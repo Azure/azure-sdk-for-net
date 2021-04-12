@@ -6,8 +6,6 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -17,7 +15,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// BackupInstance Resource
     /// </remarks>
-    [Rest.Serialization.JsonTransformation]
     public partial class BackupInstanceResource : DppResource
     {
         /// <summary>
@@ -31,45 +28,17 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <summary>
         /// Initializes a new instance of the BackupInstanceResource class.
         /// </summary>
-        /// <param name="friendlyName">Gets or sets the Backup Instance
-        /// friendly name.</param>
-        /// <param name="dataSourceInfo">Gets or sets the data source
-        /// information.</param>
-        /// <param name="policyInfo">Gets or sets the policy
-        /// information.</param>
         /// <param name="id">Resource Id represents the complete path to the
         /// resource.</param>
         /// <param name="name">Resource name associated with the
         /// resource.</param>
         /// <param name="type">Resource type represents the complete path of
         /// the form Namespace/ResourceType/ResourceType/...</param>
-        /// <param name="dataSourceSetInfo">Gets or sets the data source set
-        /// information.</param>
-        /// <param name="protectionStatus">Specifies the protection status of
-        /// the resource</param>
-        /// <param name="currentProtectionState">Specifies the current
-        /// protection state of the resource. Possible values include:
-        /// 'Invalid', 'NotProtected', 'ConfiguringProtection',
-        /// 'ProtectionConfigured', 'BackupSchedulesSuspended',
-        /// 'RetentionSchedulesSuspended', 'ProtectionStopped',
-        /// 'ProtectionError', 'ConfiguringProtectionFailed', 'SoftDeleting',
-        /// 'SoftDeleted', 'UpdatingProtection'</param>
-        /// <param name="protectionErrorDetails">Specifies the protection error
-        /// of the resource</param>
-        /// <param name="provisioningState">Specifies the provisioning state of
-        /// the resource i.e. provisioning/updating/Succeeded/Failed</param>
-        public BackupInstanceResource(string friendlyName, Datasource dataSourceInfo, PolicyInfo policyInfo, string objectType, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), DatasourceSet dataSourceSetInfo = default(DatasourceSet), ProtectionStatusDetails protectionStatus = default(ProtectionStatusDetails), string currentProtectionState = default(string), UserFacingError protectionErrorDetails = default(UserFacingError), string provisioningState = default(string))
+        /// <param name="properties">BackupInstanceResource properties</param>
+        public BackupInstanceResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), BackupInstance properties = default(BackupInstance))
             : base(id, name, type, systemData)
         {
-            FriendlyName = friendlyName;
-            DataSourceInfo = dataSourceInfo;
-            DataSourceSetInfo = dataSourceSetInfo;
-            PolicyInfo = policyInfo;
-            ProtectionStatus = protectionStatus;
-            CurrentProtectionState = currentProtectionState;
-            ProtectionErrorDetails = protectionErrorDetails;
-            ProvisioningState = provisioningState;
-            ObjectType = objectType;
+            Properties = properties;
             CustomInit();
         }
 
@@ -79,100 +48,22 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Backup Instance friendly name.
+        /// Gets or sets backupInstanceResource properties
         /// </summary>
-        [JsonProperty(PropertyName = "properties.friendlyName")]
-        public string FriendlyName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the data source information.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.dataSourceInfo")]
-        public Datasource DataSourceInfo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the data source set information.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.dataSourceSetInfo")]
-        public DatasourceSet DataSourceSetInfo { get; set; }
-
-        /// <summary>
-        /// Gets or sets the policy information.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.policyInfo")]
-        public PolicyInfo PolicyInfo { get; set; }
-
-        /// <summary>
-        /// Gets specifies the protection status of the resource
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.protectionStatus")]
-        public ProtectionStatusDetails ProtectionStatus { get; private set; }
-
-        /// <summary>
-        /// Gets specifies the current protection state of the resource.
-        /// Possible values include: 'Invalid', 'NotProtected',
-        /// 'ConfiguringProtection', 'ProtectionConfigured',
-        /// 'BackupSchedulesSuspended', 'RetentionSchedulesSuspended',
-        /// 'ProtectionStopped', 'ProtectionError',
-        /// 'ConfiguringProtectionFailed', 'SoftDeleting', 'SoftDeleted',
-        /// 'UpdatingProtection'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.currentProtectionState")]
-        public string CurrentProtectionState { get; private set; }
-
-        /// <summary>
-        /// Gets specifies the protection error of the resource
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.protectionErrorDetails")]
-        public UserFacingError ProtectionErrorDetails { get; private set; }
-
-        /// <summary>
-        /// Gets specifies the provisioning state of the resource i.e.
-        /// provisioning/updating/Succeeded/Failed
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.objectType")]
-        public string ObjectType { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public BackupInstance Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (FriendlyName == null)
+            if (Properties != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "FriendlyName");
-            }
-            if (DataSourceInfo == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DataSourceInfo");
-            }
-            if (PolicyInfo == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PolicyInfo");
-            }
-            if (ObjectType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ObjectType");
-            }
-            if (DataSourceInfo != null)
-            {
-                DataSourceInfo.Validate();
-            }
-            if (DataSourceSetInfo != null)
-            {
-                DataSourceSetInfo.Validate();
-            }
-            if (PolicyInfo != null)
-            {
-                PolicyInfo.Validate();
+                Properties.Validate();
             }
         }
     }

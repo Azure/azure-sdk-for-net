@@ -5,19 +5,19 @@ using Xunit;
 
 namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.ScenarioTests
 {
-    public class DPPPoliciesTests : TestBase, IDisposable
+    public class DPPDisksE2ETests : TestBase, IDisposable
     {
-        private const string PoliciesTestVault = "DefaultPolicyTestVault";
-        private const string PoliciesTestVaultRg = "DefaultPolicyTestVaultRg";
+        private const string TestVault = "DiskbackupVault1";
+        private const string TestVaultRg = "mayaggarDiskRG";
 
         [Fact]
-        public void CreatePolicy()
+        public void DisksE2ETests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
-            using (TestHelper testHelper = new TestHelper() { VaultName = PoliciesTestVault, ResourceGroup = PoliciesTestVaultRg })
+            using (TestHelper testHelper = new TestHelper() { VaultName = TestVault, ResourceGroup = TestVaultRg })
             {
                 testHelper.Initialize(context);
-                testHelper.CreatePolicy("MyPolicy");
+                testHelper.CreatePolicy("retentionpolicy2");
             }
         }
         public void Dispose()

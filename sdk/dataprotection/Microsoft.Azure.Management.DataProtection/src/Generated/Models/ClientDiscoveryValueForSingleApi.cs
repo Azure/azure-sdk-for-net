@@ -6,8 +6,6 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -17,7 +15,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Available operation details.
     /// </remarks>
-    [Rest.Serialization.JsonTransformation]
     public partial class ClientDiscoveryValueForSingleApi
     {
         /// <summary>
@@ -41,14 +38,15 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="origin">The intended executor of the operation;governs
         /// the display of the operation in the RBAC UX and the audit logs
         /// UX</param>
-        /// <param name="serviceSpecification">Operation properties.</param>
-        public ClientDiscoveryValueForSingleApi(ClientDiscoveryDisplay display = default(ClientDiscoveryDisplay), string name = default(string), bool? isDataAction = default(bool?), string origin = default(string), ClientDiscoveryForServiceSpecification serviceSpecification = default(ClientDiscoveryForServiceSpecification))
+        /// <param name="properties">Properties for the given
+        /// operation.</param>
+        public ClientDiscoveryValueForSingleApi(ClientDiscoveryDisplay display = default(ClientDiscoveryDisplay), string name = default(string), bool? isDataAction = default(bool?), string origin = default(string), ClientDiscoveryForProperties properties = default(ClientDiscoveryForProperties))
         {
             Display = display;
             Name = name;
             IsDataAction = isDataAction;
             Origin = origin;
-            ServiceSpecification = serviceSpecification;
+            Properties = properties;
             CustomInit();
         }
 
@@ -84,10 +82,10 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         public string Origin { get; set; }
 
         /// <summary>
-        /// Gets or sets operation properties.
+        /// Gets or sets properties for the given operation.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.serviceSpecification")]
-        public ClientDiscoveryForServiceSpecification ServiceSpecification { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public ClientDiscoveryForProperties Properties { get; set; }
 
     }
 }

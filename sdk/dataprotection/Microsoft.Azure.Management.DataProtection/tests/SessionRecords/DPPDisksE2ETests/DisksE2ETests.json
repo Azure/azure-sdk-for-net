@@ -1,0 +1,150 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault1?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjJlZGZkNWQtNTQ5Ni00NjgzLWI5NGYtYjM1ODhjNTc5MDA5L3Jlc291cmNlR3JvdXBzL21heWFnZ2FyRGlza1JHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vYmFja3VwVmF1bHRzL0Rpc2tiYWNrdXBWYXVsdDE/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\n    \"id\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault1\",\n    \"name\": \"DiskbackupVault1\",\n    \"type\": \"Microsoft.DataProtection/BackupVaults\",\n    \"location\": \"southeastasia\",\n    \"identity\": {\n        \"type\": \"systemAssigned\"\n    },\n    \"properties\": {\n        \"storageSettings\": [\n            {\n                \"datastoreType\": \"VaultStore\",\n                \"type\": \"ZonallyRedundant\"\n            },\n            {\n                \"datastoreType\": \"OperationalStore\",\n                \"type\": \"ZonallyRedundant\"\n            }\n        ]\n    }\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cfc787f1-3f81-4ee6-8aba-9849a0caf02f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042."
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "x-ms-client-request-id": [
+          "cfc787f1-3f81-4ee6-8aba-9849a0caf02f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "209"
+        ],
+        "x-ms-correlation-request-id": [
+          "873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135053Z:873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:50:52 GMT"
+        ],
+        "Content-Length": [
+          "484"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n    \"location\": \"southeastasia\",\n    \"id\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault1\",\n    \"name\": \"DiskbackupVault1\",\n    \"type\": \"Microsoft.DataProtection/backupVaults\",\n    \"properties\": {\n        \"provisioningState\": \"Provisioning\",\n        \"storageSettings\": [\n            {\n                \"datastoreType\": \"VaultStore\",\n                \"type\": \"ZonallyRedundant\"\n            },\n            {\n                \"datastoreType\": \"OperationalStore\",\n                \"type\": \"ZonallyRedundant\"\n            }\n        ]\n    }\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault1/backupPolicies/retentionpolicy2?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjJlZGZkNWQtNTQ5Ni00NjgzLWI5NGYtYjM1ODhjNTc5MDA5L3Jlc291cmNlR3JvdXBzL21heWFnZ2FyRGlza1JHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vYmFja3VwVmF1bHRzL0Rpc2tiYWNrdXBWYXVsdDEvYmFja3VwUG9saWNpZXMvcmV0ZW50aW9ucG9saWN5Mj9hcGktdmVyc2lvbj0yMDIxLTAxLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"id\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault1/backupPolicies/retentionpolicy2\",\r\n  \"name\": \"retentionpolicy2\",\r\n  \"type\": \"Microsoft.DataProtection/backupPolicies\",\r\n  \"properties\": {\r\n\t\"policyRules\": [\r\n\t  {\r\n\t\t\"backupParameters\": {\r\n\t\t  \"backupType\": \"Incremental\",\r\n\t\t  \"objectType\": \"AzureBackupParams\"\r\n\t\t},\r\n\t\t\"trigger\": {\r\n\t\t  \"schedule\": {\r\n\t\t\t\"repeatingTimeIntervals\": [\r\n\t\t\t  \"R/2019-12-26T13:08:27.8535071Z/PT4H\"\r\n\t\t\t]\r\n\t\t  },\r\n\t\t  \"taggingCriteria\": [\r\n\t\t\t{\r\n\t\t\t  \"tagInfo\": {\r\n\t\t\t\t\"tagName\": \"Default\",\r\n\t\t\t\t\"id\": \"Default_\"\r\n\t\t\t  },\r\n\t\t\t  \"taggingPriority\": 99,\r\n\t\t\t  \"isDefault\": true,\r\n\t\t\t  \"objectType\": \"TaggingCriteria\"\r\n\t\t\t}\r\n\t\t  ],\r\n\t\t  \"objectType\": \"ScheduleBasedTriggerContext\"\r\n\t\t},\r\n\t\t\"dataStore\": {\r\n\t\t  \"dataStoreType\": \"OperationalStore\",\r\n\t\t  \"objectType\": \"DataStoreInfoBase\"\r\n\t\t},\r\n\t\t\"name\": \"BackupHourly\",\r\n\t\t\"objectType\": \"AzureBackupRule\",\r\n\t\t\"ruleType\": \"Backup\"\r\n\t  },\r\n\t  {\r\n\t\t\"lifecycles\": [\r\n\t\t  {\r\n\t\t\t\"sourceDataStore\": {\r\n\t\t\t  \"dataStoreType\": \"OperationalStore\",\r\n\t\t\t  \"objectType\": \"DataStoreInfoBase\"\r\n\t\t\t},\r\n\t\t\t\"deleteAfter\": {\r\n\t\t\t  \"objectType\": \"AbsoluteDeleteOption\",\r\n\t\t\t  \"duration\": \"P1W\"\r\n\t\t\t}\r\n\t\t  }\r\n\t\t],\r\n\t\t\"isDefault\": true,\r\n\t\t\"name\": \"Default\",\r\n\t\t\"objectType\": \"AzureRetentionRule\",\r\n\t\t\"ruleType\": \"Retention\"\r\n\t  }\r\n\t],\r\n\t\"name\": \"retentionpolicy2\",\r\n\t\"id\": \"75efeda6-7c58-4771-a618-0ec86fe8e423\",\r\n\t\"datasourceTypes\": [\r\n\t  \"Microsoft.Compute/disks\"\r\n\t],\r\n\t\"objectType\": \"BackupPolicy\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1f015d8b-792c-463b-9997-32b8c464b97b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042."
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "913247bd-7c1a-4ed8-bdad-d0d2a9432c86"
+        ],
+        "x-ms-client-request-id": [
+          "1f015d8b-792c-463b-9997-32b8c464b97b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "209"
+        ],
+        "x-ms-correlation-request-id": [
+          "873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135053Z:873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:50:52 GMT"
+        ],
+        "Content-Length": [
+          "484"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n    \"id\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault1/backupPolicies/retentionpolicy2\",\n    \"name\": \"retentionpolicy2\",\n    \"type\": \"Microsoft.DataProtection/backupVaults/backupPolicies\",\n    \"properties\": {\n        \"policyRules\": [\n            {\n                \"backupParameters\": {\n                    \"backupType\": \"Incremental\",\n                    \"objectType\": \"AzureBackupParams\"\n                },\n                \"trigger\": {\n                    \"schedule\": {\n                        \"repeatingTimeIntervals\": [\n                            \"R/2019-12-26T13:08:27.8535071Z/PT4H\"\n                        ]\n                    },\n                    \"taggingCriteria\": [\n                        {\n                            \"tagInfo\": {\n                                \"tagName\": \"Default\",\n                                \"id\": \"Default_\"\n                            },\n                            \"taggingPriority\": 99,\n                            \"isDefault\": true\n                        }\n                    ],\n                    \"objectType\": \"ScheduleBasedTriggerContext\"\n                },\n                \"dataStore\": {\n                    \"dataStoreType\": \"OperationalStore\",\n                    \"objectType\": \"DataStoreInfoBase\"\n                },\n                \"name\": \"BackupHourly\",\n                \"objectType\": \"AzureBackupRule\"\n            },\n            {\n                \"lifecycles\": [\n                    {\n                        \"deleteAfter\": {\n                            \"objectType\": \"AbsoluteDeleteOption\",\n                            \"duration\": \"P1W\"\n                        },\n                        \"sourceDataStore\": {\n                            \"dataStoreType\": \"OperationalStore\",\n                            \"objectType\": \"DataStoreInfoBase\"\n                        }\n                    }\n                ],\n                \"isDefault\": true,\n                \"name\": \"Default\",\n                \"objectType\": \"AzureRetentionRule\"\n            }\n        ],\n        \"datasourceTypes\": [\n            \"Microsoft.Compute/disks\"\n        ],\n        \"objectType\": \"BackupPolicy\"\n    }\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f2edfd5d-5496-4683-b94f-b3588c579009"
+  }
+}

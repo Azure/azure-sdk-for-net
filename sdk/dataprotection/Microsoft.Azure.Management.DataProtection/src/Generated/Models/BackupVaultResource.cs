@@ -7,7 +7,6 @@
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,7 +18,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Backup Vault Resource
     /// </remarks>
-    [Rest.Serialization.JsonTransformation]
     public partial class BackupVaultResource : DppTrackedResource
     {
         /// <summary>
@@ -33,7 +31,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <summary>
         /// Initializes a new instance of the BackupVaultResource class.
         /// </summary>
-        /// <param name="storageSettings">Storage Settings</param>
+        /// <param name="properties">BackupVaultResource properties</param>
         /// <param name="eTag">Optional ETag.</param>
         /// <param name="id">Resource Id represents the complete path to the
         /// resource.</param>
@@ -44,14 +42,10 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="type">Resource type represents the complete path of
         /// the form Namespace/ResourceType/ResourceType/...</param>
-        /// <param name="provisioningState">Provisioning state of the
-        /// BackupVault resource. Possible values include: 'Failed',
-        /// 'Provisioning', 'Succeeded', 'Unknown', 'Updating'</param>
-        public BackupVaultResource(IList<StorageSetting> storageSettings, string eTag = default(string), string id = default(string), DppIdentityDetails identity = default(DppIdentityDetails), string location = default(string), string name = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string), SystemData systemData = default(SystemData), string provisioningState = default(string))
+        public BackupVaultResource(BackupVault properties, string eTag = default(string), string id = default(string), DppIdentityDetails identity = default(DppIdentityDetails), string location = default(string), string name = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string), SystemData systemData = default(SystemData))
             : base(eTag, id, identity, location, name, tags, type, systemData)
         {
-            ProvisioningState = provisioningState;
-            StorageSettings = storageSettings;
+            Properties = properties;
             CustomInit();
         }
 
@@ -61,18 +55,10 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets provisioning state of the BackupVault resource. Possible
-        /// values include: 'Failed', 'Provisioning', 'Succeeded', 'Unknown',
-        /// 'Updating'
+        /// Gets or sets backupVaultResource properties
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets or sets storage Settings
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.storageSettings")]
-        public IList<StorageSetting> StorageSettings { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public BackupVault Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -82,9 +68,13 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (StorageSettings == null)
+            if (Properties == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "StorageSettings");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (Properties != null)
+            {
+                Properties.Validate();
             }
         }
     }

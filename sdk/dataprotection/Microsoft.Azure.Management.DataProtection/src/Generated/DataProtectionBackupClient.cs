@@ -261,7 +261,6 @@ namespace Microsoft.Azure.Management.DataProtection
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -303,7 +302,6 @@ namespace Microsoft.Azure.Management.DataProtection
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ItemLevelRestoreCriteria>("objectType"));
             DeserializationSettings.Converters.Add(new  PolymorphicDeserializeJsonConverter<ItemLevelRestoreCriteria>("objectType"));
             CustomInitialize();
-            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
         }
         /// <summary>
         /// Gets the operation status for a resource.

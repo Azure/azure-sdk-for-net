@@ -6,8 +6,6 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -17,7 +15,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Operation Resource
     /// </remarks>
-    [Rest.Serialization.JsonTransformation]
     public partial class OperationResource
     {
         /// <summary>
@@ -42,17 +39,15 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="name">It must match the last segment of the "id"
         /// field, and will typically be a GUID / system generated
         /// value</param>
-        /// <param name="objectType">This property will be used as the
-        /// discriminator for deciding the specific types in the polymorphic
-        /// chain of types.</param>
+        /// <param name="properties">End time of the operation</param>
         /// <param name="startTime">Start time of the operation</param>
-        public OperationResource(System.DateTime? endTime = default(System.DateTime?), Error error = default(Error), string id = default(string), string name = default(string), string objectType = default(string), System.DateTime? startTime = default(System.DateTime?), string status = default(string))
+        public OperationResource(System.DateTime? endTime = default(System.DateTime?), Error error = default(Error), string id = default(string), string name = default(string), OperationExtendedInfo properties = default(OperationExtendedInfo), System.DateTime? startTime = default(System.DateTime?), string status = default(string))
         {
             EndTime = endTime;
             Error = error;
             Id = id;
             Name = name;
-            ObjectType = objectType;
+            Properties = properties;
             StartTime = startTime;
             Status = status;
             CustomInit();
@@ -94,11 +89,10 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets this property will be used as the discriminator for
-        /// deciding the specific types in the polymorphic chain of types.
+        /// Gets or sets end time of the operation
         /// </summary>
-        [JsonProperty(PropertyName = "properties.objectType")]
-        public string ObjectType { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public OperationExtendedInfo Properties { get; set; }
 
         /// <summary>
         /// Gets or sets start time of the operation
