@@ -315,5 +315,18 @@ namespace Azure.Storage.Sas
                 Version = SasQueryParameters.DefaultSasVersion;
             }
         }
+
+        internal static QueueSasBuilder DeepCopy(QueueSasBuilder originalQueueSasBuilder)
+            => new QueueSasBuilder
+            {
+                Version = originalQueueSasBuilder.Version,
+                Protocol = originalQueueSasBuilder.Protocol,
+                StartsOn = originalQueueSasBuilder.StartsOn,
+                ExpiresOn = originalQueueSasBuilder.ExpiresOn,
+                Permissions = originalQueueSasBuilder.Permissions,
+                IPRange = originalQueueSasBuilder.IPRange,
+                Identifier = originalQueueSasBuilder.Identifier,
+                QueueName = originalQueueSasBuilder.QueueName
+            };
     }
 }

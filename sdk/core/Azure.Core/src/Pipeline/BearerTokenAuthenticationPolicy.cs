@@ -119,12 +119,14 @@ namespace Azure.Core.Pipeline
                         catch (OperationCanceledException)
                         {
                             headerValueTcs.SetCanceled();
-                            throw;
                         }
+#pragma warning disable CA1031 // Catch more specific allowed exception type, or rethrow the exception
                         catch (Exception exception)
+#pragma warning restore CA1031 // Catch more specific allowed exception type, or rethrow the exception
                         {
                             headerValueTcs.SetException(exception);
-                            throw;
+                            // The exception will be thrown on the next lines when we touch the result of
+                            // headerValueTcs.Task, this approach will prevent later runtime UnobservedTaskException
                         }
                     }
 

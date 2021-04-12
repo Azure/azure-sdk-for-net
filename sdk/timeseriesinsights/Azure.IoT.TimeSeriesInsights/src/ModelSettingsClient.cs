@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// Model Settings client that can be used to perform operations for Time Series Model configuration settings.
+    /// Model Settings client that can be used to perform operations such as getting and updating Time Series Model configuration settings.
     /// </summary>
     public class ModelSettingsClient
     {

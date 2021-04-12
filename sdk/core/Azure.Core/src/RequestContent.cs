@@ -74,7 +74,7 @@ namespace Azure.Core
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
-        /// <param name="serializable">The <see cref="object"/> to serilaize.</param>
+        /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <param name="serializer">The <see cref="ObjectSerializer"/> to use to convert the object to bytes. If not provided, <see cref="JsonObjectSerializer"/> is used.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
         public static RequestContent Create(object serializable, ObjectSerializer? serializer = null) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));

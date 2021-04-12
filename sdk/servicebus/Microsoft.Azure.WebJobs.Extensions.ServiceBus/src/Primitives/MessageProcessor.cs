@@ -17,16 +17,23 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// <summary>
         /// Initializes a new instance of <see cref="MessageProcessor"/>.
         /// </summary>
-        /// <param name="processor">The <see cref="ServiceBusProcessor"/> to use.</param>
-        public MessageProcessor(ServiceBusProcessor processor)
+        /// <param name="processor">The <see cref="ServiceBusProcessor"/> to use for single dispatch functions.</param>
+        /// <param name="receiver">The <see cref="ServiceBusReceiver"/> to use for multiple dispatch functions.</param>
+        public MessageProcessor(ServiceBusProcessor processor, ServiceBusReceiver receiver)
         {
             Processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            Receiver = receiver ?? throw new ArgumentNullException(nameof(processor));
         }
 
         /// <summary>
         /// Gets or sets the <see cref="ServiceBusProcessor"/> that will be used by the <see cref="Processor"/>.
         /// </summary>
-        internal ServiceBusProcessor Processor { get; set; }
+        protected internal ServiceBusProcessor Processor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="ServiceBusReceiver"/> that will be used by the <see cref="Processor"/>.
+        /// </summary>
+        protected internal ServiceBusReceiver Receiver { get; set; }
 
         /// <summary>
         /// This method is called when there is a new message to process, before the job function is invoked.

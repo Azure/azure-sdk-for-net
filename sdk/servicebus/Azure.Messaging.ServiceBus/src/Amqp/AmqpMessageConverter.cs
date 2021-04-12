@@ -155,16 +155,35 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public static AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage sbMessage)
         {
+            // body
             var amqpMessage = sbMessage.ToAmqpMessage();
+
+            // properties
             amqpMessage.Properties.MessageId = sbMessage.MessageId;
             amqpMessage.Properties.CorrelationId = sbMessage.CorrelationId;
             amqpMessage.Properties.ContentType = sbMessage.ContentType;
+            amqpMessage.Properties.ContentEncoding = sbMessage.AmqpMessage.Properties.ContentEncoding;
             amqpMessage.Properties.Subject = sbMessage.Subject;
             amqpMessage.Properties.To = sbMessage.To;
             amqpMessage.Properties.ReplyTo = sbMessage.ReplyTo;
             amqpMessage.Properties.GroupId = sbMessage.SessionId;
             amqpMessage.Properties.ReplyToGroupId = sbMessage.ReplyToSessionId;
+            amqpMessage.Properties.GroupSequence = sbMessage.AmqpMessage.Properties.GroupSequence;
 
+            if (sbMessage.AmqpMessage.Properties.UserId.HasValue)
+            {
+                ReadOnlyMemory<byte> userId = sbMessage.AmqpMessage.Properties.UserId.Value;
+                if (MemoryMarshal.TryGetArray(userId, out ArraySegment<byte> segment))
+                {
+                    amqpMessage.Properties.UserId = segment;
+                }
+                else
+                {
+                    amqpMessage.Properties.UserId = new ArraySegment<byte>(userId.ToArray());
+                }
+            }
+
+            // If TTL is set, it is used to calculate AbsoluteExpiryTime and CreationTime
             if (sbMessage.TimeToLive != TimeSpan.MaxValue)
             {
                 amqpMessage.Header.Ttl = (uint)sbMessage.TimeToLive.TotalMilliseconds;
@@ -179,21 +198,49 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     amqpMessage.Properties.AbsoluteExpiryTime = AmqpConstants.MaxAbsoluteExpiryTime;
                 }
             }
-
-            if ((sbMessage.ScheduledEnqueueTime != null) && sbMessage.ScheduledEnqueueTime > DateTimeOffset.MinValue)
+            else
             {
-                amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.ScheduledEnqueueTimeUtcName, sbMessage.ScheduledEnqueueTime.UtcDateTime);
+                if (sbMessage.AmqpMessage.Properties.CreationTime.HasValue)
+                {
+                    amqpMessage.Properties.CreationTime = sbMessage.AmqpMessage.Properties.CreationTime.Value.UtcDateTime;
+                }
+                if (sbMessage.AmqpMessage.Properties.AbsoluteExpiryTime.HasValue)
+                {
+                    amqpMessage.Properties.AbsoluteExpiryTime = sbMessage.AmqpMessage.Properties.AbsoluteExpiryTime.Value.UtcDateTime;
+                }
             }
 
-            if (sbMessage.PartitionKey != null)
+            // message annotations
+
+            foreach (KeyValuePair<string, object> kvp in sbMessage.AmqpMessage.MessageAnnotations)
             {
-                amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.PartitionKeyName, sbMessage.PartitionKey);
+                switch (kvp.Key)
+                {
+                    case AmqpMessageConstants.ScheduledEnqueueTimeUtcName:
+                        if ((sbMessage.ScheduledEnqueueTime != null) && sbMessage.ScheduledEnqueueTime > DateTimeOffset.MinValue)
+                        {
+                            amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.ScheduledEnqueueTimeUtcName, sbMessage.ScheduledEnqueueTime.UtcDateTime);
+                        }
+                        break;
+                    case AmqpMessageConstants.PartitionKeyName:
+                        if (sbMessage.PartitionKey != null)
+                        {
+                            amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.PartitionKeyName, sbMessage.PartitionKey);
+                        }
+                        break;
+                    case AmqpMessageConstants.ViaPartitionKeyName:
+                        if (sbMessage.TransactionPartitionKey != null)
+                        {
+                            amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.ViaPartitionKeyName, sbMessage.TransactionPartitionKey);
+                        }
+                        break;
+                    default:
+                        amqpMessage.MessageAnnotations.Map.Add(kvp.Key, kvp.Value);
+                        break;
+                }
             }
 
-            if (sbMessage.TransactionPartitionKey != null)
-            {
-                amqpMessage.MessageAnnotations.Map.Add(AmqpMessageConstants.ViaPartitionKeyName, sbMessage.TransactionPartitionKey);
-            }
+            // application properties
 
             if (sbMessage.ApplicationProperties != null && sbMessage.ApplicationProperties.Count > 0)
             {
@@ -202,7 +249,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     amqpMessage.ApplicationProperties = new ApplicationProperties();
                 }
 
-                foreach (var pair in sbMessage.ApplicationProperties)
+                foreach (KeyValuePair<string, object> pair in sbMessage.ApplicationProperties)
                 {
                     if (TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out var amqpObject))
                     {
@@ -215,6 +262,42 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
             }
 
+            // delivery annotations
+
+            foreach (KeyValuePair<string, object> kvp in sbMessage.AmqpMessage.DeliveryAnnotations)
+            {
+                if (TryGetAmqpObjectFromNetObject(kvp.Value, MappingType.ApplicationProperty, out var amqpObject))
+                {
+                    amqpMessage.DeliveryAnnotations.Map.Add(kvp.Key, amqpObject);
+                }
+            }
+
+            // header - except for ttl which is set above with the properties
+
+            if (sbMessage.AmqpMessage.Header.DeliveryCount != null)
+            {
+                amqpMessage.Header.DeliveryCount = sbMessage.AmqpMessage.Header.DeliveryCount;
+            }
+            if (sbMessage.AmqpMessage.Header.Durable != null)
+            {
+                amqpMessage.Header.Durable = sbMessage.AmqpMessage.Header.Durable;
+            }
+            if (sbMessage.AmqpMessage.Header.FirstAcquirer != null)
+            {
+                amqpMessage.Header.FirstAcquirer = sbMessage.AmqpMessage.Header.FirstAcquirer;
+            }
+            if (sbMessage.AmqpMessage.Header.Priority != null)
+            {
+                amqpMessage.Header.Priority = sbMessage.AmqpMessage.Header.Priority;
+            }
+
+            // footer
+
+            foreach (KeyValuePair<string, object> kvp in sbMessage.AmqpMessage.Footer)
+            {
+                amqpMessage.Footer.Map.Add(kvp.Key, kvp.Value);
+            }
+
             return amqpMessage;
         }
 
@@ -223,9 +306,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(amqpMessage, nameof(amqpMessage));
             AmqpAnnotatedMessage annotatedMessage;
 
+            // body
+
             if ((amqpMessage.BodyType & SectionFlag.Data) != 0 && amqpMessage.DataBody != null)
             {
-                annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(BodyMemory.FromAmqpData(amqpMessage.DataBody)));
+                annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(Body.FromDataSegments(amqpMessage.DataBody)));
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0 && amqpMessage.ValueBody?.Value != null)
             {
@@ -241,7 +326,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             else if ((amqpMessage.BodyType & SectionFlag.AmqpSequence) != 0)
             {
                 annotatedMessage = new AmqpAnnotatedMessage(
-                    AmqpMessageBody.FromSequence(amqpMessage.SequenceBody.Select(s => (IList<object>) s.List).ToList()));
+                    AmqpMessageBody.FromSequence(amqpMessage.SequenceBody.Select(s => (IList<object>)s.List).ToList()));
             }
             // default to using an empty Data section if no data
             else
@@ -251,18 +336,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusReceivedMessage sbMessage = new ServiceBusReceivedMessage(annotatedMessage);
 
             SectionFlag sections = amqpMessage.Sections;
-            if ((sections & SectionFlag.Header) != 0)
-            {
-                if (amqpMessage.Header.Ttl != null)
-                {
-                    annotatedMessage.Header.TimeToLive = TimeSpan.FromMilliseconds(amqpMessage.Header.Ttl.Value);
-                }
 
-                if (amqpMessage.Header.DeliveryCount != null)
-                {
-                    annotatedMessage.Header.DeliveryCount = isPeeked ? (amqpMessage.Header.DeliveryCount.Value) : (amqpMessage.Header.DeliveryCount.Value + 1);
-                }
-            }
+            // properties
 
             if ((sections & SectionFlag.Properties) != 0)
             {
@@ -279,6 +354,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 if (amqpMessage.Properties.ContentType.Value != null)
                 {
                     annotatedMessage.Properties.ContentType = amqpMessage.Properties.ContentType.Value;
+                }
+
+                if (amqpMessage.Properties.ContentEncoding.Value != null)
+                {
+                    annotatedMessage.Properties.ContentEncoding = amqpMessage.Properties.ContentEncoding.Value;
                 }
 
                 if (amqpMessage.Properties.Subject != null)
@@ -305,6 +385,26 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     annotatedMessage.Properties.ReplyToGroupId = amqpMessage.Properties.ReplyToGroupId;
                 }
+
+                if (amqpMessage.Properties.GroupSequence != null)
+                {
+                    annotatedMessage.Properties.GroupSequence = amqpMessage.Properties.GroupSequence;
+                }
+
+                if (amqpMessage.Properties.UserId != null)
+                {
+                    annotatedMessage.Properties.UserId = amqpMessage.Properties.UserId;
+                }
+
+                if (amqpMessage.Properties.CreationTime != null)
+                {
+                    annotatedMessage.Properties.CreationTime = amqpMessage.Properties.CreationTime;
+                }
+
+                if (amqpMessage.Properties.AbsoluteExpiryTime != null)
+                {
+                    annotatedMessage.Properties.AbsoluteExpiryTime = amqpMessage.Properties.AbsoluteExpiryTime;
+                }
             }
 
             // Do application properties before message annotations, because the application properties
@@ -319,6 +419,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
                 }
             }
+
+            // message annotations
 
             if ((sections & SectionFlag.MessageAnnotations) != 0)
             {
@@ -365,6 +467,39 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
                 }
             }
+
+            // delivery annotations
+
+            if (amqpMessage.DeliveryAnnotations != null)
+            {
+                foreach (KeyValuePair<MapKey, object> kvp in amqpMessage.DeliveryAnnotations.Map)
+                {
+                    if (TryGetNetObjectFromAmqpObject(kvp.Value, MappingType.ApplicationProperty, out var netObject))
+                    {
+                        annotatedMessage.DeliveryAnnotations[kvp.Key.ToString()] = netObject;
+                    }
+                }
+            }
+
+            // header
+
+            if ((sections & SectionFlag.Header) != 0)
+            {
+                if (amqpMessage.Header.Ttl != null)
+                {
+                    annotatedMessage.Header.TimeToLive = TimeSpan.FromMilliseconds(amqpMessage.Header.Ttl.Value);
+                }
+
+                if (amqpMessage.Header.DeliveryCount != null)
+                {
+                    annotatedMessage.Header.DeliveryCount = isPeeked ? (amqpMessage.Header.DeliveryCount.Value) : (amqpMessage.Header.DeliveryCount.Value + 1);
+                }
+                annotatedMessage.Header.Durable = amqpMessage.Header.Durable;
+                annotatedMessage.Header.FirstAcquirer = amqpMessage.Header.FirstAcquirer;
+                annotatedMessage.Header.Priority = amqpMessage.Header.Priority;
+            }
+
+            // footer
 
             if (amqpMessage.DeliveryTag.Count == GuidSizeInBytes)
             {
