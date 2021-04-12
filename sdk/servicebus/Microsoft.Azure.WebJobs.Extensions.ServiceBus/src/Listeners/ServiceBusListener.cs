@@ -136,8 +136,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             await _messageProcessor.Value.Processor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
                         }
                     }
-                    // Batch processing will be stopped via the _started flag on its next iteration
-
+                    // Batch processing will be stopped via the _cancellationTokenSource on its next iteration
+                    _cancellationTokenSource.Cancel();
                     _started = false;
                 }
                 finally
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 {
                     try
                     {
-                        if (!_started || cancellationToken.IsCancellationRequested)
+                        if (cancellationToken.IsCancellationRequested)
                         {
                             _logger.LogInformation("Message processing has been stopped or cancelled");
                             return;

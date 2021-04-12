@@ -7,25 +7,20 @@ using System.Collections.Generic;
 //@@ using Azure.Communication.Sms;
 #endregion Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.Sms.Tests
 {
-    public class SmsClientLiveTests : RecordedTestBase<SmsClientTestEnvironment>
+    public class SmsClientLiveTests : SmsClientLiveTestBase
     {
         public SmsClientLiveTests(bool isAsync) : base(isAsync)
-            => Sanitizer = new SmsClientRecordedTestSanitizer();
+        {
+        }
 
         [Test]
         public async Task SendingSmsMessage()
         {
-            SmsClient client = InstrumentClient(
-                new SmsClient(
-                    TestEnvironment.LiveTestConnectionString,
-                    InstrumentClientOptions(new SmsClientOptions())));
+            SmsClient client = CreateSmsClient();
             try
             {
                 SmsSendResult result = await client.SendAsync(
@@ -49,21 +44,7 @@ namespace Azure.Communication.Sms.Tests
         [Test]
         public async Task SendingSmsMessageUsingTokenCredential()
         {
-            TokenCredential tokenCredential;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                tokenCredential = new MockCredential();
-            }
-            else
-            {
-                tokenCredential = new DefaultAzureCredential();
-            }
-            SmsClient client = InstrumentClient(
-                new SmsClient(
-                    TestEnvironment.LiveTestEndpoint,
-                    tokenCredential,
-                    InstrumentClientOptions(new SmsClientOptions())));
-
+            SmsClient client = CreateSmsClientWithToken();
             try
             {
                 SmsSendResult result = await client.SendAsync(
@@ -87,10 +68,7 @@ namespace Azure.Communication.Sms.Tests
         [Test]
         public async Task SendingSmsMessageFromFakeNumber()
         {
-            SmsClient client = InstrumentClient(
-                new SmsClient(
-                    TestEnvironment.LiveTestConnectionString,
-                    InstrumentClientOptions(new SmsClientOptions())));
+            SmsClient client = CreateSmsClient();
             try
             {
                 SmsSendResult result = await client.SendAsync(
@@ -113,10 +91,7 @@ namespace Azure.Communication.Sms.Tests
         [Test]
         public async Task SendingSmsMessageToFakeNumber()
         {
-            SmsClient client = InstrumentClient(
-                new SmsClient(
-                    TestEnvironment.LiveTestConnectionString,
-                    InstrumentClientOptions(new SmsClientOptions())));
+            SmsClient client = CreateSmsClient();
             try
             {
                 SmsSendResult result = await client.SendAsync(
@@ -140,10 +115,7 @@ namespace Azure.Communication.Sms.Tests
         [Test]
         public async Task SendingSmsMessageFromUnauthorizedNumber()
         {
-            SmsClient client = InstrumentClient(
-                new SmsClient(
-                    TestEnvironment.LiveTestConnectionString,
-                    InstrumentClientOptions(new SmsClientOptions())));
+            SmsClient client = CreateSmsClient();
             try
             {
                 SmsSendResult result = await client.SendAsync(
@@ -166,10 +138,7 @@ namespace Azure.Communication.Sms.Tests
         [Test]
         public async Task SendingSmsMessageToGroupWithOptions()
         {
-            SmsClient client = InstrumentClient(
-                new SmsClient(
-                    TestEnvironment.LiveTestConnectionString,
-                    InstrumentClientOptions(new SmsClientOptions())));
+            SmsClient client = CreateSmsClient();
             try
             {
                 var response = await client.SendAsync(
@@ -200,10 +169,7 @@ namespace Azure.Communication.Sms.Tests
         [Test]
         public async Task SendingTwoSmsMessages()
         {
-            SmsClient client = InstrumentClient(
-                new SmsClient(
-                    TestEnvironment.LiveTestConnectionString,
-                    InstrumentClientOptions(new SmsClientOptions())));
+            SmsClient client = CreateSmsClient();
             try
             {
                 SmsSendResult firstMessageResult = await client.SendAsync(

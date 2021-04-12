@@ -8,7 +8,6 @@ using System.Runtime.InteropServices;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 using IList = System.Collections.IList;
 
@@ -104,7 +103,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             if (message.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
             {
-                return BinaryData.FromBytes(BodyMemory.FromReadOnlyMemory(dataBody));
+                return BinaryData.FromBytes(Body.FromReadOnlyMemorySegments(dataBody));
             }
             throw new NotSupportedException($"{message.Body.BodyType} cannot be retrieved using the {nameof(ServiceBusMessage.Body)} property." +
                 $"Use {nameof(ServiceBusMessage.GetRawAmqpMessage)} to access the underlying Amqp Message object.");

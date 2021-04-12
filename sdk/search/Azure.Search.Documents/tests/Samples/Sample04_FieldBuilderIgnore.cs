@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Tests.Samples
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
             // Define client options to use camelCase when serializing property names.
-            SearchClientOptions options = new SearchClientOptions
+            SearchClientOptions options = new SearchClientOptions(ServiceVersion)
             {
                 Serializer = new JsonObjectSerializer(
                     new JsonSerializerOptions

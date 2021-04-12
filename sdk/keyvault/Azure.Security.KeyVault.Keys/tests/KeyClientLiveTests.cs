@@ -648,7 +648,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = operation.Value;
 
-            await WaitForDeletedKey(keyName);
+            // Wait a little longer since live tests are failing with only a 2s delay.
+            await WaitForDeletedKey(keyName, TimeSpan.FromSeconds(5));
 
             DeletedKey polledSecret = await Client.GetDeletedKeyAsync(keyName);
 
