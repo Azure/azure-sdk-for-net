@@ -24,11 +24,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public override Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionProperties Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionProperties>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionProperties>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class AssetConversionOptions
@@ -110,10 +107,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public string AccountDomain { get { throw null; } }
         public System.Guid AccountId { get { throw null; } }
         public virtual Azure.Response<Azure.MixedReality.ObjectAnchors.Conversion.AssetUploadUriResult> GetAssetUploadUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.MixedReality.ObjectAnchors.Conversion.AssetUploadUriResult>> GetAssetUploadUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionOperation StartAssetConversion(Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionOperation> StartAssetConversionAsync(Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ObjectAnchorsConversionClientOptions : Azure.Core.ClientOptions
