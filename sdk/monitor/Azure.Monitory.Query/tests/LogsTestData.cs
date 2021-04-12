@@ -59,7 +59,7 @@ namespace Azure.Template.Tests
 
             if (count == 0)
             {
-                var senderClient = new LogSenderClient(_testEnvironment.WorkspaceId, _testEnvironment.WorkspaceKey);
+                var senderClient = new LogSenderClient(_testEnvironment.WorkspaceId, _testEnvironment.MonitorIngestionEndpoint, _testEnvironment.WorkspaceKey);
                 await senderClient.SendAsync(TableANameSent, TableA);
             }
             else

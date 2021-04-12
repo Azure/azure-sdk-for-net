@@ -33,7 +33,7 @@ namespace Azure.Template.Tests
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQuery()
         {
             var client = CreateClient();
@@ -59,7 +59,7 @@ namespace Azure.Template.Tests
             Assert.AreEqual(0f, resultTable.Rows[0].GetSingle(LogsTestData.FloatColumnName));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryIntoPrimitiveString()
         {
             var client = CreateClient();
@@ -70,7 +70,7 @@ namespace Azure.Template.Tests
             CollectionAssert.AreEqual(new[] {"a","b","c"}, results.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryIntoPrimitiveInt()
         {
             var client = CreateClient();
@@ -80,7 +80,7 @@ namespace Azure.Template.Tests
             Assert.AreEqual(LogsTestData.TableA.Count, results.Value[0]);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryIntoClass()
         {
             var client = CreateClient();
@@ -98,7 +98,7 @@ namespace Azure.Template.Tests
             }, results.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryIntoDictionary()
         {
             var client = CreateClient();
@@ -117,7 +117,7 @@ namespace Azure.Template.Tests
             }, results.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryIntoIDictionary()
         {
             var client = CreateClient();
@@ -136,7 +136,7 @@ namespace Azure.Template.Tests
             }, results.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryBatch()
         {
             var client = CreateClient();

@@ -15,13 +15,15 @@ namespace Azure.Template.Tests
     public class LogSenderClient
     {
         private readonly string _workspaceId;
+        private readonly string _ingestEndpointSuffix;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        public LogSenderClient(string workspaceId, string sharedKey, LogSenderClientOptions options = null)
+        public LogSenderClient(string workspaceId, string ingestEndpointSuffix, string sharedKey, LogSenderClientOptions options = null)
         {
             options ??= new();
             _workspaceId = workspaceId;
+            _ingestEndpointSuffix = ingestEndpointSuffix;
             _pipeline = HttpPipelineBuilder.Build(options, new SignaturePolicy(workspaceId, sharedKey));
             _clientDiagnostics = new ClientDiagnostics(options);
         }
@@ -30,7 +32,7 @@ namespace Azure.Template.Tests
         {
             var data = JsonSerializer.Serialize(values);
             var request = _pipeline.CreateRequest();
-            request.Uri.Reset(new Uri($"https://{_workspaceId}.ods.opinsights.azure.com/api/logs?api-version=2016-04-01"));
+            request.Uri.Reset(new Uri($"https://{_workspaceId}.{_ingestEndpointSuffix}/api/logs?api-version=2016-04-01"));
             request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Log-Type", tableName);
