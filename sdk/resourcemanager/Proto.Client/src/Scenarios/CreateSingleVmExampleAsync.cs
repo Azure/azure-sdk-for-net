@@ -20,7 +20,7 @@ namespace Proto.Client
         private async System.Threading.Tasks.Task ExcuteAsync()
         {
                 var client = new ArmClient(new DefaultAzureCredential());
-            var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
+            var subscription = client.GetSubscriptions().TryGet(Context.SubscriptionId);
 
             // Create Resource Group
             Console.WriteLine($"--------Start create group async {Context.RgName}--------");

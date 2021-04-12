@@ -11,7 +11,7 @@ namespace Proto.Client
             Scenario scenario = null;
             try
             {
-                scenario = ScenarioFactory.GetScenario(Scenarios.GenericResourceOperationsExample);
+                scenario = ScenarioFactory.GetScenario(Scenarios.GetFromOperations);
                 scenario.Execute();
             }
             finally
@@ -19,7 +19,7 @@ namespace Proto.Client
                 foreach (var rgId in Scenario.CleanUp)
                 {
                     var id = new ResourceGroupResourceIdentifier(rgId);
-                    var rg = new ArmClient(new DefaultAzureCredential()).GetSubscriptionOperations(id.SubscriptionId).GetResourceGroupOperations(id.ResourceGroupName);
+                    var rg = new ArmClient(new DefaultAzureCredential()).GetSubscriptions().TryGet(id.SubscriptionId).GetResourceGroups().Get(id.ResourceGroupName).Value;
                     Console.WriteLine($"--------Deleting {rg.Id.Name}--------");
                     try
                     {

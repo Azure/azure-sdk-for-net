@@ -21,7 +21,7 @@ namespace Proto.Client
         private Task<VirtualMachine> CreateVmWithBuilderAsync()
         {
             var client = new ArmClient(new DefaultAzureCredential());
-            var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
+            var subscription = client.GetSubscriptions().TryGet(Context.SubscriptionId);
 
             // Create Resource Group
             Console.WriteLine($"--------Start create group {Context.RgName}--------");

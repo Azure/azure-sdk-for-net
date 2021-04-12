@@ -77,7 +77,8 @@ namespace Azure.ResourceManager.TestFramework
                 {
                     try
                     {
-                        _cleanupClient.GetResourceGroupOperations(TestEnvironment.SubscriptionId, resourceGroup).StartDelete();
+                        var sub = _cleanupClient.GetSubscriptions().TryGet(TestEnvironment.SubscriptionId);
+                        sub?.GetResourceGroups().Get(resourceGroup).Value.StartDelete();
                     }
                     catch (RequestFailedException e) when (e.Status == 404)
                     {
@@ -159,7 +160,8 @@ namespace Azure.ResourceManager.TestFramework
             {
                 Parallel.ForEach(OneTimeCleanupPolicy.ResourceGroupsCreated, resourceGroup =>
                 {
-                    _cleanupClient.GetResourceGroupOperations(SessionEnvironment.SubscriptionId, resourceGroup).StartDelete();
+                    var sub = _cleanupClient.GetSubscriptions().TryGet(SessionEnvironment.SubscriptionId);
+                    sub?.GetResourceGroups().Get(resourceGroup).Value.StartDelete();
                 });
             }
 

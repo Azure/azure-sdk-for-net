@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.Core.Tests
         private readonly string _location = "southcentralus";
 
         public GenericResourceTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         [OneTimeSetUp]
-        public void LocalOneTimeSetup()
+        public async Task LocalOneTimeSetup()
         {
             _rgName = SessionRecording.GenerateAssetName("testRg-");
-            var subscriptionOperations = GlobalClient.GetSubscriptionOperations(SessionEnvironment.SubscriptionId);
-            _ = subscriptionOperations.GetResourceGroups().Construct(_location).StartCreateOrUpdateAsync(_rgName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
+            var subscription = await GlobalClient.GetSubscriptions().TryGetAsync(SessionEnvironment.SubscriptionId);
+            _ = subscription.GetResourceGroups().Construct(_location).StartCreateOrUpdateAsync(_rgName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
             StopSessionRecording();
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Core.Tests
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}/providers/Microsoft.Compute/availabilitySets/testavset";
             ArmClientOptions options = new ArmClientOptions();
             _ = GetArmClient(options); // setup providers client
-            var subOp = Client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
+            var subOp = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, asetid);
             try
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Core.Tests
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}/providers/Microsoft.NotAValidNameSpace123/availabilitySets/testavset";
             ArmClientOptions options = new ArmClientOptions();
             _ = GetArmClient(options); // setup providers client
-            var subOp = Client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
+            var subOp = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, asetid);
             try
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Core.Tests
             ArmClientOptions options = new ArmClientOptions();
             options.ApiVersions.SetApiVersion(rgid.ResourceType, "1500-10-10");
             var client = GetArmClient(options);
-            var subOp = client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
+            var subOp = await client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, rgid);
             try
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Core.Tests
             ResourceGroupResourceIdentifier rgid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
             ArmClientOptions options = new ArmClientOptions();
             var client = GetArmClient(options);
-            var subOp = client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
+            var subOp = await client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, rgid);
             var rg = await genericResourceOperations.GetAsync();
             Assert.IsNotNull(rg.Value);

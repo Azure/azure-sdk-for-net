@@ -124,7 +124,7 @@ TokenCredential deviceCodeCredential = new DeviceCodeCredential(deviceCodeCallba
 
 MixedRealityStsClient client = new MixedRealityStsClient(accountId, accountDomain, deviceCodeCredential);
 
-AccessToken token = await client.GetTokenAsync(accountId);
+AccessToken token = await client.GetTokenAsync();
 ```
 
 See [here](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Device-Code-Flow) for more
@@ -173,7 +173,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 AzureKeyCredential keyCredential = new AzureKeyCredential(accountKey);
 MixedRealityStsClient client = new MixedRealityStsClient(accountId, accountDomain, keyCredential);
 
-AccessToken token = await client.GetTokenAsync(accountId);
+AccessToken token = await client.GetTokenAsync();
 ```
 
 See the authentication examples [above](#authenticate-the-client) for more complex authentication scenarios.

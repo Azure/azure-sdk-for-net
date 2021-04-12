@@ -5509,6 +5509,14 @@ namespace Azure.Storage.Files.Shares
         public virtual Uri GenerateSasUri(ShareSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+
+            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
+            builder = ShareSasBuilder.DeepCopy(builder);
+
+            // Assign builder's ShareName and Path, if they are null.
+            builder.ShareName ??= ShareName;
+            builder.FilePath ??= Path;
+
             if (!builder.ShareName.Equals(ShareName, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(

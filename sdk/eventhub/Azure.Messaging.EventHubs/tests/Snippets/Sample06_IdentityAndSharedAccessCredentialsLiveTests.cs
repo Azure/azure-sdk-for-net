@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #region Snippet:EventHubs_Sample06_SharedAccessSignature
 
-            //@@ var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
+            var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
 
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             /*@@*/
             /*@@*/ var resource = EventHubConnection.BuildConnectionSignatureAuthorizationResource(new EventHubProducerClientOptions().ConnectionOptions.TransportType, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
             /*@@*/ var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
-            /*@@*/ var credential = new AzureSasCredential(signature.Value);
+            /*@@*/ credential = new AzureSasCredential(signature.Value);
             /*@@*/
             var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 

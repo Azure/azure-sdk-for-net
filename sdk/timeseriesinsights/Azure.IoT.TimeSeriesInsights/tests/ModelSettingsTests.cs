@@ -60,7 +60,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 try
                 {
                     Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
-                        .DeleteTimeSeriesTypesbyIdAsync(new string[] { typeId })
+                        .Types
+                        .DeleteByIdAsync(new string[] { typeId })
                         .ConfigureAwait(false);
 
                     // Assert that the response array does not have any error object set
@@ -102,12 +103,15 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             var variableNamePrefix = "aggregateVariable";
             variables.Add(Recording.GenerateAlphaNumericId(variableNamePrefix), aggregateVariable);
 
-            var type = new TimeSeriesType(timeSeriesTypesName, variables);
-            type.Id = timeSeriesTypeId;
+            var type = new TimeSeriesType(timeSeriesTypesName, variables)
+            {
+                Id = timeSeriesTypeId
+            };
             timeSeriesTypes.Add(type);
 
             Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
-               .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
+               .Types
+               .CreateOrReplaceAsync(timeSeriesTypes)
                .ConfigureAwait(false);
 
             createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);

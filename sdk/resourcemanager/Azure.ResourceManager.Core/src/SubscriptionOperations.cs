@@ -80,18 +80,6 @@ namespace Azure.ResourceManager.Core
             ClientOptions.Convert<ResourcesManagementClientOptions>()).Subscriptions;
 
         /// <summary>
-        /// Gets the resource group operations for a given resource group.
-        /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <returns> The resource group operations. </returns>
-        /// <exception cref="ArgumentOutOfRangeException"> resourceGroupName must be at least one character long and cannot be longer than 90 characters. </exception>
-        /// <exception cref="ArgumentException"> The name of the resource group can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters. </exception>
-        public virtual ResourceGroupOperations GetResourceGroupOperations(string resourceGroupName)
-        {
-            return new ResourceGroupOperations(this, resourceGroupName);
-        }
-
-        /// <summary>
         /// Gets the resource group container under this subscription.
         /// </summary>
         /// <returns> The resource group container. </returns>

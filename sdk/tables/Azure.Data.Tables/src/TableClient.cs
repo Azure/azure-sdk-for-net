@@ -21,14 +21,35 @@ namespace Azure.Data.Tables
     public class TableClient
     {
         private static readonly char[] ContinuationTokenSplit = new[] { ' ' };
-
-        private readonly string _table;
         private readonly ClientDiagnostics _diagnostics;
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
-        private readonly bool _isPremiumEndpoint;
+        private readonly bool _isCosmosEndpoint;
         private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
         private readonly QueryOptions _defaultQueryOptions = new QueryOptions() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata };
+        private string _accountName;
+        private readonly Uri _endpoint;
+
+        /// <summary>
+        /// The name of the table with which this client instance will interact.
+        /// </summary>
+        public virtual string Name { get; }
+
+        /// <summary>
+        /// The name of the table account with which this client instance will interact.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    var builder = new TableUriBuilder(_endpoint);
+                    _accountName = builder.AccountName;
+                }
+                return _accountName;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> <see cref="AzureSasCredential"/>.
@@ -132,6 +153,9 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(connectionString, nameof(connectionString));
 
             TableConnectionString connString = TableConnectionString.Parse(connectionString);
+            _accountName = connString._accountName;
+            _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
+            var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
             options ??= new TableClientOptions();
             var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
@@ -142,13 +166,12 @@ namespace Azure.Data.Tables
                 _ => default
             };
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { policy }, new ResponseClassifier());
 
             _version = options.VersionString;
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
-            _table = tableName;
-            _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
+            Name = tableName;
         }
 
         internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
@@ -156,27 +179,30 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
+            _endpoint = endpoint;
+            _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
             options ??= new TableClientOptions();
+            var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             HttpPipeline pipeline = sasCredential switch
             {
-                null => HttpPipelineBuilder.Build(options, policy),
-                _ => HttpPipelineBuilder.Build(options, policy, new AzureSasCredentialSynchronousPolicy(sasCredential))
+                null => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { policy }, new ResponseClassifier()),
+                _ => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new HttpPipelinePolicy[] { policy, new AzureSasCredentialSynchronousPolicy(sasCredential) }, new ResponseClassifier())
             };
 
             _version = options.VersionString;
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.ToString(), _version);
-            _table = tableName;
-            _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
+            Name = tableName;
         }
 
-        internal TableClient(string table, TableRestClient tableOperations, string version, ClientDiagnostics diagnostics, bool isPremiumEndpoint)
+        internal TableClient(string table, TableRestClient tableOperations, string version, ClientDiagnostics diagnostics, bool isPremiumEndpoint, Uri endpoint)
         {
             _tableOperations = tableOperations;
             _version = version;
-            _table = table;
+            Name = table;
             _diagnostics = diagnostics;
-            _isPremiumEndpoint = isPremiumEndpoint;
+            _isCosmosEndpoint = isPremiumEndpoint;
+            _endpoint = endpoint;
         }
 
         /// <summary>
@@ -195,7 +221,7 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(TableSasPermissions permissions, DateTimeOffset expiresOn)
         {
-            return new TableSasBuilder(_table, permissions, expiresOn) { Version = _version };
+            return new TableSasBuilder(Name, permissions, expiresOn) { Version = _version };
         }
 
         /// <summary>
@@ -212,7 +238,7 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(string rawPermissions, DateTimeOffset expiresOn)
         {
-            return new TableSasBuilder(_table, rawPermissions, expiresOn) { Version = _version };
+            return new TableSasBuilder(Name, rawPermissions, expiresOn) { Version = _version };
         }
 
         /// <summary>
@@ -227,7 +253,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = Name }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -249,7 +275,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = _table }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = Name }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -271,7 +297,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = Name }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -297,7 +323,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = _table }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = Name }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -322,7 +348,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return _tableOperations.Delete(table: _table, cancellationToken: cancellationToken);
+                return _tableOperations.Delete(table: Name, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -342,7 +368,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteAsync(table: _table, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await _tableOperations.DeleteAsync(table: Name, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -369,7 +395,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.InsertEntityAsync(_table,
+                var response = await _tableOperations.InsertEntityAsync(Name,
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                     responsePreference: _returnNoContent,
                      queryOptions: _defaultQueryOptions,
@@ -401,7 +427,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.InsertEntity(_table,
+                var response = _tableOperations.InsertEntity(Name,
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                     responsePreference: _returnNoContent,
                      queryOptions: _defaultQueryOptions,
@@ -439,7 +465,7 @@ namespace Azure.Data.Tables
             try
             {
                 var response = _tableOperations.QueryEntityWithPartitionAndRowKey(
-                    _table,
+                    Name,
                     partitionKey,
                     rowKey,
                     queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Select = selectArg },
@@ -478,7 +504,7 @@ namespace Azure.Data.Tables
             try
             {
                 var response = await _tableOperations.QueryEntityWithPartitionAndRowKeyAsync(
-                    _table,
+                    Name,
                     partitionKey,
                     rowKey,
                     queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Select = selectArg },
@@ -514,7 +540,7 @@ namespace Azure.Data.Tables
             {
                 if (mode == TableUpdateMode.Replace)
                 {
-                    return await _tableOperations.UpdateEntityAsync(_table,
+                    return await _tableOperations.UpdateEntityAsync(Name,
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -523,7 +549,7 @@ namespace Azure.Data.Tables
                 }
                 else if (mode == TableUpdateMode.Merge)
                 {
-                    return await _tableOperations.MergeEntityAsync(_table,
+                    return await _tableOperations.MergeEntityAsync(Name,
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -562,7 +588,7 @@ namespace Azure.Data.Tables
             {
                 if (mode == TableUpdateMode.Replace)
                 {
-                    return _tableOperations.UpdateEntity(_table,
+                    return _tableOperations.UpdateEntity(Name,
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -571,7 +597,7 @@ namespace Azure.Data.Tables
                 }
                 else if (mode == TableUpdateMode.Merge)
                 {
-                    return _tableOperations.MergeEntity(_table,
+                    return _tableOperations.MergeEntity(Name,
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -622,7 +648,7 @@ namespace Azure.Data.Tables
             {
                 if (mode == TableUpdateMode.Replace)
                 {
-                    return await _tableOperations.UpdateEntityAsync(_table,
+                    return await _tableOperations.UpdateEntityAsync(Name,
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -632,7 +658,7 @@ namespace Azure.Data.Tables
                 }
                 else if (mode == TableUpdateMode.Merge)
                 {
-                    return await _tableOperations.MergeEntityAsync(_table,
+                    return await _tableOperations.MergeEntityAsync(Name,
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -684,7 +710,7 @@ namespace Azure.Data.Tables
             {
                 if (mode == TableUpdateMode.Replace)
                 {
-                    return _tableOperations.UpdateEntity(_table,
+                    return _tableOperations.UpdateEntity(Name,
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -694,7 +720,7 @@ namespace Azure.Data.Tables
                 }
                 else if (mode == TableUpdateMode.Merge)
                 {
-                    return _tableOperations.MergeEntity(_table,
+                    return _tableOperations.MergeEntity(Name,
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -813,7 +839,7 @@ namespace Azure.Data.Tables
                     try
                     {
                         var response = await _tableOperations.QueryEntitiesAsync(
-                            _table,
+                            Name,
                             queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
                             cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -836,7 +862,7 @@ namespace Azure.Data.Tables
                         var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
 
                         var response = await _tableOperations.QueryEntitiesAsync(
-                            _table,
+                            Name,
                             queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
                             nextPartitionKey: NextPartitionKey,
                             nextRowKey: NextRowKey,
@@ -887,7 +913,7 @@ namespace Azure.Data.Tables
                     {
                         var queryOptions = new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg };
 
-                        var response = _tableOperations.QueryEntities(_table,
+                        var response = _tableOperations.QueryEntities(Name,
                             queryOptions: queryOptions,
                             cancellationToken: cancellationToken);
 
@@ -913,7 +939,7 @@ namespace Azure.Data.Tables
                         var queryOptions = new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg };
 
                         var response = _tableOperations.QueryEntities(
-                            _table,
+                            Name,
                             queryOptions: queryOptions,
                             nextPartitionKey: NextPartitionKey,
                             nextRowKey: NextRowKey,
@@ -954,7 +980,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteEntityAsync(_table,
+                return await _tableOperations.DeleteEntityAsync(Name,
                     partitionKey,
                     rowKey,
                     ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
@@ -990,7 +1016,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return _tableOperations.DeleteEntity(_table,
+                return _tableOperations.DeleteEntity(Name,
                     partitionKey,
                     rowKey,
                     ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
@@ -1013,7 +1039,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.GetAccessPolicyAsync(_table, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.GetAccessPolicyAsync(Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -1032,7 +1058,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.GetAccessPolicy(_table, cancellationToken: cancellationToken);
+                var response = _tableOperations.GetAccessPolicy(Name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -1052,7 +1078,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return await _tableOperations.SetAccessPolicyAsync(_table, tableAcl: tableAcl, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await _tableOperations.SetAccessPolicyAsync(Name, tableAcl: tableAcl, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -1071,7 +1097,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return _tableOperations.SetAccessPolicy(_table, tableAcl: tableAcl, cancellationToken: cancellationToken);
+                return _tableOperations.SetAccessPolicy(Name, tableAcl: tableAcl, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -1095,7 +1121,7 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableTransactionalBatch"/>.</returns>
         public virtual TableTransactionalBatch CreateTransactionalBatch(string partitionKey)
         {
-            return new TableTransactionalBatch(_table, partitionKey, _tableOperations, _defaultQueryOptions.Format.Value);
+            return new TableTransactionalBatch(Name, partitionKey, _tableOperations, _defaultQueryOptions.Format.Value, _isCosmosEndpoint);
         }
 
         internal static string Bind(Expression expression)

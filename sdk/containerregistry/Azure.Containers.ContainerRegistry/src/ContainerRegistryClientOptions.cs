@@ -23,6 +23,18 @@ namespace Azure.Containers.ContainerRegistry
                 ServiceVersion.V1_0 => "1.0",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
+            AddHeadersAndQueryParameters();
+        }
+
+        /// <summary>
+        /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>
+        /// </summary>
+        private void AddHeadersAndQueryParameters()
+        {
+            Diagnostics.LoggedQueryParameters.Add("orderby");
+            Diagnostics.LoggedQueryParameters.Add("n");
+            Diagnostics.LoggedQueryParameters.Add("last");
+            Diagnostics.LoggedQueryParameters.Add("digest");
         }
 
         /// <summary>
