@@ -1,5 +1,25 @@
 # Release History
 
+## 1.3.0-beta.1 (Unreleased)
+
+
+## 1.0.0-preview.1 (Unreleased)
+
+### New features
+
+- Initial preview of Azure.DigitalTwins.Core SDK
+
+### Breaking changes
+
+- N/A
+
+### Added
+
+- N/A
+
+### Fixes and improvements
+
+- N/A
 ## 1.2.2 (2021-04-12)
 
 ### Fixes and improvements
@@ -82,20 +102,3 @@ Note that these breaking changes are only breaking changes from the **preview** 
 - [Azure Digital Twins Public Repo](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core)
 - [Azure Digital Twins Samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples)
 
-## 1.0.0-preview.1 (Unreleased)
-
-### New features
-
-- Initial preview of Azure.DigitalTwins.Core SDK
-
-### Breaking changes
-
-- N/A
-
-### Added
-
-- N/A
-
-### Fixes and improvements
-
-- N/A
