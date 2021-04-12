@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.TextAnalytics.Models;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The HealthcareEntity. </summary>
     internal partial class HealthcareEntityInternal : Entity

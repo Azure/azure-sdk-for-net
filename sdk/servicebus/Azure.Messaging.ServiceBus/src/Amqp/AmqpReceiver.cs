@@ -99,9 +99,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
-        /// <param name="identifier"></param>
-        /// <param name="sessionId"></param>
-        /// <param name="isSessionReceiver"></param>
+        /// <param name="identifier">The identifier for the sender.</param>
+        /// <param name="sessionId">The session ID to receive messages for.</param>
+        /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
+        /// open link operation. Only applicable for session receivers.</param>
         ///
         /// <remarks>
         /// As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -119,7 +121,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusRetryPolicy retryPolicy,
             string identifier,
             string sessionId,
-            bool isSessionReceiver)
+            bool isSessionReceiver,
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -141,7 +144,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
                         isSessionReceiver: isSessionReceiver,
-                        identifier: identifier),
+                        identifier: identifier,
+                        // The cancellationToken will always be CancellationToken.None for non-session receivers
+                        // it is okay to register the user provided cancellationToken from the AcceptNextSessionAsync call in
+                        // the fault tolerant object because session receivers are never reconnected.
+                        cancellationToken: cancellationToken),
                 link => CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
@@ -166,7 +173,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             uint prefetchCount,
             ServiceBusReceiveMode receiveMode,
             bool isSessionReceiver,
-            string identifier)
+            string identifier,
+            CancellationToken cancellationToken)
         {
             ServiceBusEventSource.Log.CreateReceiveLinkStart(_identifier);
 
@@ -180,7 +188,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     receiveMode: receiveMode,
                     sessionId: SessionId,
                     isSessionReceiver: isSessionReceiver,
-                    cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (isSessionReceiver)
                 {
                     SessionLockedUntil = link.Settings.Properties.TryGetValue<long>(

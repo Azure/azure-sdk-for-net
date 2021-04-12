@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the project which implements the Microsoft Azure Attestation client API and package</Description>
     <AssemblyTitle>Azure SDK Template</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.3</Version>
     <PackageTags>Azure Template</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>

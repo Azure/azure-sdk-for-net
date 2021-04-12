@@ -85,7 +85,9 @@ namespace Azure.Data.Tables.Tests
             // Validate that we are unable to create a table using the SAS URI with only Delete permissions.
 
             var sasTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-            Assert.That(async () => await sasAuthedServiceDelete.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sasAuthedServiceDelete.CreateTableAsync(sasTableName).ConfigureAwait(false));
+            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
 
             // Validate that we are able to create a table using the SAS URI with Write and Delete permissions.
 
@@ -133,7 +135,9 @@ namespace Azure.Data.Tables.Tests
             // Validate that we are unable to create a table using the SAS URI with access to Service resource types.
 
             var sasTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-            Assert.That(async () => await sasAuthedServiceClientService.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sasAuthedServiceClientService.CreateTableAsync(sasTableName).ConfigureAwait(false));
+            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationResourceTypeMismatch.ToString()));
 
             // Validate that we are able to create a table using the SAS URI with access to Service and Container resource types.
 
@@ -223,7 +227,14 @@ namespace Azure.Data.Tables.Tests
                 var tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{tableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
-                Assert.That(() => tableResponses.Select(r => r.TableName), Contains.Item(tableName));
+                Assert.AreEqual(tableName, tableResponses.Select(r => r.TableName).SingleOrDefault());
+
+                // Query with a filter.
+
+                tableResponses = (await service.GetTablesAsync(filter: t => t.TableName == tableName).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+
+                Assert.That(() => tableResponses, Is.Not.Empty);
+                Assert.AreEqual(tableName, tableResponses.Select(r => r.TableName).SingleOrDefault());
             }
             finally
             {

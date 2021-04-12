@@ -36,24 +36,25 @@ namespace Azure.Data.Tables
 
                 switch (annotatedDictionary[prop.Name])
                 {
-                    case byte[] _:
+                    case byte[]:
+                    case BinaryData:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmBinary;
                         break;
-                    case long _:
+                    case long:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmInt64;
                         // Int64 / long should be serialized as string.
                         annotatedDictionary[prop.Name] = annotatedDictionary[prop.Name].ToString();
                         break;
-                    case double _:
+                    case double:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmDouble;
                         break;
-                    case Guid _:
+                    case Guid:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmGuid;
                         break;
-                    case DateTimeOffset _:
+                    case DateTimeOffset:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
                         break;
-                    case DateTime _:
+                    case DateTime:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmDateTime;
                         break;
                     case Enum enumValue:

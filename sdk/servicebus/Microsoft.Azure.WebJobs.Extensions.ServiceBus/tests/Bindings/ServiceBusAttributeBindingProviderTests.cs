@@ -7,8 +7,10 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -23,12 +25,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
         public ServiceBusAttributeBindingProviderTests()
         {
-            _configuration = new ConfigurationBuilder()
-                .AddEnvironmentVariables()
-                .Build();
+            _configuration = new ConfigurationBuilder().AddInMemoryCollection(new KeyValuePair<string, string>[] { new("connection", "connectionString") }).Build();
+
             Mock<INameResolver> mockResolver = new Mock<INameResolver>(MockBehavior.Strict);
             ServiceBusOptions config = new ServiceBusOptions();
-            _provider = new ServiceBusAttributeBindingProvider(mockResolver.Object, config, _configuration, new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(config)));
+            var messagingProvider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(config));
+            var factory = new ServiceBusClientFactory(_configuration, new Mock<AzureComponentFactory>().Object, messagingProvider);
+            _provider = new ServiceBusAttributeBindingProvider(mockResolver.Object, messagingProvider, factory);
         }
 
         [Test]
@@ -61,7 +64,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
         }
 
         internal static void TestJob(
-            [ServiceBusAttribute("test", Connection = Constants.DefaultConnectionStringName)] out ServiceBusMessage message)
+            [ServiceBusAttribute("test", Connection = Constants.DefaultConnectionStringName)]
+            out ServiceBusMessage message)
         {
             message = new ServiceBusMessage();
         }

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Datadog
     {
         /// <summary>
         /// List all operations provided by Microsoft.Datadog for the
-        /// 2020-02-01-preview api version.
+        /// 2021-03-01 api version.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ResourceProviderDefaultErrorResponseException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Datadog
         Task<AzureOperationResponse<IPage<OperationResult>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all operations provided by Microsoft.Datadog for the
-        /// 2020-02-01-preview api version.
+        /// 2021-03-01 api version.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ResourceProviderDefaultErrorResponseException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

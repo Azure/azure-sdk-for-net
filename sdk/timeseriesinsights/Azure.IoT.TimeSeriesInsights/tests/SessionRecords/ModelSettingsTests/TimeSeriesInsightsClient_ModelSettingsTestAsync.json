@@ -6,8 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "678064e05eda1ffaa73dbdd18e58a320",
+        "User-Agent": [
+          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210405.1",
+          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "1f9456e1754d560e293cd7102ffb1153",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,27 +19,27 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 22:15:14 GMT",
+        "Date": "Mon, 05 Apr 2021 18:38:33 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "ffb63a05-856d-4a3f-b25f-07d8d8ade6f5"
+        "x-ms-request-id": "0b5f35d5-0a1f-43ab-9ed3-06ef548cb49d"
       },
       "ResponseBody": {
         "modelSettings": {
           "name": "testModel",
           "timeSeriesIdProperties": [
             {
-              "name": "building",
+              "name": "Building",
               "type": "String"
             },
             {
-              "name": "floor",
+              "name": "Floor",
               "type": "String"
             },
             {
-              "name": "room",
+              "name": "Room",
               "type": "String"
             }
           ],
@@ -50,20 +53,22 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "146",
+        "Content-Length": "145",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "4bea43ae6a112f11abca3ceeb119df32",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "User-Agent": [
+          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210405.1",
+          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "765377c838096e04170b48a32716d3d2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "put": [
           {
-            "id": "1330378550",
-            "name": "typelUX3T459",
+            "id": "206563945",
+            "name": "typel1pBk6XW",
             "variables": {
-              "aggregateVariableuMESSdxz": {
+              "aggregateVariablejqTkSnCM": {
                 "aggregation": {
                   "tsx": "count()"
                 },
@@ -78,21 +83,21 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 22:15:14 GMT",
+        "Date": "Mon, 05 Apr 2021 18:38:33 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "3acca50d-afc3-48b5-b778-b4ff6534d396"
+        "x-ms-request-id": "26e9b004-9eeb-4477-8e15-eb2a39589a2f"
       },
       "ResponseBody": {
         "put": [
           {
             "timeSeriesType": {
-              "id": "1330378550",
-              "name": "typelUX3T459",
+              "id": "206563945",
+              "name": "typel1pBk6XW",
               "variables": {
-                "aggregateVariableuMESSdxz": {
+                "aggregateVariablejqTkSnCM": {
                   "kind": "aggregate",
                   "aggregation": {
                     "tsx": "count()"
@@ -110,8 +115,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "c04c6a34e8b5fc0a18316b38c439898a",
+        "User-Agent": [
+          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210405.1",
+          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "ec016029da27b7e993b6656b73c01c57",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -120,27 +128,27 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 22:15:14 GMT",
+        "Date": "Mon, 05 Apr 2021 18:38:33 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "bf58c60e-06e2-4d78-9381-f4abda8c9fdf"
+        "x-ms-request-id": "75eb6d57-1e80-485d-b9e9-197c90fb880c"
       },
       "ResponseBody": {
         "modelSettings": {
           "name": "testModel",
           "timeSeriesIdProperties": [
             {
-              "name": "building",
+              "name": "Building",
               "type": "String"
             },
             {
-              "name": "floor",
+              "name": "Floor",
               "type": "String"
             },
             {
-              "name": "room",
+              "name": "Room",
               "type": "String"
             }
           ],
@@ -156,8 +164,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "20",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "14df97c7d5b80bf3c330d50b2b798455",
+        "User-Agent": [
+          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210405.1",
+          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "836708c8dcbdc32dd62b48ec555d41d1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -168,27 +179,27 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 22:15:14 GMT",
+        "Date": "Mon, 05 Apr 2021 18:38:33 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "062e4dbf-1c72-475a-aaa4-1434ebde35dd"
+        "x-ms-request-id": "e6ad8c30-d26d-4ead-b18a-1ffad4ca42cc"
       },
       "ResponseBody": {
         "modelSettings": {
           "name": "testModel",
           "timeSeriesIdProperties": [
             {
-              "name": "building",
+              "name": "Building",
               "type": "String"
             },
             {
-              "name": "floor",
+              "name": "Floor",
               "type": "String"
             },
             {
-              "name": "room",
+              "name": "Room",
               "type": "String"
             }
           ],
@@ -202,45 +213,48 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "30",
+        "Content-Length": "29",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "b3b103453565c58438ee32e0fed86b71",
+        "User-Agent": [
+          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210405.1",
+          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "ac6cc73622e2eee08e9ce252d399fb57",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "defaultTypeId": "1330378550"
+        "defaultTypeId": "206563945"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 22:15:14 GMT",
+        "Date": "Mon, 05 Apr 2021 18:38:33 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "8b15a6f0-e195-405a-92e9-bc20dd7b67cf"
+        "x-ms-request-id": "b1a60a3e-ab24-41d1-b8cd-074e64b4a09e"
       },
       "ResponseBody": {
         "modelSettings": {
           "name": "testModel",
           "timeSeriesIdProperties": [
             {
-              "name": "building",
+              "name": "Building",
               "type": "String"
             },
             {
-              "name": "floor",
+              "name": "Floor",
               "type": "String"
             },
             {
-              "name": "room",
+              "name": "Room",
               "type": "String"
             }
           ],
-          "defaultTypeId": "1330378550"
+          "defaultTypeId": "206563945"
         }
       }
     },
@@ -252,8 +266,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "56",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "1a27b141ca395f797740fd8512ffd09f",
+        "User-Agent": [
+          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210405.1",
+          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "1edbf1ef4faf4c14333e16fc91fd6236",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -264,27 +281,27 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 22:15:14 GMT",
+        "Date": "Mon, 05 Apr 2021 18:38:33 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "5e23419c-017f-4e03-b69c-dc24e0fe66a5"
+        "x-ms-request-id": "935610cb-3ecd-402a-afb9-dc82fb36144e"
       },
       "ResponseBody": {
         "modelSettings": {
           "name": "testModel",
           "timeSeriesIdProperties": [
             {
-              "name": "building",
+              "name": "Building",
               "type": "String"
             },
             {
-              "name": "floor",
+              "name": "Floor",
               "type": "String"
             },
             {
-              "name": "room",
+              "name": "Room",
               "type": "String"
             }
           ],
@@ -298,17 +315,19 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "37",
+        "Content-Length": "36",
         "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "c0f316acd6889124121adccaa3120cea",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "User-Agent": [
+          "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210405.1",
+          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "ab3593747054a6742778f521fadaef3d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "delete": {
           "typeIds": [
-            "1330378550"
+            "206563945"
           ]
         }
       },
@@ -317,12 +336,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 22:15:15 GMT",
+        "Date": "Mon, 05 Apr 2021 18:38:33 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "d28784e1-010f-4a40-9207-b6a0df535c60"
+        "x-ms-request-id": "feaa130a-eae4-42a3-8f3f-c15fae20d4b2"
       },
       "ResponseBody": {
         "delete": [
@@ -332,7 +351,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1169486807",
+    "RandomSeed": "1039187939",
     "TIMESERIESINSIGHTS_URL": "fakeHost.api.wus2.timeseriesinsights.azure.com"
   }
 }

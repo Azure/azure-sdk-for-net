@@ -31,7 +31,11 @@ Note: Only applies to `Microsoft.Azure.Management.[RP]` or `Azure.ResourceManage
 	- Do not modify any code in generated folders.
 	- Do not selectively include/remove generated files in the PR.
 	- Do use `generate.ps1/cmd` to generate this PR instead of calling `autorest` directly.
-	Please pay attention to the @microsoft.csharp version output after running generate.ps1. If it is lower than current released version (2.3.82), please run it again as it should pull down the latest version,
+	Please pay attention to the @microsoft.csharp version output after running `generate.ps1`. If it is lower than current released version (2.3.82), please run it again as it should pull down the latest version.
+	
+	**Note: We have recently updated the PSH module called by `generate.ps1` to emit additional data. This would help reduce/eliminate the Code Verification check error. Please run following command**:
+
+	    `dotnet msbuild eng/mgmt.proj /t:Util /p:UtilityName=InstallPsModules`
 
 ### Old outstanding PR cleanup
  Please note:

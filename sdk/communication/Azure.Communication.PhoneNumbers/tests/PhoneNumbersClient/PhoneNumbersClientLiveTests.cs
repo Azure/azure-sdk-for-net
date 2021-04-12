@@ -127,5 +127,85 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             Assert.Fail("StartSearchAvailablePhoneNumbersAsync should have thrown an exception.");
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task CreateSearchAsync()
+        {
+            var client = CreateClient();
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            await searchOperation.WaitForCompletionAsync();
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void CreateSearch()
+        {
+            var client = CreateClient();
+            var searchOperation = client.StartSearchAvailablePhoneNumbers("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            while (!searchOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                searchOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task UpdateCapabilitiesAsync()
+        {
+            var number = GetTestPhoneNumber();
+
+            var client = CreateClient();
+            var updateOperation = await client.StartUpdateCapabilitiesAsync(number, PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.Outbound);
+
+            await updateOperation.WaitForCompletionAsync();
+
+            Assert.IsTrue(updateOperation.HasCompleted);
+            Assert.IsNotNull(updateOperation.Value);
+            Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateOperation.Value.Capabilities.Sms);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void UpdateCapabilities()
+        {
+            var number = GetTestPhoneNumber();
+
+            var client = CreateClient();
+            var updateOperation = client.StartUpdateCapabilities(number, PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.Outbound);
+
+            while (!updateOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                updateOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(updateOperation.HasCompleted);
+            Assert.IsNotNull(updateOperation.Value);
+            Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateOperation.Value.Capabilities.Sms);
+        }
     }
 }
