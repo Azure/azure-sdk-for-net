@@ -14,8 +14,12 @@ namespace Azure.Core.Pipeline
     /// Extend ClientDiagnostics to customize the exceptions thrown by the
     /// generated code.
     /// </summary>
-    internal sealed partial class ClientDiagnostics
+    internal sealed class TextAnalyticsClientDiagnostics : ClientDiagnostics
     {
+        public TextAnalyticsClientDiagnostics(ClientOptions options) : base(options)
+        {
+        }
+
         /// <summary>
         /// Customize the exception messages we throw from the protocol layer by
         /// attempting to parse them as <see cref="TextAnalyticsError"/>s.
@@ -25,16 +29,12 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The error message.</param>
         /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
-#pragma warning disable CA1822 // Member can be static
-#pragma warning disable CA1801 // Remove unused parameter
-        partial void ExtractFailureContent(
+        protected override void ExtractFailureContent(
             string? content,
             ResponseHeaders responseHeaders,
             ref string? message,
             ref string? errorCode,
             ref IDictionary<string, string>? additionalInfo)
-#pragma warning restore CA1801 // Remove unused parameter
-#pragma warning restore CA1822 // Member can be static
         {
             if (!string.IsNullOrEmpty(content))
             {

@@ -1,18 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using System.Xml;
 using System.Xml.Linq;
 using Azure.Storage;
 
+#nullable enable
+
 namespace Azure.Core.Pipeline
 {
-    internal sealed partial class ClientDiagnostics : DiagnosticScopeFactory
+    internal sealed class StorageClientDiagnostics: ClientDiagnostics
     {
+        public StorageClientDiagnostics(ClientOptions options) : base(options)
+        {
+        }
+
         /// <summary>
         /// Partial method that can optionally be defined to extract the error
         /// message, code, and details in a service specific manner.
@@ -22,21 +25,17 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The error message.</param>
         /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
-#pragma warning disable CA1822 // Member can be static
-#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
-        partial void ExtractFailureContent(
+        protected override void ExtractFailureContent(
             string? content,
             ResponseHeaders responseHeaders,
             ref string? message,
             ref string? errorCode,
             ref IDictionary<string, string>? additionalInfo
-#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
-#pragma warning restore CA1822
             )
         {
             additionalInfo = new Dictionary<string, string>();
 
-            if (content != null)
+            if (content != null && responseHeaders.ContentType != null)
             {
                 // XML body
                 if (responseHeaders.ContentType.Contains(Constants.ContentTypeApplicationXml))
@@ -65,7 +64,7 @@ namespace Azure.Core.Pipeline
                     JsonDocument json = JsonDocument.Parse(content);
                     JsonElement error = json.RootElement.GetProperty(Constants.ErrorPropertyKey);
 
-                    IDictionary<string, string> details = default;
+                    IDictionary<string, string>? details = default;
                     if (error.TryGetProperty(Constants.DetailPropertyKey, out JsonElement detail))
                     {
                         details = new Dictionary<string, string>();
@@ -84,7 +83,7 @@ namespace Azure.Core.Pipeline
             else
             {
                 // The other headers will appear in the "Headers" section of the Exception message.
-                if (responseHeaders.TryGetValue(Constants.HeaderNames.ErrorCode, out string value))
+                if (responseHeaders.TryGetValue(Constants.HeaderNames.ErrorCode, out string? value))
                 {
                     errorCode = value;
                 }

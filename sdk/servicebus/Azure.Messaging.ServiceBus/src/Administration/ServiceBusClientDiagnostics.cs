@@ -10,18 +10,18 @@ using System.Xml.Linq;
 
 namespace Azure.Core.Pipeline
 {
-    internal sealed partial class ClientDiagnostics
+    internal sealed class ServiceBusClientDiagnostics: ClientDiagnostics
     {
-#pragma warning disable CA1822 // Member can be static
-#pragma warning disable CA1801 // Remove unused parameter
-        partial void ExtractFailureContent(
+        public ServiceBusClientDiagnostics(ClientOptions options) : base(options)
+        {
+        }
+
+        protected override void ExtractFailureContent(
             string? content,
             ResponseHeaders responseHeaders,
             ref string? message,
             ref string? errorCode,
             ref IDictionary<string, string>? additionalInfo)
-#pragma warning restore CA1801 // Remove unused parameter
-#pragma warning restore CA1822 // Member can be static
         {
             if (string.IsNullOrWhiteSpace(content))
             {
