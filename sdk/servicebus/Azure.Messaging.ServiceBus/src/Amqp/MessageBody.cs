@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return new NonCopyingSingleSegmentMessageBody(segment);
         }
 
-        public static MessageBody FromDataSegments(IEnumerable<Data> segments)
+        public static MessageBody FromDataSegments(IEnumerable<Data> segments, bool poolReceivedMessageBodies = false)
         {
-            return new EagerCopyingMessageBody(segments ?? Enumerable.Empty<Data>());
+            IEnumerable<Data> dataSegments = segments ?? Enumerable.Empty<Data>();
+            return poolReceivedMessageBodies
+                ? new EagerCopyingMessageBodyWithManagedBuffer(dataSegments)
+                : new EagerCopyingMessageBody(dataSegments);
         }
 
         protected abstract ReadOnlyMemory<byte> WrittenMemory { get; }
@@ -42,6 +46,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public virtual void Release()
+        {
         }
 
         public static implicit operator ReadOnlyMemory<byte>(MessageBody memory)
@@ -160,6 +168,83 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 dataToAppend.CopyTo(memory);
                 _writer.Advance(dataToAppend.Length);
                 _segments.Add(memory.Slice(0, dataToAppend.Length));
+            }
+        }
+
+        /// <summary>
+        /// Eagerly copies the provided data segments into a single continuous buffer while still keeping around a list of the individual copied segments.
+        /// Important for the receive path in order to make sure the buffers managed by the underlying AMQP library can be released on dispose.
+        /// </summary>
+        private sealed class EagerCopyingMessageBodyWithManagedBuffer : MessageBody
+        {
+            private IList<ReadOnlyMemory<byte>> _segments;
+            private byte[] _continuousBuffer;
+            private ReadOnlyMemory<byte>? _writtenMemory;
+
+            internal EagerCopyingMessageBodyWithManagedBuffer(IEnumerable<Data> dataSegments)
+            {
+                Append(dataSegments);
+            }
+
+            protected override ReadOnlyMemory<byte> WrittenMemory => _writtenMemory ?? ReadOnlyMemory<byte>.Empty;
+
+            public override IEnumerator<ReadOnlyMemory<byte>> GetEnumerator()
+            {
+                return _segments.GetEnumerator();
+            }
+
+            private void Append(IEnumerable<Data> dataSegments)
+            {
+                int length = 0;
+                List<ReadOnlyMemory<byte>> convertedSegments = null;
+                foreach (var dataSegment in dataSegments)
+                {
+                    convertedSegments ??= new List<ReadOnlyMemory<byte>>();
+                    ReadOnlyMemory<byte> readOnlyMemory = Convert(dataSegment);
+                    convertedSegments.Add(readOnlyMemory);
+                    length += readOnlyMemory.Length;
+                }
+
+                if (convertedSegments == null)
+                {
+                    return;
+                }
+
+                _segments ??= new List<ReadOnlyMemory<byte>>();
+                _continuousBuffer = ArrayPool<byte>.Shared.Rent(length);
+                Memory<byte> asMemory = _continuousBuffer.AsMemory();
+                int start = 0;
+                foreach (ReadOnlyMemory<byte> segment in convertedSegments)
+                {
+                    Memory<byte> destination = asMemory.Slice(start, segment.Length);
+                    segment.CopyTo(destination);
+                    _segments.Add(destination);
+                    start += segment.Length;
+                }
+
+                _writtenMemory = asMemory.Slice(0, length);
+            }
+
+            private static ReadOnlyMemory<byte> Convert(Data segment)
+            {
+                return segment.Value switch
+                {
+                    byte[] byteArray => byteArray,
+                    ArraySegment<byte> arraySegment => arraySegment,
+                    _ => ReadOnlyMemory<byte>.Empty
+                };
+            }
+
+            public override void Release()
+            {
+                if (_continuousBuffer == null)
+                {
+                    return;
+                }
+
+                _writtenMemory = null;
+                _segments.Clear();
+                ArrayPool<byte>.Shared.Return(_continuousBuffer);
             }
         }
     }

@@ -532,15 +532,17 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             public bool WasCloseCalled;
 
+            public override TransportReceiver CreateReceiver(string entityPath, ServiceBusRetryPolicy retryPolicy,
+                ServiceBusReceiveMode receiveMode, uint prefetchCount, string identifier, string sessionId, bool isSessionReceiver,
+                bool poolReceivedMessageBodies, CancellationToken cancellationToken)
+            {
+                throw new NotImplementedException();
+            }
+
             public override Task CloseAsync(CancellationToken cancellationToken)
             {
                 WasCloseCalled = true;
                 return Task.CompletedTask;
-            }
-
-            public override TransportReceiver CreateReceiver(string entityPath, ServiceBusRetryPolicy retryPolicy, ServiceBusReceiveMode receiveMode, uint prefetchCount, string identifier, string sessionId, bool isSessionReceiver, CancellationToken cancellationToken)
-            {
-                throw new NotImplementedException();
             }
 
             public override TransportSender CreateSender(string entityPath, ServiceBusRetryPolicy retryPolicy, string identifier)

@@ -184,6 +184,7 @@ namespace Azure.Messaging.ServiceBus
                     identifier: Identifier,
                     sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver,
+                    poolReceivedMessageBodies: options.PoolMessageBodies,
                     cancellationToken: cancellationToken);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
                 _plugins = plugins;

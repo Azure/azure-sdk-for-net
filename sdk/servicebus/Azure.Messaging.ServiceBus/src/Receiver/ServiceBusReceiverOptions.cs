@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Amqp;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -46,6 +47,12 @@ namespace Azure.Messaging.ServiceBus
         public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
+        /// Gets or sets whether the messages bodies use pooled byte arrays underneath in case of binary data. When this option is enabled the receiver needs to
+        /// dispose the received messages by using the <see cref="ServiceBusReceivedMessageExtensions.CreateBodyScope"/> extension.
+        /// </summary>
+        internal bool PoolMessageBodies { get; set; }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -84,6 +91,7 @@ namespace Azure.Messaging.ServiceBus
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
                 SubQueue = SubQueue,
+                PoolMessageBodies = PoolMessageBodies
             };
     }
 }

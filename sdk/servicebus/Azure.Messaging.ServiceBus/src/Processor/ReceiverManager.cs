@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Plugins;
 
@@ -41,6 +42,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ProcessorOptions.ReceiveMode,
                 PrefetchCount = ProcessorOptions.PrefetchCount,
+                PoolMessageBodies = true
             };
             _maxReceiveWaitTime = ProcessorOptions.MaxReceiveWaitTime;
             _plugins = plugins;
@@ -87,6 +89,8 @@ namespace Azure.Messaging.ServiceBus
                     {
                         continue;
                     }
+
+                    using var bodyScope = message.CreateBodyScope();
                     await ProcessOneMessageWithinScopeAsync(
                         message,
                         DiagnosticProperty.ProcessMessageActivityName,

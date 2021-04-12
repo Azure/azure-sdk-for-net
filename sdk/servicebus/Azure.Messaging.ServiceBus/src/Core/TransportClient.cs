@@ -55,6 +55,7 @@ namespace Azure.Messaging.ServiceBus.Core
             string identifier,
             string sessionId,
             bool isSessionReceiver,
+            bool poolReceivedMessageBodies,
             CancellationToken cancellationToken);
 
         /// <summary>

@@ -139,6 +139,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="identifier">The identifier for the sender.</param>
         /// <param name="sessionId">The session ID to receive messages for.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
+        /// <param name="poolReceivedMessageBodies">Whether or not the messages bodies use pooled byte arrays underneath in case of binary data. When this option is enabled the receiver needs to
+        /// dispose the received messages by using the <see cref="ServiceBusReceivedMessageExtensions.CreateBodyScope"/> extension.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
         /// open link operation. Only applicable for session receivers.</param>
         ///
@@ -151,6 +153,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string identifier,
             string sessionId,
             bool isSessionReceiver,
+            bool poolReceivedMessageBodies,
             CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
@@ -165,6 +168,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 identifier,
                 sessionId,
                 isSessionReceiver,
+                poolReceivedMessageBodies,
                 cancellationToken
             );
         }

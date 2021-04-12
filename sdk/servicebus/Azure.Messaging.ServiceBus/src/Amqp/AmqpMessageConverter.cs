@@ -301,7 +301,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return amqpMessage;
         }
 
-        public static ServiceBusReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
+        public static ServiceBusReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool poolReceivedMessageBodies = false, bool isPeeked = false)
         {
             Argument.AssertNotNull(amqpMessage, nameof(amqpMessage));
             AmqpAnnotatedMessage annotatedMessage;
@@ -310,7 +310,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if ((amqpMessage.BodyType & SectionFlag.Data) != 0 && amqpMessage.DataBody != null)
             {
-                annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(MessageBody.FromDataSegments(amqpMessage.DataBody)));
+                annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(MessageBody.FromDataSegments(amqpMessage.DataBody, poolReceivedMessageBodies)));
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0 && amqpMessage.ValueBody?.Value != null)
             {
