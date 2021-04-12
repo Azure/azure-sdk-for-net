@@ -6,6 +6,7 @@ extends:
     ServiceDirectory: keyvault
     MaxParallel: 5
     TimeoutInMinutes: 180
+    Clouds: 'Public,Preview,UsGov,China,Canary'
     AdditionalMatrixConfigs:
       - Name: keyvault_test_matrix_addons
         Path: sdk/keyvault/platform-matrix.json
