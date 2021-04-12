@@ -61,7 +61,6 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
         {
             JToken requestData = mockJson["Entries"][2]["RequestBody"];
             ValidateForBackupRequest body = JsonConvert.DeserializeObject<ValidateForBackupRequest>(requestData.ToString());
-            body.BackupInstance.FriendlyName = backupInstanceName;
             var response = BackupClient.BackupInstances.ValidateForBackup(VaultName, ResourceGroup, body);
             Assert.Null(response);
         }
@@ -70,7 +69,6 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
         {
             JToken requestData = mockJson["Entries"][3]["RequestBody"];
             BackupInstanceResource body = JsonConvert.DeserializeObject<BackupInstanceResource>(requestData.ToString());
-            body.Properties.FriendlyName = backupInstanceName;
             var response = BackupClient.BackupInstances.CreateOrUpdate(VaultName, ResourceGroup, backupInstanceName, body);
             Assert.NotNull(response);
         }

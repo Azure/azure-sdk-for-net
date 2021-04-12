@@ -26,12 +26,12 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <summary>
         /// Initializes a new instance of the BackupInstance class.
         /// </summary>
-        /// <param name="friendlyName">Gets or sets the Backup Instance
-        /// friendly name.</param>
         /// <param name="dataSourceInfo">Gets or sets the data source
         /// information.</param>
         /// <param name="policyInfo">Gets or sets the policy
         /// information.</param>
+        /// <param name="friendlyName">Gets or sets the Backup Instance
+        /// friendly name.</param>
         /// <param name="dataSourceSetInfo">Gets or sets the data source set
         /// information.</param>
         /// <param name="protectionStatus">Specifies the protection status of
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// of the resource</param>
         /// <param name="provisioningState">Specifies the provisioning state of
         /// the resource i.e. provisioning/updating/Succeeded/Failed</param>
-        public BackupInstance(string friendlyName, Datasource dataSourceInfo, PolicyInfo policyInfo, string objectType, DatasourceSet dataSourceSetInfo = default(DatasourceSet), ProtectionStatusDetails protectionStatus = default(ProtectionStatusDetails), string currentProtectionState = default(string), UserFacingError protectionErrorDetails = default(UserFacingError), string provisioningState = default(string))
+        public BackupInstance(Datasource dataSourceInfo, PolicyInfo policyInfo, string objectType, string friendlyName = default(string), DatasourceSet dataSourceSetInfo = default(DatasourceSet), ProtectionStatusDetails protectionStatus = default(ProtectionStatusDetails), string currentProtectionState = default(string), UserFacingError protectionErrorDetails = default(UserFacingError), string provisioningState = default(string))
         {
             FriendlyName = friendlyName;
             DataSourceInfo = dataSourceInfo;
@@ -134,10 +134,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (FriendlyName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "FriendlyName");
-            }
             if (DataSourceInfo == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DataSourceInfo");
