@@ -5,7 +5,7 @@ languages:
 products:
 - azure
 - azure-cognitive-services
-- azure-document-translation
+- azure-translator-text
 name: Azure DocumentTranslation samples for .NET
 description: Samples for the Azure.AI.Translation.Document client library
 ---
