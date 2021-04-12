@@ -16,11 +16,42 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.ScenarioTests
             using (MockContext context = MockContext.Start(this.GetType()))
             using (TestHelper testHelper = new TestHelper() { VaultName = TestVault, ResourceGroup = TestVaultRg })
             {
+                // initilizing test context
                 testHelper.Initialize(context);
+
+                // Create Backup vault
+                testHelper.CreateVault();
+
+                // Get Backup Vault
+                testHelper.GetVault();
+
+                // Create Policy
                 testHelper.CreatePolicy("retentionpolicy2");
+
+                // Get Policy
+                testHelper.GetPolicy("retentionpolicy2");
+                
+                //Validate For Backup
                 testHelper.ValidateForBackup("TestDiskCmk2");
+
+                // Configure Backup
+                testHelper.CreateBackupInstance("TestDiskCmk2");
+
+                // Trigger Backup
                 testHelper.TriggerBackup("TestDiskCmk2");
+
+                // TODO:  Validate for Restore
+                // check why this is not getting deserialized
+                // testHelper.ValidateForRestore("TestDiskCmk2");
+
+                // Trigger Restore
                 testHelper.TriggerRestore("TestDiskCmk2");
+
+                // Delete Policy
+
+                // Delete Backup Instance
+
+                // Delete Vault
             }
         }
         public void Dispose()

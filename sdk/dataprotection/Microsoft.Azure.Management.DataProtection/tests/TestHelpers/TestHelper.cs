@@ -33,33 +33,41 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
             BackupClient.ApiVersion = "2021-01-01";
             string[] path = Directory.GetFiles("SessionRecords\\DPPDisksE2ETests", "DisksE2ETests.json");
             mockJson = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(path[0]));
-            CreateVault();
         }
 
-        private void CreateVault()
+        public void CreateVault()
         {
-            
             BackupVaults vault = new BackupVaults(BackupClient);
-            
             JToken requestData = mockJson["Entries"][0]["RequestBody"];
-            
             BackupVaultResource backupVaultResource = JsonConvert.DeserializeObject<BackupVaultResource>(requestData.ToString());
-
             var response = vault.CreateOrUpdate(VaultName, ResourceGroup, backupVaultResource);
+            Assert.NotNull(response);
+        }
+
+        public void GetVault()
+        {
+            BackupVaults vault = new BackupVaults(BackupClient);
+            var response = vault.Get(VaultName, ResourceGroup);
             Assert.NotNull(response);
         }
 
         public void CreatePolicy(string policyName)
         {
-            JToken requestData = mockJson["Entries"][1]["RequestBody"];
+            JToken requestData = mockJson["Entries"][2]["RequestBody"];
             BaseBackupPolicyResource body = JsonConvert.DeserializeObject<BaseBackupPolicyResource>(requestData.ToString());
             BaseBackupPolicyResource baseBackupPolicyResource = BackupClient.BackupPolicies.CreateOrUpdate(VaultName, ResourceGroup, policyName, body);
             Assert.NotNull(baseBackupPolicyResource);
         }
 
+        public void GetPolicy(string policyName)
+        {
+            BaseBackupPolicyResource baseBackupPolicyResource = BackupClient.BackupPolicies.Get(VaultName, ResourceGroup, policyName);
+            Assert.NotNull(baseBackupPolicyResource);
+        }
+
         public void ValidateForBackup(string backupInstanceName)
         {
-            JToken requestData = mockJson["Entries"][2]["RequestBody"];
+            JToken requestData = mockJson["Entries"][4]["RequestBody"];
             ValidateForBackupRequest body = JsonConvert.DeserializeObject<ValidateForBackupRequest>(requestData.ToString());
             var response = BackupClient.BackupInstances.ValidateForBackup(VaultName, ResourceGroup, body);
             Assert.Null(response);
@@ -67,23 +75,37 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
 
         public void CreateBackupInstance(string backupInstanceName)
         {
-            JToken requestData = mockJson["Entries"][3]["RequestBody"];
+            JToken requestData = mockJson["Entries"][5]["RequestBody"];
             BackupInstanceResource body = JsonConvert.DeserializeObject<BackupInstanceResource>(requestData.ToString());
             var response = BackupClient.BackupInstances.CreateOrUpdate(VaultName, ResourceGroup, backupInstanceName, body);
             Assert.NotNull(response);
         }
 
+        public void GetBackupInstance(string backupInstanceName)
+        {
+            var response = BackupClient.BackupInstances.Get(VaultName, ResourceGroup, backupInstanceName);
+            Assert.NotNull(response);
+        }
+
         public void TriggerBackup(string backupInstanceName)
         {
-            JToken requestData = mockJson["Entries"][4]["RequestBody"];
+            JToken requestData = mockJson["Entries"][7]["RequestBody"];
             TriggerBackupRequest body = JsonConvert.DeserializeObject<TriggerBackupRequest>(requestData.ToString());
             var response = BackupClient.BackupInstances.AdhocBackup(VaultName, ResourceGroup, backupInstanceName, body);
             Assert.Null(response);
         }
 
+        public void ValidateForRestore(string backupInstanceName)
+        {
+            JToken requestData = mockJson["Entries"][8]["RequestBody"];
+            ValidateRestoreRequestObject body = JsonConvert.DeserializeObject<ValidateRestoreRequestObject>(requestData.ToString());
+            var response = BackupClient.BackupInstances.ValidateRestore(VaultName, ResourceGroup, backupInstanceName, body);
+            Assert.Null(response);
+        }
+
         public void TriggerRestore(string backupInstanceName)
         {
-            JToken requestData = mockJson["Entries"][5]["RequestBody"];
+            JToken requestData = mockJson["Entries"][9]["RequestBody"];
             AzureBackupRestoreRequest body = JsonConvert.DeserializeObject<AzureBackupRestoreRequest>(requestData.ToString());
             var response = BackupClient.BackupInstances.TriggerRestore(VaultName, ResourceGroup, backupInstanceName, body);
             Assert.Null(response);
