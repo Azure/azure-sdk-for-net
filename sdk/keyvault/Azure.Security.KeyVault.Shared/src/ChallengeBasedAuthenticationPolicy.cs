@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential) : base(credential, Array.Empty<string>())
         { }
 
-        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthenticateRequestOnChallengeAsync(HttpMessage, bool)" />
+        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequestOnChallengeAsync(HttpMessage, bool)" />
         protected override async Task AuthorizeRequestAsync(HttpMessage message, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
