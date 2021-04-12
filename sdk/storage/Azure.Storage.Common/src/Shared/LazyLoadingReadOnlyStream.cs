@@ -19,6 +19,59 @@ namespace Azure.Storage
     internal class LazyLoadingReadOnlyStream<TRequestConditions, TProperties> : Stream
     {
         /// <summary>
+        /// Delegate for a resource's direct REST download method.
+        /// </summary>
+        /// <param name="range">
+        /// Content range to download.
+        /// </param>
+        /// <param name="serviceRequestConditions">
+        /// Request conditions specific to the service.
+        /// </param>
+        /// <param name="rangeGetContentHash">
+        /// Whether to request a transactional MD5 for the ranged download.
+        /// </param>
+        /// <param name="async">
+        /// Whether to perform the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token for cancelling the download request.
+        /// </param>
+        /// <returns>
+        /// Downloaded resource content.
+        /// </returns>
+        public delegate Task<Response<IDownloadedContent>> DownloadInternalAsync(
+            HttpRange range,
+            TRequestConditions serviceRequestConditions,
+            bool rangeGetContentHash,
+            bool async,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delegate for getting service-specific request contitions for etag locking.
+        /// </summary>
+        /// <param name="etag">
+        /// Etag to lock on.
+        /// </param>
+        /// <returns>
+        /// Created request conditions.
+        /// </returns>
+        public delegate TRequestConditions CreateRequestConditions(ETag? etag);
+
+        /// <summary>
+        /// Delegate for getting properties for the target resource.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to perform the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token for cancelling the download request.
+        /// </param>
+        /// <returns>
+        /// Resource properties.
+        /// </returns>
+        public delegate Task<Response<TProperties>> GetPropertiesAsync(bool async, CancellationToken cancellationToken);
+
+        /// <summary>
         /// The current position within the blob or file.
         /// </summary>
         private long _position;
@@ -66,22 +119,22 @@ namespace Azure.Storage
         /// <summary>
         /// Download() function.
         /// </summary>
-        private readonly Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<IDownloadedContent>>> _downloadInternalFunc;
+        private readonly DownloadInternalAsync _downloadInternalFunc;
 
         /// <summary>
         /// Function to create RequestConditions.
         /// </summary>
-        private readonly Func<ETag?, TRequestConditions> _createRequestConditionsFunc;
+        private readonly CreateRequestConditions _createRequestConditionsFunc;
 
         /// <summary>
         /// Function to get properties.
         /// </summary>
-        private readonly Func<bool, CancellationToken, Task<Response<TProperties>>> _getPropertiesInternalFunc;
+        private readonly GetPropertiesAsync _getPropertiesInternalFunc;
 
         public LazyLoadingReadOnlyStream(
-            Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<IDownloadedContent>>> downloadInternalFunc,
-            Func<ETag?, TRequestConditions> createRequestConditionsFunc,
-            Func<bool, CancellationToken, Task<Response<TProperties>>> getPropertiesFunc,
+            DownloadInternalAsync downloadInternalFunc,
+            CreateRequestConditions createRequestConditionsFunc,
+            GetPropertiesAsync getPropertiesFunc,
             long initialLenght,
             long position = 0,
             int? bufferSize = default,

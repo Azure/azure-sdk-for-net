@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type &apos;semantic&apos;.. </summary>
-    internal partial class CaptionResult : IReadOnlyDictionary<string, object>
+    public partial class CaptionResult : IReadOnlyDictionary<string, object>
     {
         /// <summary> Initializes a new instance of CaptionResult. </summary>
         internal CaptionResult()

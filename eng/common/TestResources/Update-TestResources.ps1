@@ -10,7 +10,7 @@
 
 [CmdletBinding(DefaultParameterSetName = 'Default')]
 param (
-    [Parameter(ParameterSetName = 'Default', Mandatory = $true, Position = 0)]
+    [Parameter(ParameterSetName = 'Default', Position = 0)]
     [string] $ServiceDirectory,
 
     [Parameter(ParameterSetName = 'Default')]
@@ -67,18 +67,18 @@ $exitActions = @({
     }
 })
 
-# Make sure $BaseName is set.
-if (!$BaseName) {
-    $UserName = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
-    # Remove spaces, etc. that may be in $UserName
-    $UserName = $UserName -replace '\W'
-
-    $BaseName = "$UserName$ServiceDirectory"
-    Log "BaseName was not set. Using default base name '$BaseName'"
-}
-
 # Make sure $ResourceGroupName is set.
 if (!$ResourceGroupName) {
+    # Make sure $BaseName is set.
+    if (!$BaseName) {
+        $UserName = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
+        # Remove spaces, etc. that may be in $UserName
+        $UserName = $UserName -replace '\W'
+
+        $BaseName = "$UserName$ServiceDirectory"
+        Log "BaseName was not set. Using default base name '$BaseName'"
+    }
+
     $ResourceGroupName = "rg-$BaseName"
 }
 
