@@ -73,6 +73,7 @@ stages:
                         PackageRepository: Nuget
                         ReleaseSha: $(Build.SourceVersion)
                         RepoId: Azure/azure-sdk-for-net
+                    - template: /eng/common/pipelines/steps/retain-run.yml
 
           - ${{if ne(artifact.skipPublishPackage, 'true')}}:
             - deployment: PublishPackage
