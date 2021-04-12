@@ -35,14 +35,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        public IdentityProviders(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), Facebook facebook = default(Facebook), GitHub gitHub = default(GitHub), Google google = default(Google), Twitter twitter = default(Twitter), IDictionary<string, CustomOpenIdConnectProvider> customOpenIdConnectProviders = default(IDictionary<string, CustomOpenIdConnectProvider>))
+        public IdentityProviders(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), AzureActiveDirectory azureActiveDirectory = default(AzureActiveDirectory), Facebook facebook = default(Facebook), GitHub gitHub = default(GitHub), Google google = default(Google), LegacyMicrosoftAccount legacyMicrosoftAccount = default(LegacyMicrosoftAccount), Twitter twitter = default(Twitter), Apple apple = default(Apple), AzureStaticWebApps azureStaticWebApps = default(AzureStaticWebApps), IDictionary<string, CustomOpenIdConnectProvider> customOpenIdConnectProviders = default(IDictionary<string, CustomOpenIdConnectProvider>))
             : base(id, name, kind, type)
         {
             AzureActiveDirectory = azureActiveDirectory;
             Facebook = facebook;
             GitHub = gitHub;
             Google = google;
+            LegacyMicrosoftAccount = legacyMicrosoftAccount;
             Twitter = twitter;
+            Apple = apple;
+            AzureStaticWebApps = azureStaticWebApps;
             CustomOpenIdConnectProviders = customOpenIdConnectProviders;
             CustomInit();
         }
@@ -74,8 +77,23 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// </summary>
+        [JsonProperty(PropertyName = "properties.legacyMicrosoftAccount")]
+        public LegacyMicrosoftAccount LegacyMicrosoftAccount { get; set; }
+
+        /// <summary>
+        /// </summary>
         [JsonProperty(PropertyName = "properties.twitter")]
         public Twitter Twitter { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.apple")]
+        public Apple Apple { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azureStaticWebApps")]
+        public AzureStaticWebApps AzureStaticWebApps { get; set; }
 
         /// <summary>
         /// </summary>

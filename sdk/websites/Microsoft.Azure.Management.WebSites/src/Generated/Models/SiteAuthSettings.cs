@@ -46,6 +46,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain
         /// features in the Authentication / Authorization module.</param>
+        /// <param name="configVersion">The ConfigVersion of the Authentication
+        /// / Authorization feature in use for the current app.
+        /// The setting in this value can control the behavior of the control
+        /// plane for Authentication / Authorization.</param>
         /// <param name="unauthenticatedClientAction">The action to take when
         /// an unauthenticated client attempts to access the app. Possible
         /// values include: 'RedirectToLoginPage', 'AllowAnonymous'</param>
@@ -205,11 +209,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// auth settings.
         /// If the path is relative, base will the site's root
         /// directory.</param>
-        public SiteAuthSettings(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), string runtimeVersion = default(string), UnauthenticatedClientAction? unauthenticatedClientAction = default(UnauthenticatedClientAction?), bool? tokenStoreEnabled = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), BuiltInAuthenticationProvider? defaultProvider = default(BuiltInAuthenticationProvider?), double? tokenRefreshExtensionHours = default(double?), string clientId = default(string), string clientSecret = default(string), string clientSecretSettingName = default(string), string clientSecretCertificateThumbprint = default(string), string issuer = default(string), bool? validateIssuer = default(bool?), IList<string> allowedAudiences = default(IList<string>), IList<string> additionalLoginParams = default(IList<string>), string aadClaimsAuthorization = default(string), string googleClientId = default(string), string googleClientSecret = default(string), string googleClientSecretSettingName = default(string), IList<string> googleOAuthScopes = default(IList<string>), string facebookAppId = default(string), string facebookAppSecret = default(string), string facebookAppSecretSettingName = default(string), IList<string> facebookOAuthScopes = default(IList<string>), string gitHubClientId = default(string), string gitHubClientSecret = default(string), string gitHubClientSecretSettingName = default(string), IList<string> gitHubOAuthScopes = default(IList<string>), string twitterConsumerKey = default(string), string twitterConsumerSecret = default(string), string twitterConsumerSecretSettingName = default(string), string microsoftAccountClientId = default(string), string microsoftAccountClientSecret = default(string), string microsoftAccountClientSecretSettingName = default(string), IList<string> microsoftAccountOAuthScopes = default(IList<string>), string isAuthFromFile = default(string), string authFilePath = default(string))
+        public SiteAuthSettings(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), string runtimeVersion = default(string), string configVersion = default(string), UnauthenticatedClientAction? unauthenticatedClientAction = default(UnauthenticatedClientAction?), bool? tokenStoreEnabled = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), BuiltInAuthenticationProvider? defaultProvider = default(BuiltInAuthenticationProvider?), double? tokenRefreshExtensionHours = default(double?), string clientId = default(string), string clientSecret = default(string), string clientSecretSettingName = default(string), string clientSecretCertificateThumbprint = default(string), string issuer = default(string), bool? validateIssuer = default(bool?), IList<string> allowedAudiences = default(IList<string>), IList<string> additionalLoginParams = default(IList<string>), string aadClaimsAuthorization = default(string), string googleClientId = default(string), string googleClientSecret = default(string), string googleClientSecretSettingName = default(string), IList<string> googleOAuthScopes = default(IList<string>), string facebookAppId = default(string), string facebookAppSecret = default(string), string facebookAppSecretSettingName = default(string), IList<string> facebookOAuthScopes = default(IList<string>), string gitHubClientId = default(string), string gitHubClientSecret = default(string), string gitHubClientSecretSettingName = default(string), IList<string> gitHubOAuthScopes = default(IList<string>), string twitterConsumerKey = default(string), string twitterConsumerSecret = default(string), string twitterConsumerSecretSettingName = default(string), string microsoftAccountClientId = default(string), string microsoftAccountClientSecret = default(string), string microsoftAccountClientSecretSettingName = default(string), IList<string> microsoftAccountOAuthScopes = default(IList<string>), string isAuthFromFile = default(string), string authFilePath = default(string))
             : base(id, name, kind, type)
         {
             Enabled = enabled;
             RuntimeVersion = runtimeVersion;
+            ConfigVersion = configVersion;
             UnauthenticatedClientAction = unauthenticatedClientAction;
             TokenStoreEnabled = tokenStoreEnabled;
             AllowedExternalRedirectUrls = allowedExternalRedirectUrls;
@@ -269,6 +274,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.runtimeVersion")]
         public string RuntimeVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ConfigVersion of the Authentication /
+        /// Authorization feature in use for the current app.
+        /// The setting in this value can control the behavior of the control
+        /// plane for Authentication / Authorization.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.configVersion")]
+        public string ConfigVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the action to take when an unauthenticated client

@@ -35,14 +35,20 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="privateBytesInKB">A rule based on private
         /// bytes.</param>
         /// <param name="statusCodes">A rule based on status codes.</param>
+        /// <param name="statusCodesRange">A rule based on status codes
+        /// ranges.</param>
         /// <param name="slowRequests">A rule based on request execution
         /// time.</param>
-        public AutoHealTriggers(RequestsBasedTrigger requests = default(RequestsBasedTrigger), int? privateBytesInKB = default(int?), IList<StatusCodesBasedTrigger> statusCodes = default(IList<StatusCodesBasedTrigger>), SlowRequestsBasedTrigger slowRequests = default(SlowRequestsBasedTrigger))
+        /// <param name="slowRequestsWithPath">A rule based on multiple Slow
+        /// Requests Rule with path</param>
+        public AutoHealTriggers(RequestsBasedTrigger requests = default(RequestsBasedTrigger), int? privateBytesInKB = default(int?), IList<StatusCodesBasedTrigger> statusCodes = default(IList<StatusCodesBasedTrigger>), IList<StatusCodesRangeBasedTrigger> statusCodesRange = default(IList<StatusCodesRangeBasedTrigger>), SlowRequestsBasedTrigger slowRequests = default(SlowRequestsBasedTrigger), IList<SlowRequestsBasedTrigger> slowRequestsWithPath = default(IList<SlowRequestsBasedTrigger>))
         {
             Requests = requests;
             PrivateBytesInKB = privateBytesInKB;
             StatusCodes = statusCodes;
+            StatusCodesRange = statusCodesRange;
             SlowRequests = slowRequests;
+            SlowRequestsWithPath = slowRequestsWithPath;
             CustomInit();
         }
 
@@ -70,10 +76,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public IList<StatusCodesBasedTrigger> StatusCodes { get; set; }
 
         /// <summary>
+        /// Gets or sets a rule based on status codes ranges.
+        /// </summary>
+        [JsonProperty(PropertyName = "statusCodesRange")]
+        public IList<StatusCodesRangeBasedTrigger> StatusCodesRange { get; set; }
+
+        /// <summary>
         /// Gets or sets a rule based on request execution time.
         /// </summary>
         [JsonProperty(PropertyName = "slowRequests")]
         public SlowRequestsBasedTrigger SlowRequests { get; set; }
+
+        /// <summary>
+        /// Gets or sets a rule based on multiple Slow Requests Rule with path
+        /// </summary>
+        [JsonProperty(PropertyName = "slowRequestsWithPath")]
+        public IList<SlowRequestsBasedTrigger> SlowRequestsWithPath { get; set; }
 
     }
 }
