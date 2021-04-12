@@ -33,10 +33,10 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
             BackupClient.ApiVersion = "2021-01-01";
             string[] path = Directory.GetFiles("SessionRecords\\DPPDisksE2ETests", "DisksE2ETests.json");
             mockJson = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(path[0]));
-            CreateVault(VaultName);
+            CreateVault();
         }
 
-        private void CreateVault(string vaultName)
+        private void CreateVault()
         {
             
             BackupVaults vault = new BackupVaults(BackupClient);
@@ -49,13 +49,30 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
             Assert.NotNull(response);
         }
 
-        public BaseBackupPolicyResource CreatePolicy(string policyName)
+        public void CreatePolicy(string policyName)
         {
             JToken requestData = mockJson["Entries"][1]["RequestBody"];
             BaseBackupPolicyResource body = JsonConvert.DeserializeObject<BaseBackupPolicyResource>(requestData.ToString());
             BaseBackupPolicyResource baseBackupPolicyResource = BackupClient.BackupPolicies.CreateOrUpdate(VaultName, ResourceGroup, policyName, body);
             Assert.NotNull(baseBackupPolicyResource);
-            return baseBackupPolicyResource;
+        }
+
+        public void ValidateForBackup(string backupInstanceName)
+        {
+            JToken requestData = mockJson["Entries"][2]["RequestBody"];
+            ValidateForBackupRequest body = JsonConvert.DeserializeObject<ValidateForBackupRequest>(requestData.ToString());
+            body.BackupInstance.FriendlyName = backupInstanceName;
+            var response = BackupClient.BackupInstances.ValidateForBackup(VaultName, ResourceGroup, body);
+            Assert.Null(response);
+        }
+
+        public void CreateBackupInstance(string backupInstanceName)
+        {
+            JToken requestData = mockJson["Entries"][3]["RequestBody"];
+            BackupInstanceResource body = JsonConvert.DeserializeObject<BackupInstanceResource>(requestData.ToString());
+            body.Properties.FriendlyName = backupInstanceName;
+            var response = BackupClient.BackupInstances.CreateOrUpdate(VaultName, ResourceGroup, backupInstanceName, body);
+            Assert.NotNull(response);
         }
     }
 }
