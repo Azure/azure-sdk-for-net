@@ -19,6 +19,7 @@ namespace Azure.Search.Documents.Models
             Optional<long> odataCount = default;
             Optional<double> searchCoverage = default;
             Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
+            Optional<IReadOnlyDictionary<string, IList<AnswerResult>>> searchAnswers = default;
             Optional<SearchOptions> searchNextPageParameters = default;
             IReadOnlyList<SearchResult> value = default;
             Optional<string> odataNextLink = default;
@@ -64,6 +65,26 @@ namespace Azure.Search.Documents.Models
                     searchFacets = dictionary;
                     continue;
                 }
+                if (property.NameEquals("@search.answers"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchAnswers = null;
+                        continue;
+                    }
+                    Dictionary<string, IList<AnswerResult>> dictionary = new Dictionary<string, IList<AnswerResult>>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        List<AnswerResult> array = new List<AnswerResult>();
+                        foreach (var item in property0.Value.EnumerateArray())
+                        {
+                            array.Add(AnswerResult.DeserializeAnswerResult(item));
+                        }
+                        dictionary.Add(property0.Name, array);
+                    }
+                    searchAnswers = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("@search.nextPageParameters"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -90,7 +111,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), searchNextPageParameters.Value, value, odataNextLink.Value);
+            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), Optional.ToDictionary(searchAnswers), searchNextPageParameters.Value, value, odataNextLink.Value);
         }
     }
 }

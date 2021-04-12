@@ -24,7 +24,7 @@ namespace Proto.Compute
             if (resourceId.ResourceType != AvailabilitySetOperations.ResourceType)
                 throw new ArgumentException($"{nameof(resourceId.ResourceType)} provided is not for an AvailabilitySet.", nameof(resourceId.ResourceType));
 
-            return client.GetSubscriptionOperations(resourceId.SubscriptionId).GetResourceGroupOperations(resourceId.ResourceGroupName).GetAvailabilitySetOperations(resourceId.Name);
+            return new AvailabilitySetOperations(client.GetResourceGroupOperations(resourceId), resourceId.Name);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Proto.Compute
             if (resourceId.ResourceType != VirtualMachineOperations.ResourceType)
                 throw new ArgumentException($"{nameof(resourceId.ResourceType)} provided is not for a VirtualMachine.", nameof(resourceId.ResourceType));
 
-            return client.GetSubscriptionOperations(resourceId.SubscriptionId).GetResourceGroupOperations(resourceId.ResourceGroupName).GetVirtualMachineOperations(resourceId.Name);
+            return new VirtualMachineOperations(client.GetResourceGroupOperations(resourceId), resourceId.Name);
         }
     }
 }

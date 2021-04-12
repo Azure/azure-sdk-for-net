@@ -26,10 +26,11 @@ namespace Proto.Client
             }
             finally
             {
+                var client = new ArmClient(new DefaultAzureCredential());
                 foreach (var rgId in CleanUp)
                 {
                     var id = new ResourceGroupResourceIdentifier(rgId);
-                    var rg = new ArmClient(new DefaultAzureCredential()).GetResourceGroupOperations(id);
+                    var rg = client.GetResourceGroupOperations(id);
                     Console.WriteLine($"--------Deleting {rg.Id.Name}--------");
                     try
                     {

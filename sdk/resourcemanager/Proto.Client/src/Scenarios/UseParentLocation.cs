@@ -11,7 +11,7 @@ namespace Proto.Client
         public override void Execute()
         {
             var client = new ArmClient(new DefaultAzureCredential());
-            var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
+            var subscription = client.GetSubscriptions().TryGet(Context.SubscriptionId);
 
             // Create Resource Group
             Console.WriteLine($"--------Start create group {Context.RgName}--------");

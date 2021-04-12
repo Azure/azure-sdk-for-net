@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {

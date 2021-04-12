@@ -5,7 +5,7 @@ languages:
 products:
 - azure
 - azure-event-hubs
-name: Samples for the Azure.Messaging.EventHubs client library
+name: Samples for the Azure.Messaging.EventHubs.Processor client library
 description: Samples for the Azure.Messaging.EventHubs.Processor client library
 ---
 

@@ -12,7 +12,7 @@
         [Fact]
         public void CanGetRunById()
         {
-            var runId = Guid.Parse("6ff49ee2-092a-48bf-841a-c3d645611689");
+            var runId = Guid.Parse("e5934d51-6e50-41f8-b860-3a3657040f8d");
             using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
@@ -32,21 +32,21 @@
 
                 var runs = this.automationClient.SoftwareUpdateConfigurationRuns.List(ResourceGroupName, AutomationAccountName);
                 Assert.NotNull(runs.Value);
-                Assert.Equal(7, runs.Value.Count);
+                Assert.Equal(1, runs.Value.Count);
             }
         }
 
         [Fact]
         public void CanGetAllRunsByConfigurationName()
         {
-            const string configName = "all-01";
+            const string configName = "test-suc";
             using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
 
                 var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByConfigurationName(ResourceGroupName, AutomationAccountName, configName);
                 Assert.NotNull(runs.Value);
-                Assert.Equal(2, runs.Value.Count);
+                Assert.Equal(1, runs.Value.Count);
             }
         }
 
@@ -60,7 +60,7 @@
 
                 var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByOsType(ResourceGroupName, AutomationAccountName, os);
                 Assert.NotNull(runs.Value);
-                Assert.Equal(7, runs.Value.Count);
+                Assert.Equal(1, runs.Value.Count);
             }
         }
 
@@ -81,7 +81,7 @@
         [Fact]
         public void CanGetAllRunsByStartTime()
         {
-            var startTime = DateTime.Parse("2018-10-23T11:02:00-8").ToUniversalTime();
+            var startTime = DateTime.Parse("2021-03-31T17:10:39+05:30").ToUniversalTime();
             using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);

@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Core
             if (credential is null)
                 throw new ArgumentNullException(nameof(credential));
 
-            ClientOptions = options ?? new ArmClientOptions();
+            ClientOptions = options?.Clone() ?? new ArmClientOptions();
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
-                : GetSubscriptionOperations(defaultSubscriptionId).Get().Value;
+                : GetSubscriptions().TryGet(defaultSubscriptionId);
             ClientOptions.ApiVersions.SetProviderClient(credential, baseUri, DefaultSubscription.Id.SubscriptionId);
         }
 
@@ -119,13 +119,6 @@ namespace Azure.ResourceManager.Core
         private Uri BaseUri;
 
         /// <summary>
-        /// Gets the Azure subscription operations.
-        /// </summary>
-        /// <param name="subscriptionGuid"> The guid of the subscription. </param>
-        /// <returns> Subscription operations. </returns>
-        public virtual SubscriptionOperations GetSubscriptionOperations(string subscriptionGuid) => new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), subscriptionGuid);
-
-        /// <summary>
         /// Gets the Azure subscriptions.
         /// </summary>
         /// <returns> Subscription container. </returns>
@@ -135,24 +128,13 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets resource group operations.
+        /// Gets a resource group operations object.
         /// </summary>
-        /// <param name="subscriptionGuid"> The id of the Azure subscription. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <returns> Resource group operations. </returns>
-        public virtual ResourceGroupOperations GetResourceGroupOperations(string subscriptionGuid, string resourceGroupName)
+        /// <param name="id"> The id of the resourcegroup </param>
+        /// <returns> Resource operations of the resource. </returns>
+        public ResourceGroupOperations GetResourceGroupOperations(ResourceGroupResourceIdentifier id)
         {
-            return GetSubscriptionOperations(subscriptionGuid).GetResourceGroupOperations(resourceGroupName);
-        }
-
-        /// <summary>
-        /// Gets resource group operations.
-        /// </summary>
-        /// <param name="resourceGroupId"> The resource identifier of the resource group. </param>
-        /// <returns> Resource group operations. </returns>
-        public virtual ResourceGroupOperations GetResourceGroupOperations(ResourceGroupResourceIdentifier resourceGroupId)
-        {
-            return GetSubscriptionOperations(resourceGroupId.SubscriptionId).GetResourceGroupOperations(resourceGroupId.ResourceGroupName);
+            return new ResourceGroupOperations(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), id.SubscriptionId), id.ResourceGroupName);
         }
 
         /// <summary>
@@ -166,7 +148,8 @@ namespace Azure.ResourceManager.Core
         public virtual T GetResourceOperations<T>(string subscription, string resourceGroup, string name)
             where T : OperationsBase
         {
-            var rgOp = GetSubscriptionOperations(subscription).GetResourceGroupOperations(resourceGroup);
+            var subOp = new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), subscription);
+            var rgOp = subOp.GetResourceGroups().Get(resourceGroup);
             return Activator.CreateInstance(
                 typeof(T),
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance,

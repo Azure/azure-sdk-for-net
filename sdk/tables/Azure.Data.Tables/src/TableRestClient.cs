@@ -77,6 +77,7 @@ namespace Azure.Data.Tables
                         if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
                         {
                             var ex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(responses[0]).ConfigureAwait(false);
+                            throw ex;
                         }
 
                         return Response.FromValue(responses.ToList(), message.Response);
@@ -112,6 +113,7 @@ namespace Azure.Data.Tables
                         if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
                         {
                             var ex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
+                            throw ex;
                         }
 
                         return Response.FromValue(responses.ToList(), message.Response);

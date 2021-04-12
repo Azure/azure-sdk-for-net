@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Search.Documents.Indexes;
@@ -46,7 +45,10 @@ namespace Azure.Search.Documents.Perf.Infrastructure
             SearchClient = _searchIndexClient.GetSearchClient(_indexName);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Executes code that runs exactly once at the beginning of test execution.
+        /// </summary>
+        /// <returns>Task representing the global setup work.</returns>
         public override async Task GlobalSetupAsync()
         {
             SearchIndex index = new(_indexName)
@@ -58,7 +60,10 @@ namespace Azure.Search.Documents.Perf.Infrastructure
             await _searchIndexClient.CreateIndexAsync(index);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Executes code that runs exactly once at the end of test execution.
+        /// </summary>
+        /// <returns>Task representing the global cleanup work.</returns>
         public override async Task GlobalCleanupAsync()
         {
             await _searchIndexClient.DeleteIndexAsync(_indexName);
