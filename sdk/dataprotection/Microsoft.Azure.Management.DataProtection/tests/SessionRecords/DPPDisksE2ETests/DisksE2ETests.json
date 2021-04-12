@@ -214,7 +214,7 @@
         ]
       },
       "ResponseBody": "",
-      "StatusCode": 200
+      "StatusCode": 202
     },
     {
       "RequestUri": "/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault1/backupInstances/TestDiskCmk2?api-version=2021-01-01",
@@ -288,7 +288,155 @@
         ]
       },
       "ResponseBody": "{\n    \"id\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/DiskBackup_SEACAN/providers/Microsoft.DataProtection/backupVaults/DiskBackupVault1/backupInstances/TestDiskCmk2\",\n    \"name\": \"TestDiskCmk2\",\n    \"type\": \"Microsoft.DataProtection/backupVaults/backupInstances\",\n    \"properties\": {\n        \"friendlyName\": \"TestDiskCmk2\",\n        \"dataSourceInfo\": {\n            \"resourceID\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/vityagi/providers/Microsoft.Compute/disks/TestDiskCmk2\",\n            \"resourceUri\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/vityagi/providers/Microsoft.Compute/disks/TestDiskCmk2\",\n            \"datasourceType\": \"Microsoft.Compute/disks\",\n            \"resourceName\": \"TestDiskCmk2\",\n            \"resourceType\": \"Microsoft.Compute/disks\",\n            \"resourceLocation\": \"southeastasia\",\n            \"objectType\": \"Datasource\"\n        },\n        \"policyInfo\": {\n            \"policyId\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/DiskBackup_SEACAN/providers/Microsoft.DataProtection/backupVaults/DiskBackupVault1/backupPolicies/disk-test\",\n            \"policyVersion\": \"3.2\",\n            \"policyParameters\": {\n                \"dataStoreParametersList\": [\n                    {\n                        \"objectType\": \"AzureOperationalStoreParameters\",\n                        \"dataStoreType\": \"OperationalStore\",\n                        \"resourceGroupId\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/anubhprod\"\n                    }\n                ]\n            }\n        },\n        \"protectionStatus\": {\n            \"status\": \"ConfiguringProtection\"\n        },\n        \"currentProtectionState\": \"ConfiguringProtection\",\n        \"provisioningState\": \"Provisioning\",\n        \"objectType\": \"BackupInstance\"\n    }\n}",
-      "StatusCode": 200
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault1/backupInstances/TestDiskCmk2/backup?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjJlZGZkNWQtNTQ5Ni00NjgzLWI5NGYtYjM1ODhjNTc5MDA5L3Jlc291cmNlR3JvdXBzL21heWFnZ2FyRGlza1JHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vYmFja3VwVmF1bHRzL0Rpc2tiYWNrdXBWYXVsdDEvYmFja3VwSW5zdGFuY2VzL1Rlc3REaXNrQ21rMi9iYWNrdXA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"backupRuleOptions\": {\r\n    \"ruleName\": \"BackupHourly\",\r\n    \"triggerOption\": {\r\n      \"retentionTagOverride\": \"Default\"\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1f015d8b-793d-463b-9997-32b8c464b97b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042."
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "913287bd-7d1a-4ed8-bdad-d0d2a9432c86"
+        ],
+        "x-ms-client-request-id": [
+          "1f015d8b-793d-463b-9997-32b8c464b97b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "209"
+        ],
+        "x-ms-correlation-request-id": [
+          "873ce447-d705-43e0-a250-c245a146c480"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135053Z:873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:50:52 GMT"
+        ],
+        "Content-Length": [
+          "484"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzIwZWZlY2Q2LTA5MmItNDk1MC04YTBiLTI1NTk2NzA1MTMzZg==?api-version=2020-01-01-alpha"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault1/backupInstances/TestDiskCmk2/restore?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjJlZGZkNWQtNTQ5Ni00NjgzLWI5NGYtYjM1ODhjNTc5MDA5L3Jlc291cmNlR3JvdXBzL21heWFnZ2FyRGlza1JHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vYmFja3VwVmF1bHRzL0Rpc2tiYWNrdXBWYXVsdDEvYmFja3VwSW5zdGFuY2VzL1Rlc3REaXNrQ21rMi9yZXN0b3JlP2FwaS12ZXJzaW9uPTIwMjEtMDEtMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n\t\"objectType\": \"AzureBackupRecoveryPointBasedRestoreRequest\",\r\n      \"recoveryPointId\": \"f2edfd5d-5496-4383-b94f-b3588c579009\",\r\n    \"sourceDataStoreType\": \"OperationalStore\",\r\n    \"recoveryPointTime\": \"2020-10-30T11:47:00.0000000Z\",\r\n   \t\"restoreTargetInfo\": {\r\n\t\t\t\"objectType\": \"restoreTargetInfo\",\r\n\t\t\t\"recoveryOption\": \"FailIfExists\",\r\n\t\t\t\"dataSourceInfo\": {\r\n\t\t\t\t\"objectType\": \"Datasource\",\r\n\t\t\t\t\"resourceID\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/DiskBackup_SEACAN/providers/Microsoft.Compute/disks/{{restoreDiskName}}\",\r\n\t\t\t\t\"resourceName\": \"{{restoreDiskName}}\",\r\n\t\t\t\t\"resourceType\": \"Microsoft.Compute/disks\",\r\n\t\t\t\t\"resourceLocation\": \"southeastasia\",\r\n\t\t\t\t\"resourceUri\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/DiskBackup_SEACAN/providers/Microsoft.Compute/disks/{{restoreDiskName}}\",\r\n\t\t\t\t\"datasourceType\": \"Microsoft.Compute/disks\"\r\n\t\t\t},\r\n\t\t\t\"restoreLocation\": \"southeastasia\"\r\n\t\t}\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1f015d8b-793d-463b-9997-32b8c464b97b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042."
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "913287bd-7d1a-4ed8-bdad-d0d2a9432c86"
+        ],
+        "x-ms-client-request-id": [
+          "1f015d8b-793d-463b-9997-32b8c464b97b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "209"
+        ],
+        "x-ms-correlation-request-id": [
+          "873ce447-d705-43e0-a250-c245a146c480"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135053Z:873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:50:52 GMT"
+        ],
+        "Content-Length": [
+          "484"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzIwZWZlY2Q2LTA5MmItNDk1MC04YTBiLTI1NTk2NzA1MTMzZg==?api-version=2020-01-01-alpha"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
     }
   ],
   "Names": {},

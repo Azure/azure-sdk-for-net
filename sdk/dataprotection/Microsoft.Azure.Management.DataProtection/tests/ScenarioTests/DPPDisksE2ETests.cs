@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.ScenarioTests
                 testHelper.Initialize(context);
                 testHelper.CreatePolicy("retentionpolicy2");
                 testHelper.ValidateForBackup("TestDiskCmk2");
-                testHelper.CreateBackupInstance("TestDiskCmk2");
+                testHelper.TriggerBackup("TestDiskCmk2");
+                testHelper.TriggerRestore("TestDiskCmk2");
             }
         }
         public void Dispose()

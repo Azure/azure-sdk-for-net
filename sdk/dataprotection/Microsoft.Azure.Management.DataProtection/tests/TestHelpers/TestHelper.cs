@@ -72,5 +72,21 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
             var response = BackupClient.BackupInstances.CreateOrUpdate(VaultName, ResourceGroup, backupInstanceName, body);
             Assert.NotNull(response);
         }
+
+        public void TriggerBackup(string backupInstanceName)
+        {
+            JToken requestData = mockJson["Entries"][4]["RequestBody"];
+            TriggerBackupRequest body = JsonConvert.DeserializeObject<TriggerBackupRequest>(requestData.ToString());
+            var response = BackupClient.BackupInstances.AdhocBackup(VaultName, ResourceGroup, backupInstanceName, body);
+            Assert.Null(response);
+        }
+
+        public void TriggerRestore(string backupInstanceName)
+        {
+            JToken requestData = mockJson["Entries"][5]["RequestBody"];
+            AzureBackupRestoreRequest body = JsonConvert.DeserializeObject<AzureBackupRestoreRequest>(requestData.ToString());
+            var response = BackupClient.BackupInstances.TriggerRestore(VaultName, ResourceGroup, backupInstanceName, body);
+            Assert.Null(response);
+        }
     }
 }
