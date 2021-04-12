@@ -1,6 +1,14 @@
 # Release History
 
-## 1.13.0-beta.1 (Unreleased)
+## 1.14.0-beta.1 (Unreleased)
+
+
+## 1.13.0 (2021-04-07)
+
+### Key Bug Fixes
+
+- Fixed `NotSupportedException` when running using Blazor in the browser.
+- Disable the response caching and enable the streaming when running using Blazor in the browser.
 
 ## 1.12.0 (2021-04-06)
 

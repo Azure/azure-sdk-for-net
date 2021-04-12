@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using FluentAssertions;
@@ -33,7 +32,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             TimeSeriesInsightsClient client = GetClient();
 
             // Create a Time Series Id with 3 keys. Middle key is a null
-            TimeSeriesId idWithNull = new TimeSeriesId(
+            var idWithNull = new TimeSeriesId(
                 Recording.GenerateAlphaNumericId(string.Empty, 5),
                 null,
                 Recording.GenerateAlphaNumericId(string.Empty, 5));
@@ -48,7 +47,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             {
                 // Create TSI instances
                 Response<TimeSeriesOperationError[]> createInstancesResult = await client
-                    .CreateOrReplaceTimeSeriesInstancesAsync(timeSeriesInstances)
+                    .Instances
+                    .CreateOrReplaceAsync(timeSeriesInstances)
                     .ConfigureAwait(false);
 
                 // Assert that the result error array does not contain any object that is set
@@ -59,13 +59,14 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 {
                     // Get the instance with a null item in its Id
                     Response<InstancesOperationResult[]> getInstanceWithNullInId = await client
-                        .GetInstancesAsync(new List<TimeSeriesId> { idWithNull })
+                        .Instances
+                        .GetAsync(new List<TimeSeriesId> { idWithNull })
                         .ConfigureAwait(false);
 
                     getInstanceWithNullInId.Value.Length.Should().Be(1);
 
                     InstancesOperationResult resultItem = getInstanceWithNullInId.Value.First();
-                    resultItem.Error.Should().BeNullOrEmpty();
+                    resultItem.Error.Should().BeNull();
                     resultItem.Instance.Should().NotBeNull();
                     resultItem.Instance.TimeSeriesId.ToArray().Length.Should().Be(3);
                     resultItem.Instance.TimeSeriesId.ToArray()[1].Should().BeNull();
@@ -79,7 +80,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 try
                 {
                     Response<TimeSeriesOperationError[]> deleteInstancesResponse = await client
-                        .DeleteInstancesAsync(timeSeriesInstances.Select((instance) => instance.TimeSeriesId))
+                        .Instances
+                        .DeleteAsync(timeSeriesInstances.Select((instance) => instance.TimeSeriesId))
                         .ConfigureAwait(false);
 
                     // Assert that the response array does not have any error object set
