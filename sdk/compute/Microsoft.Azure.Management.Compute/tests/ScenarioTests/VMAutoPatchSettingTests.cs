@@ -117,7 +117,7 @@ namespace Compute.Tests
             else
             {
                 // By default in supported API versions, a value is provided in the VM model even if one is
-                // not specified by the user.
+                // not specified by the user. 
                 Assert.Equal("AutomaticByOS", osProfile.WindowsConfiguration.PatchSettings.PatchMode);
             }
 
