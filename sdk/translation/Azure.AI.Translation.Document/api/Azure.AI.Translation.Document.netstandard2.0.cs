@@ -94,18 +94,18 @@ namespace Azure.AI.Translation.Document
     {
         protected DocumentTranslationOperation() { }
         public DocumentTranslationOperation(string translationId, Azure.AI.Translation.Document.DocumentTranslationClient client) { }
-        public System.DateTimeOffset CreatedOn { get { throw null; } }
-        public int DocumentsCancelled { get { throw null; } }
-        public int DocumentsFailed { get { throw null; } }
-        public int DocumentsInProgress { get { throw null; } }
-        public int DocumentsNotStarted { get { throw null; } }
-        public int DocumentsSucceeded { get { throw null; } }
-        public int DocumentsTotal { get { throw null; } }
+        public virtual System.DateTimeOffset CreatedOn { get { throw null; } }
+        public virtual int DocumentsCancelled { get { throw null; } }
+        public virtual int DocumentsFailed { get { throw null; } }
+        public virtual int DocumentsInProgress { get { throw null; } }
+        public virtual int DocumentsNotStarted { get { throw null; } }
+        public virtual int DocumentsSucceeded { get { throw null; } }
+        public virtual int DocumentsTotal { get { throw null; } }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public System.DateTimeOffset LastModified { get { throw null; } }
-        public Azure.AI.Translation.Document.TranslationStatus Status { get { throw null; } }
+        public virtual System.DateTimeOffset LastModified { get { throw null; } }
+        public virtual Azure.AI.Translation.Document.TranslationStatus Status { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.AsyncPageable<Azure.AI.Translation.Document.DocumentStatusResult> Value { get { throw null; } }
         public virtual void Cancel(System.Threading.CancellationToken cancellationToken) { }

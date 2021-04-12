@@ -28,47 +28,47 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// The date time when the translation operation was created.
         /// </summary>
-        public DateTimeOffset CreatedOn => _createdOn;
+        public virtual DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
         /// The date time when the translation operation's status was last updated.
         /// </summary>
-        public DateTimeOffset LastModified => _lastModified;
+        public virtual DateTimeOffset LastModified => _lastModified;
 
         /// <summary>
         /// The current status of the translation operation.
         /// </summary>
-        public TranslationStatus Status => _status;
+        public virtual TranslationStatus Status => _status;
 
         /// <summary>
         /// Total number of expected translated documents.
         /// </summary>
-        public int DocumentsTotal => _documentsTotal;
+        public virtual int DocumentsTotal => _documentsTotal;
 
         /// <summary>
         /// Number of documents failed to translate.
         /// </summary>
-        public int DocumentsFailed => _documentsFailed;
+        public virtual int DocumentsFailed => _documentsFailed;
 
         /// <summary>
         /// Number of documents translated successfully.
         /// </summary>
-        public int DocumentsSucceeded => _documentsSucceeded;
+        public virtual int DocumentsSucceeded => _documentsSucceeded;
 
         /// <summary>
         /// Number of documents in progress.
         /// </summary>
-        public int DocumentsInProgress => _documentsInProgress;
+        public virtual int DocumentsInProgress => _documentsInProgress;
 
         /// <summary>
         /// Number of documents in queue for translation.
         /// </summary>
-        public int DocumentsNotStarted => _documentsNotStarted;
+        public virtual int DocumentsNotStarted => _documentsNotStarted;
 
         /// <summary>
         /// Number of documents cancelled.
         /// </summary>
-        public int DocumentsCancelled => _documentsCancelled;
+        public virtual int DocumentsCancelled => _documentsCancelled;
 
         private int _documentsTotal;
         private int _documentsFailed;

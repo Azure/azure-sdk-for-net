@@ -14,94 +14,146 @@ namespace Azure.Core.TestFramework
 {
     public class DiagnosticScopeValidatingInterceptor : IInterceptor
     {
-        private static readonly MethodInfo ValidateDiagnosticScopeMethod = typeof(DiagnosticScopeValidatingInterceptor).GetMethod(nameof(AwaitAndValidateDiagnosticScope), BindingFlags.NonPublic | BindingFlags.Static);
+        private static readonly MethodInfo ValidateDiagnosticScopeMethodInfo = typeof(DiagnosticScopeValidatingInterceptor)
+            .GetMethod(nameof(ValidateDiagnosticScopeInterceptor), BindingFlags.NonPublic | BindingFlags.Instance)
+            ?? throw new InvalidOperationException("Unable to find DiagnosticScopeValidatingInterceptor.ValidateDiagnosticScopeInterceptor method");
+
+        private static readonly MethodInfo WrapAsyncResultCoreMethod = typeof(DiagnosticScopeValidatingInterceptor)
+            .GetMethod(nameof(WrapAsyncResultCore), BindingFlags.NonPublic | BindingFlags.Static)
+            ?? throw new InvalidOperationException("Unable to find DiagnosticScopeValidatingInterceptor.WrapAsyncResultCore method");
+
         public void Intercept(IInvocation invocation)
         {
-            var methodName = invocation.Method.Name;
+            var type = invocation.Method.ReturnType;
 
-            Type declaringType = invocation.Method.DeclaringType;
-            var methodNameWithoutSuffix = methodName.EndsWith("Async", StringComparison.OrdinalIgnoreCase) ?
-                methodName.Substring(0, methodName.Length - 5) :
-                methodName;
+            var isAsyncEnumerable = false;
+            foreach (var iface in type.GetInterfaces())
+            {
+                if (iface.IsGenericType && iface.GetGenericTypeDefinition() == typeof(IAsyncEnumerable<>))
+                {
+                    isAsyncEnumerable = true;
+                }
+            }
 
-            var expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
-            bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
+            if (invocation.Method.Name.EndsWith("Async") &&
+                !isAsyncEnumerable)
+            {
+                WrapAsyncResult(invocation, this, ValidateDiagnosticScopeMethodInfo);
+                return;
+            }
 
-            if (invocation.Method.ReturnType is {IsGenericType: true} genericType &&
+            if (type is {IsGenericType: true} genericType &&
                 genericType.GetGenericTypeDefinition() == typeof(AsyncPageable<>))
             {
                 invocation.Proceed();
-                invocation.ReturnValue = Activator.CreateInstance(typeof(DiagnosticScopeValidatingAsyncEnumerable<>).MakeGenericType(genericType.GenericTypeArguments[0]), invocation.ReturnValue, expectedName, methodName, strict);
+                invocation.ReturnValue = Activator.CreateInstance(
+                    typeof(DiagnosticScopeValidatingAsyncEnumerable<>).MakeGenericType(genericType.GenericTypeArguments[0]),
+                    invocation.ReturnValue,
+                    invocation.Method);
+                return;
             }
-            else if (methodName.EndsWith("Async") && !invocation.Method.ReturnType.Name.Contains("IAsyncEnumerable"))
-            {
-                Type genericArgument = typeof(object);
-                Type awaitableType = invocation.Method.ReturnType;
-                if (invocation.Method.ReturnType is {IsGenericType: true, GenericTypeArguments: {Length: 1} genericTypeArguments})
-                {
-                    genericArgument = genericTypeArguments[0];
-                    awaitableType = invocation.Method.ReturnType.GetGenericTypeDefinition();
-                }
-                ValidateDiagnosticScopeMethod.MakeGenericMethod(genericArgument)
-                    .Invoke(null, new object[]{awaitableType, invocation, expectedName, methodName, strict});
-            }
-            else
-            {
-                invocation.Proceed();
-            }
+
+            invocation.Proceed();
         }
 
-        internal static void AwaitAndValidateDiagnosticScope<T>(Type genericType, IInvocation invocation, string expectedName, string methodName, bool strict)
+        internal static void WrapAsyncResult(IInvocation invocation, object target, MethodInfo interceptorMethod)
+        {
+            Type genericArgument = typeof(object);
+            Type awaitableType = invocation.Method.ReturnType;
+            if (invocation.Method.ReturnType is {IsGenericType: true, GenericTypeArguments: {Length: 1} genericTypeArguments})
+            {
+                genericArgument = genericTypeArguments[0];
+                awaitableType = invocation.Method.ReturnType.GetGenericTypeDefinition();
+            }
+
+            WrapAsyncResultCoreMethod.MakeGenericMethod(genericArgument)
+                .Invoke(null, new object[]
+                {
+                    invocation,
+                    awaitableType,
+                    interceptorMethod
+                        .MakeGenericMethod(genericArgument)
+                        .CreateDelegate(typeof(AsyncCallInterceptor<>).MakeGenericType(genericArgument), target)
+                });
+        }
+
+        internal static void WrapAsyncResultCore<T>(IInvocation invocation, Type genericType, AsyncCallInterceptor<T> wrap)
         {
             // All this ceremony is not to await the returned Task/ValueTask syncronously
             // instead we are replacing the invocation.ReturnValue with the ValidateDiagnosticScope task
             // but we need to make sure the types match
             if (genericType == typeof(Task<>))
             {
-                invocation.ReturnValue = ValidateDiagnosticScope(async () =>
+                async ValueTask<T> Await()
                 {
                     invocation.Proceed();
-                    return (await (Task<T>)invocation.ReturnValue, false);
-                }, expectedName, methodName, strict).AsTask();
+                    return await (Task<T>)invocation.ReturnValue;
+                }
+
+                invocation.ReturnValue = wrap(invocation, Await).AsTask();
             }
             else if (genericType == typeof(Task))
             {
-                invocation.ReturnValue = ValidateDiagnosticScope<object>(async () =>
+                async ValueTask<T> Await()
                 {
                     invocation.Proceed();
                     await (Task)invocation.ReturnValue;
                     return default;
-                }, expectedName, methodName, strict).AsTask();
+                }
+
+                invocation.ReturnValue = wrap(invocation, Await).AsTask();
             }
             else if (genericType == typeof(ValueTask<>))
             {
-                invocation.ReturnValue = ValidateDiagnosticScope(async () =>
+                ValueTask<T> Await()
                 {
                     invocation.Proceed();
-                    return (await (ValueTask<T>)invocation.ReturnValue, false);
-                }, expectedName, methodName, strict);
+                    return (ValueTask<T>)invocation.ReturnValue;
+                }
+
+                invocation.ReturnValue = wrap(invocation, Await);
             }
             else if (genericType == typeof(ValueTask))
             {
-                invocation.ReturnValue = new ValueTask(ValidateDiagnosticScope<object>(async () =>
+                async ValueTask<T> Await()
                 {
                     invocation.Proceed();
-                    await (ValueTask)invocation.ReturnValue;;
+                    await (ValueTask)invocation.ReturnValue;
                     return default;
-                }, expectedName, methodName, strict).AsTask());
+                }
+
+                invocation.ReturnValue = new ValueTask(wrap(invocation, Await).AsTask());
             }
             else
             {
-                ValidateDiagnosticScope<object>(() =>
+                ValueTask<T> Await()
                 {
                     invocation.Proceed();
                     return default;
-                }, expectedName, methodName, strict).GetAwaiter().GetResult();
+                }
+
+                invocation.ReturnValue = wrap(invocation, Await).GetAwaiter().GetResult();
             }
         }
 
-        internal static async ValueTask<T> ValidateDiagnosticScope<T>(Func<ValueTask<(T Result, bool SkipChecks)>> action, string expectedName, string methodName, bool strict)
+        internal ValueTask<T> ValidateDiagnosticScopeInterceptor<T>(IInvocation invocation, Func<ValueTask<T>> innerTask)
         {
+            return ValidateDiagnosticScope(async () => (await innerTask(), false), invocation.Method);
+        }
+
+        internal static async ValueTask<T> ValidateDiagnosticScope<T>(Func<ValueTask<(T Result, bool SkipChecks)>> action, MethodInfo methodInfo, string source = null)
+        {
+            var methodName = methodInfo.Name;
+            source ??= methodName;
+
+            Type declaringType = methodInfo.DeclaringType;
+            var methodNameWithoutSuffix = methodName.EndsWith("Async", StringComparison.OrdinalIgnoreCase) ?
+                methodName.Substring(0, methodName.Length - 5) :
+                methodName;
+
+            var expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
+            bool strict = !methodInfo.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
+
             bool expectFailure = false;
             bool skipChecks = false;
             T result;
@@ -137,7 +189,7 @@ namespace Azure.Core.TestFramework
                         {
                             throw new InvalidOperationException($"Expected diagnostic scope not created {expectedName} {Environment.NewLine}" +
                                                                 $"    created {diagnosticListener.Scopes.Count} scopes [{string.Join(", ", diagnosticListener.Scopes)}] {Environment.NewLine}" +
-                                                                $"    You may have forgotten to add clientDiagnostics.CreateScope(...), set your operationId to {expectedName} in {methodName} or applied the Azure.Core.ForwardsClientCallsAttribute to {methodName}.");
+                                                                $"    You may have forgotten to add clientDiagnostics.CreateScope(...), set your operationId to {expectedName} in {source} or applied the Azure.Core.ForwardsClientCallsAttribute to {source}.");
                         }
 
                         if (!e.Activity.Tags.Any(tag => tag.Key == "az.namespace"))
@@ -166,12 +218,10 @@ namespace Azure.Core.TestFramework
         internal class DiagnosticScopeValidatingAsyncEnumerable<T> : AsyncPageable<T>
         {
             private readonly AsyncPageable<T> _pageable;
-            private readonly string _expectedName;
-            private readonly string _methodName;
-            private readonly bool _strict;
+            private readonly MethodInfo _methodInfo;
             private readonly bool _overridesGetAsyncEnumerator;
 
-            public DiagnosticScopeValidatingAsyncEnumerable(AsyncPageable<T> pageable, string expectedName, string methodName, bool strict)
+            public DiagnosticScopeValidatingAsyncEnumerable(AsyncPageable<T> pageable, MethodInfo methodInfo)
             {
                 if (pageable == null) throw new ArgumentNullException(nameof(pageable), "Operations returning [Async]Pageable should never return null.");
 
@@ -182,9 +232,7 @@ namespace Azure.Core.TestFramework
                     genericType.GetGenericTypeDefinition() != typeof(AsyncPageable<>);
 
                 _pageable = pageable;
-                _expectedName = expectedName;
-                _methodName = methodName;
-                _strict = strict;
+                _methodInfo = methodInfo;
             }
 
             public override IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
@@ -206,7 +254,7 @@ namespace Azure.Core.TestFramework
                     bool movedNext = await enumerator.MoveNextAsync();
                     // Don't expect the MoveNextAsync call that returns false to create scope
                     return (movedNext, !movedNext);
-                }, _expectedName, $"AsPages() implementation returned from {_methodName}", _strict))
+                }, _methodInfo, $"AsPages() implementation returned from {_methodInfo.Name}"))
                 {
                     yield return enumerator.Current;
                 }
