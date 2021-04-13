@@ -170,7 +170,7 @@ namespace Azure.Storage.Blobs
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 304:
-                    return ResponseWithHeaders.FromValue<Stream, BlobDownloadHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue((Stream)null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -207,7 +207,7 @@ namespace Azure.Storage.Blobs
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 304:
-                    return ResponseWithHeaders.FromValue<Stream, BlobDownloadHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue((Stream)null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
