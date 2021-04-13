@@ -1,5 +1,8 @@
 # Release History
 
+## 7.2.0-beta.1 (Unreleased)
+
+
 ## 7.1.2 (2021-04-09)
 - Updated dependency on Microsoft.Azure.Amqp to benefit from a performance enhancement involving message settlement.
 - Updated dependency on System.Text.Encodings.Web
