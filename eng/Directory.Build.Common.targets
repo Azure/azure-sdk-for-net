@@ -72,8 +72,13 @@
   </ItemGroup>
 
   <!-- Add App.config to enable server GC in net461 perf and stress projects -->
-  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net461'">
+  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(IsTargetingNetFx)' == 'true'">
     <None Include="$(RepoRoot)/common/PerfStressShared/App.config" />
+  </ItemGroup>
+
+  <!-- Switch default .NET Framework architecture to x64 -->
+  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true' or '$(IsTestProject)' == 'true') and '$(IsTargetingNetFx)' == 'true'">
+    <PlatformTarget>x64</PlatformTarget>
   </ItemGroup>
 
   <!-- Add StyleCop Analyzers -->
