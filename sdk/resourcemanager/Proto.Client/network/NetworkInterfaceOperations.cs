@@ -12,7 +12,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing the operations that can be pefroemd over a specific <see cref="NetworkInterface"/>.
     /// </summary>
-    public class NetworkInterfaceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, NetworkInterface>, ITaggableResource<ResourceGroupResourceIdentifier,NetworkInterface>, IDeletableResource
+    public class NetworkInterfaceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, NetworkInterface>, ITaggableResource<ResourceGroupResourceIdentifier, NetworkInterface>, IDeletableResource
     {
         internal NetworkInterfaceOperations(GenericResourceOperations genericOperations)
             : base(genericOperations, genericOperations.Id)
@@ -20,7 +20,7 @@ namespace Proto.Network
         }
 
         internal NetworkInterfaceOperations(ResourceGroupOperations resourceGroup, string nicName)
-            : base(resourceGroup, resourceGroup.Id.AppendProviderResource( ResourceType.Namespace, ResourceType.Type, nicName))
+            : base(resourceGroup, resourceGroup.Id.AppendProviderResource(ResourceType.Namespace, ResourceType.Type, nicName))
         {
         }
 
@@ -77,7 +77,7 @@ namespace Proto.Network
         /// <inheritdoc/>
         public override ArmResponse<NetworkInterface> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -85,7 +85,7 @@ namespace Proto.Network
         /// <inheritdoc/>
         public async override Task<ArmResponse<NetworkInterface>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -97,7 +97,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -109,7 +109,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -121,7 +121,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -133,7 +133,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -143,7 +143,7 @@ namespace Proto.Network
         {
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -153,7 +153,7 @@ namespace Proto.Network
         {
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -163,7 +163,7 @@ namespace Proto.Network
         {
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -173,7 +173,7 @@ namespace Proto.Network
         {
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -185,7 +185,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -197,7 +197,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -209,7 +209,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
@@ -221,7 +221,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }

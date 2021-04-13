@@ -44,7 +44,7 @@ namespace Proto.Network
         public override ArmResponse<NetworkInterface> CreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken);
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
         }
@@ -53,7 +53,7 @@ namespace Proto.Network
         public async override Task<ArmResponse<NetworkInterface>> CreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
                 n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
         }
@@ -61,7 +61,7 @@ namespace Proto.Network
         /// <inheritdoc/>
         public override ArmOperation<NetworkInterface> StartCreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
-            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken),
                 n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
         }
@@ -69,7 +69,7 @@ namespace Proto.Network
         /// <inheritdoc/>
         public async override Task<ArmOperation<NetworkInterface>> StartCreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
-            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false),
                 n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
         }
@@ -106,7 +106,7 @@ namespace Proto.Network
         /// <summary>
         /// Lists the <see cref="NetworkInterface"/> for this <see cref="ResourceGroup"/>.
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="System.Threading.CancellationToken.None"/>. </param>
         /// <returns> A collection of <see cref="NetworkInterface"/> that may take multiple service requests to iterate over. </returns>
         public Pageable<NetworkInterfaceOperations> List(CancellationToken cancellationToken = default)
@@ -119,7 +119,7 @@ namespace Proto.Network
         /// <summary>
         /// Lists the <see cref="NetworkInterface"/> for this <see cref="ResourceGroup"/>.
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
         /// <returns> An async collection of <see cref="NetworkInterface"/> that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<NetworkInterfaceOperations> ListAsync(CancellationToken cancellationToken = default)
@@ -135,7 +135,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="nameFilter"> A string to filter the <see cref="NetworkInterface"/> resources by name. </param>
         /// <param name="top"> The number of results to return per page of data. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public Pageable<GenericResource> ListAsGenericResource(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
@@ -150,7 +150,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="nameFilter"> A string to filter the <see cref="NetworkInterface"/> resources by name. </param>
         /// <param name="top"> The number of results to return per page of data. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<GenericResource> ListAsGenericResourceAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
@@ -161,12 +161,12 @@ namespace Proto.Network
         }
 
         /// <summary>
-        /// Filters the list of <see cref="NetworkInterface"/> resources for this <see cref="ResourceGroup"/>. 
+        /// Filters the list of <see cref="NetworkInterface"/> resources for this <see cref="ResourceGroup"/>.
         /// Makes an additional network call to retrieve the full data model for each <see cref="NetworkInterface"/>.
         /// </summary>
         /// <param name="nameFilter"> A string to filter the <see cref="NetworkInterface"/> resources by name. </param>
         /// <param name="top"> The number of results to return per page of data. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public Pageable<NetworkInterface> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
@@ -176,12 +176,12 @@ namespace Proto.Network
         }
 
         /// <summary>
-        /// Filters the list of <see cref="NetworkInterface"/> resources for this <see cref="ResourceGroup"/>. 
+        /// Filters the list of <see cref="NetworkInterface"/> resources for this <see cref="ResourceGroup"/>.
         /// Makes an additional network call to retrieve the full data model for each <see cref="NetworkInterface"/>.
         /// </summary>
         /// <param name="nameFilter"> A string to filter the <see cref="NetworkInterface"/> resources by name. </param>
         /// <param name="top"> The number of results to return per page of data. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<NetworkInterface> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
@@ -198,7 +198,7 @@ namespace Proto.Network
         /// <inheritdoc />
         public override ArmResponse<NetworkInterface> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.Get(Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken),
                 g => new NetworkInterface(Parent, new NetworkInterfaceData(g)));
         }
@@ -206,7 +206,7 @@ namespace Proto.Network
         /// <inheritdoc/>
         public override async Task<ArmResponse<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+            return new ArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.GetAsync(Id.ResourceGroupName, networkInterfaceName, null, cancellationToken),
                     g => new NetworkInterface(Parent, new NetworkInterfaceData(g)));
         }

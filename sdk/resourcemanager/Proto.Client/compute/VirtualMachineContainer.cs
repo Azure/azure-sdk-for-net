@@ -50,7 +50,7 @@ namespace Proto.Compute
         public override ArmResponse<VirtualMachine> CreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
+            return new ArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
                 operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 v => new VirtualMachine(Parent, new VirtualMachineData(v)));
         }
@@ -65,7 +65,7 @@ namespace Proto.Compute
         public async override Task<ArmResponse<VirtualMachine>> CreateOrUpdateAsync(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
+            return new ArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
                 await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
                 v => new VirtualMachine(Parent, new VirtualMachineData(v)));
         }
@@ -82,7 +82,7 @@ namespace Proto.Compute
         /// <returns> An <see cref="ArmOperation{VirtualMachine}"/> that allows polling for completion of the operation. </returns>
         public override ArmOperation<VirtualMachine> StartCreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
-            return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
+            return new ArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
                 Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken),
                 v => new VirtualMachine(Parent, new VirtualMachineData(v)));
         }
@@ -99,7 +99,7 @@ namespace Proto.Compute
         /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{VirtualMachine}"/> that allows polling for completion of the operation. </returns>
         public async override Task<ArmOperation<VirtualMachine>> StartCreateOrUpdateAsync(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
-            return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
+            return new ArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false),
                 v => new VirtualMachine(Parent, new VirtualMachineData(v)));
         }
@@ -116,7 +116,7 @@ namespace Proto.Compute
         /// <returns> Object used to create a <see cref="VirtualMachine"/>. </returns>
         public VirtualMachineModelBuilder Construct(string hostName, string adminUser, string adminPassword, ResourceIdentifier networkInterfaceId, ResourceIdentifier availabilitySetId, LocationData location = null)
         {
-            var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier,ResourceGroupOperations>();
+            var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier, ResourceGroupOperations>();
             var vm = new Azure.ResourceManager.Compute.Models.VirtualMachine(location ?? parent.Data.Location)
             {
                 NetworkProfile = new NetworkProfile(),
@@ -230,14 +230,14 @@ namespace Proto.Compute
         /// <inheritdoc />
         public override ArmResponse<VirtualMachine> Get(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(Operations.Get(Id.ResourceGroupName, virtualMachineName, cancellationToken), 
+            return new ArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(Operations.Get(Id.ResourceGroupName, virtualMachineName, cancellationToken),
                 v => new VirtualMachine(Parent, new VirtualMachineData(v)));
         }
 
         /// <inheritdoc/>
         public override async Task<ArmResponse<VirtualMachine>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(await Operations.GetAsync(Id.ResourceGroupName, virtualMachineName, cancellationToken),
+            return new ArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(await Operations.GetAsync(Id.ResourceGroupName, virtualMachineName, cancellationToken),
                 v => new VirtualMachine(Parent, new VirtualMachineData(v)));
         }
     }

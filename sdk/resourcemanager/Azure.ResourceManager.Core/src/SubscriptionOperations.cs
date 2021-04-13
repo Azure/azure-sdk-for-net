@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override ArmResponse<Subscription> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
+            return new ArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
                 SubscriptionsClient.Get(Id.Name, cancellationToken),
                 Converter());
         }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override async Task<ArmResponse<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
+            return new ArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
                 await SubscriptionsClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
                 Converter());
         }

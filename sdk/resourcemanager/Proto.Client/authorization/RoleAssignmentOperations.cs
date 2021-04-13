@@ -88,7 +88,7 @@ namespace Proto.Authorization
         /// <inheritdoc/>
         public override ArmResponse<RoleAssignment> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
+            return new ArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
                 Operations.GetById(Id, cancellationToken),
                 a => new RoleAssignment(this, new RoleAssignmentData(a)));
         }
@@ -96,7 +96,7 @@ namespace Proto.Authorization
         /// <inheritdoc/>
         public async override Task<ArmResponse<RoleAssignment>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
+            return new ArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
                 await Operations.GetByIdAsync(Id, cancellationToken),
                 a => new RoleAssignment(this, new RoleAssignmentData(a)));
         }

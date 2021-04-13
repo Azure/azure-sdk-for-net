@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
 
-        private ResourceGroupsOperations Operations 
+        private ResourceGroupsOperations Operations
         {
             get
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var response = Operations.CreateOrUpdate(name, resourceDetails, cancellationToken);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                return new ArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                     response,
                     g => new ResourceGroup(Parent, new ResourceGroupData(g)));
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var response = await Operations.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                return new ArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                     response,
                     g => new ResourceGroup(Parent, new ResourceGroupData(g)));
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                return new ArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                 Operations.CreateOrUpdate(name, resourceDetails, cancellationToken),
                 g => new ResourceGroup(Parent, new ResourceGroupData(g)));
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                return new ArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                 await Operations.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false),
                 g => new ResourceGroup(Parent, new ResourceGroupData(g)));
             }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(resourceGroupName, cancellationToken), g =>
+                return new ArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(resourceGroupName, cancellationToken), g =>
                 {
                     return new ResourceGroup(Parent, new ResourceGroupData(g));
                 });
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                return new ArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                 await Operations.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false),
                 g =>
                 {

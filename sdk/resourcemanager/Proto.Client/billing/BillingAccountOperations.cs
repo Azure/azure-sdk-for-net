@@ -58,7 +58,7 @@ namespace Proto.Billing
         /// <inheritdoc/>
         public override ArmResponse<BillingAccount> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<BillingAccount, Azure.ResourceManager.Billing.Models.BillingAccount>(
+            return new ArmResponse<BillingAccount, Azure.ResourceManager.Billing.Models.BillingAccount>(
                 Operations.Get(Id.Name, cancellationToken: cancellationToken),
                 Converter());
         }
@@ -66,7 +66,7 @@ namespace Proto.Billing
         /// <inheritdoc/>
         public override async Task<ArmResponse<BillingAccount>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<BillingAccount, Azure.ResourceManager.Billing.Models.BillingAccount>(
+            return new ArmResponse<BillingAccount, Azure.ResourceManager.Billing.Models.BillingAccount>(
                 await Operations.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false),
                 Converter());
         }

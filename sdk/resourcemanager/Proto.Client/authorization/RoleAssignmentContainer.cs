@@ -67,7 +67,7 @@ namespace Proto.Authorization
         public override ArmResponse<RoleAssignment> Create(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
             var response = Operations.Create(Id, name, resourceDetails.ToModel(), cancellationToken);
-            return new PhArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
+            return new ArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
                 response,
                 a => new RoleAssignment(this, new RoleAssignmentData(a)));
         }
@@ -83,7 +83,7 @@ namespace Proto.Authorization
         public async override Task<ArmResponse<RoleAssignment>> CreateAsync(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
             var response = await Operations.CreateAsync(Id, name, resourceDetails.ToModel(), cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
+            return new ArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
                 response,
                 a => new RoleAssignment(this, new RoleAssignmentData(a)));
         }
@@ -98,7 +98,7 @@ namespace Proto.Authorization
         /// <returns> An ArmOperation that yields the created role assignment and gives the user control over polling. </returns>
         public override ArmOperation<RoleAssignment> StartCreate(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
-            return new PhArmOperation<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
+            return new ArmOperation<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
                 Operations.Create(Id, name, resourceDetails.ToModel(), cancellationToken),
                 a => new RoleAssignment(this, new RoleAssignmentData(a)));
         }
@@ -113,7 +113,7 @@ namespace Proto.Authorization
         /// <returns> A <see cref="Task{ArmOperation}"/> that yields the created role assignment and gives the user control over polling. </returns>
         public async override Task<ArmOperation<RoleAssignment>> StartCreateAsync(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
-            return new PhArmOperation<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
+            return new ArmOperation<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
                 await Operations.CreateAsync(Id, name, resourceDetails.ToModel(), cancellationToken).ConfigureAwait(false),
                 a => new RoleAssignment(this, new RoleAssignmentData(a)));
         }

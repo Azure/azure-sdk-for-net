@@ -17,7 +17,7 @@ namespace Proto.Network
         /// <param name="virtualNetwork"> The client parameters to use in these operations. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
         internal SubnetOperations(VirtualNetworkOperations virtualNetwork, string subnetName)
-            : base(virtualNetwork, virtualNetwork.Id.AppendChildResource( "subnets", subnetName))
+            : base(virtualNetwork, virtualNetwork.Id.AppendChildResource("subnets", subnetName))
         {
         }
 
@@ -77,14 +77,14 @@ namespace Proto.Network
         /// <inheritdoc/>
         public override ArmResponse<Subnet> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(Operations.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken),
+            return new ArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(Operations.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken),
                 n => new Subnet(this, new SubnetData(n)));
         }
-        
+
         /// <inheritdoc/>
         public override async Task<ArmResponse<Subnet>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(await Operations.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken),
+            return new ArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(await Operations.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken),
                 n => new Subnet(this, new SubnetData(n)));
         }
     }

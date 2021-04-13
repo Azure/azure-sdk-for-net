@@ -33,7 +33,7 @@ namespace Proto.Compute
         public override ArmResponse<AvailabilitySet> CreateOrUpdate(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
         {
             var response = Operations.CreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model);
-            return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
+            return new ArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 response,
                 a => new AvailabilitySet(Parent, new AvailabilitySetData(a)));
         }
@@ -43,7 +43,7 @@ namespace Proto.Compute
         {
             var containerId = Id as ResourceGroupResourceIdentifier;
             var response = await Operations.CreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
+            return new ArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 response,
                 a => new AvailabilitySet(Parent, new AvailabilitySetData(a)));
         }
@@ -51,7 +51,7 @@ namespace Proto.Compute
         /// <inheritdoc/>
         public override ArmOperation<AvailabilitySet> StartCreateOrUpdate(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
         {
-            return new PhArmOperation<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
+            return new ArmOperation<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 Operations.CreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken),
                 a => new AvailabilitySet(Parent, new AvailabilitySetData(a)));
         }
@@ -59,7 +59,7 @@ namespace Proto.Compute
         /// <inheritdoc/>
         public async override Task<ArmOperation<AvailabilitySet>> StartCreateOrUpdateAsync(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
         {
-            return new PhArmOperation<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
+            return new ArmOperation<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 await Operations.CreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false),
                 a => new AvailabilitySet(Parent, new AvailabilitySetData(a)));
         }
@@ -149,14 +149,14 @@ namespace Proto.Compute
         /// <inheritdoc />
         public override ArmResponse<AvailabilitySet> Get(string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(Operations.Get(Id.ResourceGroupName, availabilitySetName),
+            return new ArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(Operations.Get(Id.ResourceGroupName, availabilitySetName),
                 g => new AvailabilitySet(Parent, new AvailabilitySetData(g)));
         }
 
         /// <inheritdoc/>
         public override async Task<ArmResponse<AvailabilitySet>> GetAsync(string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(await Operations.GetAsync(Id.ResourceGroupName, availabilitySetName, cancellationToken),
+            return new ArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(await Operations.GetAsync(Id.ResourceGroupName, availabilitySetName, cancellationToken),
                 g => new AvailabilitySet(Parent, new AvailabilitySetData(g)));
         }
     }
