@@ -65,22 +65,3 @@ steps:
     TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
     WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-
-- ${{if ne( parameters['OnboardingBranch'], '')}}:
-  - pwsh: |
-      Push-Location ${{ parameters.WorkingDirectory }}/repo
-      git reset --hard HEAD
-      git remote rm azure-sdk-fork
-      git checkout ${{ parameters.OnboardingBranch}}
-    displayName: Reset Docs Repo, Checkout Onboarding Branch
-    ignoreLASTEXITCODE: false
-
-  - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
-    parameters:
-      BaseRepoBranch: ${{ parameters.OnboardingBranch}}
-      BaseRepoOwner: ${{ parameters.TargetDocRepoOwner }}
-      CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
-      TargetRepoName: ${{ parameters.TargetDocRepoName }}
-      TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
-      WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
-      ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
