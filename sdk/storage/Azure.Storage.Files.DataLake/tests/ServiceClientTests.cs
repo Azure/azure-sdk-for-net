@@ -201,16 +201,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (GetNewFileSystem(service: service))
-            {
-                // Act
-                IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
+            await using DisposingFileSystem test = await GetNewFileSystem(service: service);
 
-                // Assert
-                Assert.IsTrue(fileSystems.Count >= 1);
-                var accountName = new DataLakeUriBuilder(service.Uri).AccountName;
-                TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
-            }
+            // Act
+            IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
+
+            // Assert
+            Assert.IsTrue(fileSystems.Count >= 1);
+            var accountName = new DataLakeUriBuilder(service.Uri).AccountName;
+            TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
         }
 
         [RecordedTest]
