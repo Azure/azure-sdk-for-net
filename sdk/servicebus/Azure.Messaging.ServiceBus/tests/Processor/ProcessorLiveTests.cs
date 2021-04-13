@@ -15,11 +15,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
     public class ProcessorLiveTests : ServiceBusLiveTestBase
     {
         [Test]
-        [TestCase(1, false)]
-        [TestCase(5, true)]
-        [TestCase(10, false)]
-        [TestCase(20, true)]
-        public async Task ProcessMessages(int numThreads, bool autoComplete)
+        [TestCase(1, false, false)]
+        [TestCase(1, false, true)]
+        [TestCase(5, true, false)]
+        [TestCase(5, true, true)]
+        [TestCase(10, false, false)]
+        [TestCase(10, false, true)]
+        [TestCase(20, true, false)]
+        [TestCase(20, true, true)]
+        public async Task ProcessMessages(int numThreads, bool autoComplete, bool poolMessageBodies)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -40,6 +44,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     MaxConcurrentCalls = numThreads,
                     AutoCompleteMessages = autoComplete,
+                    PoolMessageBodies = poolMessageBodies,
                     PrefetchCount = 20
                 };
                 await using var processor = client.CreateProcessor(scope.QueueName, options);

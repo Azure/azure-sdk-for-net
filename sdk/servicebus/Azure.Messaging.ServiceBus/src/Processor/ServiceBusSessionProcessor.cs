@@ -52,6 +52,9 @@ namespace Azure.Messaging.ServiceBus
         /// <inheritdoc cref="ServiceBusProcessor.AutoCompleteMessages"/>
         public virtual bool AutoCompleteMessages => InnerProcessor.AutoCompleteMessages;
 
+        /// <inheritdoc cref="ServiceBusProcessor.PoolMessageBodies"/>
+        public virtual bool PoolMessageBodies => InnerProcessor.PoolMessageBodies;
+
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusSessionProcessor"/> has been closed.
         /// </summary>

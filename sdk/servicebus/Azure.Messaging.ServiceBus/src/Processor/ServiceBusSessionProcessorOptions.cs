@@ -148,6 +148,17 @@ namespace Azure.Messaging.ServiceBus
         public IList<string> SessionIds { get; } = new List<string>();
 
         /// <summary>
+        /// Gets or sets whether the messages bodies use pooled byte arrays underneath in case of binary data.
+        /// When this option is enabled <see cref="ServiceBusReceivedMessage"/> cannot be safely kept for longer than the
+        /// lifetime of the scope of the <see cref="ServiceBusProcessor.ProcessSessionMessageAsync"/> or
+        /// the <see cref="ServiceBusProcessor.ProcessSessionMessageAsync"/> event handler delegate.
+        /// The default value is false.
+        /// </summary>
+        ///
+        /// <value>true to pool message bodies; otherwise, false.</value>
+        public bool PoolMessageBodies { get; set; }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -181,6 +192,7 @@ namespace Azure.Messaging.ServiceBus
                 AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = SessionIdleTimeout,
+                PoolMessageBodies = PoolMessageBodies
             };
     }
 }

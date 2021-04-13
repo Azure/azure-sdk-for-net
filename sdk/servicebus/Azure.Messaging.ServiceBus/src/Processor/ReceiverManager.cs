@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ProcessorOptions.ReceiveMode,
                 PrefetchCount = ProcessorOptions.PrefetchCount,
-                PoolMessageBodies = true
+                PoolMessageBodies = ProcessorOptions.PoolMessageBodies,
             };
             _maxReceiveWaitTime = ProcessorOptions.MaxReceiveWaitTime;
             _plugins = plugins;

@@ -53,6 +53,17 @@ namespace Azure.Messaging.ServiceBus
         public bool AutoCompleteMessages { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets whether the messages bodies use pooled byte arrays underneath in case of binary data.
+        /// When this option is enabled <see cref="ServiceBusReceivedMessage"/> cannot be safely kept for longer than the
+        /// lifetime of the scope of the <see cref="ServiceBusProcessor.ProcessMessageAsync"/> or
+        /// the <see cref="ServiceBusProcessor.ProcessSessionMessageAsync"/> event handler delegate.
+        /// The default value is false.
+        /// </summary>
+        ///
+        /// <value>true to pool message bodies; otherwise, false.</value>
+        public bool PoolMessageBodies { get; set; }
+
+        /// <summary>
         /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
         /// </summary>
@@ -163,6 +174,7 @@ namespace Azure.Messaging.ServiceBus
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = MaxReceiveWaitTime,
                 MaxConcurrentCalls = MaxConcurrentCalls,
+                PoolMessageBodies = PoolMessageBodies,
             };
         }
     }

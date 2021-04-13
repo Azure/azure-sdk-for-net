@@ -93,11 +93,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        [TestCase(1, true)]
-        [TestCase(5, true)]
-        [TestCase(10, false)]
-        [TestCase(20, false)]
-        public async Task ProcessSessionMessage(int numThreads, bool autoComplete)
+        [TestCase(1, true, false)]
+        [TestCase(1, true, true)]
+        [TestCase(5, true, false)]
+        [TestCase(5, true, true)]
+        [TestCase(10, false, false)]
+        [TestCase(10, false, true)]
+        [TestCase(20, false, false)]
+        [TestCase(20, false, true)]
+        public async Task ProcessSessionMessage(int numThreads, bool autoComplete, bool poolMessageBodies)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -117,7 +121,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusSessionProcessorOptions
                 {
                     MaxConcurrentSessions = numThreads,
-                    AutoCompleteMessages = autoComplete
+                    AutoCompleteMessages = autoComplete,
+                    PoolMessageBodies = poolMessageBodies,
                 };
                 await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 int messageCt = 0;
