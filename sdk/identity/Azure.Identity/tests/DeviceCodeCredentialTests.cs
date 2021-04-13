@@ -224,12 +224,12 @@ namespace Azure.Identity.Tests
                 return OpenIdConfigurationResponse;
             }
 
-            if (requestUrl.StartsWith(new Uri(new Uri(testEnvironment.AuthorityHostUrl), "organizations/oauth2/v2.0/devicecode").ToString()) || requestUrl.StartsWith("https://login.partner.microsoftonline.cn/organizations/oauth2/v2.0/devicecode"))
+            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/oauth2/v2.0/devicecode"))
             {
                 return CreateDeviceCodeResponse(code);
             }
 
-            if (requestUrl.StartsWith(new Uri(new Uri(testEnvironment.AuthorityHostUrl), "organizations/oauth2/v2.0/token").ToString()) || requestUrl.StartsWith($"https://login.partner.microsoftonline.cn/organizations/oauth2/v2.0/token"))
+            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/oauth2/v2.0/token"))
             {
                 return CreateTokenResponse(code, token);
             }
