@@ -158,12 +158,13 @@ namespace Azure.Identity
 
             // filter the accounts to those matching the specified user and tenant
             List<IAccount> filteredAccounts = accounts.Where(a =>
-                // if _username is specified it must match the account
-                (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
-                &&
-                // if _skipTenantValidation is false and _tenantId is specified it must match the account
-                (_skipTenantValidation || string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
-            ).ToList();
+                    // if _username is specified it must match the account
+                    (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
+                    &&
+                    // if _skipTenantValidation is false and _tenantId is specified it must match the account
+                    (_skipTenantValidation || string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+                )
+                .ToList();
 
             if (_skipTenantValidation && filteredAccounts.Count > 1)
             {
