@@ -108,7 +108,9 @@ var eventHubClient = new EventHubProducerClient("myeventhub.eventhubs.windows.ne
 Many Azure hosts allow the assignment of a user assigned managed identity. This example demonstrates configuring the `DefaultAzureCredential` to authenticate a user assigned identity when deployed to an azure host. It then authenticates a `BlobClient` from the [Azure.Storage.Blobs][blobs_client_library] client library with credential.
 
 ```C# Snippet:UserAssignedManagedIdentity
-// when deployed to an azure host the default azure credential will authenticate the specified user assigned managed identity
+// When deployed to an azure host, the default azure credential will authenticate the specified user assigned managed identity.
+
+string userAssignedClientId = "<your managed identity client Id>";
 var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
 
 var blobClient = new BlobClient(new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), credential);
@@ -120,7 +122,8 @@ In addition to configuring the `ManagedIdentityClientId` via code, it can also b
 While the `DefaultAzureCredential` is generally the quickest way to get started developing applications for Azure, more advanced users may want to customize the credentials considered when authenticating. The `ChainedTokenCredential` enables users to combine multiple credential instances to define a customized chain of credentials. This example demonstrates creating a `ChainedTokenCredential` which will attempt to authenticate using managed identity, and fall back to authenticating via the Azure CLI if managed identity is unavailable in the current environment. The credential is then used to authenticate an `EventHubProducerClient` from the [Azure.Messaging.EventHubs][eventhubs_client_library] client library.
 
 ```C# Snippet:CustomChainedTokenCredential
-// authenticate using managed identity if it is available otherwise use the Azure CLI to auth
+// Authenticate using managed identity if it is available; otherwise use the Azure CLI to authenticate.
+
 var credential = new ChainedTokenCredential(new ManagedIdentityCredential(), new AzureCliCredential());
 
 var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
