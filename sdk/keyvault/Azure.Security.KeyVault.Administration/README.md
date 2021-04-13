@@ -117,6 +117,8 @@ To perform other actions on keys, you need to assign principals to other roles s
 az keyvault role assignment create --hsm-name <your-key-vault-name> --role "Managed HSM Crypto User" --scope / --assignee-object-id <principal-or-user-object-ID> --assignee-principal-type <principal-type>
 ```
 
+Please read [best practices][best_practices] for properly securing your managed HSM.
+
 #### Create KeyVaultAccessControlClient
 Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url**
 with the above returned URI, you can create the [KeyVaultAccessControlClient][rbac_client]:
@@ -263,6 +265,7 @@ additional questions or comments.
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/
+[best_practices]: https://docs.microsoft.com/azure/key-vault/managed-hsm/best-practices
 [built_in_roles]: https://docs.microsoft.com/azure/key-vault/managed-hsm/built-in-roles
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [rbac_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultAccessControlClient.cs
