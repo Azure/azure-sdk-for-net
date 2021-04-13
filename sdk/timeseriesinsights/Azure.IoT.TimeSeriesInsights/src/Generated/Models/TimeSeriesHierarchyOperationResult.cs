@@ -8,17 +8,17 @@
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Result of a batch operation on a particular time series hierarchy. Hierarchy is set when operation is successful and error object is set when operation is unsuccessful. </summary>
-    public partial class TimeSeriesHierarchyOrError
+    public partial class TimeSeriesHierarchyOperationResult
     {
-        /// <summary> Initializes a new instance of TimeSeriesHierarchyOrError. </summary>
-        internal TimeSeriesHierarchyOrError()
+        /// <summary> Initializes a new instance of TimeSeriesHierarchyOperationResult. </summary>
+        internal TimeSeriesHierarchyOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesHierarchyOrError. </summary>
+        /// <summary> Initializes a new instance of TimeSeriesHierarchyOperationResult. </summary>
         /// <param name="hierarchy"> Time series hierarchy object - set when the operation is successful. </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>
-        internal TimeSeriesHierarchyOrError(TimeSeriesHierarchy hierarchy, TimeSeriesOperationError error)
+        internal TimeSeriesHierarchyOperationResult(TimeSeriesHierarchy hierarchy, TimeSeriesOperationError error)
         {
             Hierarchy = hierarchy;
             Error = error;

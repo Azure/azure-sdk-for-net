@@ -12,53 +12,53 @@ using Azure.Core.Pipeline;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// Types client that can be used to perform operations such as creating, listing, replacing and deleting Time Series types.
+    /// Hierarchies client that can be used to perform operations such as creating, listing, replacing and deleting Time Series hierarchies.
     /// </summary>
-    public class TypesClient
+    public class HierarchiesClient
     {
-        private readonly TimeSeriesTypesRestClient _typesRestClient;
+        private readonly TimeSeriesHierarchiesRestClient _hierarchiesRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of TypesClient. This constructor should only be used for mocking purposes.
+        /// Initializes a new instance of HierarchiesClient. This constructor should only be used for mocking purposes.
         /// </summary>
-        protected TypesClient()
+        protected HierarchiesClient()
         {
         }
 
-        internal TypesClient(TimeSeriesTypesRestClient typesRestClient, ClientDiagnostics clientDiagnostics)
+        internal HierarchiesClient(TimeSeriesHierarchiesRestClient hierarchiesRestClient, ClientDiagnostics clientDiagnostics)
         {
-            Argument.AssertNotNull(typesRestClient, nameof(typesRestClient));
+            Argument.AssertNotNull(hierarchiesRestClient, nameof(hierarchiesRestClient));
             Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
 
-            _typesRestClient = typesRestClient;
+            _hierarchiesRestClient = hierarchiesRestClient;
             _clientDiagnostics = clientDiagnostics;
         }
 
         /// <summary>
-        /// Gets Time Series Insights types in pages asynchronously.
+        /// Gets Time Series Insights hierarchies in pages asynchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesType}"/> of Time Series types with the http response.</returns>
-        public virtual AsyncPageable<TimeSeriesType> GetTypesAsync(
+        /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesHierarchy}"/> of Time Series hierarchies with the http response.</returns>
+        public virtual AsyncPageable<TimeSeriesHierarchy> GetAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTypes)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
             scope.Start();
 
             try
             {
-                async Task<Page<TimeSeriesType>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<TimeSeriesHierarchy>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTypes)}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
                     scope.Start();
 
                     try
                     {
-                        Response<GetTypesPage> getTypesResponse = await _typesRestClient
+                        Response<GetHierarchiesPage> getHierarchiesResponse = await _hierarchiesRestClient
                             .ListAsync(null, null, cancellationToken)
                             .ConfigureAwait(false);
-                        return Page.FromValues(getTypesResponse.Value.Types, getTypesResponse.Value.ContinuationToken, getTypesResponse.GetRawResponse());
+                        return Page.FromValues(getHierarchiesResponse.Value.Hierarchies, getHierarchiesResponse.Value.ContinuationToken, getHierarchiesResponse.GetRawResponse());
                     }
                     catch (Exception ex)
                     {
@@ -67,17 +67,17 @@ namespace Azure.IoT.TimeSeriesInsights
                     }
                 }
 
-                async Task<Page<TimeSeriesType>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<TimeSeriesHierarchy>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTypes)}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
                     scope.Start();
 
                     try
                     {
-                        Response<GetTypesPage> getTypesResponse = await _typesRestClient
+                        Response<GetHierarchiesPage> getHierarchiesResponse = await _hierarchiesRestClient
                             .ListAsync(nextLink, null, cancellationToken)
                             .ConfigureAwait(false);
-                        return Page.FromValues(getTypesResponse.Value.Types, getTypesResponse.Value.ContinuationToken, getTypesResponse.GetRawResponse());
+                        return Page.FromValues(getHierarchiesResponse.Value.Hierarchies, getHierarchiesResponse.Value.ContinuationToken, getHierarchiesResponse.GetRawResponse());
                     }
                     catch (Exception ex)
                     {
@@ -96,29 +96,29 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series Insights types in pages synchronously.
+        /// Gets Time Series Insights hierarchies in pages synchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="Pageable{TimeSeriesType}"/> of Time Series types with the http response.</returns>
-        /// <seealso cref="GetTypesAsync(CancellationToken)">
+        /// <returns>The pageable list <see cref="Pageable{TimeSeriesHierarchy}"/> of Time Series hierarchies with the http response.</returns>
+        /// <seealso cref="GetAsync(CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Pageable<TimeSeriesType> GetTypes(CancellationToken cancellationToken = default)
+        public virtual Pageable<TimeSeriesHierarchy> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTypes)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
             scope.Start();
 
             try
             {
-                Page<TimeSeriesType> FirstPageFunc(int? pageSizeHint)
+                Page<TimeSeriesHierarchy> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTypes)}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
                     scope.Start();
 
                     try
                     {
-                        Response<GetTypesPage> getTypesResponse = _typesRestClient.List(null, null, cancellationToken);
-                        return Page.FromValues(getTypesResponse.Value.Types, getTypesResponse.Value.ContinuationToken, getTypesResponse.GetRawResponse());
+                        Response<GetHierarchiesPage> getHierarchiesResponse = _hierarchiesRestClient.List(null, null, cancellationToken);
+                        return Page.FromValues(getHierarchiesResponse.Value.Hierarchies, getHierarchiesResponse.Value.ContinuationToken, getHierarchiesResponse.GetRawResponse());
                     }
                     catch (Exception ex)
                     {
@@ -127,15 +127,15 @@ namespace Azure.IoT.TimeSeriesInsights
                     }
                 }
 
-                Page<TimeSeriesType> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<TimeSeriesHierarchy> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTypes)}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
                     scope.Start();
 
                     try
                     {
-                        Response<GetTypesPage> getTypesResponse = _typesRestClient.List(nextLink, null, cancellationToken);
-                        return Page.FromValues(getTypesResponse.Value.Types, getTypesResponse.Value.ContinuationToken, getTypesResponse.GetRawResponse());
+                        Response<GetHierarchiesPage> getHierarchiesResponse = _hierarchiesRestClient.List(nextLink, null, cancellationToken);
+                        return Page.FromValues(getHierarchiesResponse.Value.Hierarchies, getHierarchiesResponse.Value.ContinuationToken, getHierarchiesResponse.GetRawResponse());
                     }
                     catch (Exception ex)
                     {
@@ -154,25 +154,25 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series Insights types by type names asynchronously.
+        /// Gets Time Series Insights hierarchies by hierarchy names asynchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeNames">List of names of the Time Series types to return.</param>
+        /// <param name="timeSeriesHierarchyNames">List of names of the Time Series hierarchies to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of type or error objects corresponding by position to the array in the request.
-        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// List of hierarchy or error objects corresponding by position to the array in the request.
+        /// Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is empty.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is empty.
         /// </exception>
-        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetByNameAsync(
-            IEnumerable<string> timeSeriesTypeNames,
+        public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> GetByNameAsync(
+            IEnumerable<string> timeSeriesHierarchyNames,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetByName)}");
@@ -180,19 +180,19 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeNames, nameof(timeSeriesTypeNames));
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyNames, nameof(timeSeriesHierarchyNames));
 
-                var batchRequest = new TypesBatchRequest()
+                var batchRequest = new HierarchiesBatchRequest()
                 {
-                    Get = new TypesRequestBatchGetOrDelete()
+                    Get = new HierarchiesRequestBatchGetDelete()
                 };
 
-                foreach (string timeSeriesName in timeSeriesTypeNames)
+                foreach (string timeSeriesName in timeSeriesHierarchyNames)
                 {
                     batchRequest.Get.Names.Add(timeSeriesName);
                 }
 
-                Response<TypesBatchResponse> executeBatchResponse = await _typesRestClient
+                Response<HierarchiesBatchResponse> executeBatchResponse = await _hierarchiesRestClient
                     .ExecuteBatchAsync(batchRequest, null, cancellationToken)
                     .ConfigureAwait(false);
 
@@ -206,25 +206,25 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series Insights types by type names synchronously.
+        /// Gets Time Series Insights hierarchies by hierarchy names synchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeNames">List of names of the Time Series types to return.</param>
+        /// <param name="timeSeriesHierarchyNames">List of names of the Time Series hierarchies to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of type or error objects corresponding by position to the array in the request.
-        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// List of hierarchy or error objects corresponding by position to the array in the request.
+        /// Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <seealso cref="GetByNameAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is empty.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is empty.
         /// </exception>
-        public virtual Response<TimeSeriesTypeOperationResult[]> GetByName(
-            IEnumerable<string> timeSeriesTypeNames,
+        public virtual Response<TimeSeriesHierarchyOperationResult[]> GetByName(
+            IEnumerable<string> timeSeriesHierarchyNames,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetByName)}");
@@ -232,19 +232,19 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeNames, nameof(timeSeriesTypeNames));
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyNames, nameof(timeSeriesHierarchyNames));
 
-                var batchRequest = new TypesBatchRequest()
+                var batchRequest = new HierarchiesBatchRequest()
                 {
-                    Get = new TypesRequestBatchGetOrDelete()
+                    Get = new HierarchiesRequestBatchGetDelete()
                 };
 
-                foreach (string timeSeriesName in timeSeriesTypeNames)
+                foreach (string timeSeriesName in timeSeriesHierarchyNames)
                 {
                     batchRequest.Get.Names.Add(timeSeriesName);
                 }
 
-                Response<TypesBatchResponse> executeBatchResponse = _typesRestClient
+                Response<HierarchiesBatchResponse> executeBatchResponse = _hierarchiesRestClient
                     .ExecuteBatch(batchRequest, null, cancellationToken);
 
                 return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
@@ -257,25 +257,25 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series Insights types by type Ids asynchronously.
+        /// Gets Time Series Insights hierarchies by hierarchy Ids asynchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeIds">List of Time Series type Ids of the Time Series types to return.</param>
+        /// <param name="timeSeriesHierarchyIds">List of Time Series hierarchy Ids of the Time Series hierarchies to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of type or error objects corresponding by position to the array in the request.
-        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// List of hierarchy or error objects corresponding by position to the array in the request.
+        /// Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
         /// </exception>
-        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetByIdAsync(
-            IEnumerable<string> timeSeriesTypeIds,
+        public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> GetByIdAsync(
+            IEnumerable<string> timeSeriesHierarchyIds,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetById)}");
@@ -283,19 +283,19 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyIds, nameof(timeSeriesHierarchyIds));
 
-                var batchRequest = new TypesBatchRequest()
+                var batchRequest = new HierarchiesBatchRequest()
                 {
-                    Get = new TypesRequestBatchGetOrDelete()
+                    Get = new HierarchiesRequestBatchGetDelete()
                 };
 
-                foreach (string typeId in timeSeriesTypeIds)
+                foreach (string hierarchyId in timeSeriesHierarchyIds)
                 {
-                    batchRequest.Get.TypeIds.Add(typeId);
+                    batchRequest.Get.HierarchyIds.Add(hierarchyId);
                 }
 
-                Response<TypesBatchResponse> executeBatchResponse = await _typesRestClient
+                Response<HierarchiesBatchResponse> executeBatchResponse = await _hierarchiesRestClient
                     .ExecuteBatchAsync(batchRequest, null, cancellationToken)
                     .ConfigureAwait(false);
 
@@ -309,25 +309,25 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series Insights types by type Ids synchronously.
+        /// Gets Time Series Insights hierarchies by hierarchy Ids synchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeIds">List of Time Series type Ids of the Time Series types to return.</param>
+        /// <param name="timeSeriesHierarchyIds">List of Time Series hierarchy Ids of the Time Series hierarchies to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of type or error objects corresponding by position to the array in the request.
-        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// List of hierarchy or error objects corresponding by position to the array in the request.
+        /// Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <seealso cref="GetByIdAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
         /// </exception>
-        public virtual Response<TimeSeriesTypeOperationResult[]> GetById(
-            IEnumerable<string> timeSeriesTypeIds,
+        public virtual Response<TimeSeriesHierarchyOperationResult[]> GetById(
+            IEnumerable<string> timeSeriesHierarchyIds,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetById)}");
@@ -335,19 +335,19 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyIds, nameof(timeSeriesHierarchyIds));
 
-                var batchRequest = new TypesBatchRequest()
+                var batchRequest = new HierarchiesBatchRequest()
                 {
-                    Get = new TypesRequestBatchGetOrDelete()
+                    Get = new HierarchiesRequestBatchGetDelete()
                 };
 
-                foreach (string typeId in timeSeriesTypeIds)
+                foreach (string hierarchyId in timeSeriesHierarchyIds)
                 {
-                    batchRequest.Get.TypeIds.Add(typeId);
+                    batchRequest.Get.HierarchyIds.Add(hierarchyId);
                 }
 
-                Response<TypesBatchResponse> executeBatchResponse = _typesRestClient
+                Response<HierarchiesBatchResponse> executeBatchResponse = _hierarchiesRestClient
                     .ExecuteBatch(batchRequest, null, cancellationToken);
 
                 return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
@@ -360,25 +360,25 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Creates Time Series Insights types asynchronously. If a provided type is already in use, then this will attempt to replace the existing type with the provided Time Series type.
+        /// Creates Time Series Insights hierarchies asynchronously. If a provided hierarchy is already in use, then this will attempt to replace the existing hierarchy with the provided Time Series hierarchy.
         /// </summary>
-        /// <param name="timeSeriesTypes">The Time Series Insights types to be created or replaced.</param>
+        /// <param name="timeSeriesHierarchies">The Time Series Insights hierarchies to be created or replaced.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of error objects corresponding by position to the <paramref name="timeSeriesTypes"/> array in the request.
+        /// List of error objects corresponding by position to the <paramref name="timeSeriesHierarchies"/> array in the request.
         /// An error object will be set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="timeSeriesTypes"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchies"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The exception is thrown when <paramref name="timeSeriesTypes"/> is empty.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchies"/> is empty.
         /// </exception>
-        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> CreateOrReplaceAsync(
-            IEnumerable<TimeSeriesType> timeSeriesTypes,
+        public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> CreateOrReplaceAsync(
+            IEnumerable<TimeSeriesHierarchy> timeSeriesHierarchies,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics
@@ -387,16 +387,16 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypes, nameof(timeSeriesTypes));
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchies, nameof(timeSeriesHierarchies));
 
-                var batchRequest = new TypesBatchRequest();
+                var batchRequest = new HierarchiesBatchRequest();
 
-                foreach (TimeSeriesType type in timeSeriesTypes)
+                foreach (TimeSeriesHierarchy hierarchy in timeSeriesHierarchies)
                 {
-                    batchRequest.Put.Add(type);
+                    batchRequest.Put.Add(hierarchy);
                 }
 
-                Response<TypesBatchResponse> executeBatchResponse = await _typesRestClient
+                Response<HierarchiesBatchResponse> executeBatchResponse = await _hierarchiesRestClient
                     .ExecuteBatchAsync(batchRequest, null, cancellationToken)
                     .ConfigureAwait(false);
 
@@ -412,25 +412,25 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Creates Time Series Insights types synchronously. If a provided type is already in use, then this will attempt to replace the existing type with the provided Time Series type.
+        /// Creates Time Series Insights hierarchies synchronously. If a provided hierarchy is already in use, then this will attempt to replace the existing hierarchy with the provided Time Series hierarchy.
         /// </summary>
-        /// <param name="timeSeriesTypes">The Time Series Insights types to be created or replaced.</param>
+        /// <param name="timeSeriesHierarchies">The Time Series Insights hierarchies to be created or replaced.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of types or error objects corresponding by position to the <paramref name="timeSeriesTypes"/> array in the request.
-        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// List of hierarchies or error objects corresponding by position to the <paramref name="timeSeriesHierarchies"/> array in the request.
+        /// Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
-        /// <seealso cref="CreateOrReplaceAsync(IEnumerable{TimeSeriesType}, CancellationToken)">
+        /// <seealso cref="CreateOrReplaceAsync(IEnumerable{TimeSeriesHierarchy}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="timeSeriesTypes"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchies"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The exception is thrown when <paramref name="timeSeriesTypes"/> is empty.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchies"/> is empty.
         /// </exception>
-        public virtual Response<TimeSeriesTypeOperationResult[]> CreateOrReplace(
-            IEnumerable<TimeSeriesType> timeSeriesTypes,
+        public virtual Response<TimeSeriesHierarchyOperationResult[]> CreateOrReplace(
+            IEnumerable<TimeSeriesHierarchy> timeSeriesHierarchies,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(CreateOrReplace)}");
@@ -438,16 +438,16 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypes, nameof(timeSeriesTypes));
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchies, nameof(timeSeriesHierarchies));
 
-                var batchRequest = new TypesBatchRequest();
+                var batchRequest = new HierarchiesBatchRequest();
 
-                foreach (TimeSeriesType type in timeSeriesTypes)
+                foreach (TimeSeriesHierarchy hierarchy in timeSeriesHierarchies)
                 {
-                    batchRequest.Put.Add(type);
+                    batchRequest.Put.Add(hierarchy);
                 }
 
-                Response<TypesBatchResponse> executeBatchResponse = _typesRestClient
+                Response<HierarchiesBatchResponse> executeBatchResponse = _hierarchiesRestClient
                     .ExecuteBatch(batchRequest, null, cancellationToken);
 
                 IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
@@ -462,9 +462,9 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Deletes Time Series Insights types by type names asynchronously.
+        /// Deletes Time Series Insights hierarchies by hierarchy names asynchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeNames">List of names of the Time Series types to delete.</param>
+        /// <param name="timeSeriesHierarchyNames">List of names of the Time Series hierarchies to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
@@ -473,13 +473,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is empty.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is empty.
         /// </exception>
         public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteByNameAsync(
-            IEnumerable<string> timeSeriesTypeNames,
+            IEnumerable<string> timeSeriesHierarchyNames,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteByName)}");
@@ -487,19 +487,19 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeNames, nameof(timeSeriesTypeNames));
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyNames, nameof(timeSeriesHierarchyNames));
 
-                var batchRequest = new TypesBatchRequest
+                var batchRequest = new HierarchiesBatchRequest
                 {
-                    Delete = new TypesRequestBatchGetOrDelete()
+                    Delete = new HierarchiesRequestBatchGetDelete()
                 };
 
-                foreach (string timeSeriesName in timeSeriesTypeNames)
+                foreach (string timeSeriesName in timeSeriesHierarchyNames)
                 {
                     batchRequest.Delete.Names.Add(timeSeriesName);
                 }
 
-                Response<TypesBatchResponse> executeBatchResponse = await _typesRestClient
+                Response<HierarchiesBatchResponse> executeBatchResponse = await _hierarchiesRestClient
                     .ExecuteBatchAsync(batchRequest, null, cancellationToken)
                     .ConfigureAwait(false);
 
@@ -513,9 +513,9 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Deletes Time Series Insights types by type names synchronously.
+        /// Deletes Time Series Insights hierarchies by hierarchy names synchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeNames">List of names of the Time Series types to delete.</param>
+        /// <param name="timeSeriesHierarchyNames">List of names of the Time Series hierarchies to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
@@ -524,13 +524,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is empty.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is empty.
         /// </exception>
         public virtual Response<TimeSeriesOperationError[]> DeleteByName(
-            IEnumerable<string> timeSeriesTypeNames,
+            IEnumerable<string> timeSeriesHierarchyNames,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteByName)}");
@@ -538,19 +538,19 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeNames, nameof(timeSeriesTypeNames));
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyNames, nameof(timeSeriesHierarchyNames));
 
-                var batchRequest = new TypesBatchRequest
+                var batchRequest = new HierarchiesBatchRequest
                 {
-                    Delete = new TypesRequestBatchGetOrDelete()
+                    Delete = new HierarchiesRequestBatchGetDelete()
                 };
 
-                foreach (string timeSeriesName in timeSeriesTypeNames)
+                foreach (string timeSeriesName in timeSeriesHierarchyNames)
                 {
                     batchRequest.Delete.Names.Add(timeSeriesName);
                 }
 
-                Response<TypesBatchResponse> executeBatchResponse = _typesRestClient
+                Response<HierarchiesBatchResponse> executeBatchResponse = _hierarchiesRestClient
                     .ExecuteBatch(batchRequest, null, cancellationToken);
 
                 return Response.FromValue(executeBatchResponse.Value.Delete.ToArray(), executeBatchResponse.GetRawResponse());
@@ -563,9 +563,9 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Deletes Time Series Insights types by type Ids asynchronously.
+        /// Deletes Time Series Insights hierarchies by hierarchy Ids asynchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeIds">List of Time Series type Ids of the Time Series types to delete.</param>
+        /// <param name="timeSeriesHierarchyIds">List of Time Series hierarchy Ids of the Time Series hierarchies to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
@@ -574,13 +574,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
         /// </exception>
         public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteByIdAsync(
-            IEnumerable<string> timeSeriesTypeIds,
+            IEnumerable<string> timeSeriesHierarchyIds,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteById)}");
@@ -588,19 +588,19 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyIds, nameof(timeSeriesHierarchyIds));
 
-                var batchRequest = new TypesBatchRequest
+                var batchRequest = new HierarchiesBatchRequest
                 {
-                    Delete = new TypesRequestBatchGetOrDelete()
+                    Delete = new HierarchiesRequestBatchGetDelete()
                 };
 
-                foreach (string typeId in timeSeriesTypeIds)
+                foreach (string hierarchyId in timeSeriesHierarchyIds)
                 {
-                    batchRequest.Delete.TypeIds.Add(typeId);
+                    batchRequest.Delete.HierarchyIds.Add(hierarchyId);
                 }
 
-                Response<TypesBatchResponse> executeBatchResponse = await _typesRestClient
+                Response<HierarchiesBatchResponse> executeBatchResponse = await _hierarchiesRestClient
                     .ExecuteBatchAsync(batchRequest, null, cancellationToken)
                     .ConfigureAwait(false);
 
@@ -616,7 +616,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary>
         /// Deletes Time Series instances from the environment by Time Series Ids synchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeIds">List of Ids of the Time Series instances to delete.</param>
+        /// <param name="timeSeriesHierarchyIds">List of Ids of the Time Series instances to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
@@ -625,31 +625,31 @@ namespace Azure.IoT.TimeSeriesInsights
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         /// <exception cref="ArgumentNullException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is <c>null</c>.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
         /// </exception>
         public virtual Response<TimeSeriesOperationError[]> DeleteById(
-            IEnumerable<string> timeSeriesTypeIds,
+            IEnumerable<string> timeSeriesHierarchyIds,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteById)}");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyIds, nameof(timeSeriesHierarchyIds));
 
-                var batchRequest = new TypesBatchRequest
+                var batchRequest = new HierarchiesBatchRequest
                 {
-                    Delete = new TypesRequestBatchGetOrDelete()
+                    Delete = new HierarchiesRequestBatchGetDelete()
                 };
 
-                foreach (string typeId in timeSeriesTypeIds ?? Enumerable.Empty<string>())
+                foreach (string hierarchyId in timeSeriesHierarchyIds ?? Enumerable.Empty<string>())
                 {
-                    batchRequest.Delete.TypeIds.Add(typeId);
+                    batchRequest.Delete.HierarchyIds.Add(hierarchyId);
                 }
-                Response<TypesBatchResponse> executeBatchResponse = _typesRestClient
+                Response<HierarchiesBatchResponse> executeBatchResponse = _hierarchiesRestClient
                     .ExecuteBatch(batchRequest, null, cancellationToken);
                 return Response.FromValue(executeBatchResponse.Value.Delete.ToArray(), executeBatchResponse.GetRawResponse());
             }
