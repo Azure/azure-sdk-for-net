@@ -12,13 +12,16 @@ namespace Azure.Core.Tests
         where T : class
     {
         private T _value;
+        private bool _exceptionOnWait;
+
         protected ArmOperationTest()
         {
         }
 
-        public ArmOperationTest(T value)
+        public ArmOperationTest(T value, bool exceptionOnWait = false)
         {
             _value = value;
+            _exceptionOnWait = exceptionOnWait;
         }
 
         public override string Id => "testId";
@@ -36,21 +39,33 @@ namespace Azure.Core.Tests
 
         public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
+
             return new ValueTask<Response<T>>(Response.FromValue(_value, null));
         }
 
         public override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
+
             return new ValueTask<Response<T>>(Response.FromValue(_value, null));
         }
 
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
+
             return new ValueTask<Response>(Response.FromValue(_value, null) as Response);
         }
 
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
+
             return Response.FromValue(_value, null) as Response;
         }
     }
