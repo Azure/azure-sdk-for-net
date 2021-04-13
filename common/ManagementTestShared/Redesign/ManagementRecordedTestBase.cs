@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
+using Castle.DynamicProxy;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,8 @@ namespace Azure.ResourceManager.TestFramework
             }
             return null;
         }
+
+        protected TClient InstrumentClientExtension<TClient>(TClient client) => (TClient)InstrumentClient(typeof(TClient), client, new IInterceptor[] { new ManagementInterceptor(this) });
 
         protected ArmClient GetArmClient(ArmClientOptions clientOptions = default)
         {

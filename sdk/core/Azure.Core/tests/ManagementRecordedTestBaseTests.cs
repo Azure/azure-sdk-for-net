@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
@@ -133,6 +134,53 @@ namespace Azure.Core.Tests.Management
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             Assert.AreEqual("success", testResource.Method());
+        }
+
+        [Test]
+        public async Task ValidateExceptionResponse()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResourceOperations rgOp = client.GetTestResourceOperations();
+            try
+            {
+                var testResourceOp = await rgOp.GetArmResponseExceptionAsync();
+                Assert.Fail("Argument exception wasn't thrown");
+            }
+            catch (ArgumentException)
+            {
+            }
+        }
+
+        [Test]
+        public async Task ValidateExceptionOperation()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResourceOperations rgOp = client.GetTestResourceOperations();
+            try
+            {
+                var testResourceOp = await rgOp.GetArmOperationExceptionAsync();
+                var testResource = await testResourceOp.WaitForCompletionAsync();
+                Assert.Fail("Argument exception wasn't thrown");
+            }
+            catch (ArgumentException)
+            {
+            }
+        }
+
+        [Test]
+        public async Task ValidateExceptionOperationWaitForCompletion()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResourceOperations rgOp = client.GetTestResourceOperations();
+            var testResourceOp = await rgOp.GetArmOperationAsync(true);
+            try
+            {
+                var testResource = await testResourceOp.WaitForCompletionAsync();
+                Assert.Fail("Argument exception wasn't thrown");
+            }
+            catch (ArgumentException)
+            {
+            }
         }
     }
 }
