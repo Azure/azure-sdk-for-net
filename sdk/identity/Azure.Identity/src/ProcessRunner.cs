@@ -25,6 +25,7 @@ namespace Azure.Identity
 
         public ProcessRunner(IProcess process, TimeSpan timeout, CancellationToken cancellationToken)
         {
+            AzureIdentityEventSource.Singleton.ProcessRunnerInformational($"Running process `{process.StartInfo.FileName}' with arguments {string.Join(", ", process.StartInfo.Arguments)}");
             _process = process;
             _timeout = timeout;
 
@@ -152,6 +153,7 @@ namespace Azure.Identity
 
         private void TrySetException(Exception exception)
         {
+            AzureIdentityEventSource.Singleton.ProcessRunnerError(exception.ToString());
             _tcs.TrySetException(exception);
         }
 

@@ -2,13 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Diagnostics;
+using Azure.Core.Tests;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -28,11 +33,23 @@ namespace Azure.Identity.Tests
         public async Task ProcessRunnerSucceeded()
         {
             var output = "Test output";
-            var process = new TestProcess { Output = output };
+            var fileName = "someFileName.exe";
+            var args = "arg1 arg2";
+            var pi = new ProcessStartInfo(fileName, args);
+            var process = new TestProcess {StartInfo = pi, Output = output};
+            string result;
+            string log = string.Empty;
+            using AzureEventSourceListener listener = new AzureEventSourceListener((args, s) =>
+            {
+                log = $"{args.EventName} {s}";
+            }, EventLevel.Verbose);
             using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
-            var result = await Run(runner);
+            result = await Run(runner);
 
             Assert.AreEqual(output, result);
+            Assert.That(log, Contains.Substring(fileName));
+            Assert.That(log, Contains.Substring(args));
+            Assert.That(log, Contains.Substring(nameof(AzureIdentityEventSource.ProcessRunnerInformational)));
         }
 
         [Test]
@@ -73,7 +90,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void ProcessRunnerProcessFailsToStart()
         {
-            var process = new TestProcess { FailedToStart = true };
+            var process = new TestProcess {FailedToStart = true};
             using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
 
             Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
@@ -83,7 +100,7 @@ namespace Azure.Identity.Tests
         public void ProcessRunnerCanceledByTimeout()
         {
             var cts = new CancellationTokenSource();
-            var process = new TestProcess { Output =  "Test output", Timeout = 5000 };
+            var process = new TestProcess {Output = "Test output", Timeout = 5000};
             using var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(100), cts.Token);
 
             Assert.CatchAsync<OperationCanceledException>(async () => await Run(runner));
@@ -93,7 +110,7 @@ namespace Azure.Identity.Tests
         public void ProcessRunnerCanceledByCancellationToken()
         {
             var cts = new CancellationTokenSource();
-            var process = new TestProcess { Output =  "Test output", Timeout = 5000 };
+            var process = new TestProcess {Output = "Test output", Timeout = 5000};
             using var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cts.Token);
             cts.CancelAfter(100);
 
@@ -103,7 +120,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void ProcessRunnerCreatedOnCanceled()
         {
-            var process = new TestProcess { Output =  "Test output", Timeout = 5000 };
+            var process = new TestProcess {Output = "Test output", Timeout = 5000};
             var cancellationToken = new CancellationToken(true);
             using var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cancellationToken);
 
@@ -114,7 +131,7 @@ namespace Azure.Identity.Tests
         public void ProcessRunnerCanceledBeforeRun()
         {
             var cts = new CancellationTokenSource();
-            var process = new TestProcess { Output =  "Test output", Timeout = 5000 };
+            var process = new TestProcess {Output = "Test output", Timeout = 5000};
             using var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(5000), cts.Token);
 
             cts.Cancel();
@@ -126,7 +143,7 @@ namespace Azure.Identity.Tests
         public async Task ProcessRunnerCanceledFinished()
         {
             var cts = new CancellationTokenSource();
-            var process = new TestProcess { Output =  "Test output" };
+            var process = new TestProcess {Output = "Test output"};
             using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(5000), cts.Token);
             await Run(runner);
             cts.Cancel();
@@ -135,12 +152,19 @@ namespace Azure.Identity.Tests
         [Test]
         public void ProcessRunnerFailedWithErrorMessage()
         {
+            string log = string.Empty;
+            using AzureEventSourceListener listener = new AzureEventSourceListener((args, s) =>
+            {
+                log = $"{args.EventName} {s}";
+            }, EventLevel.Verbose);
             var error = "Test error";
-            var process = new TestProcess { Error = error };
+            var process = new TestProcess {Error = error};
             using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
 
             var exception = Assert.CatchAsync<InvalidOperationException>(async () => await Run(runner));
             Assert.AreEqual(error, exception.Message);
+            Assert.That(log, Contains.Substring(error));
+            Assert.That(log, Contains.Substring(nameof(AzureIdentityEventSource.ProcessRunnerError)));
         }
 
         [Test]
@@ -157,7 +181,8 @@ namespace Azure.Identity.Tests
         [Test]
         public void ProcessRunnerRealProcessFailedWithLargeErrorMessage()
         {
-            var error = string.Concat(Enumerable.Repeat("Test error", 500));;
+            var error = string.Concat(Enumerable.Repeat("Test error", 500));
+            ;
             var process = CreateRealProcess($"echo {error} 1>&2 & exit 1", $">&2 echo {error} & exit 1");
             using var runner = new ProcessRunner(process, TimeSpan.FromSeconds(30), default);
 
@@ -169,7 +194,7 @@ namespace Azure.Identity.Tests
         public void ProcessRunnerFailedOnKillProcess()
         {
             var output = "Test output";
-            var process = new TestProcess { Output = output, ExceptionOnProcessKill = new Win32Exception(1), Timeout = 5000 };
+            var process = new TestProcess {Output = output, ExceptionOnProcessKill = new Win32Exception(1), Timeout = 5000};
             using var runner = new ProcessRunner(process, TimeSpan.FromMilliseconds(50), default);
 
             var exception = Assert.CatchAsync<Win32Exception>(async () => await Run(runner));
