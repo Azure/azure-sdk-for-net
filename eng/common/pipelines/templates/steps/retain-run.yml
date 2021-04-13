@@ -6,7 +6,6 @@ parameters:
 steps:
   - task: PowerShell@2
     displayName: Retain pipeline run
-    condition: ${{ parameters.Condition }}
     inputs:
       pwsh: true
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Add-RetentionLease.ps1
