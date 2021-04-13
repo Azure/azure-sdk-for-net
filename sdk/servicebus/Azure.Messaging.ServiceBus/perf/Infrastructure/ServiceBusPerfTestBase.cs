@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Perf
 
         // until https://github.com/Azure/azure-sdk-for-net/issues/17248 is addressed we have to estimate how many
         // messages may be needed
-        private const int s_operationCountEstimate = 1000;
+        private const int OperationCountEstimate = 1000;
 
         protected byte[] MessageBody { get; }
 
@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Perf
         {
             MessageBody = ServiceBusTestBase.GetRandomBuffer(options.Size);
             _useSessions = useSessions;
-            SeededMessageCount = options.Count * s_operationCountEstimate;
+            SeededMessageCount = options.Count * OperationCountEstimate;
         }
 
         protected async Task SeedMessagesAsync(int? messageCount = default)
