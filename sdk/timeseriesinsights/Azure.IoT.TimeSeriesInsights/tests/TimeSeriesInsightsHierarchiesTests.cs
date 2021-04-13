@@ -29,7 +29,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             var tsiHiearchyNamePrefix = "hierarchy";
             var tsiSourceNamePrefix = "hierarchySource";
             var tsiHierarchyName = Recording.GenerateAlphaNumericId(tsiHiearchyNamePrefix);
-            var hiearchyNames = new List<string>
+            var hierarchyNames = new List<string>
             {
                 tsiHierarchyName
             };
@@ -81,7 +81,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 // Update hierarchies with adding a source and set Id
                 var updateTsiName = Recording.GenerateAlphaNumericId(tsiHiearchyNamePrefix);
-                hiearchyNames.Add(updateTsiName);
+                hierarchyNames.Add(updateTsiName);
 
                 hierarchySource.InstanceFieldNames.Add(Recording.GenerateAlphaNumericId(tsiSourceNamePrefix));
                 var tsiHierarchyToAdd = new TimeSeriesHierarchy(updateTsiName, hierarchySource);
@@ -130,9 +130,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 try
                 {
                     Response<TimeSeriesOperationError[]> deleteHierarchiesResponse = await client
-                    .Hierarchies
-                    .DeleteByNameAsync(hiearchyNames)
-                    .ConfigureAwait(false);
+                        .Hierarchies
+                        .DeleteByNameAsync(hierarchyNames)
+                        .ConfigureAwait(false);
                     // Assert that the response array does not have any error object set
                     deleteHierarchiesResponse.Value.Should().OnlyContain((errorResult) => errorResult == null);
                 }
