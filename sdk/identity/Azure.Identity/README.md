@@ -126,6 +126,17 @@ var credential = new ChainedTokenCredential(new ManagedIdentityCredential(), new
 var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
 ```
 
+## Managed Identity Support
+
+The [Managed identity authentication](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) is supported via either the `DefaultAzureCredential` or the `ManagedIdentityCredential` directly for the following Azure Services:
+* [Azure Virtual Machines](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token)
+* [Azure App Service](https://docs.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet)
+* [Azure Kubernetes Service](https://docs.microsoft.com/azure/aks/use-managed-identity)
+* [Azure Cloud Shell](https://docs.microsoft.com/azure/cloud-shell/msi-authorization)
+* [Azure Arc](https://docs.microsoft.com/azure/azure-arc/servers/managed-identity-authentication)
+* [Azure Service Fabric](https://docs.microsoft.com/azure/service-fabric/concepts-managed-identity)
+
+
 ## Credential Classes
 ### Authenticating Azure Hosted Applications
 |credential  | usage
@@ -241,13 +252,9 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 ## Next steps
 
 ### Client libraries supporting authentication with Azure Identity
-Currently the following client libraries support authenticating with `TokenCredential` and the Azure Identity library.  You can learn more about their use, and find additional documentation on use of these client libraries along samples with can be found in the links below.
 
-- [Azure.Messaging.EventHubs][eventhubs_client_library]
-- [Azure.Security.KeyVault.Keys][keys_client_library]
-- [Azure.Security.KeyVault.Secrets][secrets_client_library]
-- [Azure.Storage.Blobs][blobs_client_library]
-- [Azure.Storage.Queues][queues_client_library]
+Many of the client libraries listed [here](https://azure.github.io/azure-sdk/releases/latest/dotnet.html) support authenticating with `TokenCredential` and the Azure Identity library.
+There you will also find links where you can learn more about their use, including additional documentation and samples.
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
