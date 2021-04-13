@@ -6,6 +6,16 @@ extends:
     ServiceDirectory: keyvault
     MaxParallel: 5
     TimeoutInMinutes: 180
+    CloudConfig:
+      Public:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+      Canary:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: 'eastus2euap'
+        # Managed HSM test resources are expensive and provisioning has not been reliable.
+        # Given test coverage of non-canary regions we probably don't need to test in canary.
+        MatrixFilters:
+         - ArmTemplateParameters=^(?!.*enableHsm.*true)
     AdditionalMatrixConfigs:
       - Name: keyvault_test_matrix_addons
         Path: sdk/keyvault/platform-matrix.json
