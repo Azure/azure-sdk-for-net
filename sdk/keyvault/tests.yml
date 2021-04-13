@@ -6,6 +6,7 @@ extends:
     ServiceDirectory: keyvault
     MaxParallel: 5
     TimeoutInMinutes: 180
+    Clouds: 'Public,Preview,UsGov,China,Canary'
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
