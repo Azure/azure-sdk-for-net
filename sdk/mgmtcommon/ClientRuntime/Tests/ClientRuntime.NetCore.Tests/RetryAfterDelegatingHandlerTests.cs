@@ -106,7 +106,6 @@ namespace ClientRuntime.NetCore.Tests
                 MaxRetries = 3
             };
 
-            // Setup HttpClient to timeout after 5 seconds.
             var httpClient = new HttpClient(retryHandler, false);
 
             // Make a request using the HttpClient.
