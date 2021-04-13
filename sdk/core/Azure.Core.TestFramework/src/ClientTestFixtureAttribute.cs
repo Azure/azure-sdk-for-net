@@ -26,7 +26,7 @@ namespace Azure.Core.TestFramework
         private readonly object[] _additionalParameters;
         private readonly object[] _serviceVersions;
         private int? _actualPlaybackServiceVersion;
-        private int[] _actualLiveServiceVersions;
+        private int[] _actualLiveServiceVersions = new int[0];
 
         /// <summary>
         /// Specifies which service version is run during recording/playback runs.
@@ -96,9 +96,33 @@ namespace Azure.Core.TestFramework
         {
             var result = new List<(TestFixtureAttribute Suite, bool IsAsync, object ServiceVersion, object Parameter)>();
 
-            if (_serviceVersions.Any())
+            SortedSet<int> relevantServiceVersions;
+            if (TestEnvironment.IsRunningInCI && RecordedTestUtilities.GetModeFromEnvironment() == RecordedTestMode.Live)
             {
-                foreach (object serviceVersion in _serviceVersions)
+                relevantServiceVersions = new SortedSet<int>(_actualLiveServiceVersions);
+            }
+            else if (TestEnvironment.IsRunningInCI && RecordedTestUtilities.GetModeFromEnvironment() == RecordedTestMode.Playback)
+            {
+                relevantServiceVersions = new SortedSet<int>();
+                if (_actualPlaybackServiceVersion.HasValue)
+                {
+                    relevantServiceVersions.Add(_actualPlaybackServiceVersion.Value);
+                }
+            }
+            else
+            {
+                relevantServiceVersions = new SortedSet<int>(_actualLiveServiceVersions);
+                if (_actualPlaybackServiceVersion.HasValue)
+                {
+                    relevantServiceVersions.Add(_actualPlaybackServiceVersion.Value);
+                }
+            }
+
+            var serviceVersions = _serviceVersions.Where(sv => relevantServiceVersions.Contains(Convert.ToInt32(sv)));
+
+            if (serviceVersions.Any())
+            {
+                foreach (object serviceVersion in serviceVersions)
                 {
                     if (_additionalParameters.Any())
                     {
