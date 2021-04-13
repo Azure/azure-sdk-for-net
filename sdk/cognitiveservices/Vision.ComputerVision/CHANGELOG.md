@@ -1,5 +1,10 @@
 # Release History
 
+## 7.1.0-beta.1 (Unreleased)
+
+
+## 6.1.0-beta.1 (Unreleased)
+
 ## 7.0.0 (2021-04-12)
 
 Supports v3.2 Cognitive Services Computer Vision API endpoints.
@@ -14,8 +19,6 @@ Supports v3.2 Cognitive Services Computer Vision API endpoints.
 * Updated the Tags visual feature for Analyze Image operation and the Tag Image operation
 * Updated the error response format
 
-## 6.1.0-beta.1 (Unreleased)
-
 ## 6.0.0 (2020-10-09)
 
 Supports v3.1 Cognitive Services Computer Vision API endpoints.
@@ -27,3 +30,5 @@ Supports v3.1 Cognitive Services Computer Vision API endpoints.
 * Updating the description visual feature for analyze image method and the describe image method.
 
 ## 6.0.0-preview.1 (2020-07-07)
+
+

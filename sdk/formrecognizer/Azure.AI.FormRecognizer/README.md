@@ -25,7 +25,7 @@ dotnet add package Azure.AI.FormRecognizer
 * An existing Cognitive Services or Form Recognizer resource.
 
 #### Create a Cognitive Services or Form Recognizer resource
-Form Recognizer supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Form Recognizer access only, create a Form Recognizer resource.
+Form Recognizer supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Form Recognizer access only, create a Form Recognizer resource. Please note that you will need a single-service resource if you intend to use [Azure Active Directory authentication](#create-formrecognizerclient-with-azure-active-directory-credential).
 
 You can create either resource using: 
 
@@ -57,9 +57,24 @@ For more information about creating the resource or how to get the location and 
 ### Authenticate the client
 In order to interact with the Form Recognizer service, you'll need to create an instance of the [`FormRecognizerClient`][form_recognizer_client_class] class.  You will need an **endpoint** and an **API key** to instantiate a client object.  
 
+#### Get the endpoint
+
+You can obtain the endpoint from the resource information in the [Azure Portal][azure_portal].
+
+Either a regional endpoint or a custom subdomain can be used for authentication. They are formatted as follows:
+
+```
+Regional endpoint: https://<region>.api.cognitive.microsoft.com/
+Custom subdomain: https://<resource-name>.cognitiveservices.azure.com/
+```
+
+A regional endpoint is the same for every resource in a region. A complete list of supported regional endpoints can be consulted [here][regional_endpoints]. Please note that regional endpoints do not support AAD authentication.
+
+A custom subdomain, on the other hand, is a name that is unique to the Form Recognizer resource. They can only be used by [single-service resources][cognitive_resource_portal].
+
 #### Get API Key
 
-You can obtain the endpoint and API key from the resource information in the [Azure Portal][azure_portal].
+You can obtain the API key from the resource information in the [Azure Portal][azure_portal].
 
 Alternatively, you can use the [Azure CLI][azure_cli] snippet below to get the API key from the Form Recognizer resource.
 
@@ -590,6 +605,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
+[regional_endpoints]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-custom-subdomains#is-there-a-list-of-regional-endpoints
 
 
 [labeling_tool]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool

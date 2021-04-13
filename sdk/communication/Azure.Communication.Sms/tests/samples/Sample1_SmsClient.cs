@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -14,34 +12,10 @@ namespace Azure.Communication.Sms.Tests.samples
     /// <summary>
     /// Samples that are used in the README.md file.
     /// </summary>
-    public partial class Sample1_SmsClient : RecordedTestBase<SmsClientTestEnvironment>
+    public partial class Sample1_SmsClient : SmsClientLiveTestBase
     {
         public Sample1_SmsClient(bool isAsync) : base(isAsync)
-            => Sanitizer = new SmsClientRecordedTestSanitizer();
-
-        public SmsClient CreateSmsClient()
         {
-            var connectionString = TestEnvironment.LiveTestConnectionString;
-            SmsClient client = new SmsClient(connectionString, InstrumentClientOptions(new SmsClientOptions()));
-
-            #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
-            //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-            //@@SmsClient client = new SmsClient(connectionString);
-            #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
-            return InstrumentClient(client);
-        }
-
-        public SmsClient CreateSmsClientWithToken()
-        {
-            Uri endpoint = TestEnvironment.LiveTestEndpoint;
-
-            #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
-            //@@string endpoint = "<endpoint_url>";
-            TokenCredential tokenCredential = new DefaultAzureCredential();
-            /*@@*/SmsClient client = new SmsClient(endpoint, tokenCredential, InstrumentClientOptions(new SmsClientOptions()));
-            //@@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
-            #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
-            return InstrumentClient(client);
         }
 
         [Test]

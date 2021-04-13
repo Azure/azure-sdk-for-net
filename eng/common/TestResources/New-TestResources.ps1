@@ -212,12 +212,12 @@ try {
             if ($currentSubcriptionId -ne $SubscriptionId) {
                 Log "Selecting subscription '$SubscriptionId'"
                 $null = Select-AzSubscription -Subscription $SubscriptionId
-        
+
                 $exitActions += {
                     Log "Selecting previous subscription '$currentSubcriptionId'"
                     $null = Select-AzSubscription -Subscription $currentSubcriptionId
                 }
-        
+
                 # Update the context.
                 $context = Get-AzContext
             }
@@ -459,7 +459,7 @@ try {
                 if ($CI) {
                     $DebugPreference = 'Continue'
                 }
-                New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters -Mode Complete -Force:$Force
+                New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters -Force:$Force
             } catch {
                 Write-Output @'
 #####################################################
