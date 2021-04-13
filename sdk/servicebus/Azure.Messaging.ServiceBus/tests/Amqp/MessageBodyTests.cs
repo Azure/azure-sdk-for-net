@@ -11,22 +11,22 @@ using NUnit.Framework;
 namespace Azure.Messaging.ServiceBus.Tests.Amqp
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="Body" />
+    ///   The suite of tests for the <see cref="MessageBody" />
     ///   class.
     /// </summary>
     ///
     [TestFixture]
-    public class BodyTests
+    public class MessageBodyTests
     {
         [Test]
         public void ManagesSingleReadOnlyMemoryWithoutCopying()
         {
             ReadOnlyMemory<byte> singleReadOnlyMemory = new byte[] { 1, 2, 3 };
 
-            var message = new AmqpMessageBody(Body.FromReadOnlyMemorySegment(singleReadOnlyMemory));
+            var message = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegment(singleReadOnlyMemory));
 
             message.TryGetData(out var body);
-            ReadOnlyMemory<byte> fromReadOnlyMemorySegments = Body.FromReadOnlyMemorySegments(body);
+            ReadOnlyMemory<byte> fromReadOnlyMemorySegments = MessageBody.FromReadOnlyMemorySegments(body);
 
             Assert.IsTrue(singleReadOnlyMemory.Equals(fromReadOnlyMemorySegments));
         }
@@ -37,14 +37,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             ReadOnlyMemory<byte> firstSegment = new byte[] { 1, 2, 3 };
             ReadOnlyMemory<byte> secondSegment = new byte[] { 4, 5, 6 };
 
-            var message = new AmqpMessageBody(Body.FromReadOnlyMemorySegments(new[]{ firstSegment, secondSegment }));
+            var message = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegments(new[]{ firstSegment, secondSegment }));
 
             message.TryGetData(out var body);
             var firstSegmentBeforeConversion = body.ElementAt(0);
             var secondSegmentBeforeConversion = body.ElementAt(1);
 
-            ReadOnlyMemory<byte> fromReadOnlyMemorySegments = Body.FromReadOnlyMemorySegments(body);
-            ReadOnlyMemory<byte> convertedASecondTime = Body.FromReadOnlyMemorySegments(body);
+            ReadOnlyMemory<byte> fromReadOnlyMemorySegments = MessageBody.FromReadOnlyMemorySegments(body);
+            ReadOnlyMemory<byte> convertedASecondTime = MessageBody.FromReadOnlyMemorySegments(body);
 
             var firstSegmentAfterConversion = body.ElementAt(0);
             var secondSegmentAfterConversion = body.ElementAt(1);
@@ -65,7 +65,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             byte[] firstSegment = new byte[] {1, 2, 3};
             byte[]  secondSegment = new byte[] { 4, 5, 6 };
 
-            var message = new AmqpMessageBody(Body.FromDataSegments(new[]
+            var message = new AmqpMessageBody(MessageBody.FromDataSegments(new[]
             {
                 new Data {Value = new ArraySegment<byte>(firstSegment) }, new Data {Value = new ArraySegment<byte>(secondSegment) }
             }));
@@ -74,8 +74,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var firstSegmentBeforeConversion = body.ElementAt(0);
             var secondSegmentBeforeConversion = body.ElementAt(1);
 
-            ReadOnlyMemory<byte> fromReadOnlyMemorySegments = Body.FromReadOnlyMemorySegments(body);
-            ReadOnlyMemory<byte> convertedASecondTime = Body.FromReadOnlyMemorySegments(body);
+            ReadOnlyMemory<byte> fromReadOnlyMemorySegments = MessageBody.FromReadOnlyMemorySegments(body);
+            ReadOnlyMemory<byte> convertedASecondTime = MessageBody.FromReadOnlyMemorySegments(body);
 
             var firstSegmentAfterConversion = body.ElementAt(0);
             var secondSegmentAfterConversion = body.ElementAt(1);

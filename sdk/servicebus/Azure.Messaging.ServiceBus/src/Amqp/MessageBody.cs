@@ -14,25 +14,25 @@ namespace Azure.Messaging.ServiceBus.Amqp
     /// The body abstractions allow to optimize several use cases of <see cref="ServiceBusMessage"/> and
     /// <see cref="ServiceBusReceivedMessage"/> to make sure body memory is only converted when needed and as little as possible.
     /// </summary>
-    internal abstract class Body : IEnumerable<ReadOnlyMemory<byte>>
+    internal abstract class MessageBody : IEnumerable<ReadOnlyMemory<byte>>
     {
-        public static Body FromReadOnlyMemorySegments(IEnumerable<ReadOnlyMemory<byte>> segments)
+        public static MessageBody FromReadOnlyMemorySegments(IEnumerable<ReadOnlyMemory<byte>> segments)
         {
             return segments switch
             {
-                Body bodyMemory => bodyMemory,
-                _ => new CopyingOnConversionBody(segments)
+                MessageBody bodyMemory => bodyMemory,
+                _ => new CopyingOnConversionMessageBody(segments)
             };
         }
 
-        public static Body FromReadOnlyMemorySegment(ReadOnlyMemory<byte> segment)
+        public static MessageBody FromReadOnlyMemorySegment(ReadOnlyMemory<byte> segment)
         {
-            return new NonCopyingSingleSegmentBody(segment);
+            return new NonCopyingSingleSegmentMessageBody(segment);
         }
 
-        public static Body FromDataSegments(IEnumerable<Data> segments)
+        public static MessageBody FromDataSegments(IEnumerable<Data> segments)
         {
-            return new EagerCopyingBody(segments ?? Enumerable.Empty<Data>());
+            return new EagerCopyingMessageBody(segments ?? Enumerable.Empty<Data>());
         }
 
         protected abstract ReadOnlyMemory<byte> WrittenMemory { get; }
@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return GetEnumerator();
         }
 
-        public static implicit operator ReadOnlyMemory<byte>(Body memory)
+        public static implicit operator ReadOnlyMemory<byte>(MessageBody memory)
         {
             return memory.WrittenMemory;
         }
@@ -54,9 +54,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// path by always bridging into enumerable like behavior without the additional overhead of underlying lists and copying.
         /// This is the common path for ServiceBusMessage when the Body is set via constructor or the Body property.
         /// </summary>
-        private sealed class NonCopyingSingleSegmentBody : Body
+        private sealed class NonCopyingSingleSegmentMessageBody : MessageBody
         {
-            public NonCopyingSingleSegmentBody(ReadOnlyMemory<byte> dataSegment)
+            public NonCopyingSingleSegmentMessageBody(ReadOnlyMemory<byte> dataSegment)
             {
                 WrittenMemory = dataSegment;
             }
@@ -73,7 +73,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Copies the provided segments into a single continuous buffer on demand while still keeping around a list of the individual copied segments.
         /// This path is hit when users modify the body via the underlying AmqpAnnotatedMessage.
         /// </summary>
-        private sealed class CopyingOnConversionBody : Body
+        private sealed class CopyingOnConversionMessageBody : MessageBody
         {
             private ArrayBufferWriter<byte> _writer;
             private IList<ReadOnlyMemory<byte>> _segments;
@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
             }
 
-            internal CopyingOnConversionBody(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
+            internal CopyingOnConversionMessageBody(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
             {
                 _lazySegments = dataSegments;
             }
@@ -123,12 +123,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Eagerly copies the provided data segments into a single continuous buffer while still keeping around a list of the individual copied segments.
         /// Important for the receive path in order to make sure the buffers managed by the underlying AMQP library can be released on dispose.
         /// </summary>
-        private sealed class EagerCopyingBody : Body
+        private sealed class EagerCopyingMessageBody : MessageBody
         {
             private ArrayBufferWriter<byte> _writer;
             private IList<ReadOnlyMemory<byte>> _segments;
 
-            internal EagerCopyingBody(IEnumerable<Data> dataSegments)
+            internal EagerCopyingMessageBody(IEnumerable<Data> dataSegments)
             {
                 foreach (var segment in dataSegments)
                 {
