@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Generic representation of a tracked resource.  All tracked resources should extend this class
     /// </summary>
-    [ReferenceType]
+    [ReferenceType(typeof(TenantResourceIdentifier))]
     public abstract partial class TrackedResource<TIdentifier> : Resource<TIdentifier> where TIdentifier : TenantResourceIdentifier
     {
         private IDictionary<string, string> _tag = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
