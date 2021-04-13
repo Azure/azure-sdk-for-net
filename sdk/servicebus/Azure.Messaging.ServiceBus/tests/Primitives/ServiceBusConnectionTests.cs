@@ -538,7 +538,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 return Task.CompletedTask;
             }
 
-            public override TransportReceiver CreateReceiver(string entityPath, ServiceBusRetryPolicy retryPolicy, ServiceBusReceiveMode receiveMode, uint prefetchCount, string identifier, string sessionId, bool isSessionReceiver)
+            public override TransportReceiver CreateReceiver(string entityPath, ServiceBusRetryPolicy retryPolicy, ServiceBusReceiveMode receiveMode, uint prefetchCount, string identifier, string sessionId, bool isSessionReceiver, CancellationToken cancellationToken)
             {
                 throw new NotImplementedException();
             }

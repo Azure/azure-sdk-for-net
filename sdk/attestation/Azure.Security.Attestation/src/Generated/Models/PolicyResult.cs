@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary> The result of a policy certificate modification. </summary>
     public partial class PolicyResult

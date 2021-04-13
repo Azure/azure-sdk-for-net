@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary> Specifies the type of the data encoded contained within the &quot;data&quot; field of a &quot;RuntimeData&quot; or &quot;InitTimeData&quot; object. </summary>
     internal readonly partial struct DataType : IEquatable<DataType>

@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
@@ -117,6 +119,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             sbMessage.SequenceNumber = 1L;
 
             Assert.AreEqual(3, sbMessage.DeliveryCount);
+        }
+
+        [Test]
+        public void CanParseDictionaryValueSection()
+        {
+            var amqpMessage = AmqpMessage.Create(new AmqpValue { Value = new Dictionary<string, string> { { "key", "value" } } });
+            var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+            var body = sbMessage.GetRawAmqpMessage().Body;
+            Assert.IsTrue(body.TryGetValue(out object val));
+            Assert.AreEqual("value", ((Dictionary<string, string>)val)["key"]);
+
+            amqpMessage = AmqpMessage.Create(new AmqpValue { Value = new AmqpMap { { new MapKey("key"), "value" } } });
+            sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+            body = sbMessage.GetRawAmqpMessage().Body;
+            Assert.IsTrue(body.TryGetValue(out val));
+            Assert.AreEqual("value", ((Dictionary<string, object>)val)["key"]);
         }
     }
 }

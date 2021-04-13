@@ -1,8 +1,12 @@
 # Release History
 
-## 12.9.0-beta.3 (Unreleased)
+## 12.9.0-beta.4 (Unreleased)
 - Added support for service version 2020-08-04.
 - Added support for Blob Query Parquet input format.
+- Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a BlobSasBuilder parameter.
+
+## 12.9.0-beta.3 (2021-04-09)
+- This release contains bug fixes to improve quality.
 
 ## 12.8.1 (2021-03-29)
 - Fixed bug where ClientDiagnostics's DiagnosticListener was leaking resources.

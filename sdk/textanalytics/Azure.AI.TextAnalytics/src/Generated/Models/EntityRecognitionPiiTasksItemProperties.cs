@@ -12,5 +12,18 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The Components15X8E9LSchemasTasksstatePropertiesTasksPropertiesEntityrecognitionpiitasksItemsAllof1. </summary>
     internal partial class EntityRecognitionPiiTasksItemProperties
     {
+        /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItemProperties. </summary>
+        internal EntityRecognitionPiiTasksItemProperties()
+        {
+        }
+
+        /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItemProperties. </summary>
+        /// <param name="results"> . </param>
+        internal EntityRecognitionPiiTasksItemProperties(PiiEntitiesResult results)
+        {
+            Results = results;
+        }
+
+        public PiiEntitiesResult Results { get; }
     }
 }

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary> Defines the &quot;initialization time data&quot; used to provision the attestation target for use by the MAA. </summary>
     internal partial class InitTimeData
