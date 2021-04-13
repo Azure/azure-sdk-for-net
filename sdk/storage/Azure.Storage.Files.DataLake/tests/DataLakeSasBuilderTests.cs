@@ -27,7 +27,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder();
 
-            // No Identifier, Permissions and ExpiresOn not present.
+            // No Identifier, Permissions and ExpiresOn not present. Touch.
             TestHelper.AssertExpectedException(
                 () => sasBuilder.EnsureState(),
                 new InvalidOperationException("SAS is missing required parameter: Permissions"));
