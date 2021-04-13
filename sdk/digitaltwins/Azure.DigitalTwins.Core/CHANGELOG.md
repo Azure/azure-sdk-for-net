@@ -87,15 +87,3 @@ Note that these breaking changes are only breaking changes from the **preview** 
 ### New features
 
 - Initial preview of Azure.DigitalTwins.Core SDK
-
-### Breaking changes
-
-- N/A
-
-### Added
-
-- N/A
-
-### Fixes and improvements
-
-- N/A
