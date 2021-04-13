@@ -12,8 +12,8 @@ using Azure.Test.Perf;
 namespace Azure.Messaging.EventHubs.Perf.Scenarios
 {
     /// <summary>
-    ///   The performance test scenario focused on publishing events
-    ///   to an Event Hubs partition.
+    ///   The performance test scenario focused on reading events from an
+    ///   Event Hub partition using the <see cref="PartitionReceiver" />.
     /// </summary>
     ///
     /// <seealso cref="ReadPerfTest" />
