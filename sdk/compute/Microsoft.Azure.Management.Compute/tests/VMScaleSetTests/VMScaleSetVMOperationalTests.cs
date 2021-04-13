@@ -343,6 +343,51 @@ namespace Compute.Tests
 
         /// <summary>
         /// Covers following operations:
+        /// 1. Create VM Scale Set with UserData
+        /// 2. Validate UserData is returned when calling GET VMSS $expand=UserData and GET VMSS VM $expand=userData
+        /// 3. Modify existing UserData on VM scaleset
+        /// 4. Modify existing UserData on VMSS instance
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetVMOperations_UserData()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                instanceId = "0";
+                bool passed = false;
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                    InitializeCommon(context);
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
+                        storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true,
+                        faultDomainCount: 1, bootDiagnosticsProfile: GetManagedDiagnosticsProfile(), userData: DummyUserData1);
+
+                    var getVmssResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmScaleSet.Name, expand: "userData");
+                    Assert.Equal(DummyUserData1, getVmssResponse.VirtualMachineProfile.UserData);
+
+                    var getVmssVMResponse = m_CrpClient.VirtualMachineScaleSetVMs.Get(rgName, vmScaleSet.Name, instanceId, expand: InstanceViewTypes.UserData);
+                    Assert.Equal(DummyUserData1, getVmssVMResponse.UserData);
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        /// Covers following operations:
         /// Create RG
         /// Create VM Scale Set with managed boot diagnostics enabled
         /// RetrieveBootDiagnosticsData for a VM instance

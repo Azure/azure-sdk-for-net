@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using Xunit;
 using CM=Microsoft.Azure.Management.Compute.Models;
 using NM=Microsoft.Azure.Management.Network.Models;
@@ -28,6 +29,9 @@ namespace Compute.Tests
         protected const string TestPrefix = "crptestar";
         protected const string PLACEHOLDER = "[PLACEHOLDEr1]";
         protected const string ComputerName = "Test";
+
+        protected static readonly string DummyUserData1 = Convert.ToBase64String(Encoding.UTF8.GetBytes("Some User Data"));
+        protected static readonly string DummyUserData2 = Convert.ToBase64String(Encoding.UTF8.GetBytes("Some new User Data"));
 
         protected ResourceManagementClient m_ResourcesClient;
         protected ComputeManagementClient m_CrpClient;

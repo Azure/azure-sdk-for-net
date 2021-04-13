@@ -3,9 +3,6 @@ using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace Compute.Tests
@@ -18,8 +15,6 @@ namespace Compute.Tests
     /// </summary>
     public class UserDataTests : VMTestBase
     {
-        static readonly string DummyUserData1 = Convert.ToBase64String(Encoding.UTF8.GetBytes("Some User Data"));
-        static readonly string DummyUserData2 = Convert.ToBase64String(Encoding.UTF8.GetBytes("Some new User Data"));
         [Fact]
         public void TestUserData()
         {
