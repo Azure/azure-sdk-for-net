@@ -75,6 +75,10 @@ namespace Azure.Test.Perf
             }));
             Console.WriteLine();
 
+            ConfigureThreadPool(options);
+
+            PrintEnvironment();
+
             using var setupStatusCts = new CancellationTokenSource();
             var setupStatusThread = PerfStressUtilities.PrintStatus("=== Setup ===", () => ".", newLine: false, setupStatusCts.Token);
 
@@ -172,6 +176,48 @@ namespace Azure.Test.Perf
             // I would prefer to print assembly versions at the start of testing, but they cannot be determined until
             // code in each assembly has been executed, so this must wait until after testing is complete.
             PrintAssemblyVersions(testType);
+        }
+
+        private static void ConfigureThreadPool(PerfOptions options)
+        {
+            if (options.MinWorkerThreads.HasValue || options.MinCompletionPortThreads.HasValue)
+            {
+                ThreadPool.GetMinThreads(out var minWorkerThreads, out var minCompletionPortThreads);
+                ThreadPool.SetMinThreads(options.MinWorkerThreads ?? minWorkerThreads,
+                    options.MinCompletionPortThreads ?? minCompletionPortThreads);
+            }
+
+            if (options.MaxWorkerThreads.HasValue || options.MaxCompletionPortThreads.HasValue)
+            {
+                ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxCompletionPortThreads);
+                ThreadPool.SetMaxThreads(options.MaxWorkerThreads ?? maxWorkerThreads,
+                    options.MaxCompletionPortThreads ?? maxCompletionPortThreads);
+            }
+        }
+
+        private static void PrintEnvironment()
+        {
+            Console.WriteLine("=== Environment ===");
+
+            Console.Write("Configuration: ");
+#if DEBUG
+            Console.WriteLine("Debug");
+#elif RELEASE
+            Console.WriteLine("Release");
+#endif
+
+            Console.WriteLine($"GCSettings.IsServerGC: {GCSettings.IsServerGC}");
+
+            Console.WriteLine($"Environment.ProcessorCount: {Environment.ProcessorCount}");
+
+            ThreadPool.GetMinThreads(out var minWorkerThreads, out var minCompletionPortThreads);
+            ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxCompletionPortThreads);
+            Console.WriteLine($"ThreadPool.MinWorkerThreads: {minWorkerThreads}");
+            Console.WriteLine($"ThreadPool.MinCompletionPortThreads: {minCompletionPortThreads}");
+            Console.WriteLine($"ThreadPool.MaxWorkerThreads: {maxWorkerThreads}");
+            Console.WriteLine($"ThreadPool.MaxCompletionPortThreads: {maxCompletionPortThreads}");
+
+            Console.WriteLine();
         }
 
         private static void PrintAssemblyVersions(Type testType)
