@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='expand'>
             /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView'
+            /// 'instanceView', 'userData'
             /// </param>
             public static VirtualMachine Get(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
@@ -281,7 +281,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='expand'>
             /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView'
+            /// 'instanceView', 'userData'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

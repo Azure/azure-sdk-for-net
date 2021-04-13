@@ -206,9 +206,13 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
-            public static VirtualMachineScaleSet Get(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName)
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation. Possible values include:
+            /// 'userData'
+            /// </param>
+            public static VirtualMachineScaleSet Get(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, string expand = default(string))
             {
-                return operations.GetAsync(resourceGroupName, vmScaleSetName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, vmScaleSetName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -223,12 +227,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation. Possible values include:
+            /// 'userData'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineScaleSet> GetAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSet> GetAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

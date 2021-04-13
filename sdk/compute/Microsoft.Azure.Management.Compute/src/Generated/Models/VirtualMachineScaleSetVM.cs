@@ -99,6 +99,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// scale set or the customized model for the virtual machine.</param>
         /// <param name="protectionPolicy">Specifies the protection policy of
         /// the virtual machine.</param>
+        /// <param name="userData">UserData for the VM, which must be base-64
+        /// encoded. Customer should not pass any secrets in here.
+        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01</param>
         /// <param name="plan">Specifies information about the marketplace
         /// image used to create the virtual machine. This element is only used
         /// for marketplace images. Before you can use a marketplace image from
@@ -109,7 +112,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="resources">The virtual machine child extension
         /// resources.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), string vmId = default(string), VirtualMachineScaleSetVMInstanceView instanceView = default(VirtualMachineScaleSetVMInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), SecurityProfile securityProfile = default(SecurityProfile), NetworkProfile networkProfile = default(NetworkProfile), VirtualMachineScaleSetVMNetworkProfileConfiguration networkProfileConfiguration = default(VirtualMachineScaleSetVMNetworkProfileConfiguration), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), string modelDefinitionApplied = default(string), VirtualMachineScaleSetVMProtectionPolicy protectionPolicy = default(VirtualMachineScaleSetVMProtectionPolicy), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), IList<string> zones = default(IList<string>))
+        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), string vmId = default(string), VirtualMachineScaleSetVMInstanceView instanceView = default(VirtualMachineScaleSetVMInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), SecurityProfile securityProfile = default(SecurityProfile), NetworkProfile networkProfile = default(NetworkProfile), VirtualMachineScaleSetVMNetworkProfileConfiguration networkProfileConfiguration = default(VirtualMachineScaleSetVMNetworkProfileConfiguration), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), string modelDefinitionApplied = default(string), VirtualMachineScaleSetVMProtectionPolicy protectionPolicy = default(VirtualMachineScaleSetVMProtectionPolicy), string userData = default(string), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             InstanceId = instanceId;
@@ -130,6 +133,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             LicenseType = licenseType;
             ModelDefinitionApplied = modelDefinitionApplied;
             ProtectionPolicy = protectionPolicy;
+            UserData = userData;
             Plan = plan;
             Resources = resources;
             Zones = zones;
@@ -290,6 +294,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.protectionPolicy")]
         public VirtualMachineScaleSetVMProtectionPolicy ProtectionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets userData for the VM, which must be base-64 encoded.
+        /// Customer should not pass any secrets in here.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version: 2021-03-01
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userData")]
+        public string UserData { get; set; }
 
         /// <summary>
         /// Gets or sets specifies information about the marketplace image used

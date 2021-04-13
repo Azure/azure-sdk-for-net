@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='expand'>
             /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView'
+            /// 'instanceView', 'userData'
             /// </param>
             public static DedicatedHost Get(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='expand'>
             /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView'
+            /// 'instanceView', 'userData'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

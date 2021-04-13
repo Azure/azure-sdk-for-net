@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='expand'>
             /// The expand expression to apply on the operation. The response shows the
             /// list of instance view of the dedicated hosts under the dedicated host
-            /// group. Possible values include: 'instanceView'
+            /// group. Possible values include: 'instanceView', 'userData'
             /// </param>
             public static DedicatedHostGroup Get(this IDedicatedHostGroupsOperations operations, string resourceGroupName, string hostGroupName, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='expand'>
             /// The expand expression to apply on the operation. The response shows the
             /// list of instance view of the dedicated hosts under the dedicated host
-            /// group. Possible values include: 'instanceView'
+            /// group. Possible values include: 'instanceView', 'userData'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -43,14 +43,16 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "VirtualMachineExtensions", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineImages", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineImagesEdgeZone", "2021-03-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineRunCommands", "2021-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineRunCommands", "2020-12-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetExtensions", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetRollingUpgrades", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMExtensions", "2021-03-01"),
-                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMRunCommands", "2021-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMRunCommands", "2020-12-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMs", "2020-12-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMs", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSets", "2021-03-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineSizes", "2021-03-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachines", "2020-12-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachines", "2021-03-01"),
               }.AsEnumerable();
           }

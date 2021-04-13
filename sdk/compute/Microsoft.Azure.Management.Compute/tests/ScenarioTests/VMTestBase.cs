@@ -214,9 +214,10 @@ namespace Compute.Tests
             Action<VirtualMachine> vmCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool waitForCompletion = true,
-            bool hasManagedDisks = false)
+            bool hasManagedDisks = false,
+            string userData = null)
         {
-            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks);
+            return CreateVM(rgName, asName, storageAccount.Name, imageRef, out inputVM, vmCustomizer, createWithPublicIpAddress, waitForCompletion, hasManagedDisks, userData: userData);
         }
 
         protected VirtualMachine CreateVM(
@@ -238,7 +239,8 @@ namespace Compute.Tests
             string securityType = null,
             string dedicatedHostGroupReferenceId = null,
             string dedicatedHostGroupName = null,
-            string dedicatedHostName = null)
+            string dedicatedHostName = null,
+            string userData = null)
         {
             try
             {
@@ -335,6 +337,8 @@ namespace Compute.Tests
                     inputVM.HardwareProfile.VmSize = vmSize;
                     inputVM.Zones = zones;
                 }
+
+                inputVM.UserData = userData;
 
                 if (vmCustomizer != null)
                 {
