@@ -30,7 +30,7 @@ namespace Azure.Communication.Tests
 
         public virtual string ExpectedTestPackagesEnabled { get { return TestPackagesEnabledDefaultValue; } }
 
-        public bool ShouldIgnoreTests => TestPackagesEnabled != TestPackagesEnabledDefaultValue
+        public bool ShouldEnableTests => TestPackagesEnabled != TestPackagesEnabledDefaultValue
             && TestPackagesEnabled != ExpectedTestPackagesEnabled;
 
         public string TestPackagesEnabled => GetTestPackageEnabled();

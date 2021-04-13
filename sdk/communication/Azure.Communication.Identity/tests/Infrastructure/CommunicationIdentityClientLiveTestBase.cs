@@ -16,7 +16,7 @@ namespace Azure.Communication.Identity.Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            if (TestEnvironment.ShouldIgnoreTests)
+            if (!TestEnvironment.ShouldEnableTests)
             {
                 Assert.Ignore("Identity tests are skipped " +
                     "because identity package is not included in the TEST_PACKAGES_ENABLED variable");

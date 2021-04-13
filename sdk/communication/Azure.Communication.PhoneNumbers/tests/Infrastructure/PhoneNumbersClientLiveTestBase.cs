@@ -22,7 +22,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            if (TestEnvironment.ShouldIgnoreTests)
+            if (!TestEnvironment.ShouldEnableTests)
             {
                 Assert.Ignore("Phone number tests are skipped " +
                     "because phonenumbers package is not included in the TEST_PACKAGES_ENABLED variable");

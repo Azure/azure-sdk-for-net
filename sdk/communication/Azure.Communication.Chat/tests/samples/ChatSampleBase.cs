@@ -11,7 +11,7 @@ namespace Azure.Communication.Chat.Tests.samples
         [OneTimeSetUp]
         public void Setup()
         {
-            if (TestEnvironment.ShouldIgnoreTests)
+            if (!TestEnvironment.ShouldEnableTests)
             {
                 Assert.Ignore("Chat samples are skipped " +
                     "because chat package is not included in the TEST_PACKAGES_ENABLED variable");
