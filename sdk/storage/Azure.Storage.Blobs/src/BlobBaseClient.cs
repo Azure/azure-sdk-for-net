@@ -211,7 +211,7 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -370,7 +370,7 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);

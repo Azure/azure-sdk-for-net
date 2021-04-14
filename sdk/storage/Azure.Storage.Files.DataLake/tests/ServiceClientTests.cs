@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (GetNewFileSystem(service: service))
+            await using (await GetNewFileSystem(service: service))
             {
                 // Act
                 IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
