@@ -180,18 +180,18 @@ namespace Azure.Test.Perf
 
         private static void ConfigureThreadPool(PerfOptions options)
         {
-            if (options.MinWorkerThreads.HasValue || options.MinCompletionPortThreads.HasValue)
+            if (options.MinWorkerThreads.HasValue || options.MinIOCompletionThreads.HasValue)
             {
-                ThreadPool.GetMinThreads(out var minWorkerThreads, out var minCompletionPortThreads);
+                ThreadPool.GetMinThreads(out var minWorkerThreads, out var minIOCompletionThreads);
                 ThreadPool.SetMinThreads(options.MinWorkerThreads ?? minWorkerThreads,
-                    options.MinCompletionPortThreads ?? minCompletionPortThreads);
+                    options.MinIOCompletionThreads ?? minIOCompletionThreads);
             }
 
-            if (options.MaxWorkerThreads.HasValue || options.MaxCompletionPortThreads.HasValue)
+            if (options.MaxWorkerThreads.HasValue || options.MaxIOCompletionThreads.HasValue)
             {
-                ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxCompletionPortThreads);
+                ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxIOCompletionThreads);
                 ThreadPool.SetMaxThreads(options.MaxWorkerThreads ?? maxWorkerThreads,
-                    options.MaxCompletionPortThreads ?? maxCompletionPortThreads);
+                    options.MaxIOCompletionThreads ?? maxIOCompletionThreads);
             }
         }
 
