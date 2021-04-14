@@ -29,7 +29,7 @@ namespace Proto.Network
         public NetworkSecurityGroupData Data { get; private set; }
 
         /// <inheritdoc />
-        protected override NetworkSecurityGroup GetResource()
+        protected override NetworkSecurityGroup GetResource(CancellationToken cancellation = default)
         {
             return this;
         }

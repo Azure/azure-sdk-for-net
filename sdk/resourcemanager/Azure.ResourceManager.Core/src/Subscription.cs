@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Core
         public virtual SubscriptionData Data { get; }
 
         /// <inheritdoc />
-        protected override Subscription GetResource()
+        protected override Subscription GetResource(CancellationToken cancellation = default)
         {
             return this;
         }
