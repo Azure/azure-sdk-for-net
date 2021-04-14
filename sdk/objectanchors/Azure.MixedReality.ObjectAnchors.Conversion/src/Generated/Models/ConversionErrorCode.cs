@@ -36,6 +36,35 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
         private const string ZeroTrajectoriesGeneratedValue = "ZERO_TRAJECTORIES_GENERATED";
         private const string TooManyRigPosesValue = "TOO_MANY_RIG_POSES";
         private const string AssetCannotBeConvertedValue = "ASSET_CANNOT_BE_CONVERTED";
+
+        /// <summary> UNKNOWN. </summary>
+        public static ConversionErrorCode Unknown { get; } = new ConversionErrorCode(UnknownValue);
+        /// <summary> NO_ERROR. </summary>
+        public static ConversionErrorCode NoError { get; } = new ConversionErrorCode(NoErrorValue);
+        /// <summary> SERVICE_ERROR. </summary>
+        public static ConversionErrorCode ServiceError { get; } = new ConversionErrorCode(ServiceErrorValue);
+        /// <summary> INVALID_ASSET_URI. </summary>
+        public static ConversionErrorCode InvalidAssetUri { get; } = new ConversionErrorCode(InvalidAssetUriValue);
+        /// <summary> INVALID_JOB_ID. </summary>
+        public static ConversionErrorCode InvalidJobId { get; } = new ConversionErrorCode(InvalidJobIdValue);
+        /// <summary> INVALID_GRAVITY. </summary>
+        public static ConversionErrorCode InvalidGravity { get; } = new ConversionErrorCode(InvalidGravityValue);
+        /// <summary> INVALID_SCALE. </summary>
+        public static ConversionErrorCode InvalidScale { get; } = new ConversionErrorCode(InvalidScaleValue);
+        /// <summary> ASSET_SIZE_TOO_LARGE. </summary>
+        public static ConversionErrorCode AssetSizeTooLarge { get; } = new ConversionErrorCode(AssetSizeTooLargeValue);
+        /// <summary> ASSET_DIMENSIONS_OUT_OF_BOUNDS. </summary>
+        public static ConversionErrorCode AssetDimensionsOutOfBounds { get; } = new ConversionErrorCode(AssetDimensionsOutOfBoundsValue);
+        /// <summary> ZERO_FACES. </summary>
+        public static ConversionErrorCode ZeroFaces { get; } = new ConversionErrorCode(ZeroFacesValue);
+        /// <summary> INVALID_FACE_VERTICES. </summary>
+        public static ConversionErrorCode InvalidFaceVertices { get; } = new ConversionErrorCode(InvalidFaceVerticesValue);
+        /// <summary> ZERO_TRAJECTORIES_GENERATED. </summary>
+        public static ConversionErrorCode ZeroTrajectoriesGenerated { get; } = new ConversionErrorCode(ZeroTrajectoriesGeneratedValue);
+        /// <summary> TOO_MANY_RIG_POSES. </summary>
+        public static ConversionErrorCode TooManyRigPoses { get; } = new ConversionErrorCode(TooManyRigPosesValue);
+        /// <summary> ASSET_CANNOT_BE_CONVERTED. </summary>
+        public static ConversionErrorCode AssetCannotBeConverted { get; } = new ConversionErrorCode(AssetCannotBeConvertedValue);
         /// <summary> Determines if two <see cref="ConversionErrorCode"/> values are the same. </summary>
         public static bool operator ==(ConversionErrorCode left, ConversionErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConversionErrorCode"/> values are not the same. </summary>
