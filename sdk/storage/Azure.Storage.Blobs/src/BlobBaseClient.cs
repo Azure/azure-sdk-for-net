@@ -532,6 +532,52 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/>.
+        ///
+        /// </summary>
+        /// <param name="customerProvidedKey">The customer provided key.</param>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the customer provide key in the returned <see cref="BlobBaseClient"/>.
+        /// </remarks>
+        public virtual BlobBaseClient WithCustomerProvidedKey(CustomerProvidedKey? customerProvidedKey) => WithCustomerProvidedKeyCore(customerProvidedKey);
+
+        private protected virtual BlobBaseClient WithCustomerProvidedKeyCore(CustomerProvidedKey? customerProvidedKey)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.CustomerProvidedKey = customerProvidedKey;
+            return new BlobBaseClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration,
+                clientSideEncryption: ClientSideEncryption?.Clone());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="encryptionScope"/>.
+        ///
+        /// </summary>
+        /// <param name="encryptionScope">The encryption scope.</param>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the encryption scope in the returned <see cref="BlobBaseClient"/>.
+        /// </remarks>
+        public virtual BlobBaseClient WithEncryptionScope(string encryptionScope) => WithEncryptionScopeCore(encryptionScope);
+
+        private protected virtual BlobBaseClient WithEncryptionScopeCore(string encryptionScope)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.EncryptionScope = encryptionScope;
+            return new BlobBaseClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration,
+                clientSideEncryption: ClientSideEncryption?.Clone());
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlobLeaseClient"/> class.
         /// </summary>
         /// <param name="leaseId">
