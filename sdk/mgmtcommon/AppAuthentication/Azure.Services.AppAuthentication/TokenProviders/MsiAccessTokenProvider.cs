@@ -42,8 +42,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     {
 #if NETSTANDARD1_4 || net452 || net461
                         var httpClientHandler = new HttpClientHandler();
+                        httpClientHandler.Proxy = null;
 #else
                         var httpClientHandler = new HttpClientHandler() { CheckCertificateRevocationList = true };
+                        httpClientHandler.Proxy = null;
 #endif
 
 #if !net452

@@ -20,14 +20,14 @@ namespace Proto.Client
             createVm.Execute();
 
             var client = new ArmClient(new DefaultAzureCredential());
-            var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
-            var resourceGroup = subscription.GetResourceGroupOperations(Context.RgName);
-            var vmId = resourceGroup.GetVirtualMachineOperations(Context.VmName).Id;
-            var vnId = resourceGroup.GetVirtualNetworkOperations(Context.VmName + "_vnet").Id;
-            var subnetId = resourceGroup.GetVirtualNetworkOperations(Context.VmName + "_vnet").GetSubnetOperations(Context.SubnetName).Id;
-            var asId = resourceGroup.GetAvailabilitySetOperations(Context.VmName + "_aSet").Id;
-            var nsgId = resourceGroup.GetNetworkSecurityGroupOperations(Context.NsgName).Id;
-            var niId = resourceGroup.GetNetworkInterfaceOperations(Context.VmName + "_nic").Id;
+            var subscription = client.GetSubscriptions().TryGet(Context.SubscriptionId);
+            var resourceGroup = subscription.GetResourceGroups().Get(Context.RgName).Value;
+            var vmId = resourceGroup.GetVirtualMachines().Get(Context.VmName).Value.Id;
+            var vnId = resourceGroup.GetVirtualNetworks().Get(Context.VmName + "_vnet").Value.Id;
+            var subnetId = resourceGroup.GetVirtualNetworks().Get(Context.VmName + "_vnet").Value.GetSubnets().Get(Context.SubnetName).Value.Id;
+            var asId = resourceGroup.GetAvailabilitySets().Get(Context.VmName + "_aSet").Value.Id;
+            var nsgId = resourceGroup.GetNetworkSecurityGroups().Get(Context.NsgName).Value.Id;
+            var niId = resourceGroup.GetNetworkInterfaces().Get(Context.VmName + "_nic").Value.Id;
 
             var vmOps = client.GetVirtualMachineOperations(vmId);
             Console.WriteLine("\nclient.GetVirtualMachineOperations(vmResourceId)");

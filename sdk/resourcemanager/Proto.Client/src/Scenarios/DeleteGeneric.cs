@@ -12,8 +12,9 @@ namespace Proto.Client
         {
             var createVm = new CreateSingleVmExample(Context);
             createVm.Execute();
-
-            var rgOp = new ArmClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
+            var client = new ArmClient(new DefaultAzureCredential());
+            var sub = client.GetSubscriptions().TryGet(Context.SubscriptionId);
+            var rgOp = sub.GetResourceGroups().Get(Context.RgName).Value;
             foreach(var genericOp in rgOp.GetVirtualMachines().ListAsGenericResource(Context.VmName))
             {
                 Console.WriteLine($"Deleting {genericOp.Id}");
@@ -22,7 +23,7 @@ namespace Proto.Client
 
             try
             {
-                var vmOp = rgOp.GetVirtualMachineOperations(Context.VmName);
+                var vmOp = rgOp.GetVirtualMachines().Get(Context.VmName).Value;
                 Console.WriteLine($"Trying to get {vmOp.Id}");
                 var response = vmOp.Get();
             }

@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(TriggerRunConverter))]
     public partial class TriggerRun
     {
         internal static TriggerRun DeserializeTriggerRun(JsonElement element)
@@ -102,6 +104,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new TriggerRun(triggerRunId.Value, triggerName.Value, triggerType.Value, Optional.ToNullable(triggerRunTimestamp), Optional.ToNullable(status), message.Value, Optional.ToDictionary(properties), Optional.ToDictionary(triggeredPipelines), additionalProperties);
+        }
+
+        internal partial class TriggerRunConverter : JsonConverter<TriggerRun>
+        {
+            public override void Write(Utf8JsonWriter writer, TriggerRun model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override TriggerRun Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeTriggerRun(document.RootElement);
+            }
         }
     }
 }

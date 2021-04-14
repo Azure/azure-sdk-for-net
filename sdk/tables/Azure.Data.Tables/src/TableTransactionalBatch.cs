@@ -33,6 +33,7 @@ namespace Azure.Data.Tables
         private List<(ITableEntity Entity, HttpMessage HttpMessage)> _submittedMessageList;
         private bool _submitted;
         private readonly string _partitionKey;
+        private readonly bool _isCosmosEndpoint;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableTransactionalBatch"/> class.
@@ -41,7 +42,8 @@ namespace Azure.Data.Tables
         /// <param name="partitionKey">The partitionKEy value for this transactional batch.</param>
         /// <param name="tableOperations">The <see cref="TableRestClient"/>.</param>
         /// <param name="format">The format for the service requests.</param>
-        internal TableTransactionalBatch(string table, string partitionKey, TableRestClient tableOperations, OdataMetadataFormat format)
+        /// <param name="isCosmosEndpoint">Indicates whether or not the current service endpoint is Cosmos.</param>
+        internal TableTransactionalBatch(string table, string partitionKey, TableRestClient tableOperations, OdataMetadataFormat format, bool isCosmosEndpoint)
         {
             _table = table;
             _tableOperations = tableOperations;
@@ -51,6 +53,7 @@ namespace Azure.Data.Tables
             _batch = TableRestClient.CreateBatchContent(_batchGuid);
             _changeset = _batch.AddChangeset(_changesetGuid);
             _partitionKey = partitionKey;
+            _isCosmosEndpoint = isCosmosEndpoint;
         }
 
         /// <summary>
@@ -139,7 +142,7 @@ namespace Azure.Data.Tables
 
         private HttpMessage CreateUpdateOrMergeRequest<T>(T entity, TableUpdateMode mode, ETag ifMatch = default) where T : class, ITableEntity, new()
         {
-            return mode switch
+            HttpMessage msg = mode switch
             {
                 TableUpdateMode.Replace => _batchOperations.CreateUpdateEntityRequest(
                     _table,
@@ -159,6 +162,13 @@ namespace Azure.Data.Tables
                     new QueryOptions() { Format = _format }),
                 _ => throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}")
             };
+
+            if (_isCosmosEndpoint && mode == TableUpdateMode.Merge)
+            {
+                CosmosPatchTransformPolicy.TransformPatchToCosmosPost(msg);
+            }
+
+            return msg;
         }
 
         /// <summary>
@@ -208,21 +218,25 @@ namespace Azure.Data.Tables
 
         internal async Task<Response<TableBatchResponse>> SubmitBatchAsyncInternal(bool async, CancellationToken cancellationToken = default)
         {
-            if (_submitted)
-            {
-                throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce);
-            }
-            else
-            {
-                _submitted = true;
-            }
-
-            _submittedMessageList = BuildOrderedBatchRequests();
-
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableTransactionalBatch)}.{nameof(SubmitBatch)}");
             scope.Start();
             try
             {
+                if (!_requestMessages.TryPeek(out var _))
+                {
+                    throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchIsEmpty);
+                }
+                if (_submitted)
+                {
+                    throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce);
+                }
+                else
+                {
+                    _submitted = true;
+                }
+
+                _submittedMessageList = BuildOrderedBatchRequests();
+
                 var request = _tableOperations.CreateBatchRequest(_batch, null, null);
                 Response<List<Response>> response = null;
                 if (async)
@@ -262,7 +276,7 @@ namespace Azure.Data.Tables
             {
                 try
                 {
-                    if (exception.Data[TableConstants.ExceptionData.FailedEntityIndex] is int index)
+                    if (exception.Data[TableConstants.ExceptionData.FailedEntityIndex] is string stringIndex && int.TryParse(stringIndex, out int index))
                     {
                         failedEntity = _submittedMessageList[index].Entity;
                     }

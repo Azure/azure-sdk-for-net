@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Communication.Pipeline;
-using Azure.Core;
+using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Communication.PhoneNumbers.Tests
 {
@@ -16,12 +19,22 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public bool IncludePhoneNumberLiveTests
             => TestEnvironment.Mode == RecordedTestMode.Playback || Environment.GetEnvironmentVariable("INCLUDE_PHONENUMBER_LIVE_TESTS") == "True";
 
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            if (TestEnvironment.ShouldIgnoreTests)
+            {
+                Assert.Ignore("Phone number tests are skipped " +
+                    "because phonenumbers package is not included in the TEST_PACKAGES_ENABLED variable");
+            }
+        }
+
         /// <summary>
         /// Creates a <see cref="PhoneNumbersClient" /> with the connectionstring via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="PhoneNumbersClient" />.</returns>
-        protected PhoneNumbersClient CreateClient(bool isInstrumented = true)
+        protected PhoneNumbersClient CreateClientWithConnectionString(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
                     TestEnvironment.LiveTestConnectionString,
@@ -33,18 +46,62 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         /// <summary>
+        /// Creates a <see cref="PhoneNumbersClient" /> with the azure key credential
+        /// and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="PhoneNumbersClient" />.</returns>
+        protected PhoneNumbersClient CreateClientWithAzureKeyCredential(bool isInstrumented = true)
+        {
+            var client = new PhoneNumbersClient(
+                    TestEnvironment.LiveTestEndpoint,
+                     new AzureKeyCredential(TestEnvironment.LiveTestAccessKey),
+                    InstrumentClientOptions(new PhoneNumbersClientOptions()));
+
+            return isInstrumented ? InstrumentClient(client) : client;
+        }
+
+        /// <summary>
         /// Creates a <see cref="PhoneNumbersClient" /> with the token credential
         /// and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="PhoneNumbersClient" />.</returns>
-        protected PhoneNumbersClient CreateClientWithTokenCredential(TokenCredential token, bool isInstrumented = true)
+        protected PhoneNumbersClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
                     TestEnvironment.LiveTestEndpoint,
-                    token,
+                    (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     InstrumentClientOptions(new PhoneNumbersClientOptions()));
 
             return isInstrumented ? InstrumentClient(client) : client;
+        }
+
+        /// <summary>
+        /// Creates a <see cref="PhoneNumbersClient" /> based on provided authMethod
+        /// and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="PhoneNumbersClient" />.</returns>
+        protected PhoneNumbersClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString, bool isInstrumented = true)
+        {
+            return authMethod switch
+            {
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(isInstrumented),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(isInstrumented),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(isInstrumented),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod))
+            };
+        }
+
+        protected string GetTestPhoneNumber()
+        {
+            return TestEnvironment.Mode == RecordedTestMode.Playback
+                ? RecordedTestSanitizer.SanitizeValue
+                : TestEnvironment.CommunicationTestPhoneNumber;
+        }
+
+        protected void SleepIfNotInPlaybackMode()
+        {
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
+                Thread.Sleep(2000);
         }
     }
 }

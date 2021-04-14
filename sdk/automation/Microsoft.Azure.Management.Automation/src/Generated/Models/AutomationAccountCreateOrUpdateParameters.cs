@@ -38,16 +38,26 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// AutomationAccountCreateOrUpdateParameters class.
         /// </summary>
         /// <param name="sku">Gets or sets account SKU.</param>
+        /// <param name="encryption">Set the encryption properties for the
+        /// automation account</param>
+        /// <param name="publicNetworkAccess">Indicates whether traffic on the
+        /// non-ARM endpoint (Webhook/Agent) is allowed from the public
+        /// internet</param>
         /// <param name="name">Gets or sets name of the resource.</param>
         /// <param name="location">Gets or sets the location of the
         /// resource.</param>
+        /// <param name="identity">Sets the identity property for automation
+        /// account</param>
         /// <param name="tags">Gets or sets the tags attached to the
         /// resource.</param>
-        public AutomationAccountCreateOrUpdateParameters(Sku sku = default(Sku), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public AutomationAccountCreateOrUpdateParameters(Sku sku = default(Sku), EncryptionProperties encryption = default(EncryptionProperties), bool? publicNetworkAccess = default(bool?), string name = default(string), string location = default(string), Identity identity = default(Identity), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
+            Encryption = encryption;
+            PublicNetworkAccess = publicNetworkAccess;
             Name = name;
             Location = location;
+            Identity = identity;
             Tags = tags;
             CustomInit();
         }
@@ -64,6 +74,20 @@ namespace Microsoft.Azure.Management.Automation.Models
         public Sku Sku { get; set; }
 
         /// <summary>
+        /// Gets or sets set the encryption properties for the automation
+        /// account
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public EncryptionProperties Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether traffic on the non-ARM endpoint
+        /// (Webhook/Agent) is allowed from the public internet
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public bool? PublicNetworkAccess { get; set; }
+
+        /// <summary>
         /// Gets or sets name of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
@@ -74,6 +98,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets sets the identity property for automation account
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the tags attached to the resource.

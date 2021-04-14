@@ -4,7 +4,6 @@
 using Azure.ResourceManager.Core;
 using System;
 
-
 namespace Proto.Billing
 {
     /// <summary>
@@ -18,12 +17,11 @@ namespace Proto.Billing
         /// </summary>
         /// <param name="client"> The <see cref="TenantOperations" /> instance the method will execute against. </param>
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="BillingAccountOperations" />. </returns>
-        public static BillingAccountOperations GetBillingAccountsOperations(this TenantOperations client, string billingAccountId)
+        public static BillingAccountOperations GetBillingAccountsOperations(this TenantOperations tenant, string billingAccountId)
         {
             if (string.IsNullOrEmpty(billingAccountId))
                 throw new ArgumentException(nameof(billingAccountId));
-
-            return new BillingAccountOperations(client.ClientOptions, billingAccountId, client.Credential, client.BaseUri);
+            return new BillingAccountOperations(tenant, billingAccountId);
         }
     }
 }

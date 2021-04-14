@@ -16,7 +16,6 @@ using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
-using Microsoft.Azure.Amqp.Transaction;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -100,9 +99,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
-        /// <param name="identifier"></param>
-        /// <param name="sessionId"></param>
-        /// <param name="isSessionReceiver"></param>
+        /// <param name="identifier">The identifier for the sender.</param>
+        /// <param name="sessionId">The session ID to receive messages for.</param>
+        /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
+        /// open link operation. Only applicable for session receivers.</param>
         ///
         /// <remarks>
         /// As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -120,7 +121,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusRetryPolicy retryPolicy,
             string identifier,
             string sessionId,
-            bool isSessionReceiver)
+            bool isSessionReceiver,
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -142,7 +144,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         prefetchCount: prefetchCount,
                         receiveMode: receiveMode,
                         isSessionReceiver: isSessionReceiver,
-                        identifier: identifier),
+                        identifier: identifier,
+                        // The cancellationToken will always be CancellationToken.None for non-session receivers
+                        // it is okay to register the user provided cancellationToken from the AcceptNextSessionAsync call in
+                        // the fault tolerant object because session receivers are never reconnected.
+                        cancellationToken: cancellationToken),
                 link => CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
@@ -167,7 +173,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             uint prefetchCount,
             ServiceBusReceiveMode receiveMode,
             bool isSessionReceiver,
-            string identifier)
+            string identifier,
+            CancellationToken cancellationToken)
         {
             ServiceBusEventSource.Log.CreateReceiveLinkStart(_identifier);
 
@@ -181,7 +188,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     receiveMode: receiveMode,
                     sessionId: SessionId,
                     isSessionReceiver: isSessionReceiver,
-                    cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (isSessionReceiver)
                 {
                     SessionLockedUntil = link.Settings.Properties.TryGetValue<long>(
@@ -275,7 +282,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             var link = default(ReceivingAmqpLink);
-            var amqpMessages = default(IEnumerable<AmqpMessage>);
             var receivedMessages = new List<ServiceBusReceivedMessage>();
 
             ThrowIfSessionLockLost();
@@ -284,49 +290,89 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 if (!_receiveLink.TryGetOpenedObject(out link))
                 {
-                    link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
+                    link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout))
+                        .ConfigureAwait(false);
                 }
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                var messagesReceived = await Task.Factory.FromAsync
-                (
-                    (callback, state) => link.BeginReceiveRemoteMessages(
-                        maxMessages,
-                        TimeSpan.FromMilliseconds(20),
-                        maxWaitTime ?? timeout,
-                        callback,
-                        state),
-                    (asyncResult) => link.EndReceiveMessages(asyncResult, out amqpMessages),
-                    TaskCreationOptions.RunContinuationsAsynchronously
-                ).ConfigureAwait(false);
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                var receiveMessagesCompletionSource =
+                    new TaskCompletionSource<IEnumerable<AmqpMessage>>(TaskCreationOptions
+                        .RunContinuationsAsynchronously);
+
+                using var registration = cancellationToken.Register(static state =>
+                {
+                    var tcs = (TaskCompletionSource<IEnumerable<AmqpMessage>>)state;
+                    tcs.TrySetCanceled();
+                }, receiveMessagesCompletionSource, useSynchronizationContext: false);
+
+                // in case BeginReceiveRemoteMessages throws exception will be materialized on the synchronous path
+                _ = Task.Factory
+                    .FromAsync<(ReceivingAmqpLink, int, TimeSpan?, TimeSpan,
+                        TaskCompletionSource<IEnumerable<AmqpMessage>>)>
+                    (
+                        static(arguments, callback, state) =>
+                        {
+                            var (link, maxMessages, maxWaitTime, timeout, receiveMessagesCompletionSource) = arguments;
+                            return link.BeginReceiveRemoteMessages(
+                                maxMessages,
+                                TimeSpan.FromMilliseconds(20),
+                                maxWaitTime ?? timeout,
+                                callback,
+                                (link, receiveMessagesCompletionSource));
+                        },
+                        static asyncResult =>
+                        {
+                            var (link, receiveMessagesCompletionSource) =
+                                ((ReceivingAmqpLink, TaskCompletionSource<IEnumerable<AmqpMessage>>))asyncResult
+                                    .AsyncState;
+                            try
+                            {
+                                bool received =
+                                    link.EndReceiveMessages(asyncResult, out IEnumerable<AmqpMessage> amqpMessages);
+                                receiveMessagesCompletionSource.TrySetResult(received
+                                    ? amqpMessages
+                                    : Enumerable.Empty<AmqpMessage>());
+                            }
+                            catch (Exception e)
+                            {
+                                receiveMessagesCompletionSource.TrySetException(e);
+                            }
+                        },
+                        (link, maxMessages, maxWaitTime, timeout, receiveMessagesCompletionSource),
+                        default
+                    ).ConfigureAwait(false);
+
+                var messagesReceived = await receiveMessagesCompletionSource.Task
+                    .ConfigureAwait(false);
+
                 // If event messages were received, then package them for consumption and
                 // return them.
-
-                if ((messagesReceived) && (amqpMessages != null))
+                foreach (AmqpMessage message in messagesReceived)
                 {
-                    foreach (AmqpMessage message in amqpMessages)
+                    if (_receiveMode == ServiceBusReceiveMode.ReceiveAndDelete)
                     {
-                        if (_receiveMode == ServiceBusReceiveMode.ReceiveAndDelete)
-                        {
-                            link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
-                        }
-                        receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
-                        message.Dispose();
+                        link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     }
+
+                    receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
+                    message.Dispose();
                 }
 
                 return receivedMessages;
             }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
             catch (Exception exception)
             {
                 ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
-                    exception,
-                    link?.GetTrackingId(),
-                    null,
-                    !cancellationToken.IsCancellationRequested && HasLinkCommunicationError(link)))
-                .Throw();
+                        exception,
+                        link?.GetTrackingId(),
+                        null,
+                        !cancellationToken.IsCancellationRequested && HasLinkCommunicationError(link)))
+                    .Throw();
 
                 throw; // will never be reached
             }

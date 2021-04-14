@@ -24,6 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
+        // TODO https://github.com/Azure/azure-sdk-for-net/issues/19575
         public const string DefaultSasVersion = "2020-06-12";
 
         /// <summary>
@@ -339,6 +340,8 @@ namespace Azure.Storage
             public const string IsDirectoryKey = "hdi_isFolder";
 
             public const string FileSystemName = "FileSystem";
+
+            public const string DeletionId = "deletionid";
         }
 
         /// <summary>
@@ -613,6 +616,12 @@ namespace Azure.Storage
         {
             internal const int NotFound = 404;
             internal const int NotModified = 304;
+        }
+
+        internal static class ServerTimeout
+        {
+            internal const string HttpMessagePropertyKey = "Azure.Storage.StorageServerTimeoutPolicy.Timeout";
+            internal const string QueryParameterKey = "timeout";
         }
     }
 }

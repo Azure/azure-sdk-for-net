@@ -1,4 +1,4 @@
-# Microsoft.Azure.Synapse
+# Microsoft.Azure.Synapse.Artifacts
 
 Run `dotnet build /t:GenerateCode` to generate code.
 
@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-artifacts-2019-06-01-preview
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/85fc0666743639c4a1c864eae466ef950e7bc61b/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/f953424dd168e71373bc52edb9713d2d86a14ada/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 public-clients: true
 credential-types: TokenCredential
@@ -24,4 +24,53 @@ directive:
   from: swagger-document
   where: $.parameters.Endpoint
   transform: $.format = "url"
+```
+
+### Expose serialization and deserialization methods and internal models
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    for (var path in $)
+    {
+      if (path.endsWith("AvroFormat") ||
+          path.endsWith("CopyBehaviorType") ||
+          path.endsWith("CopyTranslator") ||
+          path.endsWith("DataFlowDebugPreviewDataRequest") ||
+          path.endsWith("DataFlowDebugQueryResponse") ||
+          path.endsWith("DataFlowDebugResultResponse") ||
+          path.endsWith("DataFlowDebugStatisticsRequest") ||
+          path.endsWith("DatasetDataElement") ||
+          path.endsWith("DatasetSchemaDataElement") ||
+          path.endsWith("DatasetStorageFormat") ||
+          path.endsWith("EvaluateDataFlowExpressionRequest") ||
+          path.endsWith("ExposureControlRequest") ||
+          path.endsWith("ExposureControlResponse") ||
+          path.endsWith("GetSsisObjectMetadataRequest") ||
+          path.endsWith("JsonFormat") ||
+          path.endsWith("JsonFormatFilePattern") ||
+          path.endsWith("OrcFormat") ||
+          path.endsWith("ParquetFormat") ||
+          path.endsWith("RerunTriggerListResponse") ||
+          path.endsWith("RerunTumblingWindowTriggerActionParameter") ||
+          path.endsWith("SsisObjectMetadataStatusResponse") ||
+          path.endsWith("StartDataFlowDebugSessionRequest") ||
+          path.endsWith("StartDataFlowDebugSessionResponse") ||
+          path.endsWith("TabularTranslator") ||
+          path.endsWith("TextFormat") ||
+          path.endsWith("TriggerDependencyProvisioningStatus") ||
+          path.endsWith("TypeConversionSettings") ||
+          path.endsWith("WorkspaceIdentity") ||
+          path.endsWith("WorkspaceUpdateParameters"))
+      {
+        $[path]["x-csharp-usage"] = "model,input,output,converter";
+        $[path]["x-csharp-formats"] = "json";
+      }
+      else
+      {
+        $[path]["x-csharp-usage"] = "converter";
+      }
+    }
 ```

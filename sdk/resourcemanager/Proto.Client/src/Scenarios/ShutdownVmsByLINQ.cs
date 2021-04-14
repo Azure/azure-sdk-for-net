@@ -14,9 +14,9 @@ namespace Proto.Client
             createMultipleVms.Execute();
 
             var client = new ArmClient(new DefaultAzureCredential());
-            foreach (var sub in client.GetSubscriptions().List())
+            foreach (var subscription in client.GetSubscriptions().List())
             {
-                var vmList = sub.ListVirtualMachines();
+                var vmList = subscription.ListVirtualMachines();
                 foreach (var vm in vmList.Where(armResource => armResource.Data.Name.Contains("-o")))
                 {
                     Console.WriteLine($"In subscription list: Stopping {vm.Id}");
@@ -26,7 +26,8 @@ namespace Proto.Client
                 }
             }
 
-            var resourceGroup = new ArmClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
+            var sub = client.GetSubscriptions().TryGet(Context.SubscriptionId);
+            var resourceGroup = sub.GetResourceGroups().Get(Context.RgName).Value;
 
             resourceGroup.GetVirtualMachines().List().Select(vm =>
             {

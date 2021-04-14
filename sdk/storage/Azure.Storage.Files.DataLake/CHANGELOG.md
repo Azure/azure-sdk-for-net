@@ -1,7 +1,16 @@
 # Release History
 
-## 12.7.0-beta.3 (Unreleased)
+## 12.7.0-beta.4 (Unreleased)
+- Added support for service version 2020-08-04.
+- Added support for Soft Delete for Hierarchical-Namespace enabled accounts.
+- Added support for File Query Parquet input format.
+- Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a DataLakeSasBuilder parameter.
+
+## 12.7.0-beta.3 (2021-04-09)
 - Aligned storage URL parsing with other platforms.
+
+## 12.6.1 (2021-03-29)
+- Fixed bug where ClientDiagnostics's DiagnosticListener was leaking resources.
 
 ## 12.7.0-beta.2 (2021-03-09)
 - Changed error codes from numerical (404) to descriptive (PathNotFound).

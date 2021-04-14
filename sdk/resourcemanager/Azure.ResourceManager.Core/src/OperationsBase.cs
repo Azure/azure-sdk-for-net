@@ -23,17 +23,16 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationsBase"/> class.
         /// </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="baseUri"> The base URI of the service. </param>
-        protected OperationsBase(ArmClientOptions options, ResourceIdentifier id, TokenCredential credential, Uri baseUri)
+        internal OperationsBase(ClientContext clientContext, ResourceIdentifier id)
         {
-            ClientOptions = options;
+            ClientOptions = clientContext.ClientOptions;
             Id = id;
-            Credential = credential;
-            BaseUri = baseUri;
-            Diagnostics = new ClientDiagnostics(options);
+            Credential = clientContext.Credential;
+            BaseUri = clientContext.BaseUri;
+            Diagnostics = new ClientDiagnostics(ClientOptions);
+            
             Validate(id);
         }
 
@@ -47,17 +46,17 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Azure Resource Manager client options.
         /// </summary>
-        public virtual ArmClientOptions ClientOptions { get; }
+        protected internal virtual ArmClientOptions ClientOptions { get; private set; }
 
         /// <summary>
         /// Gets the Azure credential.
         /// </summary>
-        public virtual TokenCredential Credential { get; }
+        protected internal virtual TokenCredential Credential { get; private set; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        public virtual Uri BaseUri { get; }
+        protected internal virtual Uri BaseUri { get; private set; }
 
         /// <summary>
         /// Gets the valid Azure resource type for the current operations.

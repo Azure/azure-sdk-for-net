@@ -19,7 +19,7 @@ namespace Proto.Client
         private async System.Threading.Tasks.Task ExecuteAsync()
         {
             var client = new ArmClient(new DefaultAzureCredential());
-            var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
+            var subscription = client.GetSubscriptions().TryGet(Context.SubscriptionId);
 
             // Create Resource Group
             Console.WriteLine($"--------Start StartCreate group async {Context.RgName}--------");
@@ -37,7 +37,7 @@ namespace Proto.Client
 
             //create subnet
             Console.WriteLine("--------Start StartCreate Subnet async--------");
-            var subnet = (await (await vnet.GetSubnetContainer().Construct("10.0.0.0/24").StartCreateOrUpdateAsync(Context.SubnetName)).WaitForCompletionAsync()).Value;
+            var subnet = (await (await vnet.GetSubnets().Construct("10.0.0.0/24").StartCreateOrUpdateAsync(Context.SubnetName)).WaitForCompletionAsync()).Value;
 
             //create network security group
             Console.WriteLine("--------Start StartCreate NetworkSecurityGroup async--------");

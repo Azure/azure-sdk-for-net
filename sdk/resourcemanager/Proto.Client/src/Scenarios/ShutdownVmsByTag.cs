@@ -13,7 +13,9 @@ namespace Proto.Client
             var createMultipleVms = new CreateMultipleVms(Context);
             createMultipleVms.Execute();
 
-            var rg = new ArmClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName).Get().Value;
+            var client = new ArmClient(new DefaultAzureCredential());
+            var sub = client.GetSubscriptions().TryGet(Context.SubscriptionId);
+            var rg = sub.GetResourceGroups().Get(Context.RgName).Value;
 
             //set tags on random vms
             Random rand = new Random(Environment.TickCount);

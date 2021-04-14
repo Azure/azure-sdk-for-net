@@ -29,7 +29,7 @@ namespace Azure.Core.Tests
             return new TestResourceContainer();
         }
 
-        public virtual TestResourceOperations DefaultSubscription => new TestResourceOperations();
+        public virtual TestResource DefaultSubscription => new TestResource();
 
         public virtual string Method()
         {

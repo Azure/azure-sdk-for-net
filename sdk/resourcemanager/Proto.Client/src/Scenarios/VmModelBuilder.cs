@@ -21,7 +21,7 @@ namespace Proto.Client
         private Task<VirtualMachine> CreateVmWithBuilderAsync()
         {
             var client = new ArmClient(new DefaultAzureCredential());
-            var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
+            var subscription = client.GetSubscriptions().TryGet(Context.SubscriptionId);
 
             // Create Resource Group
             Console.WriteLine($"--------Start create group {Context.RgName}--------");
@@ -39,7 +39,7 @@ namespace Proto.Client
             //create subnet
             Console.WriteLine("--------Start create Subnet--------");
             var nsg = resourceGroup.GetNetworkSecurityGroups().Construct(80).CreateOrUpdate(Context.NsgName).Value;
-            var subnet = vnet.GetSubnetContainer().Construct("10.0.0.0/24").CreateOrUpdate(Context.SubnetName).Value;
+            var subnet = vnet.GetSubnets().Construct("10.0.0.0/24").CreateOrUpdate(Context.SubnetName).Value;
 
             // Create Network Interface
             Console.WriteLine("--------Start create Network Interface--------");

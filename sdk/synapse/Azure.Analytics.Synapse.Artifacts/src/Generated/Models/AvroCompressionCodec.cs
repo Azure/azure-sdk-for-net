@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The AvroCompressionCodec. </summary>
-    public readonly partial struct AvroCompressionCodec : IEquatable<AvroCompressionCodec>
+    internal readonly partial struct AvroCompressionCodec : IEquatable<AvroCompressionCodec>
     {
         private readonly string _value;
 

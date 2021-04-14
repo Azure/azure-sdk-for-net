@@ -29,7 +29,6 @@ namespace Azure.Core.TestFramework
             }
 
             var type = result.GetType();
-
             if (type.Name.StartsWith("Task"))
             {
                 var taskResultType = type.GetGenericArguments()[0];
@@ -41,6 +40,18 @@ namespace Azure.Core.TestFramework
                     var genericType = taskResultType.Name.StartsWith("Ph") ? taskResultType.BaseType : taskResultType; //TODO: remove after 5279 and 5284
                     var genericMethod = method.MakeGenericMethod(genericType);
                     invocation.ReturnValue = genericMethod.Invoke(null, new object[] { instrumentedResult });
+                }
+            }
+            else if (type.Name.StartsWith("ValueTask"))
+            {
+                var taskResultType = type.GetGenericArguments()[0];
+                if (taskResultType.Name.StartsWith("Response") || taskResultType.Name.StartsWith("ArmResponse"))
+                {
+                    var taskResult = result.GetType().GetProperty("Result").GetValue(result);
+                    var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
+                    var genericValueTask = typeof(ValueTask<>).MakeGenericType(taskResultType);
+                    var vtCtor = genericValueTask.GetConstructor(new Type[] { taskResultType });
+                    invocation.ReturnValue = vtCtor.Invoke(new object[] { instrumentedResult });
                 }
             }
             else if (invocation.Method.Name.EndsWith("Value") && type.BaseType.Name.EndsWith("Operations"))

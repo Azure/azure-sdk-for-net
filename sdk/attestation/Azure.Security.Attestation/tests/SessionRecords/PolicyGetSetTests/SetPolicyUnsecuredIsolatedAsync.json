@@ -1,15 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://larryoattestationiso.wus.attest.azure.net/policies/OpenEnclave?api-version=2020-10-01",
+      "RequestUri": "https://cslarryoattestationiso.uks.attest.azure.net/policies/OpenEnclave?api-version=2020-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "1135",
         "Content-Type": "text/plain",
-        "traceparent": "00-eaff06cf6b39d8408e7cca96dc606543-a88407c5a9bc9640-00",
-        "User-Agent": "azsdk-net-Security.Attestation/1.0.3-alpha.20201123.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-95f3c99e24933443a5e7519ef8993b01-49ccaa87061cf34b-00",
+        "User-Agent": [
+          "azsdk-net-Security.Attestation/1.0.0-alpha.20210408.1",
+          "(.NET 5.0.4; Microsoft Windows 10.0.19043)"
+        ],
         "x-ms-client-request-id": "0e751e98e77b2ca8d15ae46755e35c32",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,21 +21,21 @@
       "ResponseHeaders": {
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Nov 2020 22:17:57 GMT",
+        "Date": "Thu, 08 Apr 2021 21:25:03 GMT",
         "Server": "Kestrel",
-        "x-ms-maa-service-version": "1.10.01419.0005",
-        "x-ms-request-id": "00-eaff06cf6b39d8408e7cca96dc606543-a88407c5a9bc9640-00"
+        "x-ms-maa-service-version": "1.10.01546.0008",
+        "x-ms-request-id": "00-95f3c99e24933443a5e7519ef8993b01-49ccaa87061cf34b-00"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidOperation",
-          "message": "Native operation failed with 74: ..\\Enclave\\enclave.cpp(2379)\\(null)!: (caller: ) Exception(0) 83FF004A Bad message    Msg:[Unsigned JWS specified but enclave is configured with signing certificates.] \n\r\n..\\Enclave\\api.cpp(663)\\(null)!: (caller: ) LogHr(0) 83FF004A Bad message    Msg:[Unhandled Enclave Exception: \u0022Bad message\u0022] \n\r\n"
+          "message": "Native operation failed with 74: ..\\Enclave\\enclave.cpp(2430)\\(null)!: (caller: ) Exception(0) 83FF004A Bad message    Msg:[Unsigned JWS specified but enclave is configured with signing certificates.] \n\r\n..\\Enclave\\api.cpp(679)\\(null)!: (caller: ) LogHr(0) 83FF004A Bad message    Msg:[Unhandled Enclave Exception: \u0022Bad message\u0022] \n\r\n"
         }
       }
     }
   ],
   "Variables": {
-    "ISOLATED_ATTESTATION_URL": "https://larryoattestationiso.wus.attest.azure.net",
+    "ATTESTATION_ISOLATED_URL": "https://cslarryoattestationiso.uks.attest.azure.net",
     "RandomSeed": "477436743"
   }
 }

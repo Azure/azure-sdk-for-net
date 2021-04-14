@@ -20,7 +20,7 @@ namespace Proto.Client
                 context = new ScenarioContext();
             }
 
-            var subscription = new ArmClient(new DefaultAzureCredential()).GetSubscriptionOperations(Context.SubscriptionId);
+            var subscription = new ArmClient(new DefaultAzureCredential()).GetSubscriptions().TryGet(Context.SubscriptionId);
 
             Regex reg = new Regex($"{Context.VmName}.*-e");
             Parallel.ForEach(subscription.ListVirtualMachines(), vm =>
