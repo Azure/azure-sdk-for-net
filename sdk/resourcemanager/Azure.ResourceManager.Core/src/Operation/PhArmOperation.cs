@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Core
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var method = typeof(TModel).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Deserialize", StringComparison.InvariantCulture) && !m.IsPublic && m.IsStatic);
-            return method.Invoke(null, new object[] { document.RootElement }) as TOperations;
+            return _converter(method.Invoke(null, new object[] { document.RootElement }) as TModel);
         }
 
         /// <inheritdoc/>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Core
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var method = typeof(TModel).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Deserialize", StringComparison.InvariantCulture) && !m.IsPublic && m.IsStatic);
-            return method.Invoke(null, new object[] { document.RootElement }) as TOperations;
+            return _converter(method.Invoke(null, new object[] { document.RootElement }) as TModel);
         }
     }
 }
