@@ -10,7 +10,7 @@
 		<AssemblyName>Microsoft.Azure.Management.ChangeAnalysis</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.ChangeAnalysis</PackageId>
 		<PackageTags>ChangeAnalysis;</PackageTags>
-		<PackageReleaseNotes>Release the first package for Azure Change Analysis</PackageReleaseNotes>
+		<PackageReleaseNotes>Release the first stable package for Azure Change Analysis</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
