@@ -219,6 +219,7 @@ namespace Azure.Test.Perf
             Console.WriteLine($"GCSettings.IsServerGC: {GCSettings.IsServerGC}");
 
             Console.WriteLine($"Environment.ProcessorCount: {Environment.ProcessorCount}");
+            Console.WriteLine($"Environment.Is64BitProcess: {Environment.Is64BitProcess}");
 
             ThreadPool.GetMinThreads(out var minWorkerThreads, out var minCompletionPortThreads);
             ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxCompletionPortThreads);
