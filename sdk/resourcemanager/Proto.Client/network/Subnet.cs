@@ -24,7 +24,7 @@ namespace Proto.Network
         public SubnetData Data { get; private set; }
 
         /// <inheritdoc />
-        protected override Subnet GetResource()
+        protected override Subnet GetResource(CancellationToken cancellation = default)
         {
             return this;
         }
