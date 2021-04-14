@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="wrapped"> The results to wrap. </param>
         public PhVoidArmOperation(Response wrapped)
         {
-            _wrappedResponseOperation = new VoidArmOperation(wrapped);
+            _wrappedResponseOperation = new PhNoValueArmOperation(wrapped);
         }
 
         private bool _doesWrapOperation => _wrappedResponseOperation is null;
@@ -47,13 +47,7 @@ namespace Azure.ResourceManager.Core
         public override string Id => _wrappedOperation?.Id;
 
         /// <inheritdoc/>
-        public override Response Value => throw new InvalidOperationException();
-
-        /// <inheritdoc/>
         public override bool HasCompleted => _doesWrapOperation ? _wrappedOperation.HasCompleted : _wrappedResponseOperation.HasCompleted;
-
-        /// <inheritdoc/>
-        public override bool HasValue => false;
 
         /// <inheritdoc/>
         public override Response GetRawResponse()
@@ -78,21 +72,24 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override async ValueTask<Response<Response>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
-            return await WaitForCompletionAsync(ArmOperationHelpers<Response>.DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
+            var task = WaitForCompletionAsync(ArmOperationHelpers<object>.DefaultPollingInterval, cancellationToken);
+            return await task.ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
         public override async ValueTask<Response<Response>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
-            return _doesWrapOperation
-                ? Response.FromValue(await _wrappedOperation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false), _wrappedOperation.GetRawResponse())
-                : Response.FromValue(await _wrappedResponseOperation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false), _wrappedOperation.GetRawResponse());
+            var task = _doesWrapOperation
+                ? _wrappedOperation.WaitForCompletionAsync(pollingInterval, cancellationToken)
+                : _wrappedResponseOperation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+            var value = await task.ConfigureAwait(false);
+            return value;
         }
 
         /// <inheritdoc/>
         public override Response WaitForCompletion(CancellationToken cancellationToken = default)
         {
-            return WaitForCompletion(ArmOperationHelpers<Response>.DefaultPollingInterval.Seconds, cancellationToken);
+            return WaitForCompletion(ArmOperationHelpers<object>.DefaultPollingInterval.Seconds, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -103,11 +100,23 @@ namespace Azure.ResourceManager.Core
                 UpdateStatus(cancellationToken);
                 if (HasCompleted)
                 {
-                    return Response.FromValue(Value, GetRawResponse());
+                    return Value;
                 }
 
                 Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);
             }
+        }
+
+        /// <inheritdoc/>
+        public override Response CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            return response;
+        }
+
+        /// <inheritdoc/>
+        public override ValueTask<Response> CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            return new ValueTask<Response>(response);
         }
     }
 }

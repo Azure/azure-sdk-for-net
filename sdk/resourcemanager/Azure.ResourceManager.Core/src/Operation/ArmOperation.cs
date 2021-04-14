@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Abstract class for long-running or synchronous applications.
     /// </summary>
-    public abstract class ArmOperation : Operation<Response>
+    public abstract class ArmOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
         private readonly Response _voidResponse;
@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmOperation"/> class.
         /// </summary>
-        /// <param name="source"> The operation source to use. </param>
         /// <param name="clientDiagnostics">The client diagnostics to use. </param>
         /// <param name="pipeline"> The HttpPipeline to use. </param>
         /// <param name="request"> The original request. </param>
         /// <param name="response"> The original response. </param>
+        /// <param name="finalStateVia"> Where the final state comes from. </param>
         /// <param name="scopeName"> The scope name to use. </param>
-        internal ArmOperation(IOperationSource<Response> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, string scopeName)
+        internal ArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string scopeName)
         {
-            _operation = new ArmOperationHelpers<Response>(source, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, scopeName);
+            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, finalStateVia, scopeName);
         }
 
         /// <summary>
@@ -134,6 +134,14 @@ namespace Azure.ResourceManager.Core
                 Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);
             }
         }
+
+#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
+        /// <inheritdoc/>
+        public abstract Response CreateResult(Response response, CancellationToken cancellationToken);
+
+        /// <inheritdoc/>
+        public abstract ValueTask<Response> CreateResultAsync(Response response, CancellationToken cancellationToken);
+#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
     }
 
     /// <summary>
@@ -141,7 +149,7 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     /// <typeparam name="TOperations"> The <see cref="OperationsBase"/> to return representing the result of the ArmOperation. </typeparam>
 #pragma warning disable SA1402 // File may only contain a single type
-    public abstract class ArmOperation<TOperations> : Operation<TOperations>
+    public abstract class ArmOperation<TOperations> : Operation<TOperations>, IOperationSource<TOperations>
         where TOperations : notnull
 #pragma warning restore SA1402 // File may only contain a single type
     {
@@ -170,15 +178,15 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmOperation{TOperations}"/> class.
         /// </summary>
-        /// <param name="source"> The operation source to use. </param>
         /// <param name="clientDiagnostics">The client diagnostics to use. </param>
         /// <param name="pipeline"> The HttpPipeline to use. </param>
         /// <param name="request"> The original request. </param>
         /// <param name="response"> The original response. </param>
+        /// <param name="finalStateVia"> Where the final state comes from. </param>
         /// <param name="scopeName"> The scope name to use. </param>
-        internal ArmOperation(IOperationSource<TOperations> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, string scopeName)
+        internal ArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string scopeName)
         {
-            _operation = new ArmOperationHelpers<TOperations>(source, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, scopeName);
+            _operation = new ArmOperationHelpers<TOperations>(this, clientDiagnostics, pipeline, request, response, finalStateVia, scopeName);
         }
 
         private bool _doesWrapOperation => _valueResponse is null;
@@ -267,5 +275,13 @@ namespace Azure.ResourceManager.Core
                 Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);
             }
         }
+
+#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
+        /// <inheritdoc/>
+        public abstract TOperations CreateResult(Response response, CancellationToken cancellationToken);
+
+        /// <inheritdoc/>
+        public abstract ValueTask<TOperations> CreateResultAsync(Response response, CancellationToken cancellationToken);
+#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
     }
 }

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -46,7 +48,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="converter"> The function used to convert from existing type to new type. </param>
         public PhArmOperation(Response<TModel> wrapped, Func<TModel, TOperations> converter)
         {
-            _wrappedResponseOperation = new ValueArmOperation<TModel>(wrapped);
+            _wrappedResponseOperation = new PhValueArmOperation<TModel>(wrapped);
             _converter = converter;
         }
 
@@ -120,6 +122,22 @@ namespace Azure.ResourceManager.Core
 
                 Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);
             }
+        }
+
+        /// <inheritdoc/>
+        public override TOperations CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var method = typeof(TModel).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Deserialize", StringComparison.InvariantCulture) && !m.IsPublic && m.IsStatic);
+            return method.Invoke(null, new object[] { document.RootElement }) as TOperations;
+        }
+
+        /// <inheritdoc/>
+        public async override ValueTask<TOperations> CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            var method = typeof(TModel).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Deserialize", StringComparison.InvariantCulture) && !m.IsPublic && m.IsStatic);
+            return method.Invoke(null, new object[] { document.RootElement }) as TOperations;
         }
     }
 }
