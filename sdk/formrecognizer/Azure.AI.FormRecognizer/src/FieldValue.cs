@@ -489,9 +489,10 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// .
+        /// Converts the <see cref="FieldValue"/> instance to the specified type
+        /// specified in the parameter result.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A bool value indicates whether the operation succeeded.</returns>
         public bool TryParse<T>(out T result)
         {
             bool parse = true;

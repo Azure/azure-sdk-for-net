@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             if (invoice.Fields.TryGetValue("VendorName", out FormField vendorNameField))
             {
-                if (vendorNameField.Value.TryParse<string>(out string vendorName))
+                if (vendorNameField.Value.TryParse(out string vendorName))
                 {
                     Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
                 }
@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             if (invoice.Fields.TryGetValue("CustomerName", out FormField customerNameField))
             {
-                if (customerNameField.Value.TryParse<string>(out string customerName))
+                if (customerNameField.Value.TryParse(out string customerName))
                 {
                     Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
                 }
