@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary> A Microsoft Azure Attestation response token body - the body of a response token issued by MAA. </summary>
     public partial class AttestationResult
@@ -48,7 +48,7 @@ namespace Azure.Security.Attestation.Models
         /// <param name="internalDeprecatedPolicySigner"> DEPRECATED: Private Preview version of x-ms-policy-signer. </param>
         /// <param name="deprecatedPolicyHash"> DEPRECATED: Private Preview version of x-ms-policy-hash. </param>
         /// <param name="deprecatedRpData"> DEPRECATED: Private Preview version of nonce. </param>
-        internal AttestationResult(string internalJti, string internalIss, long internalIat, long internalExp, long internalNbf, object internalCnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, JsonWebKey internalPolicySigner, byte[] policyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, byte[] enclaveHeldData, object sgxCollateral, string deprecatedVersion, bool? deprecatedIsDebuggable, object deprecatedSgxCollateral, byte[] deprecatedEnclaveHeldData, byte[] deprecatedEnclaveHeldData2, float? deprecatedProductId, string deprecatedMrEnclave, string deprecatedMrSigner, float? deprecatedSvn, string deprecatedTee, JsonWebKey internalDeprecatedPolicySigner, byte[] deprecatedPolicyHash, string deprecatedRpData)
+        internal AttestationResult(string internalJti, string internalIss, double? internalIat, double? internalExp, double? internalNbf, object internalCnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, JsonWebKey internalPolicySigner, byte[] policyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, byte[] enclaveHeldData, object sgxCollateral, string deprecatedVersion, bool? deprecatedIsDebuggable, object deprecatedSgxCollateral, byte[] deprecatedEnclaveHeldData, byte[] deprecatedEnclaveHeldData2, float? deprecatedProductId, string deprecatedMrEnclave, string deprecatedMrSigner, float? deprecatedSvn, string deprecatedTee, JsonWebKey internalDeprecatedPolicySigner, byte[] deprecatedPolicyHash, string deprecatedRpData)
         {
             InternalJti = internalJti;
             InternalIss = internalIss;

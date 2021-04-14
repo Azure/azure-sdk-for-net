@@ -11,8 +11,6 @@ namespace Azure.AI.FormRecognizer.Tests
 {
     public class FormRecognizerLiveTestBase : RecordedTestBase<FormRecognizerTestEnvironment>
     {
-        protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 1);
-
         public FormRecognizerLiveTestBase(bool isAsync)
             : base(isAsync)
         {
@@ -115,7 +113,7 @@ namespace Azure.AI.FormRecognizer.Tests
             };
             var trainingFilesUri = new Uri(trainingFiles);
 
-            return await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, PollingInterval, modelName);
+            return await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, modelName);
         }
 
         protected enum ContainerType

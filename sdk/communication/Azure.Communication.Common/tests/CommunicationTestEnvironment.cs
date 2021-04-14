@@ -11,6 +11,8 @@ namespace Azure.Communication.Tests
         public const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
         public const string LiveTestConnectionStringEnvironmentVariableName = "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING";
         public const string AzurePhoneNumber = "AZURE_PHONE_NUMBER";
+        protected const string TestPackagesEnabledDefaultValue = "all";
+        private const string TestPackagesEnabledEnvironmentVariableName = "TEST_PACKAGES_ENABLED";
 
         public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);
 
@@ -25,5 +27,18 @@ namespace Azure.Communication.Tests
         public string LiveTestAccessKey => Core.ConnectionString.Parse(LiveTestConnectionString).GetRequired("accesskey");
 
         public string CommunicationTestPhoneNumber => GetVariable(AzurePhoneNumber);
+
+        public virtual string ExpectedTestPackagesEnabled { get { return TestPackagesEnabledDefaultValue; } }
+
+        public bool ShouldIgnoreTests => TestPackagesEnabled != TestPackagesEnabledDefaultValue
+            && TestPackagesEnabled != ExpectedTestPackagesEnabled;
+
+        public string TestPackagesEnabled => GetTestPackageEnabled();
+
+        private string GetTestPackageEnabled()
+        {
+            string? package = Environment.GetEnvironmentVariable(TestPackagesEnabledEnvironmentVariableName);
+            return package ?? TestPackagesEnabledDefaultValue;
+        }
     }
 }

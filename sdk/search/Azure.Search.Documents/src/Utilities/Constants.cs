@@ -67,9 +67,24 @@ namespace Azure.Search.Documents
         public static readonly JsonEncodedText SearchNextPageKeyJson = JsonEncodedText.Encode("@search.nextPageParameters");
 
         /// <summary>
+        /// The @search.answers key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchAnswersKeyJson = JsonEncodedText.Encode("@search.answers");
+
+        /// <summary>
         /// The @search.highlights key.
         /// </summary>
         public static readonly JsonEncodedText SearchHighlightsKeyJson = JsonEncodedText.Encode("@search.highlights");
+
+        /// <summary>
+        /// The @search.rerankerScore key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchRerankerScoreKeyJson = JsonEncodedText.Encode("@search.rerankerScore");
+
+        /// <summary>
+        /// The @search.captions key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchCaptionsKeyJson = JsonEncodedText.Encode("@search.captions");
 
         /// <summary>
         /// The @search.action key.

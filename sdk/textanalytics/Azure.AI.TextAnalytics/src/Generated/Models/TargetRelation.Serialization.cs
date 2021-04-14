@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("relationType"))
                 {
-                    relationType = new TargetRelationType(property.Value.GetString());
+                    relationType = property.Value.GetString().ToTargetRelationType();
                     continue;
                 }
                 if (property.NameEquals("ref"))
