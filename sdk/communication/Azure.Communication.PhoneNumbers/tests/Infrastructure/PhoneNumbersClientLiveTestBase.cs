@@ -16,8 +16,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
             => Sanitizer = new PhoneNumbersClientRecordedTestSanitizer();
 
-        public bool IncludePhoneNumberLiveTests
-            => TestEnvironment.Mode == RecordedTestMode.Playback || Environment.GetEnvironmentVariable("INCLUDE_PHONENUMBER_LIVE_TESTS") == "True";
+        public bool SkipPhoneNumberLiveTests
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_PHONENUMBER_LIVE_TESTS") == "TRUE";
 
         [OneTimeSetUp]
         public void Setup()
