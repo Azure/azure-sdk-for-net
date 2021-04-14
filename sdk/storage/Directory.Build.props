@@ -29,6 +29,10 @@
       SA1649;
     </NoWarn>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' and '$(IsTargetingNetFx)' == 'true'">
+    <!-- dotnet test runs .NET FX tests in 32 bit process by default. This is to make it run 64. -->
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
     <!--
     These analyzers are blocked by https://github.com/Azure/azure-sdk-tools/issues/127

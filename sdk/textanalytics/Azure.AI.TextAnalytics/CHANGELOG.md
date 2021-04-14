@@ -1,7 +1,16 @@
 # Release History
 
-## 5.1.0-beta.6 (Unreleased)
+## 5.1.0-beta.7 (Unreleased)
 
+
+## 5.1.0-beta.6 (2021-04-06)
+### New features
+- Add overloads to `ExtractKeyPhrasesBatch` and `ExtractKeyPhrasesBatchAsync` to on `TextAnalyticsClient` to accept `ExtractKeyPhrasesOptions` and hid the previous methods (non-breaking change).
+- Add overloads to `RecognizeEntitiesBatch` and `RecognizeEntitiesBatchAsync` to on `TextAnalyticsClient` to accept `RecognizeEntitiesOptions` and hid the previous methods (non-breaking change).
+- Add overloads to `RecognizeLinkedEntitiesBatch` and `RecognizeLinkedEntitiesBatch` to on `TextAnalyticsClient` to accept `RecognizeLinkedEntitiesOptions` and hid the previous methods (non-breaking change).
+
+### Breaking changes
+- Renamed `TotalActions` to `ActionsTotal`.
 
 ## 5.1.0-beta.5 (2021-03-09)
 ### New features

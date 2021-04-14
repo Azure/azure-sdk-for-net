@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Communication.Pipeline;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Communication.PhoneNumbers.Tests
 {
@@ -16,6 +18,16 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         public bool IncludePhoneNumberLiveTests
             => TestEnvironment.Mode == RecordedTestMode.Playback || Environment.GetEnvironmentVariable("INCLUDE_PHONENUMBER_LIVE_TESTS") == "True";
+
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            if (TestEnvironment.ShouldIgnoreTests)
+            {
+                Assert.Ignore("Phone number tests are skipped " +
+                    "because phonenumbers package is not included in the TEST_PACKAGES_ENABLED variable");
+            }
+        }
 
         /// <summary>
         /// Creates a <see cref="PhoneNumbersClient" /> with the connectionstring via environment
@@ -84,6 +96,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
             return TestEnvironment.Mode == RecordedTestMode.Playback
                 ? RecordedTestSanitizer.SanitizeValue
                 : TestEnvironment.CommunicationTestPhoneNumber;
+        }
+
+        protected void SleepIfNotInPlaybackMode()
+        {
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
+                Thread.Sleep(2000);
         }
     }
 }

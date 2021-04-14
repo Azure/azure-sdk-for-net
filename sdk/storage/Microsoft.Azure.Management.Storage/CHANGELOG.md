@@ -1,5 +1,11 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 21.0.0
+
+**Breaking changes**
+
+- StorageAccount.KeyCreationTime type change from Dictionary to 'Microsoft.Azure.Management.Storage.Models.KeyCreationTime'.
+
 ### Changes in 20.0.0
 - Upgrade to rest api version 2021-02-01.
 - Support KeyPolicy,SasPolicy in create/update Storage account.
