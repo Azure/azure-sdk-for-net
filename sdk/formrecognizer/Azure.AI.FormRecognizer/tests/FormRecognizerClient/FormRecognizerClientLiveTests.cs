@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             // Sanity check to make sure we got an actual response back from the service.
 
-            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
+            FormPageCollection formPages = await operation.WaitForCompletionAsync();
             var formPage = formPages.Single();
 
             Assert.Greater(formPage.Lines.Count, 0);
@@ -91,7 +91,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             var formPage = operation.Value.Single();
@@ -198,7 +198,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             var formPage = operation.Value.Single();
@@ -311,7 +311,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
-            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
+            FormPageCollection formPages = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(2, formPages.Count);
 
@@ -343,7 +343,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeContentAsync(stream, options);
             }
 
-            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
+            FormPageCollection formPages = await operation.WaitForCompletionAsync();
             var blankPage = formPages.Single();
 
             ValidateFormPage(blankPage, includeFieldElements: true, expectedPageNumber: 1);
@@ -365,7 +365,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeContentAsync(stream);
             }
 
-            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
+            FormPageCollection formPages = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(3, formPages.Count);
 
@@ -442,7 +442,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             var formPage = operation.Value.Single();
@@ -464,7 +464,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages =  { pages } });
             }
 
-            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
+            FormPageCollection formPages = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(expected, formPages.Count);
         }
@@ -483,7 +483,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = { page1, page2 } });
             }
 
-            FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
+            FormPageCollection formPages = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(expected, formPages.Count);
         }
@@ -497,7 +497,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
             operation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { Language = FormRecognizerLanguage.En } );
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             var formPage = operation.Value.Single();
@@ -525,10 +525,10 @@ namespace Azure.AI.FormRecognizer.Tests
             basicOrderOperation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { ReadingOrder = ReadingOrder.Basic });
             naturalOrderOperation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { ReadingOrder = ReadingOrder.Natural });
 
-            await basicOrderOperation.WaitForCompletionAsync(PollingInterval);
+            await basicOrderOperation.WaitForCompletionAsync();
             Assert.IsTrue(basicOrderOperation.HasValue);
 
-            await naturalOrderOperation.WaitForCompletionAsync(PollingInterval);
+            await naturalOrderOperation.WaitForCompletionAsync();
             Assert.IsTrue(naturalOrderOperation.HasValue);
 
             var basicOrderFormPage = basicOrderOperation.Value.Single();
@@ -562,7 +562,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             // Sanity check to make sure we got an actual response back from the service.
 
-            RecognizedFormCollection formPage = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection formPage = await operation.WaitForCompletionAsync();
 
             RecognizedForm form = formPage.Single();
             Assert.NotNull(form);
@@ -600,7 +600,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
             }
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -711,7 +711,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
             }
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -826,7 +826,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(2, recognizedForms.Count);
 
@@ -872,7 +872,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsAsync(stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var blankForm = recognizedForms.Single();
 
@@ -903,7 +903,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsAsync(stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(3, recognizedForms.Count);
 
@@ -987,7 +987,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsAsync(stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var receipt = recognizedForms.Single();
 
@@ -1035,7 +1035,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsAsync(stream, new RecognizeReceiptsOptions() { Pages = { pages } });
             }
 
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(expected, forms.Count);
         }
@@ -1054,7 +1054,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeReceiptsAsync(stream, new RecognizeReceiptsOptions() { Pages = { page1, page2 } });
             }
 
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(expected, forms.Count);
         }
@@ -1077,7 +1077,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             // Sanity check to make sure we got an actual response back from the service.
 
-            RecognizedFormCollection formPage = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection formPage = await operation.WaitForCompletionAsync();
 
             RecognizedForm form = formPage.Single();
             Assert.NotNull(form);
@@ -1111,7 +1111,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeBusinessCardsFromUriAsync(uri);
             }
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -1218,7 +1218,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeBusinessCardsFromUriAsync(uri);
             }
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -1316,7 +1316,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var businessCardsForm = recognizedForms.Single();
 
@@ -1340,7 +1340,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var blankForm = recognizedForms.Single();
 
@@ -1410,7 +1410,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeBusinessCardsFromUriAsync(uri, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(2, recognizedForms.Count);
 
@@ -1466,7 +1466,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var businessCard = recognizedForms.Single();
 
@@ -1514,7 +1514,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeBusinessCardsAsync(stream, new RecognizeBusinessCardsOptions() { Pages = { pages } });
             }
 
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(expected, forms.Count);
         }
@@ -1533,7 +1533,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeBusinessCardsAsync(stream, new RecognizeBusinessCardsOptions() { Pages = { page1, page2 } });
             }
 
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(expected, forms.Count);
         }
@@ -1556,7 +1556,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             // Sanity check to make sure we got an actual response back from the service.
 
-            RecognizedFormCollection formPage = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection formPage = await operation.WaitForCompletionAsync();
 
             RecognizedForm form = formPage.Single();
             Assert.NotNull(form);
@@ -1590,7 +1590,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeInvoicesFromUriAsync(uri);
             }
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -1741,7 +1741,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeInvoicesAsync(stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var invoicesform = recognizedForms.Single();
 
@@ -1764,7 +1764,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeInvoicesAsync(stream);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var blankForm = recognizedForms.Single();
 
@@ -1806,7 +1806,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeInvoicesFromUriAsync(uri, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var form = recognizedForms.Single();
 
@@ -1889,7 +1889,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeInvoicesAsync(stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var invoice = recognizedForms.Single();
 
@@ -1937,7 +1937,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeInvoicesAsync(stream, new RecognizeInvoicesOptions() { Pages = { pages } });
             }
 
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
             int pageCount = forms.Sum(f => f.Pages.Count);
 
             Assert.AreEqual(expected, pageCount);
@@ -1957,7 +1957,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeInvoicesAsync(stream, new RecognizeInvoicesOptions() { Pages = { page1, page2 } });
             }
 
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
             int pageCount = forms.Sum(f => f.Pages.Count);
 
             Assert.AreEqual(expected, pageCount);
@@ -1981,7 +1981,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             // Sanity check to make sure we got an actual response back from the service.
 
-            RecognizedFormCollection formCollection = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection formCollection = await operation.WaitForCompletionAsync();
 
             RecognizedForm form = formCollection.Single();
             Assert.NotNull(form);
@@ -2015,7 +2015,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeIdDocumentsFromUriAsync(uri);
             }
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -2075,7 +2075,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeIdDocumentsAsync(stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var form = recognizedForms.Single();
 
@@ -2098,7 +2098,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeIdDocumentsAsync(stream);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             Assert.IsEmpty(recognizedForms);
         }
@@ -2152,7 +2152,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             // Sanity check to make sure we got an actual response back from the service.
 
-            RecognizedFormCollection formPage = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection formPage = await operation.WaitForCompletionAsync();
 
             RecognizedForm form = formPage.Single();
             Assert.NotNull(form);
@@ -2209,7 +2209,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
             Assert.GreaterOrEqual(operation.Value.Count, 1);
@@ -2258,7 +2258,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
             }
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
             Assert.GreaterOrEqual(operation.Value.Count, 1);
@@ -2309,7 +2309,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var recognizedForm = recognizedForms.Single();
 
@@ -2358,7 +2358,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var recognizedForm = recognizedForms.Single();
 
@@ -2401,7 +2401,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var recognizedForm = recognizedForms.Single();
 
@@ -2450,7 +2450,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
             }
 
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
             var fields = forms.Single().Fields;
 
             // Verify that we got back at least one missing field to make sure we hit the code path we want to test.
@@ -2491,7 +2491,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
             Assert.GreaterOrEqual(operation.Value.Count, 1);
@@ -2551,7 +2551,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(2, recognizedForms.Count);
 
@@ -2597,7 +2597,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             var blankForm = recognizedForms.Single();
 
@@ -2641,7 +2641,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, uri, options);
             }
 
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(3, recognizedForms.Count);
 
@@ -2714,7 +2714,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, invalidUri);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync(PollingInterval));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
 
             Assert.AreEqual("2003", ex.ErrorCode);
             Assert.True(operation.HasCompleted);
@@ -2737,7 +2737,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, new RecognizeCustomFormsOptions() { Pages = { pages } });
             }
 
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(expected, forms.Count);
         }
@@ -2758,7 +2758,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, new RecognizeCustomFormsOptions() { Pages = { page1, page2 } });
             }
 
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(expected, forms.Count);
         }

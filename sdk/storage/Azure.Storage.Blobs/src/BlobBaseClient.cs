@@ -211,7 +211,7 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -370,7 +370,7 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -3403,6 +3403,11 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     return Response.FromValue(false, default);
                 }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobUsesCustomerSpecifiedEncryption)
+                {
+                    return Response.FromValue(true, default);
+                }
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
@@ -4850,7 +4855,20 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
         {
-            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+            if (builder == null)
+            {
+                throw Errors.ArgumentNull(nameof(builder));
+            }
+
+            // Deep copy of builder so we don't modify the user's original BlobSasBuilder.
+            builder = BlobSasBuilder.DeepCopy(builder);
+
+            // Assign builder's ContainerName, BlobName, Snapshot, and BlobVersionId, if they are null.
+            builder.BlobContainerName ??= BlobContainerName;
+            builder.BlobName ??= Name;
+            builder.Snapshot ??= _snapshot;
+            builder.BlobVersionId ??= _blobVersionId;
+
             if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(
@@ -4879,7 +4897,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
+                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
             };
             return sasUri.ToUri();
         }

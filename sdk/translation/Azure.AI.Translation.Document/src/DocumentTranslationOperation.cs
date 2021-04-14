@@ -28,47 +28,47 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// The date time when the translation operation was created.
         /// </summary>
-        public DateTimeOffset CreatedOn => _createdOn;
+        public virtual DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
         /// The date time when the translation operation's status was last updated.
         /// </summary>
-        public DateTimeOffset LastModified => _lastModified;
+        public virtual DateTimeOffset LastModified => _lastModified;
 
         /// <summary>
         /// The current status of the translation operation.
         /// </summary>
-        public TranslationStatus Status => _status;
+        public virtual TranslationStatus Status => _status;
 
         /// <summary>
         /// Total number of expected translated documents.
         /// </summary>
-        public int DocumentsTotal => _documentsTotal;
+        public virtual int DocumentsTotal => _documentsTotal;
 
         /// <summary>
         /// Number of documents failed to translate.
         /// </summary>
-        public int DocumentsFailed => _documentsFailed;
+        public virtual int DocumentsFailed => _documentsFailed;
 
         /// <summary>
         /// Number of documents translated successfully.
         /// </summary>
-        public int DocumentsSucceeded => _documentsSucceeded;
+        public virtual int DocumentsSucceeded => _documentsSucceeded;
 
         /// <summary>
         /// Number of documents in progress.
         /// </summary>
-        public int DocumentsInProgress => _documentsInProgress;
+        public virtual int DocumentsInProgress => _documentsInProgress;
 
         /// <summary>
         /// Number of documents in queue for translation.
         /// </summary>
-        public int DocumentsNotStarted => _documentsNotStarted;
+        public virtual int DocumentsNotStarted => _documentsNotStarted;
 
         /// <summary>
         /// Number of documents cancelled.
         /// </summary>
-        public int DocumentsCancelled => _documentsCancelled;
+        public virtual int DocumentsCancelled => _documentsCancelled;
 
         private int _documentsTotal;
         private int _documentsFailed;
@@ -101,6 +101,11 @@ namespace Azure.AI.Translation.Document
         private bool _hasCompleted;
 
         /// <summary>
+        /// <c>true</c> if the long-running operation has a value. Otherwise, <c>false</c>.
+        /// </summary>
+        private bool _hasValue;
+
+        /// <summary>
         /// Returns true if the long-running operation completed.
         /// </summary>
         public override bool HasCompleted => _hasCompleted;
@@ -125,7 +130,7 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
-        public override bool HasValue => _firstPage != null;
+        public override bool HasValue => _hasValue;
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -230,7 +235,7 @@ namespace Azure.AI.Translation.Document
                 {
                     var response = await _serviceClient.GetOperationDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
                     _firstPage = Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-
+                    _hasValue = true;
                     async Task<Page<DocumentStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
                     {
                         // TODO: diagnostics scope?
@@ -289,6 +294,7 @@ namespace Azure.AI.Translation.Document
                         || update.Value.Status == TranslationStatus.Failed)
                     {
                         _hasCompleted = true;
+                        _hasValue = true;
                     }
                     else if (update.Value.Status == TranslationStatus.ValidationFailed)
                     {

@@ -391,6 +391,142 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             }
         }
 
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanRoundTripAmqpProperties(bool enableSession)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: enableSession))
+            {
+                var message = new ServiceBusMessage();
+                var amqpMessage = message.GetRawAmqpMessage();
+
+                // body
+                amqpMessage.Body = AmqpMessageBody.FromValue("body");
+
+                // header
+                amqpMessage.Header.TimeToLive = TimeSpan.FromSeconds(50);
+                amqpMessage.Header.DeliveryCount = 3;
+                amqpMessage.Header.Durable = true;
+                amqpMessage.Header.FirstAcquirer = true;
+                amqpMessage.Header.Priority = 1;
+
+                // footer
+                amqpMessage.Footer.Add("footerKey1", "footerVal1");
+                amqpMessage.Footer.Add("footerKey2", "footerVal2");
+
+                // properties
+                amqpMessage.Properties.AbsoluteExpiryTime = DateTimeOffset.Now.AddDays(1);
+                amqpMessage.Properties.ContentEncoding = "compress";
+                amqpMessage.Properties.ContentType = "application/json";
+                amqpMessage.Properties.CorrelationId = new AmqpMessageId("correlationId");
+                amqpMessage.Properties.CreationTime = DateTimeOffset.Now.AddDays(1);
+                amqpMessage.Properties.GroupId = "groupId";
+                amqpMessage.Properties.GroupSequence = 5;
+                amqpMessage.Properties.MessageId = new AmqpMessageId("messageId");
+                amqpMessage.Properties.ReplyTo = new AmqpAddress("replyTo");
+                amqpMessage.Properties.ReplyToGroupId = "replyToGroupId";
+                amqpMessage.Properties.Subject = "subject";
+                amqpMessage.Properties.To = new AmqpAddress("to");
+                amqpMessage.Properties.UserId = new byte[] { 1, 2, 3 };
+
+                // application properties
+                amqpMessage.ApplicationProperties.Add("applicationKey1", "applicationVal1");
+                amqpMessage.ApplicationProperties.Add("applicationKey2", "applicationVal2");
+
+                // message annotations
+                amqpMessage.MessageAnnotations.Add("messageAnnotationKey1", "messageAnnotationVal1");
+                amqpMessage.MessageAnnotations.Add("messageAnnotationKey2", "messageAnnotationVal2");
+
+                // delivery annotations
+                amqpMessage.DeliveryAnnotations.Add("deliveryAnnotationKey1", "deliveryAnnotationVal1");
+                amqpMessage.DeliveryAnnotations.Add("deliveryAnnotationKey2", "deliveryAnnotationVal2");
+
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+
+                var now = DateTimeOffset.UtcNow;
+                await sender.SendMessageAsync(message);
+
+                var receiver = enableSession ? await client.AcceptNextSessionAsync(scope.QueueName)
+                    : client.CreateReceiver(scope.QueueName);
+                var received = (await receiver.ReceiveMessageAsync()).GetRawAmqpMessage();
+
+                received.Body.TryGetValue(out var body);
+                Assert.AreEqual("body", body);
+
+                Assert.AreEqual(TimeSpan.FromSeconds(50), received.Header.TimeToLive);
+
+                // the broker will disregard the value set for delivery count
+                Assert.AreEqual(1, received.Header.DeliveryCount);
+                Assert.IsTrue(received.Header.Durable);
+                Assert.IsTrue(received.Header.FirstAcquirer);
+                Assert.AreEqual(1, received.Header.Priority);
+
+                Assert.AreEqual("compress", received.Properties.ContentEncoding);
+                Assert.AreEqual("application/json", received.Properties.ContentType);
+                Assert.AreEqual(new AmqpMessageId("correlationId"), received.Properties.CorrelationId);
+                Assert.AreEqual("groupId", received.Properties.GroupId);
+                Assert.AreEqual(5, received.Properties.GroupSequence);
+                Assert.AreEqual(new AmqpMessageId("messageId"), received.Properties.MessageId);
+                Assert.AreEqual(new AmqpAddress("replyTo"), received.Properties.ReplyTo);
+                Assert.AreEqual("replyToGroupId", received.Properties.ReplyToGroupId);
+                Assert.AreEqual("subject", received.Properties.Subject);
+                Assert.AreEqual(new AmqpAddress("to"), received.Properties.To);
+                Assert.AreEqual(new byte[] { 1, 2, 3 }, received.Properties.UserId.Value.ToArray());
+
+                // since TTL was set these were overriden - provide some buffer since the Now time is
+                Assert.That(received.Properties.CreationTime, Is.EqualTo(now).Within(TimeSpan.FromSeconds(1)));
+                Assert.That(received.Properties.AbsoluteExpiryTime, Is.EqualTo(now.Add(TimeSpan.FromSeconds(50))).Within(TimeSpan.FromSeconds(1)));
+
+                // application properties
+                Assert.AreEqual(received.ApplicationProperties["applicationKey1"], "applicationVal1");
+                Assert.AreEqual(received.ApplicationProperties["applicationKey2"], "applicationVal2");
+
+                // message annotations
+                Assert.AreEqual(received.MessageAnnotations["messageAnnotationKey1"], "messageAnnotationVal1");
+                Assert.AreEqual(received.MessageAnnotations["messageAnnotationKey2"], "messageAnnotationVal2");
+
+                // delivery annotations
+                Assert.AreEqual(received.DeliveryAnnotations["deliveryAnnotationKey1"], "deliveryAnnotationVal1");
+                Assert.AreEqual(received.DeliveryAnnotations["deliveryAnnotationKey2"], "deliveryAnnotationVal2");
+            }
+        }
+
+        [Test]
+        public async Task CanRoundTripAbsoluteExpiryCreationTime()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var message = new ServiceBusMessage();
+                var amqpMessage = message.GetRawAmqpMessage();
+
+                // body
+                amqpMessage.Body = AmqpMessageBody.FromValue("body");
+
+                // properties
+                var expiry = DateTimeOffset.Now.AddDays(1);
+                var creation = DateTimeOffset.Now.AddMinutes(1);
+                amqpMessage.Properties.AbsoluteExpiryTime = expiry;
+                amqpMessage.Properties.CreationTime = creation;
+
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+
+                var now = DateTimeOffset.UtcNow;
+                await sender.SendMessageAsync(message);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var received = (await receiver.ReceiveMessageAsync()).GetRawAmqpMessage();
+
+                received.Body.TryGetValue(out var body);
+                Assert.AreEqual("body", body);
+
+                Assert.AreEqual(expiry.ToUnixTimeSeconds(), received.Properties.AbsoluteExpiryTime.Value.ToUnixTimeSeconds());
+                Assert.AreEqual(creation.ToUnixTimeSeconds(), received.Properties.CreationTime.Value.ToUnixTimeSeconds());
+            }
+        }
+
         private class TestBody
         {
             public string A { get; set; }

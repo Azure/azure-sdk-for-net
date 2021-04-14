@@ -24,22 +24,22 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Time when the operation was created on.
         /// </summary>
-        public DateTimeOffset CreatedOn => _createdOn;
+        public virtual DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
         /// Time when the operation will expire.
         /// </summary>
-        public DateTimeOffset? ExpiresOn => _expiresOn;
+        public virtual DateTimeOffset? ExpiresOn => _expiresOn;
 
         /// <summary>
         /// Time when the operation was last modified on
         /// </summary>
-        public DateTimeOffset LastModified => _lastModified;
+        public virtual DateTimeOffset LastModified => _lastModified;
 
         /// <summary>
         /// Gets the status of the operation.
         /// </summary>
-        public TextAnalyticsOperationStatus Status => _status;
+        public virtual TextAnalyticsOperationStatus Status => _status;
 
         /// <summary>
         /// Gets the final result of the long-running operation asynchronously.
@@ -152,6 +152,14 @@ namespace Azure.AI.TextAnalytics
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
             Id = operationLocation.Split('/').Last();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesOperation"/> class. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        protected AnalyzeHealthcareEntitiesOperation()
+        {
         }
 
         /// <summary>

@@ -357,7 +357,7 @@ namespace Azure.Storage.Blobs.Specialized
                 new BlobClientConfiguration(
                     pipeline,
                     null,
-                    new ClientDiagnostics(options),
+                    new StorageClientDiagnostics(options),
                     options.Version,
                     null,
                     null));

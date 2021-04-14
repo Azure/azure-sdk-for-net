@@ -224,7 +224,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: sharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
 
             _containerClient = BlobContainerClientInternals.Create(
@@ -392,7 +392,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
 
             _containerClient = BlobContainerClientInternals.Create(
@@ -2619,6 +2619,13 @@ namespace Azure.Storage.Files.DataLake
             DataLakeSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+
+            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
+            builder = DataLakeSasBuilder.DeepCopy(builder);
+
+            // Assign builder's FileSystemName, if it is null.
+            builder.FileSystemName ??= Name;
+
             if (!builder.FileSystemName.Equals(Name, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(
@@ -2635,7 +2642,7 @@ namespace Azure.Storage.Files.DataLake
             }
             DataLakeUriBuilder sasUri = new DataLakeUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
+                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
             };
             return sasUri.ToUri();
         }
@@ -2645,7 +2652,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// Gets the paths that have recently been soft deleted in this file system.
         /// </summary>
-        /// <param name="path">
+        /// <param name="pathPrefix">
         /// Filters results to paths within the specified directory.
         /// </param>
         /// <param name="cancellationToken">
@@ -2661,18 +2668,18 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<PathDeletedItem> GetDeletedPaths(
-            string path = default,
+            string pathPrefix = default,
             CancellationToken cancellationToken = default)
             => new GetDeletedPathAsyncCollection(
                 this,
-                path,
+                pathPrefix,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetDeletedPaths)}")
                 .ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// Gets the paths that have recently been soft deleted in this file system.
         /// </summary>
-        /// <param name="path">
+        /// <param name="pathPrefix">
         /// Filters results to paths within the specified directory.
         /// </param>
         /// <param name="cancellationToken">
@@ -2688,16 +2695,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<PathDeletedItem> GetDeletedPathsAsync(
-            string path = default,
+            string pathPrefix = default,
             CancellationToken cancellationToken = default)
             => new GetDeletedPathAsyncCollection(
                 this,
-                path,
+                pathPrefix,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetDeletedPaths)}")
                 .ToAsyncCollection(cancellationToken);
 
         internal async Task<Response<PathDeletedSegment>> GetDeletedPathsInternal(
-            string path,
+            string pathPrefix,
             string continuation,
             int? maxResults,
             string operationName,
@@ -2728,7 +2735,7 @@ namespace Azure.Storage.Files.DataLake
                     {
                         response = await BlobFileSystemRestClient.ListBlobHierarchySegmentAsync(
                             delimiter: null,
-                            prefix: path,
+                            prefix: pathPrefix,
                             marker: continuation,
                             maxResults: maxResults,
                             include: null,
@@ -2740,7 +2747,7 @@ namespace Azure.Storage.Files.DataLake
                     {
                         response = BlobFileSystemRestClient.ListBlobHierarchySegment(
                             delimiter: null,
-                            prefix: path,
+                            prefix: pathPrefix,
                             marker: continuation,
                             maxResults: maxResults,
                             include: null,

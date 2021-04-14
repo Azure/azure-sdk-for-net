@@ -32,7 +32,9 @@ namespace Azure.Security.Attestation
             _body = body;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns the body of the response.
+        /// </summary>
         public override T Value => _body ?? _token.GetBody<T>();
 
         /// <summary>
@@ -40,7 +42,10 @@ namespace Azure.Security.Attestation
         /// </summary>
         public AttestationToken Token => _token;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns the underlying response returned from the remote service.
+        /// </summary>
+        /// <returns>The response returned from the remote service. <see cref="Response{T}.GetRawResponse"/></returns>
         public override Response GetRawResponse() => _response;
     }
 }

@@ -90,3 +90,71 @@ function Get-DevOpsBuilds {
           -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
           -MaximumRetryCount 3
 }
+
+function Delete-RetentionLease {
+  param (
+    $Organization,
+    $Project,
+    $LeaseId,
+    $Base64EncodedAuthToken
+  )
+
+  $uri = "https://dev.azure.com/$Organization/$Project/_apis/build/retention/leases?ids=$LeaseId&api-version=6.0-preview.1"
+
+  return Invoke-RestMethod `
+    -Method DELETE `
+    -Uri $uri `
+    -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
+    -MaximumRetryCount 3
+}
+
+function Get-RetentionLeases {
+  param (
+    $Organization,
+    $Project,
+    $DefinitionId,
+    $RunId,
+    $OwnerId,
+    $Base64EncodedAuthToken
+  )
+
+  $uri = "https://dev.azure.com/$Organization/$Project/_apis/build/retention/leases?ownerId=$OwnerId&definitionId=$DefinitionId&runId=$RunId&api-version=6.0-preview.1"
+
+  return Invoke-RestMethod `
+    -Method GET `
+    -Uri $uri `
+    -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
+    -MaximumRetryCount 3
+}
+
+function Add-RetentionLease {
+  param (
+    $Organization,
+    $Project,
+    $DefinitionId,
+    $RunId,
+    $OwnerId,
+    $DaysValid,
+    $Base64AuthToken
+  )
+
+  $parameter = @{}
+  $parameter["definitionId"] = $DefinitionId
+  $parameter["runId"] = $RunId
+  $parameter["ownerId"] = $OwnerId
+  $parameter["daysValid"] = $DaysValid
+
+
+  $body = $parameter | ConvertTo-Json
+
+  $uri = "https://dev.azure.com/$Organization/$Project/_apis/build/retention/leases?api-version=6.0-preview.1"
+
+  return Invoke-RestMethod `
+          -Method POST `
+          -Body "[$body]" `
+          -Uri $uri `
+          -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
+          -MaximumRetryCount 3 `
+          -ContentType "application/json"
+
+}
