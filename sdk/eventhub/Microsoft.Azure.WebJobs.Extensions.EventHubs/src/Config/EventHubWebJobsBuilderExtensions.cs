@@ -103,7 +103,7 @@ namespace Microsoft.Extensions.Hosting
                         catch (FormatException fe)
                         {
                             string message = $"{nameof(EventHubOptions)}:{nameof(InitialOffsetOptions)}:{nameof(InitialOffsetOptions.EnqueuedTimeUtc)} is configured with an invalid format. " +
-                                "Please use a format supported by DateTime.Parse().  e.g. 'yyyy-MM-ddTHH:mm:ssZ'";
+                                "Please use a format supported by DateTimeOffset.Parse().  e.g. 'yyyy-MM-ddTHH:mm:ssZ'";
                             throw new InvalidOperationException(message, fe);
                         }
                         break;
