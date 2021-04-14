@@ -232,7 +232,6 @@ namespace SnippetGenerator
             var directiveWalker = new DirectiveWalker();
             directiveWalker.Visit(syntaxTree.GetRoot());
 
-
             foreach (var region in directiveWalker.Regions)
             {
                 var leadingTrivia = region.Item1.EndOfDirectiveToken.LeadingTrivia;
