@@ -9,7 +9,8 @@ using Azure.Test.Perf;
 namespace Azure.Messaging.EventHubs.Perf.Scenarios
 {
     /// <summary>
-    ///   The performance test scenario focused on publishing a set of events.
+    ///   The performance test scenario focused on publishing a set of events to
+    ///   an Event Hub partition.
     /// </summary>
     ///
     /// <seealso cref="BatchPublishPerfTest" />
