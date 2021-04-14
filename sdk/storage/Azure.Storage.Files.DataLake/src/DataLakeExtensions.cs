@@ -605,7 +605,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 Path = new PathDeletedItem
                 {
-                    Name = blobItemInternal.Name,
+                    Path = blobItemInternal.Name,
                     DeletionId = blobItemInternal.DeletionId,
                     DeletedOn = blobItemInternal.Properties.DeletedTime,
                     RemainingRetentionDays = blobItemInternal.Properties.RemainingRetentionDays
