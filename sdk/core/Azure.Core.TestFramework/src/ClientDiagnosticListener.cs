@@ -16,23 +16,23 @@ namespace Azure.Core.Tests
         private readonly AsyncLocal<bool> _collectThisStack;
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
-        private readonly Action<ProducedDiagnosticScope> _callback;
+        private readonly Action<ProducedDiagnosticScope> _scopeStartCallback;
 
         public List<ProducedDiagnosticScope> Scopes { get; } = new List<ProducedDiagnosticScope>();
 
-        public ClientDiagnosticListener(string name, bool asyncLocal = false, Action<ProducedDiagnosticScope> callback = default)
-            : this(n => n == name, asyncLocal, callback)
+        public ClientDiagnosticListener(string name, bool asyncLocal = false, Action<ProducedDiagnosticScope> scopeStartCallback = default)
+            : this(n => n == name, asyncLocal, scopeStartCallback)
         {
         }
 
-        public ClientDiagnosticListener(Func<string, bool> filter, bool asyncLocal = false, Action<ProducedDiagnosticScope> callback = default)
+        public ClientDiagnosticListener(Func<string, bool> filter, bool asyncLocal = false, Action<ProducedDiagnosticScope> scopeStartCallback = default)
         {
             if (asyncLocal)
             {
                 _collectThisStack = new AsyncLocal<bool> { Value = true };
             }
             _sourceNameFilter = filter;
-            _callback = callback;
+            _scopeStartCallback = scopeStartCallback;
             DiagnosticListener.AllListeners.Subscribe(this);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.Core.Tests
                     };
 
                     Scopes.Add(scope);
-                    _callback?.Invoke(scope);
+                    _scopeStartCallback?.Invoke(scope);
                 }
                 else if (value.Key.EndsWith(stopSuffix))
                 {

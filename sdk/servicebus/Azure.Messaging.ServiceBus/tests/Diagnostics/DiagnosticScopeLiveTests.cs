@@ -173,7 +173,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             bool callbackExecuted = false;
             _listener = new ClientDiagnosticListener(
                 EntityScopeFactory.DiagnosticNamespace,
-                callback: (scope) =>
+                scopeStartCallback: scope =>
                 {
                     if (scope.Name == DiagnosticProperty.ProcessMessageActivityName)
                     {
@@ -231,7 +231,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             bool callbackExecuted = false;
             _listener = new ClientDiagnosticListener(
                 EntityScopeFactory.DiagnosticNamespace,
-                callback: (scope) =>
+                scopeStartCallback: scope =>
                 {
                     if (scope.Name == DiagnosticProperty.ProcessSessionMessageActivityName)
                     {
