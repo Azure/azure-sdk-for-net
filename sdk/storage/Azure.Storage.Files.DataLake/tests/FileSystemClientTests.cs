@@ -2118,7 +2118,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             AsyncPageable<PathDeletedItem> response = test.FileSystem.GetDeletedPathsAsync(
-                path: directoryName);
+                pathPrefix: directoryName);
             IList<PathDeletedItem> paths = await response.ToListAsync();
 
             // Assert
