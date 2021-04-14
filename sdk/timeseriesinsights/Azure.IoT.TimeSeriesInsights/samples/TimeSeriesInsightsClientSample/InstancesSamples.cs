@@ -14,9 +14,6 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         /// </summary>
         public async Task RunSamplesAsync(TimeSeriesInsightsClient client)
         {
-            // For the purpose of keeping code snippets readable to the user, hardcoded string literals are used in place of assigned variables, eg Ids.
-            // Despite not being a good code practice, this prevents code snippets from being out of context for the user when making API calls that accept Ids as parameters.
-
             PrintHeader("TIME SERIES INSIGHTS INSTANCES SAMPLE");
 
             // Figure out how many keys make up the Time Series Id
