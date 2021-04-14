@@ -6,7 +6,7 @@ extends:
     ServiceDirectory: keyvault
     MaxParallel: 5
     TimeoutInMinutes: 180
-    Clouds: 'Public,Preview,UsGov,China,Canary'
+    Clouds: 'Public,UsGov,China,Canary'
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
@@ -29,4 +29,4 @@ extends:
     EnvVars:
       # Runs samples with live tests.
       # THIS VARIABLE IS A ONE-OFF WORKAROUND FOR KEYVAULT TESTS SPECIFICALLY, DON'T COPY IT
-      AZURE_KEYVAULT_TEST_MODE: Live      
+      AZURE_KEYVAULT_TEST_MODE: Live
