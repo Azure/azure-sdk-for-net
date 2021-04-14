@@ -499,6 +499,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobNotFound { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobOverwritten { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlobTierInadequateForContentLength { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode BlobUsesCustomerSpecifiedEncryption { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlockCountExceedsLimit { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode BlockListTooLong { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode CannotChangeToLowerTier { get { throw null; } }

@@ -3799,6 +3799,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task ExistsAsync_Exists_CPK_NoKey()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            string blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
+            await blob.CreateIfNotExistsAsync();
+
+            AppendBlobClient blobClientNoKey = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+
+            // Act
+            Response<bool> response = await blobClientNoKey.ExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task ExistsAsync_Exists_EncryptionScope()
         {
