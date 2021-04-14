@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for ListSharesExpand.
+    /// Defines values for ObjectType.
     /// </summary>
-    public static class ListSharesExpand
+    public static class ObjectType
     {
-        public const string Deleted = "deleted";
-        public const string Snapshots = "snapshots";
+        public const string Blob = "Blob";
+        public const string Container = "Container";
     }
 }

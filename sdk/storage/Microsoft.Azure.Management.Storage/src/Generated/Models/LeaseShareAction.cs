@@ -12,10 +12,14 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for PutSharesExpand.
+    /// Defines values for LeaseShareAction.
     /// </summary>
-    public static class PutSharesExpand
+    public static class LeaseShareAction
     {
-        public const string Snapshots = "snapshots";
+        public const string Acquire = "Acquire";
+        public const string Renew = "Renew";
+        public const string Change = "Change";
+        public const string Release = "Release";
+        public const string Break = "Break";
     }
 }
