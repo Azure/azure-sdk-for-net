@@ -2,20 +2,17 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Globalization;
 using System.IO;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 {
-    internal class MessageToStringConverter : IAsyncConverter<ServiceBusReceivedMessage, string>
+    internal class MessageToStringConverter : IConverter<ServiceBusReceivedMessage, string>
     {
-        public async Task<string> ConvertAsync(ServiceBusReceivedMessage input, CancellationToken cancellationToken)
+        public string Convert(ServiceBusReceivedMessage input)
         {
             if (input == null)
             {
@@ -30,48 +27,27 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
                     return null;
                 }
 
-                Stream stream = input.Body.ToStream();
-
-                TextReader reader = new StreamReader(stream, StrictEncodings.Utf8);
                 try
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    try
-                    {
-                        return await reader.ReadToEndAsync().ConfigureAwait(false);
-                    }
-                    catch (DecoderFallbackException)
-                    {
-                        // we'll try again below
-                    }
-
-                    // We may get here if the message is a string yet was DataContract-serialized when created. We'll
-                    // try to deserialize it here using GetBody<string>(). This may fail as well, in which case we'll
-                    // provide a decent error.
-
-                    try
-                    {
-                        var serializer = DataContractBinarySerializer<string>.Instance;
-                        stream.Position = 0;
-                        return (string) serializer.ReadObject(stream);
-                    }
-                    catch
-                    {
-                        // always possible to get a valid string from the message
-                        return input.Body.ToString();
-                    }
+                    return StrictEncodings.Utf8.GetString(input.Body.ToArray());
                 }
-                finally
+                catch (DecoderFallbackException)
                 {
-                    if (stream != null)
-                    {
-                        stream.Dispose();
-                    }
+                    // we'll try again below
+                }
 
-                    if (reader != null)
-                    {
-                        reader.Dispose();
-                    }
+                // We may get here if the message is a string yet was DataContract-serialized when created.
+                try
+                {
+                    using Stream stream = input.Body.ToStream();
+                    var serializer = DataContractBinarySerializer<string>.Instance;
+                    stream.Position = 0;
+                    return (string) serializer.ReadObject(stream);
+                }
+                catch
+                {
+                    // always possible to get a valid string from the message
+                    return input.Body.ToString();
                 }
             }
             else if (body.BodyType == AmqpMessageBodyType.Value)
