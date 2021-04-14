@@ -165,7 +165,17 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="FieldValue"/> structure.
         /// </summary>
-        /// <param name="value">The actual field value.</param>
+        /// <param name="type"></param>
+        /// <param name="text"></param>
+        /// <param name="valueString"></param>
+        /// <param name="valueDate"></param>
+        /// <param name="valueTime"></param>
+        /// <param name="valuePhoneNumber"></param>
+        /// <param name="valueNumber"></param>
+        /// <param name="valueInteger"></param>
+        /// <param name="valueSelectionMark"></param>
+        /// <param name="valueGender"></param>
+        /// <param name="valueCountry"></param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
         public static FieldValue FieldValueWithStringValueType(string value) =>
             new FieldValue(value, FieldValueType.String);

@@ -487,5 +487,153 @@ namespace Azure.AI.FormRecognizer.Models
 
             return _fieldValue.ValueGender.Value;
         }
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <returns></returns>
+        public bool TryParse<T>(out T result)
+        {
+            bool parse = true;
+            switch (ValueType)
+            {
+                case FieldValueType.String:
+                    try
+                    {
+                        result = (T)(object)AsString();
+                        if (result == null)
+                        {
+                            result = default;
+                            parse = false;
+                        }
+                    }
+                    catch
+                    {
+                        result = default;
+                        parse = false;
+                    }
+                    break;
+                case FieldValueType.Date:
+                    try
+                    {
+                        result = (T)(object)AsDate();
+                    }
+                    catch
+                    {
+                        result = default;
+                        parse = false;
+                    }
+                    break;
+                case FieldValueType.Time:
+                    try
+                    {
+                        result = (T)(object)AsTime();
+                    }
+                    catch
+                    {
+                        result = default;
+                        parse = false;
+                    }
+                    break;
+                case FieldValueType.PhoneNumber:
+                    try
+                    {
+                        result = (T)(object)AsPhoneNumber();
+                        if (result == null)
+                        {
+                            result = default;
+                            parse = false;
+                        }
+                    }
+                    catch
+                    {
+                        result = default;
+                        parse = false;
+                    }
+                    break;
+                case FieldValueType.Float:
+                    try
+                    {
+                        result = (T)(object)AsFloat();
+                    }
+                    catch
+                    {
+                        result = default;
+                        parse = false;
+                    }
+                    break;
+                case FieldValueType.Int64:
+                    try
+                    {
+                        result = (T)(object)AsInt64();
+                    }
+                    catch
+                    {
+                        result = default;
+                        parse = false;
+                    }
+                    break;
+                case FieldValueType.List:
+                    try
+                    {
+                        result = (T)(object)AsList();
+                    }
+                    catch
+                    {
+                        result = default;
+                        parse = false;
+                    }
+                    break;
+                case FieldValueType.Dictionary:
+                    try
+                    {
+                        result = (T)(object)AsDictionary();
+                    }
+                    catch
+                    {
+                        result = default;
+                        parse = false;
+                    }
+                    break;
+                case FieldValueType.SelectionMark:
+                    try
+                    {
+                        result = (T)(object)AsSelectionMarkState();
+                    }
+                    catch
+                    {
+                        result = default;
+                        parse = false;
+                    }
+                    break;
+                case FieldValueType.Gender:
+                    try
+                    {
+                        result = (T)(object)AsGender();
+                    }
+                    catch
+                    {
+                        result = default;
+                        parse = false;
+                    }
+                    break;
+                case FieldValueType.Country:
+                    try
+                    {
+                        result = (T)(object)AsCountryCode();
+                    }
+                    catch
+                    {
+                        result = default;
+                        parse = false;
+                    }
+                    break;
+                default:
+                    parse = false;
+                    result = default;
+                    break;
+            }
+            return parse;
+        }
     }
 }

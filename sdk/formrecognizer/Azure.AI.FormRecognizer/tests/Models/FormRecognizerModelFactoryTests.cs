@@ -165,6 +165,98 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public void InstantiateFieldValueWithString()
+        {
+            string text = "Lovelace";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.String, text, text);
+
+            Assert.AreEqual(FieldValueType.String, fieldValue.ValueType);
+            Assert.True(fieldValue.TryParse(out string valueContent));
+            Assert.AreEqual(text, valueContent);
+            Assert.AreEqual(valueContent, fieldValue.AsString());
+        }
+
+        [Test]
+        public void InstantiateFieldValueWithStringAndNoValueString()
+        {
+            string text = "25";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.String, text);
+
+            Assert.AreEqual(FieldValueType.String, fieldValue.ValueType);
+            Assert.False(fieldValue.TryParse(out string valueContent));
+        }
+
+        [Test]
+        public void InstantiateFieldValueWithInt64AndNoValueInteger()
+        {
+            string text = "25";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.Int64, text);
+
+            Assert.AreEqual(FieldValueType.Int64, fieldValue.ValueType);
+            Assert.False(fieldValue.TryParse(out long valueContent));
+        }
+
+        [Test]
+        [Ignore("Bug. Issue https://github.com/Azure/azure-sdk-for-net/issues/20014")]
+        public void InstantiateFieldValueWithFloatAndNoValueNumber()
+        {
+            string text = "25.00";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.Float, text);
+
+            Assert.AreEqual(FieldValueType.Float, fieldValue.ValueType);
+            Assert.False(fieldValue.TryParse(out float valueContent));
+        }
+
+        [Test]
+        public void InstantiateFieldValueWithDateAndNoValueDate()
+        {
+            string text = "25 de Julio";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.Date, text);
+
+            Assert.AreEqual(FieldValueType.Date, fieldValue.ValueType);
+            Assert.False(fieldValue.TryParse(out DateTime valueContent));
+        }
+
+        [Test]
+        public void InstantiateFieldValueWithTimeAndNoValueTime()
+        {
+            string text = "24:55";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.Time, text);
+
+            Assert.AreEqual(FieldValueType.Time, fieldValue.ValueType);
+            Assert.False(fieldValue.TryParse(out TimeSpan valueContent));
+        }
+
+        [Test]
+        public void InstantiateFieldValueWithPhoneNumberAndNoValuePhoneNumber()
+        {
+            string text = "1500450271";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.PhoneNumber, text);
+
+            Assert.AreEqual(FieldValueType.PhoneNumber, fieldValue.ValueType);
+            Assert.False(fieldValue.TryParse(out string valueContent));
+        }
+
+        [Test]
+        public void InstantiateFieldValueWithSelectionMarkAndNoValueSelectionMark()
+        {
+            string text = SelectionMarkState.Selected.ToString();
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.SelectionMark, text);
+
+            Assert.AreEqual(FieldValueType.SelectionMark, fieldValue.ValueType);
+            Assert.True(fieldValue.TryParse(out SelectionMarkState valueContent));
+            Assert.AreEqual(text, valueContent.ToString());
+        }
+
+        [Test]
         public void FormRecognizerModelFactoryCanInstantiateFieldValueWithStringValueType()
         {
             string value = "Lovelace";
