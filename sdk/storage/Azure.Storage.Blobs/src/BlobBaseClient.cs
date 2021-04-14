@@ -3403,6 +3403,11 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     return Response.FromValue(false, default);
                 }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobUsesCustomerSpecifiedEncryption)
+                {
+                    return Response.FromValue(true, default);
+                }
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
