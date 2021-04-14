@@ -183,15 +183,25 @@ namespace Azure.Test.Perf
             if (options.MinWorkerThreads.HasValue || options.MinIOCompletionThreads.HasValue)
             {
                 ThreadPool.GetMinThreads(out var minWorkerThreads, out var minIOCompletionThreads);
-                ThreadPool.SetMinThreads(options.MinWorkerThreads ?? minWorkerThreads,
+                var successful = ThreadPool.SetMinThreads(options.MinWorkerThreads ?? minWorkerThreads,
                     options.MinIOCompletionThreads ?? minIOCompletionThreads);
+
+                if (!successful)
+                {
+                    throw new InvalidOperationException("ThreadPool.SetMinThreads() was unsuccessful");
+                }
             }
 
             if (options.MaxWorkerThreads.HasValue || options.MaxIOCompletionThreads.HasValue)
             {
                 ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxIOCompletionThreads);
-                ThreadPool.SetMaxThreads(options.MaxWorkerThreads ?? maxWorkerThreads,
+                var successful = ThreadPool.SetMaxThreads(options.MaxWorkerThreads ?? maxWorkerThreads,
                     options.MaxIOCompletionThreads ?? maxIOCompletionThreads);
+
+                if (!successful)
+                {
+                    throw new InvalidOperationException("ThreadPool.SetMaxThreads() was unsuccessful");
+                }
             }
         }
 
