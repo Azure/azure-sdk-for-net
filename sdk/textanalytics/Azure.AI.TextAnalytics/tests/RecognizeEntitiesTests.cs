@@ -78,10 +78,11 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task RecognizeEntitiesWithSubCategoryTest()
         {
+            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions() { ModelVersion = "2020-04-01" };
             TextAnalyticsClient client = GetClient();
             string document = "I had a wonderful trip to Seattle last week.";
 
-            RecognizeEntitiesResultCollection result = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, options: new TextAnalyticsRequestOptions() { ModelVersion = "2020-04-01" } );
+            RecognizeEntitiesResultCollection result = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, options: options );
 
             var documentResult = result.FirstOrDefault();
             Assert.IsFalse(documentResult.HasError);
@@ -93,6 +94,37 @@ namespace Azure.AI.TextAnalytics.Tests
                 if (entity.Text == "last week")
                     Assert.AreEqual("DateRange", entity.SubCategory);
             }
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+            Assert.IsFalse(options.IncludeStatistics);
+            Assert.AreEqual("2020-04-01", options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
+        }
+
+        [Test]
+        public async Task RecognizeEntitiesWithRecognizeEntitiesOptionsSubCategoryTest()
+        {
+            RecognizeEntitiesOptions options = new RecognizeEntitiesOptions() { ModelVersion = "2020-04-01" };
+            TextAnalyticsClient client = GetClient();
+            string document = "I had a wonderful trip to Seattle last week.";
+
+            RecognizeEntitiesResultCollection result = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, options: options );
+
+            var documentResult = result.FirstOrDefault();
+            Assert.IsFalse(documentResult.HasError);
+
+            Assert.GreaterOrEqual(documentResult.Entities.Count, 3);
+
+            foreach (CategorizedEntity entity in documentResult.Entities)
+            {
+                if (entity.Text == "last week")
+                    Assert.AreEqual("DateRange", entity.SubCategory);
+            }
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+            Assert.IsFalse(options.IncludeStatistics);
+            Assert.AreEqual("2020-04-01", options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [Test]
@@ -155,8 +187,9 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task RecognizeEntitiesBatchConvenienceWithStatisticsTest()
         {
+            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             TextAnalyticsClient client = GetClient();
-            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchConvenienceDocuments, "en", options);
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
@@ -165,6 +198,32 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
+        }
+
+        [Test]
+        public async Task RecognizeEntitiesBatchConvenienceWithRecognizeEntitiesOptionsStatisticsTest()
+        {
+            RecognizeEntitiesOptions options = new RecognizeEntitiesOptions { IncludeStatistics = true };
+            TextAnalyticsClient client = GetClient();
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchConvenienceDocuments, "en", options);
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [Test]
@@ -185,8 +244,9 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task RecognizeEntitiesBatchWithStatisticsTest()
         {
+            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             TextAnalyticsClient client = GetClient();
-            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchDocuments, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchDocuments, options);
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
@@ -195,6 +255,32 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
+        }
+
+        [Test]
+        public async Task RecognizeEntitiesBatchWithRecognizeEntitiesOptionsStatisticsTest()
+        {
+            RecognizeEntitiesOptions options = new RecognizeEntitiesOptions { IncludeStatistics = true };
+            TextAnalyticsClient client = GetClient();
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(s_batchDocuments, options);
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedOutput },
+                { "2", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [Test]

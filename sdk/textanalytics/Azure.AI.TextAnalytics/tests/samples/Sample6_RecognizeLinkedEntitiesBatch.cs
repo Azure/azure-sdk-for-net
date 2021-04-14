@@ -52,7 +52,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 new TextDocumentInput("4", string.Empty)
             };
 
-            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
+            var options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
             Response<RecognizeLinkedEntitiesResultCollection> response = client.RecognizeLinkedEntitiesBatch(documents, options);
             RecognizeLinkedEntitiesResultCollection entitiesPerDocuments = response.Value;
 

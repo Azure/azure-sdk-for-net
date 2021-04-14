@@ -2585,16 +2585,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         Friday = 5,
         Saturday = 6,
     }
-    public enum DaysOfWeek
-    {
-        Sunday = 0,
-        Monday = 1,
-        Tuesday = 2,
-        Wednesday = 3,
-        Thursday = 4,
-        Friday = 5,
-        Saturday = 6,
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Db2AuthenticationType : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.Db2AuthenticationType>
     {
@@ -3022,7 +3012,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     }
     public partial class ExecuteDataFlowActivity : Azure.Analytics.Synapse.Artifacts.Models.ExecutionActivity
     {
-        public ExecuteDataFlowActivity(string name) : base (default(string)) { }
+        public ExecuteDataFlowActivity(string name, Azure.Analytics.Synapse.Artifacts.Models.DataFlowReference dataflow) : base (default(string)) { }
         public Azure.Analytics.Synapse.Artifacts.Models.ExecuteDataFlowActivityTypePropertiesCompute Compute { get { throw null; } set { } }
         public object ContinueOnError { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.DataFlowReference Dataflow { get { throw null; } set { } }
@@ -5673,7 +5663,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         int System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
         bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.IsReadOnly { get { throw null; } }
         public System.Collections.Generic.ICollection<object> Values { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.DaysOfWeek> WeekDays { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.DayOfWeek> WeekDays { get { throw null; } }
         public void Add(string key, object value) { }
         public bool ContainsKey(string key) { throw null; }
         public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }

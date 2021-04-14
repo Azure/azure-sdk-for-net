@@ -414,7 +414,7 @@ namespace Azure.Storage.Files.DataLake
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 202:
-                    return ResponseWithHeaders.FromValue<SetAccessControlRecursiveResponse, PathUpdateHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue((SetAccessControlRecursiveResponse)null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -470,7 +470,7 @@ namespace Azure.Storage.Files.DataLake
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 202:
-                    return ResponseWithHeaders.FromValue<SetAccessControlRecursiveResponse, PathUpdateHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue((SetAccessControlRecursiveResponse)null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

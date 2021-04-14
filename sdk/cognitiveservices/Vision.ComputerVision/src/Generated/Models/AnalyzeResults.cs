@@ -34,10 +34,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="version">Version of schema used for this
         /// result.</param>
+        /// <param name="modelVersion">Version of the OCR model used for text
+        /// extraction.</param>
         /// <param name="readResults">Text extracted from the input.</param>
-        public AnalyzeResults(string version, IList<ReadResult> readResults)
+        public AnalyzeResults(string version, string modelVersion, IList<ReadResult> readResults)
         {
             Version = version;
+            ModelVersion = modelVersion;
             ReadResults = readResults;
             CustomInit();
         }
@@ -52,6 +55,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets version of the OCR model used for text extraction.
+        /// </summary>
+        [JsonProperty(PropertyName = "modelVersion")]
+        public string ModelVersion { get; set; }
 
         /// <summary>
         /// Gets or sets text extracted from the input.
@@ -70,6 +79,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
             if (Version == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Version");
+            }
+            if (ModelVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ModelVersion");
             }
             if (ReadResults == null)
             {

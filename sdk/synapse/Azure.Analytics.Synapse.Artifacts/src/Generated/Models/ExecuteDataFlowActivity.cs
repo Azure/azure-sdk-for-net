@@ -15,14 +15,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of ExecuteDataFlowActivity. </summary>
         /// <param name="name"> Activity name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ExecuteDataFlowActivity(string name) : base(name)
+        /// <param name="dataflow"> Data flow reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataflow"/> is null. </exception>
+        public ExecuteDataFlowActivity(string name, DataFlowReference dataflow) : base(name)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
+            if (dataflow == null)
+            {
+                throw new ArgumentNullException(nameof(dataflow));
+            }
 
+            Dataflow = dataflow;
             Type = "ExecuteDataFlow";
         }
 
