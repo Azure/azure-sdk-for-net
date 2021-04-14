@@ -93,7 +93,9 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             Response<InstancesOperationResult[]> replaceInstancesResult = await client.Instances.ReplaceAsync(instancesToReplace).ConfigureAwait(false);
 
-            if(replaceInstancesResult.Value[0].Error != null)
+            // The response of calling the API contains a list of error objects corresponding by position to the input parameter
+            // array in the request. If the error object is set to null, this means the operation was a success.
+            if (replaceInstancesResult.Value[0].Error != null)
             {
                 Console.WriteLine($"Failed to retrieve a Time Series Insights instnace with Id '{replaceInstancesResult.Value[0].Error.Message}'.");
             }
