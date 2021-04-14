@@ -446,14 +446,6 @@
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('dataLakeAccountName')), variables('mgmtApiVersion')).keys[0].value]"
     },
-    "STORAGE_ENDPOINT_SUFFIX": {
-        "type": "string",
-        "value": "[parameters('storageEndpointSuffix')]"
-    },
-    "AZURE_AUTHORITY_HOST": {
-        "type": "string",
-        "value": "[parameters('azureAuthorityHost')]"
-    },
     "SOFT_DELETE_ACCOUNT_NAME": {
       "type": "string",
       "value": "[variables('softDeleteAccountName')]"

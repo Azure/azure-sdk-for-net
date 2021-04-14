@@ -131,7 +131,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         ///   The URL of the Azure Authority host to be used for authentication. Recorded.
         /// </summary>
-        public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST") ?? "https://login.microsoftonline.com/";
+        public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST") ?? AzureAuthorityHosts.AzurePublicCloud.ToString();
 
         /// <summary>
         ///   The suffix for Azure Storage accounts for the active cloud environment, such as "core.windows.net".  Recorded.
