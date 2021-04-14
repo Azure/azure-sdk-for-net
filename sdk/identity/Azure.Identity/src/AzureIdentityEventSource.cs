@@ -25,6 +25,8 @@ namespace Azure.Identity
         private const int MsalLogInfoEvent = 8;
         private const int MsalLogWarningEvent = 9;
         private const int MsalLogErrorEvent = 10;
+        private const int InteractiveAuthenticationThreadPoolExecutionEvent = 11;
+        private const int InteractiveAuthenticationInlineExecutionEvent = 12;
 
         private AzureIdentityEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
 
@@ -208,6 +210,18 @@ namespace Azure.Identity
         private static string FormatStringArray(string[] array)
         {
             return new StringBuilder("[ ").Append(string.Join(", ", array)).Append(" ]").ToString();
+        }
+
+        [Event(InteractiveAuthenticationThreadPoolExecutionEvent, Level = EventLevel.Informational, Message = "Executing interactive authentication workflow via Task.Run.")]
+        public void InteractiveAuthenticationExecutingOnThreadPool()
+        {
+            WriteEvent(InteractiveAuthenticationThreadPoolExecutionEvent);
+        }
+
+        [Event(InteractiveAuthenticationInlineExecutionEvent, Level = EventLevel.Informational, Message = "Executing interactive authentication workflow inline.")]
+        public void InteractiveAuthenticationExecutingInline()
+        {
+            WriteEvent(InteractiveAuthenticationInlineExecutionEvent);
         }
     }
 }

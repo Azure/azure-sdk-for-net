@@ -23,5 +23,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
+
+        partial void CustomInit()
+        {
+            if (Type is null)
+            {
+                Type = FactoryIdentityType.SystemAssigned;
+            }
+        }
     }
 }

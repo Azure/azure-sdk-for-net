@@ -63,10 +63,10 @@ jobs:
             arguments: >
               -ConfigPath ${{ config.Path }}
               -Selection ${{ config.Selection }}
-              -DisplayNameFilter "$(displayNameFilter)"
-              -Filters "${{ join('","', parameters.MatrixFilters) }}","container=^$","SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}"
-              -Replace "${{ join('","', parameters.MatrixReplace) }}"
-              -NonSparseParameters "${{ join('","', config.NonSparseParameters) }}"
+              -DisplayNameFilter '$(displayNameFilter)'
+              -Filters '${{ join(''',''', parameters.MatrixFilters) }}','container=^$','SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}'
+              -Replace '${{ join(''',''', parameters.MatrixReplace) }}'
+              -NonSparseParameters '${{ join(''',''', config.NonSparseParameters) }}'
           displayName: Generate VM Job Matrix ${{ config.Name }}
           name: generate_vm_job_matrix_${{ config.Name }}
 
@@ -78,9 +78,9 @@ jobs:
             arguments: >
               -ConfigPath ${{ config.Path }}
               -Selection ${{ config.Selection }}
-              -DisplayNameFilter "$(displayNameFilter)"
-              -Filters "${{ join('","', parameters.MatrixFilters) }}", "container=.*", "SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}"
-              -NonSparseParameters "${{ join('","', config.NonSparseParameters) }}"
+              -DisplayNameFilter '$(displayNameFilter)'
+              -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=.*', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}'
+              -NonSparseParameters '${{ join(''',''', config.NonSparseParameters) }}'
           displayName: Generate Container Job Matrix
           name: generate_container_job_matrix_${{ config.Name }}
 

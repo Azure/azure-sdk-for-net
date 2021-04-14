@@ -72,6 +72,7 @@ pr:
     - sdk/digitaltwins/Microsoft.Azure.Management.DigitalTwins
     - sdk/dns/Microsoft.Azure.Management.Dns
     - sdk/edgegateway/Microsoft.Azure.Management.EdgeGateway
+    - sdk/elastic/Microsoft.Azure.Management.Elastic
     - sdk/eng/mgmt
     - sdk/eventgrid/Microsoft.Azure.Management.EventGrid
     - sdk/eventhub/Microsoft.Azure.Management.EventHub
@@ -93,6 +94,7 @@ pr:
     - sdk/labservices/Microsoft.Azure.Management.LabServices
     - sdk/locationbasedservices/Microsoft.Azure.Management.LocationBasedServices
     - sdk/logic/Microsoft.Azure.Management.Logic
+    - sdk/logz/Microsoft.Azure.Management.Logz
     - sdk/machinelearning/Microsoft.Azure.Management.MachineLearning
     - sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute
     - sdk/machinelearningservices/Microsoft.Azure.Management.MachineLearningServices
