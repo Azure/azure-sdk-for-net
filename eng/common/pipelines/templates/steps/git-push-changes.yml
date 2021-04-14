@@ -41,7 +41,7 @@ steps:
 
 - task: PowerShell@2
   displayName: Push changes
-  condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
+  condition: and(succeeded(), ne(variables['HasChanges'], 'false'))
   inputs:
     pwsh: true
     workingDirectory: ${{ parameters.WorkingDirectory }}
