@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
@@ -52,6 +54,20 @@ namespace Azure.Core.Tests
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
             return Response.FromValue(_value, null) as Response;
+        }
+
+        public override T CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var method = typeof(T).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Deserialize", StringComparison.InvariantCulture) && !m.IsPublic && m.IsStatic);
+            return method.Invoke(null, new object[] { document.RootElement }) as T;
+        }
+
+        public async override ValueTask<T> CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            var method = typeof(T).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Deserialize", StringComparison.InvariantCulture) && !m.IsPublic && m.IsStatic);
+            return method.Invoke(null, new object[] { document.RootElement }) as T;
         }
     }
 }

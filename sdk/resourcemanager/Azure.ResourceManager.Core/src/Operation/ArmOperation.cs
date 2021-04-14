@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmOperation"/> class.
         /// </summary>
-        /// <param name="clientDiagnostics">The client diagnostics to use. </param>
-        /// <param name="pipeline"> The HttpPipeline to use. </param>
+        /// <param name="operations"> The operations to copy connection info from. </param>
         /// <param name="request"> The original request. </param>
         /// <param name="response"> The original response. </param>
         /// <param name="finalStateVia"> Where the final state comes from. </param>
         /// <param name="scopeName"> The scope name to use. </param>
-        internal ArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string scopeName)
+        internal ArmOperation(ResourceOperationsBase operations, Request request, Response response, OperationFinalStateVia finalStateVia, string scopeName)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, finalStateVia, scopeName);
+            var pipeline = ManagementPipelineBuilder.Build(operations.Credential, operations.BaseUri, operations.ClientOptions);
+            _operation = new ArmOperationHelpers<Response>(this, operations.Diagnostics, pipeline, request, response, finalStateVia, scopeName);
         }
 
         /// <summary>
@@ -178,15 +178,15 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmOperation{TOperations}"/> class.
         /// </summary>
-        /// <param name="clientDiagnostics">The client diagnostics to use. </param>
-        /// <param name="pipeline"> The HttpPipeline to use. </param>
+        /// <param name="operations"> The operations to copy connection info from. </param>
         /// <param name="request"> The original request. </param>
         /// <param name="response"> The original response. </param>
         /// <param name="finalStateVia"> Where the final state comes from. </param>
         /// <param name="scopeName"> The scope name to use. </param>
-        internal ArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string scopeName)
+        internal ArmOperation(ResourceOperationsBase operations, Request request, Response response, OperationFinalStateVia finalStateVia, string scopeName)
         {
-            _operation = new ArmOperationHelpers<TOperations>(this, clientDiagnostics, pipeline, request, response, finalStateVia, scopeName);
+            var pipeline = ManagementPipelineBuilder.Build(operations.Credential, operations.BaseUri, operations.ClientOptions);
+            _operation = new ArmOperationHelpers<TOperations>(this, operations.Diagnostics, pipeline, request, response, finalStateVia, scopeName);
         }
 
         private bool _doesWrapOperation => _valueResponse is null;

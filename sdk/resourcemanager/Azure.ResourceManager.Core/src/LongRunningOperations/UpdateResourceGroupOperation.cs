@@ -29,8 +29,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="request"> The original request. </param>
         /// <param name="response"> The original response. </param>
         internal UpdateResourceGroupOperation(ResourceOperationsBase operations, Request request, Response response)
-            : base(operations.Diagnostics,
-                  ManagementPipelineBuilder.Build(operations.Credential, operations.BaseUri, operations.ClientOptions),
+            : base(operations,
                   request,
                   response,
                   OperationFinalStateVia.Location,
