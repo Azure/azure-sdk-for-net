@@ -380,7 +380,7 @@ namespace Compute.Tests
 
                     // Validate Get VMSS with $expand=UserData returns the new UserData
                     getVmssResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmScaleSet.Name, expand: "userData");
-                    Assert.Equal(DummyUserData1, getVmssResponse.VirtualMachineProfile.UserData);
+                    Assert.Equal(DummyUserData2, getVmssResponse.VirtualMachineProfile.UserData);
 
                     // Update VMSS VM with new UserData
                     getVmssVMResponse.UserData = DummyUserData2;
@@ -389,7 +389,7 @@ namespace Compute.Tests
                     // Validate Get VMSS VM with $expand=UserData returns the new UserData
                     getVmssVMResponse = m_CrpClient.VirtualMachineScaleSetVMs.Get(rgName, vmScaleSet.Name,
                         instanceId, InstanceViewTypes.UserData);
-                    Assert.Equal(DummyUserData1, getVmssResponse.VirtualMachineProfile.UserData);
+                    Assert.Equal(DummyUserData2, getVmssResponse.VirtualMachineProfile.UserData);
                 }
                 finally
                 {

@@ -313,7 +313,8 @@ namespace Compute.Tests
                                                                                      capacity: capacity,
                                                                                      dedicatedHostGroupReferenceId: dedicatedHostGroupReferenceId,
                                                                                      dedicatedHostGroupName: dedicatedHostGroupName,
-                                                                                     dedicatedHostName: dedicatedHostName);
+                                                                                     dedicatedHostName: dedicatedHostName,
+                                                                                     userData: userData);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
