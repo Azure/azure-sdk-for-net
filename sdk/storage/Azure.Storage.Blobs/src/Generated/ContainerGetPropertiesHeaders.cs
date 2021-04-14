@@ -41,5 +41,7 @@ namespace Azure.Storage.Blobs
         public string DefaultEncryptionScope => _response.Headers.TryGetValue("x-ms-default-encryption-scope", out string value) ? value : null;
         /// <summary> Indicates whether the container&apos;s default encryption scope can be overriden. </summary>
         public bool? DenyEncryptionScopeOverride => _response.Headers.TryGetValue("x-ms-deny-encryption-scope-override", out bool? value) ? value : null;
+        /// <summary> Indicates whether version level worm is enabled on a container. </summary>
+        public bool? IsVersionLevelWormEnabled => _response.Headers.TryGetValue("x-ms-version-level-worm-enabled", out bool? value) ? value : null;
     }
 }
