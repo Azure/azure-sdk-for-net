@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return default;
         }
 
-        public static BinaryData GetBody(this AmqpAnnotatedMessage message)
+        public static BinaryData GetDataBody(this AmqpAnnotatedMessage message)
         {
             if (message.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
             {

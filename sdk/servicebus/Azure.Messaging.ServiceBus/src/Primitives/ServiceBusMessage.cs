@@ -137,7 +137,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public BinaryData Body
         {
-            get => AmqpMessage.GetBody();
+            get => AmqpMessage.GetDataBody();
             set
             {
                 AmqpMessage.Body = new AmqpMessageBody(Amqp.Body.FromReadOnlyMemorySegment(value));

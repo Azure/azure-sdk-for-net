@@ -230,6 +230,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual(AmqpMessageBodyType.Data, received.BodyType);
                 received.GetRawAmqpMessage().Body.TryGetData(out var receivedData);
                 var bodyEnum = receivedData.GetEnumerator();
                 int ct = 0;
@@ -312,6 +313,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual(AmqpMessageBodyType.Value, received.BodyType);
                 received.GetRawAmqpMessage().Body.TryGetValue(out var receivedData);
                 Assert.AreEqual(value, receivedData);
 
@@ -348,6 +350,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual(AmqpMessageBodyType.Sequence, received.BodyType);
                 received.GetRawAmqpMessage().Body.TryGetSequence(out IEnumerable<IList<object>> receivedData);
                 var outerEnum = receivedData.GetEnumerator();
                 foreach (IList<object> seq in sequence)

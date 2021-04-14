@@ -240,6 +240,7 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusReceivedMessage() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> ApplicationProperties { get { throw null; } }
         public System.BinaryData Body { get { throw null; } }
+        public Azure.Core.Amqp.AmqpMessageBodyType BodyType { get { throw null; } }
         public string ContentType { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public string DeadLetterErrorDescription { get { throw null; } }

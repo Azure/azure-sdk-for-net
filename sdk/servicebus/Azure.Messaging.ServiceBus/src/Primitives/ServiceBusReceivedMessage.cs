@@ -63,9 +63,21 @@ namespace Azure.Messaging.ServiceBus
         public AmqpAnnotatedMessage GetRawAmqpMessage() => AmqpMessage;
 
         /// <summary>
-        /// Gets the body of the message.
+        /// Gets the body of the message. This property is only applicable for messages that
+        /// have <see cref="BodyType"/> of <see cref="AmqpMessageBodyType.Data"/>.
+        /// For messages with <see cref="BodyType"/> of <see cref="AmqpMessageBodyType.Value"/> or
+        /// <see cref="AmqpMessageBodyType.Sequence"/>, the body can be accessed by getting the
+        /// underlying AMQP message with the <see cref="GetRawAmqpMessage"/> method.
         /// </summary>
-        public BinaryData Body => AmqpMessage.GetBody();
+        /// <exception cref="NotSupportedException">The <see cref="BodyType"/> is not <see cref="AmqpMessageBodyType.Data"/>.
+        /// </exception>
+        public BinaryData Body => AmqpMessage.GetDataBody();
+
+        /// <summary>
+        /// Gets the <see cref="AmqpMessageBodyType"/> of the message.
+        /// The <see cref="Body"/> property will thr
+        /// </summary>
+        public AmqpMessageBodyType BodyType => AmqpMessage.Body.BodyType;
 
         /// <summary>
         /// Gets the MessageId to identify the message.
