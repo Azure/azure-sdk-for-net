@@ -81,8 +81,14 @@ process {
                     | Add-Member -PassThru -Type PropertySet -Name SampleMetadata -Value @('InvalidProducts')
             }
 
-            exit 1
+            $script_has_errors = $true
         }
+    }
+}
+
+end {
+    if ($script_has_errors) {
+        exit 1
     }
 }
 
