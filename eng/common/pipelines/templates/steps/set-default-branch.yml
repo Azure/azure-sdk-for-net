@@ -4,7 +4,8 @@ parameters:
 steps:
 - pwsh: |
     $setDefaultBranch = (git remote show ${{ parameters.RemoteRepo }} | Out-String) -replace "(?ms).*HEAD branch: (\w+).*", '$1'
-    if (!$setDefaultBranch) {
+    if ($LASTEXITCODE -ne 0) {
+      Write-Host "Not able to fetch the default branch from git command. Set to master."
       $setDefaultBranch = 'master'
     }
     Write-Host "Setting DefaultBranch=$setDefaultBranch"
