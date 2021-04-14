@@ -6,8 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "traceparent": "00-1c079d33f18d704988950eb63e5cd8c2-adf6500eb5f8ef45-00",
         "User-Agent": "azsdk-net-ResourceManager.Resources/1.0.0-preview.2 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "a9bd236f16c91b6dc2acc79d26139459",
+        "x-ms-client-request-id": "7837a659109b27a2e222cd188451ed71",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Apr 2021 02:29:50 GMT",
+        "Date": "Tue, 13 Apr 2021 02:29:49 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9eb89f3d-8e72-4ade-9f0e-6bf5cdb154b1",
-        "x-ms-ratelimit-remaining-subscription-reads": "11949",
-        "x-ms-request-id": "9eb89f3d-8e72-4ade-9f0e-6bf5cdb154b1",
-        "x-ms-routing-request-id": "WESTUS2:20210413T022950Z:9eb89f3d-8e72-4ade-9f0e-6bf5cdb154b1"
+        "x-ms-correlation-request-id": "8f71cc15-3026-4d9e-b191-ce2a9439a7e2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "8f71cc15-3026-4d9e-b191-ce2a9439a7e2",
+        "x-ms-routing-request-id": "WESTUS2:20210413T022949Z:8f71cc15-3026-4d9e-b191-ce2a9439a7e2"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -42,43 +43,43 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa?api-version=2019-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d33810fa42c7484992f959e6dad6bc7d-fe5c9fa14c645843-00",
+        "traceparent": "00-0071f2b6d6816d4198fa469df4a37a55-e8bb0f2a67619348-00",
         "User-Agent": "azsdk-net-ResourceManager.Resources/1.0.0-preview.2 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "0b432191750c0fb917a58b26b8f3ef6c",
+        "x-ms-client-request-id": "ed252f55242cb8570ce6b7cf0d3ecb29",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 400,
+      "StatusCode": 404,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "243",
+        "Content-Length": "181",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Apr 2021 02:29:50 GMT",
+        "Date": "Tue, 13 Apr 2021 02:29:49 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2a56462d-d39c-4711-98d7-d72d0da83b2d",
+        "x-ms-correlation-request-id": "45d98f6f-ae6d-4ed0-8d2b-44ba6a624e1b",
         "x-ms-failure-cause": "gateway",
-        "x-ms-ratelimit-remaining-subscription-reads": "11948",
-        "x-ms-request-id": "2a56462d-d39c-4711-98d7-d72d0da83b2d",
-        "x-ms-routing-request-id": "WESTUS2:20210413T022950Z:2a56462d-d39c-4711-98d7-d72d0da83b2d"
+        "x-ms-ratelimit-remaining-subscription-reads": "11954",
+        "x-ms-request-id": "45d98f6f-ae6d-4ed0-8d2b-44ba6a624e1b",
+        "x-ms-routing-request-id": "WESTUS2:20210413T022949Z:45d98f6f-ae6d-4ed0-8d2b-44ba6a624e1b"
       },
       "ResponseBody": {
         "error": {
-          "code": "InvalidResourceGroup",
-          "message": "The provided resource group name \u0027aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\u0027 has a length of \u002791\u0027 which exceeds the maximum length of \u002790\u0027."
+          "code": "ResourceGroupNotFound",
+          "message": "Resource group \u0027aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\u0027 could not be found."
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "708815977",
+    "RandomSeed": "1623390979",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

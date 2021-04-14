@@ -30,6 +30,7 @@
   <ItemGroup>
     <Folder Include="SessionRecords\ContainerTryGetTest\" />
     <Folder Include="SessionRecords\ResourceGroupOperationsTests\" />
+    <Folder Include="SessionRecords\SubscriptionOperationsTests\" />
   </ItemGroup>
 
 </Project>
