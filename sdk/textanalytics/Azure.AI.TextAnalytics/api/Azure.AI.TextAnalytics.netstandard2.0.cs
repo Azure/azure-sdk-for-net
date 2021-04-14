@@ -647,7 +647,7 @@ namespace Azure.AI.TextAnalytics
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public StringIndexType(string value) { throw null; }
-        public static Azure.AI.TextAnalytics.StringIndexType TextElementsV8 { get { throw null; } }
+        public static Azure.AI.TextAnalytics.StringIndexType TextElementV8 { get { throw null; } }
         public static Azure.AI.TextAnalytics.StringIndexType UnicodeCodePoint { get { throw null; } }
         public static Azure.AI.TextAnalytics.StringIndexType Utf16CodeUnit { get { throw null; } }
         public bool Equals(Azure.AI.TextAnalytics.StringIndexType other) { throw null; }
