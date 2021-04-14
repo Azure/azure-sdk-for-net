@@ -75,7 +75,6 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Gets the <see cref="AmqpMessageBodyType"/> of the message.
-        /// The <see cref="Body"/> property will thr
         /// </summary>
         public AmqpMessageBodyType BodyType => AmqpMessage.Body.BodyType;
 
