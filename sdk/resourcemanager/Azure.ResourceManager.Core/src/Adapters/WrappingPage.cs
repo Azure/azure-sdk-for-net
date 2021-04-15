@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 
 namespace Azure.ResourceManager.Core
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<TOperations> Values => _wrapped.Values.Select(_converter).ToImmutableList();
+        public override IReadOnlyList<TOperations> Values => _wrapped.Values.Select(_converter).ToList();
 
         /// <inheritdoc/>
         public override string ContinuationToken => _wrapped.ContinuationToken;
