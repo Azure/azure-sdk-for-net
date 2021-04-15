@@ -86,11 +86,9 @@ namespace Azure.Search.Documents.Tests.Samples
                 // You can optionally configure a skillset to use cognitive services when processing documents.
                 // Set the SearchIndexerSkillset.EncryptionKey to the same credential if you use a skillset.
                 string indexName = "hotels";
-#if !SNIPPET
-                indexName = resources.IndexName;
-#endif
                 string indexerName = "hotels-indexer";
 #if !SNIPPET
+                indexName = resources.IndexName;
                 indexerName = Recording.Random.GetName();
 #endif
                 SearchIndexer indexer = new SearchIndexer(

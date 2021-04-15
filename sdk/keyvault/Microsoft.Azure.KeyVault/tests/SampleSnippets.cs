@@ -34,12 +34,9 @@ namespace Microsoft.Azure.KeyVault.Tests
             {
 #if SNIPPET
                 AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
-#else
-                provider = new AzureServiceTokenProvider();
-#endif
-#if SNIPPET
                 KeyVaultClient client = new KeyVaultClient(
 #else
+                provider = new AzureServiceTokenProvider();
                 client = new KeyVaultClient(
 #endif
                     new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback),
@@ -234,12 +231,9 @@ namespace Microsoft.Azure.KeyVault.Tests
             {
 #if SNIPPET
                 AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
-#else
-                provider = new AzureServiceTokenProvider();
-#endif
-#if SNIPPET
                 KeyVaultClient client = new KeyVaultClient(
 #else
+                provider = new AzureServiceTokenProvider();
                 client = new KeyVaultClient(
 #endif
                     new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback),
@@ -379,12 +373,9 @@ namespace Microsoft.Azure.KeyVault.Tests
             {
 #if SNIPPET
                 AzureServiceTokenProvider provider = new AzureServiceTokenProvider();
-#else
-                provider = new AzureServiceTokenProvider();
-#endif
-#if SNIPPET
                 KeyVaultClient client = new KeyVaultClient(
 #else
+                provider = new AzureServiceTokenProvider();
                 client = new KeyVaultClient(
 #endif
                     new KeyVaultClient.AuthenticationCallback(provider.KeyVaultTokenCallback),
