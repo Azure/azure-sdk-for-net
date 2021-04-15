@@ -150,8 +150,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets or sets whether the messages bodies use pooled byte arrays underneath in case of binary data.
         /// When this option is enabled <see cref="ServiceBusReceivedMessage"/> cannot be safely kept for longer than the
-        /// lifetime of the scope of the <see cref="ServiceBusProcessor.ProcessSessionMessageAsync"/> or
-        /// the <see cref="ServiceBusProcessor.ProcessSessionMessageAsync"/> event handler delegate.
+        /// lifetime of the scope of the <see cref="ServiceBusProcessor.ProcessSessionMessageAsync"/> event handler delegate.
         /// The default value is false.
         /// </summary>
         ///
