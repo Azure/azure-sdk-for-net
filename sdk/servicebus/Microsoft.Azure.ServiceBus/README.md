@@ -1,6 +1,6 @@
 # Azure Service Bus client library for .NET
 
-> Please note, a newer package [Azure.Messaging.ServiceBus](https://www.nuget.org/packages/Azure.Messaging.ServiceBus) for [Azure Service Bus](https://azure.microsoft.com/services/service-bus/) is available as of December 2020. While this package will continue to receive critical bug fixes, we strongly encourage you to upgrade. Read the [migration guide](https://aka.ms/azsdk/net/migrate/sb) for more details.
+> Please be aware that a newer package, [Azure.Messaging.ServiceBus](https://www.nuget.org/packages/Azure.Messaging.ServiceBus) is available as of November 2020. While this package will continue to receive critical bug fixes, we strongly encourage upgrading for new development. Please see the [migration guide](https://aka.ms/azsdk/net/migrate/sb) for more details.
 
 Azure Service Bus allows you to build applications that take advantage of asynchronous messaging patterns using a highly-reliable service to broker messages between producers and consumers. Azure Service Bus provides flexible, brokered messaging between client and server, along with structured first-in, first-out (FIFO) messaging, and publish/subscribe capabilities with complex routing.
 
