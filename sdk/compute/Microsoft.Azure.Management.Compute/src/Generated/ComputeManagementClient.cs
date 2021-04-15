@@ -564,10 +564,6 @@ namespace Microsoft.Azure.Management.Compute
             CloudServices = new CloudServicesOperations(this);
             CloudServicesUpdateDomain = new CloudServicesUpdateDomainOperations(this);
             CloudServiceOperatingSystems = new CloudServiceOperatingSystemsOperations(this);
-<<<<<<< HEAD
-=======
-
->>>>>>> a45f4b564e78041d5cda92b3c1d656338113d2da
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
