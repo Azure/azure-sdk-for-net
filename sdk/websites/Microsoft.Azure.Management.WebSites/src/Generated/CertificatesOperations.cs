@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.WebSites
     using System.Threading;
     using System.Threading.Tasks;
 
-    /// <summary>
+    /// <summary>ListWithHttpMessagesAsync
     /// CertificatesOperations operations.
     /// </summary>
     internal partial class CertificatesOperations : IServiceOperations<WebSiteManagementClient>, ICertificatesOperations
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Certificate>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Certificate>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), string filter = default(string))
         {
             if (Client.SubscriptionId == null)
             {

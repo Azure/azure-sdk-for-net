@@ -43,6 +43,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="applicationInsights">&lt;code&gt;true&lt;/code&gt; if
         /// this supports Application Insights; otherwise,
         /// &lt;code&gt;false&lt;/code&gt;.</param>
+        /// <param name="isPreview">&lt;code&gt;true&lt;/code&gt; if this stack
+        /// is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;.</param>
+        /// <param name="isDeprecated">&lt;code&gt;true&lt;/code&gt; if this
+        /// stack has been deprecated, otherwise
+        /// &lt;code&gt;false&lt;/code&gt;.</param>
+        /// <param name="isHidden">&lt;code&gt;true&lt;/code&gt; if this stack
+        /// should be hidden for new customers on portal, otherwise
+        /// &lt;code&gt;false&lt;/code&gt;.</param> 
         /// <param name="appSettingsDictionary">&lt;appSettings&gt;
         /// &lt;appSetting name="FUNCTIONS_WORKER_RUNTIME" value="dotnet" /&gt;
         /// &lt;/appSettings&gt;
@@ -55,26 +63,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// &lt;/siteConfigProperties&gt;
         /// Example: All Linux Function Apps, need Use32BitWorkerProcess to be
         /// set to 0</param>
-        /// <param name="isPreview">&lt;code&gt;true&lt;/code&gt; if this stack
-        /// is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;.</param>
-        /// <param name="isDeprecated">&lt;code&gt;true&lt;/code&gt; if this
-        /// stack has been deprecated, otherwise
-        /// &lt;code&gt;false&lt;/code&gt;.</param>
-        /// <param name="isHidden">&lt;code&gt;true&lt;/code&gt; if this stack
-        /// should be hidden for new customers on portal, otherwise
-        /// &lt;code&gt;false&lt;/code&gt;.</param>
-        public StackMajorVersion(string displayVersion = default(string), string runtimeVersion = default(string), bool? isDefault = default(bool?), IList<StackMinorVersion> minorVersions = default(IList<StackMinorVersion>), bool? applicationInsights = default(bool?), IDictionary<string, object> appSettingsDictionary = default(IDictionary<string, object>), IDictionary<string, object> siteConfigPropertiesDictionary = default(IDictionary<string, object>), bool? isPreview = default(bool?), bool? isDeprecated = default(bool?), bool? isHidden = default(bool?))
+        public StackMajorVersion(string displayVersion = default(string), string runtimeVersion = default(string), bool? isDefault = default(bool?), IList<StackMinorVersion> minorVersions = default(IList<StackMinorVersion>), bool? applicationInsights = default(bool?), bool? isPreview = default(bool?), bool? isDeprecated = default(bool?), bool? isHidden = default(bool?), IDictionary<string, object> appSettingsDictionary = default(IDictionary<string, object>), IDictionary<string, object> siteConfigPropertiesDictionary = default(IDictionary<string, object>))
         {
             DisplayVersion = displayVersion;
             RuntimeVersion = runtimeVersion;
             IsDefault = isDefault;
             MinorVersions = minorVersions;
             ApplicationInsights = applicationInsights;
-            AppSettingsDictionary = appSettingsDictionary;
-            SiteConfigPropertiesDictionary = siteConfigPropertiesDictionary;
             IsPreview = isPreview;
             IsDeprecated = isDeprecated;
             IsHidden = isHidden;
+            AppSettingsDictionary = appSettingsDictionary;
+            SiteConfigPropertiesDictionary = siteConfigPropertiesDictionary;
             CustomInit();
         }
 
@@ -118,28 +118,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public bool? ApplicationInsights { get; set; }
 
         /// <summary>
-        /// Gets or sets &amp;lt;appSettings&amp;gt;
-        /// &amp;lt;appSetting name="FUNCTIONS_WORKER_RUNTIME" value="dotnet"
-        /// /&amp;gt;
-        /// &amp;lt;/appSettings&amp;gt;
-        /// Example: All the function apps need AppSetting:
-        /// "FUNCTIONS_WORKER_RUNTIME" to be set stack name
-        /// </summary>
-        [JsonProperty(PropertyName = "appSettingsDictionary")]
-        public IDictionary<string, object> AppSettingsDictionary { get; set; }
-
-        /// <summary>
-        /// Gets or sets &amp;lt;siteConfigProperties&amp;gt;
-        /// &amp;lt;siteConfigProperty name="Use32BitWorkerProcess"
-        /// value="false" /&amp;gt;
-        /// &amp;lt;/siteConfigProperties&amp;gt;
-        /// Example: All Linux Function Apps, need Use32BitWorkerProcess to be
-        /// set to 0
-        /// </summary>
-        [JsonProperty(PropertyName = "siteConfigPropertiesDictionary")]
-        public IDictionary<string, object> SiteConfigPropertiesDictionary { get; set; }
-
-        /// <summary>
         /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if this
         /// stack is in Preview, otherwise
         /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
@@ -162,6 +140,28 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "isHidden")]
         public bool? IsHidden { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;appSettings&amp;gt;
+        /// &amp;lt;appSetting name="FUNCTIONS_WORKER_RUNTIME" value="dotnet"
+        /// /&amp;gt;
+        /// &amp;lt;/appSettings&amp;gt;
+        /// Example: All the function apps need AppSetting:
+        /// "FUNCTIONS_WORKER_RUNTIME" to be set stack name
+        /// </summary>
+        [JsonProperty(PropertyName = "appSettingsDictionary")]
+        public IDictionary<string, object> AppSettingsDictionary { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;siteConfigProperties&amp;gt;
+        /// &amp;lt;siteConfigProperty name="Use32BitWorkerProcess"
+        /// value="false" /&amp;gt;
+        /// &amp;lt;/siteConfigProperties&amp;gt;
+        /// Example: All Linux Function Apps, need Use32BitWorkerProcess to be
+        /// set to 0
+        /// </summary>
+        [JsonProperty(PropertyName = "siteConfigPropertiesDictionary")]
+        public IDictionary<string, object> SiteConfigPropertiesDictionary { get; set; }
 
     }
 }

@@ -45,8 +45,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="repositoryUrl">URL for the repository of the static
         /// site.</param>
         /// <param name="branch">The target branch in the repository.</param>
-        /// <param name="provider">The provider that submitted the last
-        /// deployment to the primary environment of the static site.</param>
         /// <param name="customDomains">The custom domains associated with this
         /// static site.</param>
         /// <param name="repositoryToken">A user's github repository token.
@@ -54,6 +52,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// secrets.</param>
         /// <param name="buildProperties">Build properties to configure on the
         /// repository.</param>
+        /// <param name="provider">The provider that submitted the last
+        /// deployment to the primary environment of the static site.</param>
         /// <param name="templateProperties">Template options for generating a
         /// new repository.</param>
         /// <param name="contentDistributionEndpoint">The content distribution
@@ -62,16 +62,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Vault Reference authentication.</param>
         /// <param name="userProvidedFunctionApps">User provided function apps
         /// registered with the static site</param>
-        public StaticSiteARMResource(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string defaultHostname = default(string), string repositoryUrl = default(string), string branch = default(string), string provider = default(string), IList<string> customDomains = default(IList<string>), string repositoryToken = default(string), StaticSiteBuildProperties buildProperties = default(StaticSiteBuildProperties), StaticSiteTemplateOptions templateProperties = default(StaticSiteTemplateOptions), string contentDistributionEndpoint = default(string), string keyVaultReferenceIdentity = default(string), IList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps = default(IList<StaticSiteUserProvidedFunctionApp>), SkuDescription sku = default(SkuDescription), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
+        public StaticSiteARMResource(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string defaultHostname = default(string), string repositoryUrl = default(string), string branch = default(string), IList<string> customDomains = default(IList<string>), string repositoryToken = default(string), StaticSiteBuildProperties buildProperties = default(StaticSiteBuildProperties), string provider = default(string), StaticSiteTemplateOptions templateProperties = default(StaticSiteTemplateOptions), string contentDistributionEndpoint = default(string), string keyVaultReferenceIdentity = default(string), IList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps = default(IList<StaticSiteUserProvidedFunctionApp>), SkuDescription sku = default(SkuDescription), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
             : base(location, id, name, kind, type, tags)
         {
             DefaultHostname = defaultHostname;
             RepositoryUrl = repositoryUrl;
             Branch = branch;
-            Provider = provider;
             CustomDomains = customDomains;
             RepositoryToken = repositoryToken;
             BuildProperties = buildProperties;
+            Provider = provider;
             TemplateProperties = templateProperties;
             ContentDistributionEndpoint = contentDistributionEndpoint;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
@@ -105,13 +105,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string Branch { get; set; }
 
         /// <summary>
-        /// Gets the provider that submitted the last deployment to the primary
-        /// environment of the static site.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.provider")]
-        public string Provider { get; private set; }
-
-        /// <summary>
         /// Gets the custom domains associated with this static site.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customDomains")]
@@ -129,6 +122,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.buildProperties")]
         public StaticSiteBuildProperties BuildProperties { get; set; }
+
+        /// <summary>
+        /// Gets the provider that submitted the last deployment to the primary
+        /// environment of the static site.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provider")]
+        public string Provider { get; private set; }
 
         /// <summary>
         /// Gets or sets template options for generating a new repository.

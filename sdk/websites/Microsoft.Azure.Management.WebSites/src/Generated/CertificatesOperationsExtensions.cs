@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             public static async Task<IPage<Certificate>> ListAsync(this ICertificatesOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken, filter).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
