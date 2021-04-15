@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -438,13 +440,31 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="outcome"></param>
         /// <param name="timeout"></param>
         private async Task DisposeMessagesAsync(
-            IEnumerable<Guid> lockTokens,
+            Guid[] lockTokens,
             Outcome outcome,
             TimeSpan timeout)
         {
             ThrowIfSessionLockLost();
-            List<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(lockTokens);
 
+            static List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(Guid[] tokens)
+            {
+                const int sizeOfGuid = 16;
+                var convertedLockTokens = new List<ArraySegment<byte>>(tokens.Length);
+                var bufferForGuid = ArrayPool<byte>.Shared.Rent(sizeOfGuid*tokens.Length);
+                for (var i = 0; i < tokens.Length; i++)
+                {
+                    Guid lockToken = tokens[i];
+                    int start = i * sizeOfGuid;
+                    if (!MemoryMarshal.TryWrite(bufferForGuid.AsSpan(start, sizeOfGuid), ref lockToken))
+                    {
+                        lockToken.ToByteArray().AsSpan().CopyTo(bufferForGuid);
+                    }
+                    convertedLockTokens.Add(new ArraySegment<byte>(bufferForGuid, start, sizeOfGuid));
+                }
+                return convertedLockTokens;
+            }
+
+            List<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(lockTokens);
             ReceivingAmqpLink receiveLink = null;
             try
             {
@@ -467,7 +487,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var i = 0;
                 foreach (ArraySegment<byte> deliveryTag in deliveryTags)
                 {
-                    disposeMessageTasks[i++] = receiveLink.DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout);
+                    disposeMessageTasks[i++] =
+                        receiveLink.DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout);
                 }
 
                 Outcome[] outcomes = await Task.WhenAll(disposeMessageTasks).ConfigureAwait(false);
@@ -502,6 +523,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
 
                 throw;
+            }
+            finally
+            {
+                foreach (var t in deliveryTags)
+                {
+                    ArrayPool<byte>.Shared.Return(t.Array);
+                    break; // since we rented a continuous buffer and the array represents that continuous buffer
+                }
             }
         }
 
@@ -836,10 +865,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private static Outcome GetDeferOutcome(IDictionary<string, object> propertiesToModify) =>
             GetModifiedOutcome(propertiesToModify, true);
 
-        private static List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
-        {
-            return lockTokens.Select(lockToken => new ArraySegment<byte>(lockToken.ToByteArray())).ToList();
-        }
 
         private static Outcome GetModifiedOutcome(
             IDictionary<string, object> propertiesToModify,
