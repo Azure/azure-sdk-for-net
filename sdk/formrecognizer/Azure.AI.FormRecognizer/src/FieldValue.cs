@@ -237,7 +237,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueInteger.HasValue)
             {
-                throw new InvalidOperationException($"Field value is null.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Int64)} type. Consider using 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueInteger.Value;
@@ -262,13 +262,14 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueNumber.HasValue)
             {
-                // TODO: Sometimes ValueNumber isn't populated in ReceiptItems.  The following is a
-                // workaround to get the value from Text if ValueNumber isn't there.
-                // https://github.com/Azure/azure-sdk-for-net/issues/10333
-                float parsedFloat;
-                if (float.TryParse(_fieldValue.Text.TrimStart('$'), out parsedFloat))
+                // Workaround for receipts that was never deleted and got shipped in 3.0.0 GA so we need to maintain
+                if (float.TryParse(_fieldValue.Text.TrimStart('$'), out float parsedFloat))
                 {
                     return parsedFloat;
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Float)} type. Consider using 'ValueData.Text' property.");
                 }
             }
 
@@ -294,7 +295,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueDate.HasValue)
             {
-                throw new InvalidOperationException($"Field value is null.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Date)} type. Consider using 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueDate.Value.UtcDateTime;
@@ -319,7 +320,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueTime.HasValue)
             {
-                throw new InvalidOperationException($"Field value is null.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Time)} type. Consider using 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueTime.Value;
@@ -417,7 +418,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueSelectionMark.HasValue)
             {
-                throw new InvalidOperationException($"Field value is null.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.SelectionMark)} type. Consider using 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueSelectionMark.Value;
@@ -462,7 +463,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueGender.HasValue)
             {
-                throw new InvalidOperationException($"Field value is null.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Gender)} type. Consider using 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueGender.Value;

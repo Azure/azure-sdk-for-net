@@ -68,5 +68,14 @@ namespace Azure.AI.FormRecognizer.Models
             else
                 Text = text;
         }
+
+        /// <summary>
+        /// This method is used for mocking purposes.
+        /// </summary>
+        internal FieldValue_internal(FieldValueType type, string text)
+        {
+            Type = type;
+            Text = text;
+        }
     }
 }

@@ -165,6 +165,73 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public void InstantiateFieldValueWithInt64AndNoValueInteger()
+        {
+            string text = "25";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.Int64, text);
+
+            Assert.AreEqual(FieldValueType.Int64, fieldValue.ValueType);
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
+        }
+
+        [Test]
+        public void InstantiateFieldValueWithFloatAndNoValueNumber()
+        {
+            string text = "25.00%";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.Float, text);
+
+            Assert.AreEqual(FieldValueType.Float, fieldValue.ValueType);
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
+        }
+
+        [Test]
+        public void InstantiateFieldValueWithDateAndNoValueDate()
+        {
+            string text = "25 de Julio";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.Date, text);
+
+            Assert.AreEqual(FieldValueType.Date, fieldValue.ValueType);
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
+        }
+
+        [Test]
+        public void InstantiateFieldValueWithTimeAndNoValueTime()
+        {
+            string text = "24:55";
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.Time, text);
+
+            Assert.AreEqual(FieldValueType.Time, fieldValue.ValueType);
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
+        }
+
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/17814")]
+        public void InstantiateFieldValueWithSelectionMarkAndNoValueSelectionMark()
+        {
+            string text = SelectionMarkState.Selected.ToString();
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.SelectionMark, text);
+
+            Assert.AreEqual(FieldValueType.SelectionMark, fieldValue.ValueType);
+            Assert.AreEqual(SelectionMarkState.Selected, fieldValue.AsSelectionMarkState());
+        }
+
+        [Test]
+        public void InstantiateFieldValueWithGenderAndNoValueGender()
+        {
+            string text = FieldValueGender.F.ToString();
+
+            var fieldValue = FormRecognizerModelFactory.FieldValue(FieldValueType.Gender, text);
+
+            Assert.AreEqual(FieldValueType.Gender, fieldValue.ValueType);
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
+        }
+
+        [Test]
         public void FormRecognizerModelFactoryCanInstantiateFieldValueWithStringValueType()
         {
             string value = "Lovelace";
