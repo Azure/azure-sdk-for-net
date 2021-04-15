@@ -251,6 +251,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </summary>
         ISharedGalleryImageVersionsOperations SharedGalleryImageVersions { get; }
 
+        /// <summary>
         /// Gets the ICloudServiceRoleInstancesOperations.
         /// </summary>
         ICloudServiceRoleInstancesOperations CloudServiceRoleInstances { get; }

@@ -255,7 +255,8 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the ISharedGalleryImageVersionsOperations.
         /// </summary>
         public virtual ISharedGalleryImageVersionsOperations SharedGalleryImageVersions { get; private set; }
-        
+
+        /// <summary>
         /// Gets the ICloudServiceRoleInstancesOperations.
         /// </summary>
         public virtual ICloudServiceRoleInstancesOperations CloudServiceRoleInstances { get; private set; }
@@ -563,7 +564,6 @@ namespace Microsoft.Azure.Management.Compute
             CloudServices = new CloudServicesOperations(this);
             CloudServicesUpdateDomain = new CloudServicesUpdateDomainOperations(this);
             CloudServiceOperatingSystems = new CloudServiceOperatingSystemsOperations(this);
-
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
