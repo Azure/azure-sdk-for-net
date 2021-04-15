@@ -132,9 +132,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [AsyncOnly]
         public async Task CreateSearchAsync()
         {
-            if (SkipPhoneNumberLiveTests)
-                Assert.Ignore("Skip phone number live tests flag is on.");
-
             var client = CreateClient();
             var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
                 new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));

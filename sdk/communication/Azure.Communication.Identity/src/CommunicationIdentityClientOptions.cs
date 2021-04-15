@@ -28,6 +28,7 @@ namespace Azure.Communication.Identity
                 ServiceVersion.V2021_03_07 => "2021-03-07",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
+            AddHeaderParameters();
         }
 
         /// <summary>
@@ -41,6 +42,15 @@ namespace Azure.Communication.Identity
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             V2021_03_07 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
+        }
+
+        /// <summary>
+        /// Add headers in <see cref="DiagnosticsOptions.LoggedHeaderNames"/>
+        /// </summary>
+        private void AddHeaderParameters()
+        {
+            // Data Lake headers
+            Diagnostics.LoggedHeaderNames.Add("MS-CV");
         }
     }
 }
