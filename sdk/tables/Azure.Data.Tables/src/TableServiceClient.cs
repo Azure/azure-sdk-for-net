@@ -185,7 +185,7 @@ namespace Azure.Data.Tables
             HttpPipeline pipeline = sasCredential switch
             {
                 null => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { policy }, new ResponseClassifier()),
-                _ => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new HttpPipelinePolicy[] { policy, new AzureSasCredentialSynchronousPolicy(sasCredential) }, new ResponseClassifier())
+                _ => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new HttpPipelinePolicy[] { new AzureSasCredentialSynchronousPolicy(sasCredential) }, new ResponseClassifier())
             };
 
             _version = options.VersionString;

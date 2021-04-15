@@ -20,7 +20,7 @@ namespace Azure.Data.Tables
     /// </summary>
     public class TableClient
     {
-        private static readonly char[] ContinuationTokenSplit = new[] { ' ' };
+        private static readonly char[] ContinuationTokenSplit = { ' ' };
         private readonly ClientDiagnostics _diagnostics;
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
@@ -42,11 +42,13 @@ namespace Azure.Data.Tables
         {
             get
             {
-                if (_accountName == null)
+                if (_accountName != null)
                 {
-                    var builder = new TableUriBuilder(_endpoint);
-                    _accountName = builder.AccountName;
+                    return _accountName;
                 }
+
+                var builder = new TableUriBuilder(_endpoint);
+                _accountName = builder.AccountName;
                 return _accountName;
             }
         }
@@ -186,12 +188,12 @@ namespace Azure.Data.Tables
             HttpPipeline pipeline = sasCredential switch
             {
                 null => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { policy }, new ResponseClassifier()),
-                _ => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new HttpPipelinePolicy[] { policy, new AzureSasCredentialSynchronousPolicy(sasCredential) }, new ResponseClassifier())
+                _ => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new HttpPipelinePolicy[] { new AzureSasCredentialSynchronousPolicy(sasCredential) }, new ResponseClassifier())
             };
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.ToString(), _version);
+            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.AbsoluteUri, _version);
             Name = tableName;
         }
 
