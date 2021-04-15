@@ -31,10 +31,12 @@ process {
         }
 
         [string[]] $content = $file | Get-Content
-        if (!$content[0].StartsWith('---')) {
+        if (!$content -or !$content[0].StartsWith('---')) {
             Write-Verbose "Skipping $($file.FullName): does not contain frontmatter"
             continue
         }
+
+        Write-Verbose "Checking $($file.FullName)"
 
         # Reset metadata and create mutable collections.
         $products = [System.Collections.Generic.List[string]]::new()
