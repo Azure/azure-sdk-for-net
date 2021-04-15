@@ -465,6 +465,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             List<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(lockTokens);
+            byte[] bufferToReturn = null;
             ReceivingAmqpLink receiveLink = null;
             try
             {
@@ -487,6 +488,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var i = 0;
                 foreach (ArraySegment<byte> deliveryTag in deliveryTags)
                 {
+                    // since we rented a continuous buffer and the array represents that continuous buffer
+                    bufferToReturn ??= deliveryTag.Array;
+
                     disposeMessageTasks[i++] =
                         receiveLink.DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout);
                 }
@@ -526,10 +530,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             finally
             {
-                foreach (var t in deliveryTags)
+                if (bufferToReturn != null)
                 {
-                    ArrayPool<byte>.Shared.Return(t.Array);
-                    break; // since we rented a continuous buffer and the array represents that continuous buffer
+                    ArrayPool<byte>.Shared.Return(bufferToReturn);
                 }
             }
         }
@@ -864,7 +867,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private static Outcome GetDeferOutcome(IDictionary<string, object> propertiesToModify) =>
             GetModifiedOutcome(propertiesToModify, true);
-
 
         private static Outcome GetModifiedOutcome(
             IDictionary<string, object> propertiesToModify,
