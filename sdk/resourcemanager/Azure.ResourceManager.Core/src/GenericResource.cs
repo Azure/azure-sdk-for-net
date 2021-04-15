@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Core
         public virtual GenericResourceData Data { get; }
 
         /// <inheritdoc/>
-        protected override GenericResource GetResource()
+        protected override GenericResource GetResource(CancellationToken cancellation = default)
         {
             return this;
         }

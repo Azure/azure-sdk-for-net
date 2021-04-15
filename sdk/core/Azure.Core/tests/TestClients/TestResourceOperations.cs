@@ -17,14 +17,14 @@ namespace Azure.Core.Tests
             return new TestResource();
         }
 
-        public virtual ArmOperationTest<TestResource> GetArmOperation(CancellationToken cancellationToken = default)
+        public virtual ArmOperationTest<TestResource> GetArmOperation(bool exceptionOnWait = false, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmOperation");
             scope.Start();
 
             try
             {
-                return new ArmOperationTest<TestResource>(new TestResource());
+                return new ArmOperationTest<TestResource>(new TestResource(), exceptionOnWait);
             }
             catch (Exception e)
             {
@@ -33,14 +33,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual Task<ArmOperationTest<TestResource>> GetArmOperationAsync(CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperationTest<TestResource>> GetArmOperationAsync(bool exceptionOnWait = false, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmOperation");
             scope.Start();
 
             try
             {
-                return Task.FromResult(new ArmOperationTest<TestResource>(new TestResource()));
+                return Task.FromResult(new ArmOperationTest<TestResource>(new TestResource(), exceptionOnWait));
             }
             catch (Exception e)
             {
@@ -137,6 +137,70 @@ namespace Azure.Core.Tests
             try
             {
                 return Task.FromResult<ArmResponseTest<TestResource>>(new PhArmResponseTest<TestResource>(new TestResource()));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual ArmResponseTest<TestResource> GetArmResponseException(CancellationToken cancellationToken = default)
+        {
+            using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmResponseException");
+            scope.Start();
+
+            try
+            {
+                throw new ArgumentException("FakeArg");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual Task<ArmResponseTest<TestResource>> GetArmResponseExceptionAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmResponseException");
+            scope.Start();
+
+            try
+            {
+                throw new ArgumentException("FakeArg");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual ArmOperationTest<TestResource> GetArmOperationException(CancellationToken cancellationToken = default)
+        {
+            using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmOperationException");
+            scope.Start();
+
+            try
+            {
+                throw new ArgumentException("FakeArg");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual Task<ArmOperationTest<TestResource>> GetArmOperationExceptionAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmOperationException");
+            scope.Start();
+
+            try
+            {
+                throw new ArgumentException("FakeArg");
             }
             catch (Exception e)
             {

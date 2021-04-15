@@ -8,7 +8,7 @@ using Castle.DynamicProxy;
 
 namespace Azure.Core.TestFramework
 {
-    internal class ManagementInterceptor : IInterceptor
+    public class ManagementInterceptor : IInterceptor
     {
         private readonly ClientTestBase _testBase;
         private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();
@@ -31,6 +31,9 @@ namespace Azure.Core.TestFramework
             var type = result.GetType();
             if (type.Name.StartsWith("Task"))
             {
+                if (((Task)result).IsFaulted || ((Task)result).Status == TaskStatus.WaitingForActivation)
+                    return;
+
                 var taskResultType = type.GetGenericArguments()[0];
                 if (taskResultType.Name.StartsWith("ArmResponse") || taskResultType.Name.StartsWith("ArmOperation"))
                 {
@@ -44,6 +47,9 @@ namespace Azure.Core.TestFramework
             }
             else if (type.Name.StartsWith("ValueTask"))
             {
+                if ((bool)type.GetProperty("IsFaulted").GetValue(result))
+                    return;
+
                 var taskResultType = type.GetGenericArguments()[0];
                 if (taskResultType.Name.StartsWith("Response") || taskResultType.Name.StartsWith("ArmResponse"))
                 {

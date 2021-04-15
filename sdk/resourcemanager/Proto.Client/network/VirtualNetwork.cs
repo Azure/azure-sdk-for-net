@@ -26,7 +26,7 @@ namespace Proto.Network
         public VirtualNetworkData Data { get; private set; }
 
         /// <inheritdoc />
-        protected override VirtualNetwork GetResource()
+        protected override VirtualNetwork GetResource(CancellationToken cancellation = default)
         {
             return this;
         }

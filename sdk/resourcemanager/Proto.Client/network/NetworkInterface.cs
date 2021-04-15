@@ -21,7 +21,7 @@ namespace Proto.Network
         public NetworkInterfaceData Data { get; private set; }
 
         /// <inheritdoc />
-        protected override NetworkInterface GetResource()
+        protected override NetworkInterface GetResource(CancellationToken cancellation = default)
         {
             return this;
         }
