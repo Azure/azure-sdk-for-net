@@ -181,7 +181,6 @@ Previously in `Microsoft.Azure.KeyVault`, you could create a self-signed policy 
 
 ```C# Snippet:Microsoft_Azure_KeyVault_Certificates_Snippets_MigrationGuide_CreateSelfSignedPolicy
 CertificatePolicy policy = new CertificatePolicy
-policy = new CertificatePolicy
 {
     IssuerParameters = new IssuerParameters("Self"),
     X509CertificateProperties = new X509CertificateProperties("CN=DefaultPolicy")
