@@ -141,6 +141,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             Assert.Throws<KeyNotFoundException>(() => telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
         }
 
+        [Fact]
+        public void GeneratePartAEnvelope_Activity_WithParentSpanId()
+        {
+            var activity = CreateTestActivity(includeParentSpanId: true);
+            var resource = CreateTestResource();
+
+            var telemetryItem = TelemetryPartA.GetTelemetryItem(activity, resource, null);
+
+            Assert.Equal("RemoteDependency", telemetryItem.Name);
+            Assert.Equal(activity.StartTimeUtc.ToString(CultureInfo.InvariantCulture), telemetryItem.Time);
+            Assert.StartsWith("unknown_service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Null(telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()]);
+            Assert.NotNull(telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()]);
+            Assert.Equal(activity.ParentSpanId.ToHexString(), telemetryItem.Tags[ContextTagKeys.AiOperationParentId.ToString()]);
+        }
+
         // TODO: GeneratePartAEnvelope_WithActivityParent
 
         /// <summary>
@@ -173,14 +190,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Tracing
             bool addEvents = true,
             bool addLinks = true,
             Resource resource = null,
-            ActivityKind kind = ActivityKind.Client)
+            ActivityKind kind = ActivityKind.Client,
+            bool includeParentSpanId = false)
         {
             var startTimestamp = DateTime.UtcNow;
             var endTimestamp = startTimestamp.AddSeconds(60);
             var eventTimestamp = DateTime.UtcNow;
             var traceId = ActivityTraceId.CreateRandom();
 
-            var parentSpanId = ActivitySpanId.CreateRandom();
+            ActivitySpanId parentSpanId = default;
+            if (includeParentSpanId)
+            {
+                parentSpanId = ActivitySpanId.CreateRandom();
+            }
 
             var attributes = new Dictionary<string, object>
             {

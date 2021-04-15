@@ -326,7 +326,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var eventTimestamp = DateTime.UtcNow;
             var traceId = ActivityTraceId.CreateRandom();
 
-            var parentSpanId = ActivitySpanId.CreateRandom();
+            var parentSpanId = default(ActivitySpanId);
 
             Dictionary<string, object> attributes = null;
             if (additionalAttributes != null)
