@@ -1,13 +1,16 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.2.3 (2021-04-15)
 
+### Fixes and improvements
+
+- Updated doc comments to specify code language so that web documentation renders code blocks with C# styles and colors.
 
 ## 1.2.2 (2021-04-12)
 
 ### Fixes and improvements
 
-- Updated core dependencies to bring in security vulnerability fixes that are addressed in `Azure.Core v1.13.0` and `System.Memory.Data v1.0.2`
+- Updated core dependencies to bring in security vulnerability fixes that are addressed in `Azure.Core v1.13.0` and `System.Memory.Data v1.0.2`.
 
 ## 1.2.1 (2021-02-03)
 
