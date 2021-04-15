@@ -74,7 +74,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly FaultTolerantAmqpObject<ReceivingAmqpLink> _receiveLink;
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
 
-        private const int SizeOfGuid = 16;
+        private const int SizeOfGuidInBytes = 16;
 
         /// <summary>
         /// Gets the sequence number of the last peeked message.
@@ -448,7 +448,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             ThrowIfSessionLockLost();
 
-            byte[] continuousBufferForLockTokens = ArrayPool<byte>.Shared.Rent(SizeOfGuid*lockTokens.Length);;
+            byte[] continuousBufferForLockTokens = ArrayPool<byte>.Shared.Rent(SizeOfGuidInBytes*lockTokens.Length);;
             List<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(continuousBufferForLockTokens, lockTokens);
             ReceivingAmqpLink receiveLink = null;
             try
@@ -521,13 +521,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             for (var i = 0; i < tokens.Length; i++)
             {
                 Guid lockToken = tokens[i];
-                int start = i * SizeOfGuid;
-                if (!MemoryMarshal.TryWrite(buffer.AsSpan(start, SizeOfGuid), ref lockToken))
+                int start = i * SizeOfGuidInBytes;
+                if (!MemoryMarshal.TryWrite(buffer.AsSpan(start, SizeOfGuidInBytes), ref lockToken))
                 {
                     lockToken.ToByteArray().AsSpan().CopyTo(buffer);
                 }
 
-                convertedLockTokens.Add(new ArraySegment<byte>(buffer, start, SizeOfGuid));
+                convertedLockTokens.Add(new ArraySegment<byte>(buffer, start, SizeOfGuidInBytes));
             }
             return convertedLockTokens;
         }
