@@ -65,7 +65,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        protected virtual Task AuthenticateRequestAsync(HttpMessage message, bool async)
+        protected virtual Task AuthorizeRequestAsync(HttpMessage message, bool async)
         {
             var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
             return SetAuthorizationHeader(message, context, async);
@@ -78,7 +78,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
         /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
         /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
-        protected virtual ValueTask<bool> AuthenticateRequestOnChallengeAsync(HttpMessage message, bool async)
+        protected virtual ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message, bool async)
         {
             return _falseValueTask;
         }
@@ -92,12 +92,12 @@ namespace Azure.Core.Pipeline
 
             if (async)
             {
-                await AuthenticateRequestAsync(message, true).ConfigureAwait(false);
+                await AuthorizeRequestAsync(message, true).ConfigureAwait(false);
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
             else
             {
-                AuthenticateRequestAsync(message, false).EnsureCompleted();
+                AuthorizeRequestAsync(message, false).EnsureCompleted();
                 ProcessNext(message, pipeline);
             }
 
@@ -107,7 +107,7 @@ namespace Azure.Core.Pipeline
                 // Attempt to get the TokenRequestContext based on the challenge.
                 // If we fail to get the context, the challenge was not present or invalid.
                 // If we succeed in getting the context, authenticate the request and pass it up the policy chain.
-                if (await AuthenticateRequestOnChallengeAsync(message, async).ConfigureAwait(false))
+                if (await AuthorizeRequestOnChallengeAsync(message, async).ConfigureAwait(false))
                 {
                     if (async)
                     {
@@ -197,12 +197,12 @@ namespace Azure.Core.Pipeline
                         catch (OperationCanceledException)
                         {
                             headerValueTcs.SetCanceled();
-                            throw;
                         }
                         catch (Exception exception)
                         {
                             headerValueTcs.SetException(exception);
-                            throw;
+                            // The exception will be thrown on the next lines when we touch the result of
+                            // headerValueTcs.Task, this approach will prevent later runtime UnobservedTaskException
                         }
                     }
 
@@ -304,7 +304,7 @@ namespace Azure.Core.Pipeline
             // must be called under lock (_syncObj)
             private bool RequestRequiresNewToken(TokenRequestContext context) =>
                 _currentContext == null ||
-                (context.Scopes != null && !context.Scopes.SequenceEqual(_currentContext.Value.Scopes)) ||
+                (context.Scopes != null && !context.Scopes.AsSpan().SequenceEqual(_currentContext.Value.Scopes.AsSpan())) ||
                 (context.Claims != null && !string.Equals(context.Claims, _currentContext.Value.Claims));
 
             private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs, HeaderValueInfo info, TokenRequestContext context, bool async)

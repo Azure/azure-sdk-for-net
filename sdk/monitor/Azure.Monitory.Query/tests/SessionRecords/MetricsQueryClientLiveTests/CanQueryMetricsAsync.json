@@ -1,0 +1,65 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs/providers/microsoft.insights/metrics?timespan=2021-04-09T15%3A09%3A05.3163688-07%3A00%2F2021-04-09T16%3A09%3A05.3163688-07%3A00\u0026interval=PT1M\u0026api-version=2018-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d3ab18a560294943b60ff7dd504163ea-e8403173235a2942-00",
+        "User-Agent": [
+          "azsdk-net-Monitory.Query/1.0.0-alpha.20210409.1",
+          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "968e4c18a8b1cca002fb55beba6ac202",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "606",
+        "Content-Type": "application/json",
+        "Date": "Fri, 09 Apr 2021 23:09:04 GMT",
+        "Request-Context": "appId=cid-v1:b021da79-5252-4375-9df5-2e17c1dcd822",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6ed53ae3-b3d7-4e23-90cd-679a9872dd52",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "{6ed53ae3-b3d7-4e23-90cd-679a9872dd52}",
+        "x-ms-routing-request-id": "WESTUS:20210409T230905Z:6ed53ae3-b3d7-4e23-90cd-679a9872dd52",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "cost": 59,
+        "timespan": "2021-04-09T22:09:05Z/2021-04-09T23:09:05Z",
+        "interval": "PT1M",
+        "value": [
+          {
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs/providers/Microsoft.Insights/metrics/Average_% Free Inodes",
+            "type": "Microsoft.Insights/metrics",
+            "name": {
+              "value": "Average_% Free Inodes",
+              "localizedValue": "% Free Inodes"
+            },
+            "displayDescription": "Average_% Free Inodes",
+            "unit": "Count",
+            "timeseries": [],
+            "errorCode": "Success"
+          }
+        ],
+        "namespace": "Microsoft.OperationalInsights/workspaces",
+        "resourceregion": "westus2"
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-04-09T16:09:05.3163688-07:00",
+    "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs",
+    "RandomSeed": "297588951"
+  }
+}

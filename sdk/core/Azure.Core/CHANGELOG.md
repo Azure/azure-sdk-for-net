@@ -1,5 +1,21 @@
 # Release History
 
+## 1.14.0-beta.1 (Unreleased)
+
+
+## 1.13.0 (2021-04-07)
+
+### Key Bug Fixes
+
+- Fixed `NotSupportedException` when running using Blazor in the browser.
+- Disable the response caching and enable the streaming when running using Blazor in the browser.
+
+## 1.12.0 (2021-04-06)
+
+### Added
+
+- Added `HttpPipeline.CreateHttpMessagePropertiesScope` that can be used to inject scoped properties into `HttpMessage`.
+
 ## 1.11.0 (2021-03-22)
 
 ### Added
@@ -31,13 +47,13 @@
 - Avoid `ObjectDisposedException` when the request is cancelled during content upload over HTTPS.
 - Fix exception while setting `If-Modified-Since` header on .NET Framework.
 
-## 1.8.1 (2020-01-11)
+## 1.8.1 (2021-01-11)
 
 ### Key Bug Fixes
 
 - Include `Microsoft.Bcl.AsyncInterfaces` dependency on .NET 5 to avoid build issues in applications targeting .NET 5.
 
-## 1.8.0 (2020-01-06)
+## 1.8.0 (2021-01-06)
 
 ### Added
 - `AzureSasCredential` and its respective policy.

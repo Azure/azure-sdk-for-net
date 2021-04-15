@@ -26,6 +26,8 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="version">The version.</param>
         public RemoteRenderingClientOptions(ServiceVersion version = ServiceVersion.V2021_01_01)
         {
+            Diagnostics.LoggedHeaderNames.Add("MS-CV");
+
             Version = version switch
             {
                 ServiceVersion.V2021_01_01 => "2021-01-01",

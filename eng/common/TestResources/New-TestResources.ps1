@@ -39,7 +39,7 @@ param (
     # Azure SDK Developer Playground subscription
     [Parameter()]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
-    [string] $SubscriptionId = 'faa080af-c1d8-40ad-9cce-e1a450ca5b57',
+    [string] $SubscriptionId,
 
     [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
@@ -49,8 +49,8 @@ param (
     [string] $ProvisionerApplicationSecret,
 
     [Parameter()]
-    [ValidateRange(0, [int]::MaxValue)]
-    [int] $DeleteAfterHours,
+    [ValidateRange(1, [int]::MaxValue)]
+    [int] $DeleteAfterHours = 48,
 
     [Parameter()]
     [string] $Location = '',
@@ -166,7 +166,7 @@ try {
         Log "Generated base name '$BaseName' for CI build"
     } elseif (!$BaseName) {
         $BaseName = "$UserName$ServiceDirectory"
-        Log "BaseName was not set. Using default base name: '$BaseName'"
+        Log "BaseName was not set. Using default base name '$BaseName'"
     }
 
     # Make sure pre- and post-scripts are passed formerly required arguments.
@@ -200,35 +200,74 @@ try {
         # Make sure the user is logged in to create a service principal.
         $context = Get-AzContext;
         if (!$context) {
-            $subscriptionName = $SubscriptionId
+            Log 'User not logged in. Logging in now...'
+            $context = (Connect-AzAccount).Context
+        }
 
-            # Use cache of well-known team subs without having to be authenticated.
-            $wellKnownSubscriptions = @{
-                'faa080af-c1d8-40ad-9cce-e1a450ca5b57' = 'Azure SDK Developer Playground'
-                'a18897a6-7e44-457d-9260-f2854c0aca42' = 'Azure SDK Engineering System'
-                '2cd617ea-1866-46b1-90e3-fffb087ebf9b' = 'Azure SDK Test Resources'
+        $currentSubcriptionId = $context.Subscription.Id
+
+        # If no subscription was specified, try to select the Azure SDK Developer Playground subscription.
+        # Ignore errors to leave the automatically selected subscription.
+        if ($SubscriptionId) {
+            if ($currentSubcriptionId -ne $SubscriptionId) {
+                Log "Selecting subscription '$SubscriptionId'"
+                $null = Select-AzSubscription -Subscription $SubscriptionId
+
+                $exitActions += {
+                    Log "Selecting previous subscription '$currentSubcriptionId'"
+                    $null = Select-AzSubscription -Subscription $currentSubcriptionId
+                }
+
+                # Update the context.
+                $context = Get-AzContext
+            }
+        } else {
+            if ($currentSubcriptionId -ne 'faa080af-c1d8-40ad-9cce-e1a450ca5b57') {
+                Log "Attempting to select subscription 'Azure SDK Developer Playground (faa080af-c1d8-40ad-9cce-e1a450ca5b57)'"
+                $null = Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore
+
+                # Update the context.
+                $context = Get-AzContext
             }
 
-            if ($wellKnownSubscriptions.ContainsKey($SubscriptionId)) {
-                $subscriptionName = '{0} ({1})' -f $wellKnownSubscriptions[$SubscriptionId], $SubscriptionId
-            }
+            $SubscriptionId = $context.Subscription.Id
+            $PSBoundParameters['SubscriptionId'] = $SubscriptionId
+        }
 
-            Log "You are not logged in; connecting to $subscriptionName"
-            $context = (Connect-AzAccount -Subscription $SubscriptionId).Context
+        # Use cache of well-known team subs without having to be authenticated.
+        $wellKnownSubscriptions = @{
+            'faa080af-c1d8-40ad-9cce-e1a450ca5b57' = 'Azure SDK Developer Playground'
+            'a18897a6-7e44-457d-9260-f2854c0aca42' = 'Azure SDK Engineering System'
+            '2cd617ea-1866-46b1-90e3-fffb087ebf9b' = 'Azure SDK Test Resources'
+        }
+
+        # Print which subscription is currently selected.
+        $subscriptionName = $context.Subscription.Id
+        if ($wellKnownSubscriptions.ContainsKey($subscriptionName)) {
+            $subscriptionName = '{0} ({1})' -f $wellKnownSubscriptions[$subscriptionName], $subscriptionName
+        }
+
+        Log "Using subscription '$subscriptionName'"
+
+        # Make sure the TenantId is also updated from the current context.
+        # PSBoundParameters is not updated to avoid confusing parameter sets.
+        if (!$TenantId) {
+            $TenantId = $context.Subscription.TenantId
         }
 
         # If no test application ID is specified during an interactive session, create a new service principal.
         if (!$TestApplicationId) {
 
             # Cache the created service principal in this session for frequent reuse.
-            $servicePrincipal = if ($AzureTestPrincipal -and (Get-AzADServicePrincipal -ApplicationId $AzureTestPrincipal.ApplicationId)) {
+            $servicePrincipal = if ($AzureTestPrincipal -and (Get-AzADServicePrincipal -ApplicationId $AzureTestPrincipal.ApplicationId) -and $AzureTestSubscription -eq $SubscriptionId) {
                 Log "TestApplicationId was not specified; loading cached service principal '$($AzureTestPrincipal.ApplicationId)'"
                 $AzureTestPrincipal
             } else {
-                Log 'TestApplicationId was not specified; creating a new service principal'
-                $global:AzureTestPrincipal = New-AzADServicePrincipal -Role Owner
+                Log "TestApplicationId was not specified; creating a new service principal in subscription '$SubscriptionId'"
+                $global:AzureTestPrincipal = New-AzADServicePrincipal -Role Owner -Scope "/subscriptions/$SubscriptionId"
+                $global:AzureTestSubscription = $SubscriptionId
 
-                Log "Created service principal '$AzureTestPrincipal'"
+                Log "Created service principal '$($AzureTestPrincipal.ApplicationId)'"
                 $AzureTestPrincipal
             }
 
@@ -251,13 +290,15 @@ try {
     if ($ProvisionerApplicationId) {
         $null = Disable-AzContextAutosave -Scope Process
 
-        Log "Logging into service principal '$ProvisionerApplicationId'"
+        Log "Logging into service principal '$ProvisionerApplicationId'."
+        Write-Warning 'Logging into service principal may fail until the principal is fully propagated.'
+
         $provisionerSecret = ConvertTo-SecureString -String $ProvisionerApplicationSecret -AsPlainText -Force
         $provisionerCredential = [System.Management.Automation.PSCredential]::new($ProvisionerApplicationId, $provisionerSecret)
 
         # Use the given subscription ID if provided.
         $subscriptionArgs = if ($SubscriptionId) {
-            @{SubscriptionId = $SubscriptionId}
+            @{Subscription = $SubscriptionId}
         } else {
             @{}
         }
@@ -292,7 +333,7 @@ try {
 
     # If the ServiceDirectory is an absolute path use the last directory name
     # (e.g. D:\foo\bar\ -> bar)
-    $serviceName = if (Split-Path -IsAbsolute  $ServiceDirectory) {
+    $serviceName = if (Split-Path -IsAbsolute $ServiceDirectory) {
         Split-Path -Leaf $ServiceDirectory
     } else {
         $ServiceDirectory
@@ -307,16 +348,15 @@ try {
         "rg-$BaseName"
     }
 
-    # Tag the resource group to be deleted after a certain number of hours if specified.
     $tags = @{
         Creator = $UserName
         ServiceDirectory = $ServiceDirectory
     }
 
-    if ($PSBoundParameters.ContainsKey('DeleteAfterHours')) {
-        $deleteAfter = [DateTime]::UtcNow.AddHours($DeleteAfterHours)
-        $tags.Add('DeleteAfter', $deleteAfter.ToString('o'))
-    }
+    # Tag the resource group to be deleted after a certain number of hours.
+    Write-Warning "Any clean-up scripts running against subscription '$SubscriptionId' may delete resource group '$ResourceGroupName' after $DeleteAfterHours hours."
+    $deleteAfter = [DateTime]::UtcNow.AddHours($DeleteAfterHours).ToString('o')
+    $tags['DeleteAfter'] = $deleteAfter
 
     if ($CI) {
         # Add tags for the current CI job.
@@ -348,11 +388,15 @@ try {
         # New-AzResourceGroup would've written an error and stopped the pipeline by default anyway.
         Write-Verbose "Successfully created resource group '$($resourceGroup.ResourceGroupName)'"
     }
-    elseif (!$resourceGroup -and !$PSCmdlet.ShouldProcess($resourceGroupName)) {
-        # If the -WhatIf flag was passed, there will be no resource group created. Fake it.
-        $resourceGroup = [PSCustomObject]@{
-            ResourceGroupName = $resourceGroupName
-            Location = $Location
+    elseif (!$resourceGroup) {
+        if (!$PSCmdlet.ShouldProcess($resourceGroupName)) {
+            # If the -WhatIf flag was passed, there will be no resource group created. Fake it.
+            $resourceGroup = [PSCustomObject]@{
+                ResourceGroupName = $resourceGroupName
+                Location = $Location
+            }
+        } else {
+            Write-Error "Resource group '$ResourceGroupName' already exists." -Category ResourceExists -RecommendedAction "Delete resource group '$ResourceGroupName', or overwrite it when redeploying."
         }
     }
 
@@ -413,16 +457,16 @@ try {
             $lastDebugPreference = $DebugPreference
             try {
                 if ($CI) {
-                    $DebugPreference = "Continue"
+                    $DebugPreference = 'Continue'
                 }
-                New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
+                New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters -Force:$Force
             } catch {
-                Write-Output @"
+                Write-Output @'
 #####################################################
 # For help debugging live test provisioning issues, #
 # see http://aka.ms/azsdk/engsys/live-test-help,    #
 #####################################################
-"@
+'@
                 throw
             } finally {
                 $DebugPreference = $lastDebugPreference
@@ -466,7 +510,7 @@ try {
 
         if ($OutFile) {
             if (!$IsWindows) {
-                Write-Host "File option is supported only on Windows"
+                Write-Host 'File option is supported only on Windows'
             }
 
             $outputFile = "$templateFile.env"
@@ -595,7 +639,11 @@ is passed to the ARM template as 'tenantId'.
 Optional subscription ID to use for new resources when logging in as a
 provisioner. You can also use Set-AzContext if not provisioning.
 
-The default is the Azure SDK Developer Playground subscription ID.
+If you do not specify a SubscriptionId and are not logged in, one will be
+automatically selected for you by the Connect-AzAccount cmdlet.
+
+Once you are logged in (or were previously), the selected SubscriptionId
+will be used for subsequent operations that are specific to a subscription.
 
 .PARAMETER ProvisionerApplicationId
 The AAD Application ID used to provision test resources when a provisioner is
@@ -614,17 +662,14 @@ If none is specified New-TestResources.ps1 uses the TestApplicationSecret.
 This value is not passed to the ARM template.
 
 .PARAMETER DeleteAfterHours
-Optional. Positive integer number of hours from the current time to set the
+Positive integer number of hours from the current time to set the
 'DeleteAfter' tag on the created resource group. The computed value is a
 timestamp of the form "2020-03-04T09:07:04.3083910Z".
-
-If this value is not specified no 'DeleteAfter' tag will be assigned to the
-created resource group.
 
 An optional cleanup process can delete resource groups whose "DeleteAfter"
 timestamp is less than the current time.
 
-This isused for CI automation.
+This is used for CI automation.
 
 .PARAMETER Location
 Optional location where resources should be created. If left empty, the default
@@ -660,8 +705,8 @@ Save test environment settings into a test-resources.json.env file next to test-
 The environment file would be scoped to the current repository directory.
 
 .EXAMPLE
-Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
-New-TestResources.ps1 -ServiceDirectory 'keyvault'
+Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'
+New-TestResources.ps1 keyvault
 
 Run this in a desktop environment to create new AAD apps and Service Principals
 that can be used to provision resources and run live tests.

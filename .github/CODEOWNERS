@@ -146,7 +146,7 @@
 #/<NotInRepo>/            @swmachan
 
 # PRLabel: %Cognitive - Translator
-/sdk/documenttranslation/                     @maririos
+/sdk/translation/                     @maririos
 
 # ServiceLabel: %Cognitive - Speech %Service Attention
 #/<NotInRepo>/            @robch @oscholz
@@ -471,6 +471,9 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # ServiceLabel: %PostgreSQL %Service Attention
 /sdk/postgresql/Microsoft.Azure.Management.PostgreSQL/            @sunilagarwal @lfittl-msft @sr-msft @niklarin
+
+# ServiceLabel: %Quantum %Service Attention
+/sdk/quantum/Azure.Quantum.Jobs/           @xfield
 
 # ServiceLabel: %Recovery Services Backup %Service Attention
 /sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup/           @pvrk

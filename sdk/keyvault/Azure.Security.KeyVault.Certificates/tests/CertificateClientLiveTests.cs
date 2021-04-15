@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -30,6 +31,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public partial class CertificateClientLiveTests : CertificatesTestBase
     {
+        private static MethodInfo s_clearCacheMethod;
+
         public CertificateClientLiveTests(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
@@ -47,6 +50,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Client = GetClient();
 
                 ChallengeBasedAuthenticationPolicy.ClearCache();
+
+                // Make sure the shared source copy of ChallengeBasedAuthenticationPolicy is cleared as well for Keys.
+                if (s_clearCacheMethod is null)
+                {
+                    s_clearCacheMethod = typeof(CryptographyClient).Assembly.GetType("Azure.Security.KeyVault.ChallengeBasedAuthenticationPolicy", true, false)
+                        .GetMethod(nameof(ChallengeBasedAuthenticationPolicy.ClearCache), BindingFlags.Static | BindingFlags.NonPublic)
+                        ?? throw new NotSupportedException($"{nameof(ChallengeBasedAuthenticationPolicy)}.{nameof(ChallengeBasedAuthenticationPolicy.ClearCache)} not found in {typeof(CryptographyClient).Assembly}");
+                }
+
+                s_clearCacheMethod.Invoke(null, null);
             }
         }
 
@@ -110,7 +123,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
 
             OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
-                () => WaitForCompletion(operation),
+                async () => await WaitForCompletion(operation),
                 $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
 
             Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
@@ -142,7 +155,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
 
             OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
-                () => WaitForCompletion(operation),
+                async () => await WaitForCompletion(operation),
                 $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
             Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
 
@@ -165,7 +178,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await operation.DeleteAsync();
 
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => WaitForCompletion(operation));
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await WaitForCompletion(operation));
             Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);
@@ -195,7 +208,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => WaitForCompletion(operation));
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await WaitForCompletion(operation));
             Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);
@@ -228,8 +241,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
                 RegisterForCleanup(certName);
 
-                using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-                TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+                using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+                TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 2);
 
                 while (!operation.HasCompleted)
                 {
@@ -321,8 +334,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = new CertificateOperation(Client, certName);
 
             // Need to call the real async wait method or the sync version of this test fails because it's using the instrumented Client directly.
-            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 2);
 
             await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
 
@@ -894,7 +907,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
                 Assert.IsTrue(publicKey.VerifyData(plaintext, result.Signature, keyCurveName.GetHashAlgorithmName()));
             }
-            catch (CryptographicException) when (IsExpectedP256KException(certificate, keyCurveName))
+            catch (Exception ex) when (IsExpectedP256KException(ex, keyCurveName))
             {
                 Assert.Ignore("The curve is not supported by the current platform");
             }
@@ -948,7 +961,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
                 Assert.IsTrue(result.IsValid);
             }
-            catch (CryptographicException) when (IsExpectedP256KException(certificate, keyCurveName))
+            catch (Exception ex) when (IsExpectedP256KException(ex, keyCurveName))
             {
                 Assert.Ignore("The curve is not supported by the current platform");
             }
@@ -978,9 +991,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 )
             );
 
-        private static bool IsExpectedP256KException(X509Certificate2 certificate, CertificateKeyCurveName keyCurveName) =>
-            certificate is null &&
-            RuntimeInformation.IsOSPlatform(OSPlatform.OSX) &&
+        private static bool IsExpectedP256KException(Exception ex, CertificateKeyCurveName keyCurveName) =>
+            // OpenSSL-based implementations do not support P256K.
+            // TODO: Remove this entire check when https://github.com/Azure/azure-sdk-for-net/issues/20244 is resolved.
+            (ex is CryptographicException || ex is TargetInvocationException tiex && tiex.InnerException is ArgumentException {  ParamName: "privateKey" }) &&
+            !RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
             keyCurveName == CertificateKeyCurveName.P256K;
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy

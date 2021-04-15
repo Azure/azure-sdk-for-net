@@ -42,8 +42,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
             Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
-            Assert.AreEqual("FromEnqueuedTime", options.InitialOffsetOptions.Type);
-            Assert.AreEqual("2020-09-13T12:00Z", options.InitialOffsetOptions.EnqueuedTimeUTC);
+            Assert.AreEqual("FromEnqueuedTime", options.InitialOffsetOptions.Type.ToString());
+            Assert.AreEqual("2020-09-13 12:00:00Z", options.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
             Assert.AreEqual(5, options.ClientRetryOptions.MaximumRetries);
             Assert.AreEqual(TimeSpan.FromSeconds(1), options.ClientRetryOptions.Delay);
             Assert.AreEqual(TimeSpan.FromMinutes(1), options.ClientRetryOptions.MaximumDelay);
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             EventHubOptions options = CreateOptionsFromConfig();
 
-            string format = ((IOptionsFormatter) options).Format();
+            string format = ((IOptionsFormatter)options).Format();
             JObject iObj = JObject.Parse(format);
             EventHubOptions result = iObj.ToObject<EventHubOptions>();
 
@@ -67,8 +67,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(123, result.PrefetchCount);
             Assert.AreEqual(TimeSpan.FromSeconds(31), result.PartitionOwnershipExpirationInterval);
             Assert.AreEqual(TimeSpan.FromSeconds(21), result.LoadBalancingUpdateInterval);
-            Assert.AreEqual("FromEnqueuedTime", result.InitialOffsetOptions.Type);
-            Assert.AreEqual("2020-09-13T12:00Z", result.InitialOffsetOptions.EnqueuedTimeUTC);
+            Assert.AreEqual("FromEnqueuedTime", result.InitialOffsetOptions.Type.ToString());
+            Assert.AreEqual("2020-09-13 12:00:00Z", result.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
             Assert.AreEqual(5, result.ClientRetryOptions.MaximumRetries);
             Assert.AreEqual(TimeSpan.FromSeconds(1), result.ClientRetryOptions.Delay);
             Assert.AreEqual(TimeSpan.FromMinutes(1), result.ClientRetryOptions.MaximumDelay);
@@ -88,8 +88,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
             Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
-            Assert.AreEqual("FromEnqueuedTime", options.InitialOffsetOptions.Type);
-            Assert.AreEqual("2020-09-13T12:00Z", options.InitialOffsetOptions.EnqueuedTimeUTC);
+            Assert.AreEqual("FromEnqueuedTime", options.InitialOffsetOptions.Type.ToString());
+            Assert.AreEqual("2020-09-13 12:00:00Z", options.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             EventHubOptions options = CreateOptionsFromConfigBackCompat();
 
-            string format = ((IOptionsFormatter) options).Format();
+            string format = ((IOptionsFormatter)options).Format();
             JObject iObj = JObject.Parse(format);
             EventHubOptions result = iObj.ToObject<EventHubOptions>();
 
@@ -107,8 +107,97 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(123, result.PrefetchCount);
             Assert.AreEqual(TimeSpan.FromSeconds(31), result.PartitionOwnershipExpirationInterval);
             Assert.AreEqual(TimeSpan.FromSeconds(21), result.LoadBalancingUpdateInterval);
-            Assert.AreEqual("FromEnqueuedTime", result.InitialOffsetOptions.Type);
-            Assert.AreEqual("2020-09-13T12:00Z", result.InitialOffsetOptions.EnqueuedTimeUTC);
+            Assert.AreEqual("FromEnqueuedTime", result.InitialOffsetOptions.Type.ToString());
+            Assert.AreEqual("2020-09-13 12:00:00Z", result.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
+        }
+
+        [Test]
+        [TestCase("fromstart", OffsetType.FromStart)]
+        [TestCase("FromStart", OffsetType.FromStart)]
+        [TestCase("fromend", OffsetType.FromEnd)]
+        [TestCase("FromEnd", OffsetType.FromEnd)]
+        public void CanParseInitialOffsetFromConfig(string offsetType, OffsetType typeEnum)
+        {
+            string extensionPath = "AzureWebJobs:Extensions:EventHubs";
+            var options = TestHelpers.GetConfiguredOptions<EventHubOptions>(
+                b =>
+                {
+                    b.AddEventHubs();
+                },
+                new Dictionary<string, string> { { $"{extensionPath}:InitialOffsetOptions:Type", offsetType } });
+            Assert.AreEqual(typeEnum, options.InitialOffsetOptions.Type);
+        }
+
+        [Test]
+        [TestCase("fromEnqueuedTime", "2020-09-13T12:00Z")]
+        [TestCase("fromenqueuedtime", "2020-09-13 12:00:00Z")]
+        public void CanParseInitialOffsetFromConfig_EnqueuedTime(string offsetType, string enqueuedTime)
+        {
+            string extensionPath = "AzureWebJobs:Extensions:EventHubs";
+            var options = TestHelpers.GetConfiguredOptions<EventHubOptions>(
+                b =>
+                {
+                    b.AddEventHubs();
+                },
+                new Dictionary<string, string>
+                {
+                    { $"{extensionPath}:InitialOffsetOptions:Type", offsetType },
+                    { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUtc", enqueuedTime },
+                });
+            Assert.AreEqual(OffsetType.FromEnqueuedTime, options.InitialOffsetOptions.Type);
+            Assert.AreEqual(DateTimeOffset.Parse(enqueuedTime), options.InitialOffsetOptions.EnqueuedTimeUtc);
+        }
+
+        [Test]
+        public void ParseInitialOffsetWithNoTime_ThrowsInvalidOperationException()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:EventHubs";
+            Assert.That(
+                () => TestHelpers.GetConfiguredOptions<EventHubOptions>(
+                b =>
+                {
+                    b.AddEventHubs();
+                },
+                new Dictionary<string, string>
+                {
+                    { $"{extensionPath}:InitialOffsetOptions:Type", "fromEnqueuedTime" },
+                }),
+                Throws.InvalidOperationException);
+        }
+
+        [Test]
+        public void ParseInitialOffsetWithInvalidType_ThrowsInvalidOperationException()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:EventHubs";
+            Assert.That(
+                () => TestHelpers.GetConfiguredOptions<EventHubOptions>(
+                    b =>
+                    {
+                        b.AddEventHubs();
+                    },
+                    new Dictionary<string, string>
+                    {
+                        { $"{extensionPath}:InitialOffsetOptions:Type", "fromSequence" },
+                    }),
+                Throws.InvalidOperationException);
+        }
+
+        [Test]
+        public void ParseInitialOffsetWithInvalidTime_ThrowsInvalidOperationException()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:EventHubs";
+            Assert.That(
+                () => TestHelpers.GetConfiguredOptions<EventHubOptions>(
+                    b =>
+                    {
+                        b.AddEventHubs();
+                    },
+                    new Dictionary<string, string>
+                    {
+                        { $"{extensionPath}:InitialOffsetOptions:Type", "fromEnqueuedTime" },
+                        { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUtc", "not a valid time" },
+                    }),
+                Throws.InvalidOperationException);
         }
 
         private EventHubOptions CreateOptionsFromConfig()
@@ -124,7 +213,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:LoadBalancingUpdateInterval", "00:00:21" },
                 { $"{extensionPath}:LoadBalancingStrategy", "0" },
                 { $"{extensionPath}:InitialOffsetOptions:Type", "FromEnqueuedTime" },
-                { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUTC", "2020-09-13T12:00Z" },
+                { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUTC", "2020-09-13 12:00:00Z" },
                 { $"{extensionPath}:ClientRetryOptions:MaximumRetries", "5" },
                 { $"{extensionPath}:ClientRetryOptions:Delay", "00:00:01" },
                 { $"{extensionPath}:ClientRetryOptions:MaxDelay", "00:01:00" },
@@ -153,7 +242,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:PartitionManagerOptions:LeaseDuration", "00:00:31" },
                 { $"{extensionPath}:PartitionManagerOptions:RenewInterval", "00:00:21" },
                 { $"{extensionPath}:InitialOffsetOptions:Type", "FromEnqueuedTime" },
-                { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUTC", "2020-09-13T12:00Z" },
+                { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUTC", "2020-09-13 12:00:00Z" },
             };
 
             return TestHelpers.GetConfiguredOptions<EventHubOptions>(b =>
@@ -250,6 +339,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(LogLevel.Information, logMessage.Level);
             Assert.AreSame(oce, logMessage.Exception);
             Assert.AreEqual(expectedMessage + string.Format(_template, typeof(OperationCanceledException).Name), logMessage.FormattedMessage);
+        }
+
+        [Test]
+        public void IsSingleDispatchEnabled_Disabled_ByDefault()
+        {
+            Assert.False(new EventHubOptions().IsSingleDispatchEnabled);
         }
     }
 }

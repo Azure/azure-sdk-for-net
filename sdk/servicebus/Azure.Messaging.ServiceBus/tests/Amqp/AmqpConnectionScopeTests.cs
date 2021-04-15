@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [Test]
         public void CalculateLinkAuthorizationRefreshIntervalRespectsTheRefreshBuffer()
         {
-            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new MockConnectionMockScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var expireTime = currentTime.AddHours(1);
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [Test]
         public void CalculateLinkAuthorizationRefreshIntervalRespectsTheMinimumDuration()
         {
-            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new MockConnectionMockScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var minimumRefresh = GetMinimumAuthorizationRefresh();
@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         [Test]
         public void CalculateLinkAuthorizationRefreshIntervalRespectsTheMaximumDuration()
         {
-            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new MockConnectionMockScope(new Uri("sb://mine.hubs.com"), credential.Object, ServiceBusTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var refreshBuffer = GetAuthorizationRefreshBuffer();

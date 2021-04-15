@@ -387,5 +387,25 @@ namespace Azure.Storage.Sas
                 Version = SasQueryParameters.DefaultSasVersion;
             }
         }
+
+        internal static ShareSasBuilder DeepCopy(ShareSasBuilder originalShareSasBuilder)
+            => new ShareSasBuilder
+            {
+                Version = originalShareSasBuilder.Version,
+                Protocol = originalShareSasBuilder.Protocol,
+                StartsOn = originalShareSasBuilder.StartsOn,
+                ExpiresOn = originalShareSasBuilder.ExpiresOn,
+                Permissions = originalShareSasBuilder.Permissions,
+                IPRange = originalShareSasBuilder.IPRange,
+                Identifier = originalShareSasBuilder.Identifier,
+                ShareName = originalShareSasBuilder.ShareName,
+                FilePath = originalShareSasBuilder.FilePath,
+                Resource = originalShareSasBuilder.Resource,
+                CacheControl = originalShareSasBuilder.CacheControl,
+                ContentDisposition = originalShareSasBuilder.ContentDisposition,
+                ContentEncoding = originalShareSasBuilder.ContentEncoding,
+                ContentLanguage = originalShareSasBuilder.ContentLanguage,
+                ContentType = originalShareSasBuilder.ContentType
+            };
     }
 }

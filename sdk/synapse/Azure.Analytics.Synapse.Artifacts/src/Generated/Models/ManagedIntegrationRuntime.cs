@@ -23,11 +23,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> . </param>
         /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
+        /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
         /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
-        internal ManagedIntegrationRuntime(IntegrationRuntimeType type, string description, IDictionary<string, object> additionalProperties, IntegrationRuntimeState? state, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties) : base(type, description, additionalProperties)
+        internal ManagedIntegrationRuntime(IntegrationRuntimeType type, string description, IDictionary<string, object> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties) : base(type, description, additionalProperties)
         {
             State = state;
+            ManagedVirtualNetwork = managedVirtualNetwork;
             ComputeProperties = computeProperties;
             SsisProperties = ssisProperties;
             Type = type;
@@ -35,6 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Integration runtime state, only valid for managed dedicated integration runtime. </summary>
         public IntegrationRuntimeState? State { get; }
+        /// <summary> Managed Virtual Network reference. </summary>
+        public ManagedVirtualNetworkReference ManagedVirtualNetwork { get; set; }
         /// <summary> The compute resource for managed integration runtime. </summary>
         public IntegrationRuntimeComputeProperties ComputeProperties { get; set; }
         /// <summary> SSIS properties for managed integration runtime. </summary>

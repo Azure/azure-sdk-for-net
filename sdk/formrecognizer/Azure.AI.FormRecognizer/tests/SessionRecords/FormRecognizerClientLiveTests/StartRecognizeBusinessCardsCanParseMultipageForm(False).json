@@ -1,18 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyze?includeTextDetails=true",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyze?includeTextDetails=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "22",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-0c640c81df279f49a67cc826c14f0b44-a0015e7d9c866f46-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "traceparent": "00-d42ee63dc8498e42839624d989859813-65e12bc9064aa644-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "677a667fca0fd0cdc37bbaad1c2cc25f",
         "x-ms-return-client-request-id": "true"
       },
@@ -21,194 +18,149 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "c3e4c5ec-b920-47a5-838c-dc71c41c8eec",
+        "apim-request-id": "8daed94e-2b73-4983-92f8-2c57eadda05c",
         "Content-Length": "0",
-        "Date": "Tue, 17 Nov 2020 00:32:11 GMT",
-        "Operation-Location": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/c3e4c5ec-b920-47a5-838c-dc71c41c8eec",
+        "Date": "Wed, 31 Mar 2021 17:36:48 GMT",
+        "Operation-Location": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/8daed94e-2b73-4983-92f8-2c57eadda05c",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "421"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "221"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/c3e4c5ec-b920-47a5-838c-dc71c41c8eec",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/8daed94e-2b73-4983-92f8-2c57eadda05c",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "bee36640b439020ceef489482521d059",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "1d763770-3f40-4ea6-82d6-cfeea74f80dc",
+        "apim-request-id": "bd2ce62b-245c-4dd9-943c-458892d77636",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 17 Nov 2020 00:32:11 GMT",
+        "Date": "Wed, 31 Mar 2021 17:36:48 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "10"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "12"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-11-17T00:32:11Z",
-        "lastUpdatedDateTime": "2020-11-17T00:32:11Z"
+        "createdDateTime": "2021-03-31T17:36:48Z",
+        "lastUpdatedDateTime": "2021-03-31T17:36:48Z"
       }
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/c3e4c5ec-b920-47a5-838c-dc71c41c8eec",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/8daed94e-2b73-4983-92f8-2c57eadda05c",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "43aa30e9e6c75bf5b0ea7ec4a6fd2a9a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "18b1888b-8a74-41cb-9758-8b98199776f1",
+        "apim-request-id": "1331ecb7-aad1-4dcd-9ec2-274201fe91d7",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 17 Nov 2020 00:32:12 GMT",
+        "Date": "Wed, 31 Mar 2021 17:36:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "10"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "18"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-11-17T00:32:11Z",
-        "lastUpdatedDateTime": "2020-11-17T00:32:11Z"
+        "createdDateTime": "2021-03-31T17:36:48Z",
+        "lastUpdatedDateTime": "2021-03-31T17:36:48Z"
       }
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/c3e4c5ec-b920-47a5-838c-dc71c41c8eec",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/8daed94e-2b73-4983-92f8-2c57eadda05c",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "80fd21bc90a5ca315977791a4085aaa2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "272cfac7-93d3-4f4b-9b1b-ca1aac1cd11c",
+        "apim-request-id": "bba5629e-dc4d-4b77-a767-3cc438a3cf79",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 17 Nov 2020 00:32:13 GMT",
+        "Date": "Wed, 31 Mar 2021 17:36:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "12"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "11"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-11-17T00:32:11Z",
-        "lastUpdatedDateTime": "2020-11-17T00:32:11Z"
+        "createdDateTime": "2021-03-31T17:36:48Z",
+        "lastUpdatedDateTime": "2021-03-31T17:36:48Z"
       }
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/c3e4c5ec-b920-47a5-838c-dc71c41c8eec",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/8daed94e-2b73-4983-92f8-2c57eadda05c",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "ebc461ab7f825a9770870d4e35485cf0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0e37703f-557f-401f-963c-73139447faa8",
+        "apim-request-id": "fafc6b15-183b-47eb-a5ec-e1866187a58b",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 17 Nov 2020 00:32:14 GMT",
+        "Date": "Wed, 31 Mar 2021 17:36:51 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "13"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "12"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-11-17T00:32:11Z",
-        "lastUpdatedDateTime": "2020-11-17T00:32:11Z"
+        "createdDateTime": "2021-03-31T17:36:48Z",
+        "lastUpdatedDateTime": "2021-03-31T17:36:48Z"
       }
     },
     {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/c3e4c5ec-b920-47a5-838c-dc71c41c8eec",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/8daed94e-2b73-4983-92f8-2c57eadda05c",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "038befc9502359b4ffe0e9506cda1b2b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "62135ea7-0500-4a77-8350-a0eb192bdd2b",
-        "Content-Length": "106",
+        "apim-request-id": "e6a0885b-7ad8-43e6-8c10-ee4359ac9691",
+        "Content-Length": "13799",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 17 Nov 2020 00:32:16 GMT",
+        "Date": "Wed, 31 Mar 2021 17:36:52 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "10"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2020-11-17T00:32:11Z",
-        "lastUpdatedDateTime": "2020-11-17T00:32:11Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-centraluseuap.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyzeResults/c3e4c5ec-b920-47a5-838c-dc71c41c8eec",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201116.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "4418dc3f3f393c1889a30f1d82e29411",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "a1961ae6-f3f7-462d-a751-b491c3ff73a5",
-        "Content-Length": "13759",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 17 Nov 2020 00:32:17 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "19"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "21"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2020-11-17T00:32:11Z",
-        "lastUpdatedDateTime": "2020-11-17T00:32:16Z",
+        "createdDateTime": "2021-03-31T17:36:48Z",
+        "lastUpdatedDateTime": "2021-03-31T17:36:52Z",
         "analyzeResult": {
           "version": "2.1.0",
           "readResults": [
@@ -237,20 +189,20 @@
                       "boundingBox": [
                         1.7376,
                         3.7553,
-                        2.8997,
-                        3.8882,
-                        2.8444,
-                        4.2205,
+                        2.778,
+                        3.8661,
+                        2.7227,
+                        4.1984,
                         1.6934,
                         4.0876
                       ],
-                      "confidence": 0.986
+                      "confidence": 0.994
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 1
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -272,20 +224,20 @@
                       "boundingBox": [
                         1.7266,
                         4.1541,
-                        3.3314,
-                        4.3424,
-                        3.2871,
-                        4.6858,
+                        3.1875,
+                        4.3313,
+                        3.1432,
+                        4.6747,
                         1.6823,
                         4.4753
                       ],
-                      "confidence": 0.986
+                      "confidence": 0.994
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 0.999
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -305,36 +257,36 @@
                     {
                       "text": "Software",
                       "boundingBox": [
-                        1.5163,
+                        1.5273,
                         5.2508,
-                        2.5345,
-                        5.3837,
                         2.5124,
+                        5.3726,
+                        2.4902,
                         5.6163,
-                        1.4941,
+                        1.5052,
                         5.4834
                       ],
-                      "confidence": 0.984
+                      "confidence": 0.995
                     },
                     {
                       "text": "Engineer",
                       "boundingBox": [
-                        2.5788,
+                        2.5677,
                         5.3837,
                         3.6081,
-                        5.5388,
-                        3.5859,
+                        5.5277,
+                        3.5749,
                         5.7492,
-                        2.5566,
-                        5.6274
+                        2.5345,
+                        5.6163
                       ],
-                      "confidence": 0.984
+                      "confidence": 0.995
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 0.999
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -358,12 +310,12 @@
                         5.5166,
                         1.7487,
                         5.5498,
-                        1.7376,
+                        1.7266,
                         5.7825,
-                        1.472,
+                        1.4609,
                         5.7492
                       ],
-                      "confidence": 0.987
+                      "confidence": 0.962
                     },
                     {
                       "text": "(425)",
@@ -372,12 +324,12 @@
                         5.5498,
                         2.4017,
                         5.6274,
-                        2.3906,
+                        2.3796,
                         5.8711,
-                        1.7819,
+                        1.7708,
                         5.7936
                       ],
-                      "confidence": 0.97
+                      "confidence": 0.996
                     },
                     {
                       "text": "779-3479",
@@ -388,30 +340,30 @@
                         5.7603,
                         3.4089,
                         6.0151,
-                        2.4349,
+                        2.4238,
                         5.8822
                       ],
-                      "confidence": 0.982
+                      "confidence": 0.995
                     },
                     {
                       "text": "johnsinger@contoso.com",
                       "boundingBox": [
                         3.4753,
                         5.7714,
-                        6.1315,
-                        6.148,
-                        6.1094,
+                        6.043,
+                        6.1259,
+                        6.0319,
                         6.3364,
                         3.4531,
                         6.0151
                       ],
-                      "confidence": 0.951
+                      "confidence": 0.994
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 0.999
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -431,22 +383,22 @@
                     {
                       "text": "https://www.contoso.com",
                       "boundingBox": [
-                        1.4388,
+                        1.4499,
                         5.7936,
-                        4.1283,
-                        6.1702,
-                        4.0951,
-                        6.3585,
-                        1.4167,
+                        4.0508,
+                        6.1591,
+                        4.0286,
+                        6.3474,
+                        1.4277,
                         6.0262
                       ],
-                      "confidence": 0.928
+                      "confidence": 0.949
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 0.999
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 }
@@ -477,48 +429,48 @@
                       "boundingBox": [
                         1.6602,
                         2.8691,
-                        2.0586,
-                        2.7694,
-                        2.1029,
-                        2.9688,
+                        2.0254,
+                        2.7805,
+                        2.0697,
+                        2.9799,
                         1.7044,
                         3.0574
                       ],
-                      "confidence": 0.985
+                      "confidence": 0.994
                     },
                     {
                       "text": "Avery",
                       "boundingBox": [
-                        2.0918,
-                        2.7583,
-                        2.8665,
-                        2.5811,
-                        2.9108,
-                        2.7805,
-                        2.1471,
-                        2.9577
+                        2.0697,
+                        2.7694,
+                        2.7891,
+                        2.6032,
+                        2.8444,
+                        2.8026,
+                        2.1139,
+                        2.9688
                       ],
-                      "confidence": 0.978
+                      "confidence": 0.996
                     },
                     {
                       "text": "Smith",
                       "boundingBox": [
-                        2.8997,
-                        2.57,
-                        3.597,
-                        2.4038,
-                        3.6413,
-                        2.6032,
-                        2.944,
-                        2.7694
+                        2.8776,
+                        2.5811,
+                        3.5306,
+                        2.426,
+                        3.5859,
+                        2.6254,
+                        2.9219,
+                        2.7805
                       ],
-                      "confidence": 0.986
+                      "confidence": 0.996
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 1
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -538,36 +490,36 @@
                     {
                       "text": "Senior",
                       "boundingBox": [
-                        1.7044,
+                        1.7155,
                         3.1017,
-                        2.2357,
-                        2.9799,
-                        2.2689,
-                        3.1239,
-                        1.7487,
+                        2.2135,
+                        2.9909,
+                        2.2467,
+                        3.1349,
+                        1.7598,
                         3.2457
                       ],
-                      "confidence": 0.985
+                      "confidence": 0.996
                     },
                     {
                       "text": "Researcher",
                       "boundingBox": [
-                        2.2578,
+                        2.2357,
                         2.9799,
                         3.11,
                         2.7694,
                         3.1322,
                         2.9134,
-                        2.3021,
+                        2.2799,
                         3.1239
                       ],
-                      "confidence": 0.98
+                      "confidence": 0.994
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 1
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -589,62 +541,62 @@
                       "boundingBox": [
                         1.7376,
                         3.2568,
+                        2.2025,
+                        3.1571,
                         2.2357,
-                        3.146,
-                        2.2689,
-                        3.3011,
+                        3.3122,
                         1.7708,
                         3.423
                       ],
-                      "confidence": 0.984
+                      "confidence": 0.995
                     },
                     {
                       "text": "\u0026",
                       "boundingBox": [
-                        2.2689,
-                        3.1349,
-                        2.4017,
-                        3.1017,
-                        2.4349,
-                        3.2568,
-                        2.3021,
-                        3.29
+                        2.2467,
+                        3.146,
+                        2.3464,
+                        3.1239,
+                        2.3796,
+                        3.279,
+                        2.291,
+                        3.3011
                       ],
-                      "confidence": 0.987
+                      "confidence": 0.996
                     },
                     {
                       "text": "Al",
                       "boundingBox": [
-                        2.4349,
+                        2.4238,
                         3.1017,
-                        2.6009,
+                        2.5898,
                         3.0574,
-                        2.6452,
+                        2.623,
                         3.2125,
                         2.4681,
                         3.2568
                       ],
-                      "confidence": 0.744
+                      "confidence": 0.859
                     },
                     {
                       "text": "Department",
                       "boundingBox": [
-                        2.6341,
-                        3.0463,
+                        2.623,
+                        3.0574,
                         3.5638,
                         2.8248,
                         3.597,
                         2.9577,
-                        2.6673,
+                        2.6563,
                         3.2014
                       ],
-                      "confidence": 0.98
+                      "confidence": 0.994
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 1
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -666,20 +618,20 @@
                       "boundingBox": [
                         4.3828,
                         2.4924,
-                        5.722,
+                        5.6888,
                         2.1269,
-                        5.7552,
-                        2.2266,
+                        5.722,
+                        2.2377,
                         4.416,
                         2.6032
                       ],
-                      "confidence": 0.95
+                      "confidence": 0.987
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 1
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -699,7 +651,7 @@
                     {
                       "text": "https://www.contoso.com/",
                       "boundingBox": [
-                        4.4049,
+                        4.416,
                         2.6032,
                         5.8105,
                         2.2155,
@@ -708,13 +660,13 @@
                         4.4492,
                         2.7362
                       ],
-                      "confidence": 0.885
+                      "confidence": 0.933
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 0.999
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -739,11 +691,11 @@
                         4.8919,
                         2.6808,
                         4.9251,
-                        2.7915,
+                        2.8026,
                         4.6484,
                         2.8802
                       ],
-                      "confidence": 0.983
+                      "confidence": 0.994
                     },
                     {
                       "text": "\u002B44",
@@ -757,55 +709,55 @@
                         4.9473,
                         2.7915
                       ],
-                      "confidence": 0.983
+                      "confidence": 0.997
                     },
                     {
                       "text": "(0)",
                       "boundingBox": [
-                        5.1243,
+                        5.1354,
                         2.6143,
                         5.2904,
                         2.5589,
-                        5.3236,
+                        5.3125,
                         2.6808,
                         5.1576,
                         2.7251
                       ],
-                      "confidence": 0.983
+                      "confidence": 0.986
                     },
                     {
                       "text": "7911",
                       "boundingBox": [
-                        5.3125,
-                        2.5478,
-                        5.5671,
+                        5.3014,
+                        2.5589,
+                        5.556,
                         2.4814,
                         5.5892,
                         2.6032,
-                        5.3457,
+                        5.3346,
                         2.6697
                       ],
-                      "confidence": 0.985
+                      "confidence": 0.994
                     },
                     {
                       "text": "123456",
                       "boundingBox": [
-                        5.5892,
+                        5.5781,
                         2.4703,
+                        5.9434,
+                        2.3595,
                         5.9766,
-                        2.3484,
-                        5.9987,
-                        2.4703,
-                        5.6113,
+                        2.4814,
+                        5.6003,
                         2.5921
                       ],
-                      "confidence": 0.96
+                      "confidence": 0.996
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 0.998
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -827,14 +779,14 @@
                       "boundingBox": [
                         4.7702,
                         2.858,
-                        4.9473,
+                        4.9362,
                         2.8137,
                         4.9805,
                         2.9355,
                         4.8034,
                         2.9799
                       ],
-                      "confidence": 0.981
+                      "confidence": 0.994
                     },
                     {
                       "text": "\u002B44",
@@ -848,7 +800,7 @@
                         5.0026,
                         2.9245
                       ],
-                      "confidence": 0.987
+                      "confidence": 0.998
                     },
                     {
                       "text": "(0)",
@@ -862,7 +814,7 @@
                         5.224,
                         2.858
                       ],
-                      "confidence": 0.971
+                      "confidence": 0.996
                     },
                     {
                       "text": "20",
@@ -871,7 +823,7 @@
                         2.6808,
                         5.4896,
                         2.6475,
-                        5.5339,
+                        5.5228,
                         2.7694,
                         5.401,
                         2.8026
@@ -883,14 +835,14 @@
                       "boundingBox": [
                         5.5117,
                         2.6365,
-                        5.7663,
+                        5.7552,
                         2.5589,
                         5.7995,
                         2.6808,
                         5.556,
                         2.7583
                       ],
-                      "confidence": 0.983
+                      "confidence": 0.989
                     },
                     {
                       "text": "5432",
@@ -904,13 +856,13 @@
                         5.8216,
                         2.6697
                       ],
-                      "confidence": 0.984
+                      "confidence": 0.994
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 0.998
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -934,40 +886,40 @@
                         3.002,
                         5.0358,
                         2.9355,
-                        5.069,
+                        5.0801,
                         3.0574,
                         4.8587,
                         3.1128
                       ],
-                      "confidence": 0.984
+                      "confidence": 0.994
                     },
                     {
                       "text": "\u002B44",
                       "boundingBox": [
                         5.0579,
                         2.9245,
-                        5.2461,
-                        2.8691,
+                        5.2572,
+                        2.858,
                         5.2904,
                         2.9909,
-                        5.0911,
+                        5.1022,
                         3.0463
                       ],
-                      "confidence": 0.981
+                      "confidence": 0.998
                     },
                     {
                       "text": "(0)",
                       "boundingBox": [
-                        5.2682,
+                        5.2793,
                         2.858,
                         5.4342,
                         2.8026,
-                        5.4785,
+                        5.4674,
                         2.9355,
                         5.3125,
                         2.9799
                       ],
-                      "confidence": 0.983
+                      "confidence": 0.994
                     },
                     {
                       "text": "20",
@@ -976,12 +928,12 @@
                         2.8026,
                         5.5892,
                         2.7583,
-                        5.6335,
+                        5.6224,
                         2.8912,
                         5.5007,
                         2.9245
                       ],
-                      "confidence": 0.383
+                      "confidence": 0.997
                     },
                     {
                       "text": "6789",
@@ -995,27 +947,27 @@
                         5.6556,
                         2.8802
                       ],
-                      "confidence": 0.977
+                      "confidence": 0.99
                     },
                     {
                       "text": "2345",
                       "boundingBox": [
                         5.888,
                         2.6586,
-                        6.1647,
+                        6.1426,
                         2.5811,
-                        6.1979,
+                        6.1868,
                         2.7029,
                         5.9323,
                         2.7915
                       ],
-                      "confidence": 0.985
+                      "confidence": 0.994
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 0.997
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -1037,20 +989,20 @@
                       "boundingBox": [
                         2.8333,
                         4.0655,
-                        4.7148,
-                        3.4673,
-                        4.8366,
-                        3.8328,
+                        4.6374,
+                        3.4894,
+                        4.7591,
+                        3.855,
                         2.9661,
                         4.4199
                       ],
-                      "confidence": 0.984
+                      "confidence": 0.996
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 1
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -1072,28 +1024,28 @@
                       "boundingBox": [
                         2.9661,
                         4.431,
-                        3.0658,
+                        3.0547,
                         4.4089,
-                        3.1211,
+                        3.11,
                         4.575,
-                        3.0326,
+                        3.0215,
                         4.6083
                       ],
-                      "confidence": 0.987
+                      "confidence": 0.997
                     },
                     {
                       "text": "Kingdom",
                       "boundingBox": [
-                        3.099,
+                        3.0879,
                         4.3978,
-                        3.7741,
-                        4.1873,
-                        3.8184,
-                        4.3424,
-                        3.1543,
+                        3.7298,
+                        4.1984,
+                        3.7852,
+                        4.3535,
+                        3.1432,
                         4.5639
                       ],
-                      "confidence": 0.984
+                      "confidence": 0.996
                     },
                     {
                       "text": "Street",
@@ -1107,13 +1059,13 @@
                         3.8516,
                         4.3313
                       ],
-                      "confidence": 0.985
+                      "confidence": 0.996
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 1
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 },
@@ -1135,62 +1087,62 @@
                       "boundingBox": [
                         3.0326,
                         4.6415,
-                        3.9733,
+                        3.9622,
                         4.3202,
-                        4.0286,
+                        4.0176,
                         4.4975,
                         3.0879,
                         4.8187
                       ],
-                      "confidence": 0.976
+                      "confidence": 0.994
                     },
                     {
                       "text": "London,",
                       "boundingBox": [
-                        4.0065,
+                        3.9954,
                         4.3092,
-                        4.571,
+                        4.582,
                         4.1098,
-                        4.6263,
+                        4.6374,
                         4.2759,
-                        4.0618,
+                        4.0508,
                         4.4864
                       ],
-                      "confidence": 0.983
+                      "confidence": 0.995
                     },
                     {
                       "text": "W2",
                       "boundingBox": [
                         4.6152,
                         4.0987,
-                        4.8366,
+                        4.8477,
                         4.0211,
-                        4.8809,
+                        4.8919,
                         4.1762,
-                        4.6595,
+                        4.6706,
                         4.2649
                       ],
-                      "confidence": 0.983
+                      "confidence": 0.996
                     },
                     {
                       "text": "6BD",
                       "boundingBox": [
-                        4.8698,
+                        4.8809,
                         4.0101,
-                        5.1576,
-                        3.8993,
-                        5.2129,
-                        4.0544,
+                        5.1465,
+                        3.9104,
+                        5.1908,
+                        4.0655,
                         4.9251,
                         4.1652
                       ],
-                      "confidence": 0.981
+                      "confidence": 0.996
                     }
                   ],
                   "appearance": {
                     "style": {
-                      "name": "print",
-                      "confidence": 1
+                      "name": "other",
+                      "confidence": 0.878
                     }
                   }
                 }
@@ -1218,10 +1170,10 @@
                           "boundingBox": [
                             1.7376,
                             3.7553,
-                            2.8997,
-                            3.8882,
-                            2.8444,
-                            4.2205,
+                            2.778,
+                            3.8661,
+                            2.7227,
+                            4.1984,
                             1.6934,
                             4.0876
                           ],
@@ -1237,10 +1189,10 @@
                           "boundingBox": [
                             1.7266,
                             4.1541,
-                            3.3314,
-                            4.3424,
-                            3.2871,
-                            4.6858,
+                            3.1875,
+                            4.3313,
+                            3.1432,
+                            4.6747,
                             1.6823,
                             4.4753
                           ],
@@ -1252,20 +1204,45 @@
                       },
                       "text": "JOHN SINGER",
                       "boundingBox": [
-                        1.7361,
-                        3.7436,
-                        3.3804,
-                        3.9479,
-                        3.2887,
-                        4.686,
-                        1.6444,
-                        4.4817
+                        1.7392,
+                        3.7322,
+                        3.2398,
+                        3.9256,
+                        3.1432,
+                        4.6747,
+                        1.6427,
+                        4.4813
                       ],
                       "page": 1,
                       "confidence": 0.995,
                       "elements": [
                         "#/readResults/0/lines/0/words/0",
                         "#/readResults/0/lines/1/words/0"
+                      ]
+                    }
+                  ]
+                },
+                "Emails": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "johnsinger@contoso.com",
+                      "text": "johnsinger@contoso.com",
+                      "boundingBox": [
+                        3.4753,
+                        5.7714,
+                        6.043,
+                        6.1259,
+                        6.0319,
+                        6.3364,
+                        3.4531,
+                        6.0151
+                      ],
+                      "page": 1,
+                      "confidence": 0.995,
+                      "elements": [
+                        "#/readResults/0/lines/3/words/3"
                       ]
                     }
                   ]
@@ -1278,14 +1255,14 @@
                       "valueString": "Software Engineer",
                       "text": "Software Engineer",
                       "boundingBox": [
-                        1.5176,
-                        5.241,
-                        3.6163,
-                        5.5233,
-                        3.5837,
-                        5.7656,
-                        1.485,
-                        5.4833
+                        1.5285,
+                        5.2417,
+                        3.6093,
+                        5.5186,
+                        3.5771,
+                        5.7609,
+                        1.4963,
+                        5.484
                       ],
                       "page": 1,
                       "confidence": 0.995,
@@ -1323,31 +1300,6 @@
                     }
                   ]
                 },
-                "Emails": {
-                  "type": "array",
-                  "valueArray": [
-                    {
-                      "type": "string",
-                      "valueString": "johnsinger@contoso.com",
-                      "text": "johnsinger@contoso.com",
-                      "boundingBox": [
-                        3.4753,
-                        5.7714,
-                        6.1315,
-                        6.148,
-                        6.1094,
-                        6.3364,
-                        3.4531,
-                        6.0151
-                      ],
-                      "page": 1,
-                      "confidence": 0.995,
-                      "elements": [
-                        "#/readResults/0/lines/3/words/3"
-                      ]
-                    }
-                  ]
-                },
                 "Websites": {
                   "type": "array",
                   "valueArray": [
@@ -1356,13 +1308,13 @@
                       "valueString": "https://www.contoso.com",
                       "text": "https://www.contoso.com",
                       "boundingBox": [
-                        1.4388,
+                        1.4499,
                         5.7936,
-                        4.1283,
-                        6.1702,
-                        4.0951,
-                        6.3585,
-                        1.4167,
+                        4.0508,
+                        6.1591,
+                        4.0286,
+                        6.3474,
+                        1.4277,
                         6.0262
                       ],
                       "page": 1,
@@ -1382,6 +1334,62 @@
                 2
               ],
               "fields": {
+                "Addresses": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "2 Kingdom Street Paddington, London, W2 6BD",
+                      "text": "2 Kingdom Street Paddington, London, W2 6BD",
+                      "boundingBox": [
+                        2.9539,
+                        4.4353,
+                        5.0714,
+                        3.6954,
+                        5.2067,
+                        4.0826,
+                        3.0892,
+                        4.8224
+                      ],
+                      "page": 2,
+                      "confidence": 0.98,
+                      "elements": [
+                        "#/readResults/1/lines/9/words/0",
+                        "#/readResults/1/lines/9/words/1",
+                        "#/readResults/1/lines/9/words/2",
+                        "#/readResults/1/lines/10/words/0",
+                        "#/readResults/1/lines/10/words/1",
+                        "#/readResults/1/lines/10/words/2",
+                        "#/readResults/1/lines/10/words/3"
+                      ]
+                    }
+                  ]
+                },
+                "CompanyNames": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "Contoso",
+                      "text": "Contoso",
+                      "boundingBox": [
+                        2.8333,
+                        4.0655,
+                        4.6374,
+                        3.4894,
+                        4.7591,
+                        3.855,
+                        2.9661,
+                        4.4199
+                      ],
+                      "page": 2,
+                      "confidence": 0.168,
+                      "elements": [
+                        "#/readResults/1/lines/8/words/0"
+                      ]
+                    }
+                  ]
+                },
                 "ContactNames": {
                   "type": "array",
                   "valueArray": [
@@ -1393,14 +1401,14 @@
                           "valueString": "Avery",
                           "text": "Avery",
                           "boundingBox": [
-                            2.0918,
-                            2.7583,
-                            2.8665,
-                            2.5811,
-                            2.9108,
-                            2.7805,
-                            2.1471,
-                            2.9577
+                            2.0697,
+                            2.7694,
+                            2.7891,
+                            2.6032,
+                            2.8444,
+                            2.8026,
+                            2.1139,
+                            2.9688
                           ],
                           "page": 2,
                           "elements": [
@@ -1412,14 +1420,14 @@
                           "valueString": "Smith",
                           "text": "Smith",
                           "boundingBox": [
-                            2.8997,
-                            2.57,
-                            3.597,
-                            2.4038,
-                            3.6413,
-                            2.6032,
-                            2.944,
-                            2.7694
+                            2.8776,
+                            2.5811,
+                            3.5306,
+                            2.426,
+                            3.5859,
+                            2.6254,
+                            2.9219,
+                            2.7805
                           ],
                           "page": 2,
                           "elements": [
@@ -1429,47 +1437,21 @@
                       },
                       "text": "Dr. Avery Smith",
                       "boundingBox": [
-                        1.6579,
-                        2.8608,
-                        3.5967,
-                        2.4027,
-                        3.645,
-                        2.607,
-                        1.7062,
-                        3.0651
+                        1.6571,
+                        2.8555,
+                        3.5397,
+                        2.4239,
+                        3.5875,
+                        2.6322,
+                        1.7048,
+                        3.0639
                       ],
                       "page": 2,
-                      "confidence": 0.98,
+                      "confidence": 0.979,
                       "elements": [
                         "#/readResults/1/lines/0/words/0",
                         "#/readResults/1/lines/0/words/1",
                         "#/readResults/1/lines/0/words/2"
-                      ]
-                    }
-                  ]
-                },
-                "JobTitles": {
-                  "type": "array",
-                  "valueArray": [
-                    {
-                      "type": "string",
-                      "valueString": "Senior Researcher",
-                      "text": "Senior Researcher",
-                      "boundingBox": [
-                        1.7029,
-                        3.0954,
-                        3.11,
-                        2.7694,
-                        3.1468,
-                        2.9282,
-                        1.7397,
-                        3.2542
-                      ],
-                      "page": 2,
-                      "confidence": 0.99,
-                      "elements": [
-                        "#/readResults/1/lines/1/words/0",
-                        "#/readResults/1/lines/1/words/1"
                       ]
                     }
                   ]
@@ -1482,17 +1464,17 @@
                       "valueString": "Cloud \u0026 Al Department",
                       "text": "Cloud \u0026 Al Department",
                       "boundingBox": [
-                        1.7297,
-                        3.2588,
-                        3.558,
-                        2.8017,
-                        3.601,
-                        2.9736,
-                        1.7727,
-                        3.4306
+                        1.7313,
+                        3.2549,
+                        3.5657,
+                        2.8244,
+                        3.6052,
+                        2.9926,
+                        1.7708,
+                        3.4232
                       ],
                       "page": 2,
-                      "confidence": 0.988,
+                      "confidence": 0.989,
                       "elements": [
                         "#/readResults/1/lines/2/words/0",
                         "#/readResults/1/lines/2/words/1",
@@ -1512,10 +1494,10 @@
                       "boundingBox": [
                         4.3828,
                         2.4924,
-                        5.722,
+                        5.6888,
                         2.1269,
-                        5.7552,
-                        2.2266,
+                        5.722,
+                        2.2377,
                         4.416,
                         2.6032
                       ],
@@ -1523,6 +1505,87 @@
                       "confidence": 0.99,
                       "elements": [
                         "#/readResults/1/lines/3/words/0"
+                      ]
+                    }
+                  ]
+                },
+                "Faxes": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "phoneNumber",
+                      "text": "\u002B44 (0) 20 6789 2345",
+                      "boundingBox": [
+                        5.0572,
+                        2.9224,
+                        6.1447,
+                        2.5721,
+                        6.1887,
+                        2.7089,
+                        5.1013,
+                        3.0592
+                      ],
+                      "page": 2,
+                      "confidence": 0.99,
+                      "elements": [
+                        "#/readResults/1/lines/7/words/1",
+                        "#/readResults/1/lines/7/words/2",
+                        "#/readResults/1/lines/7/words/3",
+                        "#/readResults/1/lines/7/words/4",
+                        "#/readResults/1/lines/7/words/5"
+                      ]
+                    }
+                  ]
+                },
+                "JobTitles": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "Senior Researcher",
+                      "text": "Senior Researcher",
+                      "boundingBox": [
+                        1.7115,
+                        3.0841,
+                        3.11,
+                        2.7694,
+                        3.1469,
+                        2.9336,
+                        1.7485,
+                        3.2482
+                      ],
+                      "page": 2,
+                      "confidence": 0.99,
+                      "elements": [
+                        "#/readResults/1/lines/1/words/0",
+                        "#/readResults/1/lines/1/words/1"
+                      ]
+                    }
+                  ]
+                },
+                "MobilePhones": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "phoneNumber",
+                      "text": "\u002B44 (0) 7911 123456",
+                      "boundingBox": [
+                        4.9103,
+                        2.6681,
+                        5.9434,
+                        2.3595,
+                        5.9812,
+                        2.4861,
+                        4.9481,
+                        2.7947
+                      ],
+                      "page": 2,
+                      "confidence": 0.99,
+                      "elements": [
+                        "#/readResults/1/lines/5/words/1",
+                        "#/readResults/1/lines/5/words/2",
+                        "#/readResults/1/lines/5/words/3",
+                        "#/readResults/1/lines/5/words/4"
                       ]
                     }
                   ]
@@ -1535,7 +1598,7 @@
                       "valueString": "https://www.contoso.com/",
                       "text": "https://www.contoso.com/",
                       "boundingBox": [
-                        4.4049,
+                        4.416,
                         2.6032,
                         5.8105,
                         2.2155,
@@ -1552,34 +1615,7 @@
                     }
                   ]
                 },
-                "MobilePhones": {
-                  "type": "array",
-                  "valueArray": [
-                    {
-                      "type": "phoneNumber",
-                      "text": "\u002B44 (0) 7911 123456",
-                      "boundingBox": [
-                        4.9104,
-                        2.6685,
-                        5.9766,
-                        2.3484,
-                        6.0147,
-                        2.4754,
-                        4.9485,
-                        2.7955
-                      ],
-                      "page": 2,
-                      "confidence": 0.99,
-                      "elements": [
-                        "#/readResults/1/lines/5/words/1",
-                        "#/readResults/1/lines/5/words/2",
-                        "#/readResults/1/lines/5/words/3",
-                        "#/readResults/1/lines/5/words/4"
-                      ]
-                    }
-                  ]
-                },
-                "OtherPhones": {
+                "WorkPhones": {
                   "type": "array",
                   "valueArray": [
                     {
@@ -1596,97 +1632,13 @@
                         2.926
                       ],
                       "page": 2,
-                      "confidence": 0.99,
+                      "confidence": 0.989,
                       "elements": [
                         "#/readResults/1/lines/6/words/1",
                         "#/readResults/1/lines/6/words/2",
                         "#/readResults/1/lines/6/words/3",
                         "#/readResults/1/lines/6/words/4",
                         "#/readResults/1/lines/6/words/5"
-                      ]
-                    }
-                  ]
-                },
-                "Faxes": {
-                  "type": "array",
-                  "valueArray": [
-                    {
-                      "type": "phoneNumber",
-                      "text": "\u002B44 (0) 20 6789 2345",
-                      "boundingBox": [
-                        5.0503,
-                        2.9104,
-                        6.1631,
-                        2.5759,
-                        6.2062,
-                        2.7191,
-                        5.0933,
-                        3.0536
-                      ],
-                      "page": 2,
-                      "confidence": 0.99,
-                      "elements": [
-                        "#/readResults/1/lines/7/words/1",
-                        "#/readResults/1/lines/7/words/2",
-                        "#/readResults/1/lines/7/words/3",
-                        "#/readResults/1/lines/7/words/4",
-                        "#/readResults/1/lines/7/words/5"
-                      ]
-                    }
-                  ]
-                },
-                "CompanyNames": {
-                  "type": "array",
-                  "valueArray": [
-                    {
-                      "type": "string",
-                      "valueString": "Contoso",
-                      "text": "Contoso",
-                      "boundingBox": [
-                        2.8333,
-                        4.0655,
-                        4.7148,
-                        3.4673,
-                        4.8366,
-                        3.8328,
-                        2.9661,
-                        4.4199
-                      ],
-                      "page": 2,
-                      "confidence": 0.23,
-                      "elements": [
-                        "#/readResults/1/lines/8/words/0"
-                      ]
-                    }
-                  ]
-                },
-                "Addresses": {
-                  "type": "array",
-                  "valueArray": [
-                    {
-                      "type": "string",
-                      "valueString": "2 Kingdom Street Paddington, London, W2 6BD",
-                      "text": "2 Kingdom Street Paddington, London, W2 6BD",
-                      "boundingBox": [
-                        2.9493,
-                        4.4371,
-                        5.0729,
-                        3.6661,
-                        5.2183,
-                        4.0665,
-                        3.0947,
-                        4.8375
-                      ],
-                      "page": 2,
-                      "confidence": 0.979,
-                      "elements": [
-                        "#/readResults/1/lines/9/words/0",
-                        "#/readResults/1/lines/9/words/1",
-                        "#/readResults/1/lines/9/words/2",
-                        "#/readResults/1/lines/10/words/0",
-                        "#/readResults/1/lines/10/words/1",
-                        "#/readResults/1/lines/10/words/2",
-                        "#/readResults/1/lines/10/words/3"
                       ]
                     }
                   ]
@@ -1700,7 +1652,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-centraluseuap.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-canada-central.cognitiveservices.azure.com/",
     "RandomSeed": "541640835"
   }
 }
