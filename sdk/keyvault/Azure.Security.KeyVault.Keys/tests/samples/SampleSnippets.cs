@@ -284,8 +284,11 @@ namespace Azure.Security.KeyVault.Keys.Samples
                     Transport = new HttpClientTransport(httpClient)
                 };
 
-                //@@KeyClient client = new KeyClient(
-                /*@@*/ client = new KeyClient(
+#if SNIPPET
+                KeyClient client = new KeyClient(
+#else
+                client = new KeyClient(
+#endif
                     new Uri("https://myvault.vault.azure.net"),
                     new DefaultAzureCredential(),
                     options);
@@ -295,8 +298,11 @@ namespace Azure.Security.KeyVault.Keys.Samples
                     Transport = new HttpClientTransport(httpClient)
                 };
 
-                //@@CryptographyClient cryptoClient = new CryptographyClient(
-                /*@@*/ cryptoClient = new CryptographyClient(
+#if SNIPPET
+                CryptographyClient cryptoClient = new CryptographyClient(
+#else
+                cryptoClient = new CryptographyClient(
+#endif
                     new Uri("https://myvault.vault.azure.net"),
                     new DefaultAzureCredential(),
                     cryptoOptions);
