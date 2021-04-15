@@ -411,7 +411,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
+        /// Completes a <see cref="ServiceBusReceivedMessage"/> using a lock token. This will delete the message from the service.
         /// </summary>
         ///
         /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
@@ -434,10 +434,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
+        /// Settles a <see cref="ServiceBusReceivedMessage"/> using a lock token.
         /// </summary>
         ///
-        /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
+        /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
         /// <param name="outcome"></param>
         /// <param name="timeout"></param>
         private async Task DisposeMessageAsync(
