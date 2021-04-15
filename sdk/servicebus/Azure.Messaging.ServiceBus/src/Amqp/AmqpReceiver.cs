@@ -74,6 +74,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly FaultTolerantAmqpObject<ReceivingAmqpLink> _receiveLink;
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
 
+        private const int SizeOfGuid = 16;
+
         /// <summary>
         /// Gets the sequence number of the last peeked message.
         /// </summary>
@@ -446,26 +448,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             ThrowIfSessionLockLost();
 
-            static List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(Guid[] tokens)
-            {
-                const int sizeOfGuid = 16;
-                var convertedLockTokens = new List<ArraySegment<byte>>(tokens.Length);
-                var bufferForGuid = ArrayPool<byte>.Shared.Rent(sizeOfGuid*tokens.Length);
-                for (var i = 0; i < tokens.Length; i++)
-                {
-                    Guid lockToken = tokens[i];
-                    int start = i * sizeOfGuid;
-                    if (!MemoryMarshal.TryWrite(bufferForGuid.AsSpan(start, sizeOfGuid), ref lockToken))
-                    {
-                        lockToken.ToByteArray().AsSpan().CopyTo(bufferForGuid);
-                    }
-                    convertedLockTokens.Add(new ArraySegment<byte>(bufferForGuid, start, sizeOfGuid));
-                }
-                return convertedLockTokens;
-            }
-
-            List<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(lockTokens);
-            byte[] bufferToReturn = null;
+            byte[] continuousBufferForLockTokens = ArrayPool<byte>.Shared.Rent(SizeOfGuid*lockTokens.Length);;
+            List<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(continuousBufferForLockTokens, lockTokens);
             ReceivingAmqpLink receiveLink = null;
             try
             {
@@ -488,9 +472,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var i = 0;
                 foreach (ArraySegment<byte> deliveryTag in deliveryTags)
                 {
-                    // since we rented a continuous buffer and the array represents that continuous buffer
-                    bufferToReturn ??= deliveryTag.Array;
-
                     disposeMessageTasks[i++] =
                         receiveLink.DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout);
                 }
@@ -530,11 +511,25 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             finally
             {
-                if (bufferToReturn != null)
-                {
-                    ArrayPool<byte>.Shared.Return(bufferToReturn);
-                }
+                ArrayPool<byte>.Shared.Return(continuousBufferForLockTokens);
             }
+        }
+
+        private static List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(byte[] buffer, Guid[] tokens)
+        {
+            var convertedLockTokens = new List<ArraySegment<byte>>(tokens.Length);
+            for (var i = 0; i < tokens.Length; i++)
+            {
+                Guid lockToken = tokens[i];
+                int start = i * SizeOfGuid;
+                if (!MemoryMarshal.TryWrite(buffer.AsSpan(start, SizeOfGuid), ref lockToken))
+                {
+                    lockToken.ToByteArray().AsSpan().CopyTo(buffer);
+                }
+
+                convertedLockTokens.Add(new ArraySegment<byte>(buffer, start, SizeOfGuid));
+            }
+            return convertedLockTokens;
         }
 
         private void ThrowLockLostException()
