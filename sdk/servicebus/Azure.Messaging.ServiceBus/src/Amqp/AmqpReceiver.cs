@@ -430,7 +430,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     SessionId).ConfigureAwait(false);
                 return;
             }
-            await DisposeMessagesAsync(lockTokenGuid, AmqpConstants.AcceptedOutcome, timeout).ConfigureAwait(false);
+            await DisposeMessageAsync(lockTokenGuid, AmqpConstants.AcceptedOutcome, timeout).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="lockToken">The lock token of the corresponding message to complete.</param>
         /// <param name="outcome"></param>
         /// <param name="timeout"></param>
-        private async Task DisposeMessagesAsync(
+        private async Task DisposeMessageAsync(
             Guid lockToken,
             Outcome outcome,
             TimeSpan timeout)
@@ -580,7 +580,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     SessionId,
                     propertiesToModify);
             }
-            return DisposeMessagesAsync(lockTokenGuid, GetDeferOutcome(propertiesToModify), timeout);
+            return DisposeMessageAsync(lockTokenGuid, GetDeferOutcome(propertiesToModify), timeout);
         }
 
         /// <summary>
@@ -637,7 +637,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     SessionId,
                     propertiesToModify);
             }
-            return DisposeMessagesAsync(lockTokenGuid, GetAbandonOutcome(propertiesToModify), timeout);
+            return DisposeMessageAsync(lockTokenGuid, GetAbandonOutcome(propertiesToModify), timeout);
         }
 
         /// <summary>
@@ -712,7 +712,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     deadLetterErrorDescription);
             }
 
-            return DisposeMessagesAsync(
+            return DisposeMessageAsync(
                 lockTokenGuid,
                 GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription),
                 timeout);
