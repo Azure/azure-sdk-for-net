@@ -4,23 +4,17 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ## AutoRest configuration
 
-We refer directly to the OpenAPI document to avoid batch processing of multiple tags (commented lines not working).
-
 See <https://aka.ms/autorest> for more information.
 
 ``` yaml
-# require:
-# - https://github.com/Azure/azure-rest-api-specs/blob/0b9087be79feaca4504b1ecb277875bc6be56617/specification/cognitiveservices/data-plane/QnAMaker/readme.md
-# batch: false
-# tag: release_5_0_preview.2
-
-input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/0b9087be79feaca4504b1ecb277875bc6be56617/specification/cognitiveservices/data-plane/QnAMaker/preview/v5.0-preview.2/QnAMaker.json
+require:
+- https://github.com/Azure/azure-rest-api-specs/blob/f80541db7532f4e71e6f64c1bb1bde86b8620c67/specification/cognitiveservices/data-plane/QnAMaker/readme.md
+tag: release_5_0_preview.2
 ```
 
 ## General customizations
 
-These are transforms that should be in the swagger, or at least declared as transforms in the service [readme.md](https://github.com/Azure/azure-rest-api-specs/blob/0b9087be79feaca4504b1ecb277875bc6be56617/specification/cognitiveservices/data-plane/QnAMaker/readme.md).
+These are transforms that should be in the swagger, or at least declared as transforms in the service [readme.md](https://github.com/Azure/azure-rest-api-specs/blob/f80541db7532f4e71e6f64c1bb1bde86b8620c67/specification/cognitiveservices/data-plane/QnAMaker/readme.md).
 
 ### Name StringIndexType parameter enum
 
