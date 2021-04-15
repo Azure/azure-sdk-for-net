@@ -57,6 +57,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return memory.WrittenMemory;
         }
 
+        protected static ReadOnlyMemory<byte> Convert(Data segment)
+        {
+            return segment.Value switch
+            {
+                byte[] byteArray => byteArray,
+                ArraySegment<byte> arraySegment => arraySegment,
+                _ => ReadOnlyMemory<byte>.Empty
+            };
+        }
+
         /// <summary>
         /// Wraps a single data segment into an enumerable like type without copying to optimize for the most commonly used
         /// path by always bridging into enumerable like behavior without the additional overhead of underlying lists and copying.
@@ -157,12 +167,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _writer ??= new ArrayBufferWriter<byte>();
                 _segments ??= new List<ReadOnlyMemory<byte>>();
 
-                ReadOnlyMemory<byte> dataToAppend = segment.Value switch
-                {
-                    byte[] byteArray => byteArray,
-                    ArraySegment<byte> arraySegment => arraySegment,
-                    _ => ReadOnlyMemory<byte>.Empty
-                };
+                var dataToAppend = Convert(segment);
 
                 var memory = _writer.GetMemory(dataToAppend.Length);
                 dataToAppend.CopyTo(memory);
@@ -223,16 +228,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
 
                 _writtenMemory = asMemory.Slice(0, length);
-            }
-
-            private static ReadOnlyMemory<byte> Convert(Data segment)
-            {
-                return segment.Value switch
-                {
-                    byte[] byteArray => byteArray,
-                    ArraySegment<byte> arraySegment => arraySegment,
-                    _ => ReadOnlyMemory<byte>.Empty
-                };
             }
 
             public override void Release()
