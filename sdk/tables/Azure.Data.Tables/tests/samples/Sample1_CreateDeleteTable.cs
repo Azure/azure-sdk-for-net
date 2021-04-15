@@ -33,7 +33,7 @@ namespace Azure.Data.Tables.Samples
 
             //@@string tableName = "OfficeSupplies1p1";
             TableItem table = serviceClient.CreateTable(tableName);
-            Console.WriteLine($"The created table's name is {table.TableName}.");
+            Console.WriteLine($"The created table's name is {table.Name}.");
             #endregion
 
             #region Snippet:TablesSample1DeleteTable

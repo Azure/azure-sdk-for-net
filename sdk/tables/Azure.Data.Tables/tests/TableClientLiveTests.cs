@@ -48,7 +48,7 @@ namespace Azure.Data.Tables.Tests
                 await tableClient.DeleteAsync().ConfigureAwait(false);
             }
 
-            Assert.That(table.TableName, Is.EqualTo(newTableName));
+            Assert.That(table.Name, Is.EqualTo(newTableName));
         }
 
         /// <summary>
