@@ -5,9 +5,6 @@ parameters:
   - name: ScriptDirectory
     type: string
     default: eng/common/scripts
-  - name: Condition
-    type: boolean
-    default: succeeded()
 
 steps:
   - pwsh: |
@@ -16,4 +13,3 @@ steps:
       Get-ChildItem $root -Filter *.md -Recurse | ${{ parameters.ScriptDirectory }}\Test-SampleMetadata.ps1 -AllowParentProducts
     displayName: Verify sample metadata
     workingDirectory: $(Build.SourcesDirectory)
-    condition: ${{ parameters.Condition }}
