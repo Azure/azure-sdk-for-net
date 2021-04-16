@@ -58,6 +58,7 @@ namespace Azure.Data.Tables.Tests
             {"GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints."},
             {"ValidateSasCredentialsWithRowKeyAndPartitionKeyRanges", "Shared access signature with PartitionKey or RowKey are not supported"},
             {"ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported"},
+            {"ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported"},
             {"ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported"},
         };
 
