@@ -366,7 +366,7 @@ namespace Azure.Core.TestFramework
         {
             get
             {
-                string switchString = TestContext.Parameters["LiveTestServiceVersions"] ?? Environment.GetEnvironmentVariable("AZURE_TEST_SERVICE_VERSIONS") ?? string.Empty;
+                string switchString = TestContext.Parameters["LiveTestServiceVersions"] ?? Environment.GetEnvironmentVariable("AZURE_LIVE_TEST_SERVICE_VERSIONS") ?? string.Empty;
 
                 return switchString.Split(new char[] {',', ';'}, StringSplitOptions.RemoveEmptyEntries);
             }
