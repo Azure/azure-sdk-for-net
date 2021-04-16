@@ -32,18 +32,18 @@ namespace Azure.Data.Tables.Tests
 
         public static object[] QueryFilterTestCases =
         {
-            new object[] { QueryFilter.Create($"String ge {SomeString}"), $"String ge '{SomeString}'" },
-            new object[] { QueryFilter.Create($"String ge {StringWithSingleQuotes}"), $"String ge 'so''meS''tri''ng'" },
-            new object[] { QueryFilter.Create($"Guid eq {s_someGuid}"), $"Guid eq guid'{s_someGuidString}'" },
-            new object[] { QueryFilter.Create($"Int64 ge {SomeInt64}L"), $"Int64 ge {SomeInt64}L" },
-            new object[] { QueryFilter.Create($"Double ge {SomeDouble}"), $"Double ge {SomeDouble}" },
-            new object[] { QueryFilter.Create($"Int32 ge {SomeInt}"), $"Int32 ge {SomeInt}" },
-            new object[] { QueryFilter.Create($"DateTimeOffset ge {s_someDateTimeOffset}"), $"DateTimeOffset ge datetime'{s_someDateTimeOffsetRoundtrip}'" },
-            new object[] { QueryFilter.Create($"DateTime lt {s_someDateTime}"), $"DateTime lt datetime'{s_someDateTimeOffsetRoundtrip}'" },
-            new object[] { QueryFilter.Create($"Bool eq {SomeTrueBool}"), "Bool eq true" },
-            new object[] { QueryFilter.Create($"Bool eq {SomeFalseBool}"), "Bool eq false" },
-            new object[] { QueryFilter.Create($"Binary eq { s_someBinary}"), $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("D2")))}'" },
-            new object[] { QueryFilter.Create($"Binary eq {s_someBinaryData}"), $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("D2")))}'" }
+            new object[] { TablesFilter.Create($"String ge {SomeString}"), $"String ge '{SomeString}'" },
+            new object[] { TablesFilter.Create($"String ge {StringWithSingleQuotes}"), $"String ge 'so''meS''tri''ng'" },
+            new object[] { TablesFilter.Create($"Guid eq {s_someGuid}"), $"Guid eq guid'{s_someGuidString}'" },
+            new object[] { TablesFilter.Create($"Int64 ge {SomeInt64}L"), $"Int64 ge {SomeInt64}L" },
+            new object[] { TablesFilter.Create($"Double ge {SomeDouble}"), $"Double ge {SomeDouble}" },
+            new object[] { TablesFilter.Create($"Int32 ge {SomeInt}"), $"Int32 ge {SomeInt}" },
+            new object[] { TablesFilter.Create($"DateTimeOffset ge {s_someDateTimeOffset}"), $"DateTimeOffset ge datetime'{s_someDateTimeOffsetRoundtrip}'" },
+            new object[] { TablesFilter.Create($"DateTime lt {s_someDateTime}"), $"DateTime lt datetime'{s_someDateTimeOffsetRoundtrip}'" },
+            new object[] { TablesFilter.Create($"Bool eq {SomeTrueBool}"), "Bool eq true" },
+            new object[] { TablesFilter.Create($"Bool eq {SomeFalseBool}"), "Bool eq false" },
+            new object[] { TablesFilter.Create($"Binary eq { s_someBinary}"), $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("D2")))}'" },
+            new object[] { TablesFilter.Create($"Binary eq {s_someBinaryData}"), $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("D2")))}'" }
         };
 
         [Test]

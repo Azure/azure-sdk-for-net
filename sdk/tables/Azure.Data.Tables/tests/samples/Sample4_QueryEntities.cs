@@ -62,10 +62,10 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample4QueryEntitiesFilterWithQueryFilter
 #if SNIPPET
-            // The QueryFilter class is also available to assist with properly formatting odata queries.
-            Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: QueryFilter.Create($"PartitionKey eq {partitionKey}"));
+            // The TablesFilter class is also available to assist with properly formatting odata queries.
+            Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: TablesFilter.Create($"PartitionKey eq {partitionKey}"));
 #else
-            queryResultsFilter = tableClient.Query<TableEntity>(filter: QueryFilter.Create($"PartitionKey eq {partitionKey}"));
+            queryResultsFilter = tableClient.Query<TableEntity>(filter: TablesFilter.Create($"PartitionKey eq {partitionKey}"));
 #endif
             // Iterate the <see cref="Pageable"> to access all queried entities.
 

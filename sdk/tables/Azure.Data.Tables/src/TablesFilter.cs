@@ -11,7 +11,7 @@ using Azure.Data.Tables.Queryable;
 namespace Azure.Data.Tables
 {
     /// <summary>
-    /// The <see cref="QueryFilter"/> class is used to help construct valid OData filter
+    /// The <see cref="TablesFilter"/> class is used to help construct valid OData filter
     /// expressions, like the kind used by <see cref="TableClient.Query{T}(string,System.Nullable{int},System.Collections.Generic.IEnumerable{string},System.Threading.CancellationToken)"/>,
     /// <see cref="TableClient.QueryAsync{T}(string,System.Nullable{int},System.Collections.Generic.IEnumerable{string},System.Threading.CancellationToken)"/>,
     /// <see cref="TableServiceClient.GetTables(string,System.Nullable{int},System.Threading.CancellationToken)"/>, and
@@ -19,7 +19,7 @@ namespace Azure.Data.Tables
     /// by automatically replacing, quoting, and escaping interpolated parameters.
     /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/querying-tables-and-entities#constructing-filter-strings">Constructing Filter Strings</see>.
     /// </summary>
-    public static class QueryFilter
+    public static class TablesFilter
     {
         /// <summary>
         /// Create an OData filter expression from an interpolated string.  The interpolated values will be quoted and escaped as necessary.
