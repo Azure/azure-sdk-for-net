@@ -242,7 +242,7 @@ namespace Azure.Core.TestFramework
 
             if (runsLive)
             {
-                test.Properties.Set("RunsLive", "These tests would run in live mode.");
+                test.Properties.Set("RunsLive", "These tests would run in Live mode.");
             }
 
             return runsRecorded || runsLive;
