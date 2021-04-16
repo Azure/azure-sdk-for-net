@@ -23,35 +23,28 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.ScenarioTests
                 testHelper.CreateVault();
 
                 // Get Backup Vault
-                testHelper.GetVault();
+                //testHelper.GetVault();
 
                 // Create Policy
                 testHelper.CreatePolicy("retentionpolicy2");
 
                 // Get Policy
-                testHelper.GetPolicy("retentionpolicy2");
+                //testHelper.GetPolicy("retentionpolicy2");
                 
-                //Validate For Backup
-                testHelper.ValidateForBackup("TestDiskCmk2");
-
                 // Configure Backup
-                testHelper.CreateBackupInstance("TestDiskCmk2");
+                //testHelper.CreateBackupInstance("TestDiskCmk2");
+
+                // Validate For Backup
+                //testHelper.ValidateForBackup("TestDiskCmk2");
 
                 // Trigger Backup
-                testHelper.TriggerBackup("TestDiskCmk2");
+                //testHelper.TriggerBackup("TestDiskCmk2");
 
-                // TODO:  Validate for Restore
-                // check why this is not getting deserialized
-                // testHelper.ValidateForRestore("TestDiskCmk2");
+                // Validate for Restore
+                //testHelper.ValidateForRestore("TestDiskCmk2");
 
                 // Trigger Restore
-                testHelper.TriggerRestore("TestDiskCmk2");
-
-                // Delete Policy
-
-                // Delete Backup Instance
-
-                // Delete Vault
+                //testHelper.TriggerRestore("TestDiskCmk2");
             }
         }
         public void Dispose()
