@@ -13,8 +13,8 @@ using Azure.Storage.Test.Shared;
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     [ClientTestFixture(
-        /* BlobClientOptions.ServiceVersion.V2020_06_12,
-        BlobClientOptions.ServiceVersion.V2020_08_04, */ // https://github.com/Azure/azure-sdk-for-net/issues/20386
+        BlobClientOptions.ServiceVersion.V2020_06_12,
+        BlobClientOptions.ServiceVersion.V2020_08_04,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
     RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
