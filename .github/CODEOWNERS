@@ -609,5 +609,5 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # ######## Eng Sys ######## 
 /eng/           @weshaggard @chidozieononiwu @mitchdenny @danieljurek
 /eng/mgmt/      @allenjzhang @m-nash @markcowl
-/**/tests.yml   @danieljurek
+/**/tests.yml   @benbp
 /**/ci.yml      @mitchdenny
