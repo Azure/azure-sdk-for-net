@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -71,6 +73,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly string _identifier;
         private readonly FaultTolerantAmqpObject<ReceivingAmqpLink> _receiveLink;
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
+
+        private const int SizeOfGuidInBytes = 16;
 
         /// <summary>
         /// Gets the sequence number of the last peeked message.
@@ -407,7 +411,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
+        /// Completes a <see cref="ServiceBusReceivedMessage"/> using a lock token. This will delete the message from the service.
         /// </summary>
         ///
         /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
@@ -417,34 +421,39 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout)
         {
             Guid lockTokenGuid = new Guid(lockToken);
-            var lockTokenGuids = new[] { lockTokenGuid };
             if (_requestResponseLockedMessages.Contains(lockTokenGuid))
             {
                 await DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
+                    lockTokenGuid,
                     timeout,
                     DispositionStatus.Completed,
                     SessionId).ConfigureAwait(false);
                 return;
             }
-            await DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout).ConfigureAwait(false);
+            await DisposeMessageAsync(lockTokenGuid, AmqpConstants.AcceptedOutcome, timeout).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
+        /// Settles a <see cref="ServiceBusReceivedMessage"/> using a lock token.
         /// </summary>
         ///
-        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
+        /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
         /// <param name="outcome"></param>
         /// <param name="timeout"></param>
-        private async Task DisposeMessagesAsync(
-            IEnumerable<Guid> lockTokens,
+        private async Task DisposeMessageAsync(
+            Guid lockToken,
             Outcome outcome,
             TimeSpan timeout)
         {
             ThrowIfSessionLockLost();
-            List<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(lockTokens);
 
+            byte[] bufferForLockToken = ArrayPool<byte>.Shared.Rent(SizeOfGuidInBytes);
+            if (!MemoryMarshal.TryWrite(bufferForLockToken, ref lockToken))
+            {
+                lockToken.ToByteArray().AsSpan().CopyTo(bufferForLockToken);
+            }
+
+            ArraySegment<byte> deliveryTag = new ArraySegment<byte>(bufferForLockToken, 0, SizeOfGuidInBytes);
             ReceivingAmqpLink receiveLink = null;
             try
             {
@@ -463,27 +472,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     receiveLink = await _receiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
                 }
 
-                var disposeMessageTasks = new Task<Outcome>[deliveryTags.Count];
-                var i = 0;
-                foreach (ArraySegment<byte> deliveryTag in deliveryTags)
-                {
-                    disposeMessageTasks[i++] = receiveLink.DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout);
-                }
-
-                Outcome[] outcomes = await Task.WhenAll(disposeMessageTasks).ConfigureAwait(false);
+                Outcome outcomeResult = await receiveLink
+                    .DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout).ConfigureAwait(false);
                 Error error = null;
-                foreach (Outcome item in outcomes)
+                Outcome disposedOutcome =
+                    outcomeResult.DescriptorCode == Rejected.Code && ((error = ((Rejected)outcomeResult).Error) != null)
+                        ? outcomeResult
+                        : null;
+                if (disposedOutcome != null)
                 {
-                    Outcome disposedOutcome = item.DescriptorCode == Rejected.Code && ((error = ((Rejected)item).Error) != null) ? item : null;
-                    if (disposedOutcome != null)
+                    if (error.Condition.Equals(AmqpErrorCode.NotFound))
                     {
-                        if (error.Condition.Equals(AmqpErrorCode.NotFound))
-                        {
-                            ThrowLockLostException();
-                        }
-
-                        throw error.ToMessagingContractException();
+                        ThrowLockLostException();
                     }
+
+                    throw error.ToMessagingContractException();
                 }
             }
             catch (Exception exception)
@@ -502,6 +505,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
 
                 throw;
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(bufferForLockToken);
             }
         }
 
@@ -564,17 +571,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IDictionary<string, object> propertiesToModify = null)
         {
             Guid lockTokenGuid = new Guid(lockToken);
-            var lockTokenGuids = new[] { lockTokenGuid };
             if (_requestResponseLockedMessages.Contains(lockTokenGuid))
             {
                 return DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
+                    lockTokenGuid,
                     timeout,
                     DispositionStatus.Defered,
                     SessionId,
                     propertiesToModify);
             }
-            return DisposeMessagesAsync(lockTokenGuids, GetDeferOutcome(propertiesToModify), timeout);
+            return DisposeMessageAsync(lockTokenGuid, GetDeferOutcome(propertiesToModify), timeout);
         }
 
         /// <summary>
@@ -622,17 +628,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IDictionary<string, object> propertiesToModify = null)
         {
             Guid lockTokenGuid = new Guid(lockToken);
-            var lockTokenGuids = new[] { lockTokenGuid };
             if (_requestResponseLockedMessages.Contains(lockTokenGuid))
             {
                 return DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
+                    lockTokenGuid,
                     timeout,
                     DispositionStatus.Abandoned,
                     SessionId,
                     propertiesToModify);
             }
-            return DisposeMessagesAsync(lockTokenGuids, GetAbandonOutcome(propertiesToModify), timeout);
+            return DisposeMessageAsync(lockTokenGuid, GetAbandonOutcome(propertiesToModify), timeout);
         }
 
         /// <summary>
@@ -695,11 +700,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotTooLong(deadLetterErrorDescription, Constants.MaxDeadLetterReasonLength, nameof(deadLetterErrorDescription));
 
             Guid lockTokenGuid = new Guid(lockToken);
-            var lockTokenGuids = new[] { lockTokenGuid };
             if (_requestResponseLockedMessages.Contains(lockTokenGuid))
             {
                 return DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
+                    lockTokenGuid,
                     timeout,
                     DispositionStatus.Suspended,
                     SessionId,
@@ -708,8 +712,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     deadLetterErrorDescription);
             }
 
-            return DisposeMessagesAsync(
-                lockTokenGuids,
+            return DisposeMessageAsync(
+                lockTokenGuid,
                 GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription),
                 timeout);
         }
@@ -756,7 +760,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Updates the disposition status of deferred messages.
         /// </summary>
         ///
-        /// <param name="lockTokens">Message lock tokens to update disposition status.</param>
+        /// <param name="lockToken">Message lock token to update disposition status.</param>
         /// <param name="timeout"></param>
         /// <param name="dispositionStatus"></param>
         /// <param name="sessionId"></param>
@@ -764,7 +768,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="deadLetterReason"></param>
         /// <param name="deadLetterDescription"></param>
         private async Task DisposeMessageRequestResponseAsync(
-            Guid[] lockTokens,
+            Guid lockToken,
             TimeSpan timeout,
             DispositionStatus dispositionStatus,
             string sessionId = null,
@@ -780,7 +784,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
             }
 
-            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = lockTokens;
+            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new Guid[]{ lockToken };
             amqpRequestMessage.Map[ManagementConstants.Properties.DispositionStatus] = dispositionStatus.ToString().ToLowerInvariant();
 
             if (deadLetterReason != null)
@@ -835,11 +839,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private static Outcome GetDeferOutcome(IDictionary<string, object> propertiesToModify) =>
             GetModifiedOutcome(propertiesToModify, true);
-
-        private static List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
-        {
-            return lockTokens.Select(lockToken => new ArraySegment<byte>(lockToken.ToByteArray())).ToList();
-        }
 
         private static Outcome GetModifiedOutcome(
             IDictionary<string, object> propertiesToModify,
