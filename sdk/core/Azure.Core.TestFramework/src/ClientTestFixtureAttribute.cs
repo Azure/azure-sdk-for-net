@@ -59,13 +59,13 @@ namespace Azure.Core.TestFramework
             var latestVersion = _serviceVersions.Any() ? _serviceVersions.Max(Convert.ToInt32) : (int?)null;
             _actualPlaybackServiceVersion = RecordingServiceVersion != null ? Convert.ToInt32(RecordingServiceVersion) : latestVersion;
 
-            var liveVersions = LiveServiceVersions ?? _serviceVersions;
+            int[] liveVersions = (LiveServiceVersions ?? _serviceVersions).Select(Convert.ToInt32).ToArray();
 
             if (liveVersions.Any())
             {
                 if (TestEnvironment.GlobalTestOnlyLatestVersion)
                 {
-                    _actualLiveServiceVersions = new[] { liveVersions.Max(Convert.ToInt32) };
+                    _actualLiveServiceVersions = new[] { liveVersions.Max() };
                 }
                 else if (TestEnvironment.GlobalTestServiceVersions is { Length: > 0 } globalTestServiceVersions &&
                          _serviceVersions is { Length: > 0 })
@@ -88,7 +88,7 @@ namespace Azure.Core.TestFramework
                 }
                 else
                 {
-                    _actualLiveServiceVersions = liveVersions.Select(Convert.ToInt32).ToArray();
+                    _actualLiveServiceVersions = liveVersions.ToArray();
                 }
             }
 
@@ -165,6 +165,11 @@ namespace Azure.Core.TestFramework
                 if (test is ParameterizedMethodSuite parameterizedMethodSuite)
                 {
                     ProcessTestList(parameterizedMethodSuite, serviceVersion, isAsync, parameter, serviceVersionNumber);
+                    if (parameterizedMethodSuite.Tests.Count == 0)
+                    {
+                        testsDoDelete ??= new List<Test>();
+                        testsDoDelete.Add(test);
+                    }
                 }
                 else
                 {
