@@ -1,0 +1,19 @@
+{
+  "disabled": false,
+  "bindings": [
+    {
+      "type": "webPubSubTrigger",
+      "direction": "in",
+      "name": "connectionContext",
+      "hub": "simplechat",
+      "eventName": "connected",
+      "eventType": "system"
+    },
+    {
+      "type": "webPubSub",
+      "name": "webPubSubEvent",
+      "hub": "simplechat",
+      "direction": "out"
+    }
+  ]
+}

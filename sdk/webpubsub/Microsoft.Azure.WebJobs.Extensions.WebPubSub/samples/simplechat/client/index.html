@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A simple WebSocket demo on Azure SignalR Serverless WebSocket">
+
+    <title>A Simple Serverless WebSocket Chat</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjkiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxwYXRoIGQ9Ik02MyAyOTkgMTMyIDI5OSAxMzIgMzYzIDYzIDM2M1oiIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIi8+PC9jbGlwUGF0aD48aW1hZ2Ugd2lkdGg9IjY5IiBoZWlnaHQ9IjY0IiB4bGluazpocmVmPSJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQUVVQUFBQkFDQU1BQUFCN25rcW9BQUFBQVhOU1IwSUFyczRjNlFBQUFBUm5RVTFCQUFDeGp3djhZUVVBQUFIZ1VFeFVSUUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUpDTEcxVUFBQUNnZEZKT1V3QUJBZ01FQlFZSENBa0tDd3dORGc4UUVSSVRGQlVXRnhnWkdoc2NIUjRmSUNFaUl5UWxKaWNvS1NvckxDMHVMekF4TWpNME5UWTNPRGs2T3p3OVBqOUFRVUpEUkVWR1IwaEpTa3RNVFU1UFVGRlNVMVJWVmxkWVdWcGJYRjFlWDJCaFltTmtaV1puYUdscWEyeHRibTl3Y1hKemRIZDRlWHA3ZkgxK2Y0Q0Jnb09FaFlhSGlJbUtpNHlOam8rUWtaS1RsSldXbDVpWm1wdWNuWjZmb0tHcGdCSmpBQUFBQ1hCSVdYTUFBQTdEQUFBT3d3SEhiNmhrQUFBR3ZFbEVRVlJZUjcyWCtWK1NXUlNIUzNZQldkUlFNSlNRSU1JbDA5SlFjUzB0TlhNaE5QZlEwTkpNWWJKWDFFeENoRjVoQU5seC90VTU5K1VGMlZTc3o4ejNKK0Jjbm51V3U1MWIvNDF1SjBSK3k5YlZWbEl3b0tpSVFxRVVGZVVaaTM2NnNKSS81Z29HVWFnME9wUEpaTkJwVkVybVVQaUdqQXl3MHVsVUNvQklRNmFBUWFVejJUeEJhVm1wa004dFp0Q0FROXFRbFVKakZIUDVRckFLZUd3V25acVhBOFBvTEY2WnVGcXVWS2tVc3JzaUlZZUovRWthcVV5T1FGUWxVNmhVeXRwcWNSbVBSVStmaEJRNHd1U1dTWldOcmJyZS9yN3U5aGFOWEN4a2t5UFJER3loV0s1cGJ1L3U2Ky9WdFQ1U1NjdTVUSEFuOGVla0FNTGlpKzgzZHcvcFo1ZU03eGVteHdhMERmZEVKV2draU1vc0Vja2F0QU5qMHd2dmpVdXordUdlWnFXRXo4ckN3RGlXVUtycEdKbGQzZjY2dTJmRkxKK05oc0ZXbFlTUE1PQW1UNkpxSFRBWVAxc3c2OTd1MSsyMXVkZTZPcWt3RXdNZU13WFNobDY5eVhKZ2Q1MjYzYmpUWnQxNlA2YXJxd0lNcElSZnBkRzllYjlsdFRseHQvdlVkZnpkc21yb2YxUURtUFFDVU9pOHFvYSs2UTJydyswUGhzUGhVTUNMMjNZK3Z1MUJHRHFUVjFYWHJWL2JzZUhlUUFpc1FiL0hzYmM1ODd6eExvOUJTVkVnSHJaSTNUMjllZkRMSDRyRzR2RjRMQllKZXAxN0c0WWVqWVRQNFlzMTNZWjFxOU1iak1RSWF6VHN4dysvdk90NVdNbWhwV0tDZUlUMzJzYlg5L0ZBSkhhZVVEd1c5cnYyMS9XNkI1SnlpYXBUdjc3djhvZGpjZElhaXdid2c0MUpyVnpJVERrRHJsVFdEeHEvT2MraThmTi9FZ0pPNU14bFhYM3o3SUg4UWR1YlZhdkxqMlpJV3VQUmdBdGJlZGtnNXRDU1M2cUl6cGM5MDIvWnZPRVVCQVFZLzhtT2NVamJyQjB5N3B6NEkxbEduMzNib0pVTGtwbTVUV0dWcS91WHNGL0JXTm80R0JrTGUyM20rZGNEcitmTk1FTzJNWWp2R3A4L3ZNTktVcWhzOGFPUlR6LytEc2ZKSWFSZ3BQdHd5emhuM0RwMFo4MEF4b2ozYUgzMHNZUkRKU2swcnZUcDVQYnhXVFI3NEhuMHpIVmcyYlljdU1DV2JZd0ZIT2EzYmRVbE5JSUNhZUhKdE84c3JwenBJSG9vcWYzSWp2c3pNa1lJSEhWOW5lMjR4NmNUdFViSmxldm1kdkJRRGdXbEp1RDFlQU5aU1VFNmo0ZHdiS0ZMSWJpZzFIWXRZSGp1ZkJBVHJMQndPSHBSNDVUQVQvZnVZbzlDeUVpanpHTjRLSmNDR0ZoL2FLMlIzeThFbEZOc3NUdWRJdStjelJzUmlGaXI1T2QwbmNkQytMZDVuWnpNeXkzSWJvMTJPbDkycnhMSzdsL3YybVU4ZWhHQ0pDcXROenR5S24ybHptTm5Eck8rVmNwTlZKcFlkVTJqR3piZnpTaFJuMjFqdEVuQ1RxNDZDdXVPWnZERHZpZFBrUzRWS3RIK3lxRG1ZZ2ZBd2FEb212dnFDdHdnTWJCMFlkRjFRWW1TbENKNmlmVHB4T2FOUWtJQmJZNC9rY0lHU0ZBZ01jVVZkWU1yMXRQQ3E0UzJ0SFY1b0U1VVRLWWxFWks4WThwczkrZnN1VXNFKzlSdk4wKzF5MU1CQVFWcUxXbDhaZHJEQzNVR1hEbmROdzAxcHM0RkpIQ21WTkV4dGYzVGwzR2dYU3JpcEROUGR5cEtMNDVkbEY5d3B1SGxNdVlLRkJJVDdOSEFMK3ZLcTBZSjkrSUtBQkdaZVRhNThjT1Rmek5sQ3M0THo5R21QdU1HUUVJM1VvV21iOTV5WEVCTTZGaDNXQmI2TlhBYlpUNGJibE1ZZkduejhJZmQ2Mk9DK2dSY1Z0TklTdzAvN1dZa2hLNzdNb1YyY3YwN09xZXZ3a0JTNEV6ZjBMZmZMOCs0cFFsQmdqbVZEM3RtdG0wb05WZGc0Rnp4Mk13enZacEtMbm15cEF0aTRsVTFEaXhhN05sWFQ0YlFKV1czTEE0K3Vwc1REeEs4UGxoQ1dRdGNndzdmNVJpQStCdzd5OE10c3N4WFIwcVFtdUt5MnRiUkQ5OU80RjdQandHSS93UXpqYllweW1BRDVZRVFxV0dMbE5xeFZjeDVDUVpCbkx1cjQxcWxpSjJ4M3RJRmp5RnVoYXBqZkcwM1B5WUJXWnZvVUZWdzRkMUkvaXRIQ0ZPcDdwd2tNWmtjS0RFQm1leFVWNVpjQVVFWlpwU0kxYnJKTmV3RXBUZ2RneUMrRTJ4dFVxY1dvNGZZNVJRQ3d4T3JPeWRXTVljM1k5MEFKT1IxWUtzVG5kZENVcGlPTWRPTzNSTk1lMXJGbzBHUGZjYzAxbEVBaEF5cVVxVWRYYmJZM0FIQUlBNWNzOUdBMjJZeGptcFZsU1hYUXhJWWJvV3liWGpKZklpZkVXODVpQ1p5aGgrYUY0ZmJsQlhjUWlBRWhzNFYxVDRabk4zY2QwS080M0RmaDN6Ty9jM1p3U2UxSWxUaUFpQUpES2RjMXRRLzlRazc5Z1FqMFVqUWM0eDlOUFExeWNxVC9VVUJBZ3l0dUxTNnZtdDh4WEtFKzg1OCtKRmxaYndMSHY3RkdUM1RkU0phRklsYU83TDRaZStuNCtmZWw0WGhaK3JjSnVRNkVYMUloYUxsaGNHMFpka3lHVjQwS3lxSU5vZTBGNmhFY21ycWRjT0dHY053WjMxTkdhZndsRnlJU0k1QW9ueXMxV2tmS3lXQ202VWtKZFNOTXJubFZYS0Z2Q3JSM3YwR0JJU2lZbkVGUWdFM2I2dFpxSWptbUFIZDlXODdraEJxMUtHWi95TUdFbXBoLzVUeFArcldyWDhCNC9ha1ZxRHdhVllBQUFBQVNVVk9SSzVDWUlJPSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgaWQ9ImltZzEiPjwvaW1hZ2U+PGNsaXBQYXRoIGlkPSJjbGlwMiI+PHBhdGggZD0iTTAgMCA2OSAwIDY5IDY0IDAgNjRaIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvY2xpcFBhdGg+PGxpbmVhckdyYWRpZW50IHgxPSI5Ny41IiB5MT0iMzAzLjYzMiIgeDI9Ijk3LjUiIHkyPSIzNTQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBzcHJlYWRNZXRob2Q9InJlZmxlY3QiIGlkPSJmaWxsMyI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjQTg1MjRDIi8+PHN0b3Agb2Zmc2V0PSIwLjUiIHN0b3AtY29sb3I9IiNBMTI4MTkiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM5NDFFMEYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDApIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNjMgLTI5OSkiPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzIDI5OSkiPjx1c2Ugd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgeGxpbms6aHJlZj0iI2ltZzEiPjwvdXNlPjwvZz48cGF0aCBkPSJNOTcuNSAzMTUuNzVDMTA4Ljk1OCAyODYgMTUzLjY0NiAzMTUuNzUgOTcuNSAzNTQgNDEuMzU0MiAzMTUuNzUgODYuMDQxNyAyODYgOTcuNSAzMTUuNzVaIiBmaWxsPSJ1cmwoI2ZpbGwzKSIgZmlsbC1ydWxlPSJldmVub2RkIi8+PC9nPjwvc3ZnPg==">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <!-- Custom styles for this template -->
+    <style>
+        html,
+        body,
+        main {
+            height: 100%
+        }
+
+        body {
+            font-size: .875rem;
+        }
+
+        #chat {
+            overflow: auto;
+        }
+
+        /* Login */
+        .login {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            min-height: 100%;
+            padding: 20px;
+        }
+
+        /* Navbar */
+        .navbar-brand {
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+            font-size: 1rem;
+            background-color: rgba(0, 0, 0, .25);
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+        }
+
+        .navbar .form-control {
+            padding: .75rem 1rem;
+            border-width: 0;
+            border-radius: 0;
+        }
+
+        .form-control-dark {
+            color: #fff;
+            background-color: rgba(255, 255, 255, .1);
+            border-color: rgba(255, 255, 255, .1);
+        }
+
+        .form-control-dark:focus {
+            border-color: transparent;
+            box-shadow: 0 0 0 3px rgba(255, 25zd5, 255, .25);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="container-fluid h-100 d-flex flex-column flex-nowrap p-0">
+        <div id="login" v-if="!loggedin" class="login">
+            <form v-on:submit.prevent="login()" class="bg-light p-3" style="width: 70%;">
+                <h5>Welcome to the Chatroom</h5>
+                <div class="form-group">
+                    <label for="functionHost">Function Endpoint</label>
+                    <input type="text" class="form-control" v-model="endpoint" id="functionEndpoint" placeholder="https://jixin-simplechat-linux.azurewebsites.net/">
+                </div>
+                <div class="form-group">
+                    <label for="usernameInput">User</label>
+                    <input type="text" class="form-control" v-model="username" id="usernameInput"
+                        aria-describedby="usernameHelp" placeholder="Type your user name">
+                    <small id="usernameHelp" class="form-text text-muted">The user name used to talk to others</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Continue</button>
+            </form>
+        </div>
+        <template v-if="loggedin">
+            <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow">
+                <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Serverless WebSocket Chat</a>
+                <div class="m-3">
+                    <span class="text-light">Welcome <a href="#"><strong>{{username}}</strong></a></span>
+                    <template v-if="connected">
+                        <img style="width: 20px; height: 20px;" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzciIGhlaWdodD0iMzciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxwYXRoIGQ9Ik01MSA0MTQgODggNDE0IDg4IDQ1MSA1MSA0NTFaIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvY2xpcFBhdGg+PGltYWdlIHdpZHRoPSIzNyIgaGVpZ2h0PSIzOSIgeGxpbms6aHJlZj0iZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFDVUFBQUFuQ0FNQUFBQy9pSEU2QUFBQUFYTlNSMElBcnM0YzZRQUFBQVJuUVUxQkFBQ3hqd3Y4WVFVQUFBRjlVRXhVUlFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFIOFI1ZThBQUFCL2RGSk9Vd0FCQWdNRUJRWUhDQWtLQ3cwT0R4RVNGQlVXR0JrYUd4d2VIeUFoSWlNa0pTY29LU3NzTGk4d01USXpORFUyTnprNk96MCtQMEJCUWtWR1IwaEpTa3RNVFU1UFVGRlRWVlpZV1ZwYlhsOWdaR1ZtYUdscmJYQnhjbk4wZFhaM2VIbCtmNENCaElXSGlJbUtpNHlOajVDUmtwU1dsNWlabXB1Y25aNmZvS0VGZllBNEFBQUFDWEJJV1hNQUFBN0RBQUFPd3dISGI2aGtBQUFDTVVsRVFWUTRUN1dVL1YvU1VCVEd1ZXhGTnNaZ1VUSWNWdlFpb2ROUUt5c0lyY3ppUmV3RkpXRllFbElJZ1FwRDIxaC9lM2Q0Snh1QjhrTTlQOTU5UDgvWlBmYzV4L2JmQlBwQ0ozOExBRHVHNHdSQjREaG1IOEZCQmljZE5PTnl1UmluZzhTSGN0Q0hwRm51T2o4bFRQRTNPSlltb1IvNmRpRm81R0N2K1lNaE1iSVltUThGL1Y2V2duYm9LeEt3RTdTSHZ6Ty9zcnFSU0NZMlZwOHUzT1U5TklGWk1BZzV1Y0NESit1YjJaeFVsSExaekp1VmNJQnpFbVkzQUhDS0M0alI5UGFYOHZkYXZmYWovSFU3SFJPbk9kcGNGR0FPdHpEM0lyTmJyaDIzWkZsdUhkZkx1NW40bk9CMjlHc0NPOGxNemp6YkxGU2E3VE5GVlZYbHJOMnNGRExSa0k4aEw4d0FSbkczbHhPNWc2T08wdFYwZFpYTzBjSG41T01nUnhsbUFCQ01MN3oyYWI4aEs1cjJXNWVtS1hLamxIMDV5ek1FYWk3QUp0dzNsMU9GYWdzNjlTQ0lkWlZXVlVvOXV1V1pRR2F3b1BkZTlQMSs4MVExSUlpcHA4M1NoOWg5cjFFUzRNN0o4T3VkeXNtdlBnUXg1YVN5c3o3cmMrSUd4ZmdYM3VhcmJjVkNxZTNEL0x1SGZzYWdDSmNRU1JicnNxbWdUc24xWW5KUmNCRTlDbDZSRlpaU2UvWE9BTlg1dVpkYUVsaDB5Ykc4eHYydjhlNDRzbDhmemYwNjc3MDAyUHRES1czdVBYckhrdVVkTzQxdjJWZW1keHlSaVlvMUU3MTgrV2FlWjZ6NWtnYnlCYzMwck1hM3pGbk5iOFZGUzFiUGN6OHR4aTdQUFpxaDhPVXpwTmUwek9QYTBIblUzWERxeXRuV3NjRTlNUVRTcjJEZE9kam8zWFRsL3RLRjlxQXVkUEt2WmJQOUFlNzA0REM0RXNzNkFBQUFBRWxGVGtTdVFtQ0MiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIGlkPSJpbWcxIj48L2ltYWdlPjxjbGlwUGF0aCBpZD0iY2xpcDIiPjxwYXRoIGQ9Ik0wIDAgMzcgMCAzNyAzOSAwIDM5WiIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz48L2NsaXBQYXRoPjxsaW5lYXJHcmFkaWVudCB4MT0iNjkuNSIgeTE9IjQxOCIgeDI9IjY5LjUiIHkyPSI0NDMiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBzcHJlYWRNZXRob2Q9InJlZmxlY3QiIGlkPSJmaWxsMyI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNkFBQTU4Ii8+PHN0b3Agb2Zmc2V0PSIwLjUiIHN0b3AtY29sb3I9IiM1MkEzMzQiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM0NTk1MjgiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDApIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNTEgLTQxNCkiPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUxIDQxMykiPjx1c2Ugd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgeGxpbms6aHJlZj0iI2ltZzEiPjwvdXNlPjwvZz48cGF0aCBkPSJNNTggNDMwLjVDNTggNDIzLjU5NiA2My4xNDg3IDQxOCA2OS41IDQxOCA3NS44NTEzIDQxOCA4MSA0MjMuNTk2IDgxIDQzMC41IDgxIDQzNy40MDQgNzUuODUxMyA0NDMgNjkuNSA0NDMgNjMuMTQ4NyA0NDMgNTggNDM3LjQwNCA1OCA0MzAuNVoiIGZpbGw9InVybCgjZmlsbDMpIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L2c+PC9zdmc+"></img>
+                    </template>
+                    <template v-else>
+                        <img style="width: 20px; height: 20px;" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzciIGhlaWdodD0iMzciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxwYXRoIGQ9Ik01MSA0MTQgODggNDE0IDg4IDQ1MSA1MSA0NTFaIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvY2xpcFBhdGg+PGltYWdlIHdpZHRoPSIzNyIgaGVpZ2h0PSIzOSIgeGxpbms6aHJlZj0iZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFDVUFBQUFuQ0FNQUFBQy9pSEU2QUFBQUFYTlNSMElBcnM0YzZRQUFBQVJuUVUxQkFBQ3hqd3Y4WVFVQUFBRjlVRXhVUlFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFIOFI1ZThBQUFCL2RGSk9Vd0FCQWdNRUJRWUhDQWtLQ3cwT0R4RVNGQlVXR0JrYUd4d2VIeUFoSWlNa0pTY29LU3NzTGk4d01USXpORFUyTnprNk96MCtQMEJCUWtWR1IwaEpTa3RNVFU1UFVGRlRWVlpZV1ZwYlhsOWdaR1ZtYUdscmJYQnhjbk4wZFhaM2VIbCtmNENCaElXSGlJbUtpNHlOajVDUmtwU1dsNWlabXB1Y25aNmZvS0VGZllBNEFBQUFDWEJJV1hNQUFBN0RBQUFPd3dISGI2aGtBQUFDTVVsRVFWUTRUN1dVL1YvU1VCVEd1ZXhGTnNaZ1VUSWNWdlFpb2ROUUt5c0lyY3ppUmV3RkpXRllFbElJZ1FwRDIxaC9lM2Q0Snh1QjhrTTlQOTU5UDgvWlBmYzV4L2JmQlBwQ0ozOExBRHVHNHdSQjREaG1IOEZCQmljZE5PTnl1UmluZzhTSGN0Q0hwRm51T2o4bFRQRTNPSlltb1IvNmRpRm81R0N2K1lNaE1iSVltUThGL1Y2V2duYm9LeEt3RTdTSHZ6Ty9zcnFSU0NZMlZwOHUzT1U5TklGWk1BZzV1Y0NESit1YjJaeFVsSExaekp1VmNJQnpFbVkzQUhDS0M0alI5UGFYOHZkYXZmYWovSFU3SFJPbk9kcGNGR0FPdHpEM0lyTmJyaDIzWkZsdUhkZkx1NW40bk9CMjlHc0NPOGxNemp6YkxGU2E3VE5GVlZYbHJOMnNGRExSa0k4aEw4d0FSbkczbHhPNWc2T08wdFYwZFpYTzBjSG41T01nUnhsbUFCQ01MN3oyYWI4aEs1cjJXNWVtS1hLamxIMDV5ek1FYWk3QUp0dzNsMU9GYWdzNjlTQ0lkWlZXVlVvOXV1V1pRR2F3b1BkZTlQMSs4MVExSUlpcHA4M1NoOWg5cjFFUzRNN0o4T3VkeXNtdlBnUXg1YVN5c3o3cmMrSUd4ZmdYM3VhcmJjVkNxZTNEL0x1SGZzYWdDSmNRU1JicnNxbWdUc24xWW5KUmNCRTlDbDZSRlpaU2UvWE9BTlg1dVpkYUVsaDB5Ykc4eHYydjhlNDRzbDhmemYwNjc3MDAyUHRES1czdVBYckhrdVVkTzQxdjJWZW1keHlSaVlvMUU3MTgrV2FlWjZ6NWtnYnlCYzMwck1hM3pGbk5iOFZGUzFiUGN6OHR4aTdQUFpxaDhPVXpwTmUwek9QYTBIblUzWERxeXRuV3NjRTlNUVRTcjJEZE9kam8zWFRsL3RLRjlxQXVkUEt2WmJQOUFlNzA0REM0RXNzNkFBQUFBRWxGVGtTdVFtQ0MiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIGlkPSJpbWcxIj48L2ltYWdlPjxjbGlwUGF0aCBpZD0iY2xpcDIiPjxwYXRoIGQ9Ik0wIDAgMzcgMCAzNyAzOSAwIDM5WiIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz48L2NsaXBQYXRoPjxsaW5lYXJHcmFkaWVudCB4MT0iNjkuNSIgeTE9IjQxOCIgeDI9IjY5LjUiIHkyPSI0NDMiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBzcHJlYWRNZXRob2Q9InJlZmxlY3QiIGlkPSJmaWxsMyI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjQTg1MjRDIi8+PHN0b3Agb2Zmc2V0PSIwLjUiIHN0b3AtY29sb3I9IiNBMTI4MTkiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM5NDFFMEYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjY2xpcDApIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNTEgLTQxNCkiPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUxIDQxMykiPjx1c2Ugd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgeGxpbms6aHJlZj0iI2ltZzEiPjwvdXNlPjwvZz48cGF0aCBkPSJNNTggNDMwLjVDNTggNDIzLjU5NiA2My4xNDg3IDQxOCA2OS41IDQxOCA3NS44NTEzIDQxOCA4MSA0MjMuNTk2IDgxIDQzMC41IDgxIDQzNy40MDQgNzUuODUxMyA0NDMgNjkuNSA0NDMgNjMuMTQ4NyA0NDMgNTggNDM3LjQwNCA1OCA0MzAuNVoiIGZpbGw9InVybCgjZmlsbDMpIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L2c+PC9zdmc+"></img>
+                    </template>
+                </div>
+            </nav>
+
+            <main role="main" class="col d-flex flex-column flex-nowrap p-md-4 p-2">
+                <h5>Chat on {{endpoint}}</h5>
+                <div id="chat" style="flex:1" class="bg-light">
+                    <div class="m-2" v-for="message in chat.messages" v-bind:key="message.id">
+                        <div class="col-md row" style="display: inline-block;">
+                            <div v-if="message.type =='error' || message.from == '[System]'"
+                                class="font-italic text-warning text-center font-weight-light" role="alert">
+                                {{message.content}}
+                            </div>
+                            <div v-else-if="message.type == 'self' || message.from == username"
+                                class="alert alert-success float-right" role="text">
+                                {{message.content}}
+                            </div>
+                            <div v-else class="float-left" role="text">
+                                <small class="text-muted font-weight-light">From <a
+                                        href="#">{{message.from}}</a></small>
+                                <p class="alert alert-primary text-break ">{{message.content}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <br />
+                    <form v-on:submit.prevent="sendNewMessage()">
+                        <div class="input-group">
+                            <input type="text" v-model="newMessage" class="form-control" placeholder="Send a message">
+                            <button type="submit" class="btn btn-outline-secondary col-2 col-md-1"
+                                :disabled="!newMessage || !connected">Send</button>
+                        </div>
+                    </form>
+                </div>
+                <div style="background-color: black; color: blanchedalmond; height: 50px; overflow: auto;">
+                    <ul>
+                        <li v-for="l in logs.slice().reverse()" :key="l.id">
+                            {{ l }}
+                        </li>
+                    </ul>
+                </div>
+            </main>
+        </template>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+    <script>
+        function generateUser() {
+            return 'User ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+        }
+
+        const data = {
+            websocket: null,
+            username: generateUser(), // todo: oauth
+            endpoint: "http://localhost:7071",
+            newMessage: '',
+            chat: { messages: [] },
+            logs: [],
+            loggedin: false,
+            connected: false,
+            counter: 0
+        };
+        const app = new Vue({
+            el: '#app',
+            data: data,
+            methods: {
+                login: function () {
+                    if (this.username) {
+                        this.loggedin = true;
+
+                        this.log("Connecting...");
+                        // id in query map to the name in function, use like {query.userid}
+                        axios.post(`${this.endpoint}/api/login?userid=${this.username}`, null, null)
+                        .then(resp => resp.data)
+                        .then(info => {
+                            return info.url;
+                        }).catch(alert)
+                        .then(url => {
+                            var websocket = this.websocket = new WebSocket(url);
+                            websocket.onopen = e => {
+                                this.connected = true;
+                                console.log(websocket.protocol);
+                                this.log("Client websocket opened.");
+                            }
+                            websocket.onclose = e => {
+                                this.connected = false;
+                                this.log("Client websocket closed.");
+                            }
+                            websocket.onerror = e => {
+                                this.log("Client websocket error, check the Console window for details.");
+                            }
+                            websocket.onmessage = e => {
+                                if (!e.data) return;
+                                this.addMessageToView(e.data);
+                            }}).catch(err => {
+                                this.log("Error: " + err);
+                        });
+                    }
+                },
+                sendNewMessage: function () {
+                    if (!this.newMessage) {
+                        this.log("Error: empty message");
+                        return;
+                    }
+
+                    this.sendToServer(this.newMessage);
+
+                    this.newMessage = '';
+                },
+                addItem(item, owner) {
+                    item.id = this.counter++; // vue transitions need an id
+                    owner.push(item);
+                },
+                sendToServer(content) {
+                    this.websocket.send(JSON.stringify(
+                        {
+                            from: this.username,
+                            content: content,
+                        }
+                    ));
+                },
+                addMessageToView(message) {
+                    this.addItem(JSON.parse(message), this.chat.messages);
+
+                    // todo: not that work because the dom is rendered later, use binding?
+                    var elem = document.getElementById('chat');
+                    if (elem) {
+                        elem.scrollTop = elem.scrollHeight;
+                    }
+                },
+                log(content) {
+                    this.addItem(new Date().toLocaleString() + ": " + content, this.logs);
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>

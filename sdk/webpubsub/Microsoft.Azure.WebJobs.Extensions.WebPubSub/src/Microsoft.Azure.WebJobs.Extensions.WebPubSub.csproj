@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <PackageId>Microsoft.Azure.WebJobs.Extensions.WebPubSub</PackageId>
+    <LangVersion>8.0</LangVersion>
+    <Version>1.0.0-alpha.1</Version>
+    <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Messaging.WebPubSub" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+    <PackageReference Include="System.Memory.Data" />
+  </ItemGroup>
+</Project>
