@@ -64,7 +64,6 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                     await foreach (TimeSeriesPoint timeSeriesPoint in queryEventsPages.GetPageableResultsAsync())
                     {
-                        //Console.WriteLine($"{timeSeriesPoint.Timestamp}: {timeSeriesPoint.GetValue("Temperature")}");
                         double result = (double)timeSeriesPoint.GetValue("Temperature");
                         Console.WriteLine($"{timeSeriesPoint.Timestamp}: {result}");
                     }
