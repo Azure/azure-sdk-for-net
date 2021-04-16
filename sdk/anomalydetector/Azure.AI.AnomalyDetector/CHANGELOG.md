@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0-preview.1 (2021-04-15)
+## 3.0.0-preview.3 (2021-04-15)
 
 ### Breaking Changes
 
