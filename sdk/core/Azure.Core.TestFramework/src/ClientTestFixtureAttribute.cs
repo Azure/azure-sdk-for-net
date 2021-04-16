@@ -110,7 +110,7 @@ namespace Azure.Core.TestFramework
 
             if (_serviceVersions.Any())
             {
-                foreach (object serviceVersion in _serviceVersions)
+                foreach (object serviceVersion in _serviceVersions.Distinct())
                 {
                     if (_additionalParameters.Any())
                     {
