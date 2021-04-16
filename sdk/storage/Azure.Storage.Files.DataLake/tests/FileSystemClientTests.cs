@@ -2143,7 +2143,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        //[PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
         public async Task UndeletePathAsync()
         {
             // Arrange
@@ -2163,6 +2163,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 deletionId: deletionId);
 
             // Assert
+            Assert.AreEqual(typeof(DataLakeDirectoryClient), restoredPathClient.GetType());
             await restoredPathClient.GetPropertiesAsync();
         }
 
