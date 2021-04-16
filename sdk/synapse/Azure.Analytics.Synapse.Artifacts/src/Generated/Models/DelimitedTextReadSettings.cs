@@ -22,13 +22,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The read setting type. </param>
         /// <param name="additionalProperties"> . </param>
         /// <param name="skipLineCount"> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </param>
-        internal DelimitedTextReadSettings(string type, IDictionary<string, object> additionalProperties, object skipLineCount) : base(type, additionalProperties)
+        /// <param name="compressionProperties"> Compression settings. </param>
+        internal DelimitedTextReadSettings(string type, IDictionary<string, object> additionalProperties, object skipLineCount, CompressionReadSettings compressionProperties) : base(type, additionalProperties)
         {
             SkipLineCount = skipLineCount;
+            CompressionProperties = compressionProperties;
             Type = type ?? "DelimitedTextReadSettings";
         }
 
         /// <summary> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </summary>
         public object SkipLineCount { get; set; }
+        /// <summary> Compression settings. </summary>
+        public CompressionReadSettings CompressionProperties { get; set; }
     }
 }

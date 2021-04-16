@@ -1,8 +1,5 @@
 # Azure Communication Identity client library for .NET
 
-> Server Version:
-> Identity client: 2021-03-07
-
 Azure Communication Identity is managing tokens for Azure Communication Services.
 
 [Source code][source] <!--| [Package (NuGet)][package]--> | [Product documentation][product_docs] | [Samples][source_samples]
@@ -14,7 +11,7 @@ Azure Communication Identity is managing tokens for Azure Communication Services
 Install the Azure Communication Identity client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Communication.Identity --version 1.0.0-beta.5
+dotnet add package Azure.Communication.Identity --version 1.0.0
 ```
 
 ### Prerequisites

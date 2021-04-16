@@ -10,7 +10,7 @@ parameters:
   default: packages
 - name: SDKType
   type: string
-  default: client
+  default: all
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -115,6 +115,9 @@ jobs:
           ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
             Directory: sdk/${{ parameters.ServiceDirectory }}
           CheckLinkGuidance: $true
+      - template: /eng/common/pipelines/templates/steps/verify-samples.yml
+        parameters:
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
       - script: |
           pip install setuptools wheel
           pip install doc-warden==$(DocWardenVersion)

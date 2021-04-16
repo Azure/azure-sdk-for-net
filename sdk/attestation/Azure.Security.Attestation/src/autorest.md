@@ -7,34 +7,31 @@ Run `dotnet build /t:GenerateCode` in src directory to re-generate.
 
 ``` yaml
 title: Azure.Security.Attestation
-input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c06ad5de230ea1571df749a8014560a9762a1540/specification/attestation/data-plane/Microsoft.Attestation/stable/2020-10-01/attestation.json
+require:
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/45c7ae94a46920c94b5e03e6a7d128d6cb7a364e/specification/attestation/data-plane/readme.md
 namespace: Azure.Security.Attestation
+tag: package-2020-10-01
+azure-arm: false
+
 
 directive:
 - from: swagger-document
-  where: $.definitions.PolicyResult
+  where: $.definitions
   transform: >
-      $["x-csharp-usage"] = "model,output";
-      $["x-csharp-formats"] = "json";
-- from: swagger-document
-  where: $.definitions.AttestationResult
-  transform: >
-      $["x-csharp-usage"] = "model,output";
-      $["x-csharp-formats"] = "json";
-- from: swagger-document
-  where: $.definitions.PolicyCertificatesResult
-  transform: >
-      $["x-csharp-usage"] = "model,output";
-      $["x-csharp-formats"] = "json";
-- from: swagger-document
-  where: $.definitions.AttestationCertificateManagementBody
-  transform: >
-      $["x-csharp-usage"] = "model,output";
-      $["x-csharp-formats"] = "json";
-- from: swagger-document
-  where: $.definitions.PolicyCertificatesModificationResult
-  transform: >
-      $["x-csharp-usage"] = "model,output";
-      $["x-csharp-formats"] = "json";
+    for (var path in $)
+    {
+      if (path.endsWith("AttestationCertificateManagementBody"))
+      {
+        $[path]["x-csharp-usage"] = "model,output,input,converter";
+        $[path]["x-csharp-formats"] = "json";
+      }
+      else if (path.endsWith("PolicyResult") ||
+        path.endsWith("AttestationResult") ||
+        path.endsWith("PolicyCertificatesResult") ||
+        path.endsWith("PolicyCertificatesModificationResult"))
+      {
+        $[path]["x-csharp-usage"] = "model,output,converter";
+        $[path]["x-csharp-formats"] = "json";
+      }
+    }
 ```

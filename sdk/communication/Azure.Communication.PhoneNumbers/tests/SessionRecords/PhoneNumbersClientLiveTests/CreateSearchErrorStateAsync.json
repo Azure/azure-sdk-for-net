@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/availablePhoneNumbers/countries/US/:search?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "137",
+        "Content-Type": "application/json",
+        "Date": "Fri, 26 Mar 2021 05:07:53 GMT",
+        "traceparent": "00-8214742d0394164abb0bace4c82e3096-449e08e63155ca44-00",
+        "User-Agent": [
+          "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210325.1",
+          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "c7ef4a87c68e027a49bc8713cb35d966",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "phoneNumberType": "tollFree",
+        "assignmentType": "person",
+        "capabilities": {
+          "calling": "outbound",
+          "sms": "none"
+        },
+        "areaCode": "212",
+        "quantity": 1
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Fri, 26 Mar 2021 05:07:54 GMT",
+        "MS-CV": "c/hsLaatqE\u002Bqq76CWBrhGw.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0KWxdYAAAAABN84/U2eHjRKUsXAZRXtZgWVZSMzBFREdFMDQxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "1489ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidInput",
+          "message": "We are unable to find phone plans to match your requested capabilities.",
+          "target": "areacode"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "36253888"
+  }
+}

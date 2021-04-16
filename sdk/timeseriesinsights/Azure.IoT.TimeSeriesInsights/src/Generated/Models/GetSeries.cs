@@ -15,29 +15,6 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Get Series query. Allows to retrieve time series of calculated variable values from events for a given Time Series ID and search span. </summary>
     public partial class GetSeries
     {
-        /// <summary> Initializes a new instance of GetSeries. </summary>
-        /// <param name="timeSeriesId"> A single Time Series ID value that uniquely identifies a single time series instance (e.g. a device). Note that a single Time Series ID can be composite if multiple properties are specified as Time Series ID at environment creation time. The position and type of values must match Time Series ID properties specified on the environment and returned by Get Model Setting API. Cannot be null. </param>
-        /// <param name="searchSpan"> The range of time on which the query is executed. Cannot be null. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="timeSeriesId"/> or <paramref name="searchSpan"/> is null. </exception>
-        public GetSeries(IEnumerable<object> timeSeriesId, DateTimeRange searchSpan)
-        {
-            if (timeSeriesId == null)
-            {
-                throw new ArgumentNullException(nameof(timeSeriesId));
-            }
-            if (searchSpan == null)
-            {
-                throw new ArgumentNullException(nameof(searchSpan));
-            }
-
-            TimeSeriesId = timeSeriesId.ToList();
-            SearchSpan = searchSpan;
-            ProjectedVariables = new ChangeTrackingList<string>();
-            InlineVariables = new ChangeTrackingDictionary<string, TimeSeriesVariable>();
-        }
-
-        /// <summary> A single Time Series ID value that uniquely identifies a single time series instance (e.g. a device). Note that a single Time Series ID can be composite if multiple properties are specified as Time Series ID at environment creation time. The position and type of values must match Time Series ID properties specified on the environment and returned by Get Model Setting API. Cannot be null. </summary>
-        public IList<object> TimeSeriesId { get; }
         /// <summary> The range of time on which the query is executed. Cannot be null. </summary>
         public DateTimeRange SearchSpan { get; }
         /// <summary> Top-level filter over the events that restricts the number of events being considered for computation. This filter is AND&apos;ed with filter in each variable. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;. Optional. </summary>

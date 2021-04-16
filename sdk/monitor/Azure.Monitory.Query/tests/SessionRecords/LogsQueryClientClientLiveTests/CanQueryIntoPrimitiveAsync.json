@@ -1,0 +1,78 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/9a15b791-8d2f-436f-a734-25d128c72254/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "36",
+        "Content-Type": "application/json",
+        "traceparent": "00-f14007d774af94469c96435770d92335-4432e3232d64b44d-00",
+        "User-Agent": "azsdk-net-Monitory.Query/1.0.0-alpha.20210408.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "fa641e04f95286221788805ede7da002",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "MyLogs1_CL | project a_s"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "90",
+        "Connection": "keep-alive",
+        "Content-Length": "136",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 09 Apr 2021 03:10:45 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-69f9f48db4-crxq9",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "a_s",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                ""
+              ],
+              [
+                "b"
+              ],
+              [
+                "b"
+              ],
+              [
+                "b"
+              ],
+              [
+                "b"
+              ],
+              [
+                "b"
+              ],
+              [
+                "b"
+              ],
+              [
+                "b"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "560728092",
+    "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254"
+  }
+}

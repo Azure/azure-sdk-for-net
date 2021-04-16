@@ -1,7 +1,31 @@
 # Release History
 
-## 12.0.0-beta.7 (Unreleased)
+## 12.0.0-beta.8 (Unreleased)
 
+### Key Bug Fixes
+
+- Merge operations no longer fail for Cosmos table endpoints.
+
+## 12.0.0-beta.7 (2021-04-06)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Tables better with their contributions to this release:
+
+- Joel Verhagen _([GitHub](https://github.com/joelverhagen))_
+
+### Added
+
+- Added the `TableErrorCode` type which allows comparison of the `ErrorCode` on `RequestFailedException`s thrown from client operations with a known error value.
+- `TableEntity` and custom entity types now support `BinaryData` properties.
+
+### Key Bug Fixes
+
+- Fixed handling of paging headers when Table Storage returned a `x-ms-continuation-NextPartitionKey` but no `x-ms-continuation-NextRowKey`. This was causing an HTTP 400 on the subsequent page query (A community contribution, courtesy of _[joelverhagen](https://github.com/joelverhagen)_)
+
+### Changed
+
+- Removed the `Timestamp` property from the serialized entity when sending it to the service as it is ignored by the service (A community contribution, courtesy of _[joelverhagen](https://github.com/joelverhagen)_)
 
 ## 12.0.0-beta.6 (2021-03-09)
 

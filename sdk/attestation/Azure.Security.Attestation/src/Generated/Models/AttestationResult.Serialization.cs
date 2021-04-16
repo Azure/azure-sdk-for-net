@@ -7,19 +7,21 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
+    [JsonConverter(typeof(AttestationResultConverter))]
     public partial class AttestationResult
     {
         internal static AttestationResult DeserializeAttestationResult(JsonElement element)
         {
             Optional<string> jti = default;
             Optional<string> iss = default;
-            Optional<long> iat = default;
-            Optional<long> exp = default;
-            Optional<long> nbf = default;
+            Optional<double> iat = default;
+            Optional<double> exp = default;
+            Optional<double> nbf = default;
             Optional<object> cnf = default;
             Optional<string> nonce = default;
             Optional<string> xMsVer = default;
@@ -68,7 +70,7 @@ namespace Azure.Security.Attestation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    iat = property.Value.GetInt64();
+                    iat = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("exp"))
@@ -78,7 +80,7 @@ namespace Azure.Security.Attestation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    exp = property.Value.GetInt64();
+                    exp = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("nbf"))
@@ -88,7 +90,7 @@ namespace Azure.Security.Attestation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nbf = property.Value.GetInt64();
+                    nbf = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("cnf"))
@@ -332,7 +334,20 @@ namespace Azure.Security.Attestation.Models
                     continue;
                 }
             }
-            return new AttestationResult(jti.Value, iss.Value, iat, exp, nbf, cnf.Value, nonce.Value, xMsVer.Value, xMsRuntime.Value, xMsInittime.Value, xMsPolicy.Value, xMsAttestationType.Value, xMsPolicySigner.Value, xMsPolicyHash.Value, Optional.ToNullable(xMsSgxIsDebuggable), Optional.ToNullable(xMsSgxProductId), xMsSgxMrenclave.Value, xMsSgxMrsigner.Value, Optional.ToNullable(xMsSgxSvn), xMsSgxEhd.Value, xMsSgxCollateral.Value, ver.Value, Optional.ToNullable(isDebuggable), maaAttestationcollateral.Value, aasEhd.Value, maaEhd.Value, Optional.ToNullable(productId), sgxMrenclave.Value, sgxMrsigner.Value, Optional.ToNullable(svn), tee.Value, policySigner.Value, policyHash.Value, rpData.Value);
+            return new AttestationResult(jti.Value, iss.Value, Optional.ToNullable(iat), Optional.ToNullable(exp), Optional.ToNullable(nbf), cnf.Value, nonce.Value, xMsVer.Value, xMsRuntime.Value, xMsInittime.Value, xMsPolicy.Value, xMsAttestationType.Value, xMsPolicySigner.Value, xMsPolicyHash.Value, Optional.ToNullable(xMsSgxIsDebuggable), Optional.ToNullable(xMsSgxProductId), xMsSgxMrenclave.Value, xMsSgxMrsigner.Value, Optional.ToNullable(xMsSgxSvn), xMsSgxEhd.Value, xMsSgxCollateral.Value, ver.Value, Optional.ToNullable(isDebuggable), maaAttestationcollateral.Value, aasEhd.Value, maaEhd.Value, Optional.ToNullable(productId), sgxMrenclave.Value, sgxMrsigner.Value, Optional.ToNullable(svn), tee.Value, policySigner.Value, policyHash.Value, rpData.Value);
+        }
+
+        internal partial class AttestationResultConverter : JsonConverter<AttestationResult>
+        {
+            public override void Write(Utf8JsonWriter writer, AttestationResult model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override AttestationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAttestationResult(document.RootElement);
+            }
         }
     }
 }

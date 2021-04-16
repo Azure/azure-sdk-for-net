@@ -288,23 +288,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         private async ValueTask<KeyVaultCertificateWithPolicy> WaitForOperationAsync(CertificateOperation operation)
         {
-            var rand = new Random();
-            TimeSpan PollingInterval() => TimeSpan.FromMilliseconds(rand.Next(1, 50));
-
-            if (IsAsync)
-            {
-                return await operation.WaitForCompletionAsync(PollingInterval(), default);
-            }
-            else
-            {
-                while (!operation.HasCompleted)
-                {
-                    operation.UpdateStatus();
-                    await Task.Delay(PollingInterval());
-                }
-
-                return operation.Value;
-            }
+            return await operation.WaitForCompletionAsync();
         }
 
         public class MockCredential : TokenCredential

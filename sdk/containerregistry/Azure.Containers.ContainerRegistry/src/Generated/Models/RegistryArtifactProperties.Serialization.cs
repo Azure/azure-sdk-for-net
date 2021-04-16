@@ -12,11 +12,10 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class RegistryArtifactProperties
+    public partial class RegistryArtifactProperties
     {
         internal static RegistryArtifactProperties DeserializeRegistryArtifactProperties(JsonElement element)
         {
-            Optional<string> registry = default;
             Optional<string> imageName = default;
             Optional<string> digest = default;
             Optional<long> imageSize = default;
@@ -24,17 +23,11 @@ namespace Azure.Containers.ContainerRegistry
             Optional<DateTimeOffset> lastUpdateTime = default;
             Optional<string> architecture = default;
             Optional<string> os = default;
-            Optional<string> mediaType = default;
-            Optional<string> configMediaType = default;
+            Optional<IReadOnlyList<ManifestAttributesManifestReferences>> references = default;
             Optional<IReadOnlyList<string>> tags = default;
             Optional<ContentProperties> changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registry"))
-                {
-                    registry = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("imageName"))
                 {
                     imageName = property.Value.GetString();
@@ -94,14 +87,19 @@ namespace Azure.Containers.ContainerRegistry
                             os = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("mediaType"))
+                        if (property0.NameEquals("references"))
                         {
-                            mediaType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("configMediaType"))
-                        {
-                            configMediaType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ManifestAttributesManifestReferences> array = new List<ManifestAttributesManifestReferences>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ManifestAttributesManifestReferences.DeserializeManifestAttributesManifestReferences(item));
+                            }
+                            references = array;
                             continue;
                         }
                         if (property0.NameEquals("tags"))
@@ -133,7 +131,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new RegistryArtifactProperties(registry.Value, imageName.Value, digest.Value, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture.Value, os.Value, mediaType.Value, configMediaType.Value, Optional.ToList(tags), changeableAttributes.Value);
+            return new RegistryArtifactProperties(imageName.Value, digest.Value, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture.Value, os.Value, Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.Security.KeyVault
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential) : base(credential, Array.Empty<string>())
         { }
 
-        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthenticateRequestOnChallengeAsync(HttpMessage, bool)" />
-        protected override async Task AuthenticateRequestAsync(HttpMessage message, bool async)
+        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequestOnChallengeAsync(HttpMessage, bool)" />
+        protected override async Task AuthorizeRequestAsync(HttpMessage message, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
@@ -46,11 +46,15 @@ namespace Azure.Security.KeyVault
             // As a result, before we know the auth scheme we need to avoid sending an unprotected body to Key Vault.
             // We don't currently support this enhanced auth scheme in the SDK but we still don't want to send any unprotected data to vaults which require it.
 
-            message.SetProperty(KeyVaultStashedContentKey, message.Request.Content);
-            message.Request.Content = null;
+            // Do not overwrite previous contents if retrying after initial request failed (e.g. timeout).
+            if (!message.TryGetProperty(KeyVaultStashedContentKey, out _))
+            {
+                message.SetProperty(KeyVaultStashedContentKey, message.Request.Content);
+                message.Request.Content = null;
+            }
         }
 
-        protected override async ValueTask<bool> AuthenticateRequestOnChallengeAsync(HttpMessage message, bool async)
+        protected override async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message, bool async)
         {
             if (message.Request.Content == null && message.TryGetProperty(KeyVaultStashedContentKey, out var content))
             {
