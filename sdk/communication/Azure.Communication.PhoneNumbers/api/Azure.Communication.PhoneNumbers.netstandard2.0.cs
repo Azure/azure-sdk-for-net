@@ -17,6 +17,11 @@ namespace Azure.Communication.PhoneNumbers
         public static bool operator !=(Azure.Communication.PhoneNumbers.BillingFrequency left, Azure.Communication.PhoneNumbers.BillingFrequency right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DiagnosticPhoneNumbersClientOptions : Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions
+    {
+        public DiagnosticPhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V2021_03_07) : base (default(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion)) { }
+        public void AddHeaderParameters() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberAssignmentType : System.IEquatable<Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType>
     {
