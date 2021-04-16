@@ -237,7 +237,7 @@ namespace Azure.Core.TestFramework
 
             if (runsRecorded)
             {
-                test.Properties.Set("RunsRecorded", "These tests would run in recorded mode.");
+                test.Properties.Set("RunsRecorded", "These tests would run in Record mode.");
             }
 
             if (runsLive)
