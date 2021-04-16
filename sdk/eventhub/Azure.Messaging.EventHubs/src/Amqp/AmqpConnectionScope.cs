@@ -237,6 +237,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public virtual async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(TimeSpan timeout,
                                                                                    CancellationToken cancellationToken)
         {
+            Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = ValueStopwatch.StartNew();
@@ -278,6 +279,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                            bool trackLastEnqueuedEventProperties,
                                                                            CancellationToken cancellationToken)
         {
+            Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
@@ -327,6 +329,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                          TimeSpan timeout,
                                                                          CancellationToken cancellationToken)
         {
+            Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = ValueStopwatch.StartNew();
