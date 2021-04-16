@@ -4,15 +4,18 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Reflection;
 using Azure.Monitory.Query.Models;
 
 namespace Azure.Monitory.Query
 {
     internal class RowBinder
     {
-        internal static IReadOnlyList<T> BindResults<T>(LogsQueryResult response)
+        private TypeBinder _typeBinder = new();
+        public RowBinder()
+        {
+        }
+
+        internal IReadOnlyList<T> BindResults<T>(LogsQueryResult response)
         {
             // TODO: this is very slow
             List<T> results = new List<T>();
@@ -49,21 +52,9 @@ namespace Azure.Monitory.Query
             {
                 foreach (var table in response.Tables)
                 {
-                    var columnMap = table.Columns
-                        .Select((column, index) => (Property: typeof(T).GetProperty(column.Name, BindingFlags.Instance | BindingFlags.Public), index))
-                        .Where(columnMapping => columnMapping.Property?.SetMethod != null)
-                        .ToArray();
-
                     foreach (var row in table.Rows)
                     {
-                        T rowObject = Activator.CreateInstance<T>();
-
-                        foreach (var (property, index) in columnMap)
-                        {
-                            property.SetValue(rowObject, Convert.ChangeType(row.GetObject(index), property.PropertyType, CultureInfo.InvariantCulture));
-                        }
-
-                        results.Add(rowObject);
+                        results.Add(_typeBinder.Deserialize<T>(row));
                     }
                 }
             }

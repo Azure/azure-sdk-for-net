@@ -14,13 +14,15 @@ namespace Azure.Monitory.Query
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly QueryRestClient _restClient;
+        private readonly RowBinder _rowBinder;
         private readonly BatchRequest _batch;
         private int _counter;
 
-        internal LogsBatchQuery(ClientDiagnostics clientDiagnostics, QueryRestClient restClient)
+        internal LogsBatchQuery(ClientDiagnostics clientDiagnostics, QueryRestClient restClient, RowBinder rowBinder)
         {
             _clientDiagnostics = clientDiagnostics;
             _restClient = restClient;
+            _rowBinder = rowBinder;
             _batch = new BatchRequest();
         }
 
@@ -47,7 +49,9 @@ namespace Azure.Monitory.Query
             scope.Start();
             try
             {
-                return _restClient.Batch(_batch, cancellationToken);
+                var response = _restClient.Batch(_batch, cancellationToken);
+                response.Value.RowBinder = _rowBinder;
+                return response;
             }
             catch (Exception e)
             {
@@ -62,7 +66,9 @@ namespace Azure.Monitory.Query
             scope.Start();
             try
             {
-                return await _restClient.BatchAsync(_batch, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.BatchAsync(_batch, cancellationToken).ConfigureAwait(false);
+                response.Value.RowBinder = _rowBinder;
+                return response;
             }
             catch (Exception e)
             {
