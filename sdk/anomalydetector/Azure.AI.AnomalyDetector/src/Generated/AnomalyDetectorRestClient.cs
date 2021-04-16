@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -433,7 +434,7 @@ namespace Azure.AI.AnomalyDetector
             uri.AppendRaw("/anomalydetector/v1.1-preview", false);
             uri.AppendPath("/multivariate/models/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendPath("/:detect", false);
+            uri.AppendPath("/detect", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -558,15 +559,16 @@ namespace Azure.AI.AnomalyDetector
             uri.AppendRaw("/anomalydetector/v1.1-preview", false);
             uri.AppendPath("/multivariate/models/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendPath("/:export", false);
+            uri.AppendPath("/export", false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/zip");
             return message;
         }
 
         /// <summary> Export multivariate anomaly detection model based on modelId. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<AnomalyDetectorExportModelHeaders>> ExportModelAsync(Guid modelId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, AnomalyDetectorExportModelHeaders>> ExportModelAsync(Guid modelId, CancellationToken cancellationToken = default)
         {
             using var message = CreateExportModelRequest(modelId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -574,7 +576,10 @@ namespace Azure.AI.AnomalyDetector
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    {
+                        var value = message.ExtractResponseContent();
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -583,7 +588,7 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Export multivariate anomaly detection model based on modelId. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AnomalyDetectorExportModelHeaders> ExportModel(Guid modelId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, AnomalyDetectorExportModelHeaders> ExportModel(Guid modelId, CancellationToken cancellationToken = default)
         {
             using var message = CreateExportModelRequest(modelId);
             _pipeline.Send(message, cancellationToken);
@@ -591,7 +596,10 @@ namespace Azure.AI.AnomalyDetector
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    {
+                        var value = message.ExtractResponseContent();
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

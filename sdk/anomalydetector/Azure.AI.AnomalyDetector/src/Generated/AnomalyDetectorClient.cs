@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -374,13 +375,13 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Export multivariate anomaly detection model based on modelId. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ExportModelAsync(Guid modelId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> ExportModelAsync(Guid modelId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.ExportModel");
             scope.Start();
             try
             {
-                return (await RestClient.ExportModelAsync(modelId, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+                return await RestClient.ExportModelAsync(modelId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -392,13 +393,13 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Export multivariate anomaly detection model based on modelId. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ExportModel(Guid modelId, CancellationToken cancellationToken = default)
+        public virtual Response<Stream> ExportModel(Guid modelId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("AnomalyDetectorClient.ExportModel");
             scope.Start();
             try
             {
-                return RestClient.ExportModel(modelId, cancellationToken).GetRawResponse();
+                return RestClient.ExportModel(modelId, cancellationToken);
             }
             catch (Exception e)
             {
