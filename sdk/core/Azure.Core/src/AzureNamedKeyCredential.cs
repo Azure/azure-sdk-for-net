@@ -65,7 +65,7 @@ namespace Azure
         /// <code snippet="Snippet:AzureNamedKeyCredential_Deconstruct">
         /// var credential = new AzureNamedKeyCredential(&quot;SomeName&quot;, &quot;SomeKey&quot;);
         ///
-        ///                         (string name, string key) = credential;
+        /// (string name, string key) = credential;
         /// </code>
         /// </example>
         /// <seealso href="https://docs.microsoft.com/dotnet/csharp/deconstruct">Deconstructing tuples and other types</seealso>
