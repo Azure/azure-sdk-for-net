@@ -58,16 +58,6 @@ namespace Azure.IoT.TimeSeriesInsights
             return (int)variant._i64;
         }
 
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="variant"></param>
-        //public static explicit operator string(TimeSeriesValue variant)
-        //{
-        //    if (!variant._obj.Equals(typeof(int)))
-        //        throw new InvalidCastException();
-        //    return variant._i64.ToString(CultureInfo.InvariantCulture);
-        //}
-
         #endregion
 
         #region Double
