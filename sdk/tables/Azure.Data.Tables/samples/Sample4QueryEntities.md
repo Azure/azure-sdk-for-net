@@ -49,8 +49,8 @@ For example, OData filters require that strings be single quoted, and DateTime v
 The `QueryFilter` class handles all the type escaping for you.
 
 ```C# Snippet:TablesSample4QueryEntitiesFilterWithQueryFilter
-// The QueryFilter class is also available to assist with properly formatting odata queries.
-Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: QueryFilter.Create($"PartitionKey eq {partitionKey}"));
+// The TablesFilter class is also available to assist with properly formatting odata queries.
+Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: TablesFilter.Create($"PartitionKey eq {partitionKey}"));
 // Iterate the <see cref="Pageable"> to access all queried entities.
 
 foreach (TableEntity qEntity in queryResultsFilter)
