@@ -1,17 +1,19 @@
-﻿using Microsoft.Azure.WebJobs.Host.Executors;
-using Moq;
+﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Host.Executors;
+using Moq;
 using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
     public class WebPubSubTriggerDispatcherTests
     {
-        private static (string ConnectionId, string AccessKey, string Signature) TestKey = 
-            ("0f9c97a2f0bf4706afe87a14e0797b11", "7aab239577fd4f24bc919802fb629f5f", "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561");
+        private static (string ConnectionId, string AccessKey, string Signature) TestKey = ("0f9c97a2f0bf4706afe87a14e0797b11", "7aab239577fd4f24bc919802fb629f5f", "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561");
         private const string TestHub = "testhub";
         private const WebPubSubEventType TestType = WebPubSubEventType.System;
         private const string TestEvent = Constants.Events.ConnectedEvent;

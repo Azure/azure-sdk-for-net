@@ -12,13 +12,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public class WebPubSubConnection
     {
-        public WebPubSubConnection(string baseUrl, string accessToken)
-        {
-            BaseUrl = baseUrl;
-            AccessToken = accessToken;
-            Url = $"{baseUrl}?access_token={accessToken}";
-        }
-
         public WebPubSubConnection(Uri url)
         {
             Url = url.ToString();

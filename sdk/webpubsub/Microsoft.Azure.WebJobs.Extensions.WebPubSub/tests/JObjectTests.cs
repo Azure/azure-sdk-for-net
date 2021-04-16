@@ -1,7 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
+﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Newtonsoft.Json.Linq;
 using Xunit;
 using static Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubTriggerBinding;
 
@@ -32,9 +35,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                 ""message"": ""test"",
                 ""dataType"": ""text""
                 }";
-            
+
             var jsevent = JObject.Parse(wpsEvent);
-            
+
             var result = jsevent.ToObject<WebPubSubEvent>();
 
             Assert.Equal("test", result.Message.ToString());

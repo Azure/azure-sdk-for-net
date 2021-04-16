@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Copyright (c) .NET Foundation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
 using System.Reflection;
-using System.Text;
 using Xunit;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Bson;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {

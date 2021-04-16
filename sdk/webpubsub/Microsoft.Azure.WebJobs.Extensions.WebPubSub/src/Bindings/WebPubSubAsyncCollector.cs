@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             if (item == null)
             {
-                throw new ArgumentNullException("Binding Object.");
+                throw new ArgumentNullException(nameof(item));
             }
 
             try
@@ -29,7 +29,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 var method = typeof(IWebPubSubService).GetMethod(item.Operation.ToString(),
                     BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
-                await (Task)method.Invoke(_service, new object[] { item });
+                var task = (Task)method.Invoke(_service, new object[] { item });
+
+                await task.ConfigureAwait(false);
             }
             catch (Exception ex)
             {

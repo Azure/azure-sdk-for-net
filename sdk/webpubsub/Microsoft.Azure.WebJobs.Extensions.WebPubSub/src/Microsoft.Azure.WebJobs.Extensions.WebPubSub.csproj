@@ -5,11 +5,13 @@
     <PackageId>Microsoft.Azure.WebJobs.Extensions.WebPubSub</PackageId>
     <LangVersion>8.0</LangVersion>
     <Version>1.0.0-alpha.1</Version>
-    <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;CA1056</NoWarn>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Messaging.WebPubSub" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
