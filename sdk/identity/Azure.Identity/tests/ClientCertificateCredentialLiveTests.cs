@@ -71,7 +71,7 @@ namespace Azure.Identity.Tests
 
             var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, cert, options));
 
-            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
+            var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(AzureAuthorityHosts.GetDefault().ToString())) });
 
             // ensure we can initially acquire a  token
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
