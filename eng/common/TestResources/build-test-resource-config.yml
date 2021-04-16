@@ -31,7 +31,7 @@ steps:
   - ${{ if parameters.SubscriptionConfigurations }}:
     - pwsh: |
         Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]{}"
-      displayName: Initialize SubscriptionConfiguration variable
+      displayName: Initialize SubscriptionConfiguration variable for merging
       condition: eq(variables['SubscriptionConfiguration'], '')
 
     - ${{ each config in parameters.SubscriptionConfigurations }}:
