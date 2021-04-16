@@ -8,6 +8,9 @@ namespace Azure.Data.Tables.Models
     [CodeGenModel("TableResponseProperties")]
     public partial class TableItem
     {
+        /// <summary>
+        /// The OdataType.
+        /// </summary>
         internal string OdataType { get; }
 
         /// <summary> The id of the table. </summary>
