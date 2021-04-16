@@ -38,7 +38,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             var client = new PhoneNumbersClient(
                     TestEnvironment.LiveTestConnectionString,
-                    InstrumentClientOptions(new PhoneNumbersClientOptions()));
+                    InstrumentClientOptions(new DiagnosticPhoneNumbersClientOptions()));
 
             // We always create the instrumented client to suppress the instrumentation check
             var instrumentedClient = InstrumentClient(client);
@@ -55,7 +55,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = new PhoneNumbersClient(
                     TestEnvironment.LiveTestEndpoint,
                      new AzureKeyCredential(TestEnvironment.LiveTestAccessKey),
-                    InstrumentClientOptions(new PhoneNumbersClientOptions()));
+                    InstrumentClientOptions(new DiagnosticPhoneNumbersClientOptions()));
 
             return isInstrumented ? InstrumentClient(client) : client;
         }
@@ -70,7 +70,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = new PhoneNumbersClient(
                     TestEnvironment.LiveTestEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
-                    InstrumentClientOptions(new PhoneNumbersClientOptions()));
+                    InstrumentClientOptions(new DiagnosticPhoneNumbersClientOptions()));
 
             return isInstrumented ? InstrumentClient(client) : client;
         }
