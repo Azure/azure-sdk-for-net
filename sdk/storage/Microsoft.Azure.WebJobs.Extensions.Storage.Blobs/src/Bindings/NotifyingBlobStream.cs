@@ -4,6 +4,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
+using System;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
 {
@@ -40,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             base.Close();
             if (_committedAction != null)
             {
-                _committedAction.Execute(isClosing: true);
+                _committedAction.Execute();
             }
         }
     }

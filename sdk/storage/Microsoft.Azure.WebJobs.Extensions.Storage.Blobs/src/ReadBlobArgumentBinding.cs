@@ -34,9 +34,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                     return cacheStream;
                 }
 
-                // It does not exist in the cache; we wrap the blob's stream along with the cache key so it can be inserted in the cache later
+                // Cache miss
+                // Wrap the blob's stream along with the cache key so it can be inserted in the cache later using the above
+                // generated key for this blob.
                 Stream innerStream = await TryBindStreamAsync(blob.BlobClient, context.CancellationToken).ConfigureAwait(false);
-                CachableObjectStream cachableObjStream = new CachableObjectStream(cacheKey, innerStream);
+                CacheableObjectStream cachableObjStream = new CacheableObjectStream(cacheKey, innerStream, functionDataCache);
                 return cachableObjStream;
             }
             catch (RequestFailedException exception)
@@ -76,6 +78,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
         private static async Task<FunctionDataCacheKey> GetFunctionDataCacheKey(BlobWithContainer<BlobBaseClient> blob, CancellationToken cancellationToken)
         {
+            // To be strongly consistent, first check the latest version present in blob storage;
+            // query for that particular version in the cache.
             BlobProperties properties = await blob.BlobClient.FetchPropertiesOrNullIfNotExistAsync(cancellationToken).ConfigureAwait(false);
             string eTag = properties.ETag.ToString();
             string id = blob.BlobClient.Uri.ToString();
@@ -87,12 +91,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             FunctionDataCacheKey cacheKey,
             IFunctionDataCache functionDataCache)
         {
-            if (!functionDataCache.TryGet(cacheKey, out SharedMemoryMetadata sharedMemoryMeta))
+            if (!functionDataCache.TryGet(cacheKey, isIncrementActiveReference: true, out SharedMemoryMetadata sharedMemoryMeta))
             {
                 return null;
             }
 
-            return new FunctionDataCacheStream(sharedMemoryMeta, new MemoryStream());
+            return new FunctionDataCacheStream(cacheKey, sharedMemoryMeta, functionDataCache);
         }
     }
 }

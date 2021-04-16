@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
 {
     internal static class WriteBlobArgumentBinding
     {
-        public static async Task<NotifyingBlobStream> BindStreamAsync(BlobWithContainer<BlobBaseClient> blob,
+        public static async Task<CacheAfterWriteStream> BindStreamAsync(BlobWithContainer<BlobBaseClient> blob,
             ValueBindingContext context, IBlobWrittenWatcher blobWrittenWatcher, IFunctionDataCache functionDataCache)
         {
             var blockBlob = blob.BlobClient as BlockBlobClient;
@@ -36,9 +36,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
                 Metadata = metadata,
             };
             Stream rawStream = await blockBlob.OpenWriteAsync(true, options).ConfigureAwait(false);
-            IBlobCommitedAction committedAction = new BlobCommittedAction(blob, blobWrittenWatcher, context.SharedMemoryMetadata, functionDataCache);
+            IBlobCommitedAction committedAction = new BlobCommittedAction(blob, blobWrittenWatcher);
 
-            return await Task.FromResult(new NotifyingBlobStream(rawStream, committedAction)).ConfigureAwait(false);
+            Stream notifyingStream = new NotifyingBlobStream(rawStream, committedAction);
+
+            return await Task.FromResult(new CacheAfterWriteStream(context.SharedMemoryMetadata, functionDataCache, blob, notifyingStream)).ConfigureAwait(false);
         }
     }
 }
