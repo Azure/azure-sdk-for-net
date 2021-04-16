@@ -637,5 +637,33 @@ namespace Azure.ResourceManager.Core.Tests
                 Assert.AreEqual(expected, resource.AppendChildResource(childTypeName, childResourceName).ToString());
             }
         }
+
+        [TestCase(TrackedResourceId, TrackedResourceId, true)]
+        [TestCase(ChildResourceId, ChildResourceId, true)]
+        [TestCase(null, null, true)]
+        [TestCase(TrackedResourceId, ChildResourceId, false)]
+        [TestCase(ChildResourceId, TrackedResourceId, false)]
+        [TestCase(TrackedResourceId, null, false)]
+        [TestCase(null, TrackedResourceId, false)]
+        public void EqualsOperator(string resourceProviderID1, string resourceProviderID2, bool expected)
+        {
+            ResourceIdentifier a = resourceProviderID1;
+            ResourceIdentifier b = resourceProviderID2;
+            Assert.AreEqual(expected, a == b);
+        }
+
+        [TestCase(TrackedResourceId, TrackedResourceId, false)]
+        [TestCase(ChildResourceId, ChildResourceId, false)]
+        [TestCase(null, null, false)]
+        [TestCase(TrackedResourceId, ChildResourceId, true)]
+        [TestCase(ChildResourceId, TrackedResourceId, true)]
+        [TestCase(TrackedResourceId, null, true)]
+        [TestCase(null, TrackedResourceId, true)]
+        public void NotEqualsOperator(string resourceProviderID1, string resourceProviderID2, bool expected)
+        {
+            ResourceIdentifier a = resourceProviderID1;
+            ResourceIdentifier b = resourceProviderID2;
+            Assert.AreEqual(expected, a != b);
+        }
     }
 }
