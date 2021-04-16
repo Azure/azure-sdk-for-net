@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/template/
+    - sdk/purview/
 
 pr:
   branches:
@@ -23,7 +23,7 @@ pr:
     - common/Perf/
     - common/PerfStressShared/
     - common/Stress/
-    - sdk/template/
+    - sdk/purview/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
