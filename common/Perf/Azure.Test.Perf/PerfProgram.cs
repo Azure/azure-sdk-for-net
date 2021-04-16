@@ -209,13 +209,6 @@ namespace Azure.Test.Perf
         {
             Console.WriteLine("=== Environment ===");
 
-            Console.Write("Configuration: ");
-#if DEBUG
-            Console.WriteLine("Debug");
-#elif RELEASE
-            Console.WriteLine("Release");
-#endif
-
             Console.WriteLine($"GCSettings.IsServerGC: {GCSettings.IsServerGC}");
 
             Console.WriteLine($"Environment.ProcessorCount: {Environment.ProcessorCount}");
@@ -243,10 +236,6 @@ namespace Azure.Test.Perf
                 // Include all Track1 and Track2 assemblies
                 .Where(a => a.GetName().Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) ||
                             a.GetName().Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
-                // Exclude this perf framework
-                .Where(a => a != Assembly.GetExecutingAssembly())
-                // Exclude assembly containing the perf test itself
-                .Where(a => a != testType.Assembly)
                 // Exclude Azure.Core.TestFramework since it is only used to setup environment and should not impact results
                 .Where(a => !a.GetName().Name.Equals("Azure.Core.TestFramework", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(a => a.GetName().Name);
@@ -260,7 +249,10 @@ namespace Azure.Test.Perf
                 var debuggableAttribute = (DebuggableAttribute)(a.GetCustomAttribute(typeof(DebuggableAttribute)));
 
                 Console.WriteLine($"{name}:");
-                Console.WriteLine($"  Referenced:    {referencedVersion}");
+                if (referencedVersion != null)
+                {
+                    Console.WriteLine($"  Referenced:    {referencedVersion}");
+                }
                 Console.WriteLine($"  Loaded:        {loadedVersion}");
                 Console.WriteLine($"  Informational: {informationalVersion}");
                 Console.WriteLine($"  JITOptimizer:  {(debuggableAttribute.IsJITOptimizerDisabled ? "Disabled" : "Enabled")}");
