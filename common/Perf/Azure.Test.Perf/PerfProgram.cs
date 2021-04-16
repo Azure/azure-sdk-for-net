@@ -257,11 +257,13 @@ namespace Azure.Test.Perf
                 var referencedVersion = referencedAssemblies.Where(r => r.Name == name).SingleOrDefault()?.Version;
                 var loadedVersion = a.GetName().Version;
                 var informationalVersion = FileVersionInfo.GetVersionInfo(a.Location).ProductVersion;
+                var debuggableAttribute = (DebuggableAttribute)(a.GetCustomAttribute(typeof(DebuggableAttribute)));
 
                 Console.WriteLine($"{name}:");
                 Console.WriteLine($"  Referenced:    {referencedVersion}");
                 Console.WriteLine($"  Loaded:        {loadedVersion}");
                 Console.WriteLine($"  Informational: {informationalVersion}");
+                Console.WriteLine($"  JITOptimizer:  {(debuggableAttribute.IsJITOptimizerDisabled ? "Disabled" : "Enabled")}");
             }
 
             Console.WriteLine();
