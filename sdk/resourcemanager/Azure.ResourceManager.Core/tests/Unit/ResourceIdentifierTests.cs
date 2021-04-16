@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase(ChildResourceId, TrackedResourceId, false)]
         [TestCase(TrackedResourceId, null, false)]
         [TestCase(null, TrackedResourceId, false)]
-        public void Equals(string resourceProviderID1, string resourceProviderID2, bool expected)
+        public void EqualsToResourceIdentifier(string resourceProviderID1, string resourceProviderID2, bool expected)
         {
             ResourceIdentifier a = resourceProviderID1;
             ResourceIdentifier b = resourceProviderID2;
@@ -266,6 +266,22 @@ namespace Azure.ResourceManager.Core.Tests
                 Assert.AreEqual(expected, a.Equals(b));
 
             Assert.AreEqual(expected, ResourceIdentifier.Equals(a,b));
+        }
+
+        [TestCase(TrackedResourceId, TrackedResourceId, true)]
+        [TestCase(ChildResourceId, ChildResourceId, true)]
+        [TestCase(null, null, true)]
+        [TestCase(TrackedResourceId, ChildResourceId, false)]
+        [TestCase(ChildResourceId, TrackedResourceId, false)]
+        [TestCase(TrackedResourceId, null, false)]
+        [TestCase(null, TrackedResourceId, false)]
+        public void EqualsToString(string resourceProviderID1, string resourceProviderID2, bool expected)
+        {
+            ResourceIdentifier a = resourceProviderID1;
+            if (a != null)
+                Assert.AreEqual(expected, a.Equals(resourceProviderID2));
+
+            Assert.AreEqual(expected, ResourceIdentifier.Equals(a, resourceProviderID2));
         }
 
         [Test]
@@ -638,32 +654,60 @@ namespace Azure.ResourceManager.Core.Tests
             }
         }
 
-        [TestCase(TrackedResourceId, TrackedResourceId, true)]
-        [TestCase(ChildResourceId, ChildResourceId, true)]
-        [TestCase(null, null, true)]
-        [TestCase(TrackedResourceId, ChildResourceId, false)]
-        [TestCase(ChildResourceId, TrackedResourceId, false)]
-        [TestCase(TrackedResourceId, null, false)]
-        [TestCase(null, TrackedResourceId, false)]
-        public void EqualsOperator(string resourceProviderID1, string resourceProviderID2, bool expected)
+        [TestCase(TrackedResourceId, TrackedResourceId, true, "object")]
+        [TestCase(ChildResourceId, ChildResourceId, true, "object")]
+        [TestCase(null, null, true, "object")]
+        [TestCase(TrackedResourceId, ChildResourceId, false, "object")]
+        [TestCase(ChildResourceId, TrackedResourceId, false, "object")]
+        [TestCase(TrackedResourceId, null, false, "object")]
+        [TestCase(null, TrackedResourceId, false, "object")]
+        [TestCase(TrackedResourceId, TrackedResourceId, true, "string")]
+        [TestCase(ChildResourceId, ChildResourceId, true, "string")]
+        [TestCase(null, null, true, "string")]
+        [TestCase(TrackedResourceId, ChildResourceId, false, "string")]
+        [TestCase(ChildResourceId, TrackedResourceId, false, "string")]
+        [TestCase(TrackedResourceId, null, false, "string")]
+        [TestCase(null, TrackedResourceId, false, "string")]
+        public void EqualsOperator(string resourceProviderID1, string resourceProviderID2, bool expected, string comparisonType)
         {
             ResourceIdentifier a = resourceProviderID1;
-            ResourceIdentifier b = resourceProviderID2;
-            Assert.AreEqual(expected, a == b);
+            if(comparisonType == "object")
+            {
+                ResourceIdentifier b = resourceProviderID2;
+                Assert.AreEqual(expected, a == b);
+            }
+            else
+            {
+                Assert.AreEqual(expected, a == resourceProviderID2);
+            }
         }
 
-        [TestCase(TrackedResourceId, TrackedResourceId, false)]
-        [TestCase(ChildResourceId, ChildResourceId, false)]
-        [TestCase(null, null, false)]
-        [TestCase(TrackedResourceId, ChildResourceId, true)]
-        [TestCase(ChildResourceId, TrackedResourceId, true)]
-        [TestCase(TrackedResourceId, null, true)]
-        [TestCase(null, TrackedResourceId, true)]
-        public void NotEqualsOperator(string resourceProviderID1, string resourceProviderID2, bool expected)
+        [TestCase(TrackedResourceId, TrackedResourceId, false, "object")]
+        [TestCase(ChildResourceId, ChildResourceId, false, "object")]
+        [TestCase(null, null, false, "object")]
+        [TestCase(TrackedResourceId, ChildResourceId, true, "object")]
+        [TestCase(ChildResourceId, TrackedResourceId, true, "object")]
+        [TestCase(TrackedResourceId, null, true, "object")]
+        [TestCase(null, TrackedResourceId, true, "object")]
+        [TestCase(TrackedResourceId, TrackedResourceId, false, "string")]
+        [TestCase(ChildResourceId, ChildResourceId, false, "string")]
+        [TestCase(null, null, false, "string")]
+        [TestCase(TrackedResourceId, ChildResourceId, true, "string")]
+        [TestCase(ChildResourceId, TrackedResourceId, true, "string")]
+        [TestCase(TrackedResourceId, null, true, "string")]
+        [TestCase(null, TrackedResourceId, true, "string")]
+        public void NotEqualsOperator(string resourceProviderID1, string resourceProviderID2, bool expected, string comparisonType)
         {
             ResourceIdentifier a = resourceProviderID1;
-            ResourceIdentifier b = resourceProviderID2;
-            Assert.AreEqual(expected, a != b);
+            if (comparisonType == "object")
+            {
+                ResourceIdentifier b = resourceProviderID2;
+                Assert.AreEqual(expected, a != b);
+            }
+            else
+            {
+                Assert.AreEqual(expected, a != resourceProviderID2);
+            }
         }
     }
 }
