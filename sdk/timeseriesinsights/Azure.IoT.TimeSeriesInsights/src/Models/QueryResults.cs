@@ -18,6 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
         private string _storeType;
         private CancellationToken _cancellationToken;
         private QueryRestClient _queryClient;
+        private readonly HashSet<EventProperty> _eventProperties;
 
         /// <summary>
         /// Initializes a new instance of the QueryResults class.
@@ -37,6 +38,7 @@ namespace Azure.IoT.TimeSeriesInsights
             _storeType = storeType;
             _cancellationToken = cancellationToken;
             _queryClient = queryClient;
+            _eventProperties = new HashSet<EventProperty>();
         }
 
         /// <summary>
@@ -51,7 +53,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     Response<QueryResultPage> response = _queryClient
                         .Execute(_queryRequest, _storeType, null, null, _cancellationToken);
 
-                    TimeSeriesPoint[] points = createQueryResponse(response.Value);
+                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value, _eventProperties);
 
                     return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
                 }
@@ -68,7 +70,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     Response<QueryResultPage> response = _queryClient
                         .Execute(_queryRequest, _storeType, nextLink, null, _cancellationToken);
 
-                    TimeSeriesPoint[] points = createQueryResponse(response.Value);
+                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value, _eventProperties);
 
                     return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
                 }
@@ -79,27 +81,6 @@ namespace Azure.IoT.TimeSeriesInsights
             }
 
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        private static TimeSeriesPoint[] createQueryResponse(QueryResultPage value)
-        {
-            var result = new List<TimeSeriesPoint>();
-
-            for (int i = 0; i < value.Timestamps.Count; i++)
-            {
-                DateTimeOffset timestamp = value.Timestamps[i];
-                var point = new TimeSeriesPoint(timestamp);
-
-                foreach (PropertyValues property in value.Properties)
-                {
-                    var eventProperty = new EventProperty(property.Name, property.Type);
-                    point.Values[eventProperty] = property.Values[i];
-                }
-
-                result.Add(point);
-            }
-
-            return result.ToArray();
         }
     }
 }

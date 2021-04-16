@@ -64,7 +64,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                     await foreach (TimeSeriesPoint timeSeriesPoint in queryEventsPages.GetPageableResultsAsync())
                     {
-                        Console.WriteLine($"{timeSeriesPoint.Timestamp}: {timeSeriesPoint.GetValue("Temperature")}");
+                        //Console.WriteLine($"{timeSeriesPoint.Timestamp}: {timeSeriesPoint.GetValue("Temperature")}");
+                        double result = (double)timeSeriesPoint.GetValue("Temperature");
+                        Console.WriteLine($"{timeSeriesPoint.Timestamp}: {result}");
                     }
 
                     foreach (var property in queryEventsPages.GetProperties())
@@ -76,8 +78,6 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     {
                         Console.WriteLine($"Unique Property: {property}");
                     }
-
-                    Console.WriteLine($"Values: {string.Join(",", queryEventsPages.GetValues("Temperature"))}");
 
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);

@@ -10,7 +10,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary>
     /// Represents a Time Series point at a specific timestamp.
     /// </summary>
-    public class TimeSeriesPoint
+    public struct TimeSeriesPoint
     {
         /// <summary>
         /// Timestamp of the point.
@@ -20,7 +20,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary>
         /// List of property values associated with the point.
         /// </summary>
-        public IDictionary<EventProperty, object> Values { get; }
+        public IDictionary<EventProperty, TimeSeriesValue> Values { get; }
 
         /// <summary>
         /// Create a new instance of TimeSeriesPoint.
@@ -29,7 +29,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public TimeSeriesPoint(DateTimeOffset timestamp)
         {
             Timestamp = timestamp;
-            Values = new Dictionary<EventProperty, object>();
+            Values = new Dictionary<EventProperty, TimeSeriesValue>();
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </summary>
         /// <param name="property"></param>
         /// <returns></returns>
-        public object GetValue(string property)
+        public TimeSeriesValue GetValue(string property)
         {
             ICollection<EventProperty> keys = Values.Keys.ToList();
             EventProperty eventProperty = keys.First((key) => key.Name == property);

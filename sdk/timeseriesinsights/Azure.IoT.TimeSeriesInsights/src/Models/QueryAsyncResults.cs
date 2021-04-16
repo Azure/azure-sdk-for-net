@@ -14,12 +14,12 @@ namespace Azure.IoT.TimeSeriesInsights
     /// </summary>
     public class QueryAsyncResults
     {
-        private QueryRequest _queryRequest;
-        private string _storeType;
         private CancellationToken _cancellationToken;
-        private QueryRestClient _queryClient;
-        private HashSet<EventProperty> _eventProperties;
-        private Dictionary<string, List<object>> _allPropertyValues;
+
+        private readonly QueryRequest _queryRequest;
+        private readonly string _storeType;
+        private readonly QueryRestClient _queryClient;
+        private readonly HashSet<EventProperty> _eventProperties;
 
         /// <summary>
         /// Initializes a new instance of the QueryResults class.
@@ -39,7 +39,6 @@ namespace Azure.IoT.TimeSeriesInsights
             _cancellationToken = cancellationToken;
             _queryClient = queryClient;
             _eventProperties = new HashSet<EventProperty>();
-            _allPropertyValues = new Dictionary<string, List<object>>();
         }
 
         /// <summary>
@@ -55,7 +54,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         .ExecuteAsync(_queryRequest, _storeType, null, null, _cancellationToken)
                         .ConfigureAwait(false);
 
-                    TimeSeriesPoint[] points = createQueryResponse(response.Value);
+                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value, _eventProperties);
 
                     return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
                 }
@@ -73,7 +72,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         .ExecuteAsync(_queryRequest, _storeType, nextLink, null, _cancellationToken)
                         .ConfigureAwait(false);
 
-                    TimeSeriesPoint[] points = createQueryResponse(response.Value);
+                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value, _eventProperties);
 
                     return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
                 }
@@ -100,49 +99,6 @@ namespace Azure.IoT.TimeSeriesInsights
         public EventProperty[] GetProperties()
         {
             return _eventProperties.ToArray();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        public object[] GetValues(string propertyName)
-        {
-            return _allPropertyValues[propertyName].ToArray();
-        }
-
-        private TimeSeriesPoint[] createQueryResponse(QueryResultPage value)
-        {
-            var result = new List<TimeSeriesPoint>();
-
-            for (int i = 0; i < value.Timestamps.Count; i++)
-            {
-                DateTimeOffset timestamp = value.Timestamps[i];
-                var point = new TimeSeriesPoint(timestamp);
-
-                foreach (PropertyValues property in value.Properties)
-                {
-                    var eventProperty = new EventProperty(property.Name, property.Type);
-                    point.Values[eventProperty] = property.Values[i];
-                    _eventProperties.Add(eventProperty);
-                }
-
-                result.Add(point);
-            }
-
-            foreach (PropertyValues property in value.Properties)
-            {
-                if (_allPropertyValues.ContainsKey(property.Name))
-                {
-                    _allPropertyValues[property.Name].AddRange(property.Values);
-                }
-                else
-                {
-                    _allPropertyValues[property.Name] = new List<object>(property.Values);
-                }
-            }
-
-            return result.ToArray();
         }
     }
 }
