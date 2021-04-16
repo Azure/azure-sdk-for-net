@@ -39,7 +39,7 @@ namespace Azure.Data.Tables.Tests
             try
             {
                 TableItem table = await CosmosThrottleWrapper(async () => await service.CreateTableIfNotExistsAsync(newTableName).ConfigureAwait(false));
-                Assert.That(table.TableName, Is.EqualTo(newTableName));
+                Assert.That(table.Name, Is.EqualTo(newTableName));
             }
             finally
             {
@@ -190,7 +190,7 @@ namespace Azure.Data.Tables.Tests
                     {
                         Assert.That(page.Values.Count, Is.EqualTo(createdTables.Count));
                     }
-                    Assert.That(page.Values.All(r => createdTables.Contains(r.TableName)));
+                    Assert.That(page.Values.All(r => createdTables.Contains(r.Name)));
                 }
             }
 
@@ -227,14 +227,14 @@ namespace Azure.Data.Tables.Tests
                 var tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{tableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
-                Assert.AreEqual(tableName, tableResponses.Select(r => r.TableName).SingleOrDefault());
+                Assert.AreEqual(tableName, tableResponses.Select(r => r.Name).SingleOrDefault());
 
                 // Query with a filter.
 
-                tableResponses = (await service.GetTablesAsync(filter: t => t.TableName == tableName).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+                tableResponses = (await service.GetTablesAsync(filter: t => t.Name == tableName).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
-                Assert.AreEqual(tableName, tableResponses.Select(r => r.TableName).SingleOrDefault());
+                Assert.AreEqual(tableName, tableResponses.Select(r => r.Name).SingleOrDefault());
             }
             finally
             {

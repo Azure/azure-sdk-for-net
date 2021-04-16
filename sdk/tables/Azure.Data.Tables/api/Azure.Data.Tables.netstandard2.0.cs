@@ -290,7 +290,7 @@ namespace Azure.Data.Tables.Models
     public partial class TableItem
     {
         internal TableItem() { }
-        public string TableName { get { throw null; } }
+        public string Name { get { throw null; } }
     }
     public partial class TableMetrics
     {

@@ -32,7 +32,9 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:BatchAdd
             // Create a list of 5 entities with the same partition key.
-            //@@string partitionKey = "BatchInsertSample";
+#if SNIPPET
+            string partitionKey = "BatchInsertSample";
+#endif
             List<TableEntity> entityList = new List<TableEntity>{
                 new TableEntity(partitionKey, "01")
                 {

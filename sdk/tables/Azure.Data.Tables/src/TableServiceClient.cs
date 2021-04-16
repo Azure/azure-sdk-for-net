@@ -355,7 +355,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">
         /// Returns only tables that satisfy the specified filter expression.
-        /// For example, the following expression would filter tables with a TableName of 'foo': <c>e => e.TableName == "foo"</c>.
+        /// For example, the following expression would filter tables with a Name of 'foo': <c>e => e.Name == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
         /// The maximum number of entities that will be returned per page.
@@ -384,7 +384,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">
         /// Returns only tables that satisfy the specified filter expression.
-        /// For example, the following expression would filter tables with a TableName of 'foo': <c>e => e.TableName == "foo"</c>.
+        /// For example, the following expression would filter tables with a Name of 'foo': <c>e => e.Name == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
         /// The maximum number of entities that will be returned per page.
