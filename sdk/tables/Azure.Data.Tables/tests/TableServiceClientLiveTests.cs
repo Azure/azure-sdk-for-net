@@ -66,7 +66,7 @@ namespace Azure.Data.Tables.Tests
             string tokenWriteDelete = sasWriteDelete.Sign(credential);
 
             // Create the TableServiceClients using the SAS URIs.
-            // Intentionally double add the Sas to the endpoint and the cred to valudate de-duping
+            // Intentionally double add the Sas to the endpoint and the cred to validate de-duping
             var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TableClientOptions())));
             var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TableClientOptions())));
 
@@ -116,7 +116,7 @@ namespace Azure.Data.Tables.Tests
             };
 
             // Create the TableServiceClients using the SAS URIs.
-            // Intentionally double add the Sas to the endpoint and the cred to valudate de-duping
+            // Intentionally double add the Sas to the endpoint and the cred to validate de-duping
             var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TableClientOptions())));
             var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TableClientOptions())));
 
