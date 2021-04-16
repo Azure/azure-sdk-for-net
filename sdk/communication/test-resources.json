@@ -82,7 +82,7 @@
         },
         "COMMUNICATION_CONNECTION_STRING": {
             "type": "string",
-            "value": "[concat('https://', parameters('baseName'), '-', parameters('endpointPrefix'), parameters('communicationServicesEndpointSuffix'))]"
+            "value": "[listKeys(resourceId('Microsoft.Communication/CommunicationServices',variables('uniqueSubDomainName')), '2020-08-20-preview').primaryConnectionString]"
         },
         "RESOURCE_GROUP_NAME": {
             "type": "string",
