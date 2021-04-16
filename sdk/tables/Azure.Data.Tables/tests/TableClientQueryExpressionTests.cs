@@ -2,14 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using System.Xml;
-using Azure.Core.TestFramework;
 using Azure.Data.Tables.Models;
-using Azure.Data.Tables.Queryable;
 using NUnit.Framework;
 using static Azure.Data.Tables.Tests.TableServiceLiveTestsBase;
 
