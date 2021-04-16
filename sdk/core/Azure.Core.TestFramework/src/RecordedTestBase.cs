@@ -12,7 +12,6 @@ using NUnit.Framework.Interfaces;
 
 namespace Azure.Core.TestFramework
 {
-    [Category("Recorded")]
     public abstract class RecordedTestBase : ClientTestBase
     {
         protected RecordedTestSanitizer Sanitizer { get; set; }
@@ -46,7 +45,7 @@ namespace Azure.Core.TestFramework
             get => _saveDebugRecordingsOnFailure;
             set
             {
-                if (value && !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECTID")))
+                if (value && TestEnvironment.GlobalIsRunningInCI)
                 {
                     throw new AssertionException($"Setting {nameof(SaveDebugRecordingsOnFailure)} must not be merged");
                 }
@@ -57,7 +56,7 @@ namespace Azure.Core.TestFramework
         private bool _saveDebugRecordingsOnFailure;
         protected bool ValidateClientInstrumentation { get; set; }
 
-        protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
+        protected RecordedTestBase(bool isAsync) : this(isAsync, TestEnvironment.GlobalTestMode)
         {
         }
 
@@ -139,15 +138,15 @@ namespace Azure.Core.TestFramework
             // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
-                test.Properties.ContainsKey("SkipRecordings"))
+                test.Properties.ContainsKey("_SkipRecordings"))
             {
-                throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
+                throw new IgnoreException((string) test.Properties.Get("_SkipRecordings"));
             }
 
             if (Mode == RecordedTestMode.Live &&
-                test.Properties.ContainsKey("SkipLive"))
+                test.Properties.ContainsKey("_SkipLive"))
             {
-                throw new IgnoreException((string) test.Properties.Get("SkipLive"));
+                throw new IgnoreException((string) test.Properties.Get("_SkipLive"));
             }
 
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
