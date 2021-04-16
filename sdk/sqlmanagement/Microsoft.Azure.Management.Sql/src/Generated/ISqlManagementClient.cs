@@ -133,6 +133,11 @@ namespace Microsoft.Azure.Management.Sql
         IServerUsagesOperations ServerUsages { get; }
 
         /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        IUsagesOperations Usages { get; }
+
+        /// <summary>
         /// Gets the IBackupShortTermRetentionPoliciesOperations.
         /// </summary>
         IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }

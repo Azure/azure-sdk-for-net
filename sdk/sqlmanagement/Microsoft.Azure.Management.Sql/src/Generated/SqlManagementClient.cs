@@ -138,6 +138,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerUsagesOperations ServerUsages { get; private set; }
 
         /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        public virtual IUsagesOperations Usages { get; private set; }
+
+        /// <summary>
         /// Gets the IBackupShortTermRetentionPoliciesOperations.
         /// </summary>
         public virtual IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; private set; }
@@ -866,6 +871,7 @@ namespace Microsoft.Azure.Management.Sql
             ElasticPoolDatabaseActivities = new ElasticPoolDatabaseActivitiesOperations(this);
             TransparentDataEncryptionActivities = new TransparentDataEncryptionActivitiesOperations(this);
             ServerUsages = new ServerUsagesOperations(this);
+            Usages = new UsagesOperations(this);
             BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
             ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
             ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
