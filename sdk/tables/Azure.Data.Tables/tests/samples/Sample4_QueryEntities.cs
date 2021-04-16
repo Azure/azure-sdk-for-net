@@ -60,6 +60,24 @@ namespace Azure.Data.Tables.Samples
             Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
             #endregion
 
+            #region Snippet:TablesSample4QueryEntitiesFilterWithQueryFilter
+#if SNIPPET
+            // The QueryFilter class is also available to assist with properly formatting odata queries.
+            Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: QueryFilter.Create($"PartitionKey eq {partitionKey}"));
+#else
+            queryResultsFilter = tableClient.Query<TableEntity>(filter: QueryFilter.Create($"PartitionKey eq {partitionKey}"));
+#endif
+            // Iterate the <see cref="Pageable"> to access all queried entities.
+
+            foreach (TableEntity qEntity in queryResultsFilter)
+            {
+                Console.WriteLine($"{qEntity.GetString("Product")}: {qEntity.GetDouble("Price")}");
+            }
+
+            Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
+
+            // It handles esca
+            #endregion
             #region Snippet:TablesSample4QueryEntitiesExpression
             // Use the <see cref="TableClient"> to query the table using a filter expression.
 

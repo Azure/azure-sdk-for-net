@@ -7,6 +7,10 @@ namespace Azure.Data.Tables
         string RowKey { get; set; }
         System.DateTimeOffset? Timestamp { get; set; }
     }
+    public static partial class QueryFilter
+    {
+        public static string Create(System.FormattableString filter) { throw null; }
+    }
     public partial class TableClient
     {
         protected TableClient() { }
