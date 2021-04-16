@@ -56,15 +56,11 @@ namespace Azure.Core.TestFramework
         private bool _saveDebugRecordingsOnFailure;
         protected bool ValidateClientInstrumentation { get; set; }
 
-        protected RecordedTestBase(bool isAsync) : this(isAsync, TestEnvironment.GlobalTestMode)
-        {
-        }
-
-        protected RecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync)
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher();
-            Mode = mode;
+            Mode = mode ?? TestEnvironment.GlobalTestMode;
         }
 
         public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions

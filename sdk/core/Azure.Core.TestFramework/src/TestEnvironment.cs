@@ -327,7 +327,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         /// Determines if the current global test mode.
         /// </summary>
-        public static RecordedTestMode GlobalTestMode
+        internal static RecordedTestMode GlobalTestMode
         {
             get
             {
@@ -346,7 +346,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         /// Determines if tests that use <see cref="ClientTestFixtureAttribute"/> should only test the latest version.
         /// </summary>
-        public static bool GlobalTestOnlyLatestVersion
+        internal static bool GlobalTestOnlyLatestVersion
         {
             get
             {
@@ -362,7 +362,7 @@ namespace Azure.Core.TestFramework
         /// Determines service versions that would be tested in tests that use <see cref="ClientTestFixtureAttribute"/>.
         /// NOTE: this variable only narrows the set of versions defined in the attribute
         /// </summary>
-        public static string[] GlobalTestServiceVersions
+        internal static string[] GlobalTestServiceVersions
         {
             get
             {
@@ -375,7 +375,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         /// Determines if tests that use <see cref="RecordedTestAttribute"/> should try to re-record on failure.
         /// </summary>
-        public static bool GlobalDisableAutoRecording
+        internal static bool GlobalDisableAutoRecording
         {
             get
             {

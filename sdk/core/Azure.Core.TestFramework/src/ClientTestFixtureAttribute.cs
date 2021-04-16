@@ -67,12 +67,13 @@ namespace Azure.Core.TestFramework
                 {
                     _actualLiveServiceVersions = new[] { liveVersions.Max(Convert.ToInt32) };
                 }
-                else if (TestEnvironment.GlobalTestServiceVersions.Any())
+                else if (TestEnvironment.GlobalTestServiceVersions is { Length: > 0 } globalTestServiceVersions &&
+                         _serviceVersions is { Length: > 0 })
                 {
-                    var enumType = _serviceVersions.First().GetType();
+                    var enumType = _serviceVersions[0].GetType();
                     var selectedVersions = new List<int>();
 
-                    foreach (var versionString in TestEnvironment.GlobalTestServiceVersions)
+                    foreach (var versionString in globalTestServiceVersions)
                     {
                         try
                         {
