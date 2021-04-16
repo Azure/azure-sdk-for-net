@@ -2,6 +2,7 @@
 using Azure.ResourceManager.Core;
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Core.Adapters;
 
 namespace Proto.Network
 {

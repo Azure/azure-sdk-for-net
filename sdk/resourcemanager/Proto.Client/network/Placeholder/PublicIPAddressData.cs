@@ -5,6 +5,7 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Core;
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Core.Adapters;
 
 namespace Proto.Network
 {

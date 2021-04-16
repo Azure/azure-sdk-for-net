@@ -3,7 +3,7 @@
 
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager.Core.Adapters
 {
     /// <summary>
     /// A class representing a generic tracked resource in Azure.
@@ -21,30 +21,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="location"> The location of the resource. </param>
         /// <param name="data"> The model to copy from. </param>
         protected TrackedResource(TIdentifier id, LocationData location, TModel data)
+            :base(id, id?.Name, id?.ResourceType, null, location)
         {
-            Id = id;
-            Location = location;
-            Model = data;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TrackedResource{TModel, TIdentifier}"/> class.
-        /// </summary>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <param name="data"> The model to copy from. </param>
-        protected TrackedResource(string id, LocationData location, TModel data)
-        {
-            if (ReferenceEquals(id, null))
-            {
-                Id = null;
-            }
-            else
-            {
-                Id = ResourceIdentifier.Create(id) as TIdentifier;
-            }
-
-            Location = location;
             Model = data;
         }
 
