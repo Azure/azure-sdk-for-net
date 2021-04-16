@@ -53,8 +53,15 @@ namespace Azure.Communication.Sms.Tests
                 //@@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
                 #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
             }
-            SmsClient client = new SmsClient(endpoint, tokenCredential, InstrumentClientOptions(new SmsClientOptions()));
+            SmsClient client = new SmsClient(endpoint, tokenCredential, CreateSmsClientOptionsWithCorrelationVectorLogs());
             return InstrumentClient(client);
+        }
+
+        private SmsClientOptions CreateSmsClientOptionsWithCorrelationVectorLogs()
+        {
+            SmsClientOptions smsClientOptions = new SmsClientOptions();
+            smsClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
+            return InstrumentClientOptions(smsClientOptions);
         }
     }
 }
