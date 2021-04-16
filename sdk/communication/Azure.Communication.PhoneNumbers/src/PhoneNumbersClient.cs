@@ -27,7 +27,7 @@ namespace Azure.Communication.PhoneNumbers
         public PhoneNumbersClient(string connectionString)
             : this(
                 ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
-                new PhoneNumbersClientOptions())
+                new PhoneNumbersClientOptions().AddHeaderParameters())
         { }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Azure.Communication.PhoneNumbers
         public PhoneNumbersClient(string connectionString, PhoneNumbersClientOptions options)
             : this(
                 ConnectionString.Parse(AssertNotNullOrEmpty(connectionString, nameof(connectionString))),
-                options ?? new PhoneNumbersClientOptions())
+                options ?? new PhoneNumbersClientOptions().AddHeaderParameters())
         { }
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumbersClient"/>.</summary>
@@ -47,7 +47,7 @@ namespace Azure.Communication.PhoneNumbers
             : this(
                 AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 AssertNotNull(keyCredential, nameof(keyCredential)),
-                options ?? new PhoneNumbersClientOptions())
+                options ?? new PhoneNumbersClientOptions().AddHeaderParameters())
         { }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Azure.Communication.PhoneNumbers
             : this(
                 AssertNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 AssertNotNull(tokenCredential, nameof(tokenCredential)),
-                options ?? new PhoneNumbersClientOptions())
+                options ?? new PhoneNumbersClientOptions().AddHeaderParameters())
         { }
 
         #endregion

@@ -32,17 +32,6 @@ namespace Azure.Communication.PhoneNumbers
                 ServiceVersion.V2021_03_07 => "2021-03-07",
                 _ => throw new NotSupportedException()
             };
-
-            AddHeaderParameters();
-        }
-
-        /// <summary>
-        /// Add headers in <see cref="DiagnosticsOptions.LoggedHeaderNames"/>
-        /// </summary>
-        private void AddHeaderParameters()
-        {
-            // Data Lake headers
-            Diagnostics.LoggedHeaderNames.Add("MS-CV");
         }
     }
 }

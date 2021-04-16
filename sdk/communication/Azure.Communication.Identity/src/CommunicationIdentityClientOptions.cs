@@ -49,7 +49,7 @@ namespace Azure.Communication.Identity
         /// </summary>
         private void AddHeaderParameters()
         {
-            // Data Lake headers
+            // MS-CV headers
             Diagnostics.LoggedHeaderNames.Add("MS-CV");
         }
     }
