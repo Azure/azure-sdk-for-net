@@ -66,9 +66,9 @@ namespace Azure.Data.Tables
                     DateTime x => $"{XmlConstants.LiteralPrefixDateTime}'{XmlConvert.ToString(x.ToUniversalTime(), XmlDateTimeSerializationMode.RoundtripKind)}'",
 
                     // Text
-                    string x => $"'{x}'",
-                    char x => $"'{x.ToString()}'",
-                    StringBuilder x => $"'{x}'",
+                    string x => $"'{x.Replace("'", "''")}'",
+                    char x => $"'{x.ToString().Replace("'", "''")}'",
+                    StringBuilder x => $"'{x.Replace("'", "''")}'",
 
                     // Everything else
                     object x => throw new ArgumentException(
@@ -76,8 +76,7 @@ namespace Azure.Data.Tables
                 };
             }
 
-            string text = string.Format(CultureInfo.InvariantCulture, filter.Format, args);
-            return text;
+            return string.Format(CultureInfo.InvariantCulture, filter.Format, args);
         }
     }
 }

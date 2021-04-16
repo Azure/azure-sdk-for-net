@@ -14,6 +14,7 @@ namespace Azure.Data.Tables.Tests
         private const double SomeDouble = 10.10;
         private const long SomeInt64 = long.MaxValue;
         private const string SomeString = "someString";
+        private const string StringWithSingleQuotes = "so'meS'tri'ng";
         private const bool SomeTrueBool = true;
         private const bool SomeFalseBool = false;
         private static readonly DateTime s_someDateTime = DateTime.Parse("2020-07-23T21:20:41.6667782Z", null, System.Globalization.DateTimeStyles.RoundtripKind);
@@ -32,6 +33,7 @@ namespace Azure.Data.Tables.Tests
         public static object[] QueryFilterTestCases =
         {
             new object[] { QueryFilter.Create($"String ge {SomeString}"), $"String ge '{SomeString}'" },
+            new object[] { QueryFilter.Create($"String ge {StringWithSingleQuotes}"), $"String ge 'so''meS''tri''ng'" },
             new object[] { QueryFilter.Create($"Guid eq {s_someGuid}"), $"Guid eq guid'{s_someGuidString}'" },
             new object[] { QueryFilter.Create($"Int64 ge {SomeInt64}L"), $"Int64 ge {SomeInt64}L" },
             new object[] { QueryFilter.Create($"Double ge {SomeDouble}"), $"Double ge {SomeDouble}" },
