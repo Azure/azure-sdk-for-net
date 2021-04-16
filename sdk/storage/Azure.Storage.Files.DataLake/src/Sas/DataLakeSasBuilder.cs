@@ -582,5 +582,29 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the DataLakeSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        internal static DataLakeSasBuilder DeepCopy(DataLakeSasBuilder originalDataLakeSasBuilder)
+            => new DataLakeSasBuilder
+            {
+                Version = originalDataLakeSasBuilder.Version,
+                Protocol = originalDataLakeSasBuilder.Protocol,
+                StartsOn = originalDataLakeSasBuilder.StartsOn,
+                ExpiresOn = originalDataLakeSasBuilder.ExpiresOn,
+                Permissions = originalDataLakeSasBuilder.Permissions,
+                IPRange = originalDataLakeSasBuilder.IPRange,
+                Identifier = originalDataLakeSasBuilder.Identifier,
+                FileSystemName = originalDataLakeSasBuilder.FileSystemName,
+                Path = originalDataLakeSasBuilder.Path,
+                IsDirectory = originalDataLakeSasBuilder.IsDirectory,
+                Resource = originalDataLakeSasBuilder.Resource,
+                CacheControl = originalDataLakeSasBuilder.CacheControl,
+                ContentDisposition = originalDataLakeSasBuilder.ContentDisposition,
+                ContentEncoding = originalDataLakeSasBuilder.ContentEncoding,
+                ContentLanguage = originalDataLakeSasBuilder.ContentLanguage,
+                ContentType = originalDataLakeSasBuilder.ContentType,
+                PreauthorizedAgentObjectId = originalDataLakeSasBuilder.PreauthorizedAgentObjectId,
+                AgentObjectId = originalDataLakeSasBuilder.AgentObjectId,
+                CorrelationId = originalDataLakeSasBuilder.CorrelationId
+            };
     }
 }

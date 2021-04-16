@@ -3,4 +3,7 @@
     <NUnit>
         <ConsoleOut>0</ConsoleOut>
     </NUnit>
+    <RunConfiguration>
+        <TargetPlatform>x64</TargetPlatform>
+    </RunConfiguration>
 </RunSettings>

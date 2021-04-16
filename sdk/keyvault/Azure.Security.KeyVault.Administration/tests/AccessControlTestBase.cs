@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         internal KeyVaultAccessControlClient client;
 #pragma warning restore IDE1006 // Naming Styles
 
-        internal const string RoleName = "Managed HSM Crypto User";
+        internal const string RoleName = "Managed HSM Backup";
         internal readonly Guid _roleAssignmentId = new Guid("e7ae2aff-eb17-4c9d-84f0-d12f7f468f16");
         internal string _roleDefinitionId;
         internal string _objectId;

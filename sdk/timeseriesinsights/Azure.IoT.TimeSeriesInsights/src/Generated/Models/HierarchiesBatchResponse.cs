@@ -16,8 +16,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of HierarchiesBatchResponse. </summary>
         internal HierarchiesBatchResponse()
         {
-            Get = new ChangeTrackingList<TimeSeriesHierarchyOrError>();
-            Put = new ChangeTrackingList<TimeSeriesHierarchyOrError>();
+            Get = new ChangeTrackingList<TimeSeriesHierarchyOperationResult>();
+            Put = new ChangeTrackingList<TimeSeriesHierarchyOperationResult>();
             Delete = new ChangeTrackingList<TimeSeriesOperationError>();
         }
 
@@ -25,7 +25,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="get"> List of hierarchy or error objects corresponding by position to the &quot;get&quot; array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="put"> List of hierarchy or error object corresponding by position to the &quot;put&quot; array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="delete"> List of error objects corresponding by position to the &quot;delete&quot; array in the request - null when the operation is successful. </param>
-        internal HierarchiesBatchResponse(IReadOnlyList<TimeSeriesHierarchyOrError> @get, IReadOnlyList<TimeSeriesHierarchyOrError> put, IReadOnlyList<TimeSeriesOperationError> delete)
+        internal HierarchiesBatchResponse(IReadOnlyList<TimeSeriesHierarchyOperationResult> @get, IReadOnlyList<TimeSeriesHierarchyOperationResult> put, IReadOnlyList<TimeSeriesOperationError> delete)
         {
             Get = @get;
             Put = put;
@@ -33,9 +33,9 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary> List of hierarchy or error objects corresponding by position to the &quot;get&quot; array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
-        public IReadOnlyList<TimeSeriesHierarchyOrError> Get { get; }
+        public IReadOnlyList<TimeSeriesHierarchyOperationResult> Get { get; }
         /// <summary> List of hierarchy or error object corresponding by position to the &quot;put&quot; array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
-        public IReadOnlyList<TimeSeriesHierarchyOrError> Put { get; }
+        public IReadOnlyList<TimeSeriesHierarchyOperationResult> Put { get; }
         /// <summary> List of error objects corresponding by position to the &quot;delete&quot; array in the request - null when the operation is successful. </summary>
         public IReadOnlyList<TimeSeriesOperationError> Delete { get; }
     }

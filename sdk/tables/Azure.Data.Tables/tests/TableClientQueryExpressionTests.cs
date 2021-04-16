@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Xml;
 using Azure.Core.TestFramework;
+using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Queryable;
 using NUnit.Framework;
 using static Azure.Data.Tables.Tests.TableServiceLiveTestsBase;
@@ -24,6 +25,7 @@ namespace Azure.Data.Tables.Tests
     public class TableClientQueryExpressionTests
     {
         private const string TableName = "someTableName";
+        private const string TableName2 = "otherTableName";
         private const string Partition = "partition";
         private const string Row = "row";
         private const int SomeInt = 10;
@@ -39,16 +41,23 @@ namespace Azure.Data.Tables.Tests
         private static readonly string s_someGuidString = "66cf3753-1cc9-44c4-b857-4546f744901b";
         private static readonly byte[] s_someBinary = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
         private static readonly BinaryData s_someBinaryData = new BinaryData(new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 });
+        private static readonly Expression<Func<TableItem, bool>> s_ne_TI = x => x.TableName != TableName;
         private static readonly Expression<Func<ComplexEntity, bool>> s_ne = x => x.PartitionKey == Partition && x.RowKey != Row;
         private static readonly Expression<Func<TableEntity, bool>> s_neDE = x => x.PartitionKey == Partition && x.RowKey != Row;
+        private static readonly Expression<Func<TableItem, bool>> s_gt_TI = x => x.TableName.CompareTo(TableName) > 0;
         private static readonly Expression<Func<ComplexEntity, bool>> s_gt = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) > 0;
         private static readonly Expression<Func<TableEntity, bool>> s_gtDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) > 0;
+        private static readonly Expression<Func<TableItem, bool>> s_ge_TI = x => x.TableName.CompareTo(TableName) >= 0;
         private static readonly Expression<Func<ComplexEntity, bool>> s_ge = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) >= 0;
         private static readonly Expression<Func<TableEntity, bool>> s_geDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) >= 0;
-        private static readonly Expression<Func<ComplexEntity, bool>> s_lt = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) < 0;
-        private static readonly Expression<Func<TableEntity, bool>> s_ltDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) < 0;
+        private static readonly Expression<Func<TableItem, bool>> s_le_TI = x => x.TableName.CompareTo(TableName) <= 0;
+        private static readonly Expression<Func<TableItem, bool>> s_lege_TI = x => x.TableName.CompareTo(TableName) <= 0 && x.TableName.CompareTo(TableName2) >= 0;
         private static readonly Expression<Func<ComplexEntity, bool>> s_le = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) <= 0;
         private static readonly Expression<Func<TableEntity, bool>> s_leDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) <= 0;
+        private static readonly Expression<Func<TableItem, bool>> s_lt_TI = x => x.TableName.CompareTo(TableName) < 0;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_lt = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) < 0;
+        private static readonly Expression<Func<TableEntity, bool>> s_ltDE = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) < 0;
+        private static readonly Expression<Func<TableItem, bool>> s_or_TI = x => x.TableName == TableName || x.TableName == TableName2;
         private static readonly Expression<Func<ComplexEntity, bool>> s_or = x => x.PartitionKey == Partition || x.RowKey == Row;
         private static readonly Expression<Func<TableEntity, bool>> s_orDE = x => x.PartitionKey == Partition || x.RowKey == Row;
         private static readonly Expression<Func<ComplexEntity, bool>> s_compareToExp = ent => ent.String.CompareTo(SomeString) >= 0;
@@ -74,7 +83,7 @@ namespace Azure.Data.Tables.Tests
         private static readonly Expression<Func<ComplexEntity, bool>> s_complexExp = ent => ent.String.CompareTo(SomeString) >= 0 && ent.Int64 >= SomeInt64 && ent.Int32 >= SomeInt && ent.DateTime >= s_someDateTime;
         private static readonly Expression<Func<TableEntity, bool>> s_complexExpDE = ent => ent.GetString("String").CompareTo(SomeString) >= 0 && ent.GetInt64("Int64") >= SomeInt64 && ent.GetInt32("Int32") >= SomeInt && ent.GetDateTime("DateTime") >= s_someDateTime;
 
-        public static object[] ExpressionTestCases =
+        public static object[] TableEntityExpressionTestCases =
         {
             new object[] { $"(PartitionKey eq '{Partition}') and (RowKey ne '{Row}')", s_ne },
             new object[] { $"(PartitionKey eq '{Partition}') and (RowKey gt '{Row}')", s_gt },
@@ -94,6 +103,17 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("D2")))}'", s_binaryExp },
             new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("D2")))}'", s_binaryExp },
             new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}')", s_complexExp },
+        };
+
+        public static object[] TableItemExpressionTestCases =
+        {
+            new object[] { $"TableName ne '{TableName}'", s_ne_TI },
+            new object[] { $"TableName gt '{TableName}'", s_gt_TI },
+            new object[] { $"TableName ge '{TableName}'", s_ge_TI },
+            new object[] { $"(TableName le '{TableName}') and (TableName ge '{TableName2}')", s_lege_TI },
+            new object[] { $"TableName lt '{TableName}'", s_lt_TI },
+            new object[] { $"TableName le '{TableName}'", s_le_TI },
+            new object[] { $"(TableName eq '{TableName}') or (TableName eq '{TableName2}')", s_or_TI },
         };
 
         public static object[] DictionaryTableEntityExpressionTestCases =
@@ -118,7 +138,16 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}')", s_complexExpDE },
         };
 
-        [TestCaseSource(nameof(ExpressionTestCases))]
+        [TestCaseSource(nameof(TableItemExpressionTestCases))]
+        [Test]
+        public void TestTableItemFilterExpressions(string expectedFilter, Expression<Func<TableItem, bool>> expression)
+        {
+            var filter = TableClient.CreateQueryFilter(expression);
+
+            Assert.That(filter, Is.EqualTo(expectedFilter));
+        }
+
+        [TestCaseSource(nameof(TableEntityExpressionTestCases))]
         [Test]
         public void TestPOCOFilterExpressions(string expectedFilter, Expression<Func<ComplexEntity, bool>> expression)
         {

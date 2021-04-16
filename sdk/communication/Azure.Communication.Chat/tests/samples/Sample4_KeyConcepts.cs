@@ -1,19 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 #region Snippet:Azure_Communication_Chat_Tests_Samples_UsingStatements
 using Azure.Communication.Identity;
 //@@ using Azure.Communication.Chat;
 #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UsingStatements
 using Azure.Core;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.samples
 {
-    public partial class Sample4_KeyConcepts : SamplesBase<ChatTestEnvironment>
+    public partial class Sample4_KeyConcepts : ChatSampleBase
     {
         // This sample demonstrates the operations that can be performed on a thread: create, get, getThreads, update and delete.
         [Test]

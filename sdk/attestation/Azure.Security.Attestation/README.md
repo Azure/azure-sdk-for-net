@@ -171,7 +171,7 @@ This example assumes that you have an existing `AttestationClient` object which 
 // Collect quote and runtime data from OpenEnclave enclave.
 
 var attestationResult = client.AttestSgxEnclave(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false).Value;
-Assert.AreEqual(binaryRuntimeData, attestationResult.DeprecatedEnclaveHeldData);
+Assert.AreEqual(binaryRuntimeData, attestationResult.EnclaveHeldData);
 // VERIFY ATTESTATIONRESULT.
 // Encrypt Data using DeprecatedEnclaveHeldData
 // Send to enclave.
@@ -205,9 +205,10 @@ Under the covers, the SetPolicy APIs create a [JSON Web Token][json_web_token] b
 ```C# Snippet:SetPolicy
 string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
 
-var policyTokenSigner = TestEnvironment.PolicyCertificate0;
+X509Certificate2 policyTokenCertificate = new X509Certificate2(<Attestation Policy Signing Certificate>);
+AsymmetricAlgorithm policyTokenKey = <Attestation Policy Signing Key>;
 
-var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, TestEnvironment.PolicySigningKey0, policyTokenSigner);
+var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, new TokenSigningKey(policyTokenKey, policyTokenCertificate));
 ```
 
 Clients need to be able to verify that the attestation policy document was not modified before the policy document was received by the attestation service's enclave.
@@ -219,13 +220,19 @@ There are two properties provided in the [PolicyResult][attestation_policy_resul
 To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
 
 ```C# Snippet:VerifySigningHash
-// The SetPolicyAsync API will create a SecuredAttestationToken to transmit the policy.
-var policySetToken = new SecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = attestationPolicy }, TestEnvironment.PolicySigningKey0, policyTokenSigner);
+// The SetPolicyAsync API will create an AttestationToken signed with the TokenSigningKey to transmit the policy.
+// To verify that the policy specified by the caller was received by the service inside the enclave, we
+// verify that the hash of the policy document returned from the Attestation Service matches the hash
+// of an attestation token created locally.
+TokenSigningKey signingKey = new TokenSigningKey(<Customer provided signing key>, <Customer provided certificate>)
+var policySetToken = new AttestationToken(
+    new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
+    signingKey);
 
-var shaHasher = SHA256Managed.Create();
+using var shaHasher = SHA256Managed.Create();
 var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
 
-CollectionAssert.AreEqual(attestationPolicyHash, setResult.Value.PolicyTokenHash);
+Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash));
 ```
 
 ### Retrieve Token Certificates
@@ -263,9 +270,9 @@ See [CONTRIBUTING.md][contributing] for details on building, testing, and contri
 [attestation_response]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationresponse-1
 [attestation_response_token]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationresponse-1.token
 [attestation_response_value]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationresponse-1.value
-[attestation_policy_result]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.models.policyresult
-[attestation_policy_result_signer]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.models.policyresult.policysigner
-[attestation_policy_result_token_hash]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.models.policyresult.policytokenhash
+[attestation_policy_result]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policyresult
+[attestation_policy_result_signer]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policyresult.policysigner
+[attestation_policy_result_token_hash]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policyresult.policytokenhash
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/

@@ -10,7 +10,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
 {
     /// <summary>
     ///   The performance test scenario focused on publishing events
-    ///   to an Event Hubs partition.
+    ///   to an Event Hub partition.
     /// </summary>
     ///
     /// <seealso cref="EventPublishPerfTest" />

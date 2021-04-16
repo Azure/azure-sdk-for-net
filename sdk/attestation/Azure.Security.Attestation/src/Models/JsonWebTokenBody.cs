@@ -12,7 +12,6 @@ namespace Azure.Security.Attestation
     /// <summary>
     /// Represents the standard claims in the body of an RFC 7515 Json Web Token.
     /// </summary>
-    [CodeGenModel("JsonWebTokenBody")]
     internal partial class JsonWebTokenBody
     {
         /// <summary>
@@ -37,19 +36,19 @@ namespace Azure.Security.Attestation
         /// Expiration time for the token.
         /// </summary>
         [JsonPropertyName("exp")]
-        public long ExpirationTime{ get; set; }
+        public double? ExpirationTime{ get; set; }
 
         /// <summary>
         /// Time before which this token is not valid.
         /// </summary>
         [JsonPropertyName("nbf")]
-        public long NotBeforeTime { get; set; }
+        public double? NotBeforeTime { get; set; }
 
         /// <summary>
         /// Time at which this token was issued.
         /// </summary>
         [JsonPropertyName("iat")]
-        public long IssuedAtTime { get; set; }
+        public double? IssuedAtTime { get; set; }
 
         /// <summary>
         /// Unique identifier for this token.

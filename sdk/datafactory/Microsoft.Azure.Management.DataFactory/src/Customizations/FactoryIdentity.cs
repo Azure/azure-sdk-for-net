@@ -18,11 +18,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// identities for the factory.</param>
         public FactoryIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), IDictionary<string, object> userAssignedIdentities = default(IDictionary<string, object>))
         {
-            Type = FactoryIdentityType.SystemAssigned;
             PrincipalId = principalId;
             TenantId = tenantId;
             UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
+        }
+
+        partial void CustomInit()
+        {
+            if (Type is null)
+            {
+                Type = FactoryIdentityType.SystemAssigned;
+            }
         }
     }
 }

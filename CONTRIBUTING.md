@@ -197,12 +197,12 @@ When run, the code regions in the format below (where `<snippetName>` is the nam
 //some sample code
 string snippet = "some snippet code";
 
-// Lines prefixed with the below comment format will be ignored by the snippet updater.
-/*@@*/ string ignored = "this code will not appear in the snippet markdown";
-
-// Lines prefixed with the below comment format will appear in the snippet markdown, but will remain comments in the C#` code.
-// Note: these comments should only be used for non-critical code as it will not be compiled or refactored as the code changes.
-//@@ snippet = "value that would never pass a test but looks good in a sample!";
+// The snippet updater defines the SNIPPET directive while parsing. You can use #if SNIPPET to filter lines in or out of the snippet.
+#if SNIPPET
+snippet = "value that would never pass a test but looks good in a sample!";
+#else
+string ignored = "this code will not appear in the snippet markdown";
+#endif
 
 #endregion
 ```
