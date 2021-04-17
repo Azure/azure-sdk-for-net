@@ -13,18 +13,18 @@ namespace Azure.Monitory.Query
     {
         private Dictionary<Type, BoundTypeInfo> _cache = new();
 
-        public T Deserialize<T>(IBinderImplementation binderImplementation)
+        public T Deserialize<T, TExchange>(TExchange source, IBinderImplementation<TExchange> binderImplementation)
         {
             var info = GetBinderInfo(typeof(T));
             var instance = Activator.CreateInstance<T>();
-            info.Deserialize(instance, binderImplementation);
+            info.Deserialize(source, instance, binderImplementation);
             return instance;
         }
 
-        public void Serialize<T>(T value, IBinderImplementation binderImplementation)
+        public void Serialize<T, TExchange>(T value, TExchange destination, IBinderImplementation<TExchange> binderImplementation)
         {
             var info = GetBinderInfo(typeof(T));
-            info.Serialize(value, binderImplementation);
+            info.Serialize(value, destination, binderImplementation);
         }
 
         private BoundTypeInfo GetBinderInfo(Type type)
@@ -60,19 +60,19 @@ namespace Azure.Monitory.Query
 
         public BoundMemberInfo[] Members { get; }
 
-        public void Serialize(object o, IBinderImplementation binderImplementation)
+        public void Serialize<TExchange>(object o, TExchange destination, IBinderImplementation<TExchange> binderImplementation)
         {
             foreach (var member in Members)
             {
-                member.Serialize(o, binderImplementation);
+                member.Serialize(o, destination, binderImplementation);
             }
         }
 
-        public void Deserialize(object o, IBinderImplementation binderImplementation)
+        public void Deserialize<TExchange>(TExchange source, object o, IBinderImplementation<TExchange> binderImplementation)
         {
             foreach (var member in Members)
             {
-                member.Deserialize(o, binderImplementation);
+                member.Deserialize(source, o, binderImplementation);
             }
         }
     }
@@ -86,10 +86,10 @@ namespace Azure.Monitory.Query
 
         public string Name => MemberInfo.Name;
         public MemberInfo MemberInfo { get; }
-        public bool CanRead { get; protected set; }
-        public bool CanWrite { get; protected set; }
-        public abstract void Serialize(object o, IBinderImplementation binderImplementation);
-        public abstract void Deserialize(object o, IBinderImplementation binderImplementation);
+        public abstract bool CanRead { get; }
+        public abstract bool CanWrite { get; }
+        public abstract void Serialize<TExchange>(object o, TExchange destination, IBinderImplementation<TExchange> binderImplementation);
+        public abstract void Deserialize<TExchange>(TExchange source, object o, IBinderImplementation<TExchange> binderImplementation);
     }
 
     public delegate T PropertyGetter<T>(object o);
@@ -117,23 +117,26 @@ namespace Azure.Monitory.Query
 
         private PropertySetter<T> Setter { get; }
 
-        public override void Serialize(object o, IBinderImplementation binderImplementation)
+        public override bool CanRead { get; }
+        public override bool CanWrite { get; }
+
+        public override void Serialize<TExchange>(object o, TExchange destination, IBinderImplementation<TExchange> binderImplementation)
         {
-            binderImplementation.Set(Getter(o), this);
+            binderImplementation.Set(destination, Getter(o), this);
         }
 
-        public override void Deserialize(object o, IBinderImplementation binderImplementation)
+        public override void Deserialize<TExchange>(TExchange source, object o, IBinderImplementation<TExchange> binderImplementation)
         {
-            if (binderImplementation.TryGet<T>(this, out T value))
+            if (binderImplementation.TryGet(this, source, out T value))
             {
                 Setter(o, value);
             }
         }
     }
 
-    internal interface IBinderImplementation
+    internal interface IBinderImplementation<TExchange>
     {
-        void Set<T>(T value, BoundMemberInfo memberInfo);
-        bool TryGet<T>(BoundMemberInfo memberInfo, out T value);
+        void Set<T>(TExchange destination, T value, BoundMemberInfo memberInfo);
+        bool TryGet<T>(BoundMemberInfo memberInfo, TExchange source,  out T value);
     }
 }

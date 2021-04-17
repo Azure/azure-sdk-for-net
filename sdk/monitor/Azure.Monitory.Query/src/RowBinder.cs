@@ -8,7 +8,7 @@ using Azure.Monitory.Query.Models;
 
 namespace Azure.Monitory.Query
 {
-    internal class RowBinder
+    internal class RowBinder: IBinderImplementation<LogsQueryResultRow>
     {
         private TypeBinder _typeBinder = new();
         public RowBinder()
@@ -54,13 +54,39 @@ namespace Azure.Monitory.Query
                 {
                     foreach (var row in table.Rows)
                     {
-                        results.Add(_typeBinder.Deserialize<T>(row));
+                        results.Add(_typeBinder.Deserialize<T, LogsQueryResultRow>(row, this));
                     }
                 }
             }
 
             // TODO: Maybe support record construction
             return results;
+        }
+
+        public void Set<T>(LogsQueryResultRow destination, T value, BoundMemberInfo memberInfo)
+        {
+            throw new NotSupportedException();
+        }
+
+        public bool TryGet<T>(BoundMemberInfo memberInfo, LogsQueryResultRow source, out T value)
+        {
+            if (!source.TryGetColumn(memberInfo.Name, out int column))
+            {
+                value = default;
+                return false;
+            }
+
+            if (typeof(T) == typeof(int)) value = (T)(object)source.GetInt32(column);
+            else if (typeof(T) == typeof(string)) value = (T)(object)source.GetString(column);
+            else if (typeof(T) == typeof(bool)) value = (T)(object)source.GetBoolean(column);
+            else if (typeof(T) == typeof(long)) value = (T)(object)source.GetInt64(column);
+            else if (typeof(T) == typeof(object)) value = (T)source.GetObject(column);
+            else
+            {
+                throw new NotSupportedException();
+            }
+
+            return true;
         }
     }
 }

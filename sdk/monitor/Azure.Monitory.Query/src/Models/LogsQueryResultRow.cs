@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Azure.Monitory.Query.Models
 {
-    public class LogsQueryResultRow : IBinderImplementation
+    public class LogsQueryResultRow
     {
         private readonly Dictionary<string, int> _columns;
         private readonly JsonElement _row;
@@ -70,28 +70,6 @@ namespace Azure.Monitory.Query.Models
         public object this[int index] => GetObject(index);
         public object this[string name] => GetObject(name);
 
-        void IBinderImplementation.Set<T>(T value, BoundMemberInfo memberInfo)
-        {
-            throw new NotSupportedException();
-        }
-
-        bool IBinderImplementation.TryGet<T>(BoundMemberInfo memberInfo, out T value)
-        {
-            if (!_columns.TryGetValue(memberInfo.Name, out int column))
-            {
-                value = default;
-                return false;
-            }
-
-            if (typeof(T) == typeof(int)) value = (T)(object)GetInt32(column);
-            else if (typeof(T) == typeof(string)) value = (T)(object)GetString(column);
-            else if (typeof(T) == typeof(bool)) value = (T)(object)GetBoolean(column);
-            else
-            {
-                throw new NotSupportedException();
-            }
-
-            return true;
-        }
+        internal bool TryGetColumn(string name, out int column) => _columns.TryGetValue(name, out column);
     }
 }
