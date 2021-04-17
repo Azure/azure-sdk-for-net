@@ -38,7 +38,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             var client = new PhoneNumbersClient(
                     TestEnvironment.LiveTestConnectionString,
-                    InstrumentClientOptions(new PhoneNumbersClientOptions()));
+                    CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
             // We always create the instrumented client to suppress the instrumentation check
             var instrumentedClient = InstrumentClient(client);
@@ -55,7 +55,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = new PhoneNumbersClient(
                     TestEnvironment.LiveTestEndpoint,
                      new AzureKeyCredential(TestEnvironment.LiveTestAccessKey),
-                    InstrumentClientOptions(new PhoneNumbersClientOptions()));
+                    CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
             return isInstrumented ? InstrumentClient(client) : client;
         }
@@ -70,7 +70,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var client = new PhoneNumbersClient(
                     TestEnvironment.LiveTestEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
-                    InstrumentClientOptions(new PhoneNumbersClientOptions()));
+                    CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
             return isInstrumented ? InstrumentClient(client) : client;
         }
@@ -102,6 +102,13 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             if (TestEnvironment.Mode != RecordedTestMode.Playback)
                 Thread.Sleep(2000);
+        }
+
+        private PhoneNumbersClientOptions CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs()
+        {
+            PhoneNumbersClientOptions phoneNumbersClientOptions = new PhoneNumbersClientOptions();
+            phoneNumbersClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
+            return InstrumentClientOptions(phoneNumbersClientOptions);
         }
     }
 }
