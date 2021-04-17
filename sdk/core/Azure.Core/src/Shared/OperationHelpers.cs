@@ -33,6 +33,25 @@ namespace Azure.Core
             return value.Value;
         }
 
+        public static ValueTask<Response> DefaultWaitForCompletionResponseAsync(this Operation operation, CancellationToken cancellationToken)
+        {
+            return operation.WaitForCompletionResponseAsync(DefaultPollingInterval, cancellationToken);
+        }
+
+        public static async ValueTask<Response> DefaultWaitForCompletionResponseAsync(this Operation operation, TimeSpan pollingInterval, CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+                if (operation.HasCompleted)
+                {
+                    return operation.GetRawResponse();
+                }
+
+                await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
         public static ValueTask<Response<TResult>> DefaultWaitForCompletionAsync<TResult>(this Operation<TResult> operation, CancellationToken cancellationToken)
             where TResult : notnull
         {

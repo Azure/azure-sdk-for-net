@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    internal partial class EndpointKeysDTO
+    public partial class EndpointKeys
     {
-        internal static EndpointKeysDTO DeserializeEndpointKeysDTO(JsonElement element)
+        internal static EndpointKeys DeserializeEndpointKeys(JsonElement element)
         {
             Optional<string> primaryEndpointKey = default;
             Optional<string> secondaryEndpointKey = default;
@@ -47,7 +47,7 @@ namespace Azure.AI.QuestionAnswering.Models
                     continue;
                 }
             }
-            return new EndpointKeysDTO(primaryEndpointKey.Value, secondaryEndpointKey.Value, installedVersion.Value, lastStableVersion.Value, language.Value);
+            return new EndpointKeys(primaryEndpointKey.Value, secondaryEndpointKey.Value, installedVersion.Value, lastStableVersion.Value, language.Value);
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Azure.AI.QuestionAnswering
 
         /// <summary> Gets endpoint keys for an endpoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<EndpointKeysDTO>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<EndpointKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetKeysRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -63,9 +63,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 200:
                     {
-                        EndpointKeysDTO value = default;
+                        EndpointKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EndpointKeysDTO.DeserializeEndpointKeysDTO(document.RootElement);
+                        value = EndpointKeys.DeserializeEndpointKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -75,7 +75,7 @@ namespace Azure.AI.QuestionAnswering
 
         /// <summary> Gets endpoint keys for an endpoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<EndpointKeysDTO> GetKeys(CancellationToken cancellationToken = default)
+        public Response<EndpointKeys> GetKeys(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetKeysRequest();
             _pipeline.Send(message, cancellationToken);
@@ -83,9 +83,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 200:
                     {
-                        EndpointKeysDTO value = default;
+                        EndpointKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EndpointKeysDTO.DeserializeEndpointKeysDTO(document.RootElement);
+                        value = EndpointKeys.DeserializeEndpointKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -112,7 +112,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="keyType"> Type of Key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/> is null. </exception>
-        public async Task<Response<EndpointKeysDTO>> RefreshKeysAsync(string keyType, CancellationToken cancellationToken = default)
+        public async Task<Response<EndpointKeys>> RefreshKeysAsync(string keyType, CancellationToken cancellationToken = default)
         {
             if (keyType == null)
             {
@@ -125,9 +125,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 200:
                     {
-                        EndpointKeysDTO value = default;
+                        EndpointKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EndpointKeysDTO.DeserializeEndpointKeysDTO(document.RootElement);
+                        value = EndpointKeys.DeserializeEndpointKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -139,7 +139,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="keyType"> Type of Key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/> is null. </exception>
-        public Response<EndpointKeysDTO> RefreshKeys(string keyType, CancellationToken cancellationToken = default)
+        public Response<EndpointKeys> RefreshKeys(string keyType, CancellationToken cancellationToken = default)
         {
             if (keyType == null)
             {
@@ -152,9 +152,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 200:
                     {
-                        EndpointKeysDTO value = default;
+                        EndpointKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EndpointKeysDTO.DeserializeEndpointKeysDTO(document.RootElement);
+                        value = EndpointKeys.DeserializeEndpointKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

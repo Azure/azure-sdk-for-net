@@ -31,6 +31,19 @@ directive:
     }
 ```
 
+### Use datetime format for Operation
+
+The two timestamps in Operation should use the `datetime` format.
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.Operation
+  transform: |
+    $.properties.createdTimestamp["format"] = "datetime";
+    $.properties.lastActionTimestamp["format"] = "datetime";
+```
+
 ## C# customizations
 
 These are transforms specific to the Azure QnA Maker client libraries for .NET

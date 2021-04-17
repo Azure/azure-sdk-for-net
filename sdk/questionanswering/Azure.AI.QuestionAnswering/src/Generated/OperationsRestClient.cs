@@ -15,18 +15,18 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.QuestionAnswering
 {
-    internal partial class RestClient
+    internal partial class OperationsRestClient
     {
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of RestClient. </summary>
+        /// <summary> Initializes a new instance of OperationsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt; qnamaker-resource-name &gt;.api.cognitiveservices.azure.com). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public RestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        public OperationsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
             if (endpoint == null)
             {
@@ -57,7 +57,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="operationId"> Operation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Models.Operation, GetDetailsHeaders>> GetDetailsAsync(string operationId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<KnowledgebaseOperation, GetDetailsHeaders>> GetDetailsAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
@@ -71,9 +71,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 200:
                     {
-                        Models.Operation value = default;
+                        KnowledgebaseOperation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.Operation.DeserializeOperation(document.RootElement);
+                        value = KnowledgebaseOperation.DeserializeKnowledgebaseOperation(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -85,7 +85,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="operationId"> Operation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public ResponseWithHeaders<Models.Operation, GetDetailsHeaders> GetDetails(string operationId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<KnowledgebaseOperation, GetDetailsHeaders> GetDetails(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
@@ -99,9 +99,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 200:
                     {
-                        Models.Operation value = default;
+                        KnowledgebaseOperation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.Operation.DeserializeOperation(document.RootElement);
+                        value = KnowledgebaseOperation.DeserializeKnowledgebaseOperation(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:

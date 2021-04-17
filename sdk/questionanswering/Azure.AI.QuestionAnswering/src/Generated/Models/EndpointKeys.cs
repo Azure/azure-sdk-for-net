@@ -8,20 +8,20 @@
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> Schema for EndpointKeys generate/refresh operations. </summary>
-    internal partial class EndpointKeysDTO
+    public partial class EndpointKeys
     {
-        /// <summary> Initializes a new instance of EndpointKeysDTO. </summary>
-        internal EndpointKeysDTO()
+        /// <summary> Initializes a new instance of EndpointKeys. </summary>
+        internal EndpointKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointKeysDTO. </summary>
+        /// <summary> Initializes a new instance of EndpointKeys. </summary>
         /// <param name="primaryEndpointKey"> Primary Access Key. </param>
         /// <param name="secondaryEndpointKey"> Secondary Access Key. </param>
         /// <param name="installedVersion"> Current version of runtime. </param>
         /// <param name="lastStableVersion"> Latest version of runtime. </param>
         /// <param name="language"> Language setting of runtime. </param>
-        internal EndpointKeysDTO(string primaryEndpointKey, string secondaryEndpointKey, string installedVersion, string lastStableVersion, string language)
+        internal EndpointKeys(string primaryEndpointKey, string secondaryEndpointKey, string installedVersion, string lastStableVersion, string language)
         {
             PrimaryEndpointKey = primaryEndpointKey;
             SecondaryEndpointKey = secondaryEndpointKey;

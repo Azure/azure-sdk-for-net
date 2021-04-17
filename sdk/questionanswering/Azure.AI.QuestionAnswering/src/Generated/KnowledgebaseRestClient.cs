@@ -377,7 +377,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="updateKb"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kbId"/> or <paramref name="updateKb"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Models.Operation, KnowledgebaseUpdateHeaders>> UpdateAsync(string kbId, UpdateKbOperationDTO updateKb, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<KnowledgebaseOperation, KnowledgebaseUpdateHeaders>> UpdateAsync(string kbId, UpdateKbOperationDTO updateKb, CancellationToken cancellationToken = default)
         {
             if (kbId == null)
             {
@@ -395,9 +395,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 202:
                     {
-                        Models.Operation value = default;
+                        KnowledgebaseOperation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.Operation.DeserializeOperation(document.RootElement);
+                        value = KnowledgebaseOperation.DeserializeKnowledgebaseOperation(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -410,7 +410,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="updateKb"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kbId"/> or <paramref name="updateKb"/> is null. </exception>
-        public ResponseWithHeaders<Models.Operation, KnowledgebaseUpdateHeaders> Update(string kbId, UpdateKbOperationDTO updateKb, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<KnowledgebaseOperation, KnowledgebaseUpdateHeaders> Update(string kbId, UpdateKbOperationDTO updateKb, CancellationToken cancellationToken = default)
         {
             if (kbId == null)
             {
@@ -428,9 +428,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 202:
                     {
-                        Models.Operation value = default;
+                        KnowledgebaseOperation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.Operation.DeserializeOperation(document.RootElement);
+                        value = KnowledgebaseOperation.DeserializeKnowledgebaseOperation(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -460,7 +460,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="createKbPayload"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createKbPayload"/> is null. </exception>
-        public async Task<Response<Models.Operation>> CreateAsync(CreateKbDTO createKbPayload, CancellationToken cancellationToken = default)
+        public async Task<Response<KnowledgebaseOperation>> CreateAsync(CreateKbDTO createKbPayload, CancellationToken cancellationToken = default)
         {
             if (createKbPayload == null)
             {
@@ -473,9 +473,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 202:
                     {
-                        Models.Operation value = default;
+                        KnowledgebaseOperation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.Operation.DeserializeOperation(document.RootElement);
+                        value = KnowledgebaseOperation.DeserializeKnowledgebaseOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -487,7 +487,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="createKbPayload"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="createKbPayload"/> is null. </exception>
-        public Response<Models.Operation> Create(CreateKbDTO createKbPayload, CancellationToken cancellationToken = default)
+        public Response<KnowledgebaseOperation> Create(CreateKbDTO createKbPayload, CancellationToken cancellationToken = default)
         {
             if (createKbPayload == null)
             {
@@ -500,9 +500,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 202:
                     {
-                        Models.Operation value = default;
+                        KnowledgebaseOperation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.Operation.DeserializeOperation(document.RootElement);
+                        value = KnowledgebaseOperation.DeserializeKnowledgebaseOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
