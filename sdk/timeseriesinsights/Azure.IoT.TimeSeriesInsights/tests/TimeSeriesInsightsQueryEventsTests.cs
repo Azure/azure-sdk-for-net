@@ -60,9 +60,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // This retry logic was added as the TSI instance are not immediately available after creation
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
-                    QueryAsyncResults queryEventsPages = tsiClient.Query.GetEventsAsync(tsiId, startTime, endTime);
+                    QueryResults queryEventsPages = tsiClient.Query.GetEventsAsync(tsiId, startTime, endTime);
 
-                    await foreach (TimeSeriesPoint timeSeriesPoint in queryEventsPages.GetPageableResultsAsync())
+                    await foreach (TimeSeriesPoint timeSeriesPoint in queryEventsPages.GetResultsAsync())
                     {
                         double result = (double)timeSeriesPoint.GetValue("Temperature");
                         Console.WriteLine($"{timeSeriesPoint.Timestamp}: {result}");

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -10,14 +11,14 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// .
     /// </summary>
     public class QueryResults
     {
-        private QueryRequest _queryRequest;
-        private string _storeType;
         private CancellationToken _cancellationToken;
-        private QueryRestClient _queryClient;
+
+        private readonly QueryRequest _queryRequest;
+        private readonly string _storeType;
+        private readonly QueryRestClient _queryClient;
         private readonly HashSet<EventProperty> _eventProperties;
 
         /// <summary>
@@ -26,7 +27,6 @@ namespace Azure.IoT.TimeSeriesInsights
         internal QueryResults() { }
 
         /// <summary>
-        /// ctor.
         /// </summary>
         /// <param name="queryClient"></param>
         /// <param name="queryRequest"></param>
@@ -44,7 +44,51 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary>
         /// </summary>
         /// <returns>The search results.</returns>
-        public Pageable<TimeSeriesPoint> GetPageableResults()
+        public AsyncPageable<TimeSeriesPoint> GetResultsAsync()
+        {
+            async Task<Page<TimeSeriesPoint>> FirstPageFunc(int? pageSizeHint)
+            {
+                try
+                {
+                    Response<QueryResultPage> response = await _queryClient
+                        .ExecuteAsync(_queryRequest, _storeType, null, null, _cancellationToken)
+                        .ConfigureAwait(false);
+
+                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value, _eventProperties);
+
+                    return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            async Task<Page<TimeSeriesPoint>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                try
+                {
+                    Response<QueryResultPage> response = await _queryClient
+                        .ExecuteAsync(_queryRequest, _storeType, nextLink, null, _cancellationToken)
+                        .ConfigureAwait(false);
+
+                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value, _eventProperties);
+
+                    return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public Pageable<TimeSeriesPoint> GetResults()
         {
             Page<TimeSeriesPoint> FirstPageFunc(int? pageSizeHint)
             {
@@ -81,6 +125,22 @@ namespace Azure.IoT.TimeSeriesInsights
             }
 
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetUniquePropertyNames()
+        {
+            return _eventProperties.Select((eventProperty) => eventProperty.Name).Distinct().ToArray();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public EventProperty[] GetProperties()
+        {
+            return _eventProperties.ToArray();
         }
     }
 }

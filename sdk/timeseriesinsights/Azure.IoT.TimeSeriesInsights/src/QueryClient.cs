@@ -42,7 +42,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="options">Optional parameters to use when querying for events.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{QueryAsyncResults}"/> of query result frames.</returns>
-        public virtual QueryAsyncResults GetEventsAsync(
+        public virtual QueryResults GetEventsAsync(
             TimeSeriesId timeSeriesId,
             DateTimeOffset startTime,
             DateTimeOffset endTime,
@@ -62,7 +62,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildEventsRequestOptions(options, queryRequest);
 
-                return new QueryAsyncResults(_queryRestClient, queryRequest, options?.StoreType?.ToString(), cancellationToken);
+                return new QueryResults(_queryRestClient, queryRequest, options?.StoreType?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
