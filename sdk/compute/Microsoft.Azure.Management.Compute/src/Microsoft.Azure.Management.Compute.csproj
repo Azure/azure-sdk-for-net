@@ -15,7 +15,7 @@
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release are
-        1. This is a preview release of the Azure Compute SDK with Gallery SDK. 
+        1. This is a release of the Azure Compute SDK with Gallery SDK. It contains blob as source gallery change, shared gallery change, and gallery image features.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
