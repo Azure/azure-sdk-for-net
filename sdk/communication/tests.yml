@@ -22,7 +22,6 @@ extends:
         SubscriptionConfiguration: $(sub-config-communication-int-test-resources)
     Clouds: Public,Int
     EnvVars:
-      AZURE_PHONE_NUMBER: $(communication-livetest-phone-number)
       # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
       SKIP_PHONENUMBER_LIVE_TESTS: TRUE
       TEST_PACKAGES_ENABLED: ${{ parameters.TestPackagesEnabled }}
