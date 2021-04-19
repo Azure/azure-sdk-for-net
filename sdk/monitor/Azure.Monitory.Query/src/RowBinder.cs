@@ -8,9 +8,8 @@ using Azure.Monitory.Query.Models;
 
 namespace Azure.Monitory.Query
 {
-    internal class RowBinder: IBinderImplementation<LogsQueryResultRow>
+    internal class RowBinder: TypeBinder<LogsQueryResultRow>
     {
-        private TypeBinder _typeBinder = new();
         public RowBinder()
         {
         }
@@ -54,7 +53,7 @@ namespace Azure.Monitory.Query
                 {
                     foreach (var row in table.Rows)
                     {
-                        results.Add(_typeBinder.Deserialize<T, LogsQueryResultRow>(row, this));
+                        results.Add(Deserialize<T>(row, this));
                     }
                 }
             }
@@ -63,12 +62,12 @@ namespace Azure.Monitory.Query
             return results;
         }
 
-        public void Set<T>(LogsQueryResultRow destination, T value, BoundMemberInfo memberInfo)
+        public override void Set<T>(LogsQueryResultRow destination, T value, BoundMemberInfo memberInfo)
         {
             throw new NotSupportedException();
         }
 
-        public bool TryGet<T>(BoundMemberInfo memberInfo, LogsQueryResultRow source, out T value)
+        public override bool TryGet<T>(BoundMemberInfo memberInfo, LogsQueryResultRow source, out T value)
         {
             if (!source.TryGetColumn(memberInfo.Name, out int column))
             {

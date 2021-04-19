@@ -9,11 +9,11 @@ using System.Reflection;
 
 namespace Azure.Monitory.Query
 {
-    internal class TypeBinder
+    internal abstract class TypeBinder<TExchange>
     {
         private Dictionary<Type, BoundTypeInfo> _cache = new();
 
-        public T Deserialize<T, TExchange>(TExchange source, IBinderImplementation<TExchange> binderImplementation)
+        public T Deserialize<T>(TExchange source, TypeBinder<TExchange> binderImplementation)
         {
             var info = GetBinderInfo(typeof(T));
             var instance = Activator.CreateInstance<T>();
@@ -21,7 +21,7 @@ namespace Azure.Monitory.Query
             return instance;
         }
 
-        public void Serialize<T, TExchange>(T value, TExchange destination, IBinderImplementation<TExchange> binderImplementation)
+        public void Serialize<T>(T value, TExchange destination, TypeBinder<TExchange> binderImplementation)
         {
             var info = GetBinderInfo(typeof(T));
             info.Serialize(value, destination, binderImplementation);
@@ -36,6 +36,10 @@ namespace Azure.Monitory.Query
 
             return info;
         }
+
+
+        public abstract void Set<T>(TExchange destination, T value, BoundMemberInfo memberInfo);
+        public abstract bool TryGet<T>(BoundMemberInfo memberInfo, TExchange source,  out T value);
     }
     internal class BoundTypeInfo
     {
@@ -60,19 +64,25 @@ namespace Azure.Monitory.Query
 
         public BoundMemberInfo[] Members { get; }
 
-        public void Serialize<TExchange>(object o, TExchange destination, IBinderImplementation<TExchange> binderImplementation)
+        public void Serialize<TExchange>(object o, TExchange destination, TypeBinder<TExchange> binderImplementation)
         {
             foreach (var member in Members)
             {
-                member.Serialize(o, destination, binderImplementation);
+                if (member.CanRead)
+                {
+                    member.Serialize(o, destination, binderImplementation);
+                }
             }
         }
 
-        public void Deserialize<TExchange>(TExchange source, object o, IBinderImplementation<TExchange> binderImplementation)
+        public void Deserialize<TExchange>(TExchange source, object o, TypeBinder<TExchange> binderImplementation)
         {
             foreach (var member in Members)
             {
-                member.Deserialize(source, o, binderImplementation);
+                if (member.CanWrite)
+                {
+                    member.Deserialize(source, o, binderImplementation);
+                }
             }
         }
     }
@@ -88,8 +98,8 @@ namespace Azure.Monitory.Query
         public MemberInfo MemberInfo { get; }
         public abstract bool CanRead { get; }
         public abstract bool CanWrite { get; }
-        public abstract void Serialize<TExchange>(object o, TExchange destination, IBinderImplementation<TExchange> binderImplementation);
-        public abstract void Deserialize<TExchange>(TExchange source, object o, IBinderImplementation<TExchange> binderImplementation);
+        public abstract void Serialize<TExchange>(object o, TExchange destination, TypeBinder<TExchange> binderImplementation);
+        public abstract void Deserialize<TExchange>(TExchange source, object o, TypeBinder<TExchange> binderImplementation);
     }
 
     public delegate T PropertyGetter<T>(object o);
@@ -120,23 +130,17 @@ namespace Azure.Monitory.Query
         public override bool CanRead { get; }
         public override bool CanWrite { get; }
 
-        public override void Serialize<TExchange>(object o, TExchange destination, IBinderImplementation<TExchange> binderImplementation)
+        public override void Serialize<TExchange>(object o, TExchange destination, TypeBinder<TExchange> binderImplementation)
         {
             binderImplementation.Set(destination, Getter(o), this);
         }
 
-        public override void Deserialize<TExchange>(TExchange source, object o, IBinderImplementation<TExchange> binderImplementation)
+        public override void Deserialize<TExchange>(TExchange source, object o, TypeBinder<TExchange> binderImplementation)
         {
             if (binderImplementation.TryGet(this, source, out T value))
             {
                 Setter(o, value);
             }
         }
-    }
-
-    internal interface IBinderImplementation<TExchange>
-    {
-        void Set<T>(TExchange destination, T value, BoundMemberInfo memberInfo);
-        bool TryGet<T>(BoundMemberInfo memberInfo, TExchange source,  out T value);
     }
 }
