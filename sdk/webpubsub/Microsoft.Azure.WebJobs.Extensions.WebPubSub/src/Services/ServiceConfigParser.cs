@@ -23,16 +23,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             Endpoint = settings.ContainsKey("endpoint") ?
                 settings["endpoint"] :
-                throw new ArgumentNullException(nameof(Endpoint));
+                throw new ArgumentException(nameof(Endpoint));
             AccessKey = settings.ContainsKey("accesskey") ?
                 settings["accesskey"] :
-                throw new ArgumentNullException(nameof(AccessKey));
+                throw new ArgumentException(nameof(AccessKey));
 
             Version = settings.ContainsKey("version") ? settings["version"] : null;
             Port = settings.ContainsKey("port") ? settings["port"] : null;
         }
 
-        private Dictionary<string, string> ParseConnectionString(string connectionString)
+        private static Dictionary<string, string> ParseConnectionString(string connectionString)
         {
             if (string.IsNullOrEmpty(connectionString))
             {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             try
             {
-                setting = items.Where(x => x.Length > 0).ToDictionary(x => x.Split('=')[0].ToLower(), y => y.Split('=')[1]);
+                setting = items.Where(x => x.Length > 0).ToDictionary(x => x.Split('=')[0], y => y.Split('=')[1], StringComparer.CurrentCultureIgnoreCase);
             }
             catch (Exception)
             {

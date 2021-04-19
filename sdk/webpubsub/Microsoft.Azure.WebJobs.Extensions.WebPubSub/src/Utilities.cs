@@ -20,10 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal static class Utilities
     {
-        private const int MaxTokenLength = 4096;
         private static readonly char[] HeaderSeparator = { ',' };
-
-        private static readonly JwtSecurityTokenHandler JwtTokenHandler = new JwtSecurityTokenHandler();
 
         public static MediaTypeHeaderValue GetMediaType(MessageDataType dataType) => new MediaTypeHeaderValue(GetContentType(dataType));
 
@@ -48,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public static WebPubSubEventType GetEventType(string ceType)
         {
-            return ceType.StartsWith(Constants.Headers.CloudEvents.TypeSystemPrefix) ?
+            return ceType.StartsWith(Constants.Headers.CloudEvents.TypeSystemPrefix, StringComparison.OrdinalIgnoreCase) ?
                 WebPubSubEventType.System :
                 WebPubSubEventType.User;
         }

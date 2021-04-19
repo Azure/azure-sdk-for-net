@@ -10,7 +10,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public static IWebJobsBuilder AddWebPubSub(this IWebJobsBuilder builder)
         {
-
             if (builder == null)
             {
                 throw new ArgumentNullException(nameof(builder));

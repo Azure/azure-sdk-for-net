@@ -5,7 +5,6 @@ using System;
 using System.IO;
 
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -14,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     /// Message to communicate with service
     /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    [JsonConverter(typeof(MessageJsonConverter))]
+    [JsonConverter(typeof(WebPubSubMessageJsonConverter))]
     public class WebPubSubMessage
     {
         private readonly BinaryData _body;
@@ -52,34 +51,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public BinaryData ToBinaryData()
         {
             return _body;
-        }
-    }
-
-    internal static class MessageExtensions
-    {
-        public static object Convert(this WebPubSubMessage message, Type targetType)
-        {
-            if (targetType == typeof(JObject))
-            {
-                return JObject.FromObject(message.ToArray());
-            }
-
-            if (targetType == typeof(Stream))
-            {
-                return message.ToStream();
-            }
-
-            if (targetType == typeof(byte[]))
-            {
-                return message.ToArray();
-            }
-
-            if (targetType == typeof(string))
-            {
-                return message.ToString();
-            }
-
-            return null;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class WebPubSubListener : IListener
     {
-        public ITriggeredFunctionExecutor Executor { private set; get; }
+        public ITriggeredFunctionExecutor Executor { get; private set; }
 
         private readonly string _listenerKey;
         private readonly IWebPubSubTriggerDispatcher _dispatcher;

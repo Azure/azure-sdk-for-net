@@ -14,7 +14,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 #pragma warning restore CS0618 // Type or member is obsolete
     public class WebPubSubTriggerAttribute : Attribute
     {
-
         /// <summary>
         /// Used to map to method name automatically
         /// </summary>
@@ -38,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// </summary>
         [AutoResolve]
         public string Hub { get; }
-        
+
         /// <summary>
         /// The event of the request
         /// </summary>
@@ -51,6 +50,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// </summary>
         [AutoResolve]
         public WebPubSubEventType EventType { get; }
-
     }
 }

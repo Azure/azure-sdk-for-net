@@ -104,46 +104,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             {
                 context.Headers.Add(Constants.Headers.CloudEvents.UserId, userId);
             }
-            context.Content = payload == null ? null : new StreamContent(new MemoryStream(payload));
-            context.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+
+            if (payload != null)
+            {
+                context.Content = new StreamContent(new MemoryStream(payload));
+                context.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+            }
 
             foreach (var header in context.Headers)
             {
-                context.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                context.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
 
             return context;
-
-            //return CreateHttpRequestMessageFromContext(context);
         }
-
-        //private static HttpRequestMessage CreateHttpRequestMessageFromContext(HttpContext httpContext)
-        //{
-        //    var httpRequest = httpContext.Request;
-        //    var uriString =
-        //        httpRequest.Scheme + "://" +
-        //        httpRequest.Host +
-        //        httpRequest.PathBase +
-        //        httpRequest.Path +
-        //        httpRequest.QueryString;
-        //
-        //    var message = new HttpRequestMessage(new HttpMethod(httpRequest.Method), uriString);
-        //
-        //    message.Properties[nameof(HttpContext)] = httpContext;
-        //
-        //    message.Content = new StreamContent(httpRequest.Body);
-        //
-        //    foreach (var header in httpRequest.Headers)
-        //    {
-        //        // Every header should be able to fit into one of the two header collections.
-        //        // Try message.Headers first since that accepts more of them.
-        //        if (!message.Headers.TryAddWithoutValidation(header.Key, (IEnumerable<string>)header.Value))
-        //        {
-        //            message.Content.Headers.TryAddWithoutValidation(header.Key, (IEnumerable<string>)header.Value);
-        //        }
-        //    }
-        //
-        //    return message;
-        //}
     }
 }

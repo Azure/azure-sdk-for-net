@@ -29,7 +29,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, UserId));
             }
-            
             return claims;
         }
     }

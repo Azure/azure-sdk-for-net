@@ -66,9 +66,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             var hub = Utilities.FirstOrDefault(_attribute.Hub, _options.Hub);
             if (string.IsNullOrEmpty(hub))
             {
-                throw new ArgumentNullException("Hub name should be configured in either attribute or appsettings.");
+                throw new ArgumentNullException($"Hub name should be configured in either attribute or appsettings.");
             }
-            var attributeName = $"{hub}.{_attribute.EventType}.{_attribute.EventName}".ToLower();
+            var attributeName = $"{hub}.{_attribute.EventType}.{_attribute.EventName}";
             var listernerKey = attributeName;
 
             return Task.FromResult<IListener>(new WebPubSubListener(context.Executor, listernerKey, _dispatcher));
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             };
         }
 
-        private void AddBindingData(Dictionary<string, object> bindingData, WebPubSubTriggerEvent triggerEvent)
+        private static void AddBindingData(Dictionary<string, object> bindingData, WebPubSubTriggerEvent triggerEvent)
         {
             bindingData.Add(nameof(triggerEvent.ConnectionContext), triggerEvent.ConnectionContext);
             bindingData.Add(nameof(triggerEvent.Message), triggerEvent.Message);
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <summary>
         /// Defined what other bindings can use and return value.
         /// </summary>
-        private IReadOnlyDictionary<string, Type> CreateBindingContract(ParameterInfo parameterInfo)
+        private static IReadOnlyDictionary<string, Type> CreateBindingContract(ParameterInfo parameterInfo)
         {
             var contract = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase)
             {
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 return null;
             }
 
-            private object ConvertTypeIfPossible(object source, Type target)
+            private static object ConvertTypeIfPossible(object source, Type target)
             {
                 if (source is WebPubSubMessage message)
                 {

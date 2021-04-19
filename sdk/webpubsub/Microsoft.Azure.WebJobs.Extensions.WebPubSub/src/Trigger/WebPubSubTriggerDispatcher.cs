@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class WebPubSubTriggerDispatcher : IWebPubSubTriggerDispatcher
     {
-        private Dictionary<string, WebPubSubListener> _listeners = new Dictionary<string, WebPubSubListener>();
+        private Dictionary<string, WebPubSubListener> _listeners = new Dictionary<string, WebPubSubListener>(StringComparer.InvariantCultureIgnoreCase);
 
         public void AddListener(string key, WebPubSubListener listener)
         {
@@ -30,8 +30,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             _listeners.Add(key, listener);
         }
 
-        public async Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage req, 
-            HashSet<string> allowedHosts, 
+        public async Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage req,
+            HashSet<string> allowedHosts,
             HashSet<string> accessKeys,
             CancellationToken token = default)
         {
@@ -118,10 +118,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 await executor.Executor.TryExecuteAsync(new TriggeredFunctionData
                 {
                     TriggerValue = triggerEvent
-                }, token);
+                }, token).ConfigureAwait(false);
 
                 // After function processed, return on-hold event reponses.
-                if (requestType.IsSyncMethod())
+                if (requestType == RequestType.Connect || requestType == RequestType.User)
                 {
                     try
                     {
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         private static string GetFunctionName(ConnectionContext context)
         {
-            return $"{context.Hub}.{context.EventType}.{context.EventName}".ToLower();
+            return $"{context.Hub}.{context.EventType}.{context.EventName}";
         }
 
         private static bool RespondToServiceAbuseCheck(HttpRequestMessage req, HashSet<string> allowedHosts, out HttpResponseMessage response)
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             if (req.Method == HttpMethod.Options || req.Method == HttpMethod.Get)
             {
                 var hosts = req.Headers.GetValues(Constants.Headers.WebHookRequestOrigin);
-                if (hosts != null && hosts.Count() > 0)
+                if (hosts != null && hosts.Any())
                 {
                     foreach (var item in allowedHosts)
                     {

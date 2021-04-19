@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
-    internal class MessageJsonConverter : JsonConverter<WebPubSubMessage>
+    internal class WebPubSubMessageJsonConverter : JsonConverter<WebPubSubMessage>
     {
         public override WebPubSubMessage ReadJson(JsonReader reader, Type objectType, WebPubSubMessage existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             return new WebPubSubMessage(jObject.ToString());
         }
-    
+
         public override void WriteJson(JsonWriter writer, WebPubSubMessage value, JsonSerializer serializer)
         {
             serializer.Serialize(writer, value.ToString());
