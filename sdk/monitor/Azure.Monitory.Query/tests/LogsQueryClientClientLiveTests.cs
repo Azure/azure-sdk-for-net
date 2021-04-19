@@ -1,19 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Monitory.Query;
 using Azure.Monitory.Query.Models;
 using NUnit.Framework;
 
 namespace Azure.Monitory.Query.Tests
 {
-    public class LogsQueryClientClientLiveTests: RecordedTestBase<MonitorQueryClientTestEnvironment>
+    public class LogsQueryClientClientLiveTests : RecordedTestBase<MonitorQueryClientTestEnvironment>
     {
         private LogsTestData _logsTestData;
+
         public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -55,8 +56,8 @@ namespace Azure.Monitory.Query.Tests
             Assert.AreEqual(false, resultTable.Rows[0].GetBoolean(2));
             Assert.AreEqual(false, resultTable.Rows[0].GetBoolean(LogsTestData.BoolColumnName));
 
-            Assert.AreEqual(0f, resultTable.Rows[0].GetSingle(3));
-            Assert.AreEqual(0f, resultTable.Rows[0].GetSingle(LogsTestData.FloatColumnName));
+            Assert.AreEqual(0d, resultTable.Rows[0].GetDouble(3));
+            Assert.AreEqual(0d, resultTable.Rows[0].GetDouble(LogsTestData.FloatColumnName));
         }
 
         [RecordedTest]
@@ -67,7 +68,7 @@ namespace Azure.Monitory.Query.Tests
             var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId,
                 $"{LogsTestData.TableAName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc");
 
-            CollectionAssert.AreEqual(new[] {"a","b","c"}, results.Value);
+            CollectionAssert.AreEqual(new[] {"a", "b", "c"}, results.Value);
         }
 
         [RecordedTest]
@@ -92,9 +93,9 @@ namespace Azure.Monitory.Query.Tests
 
             CollectionAssert.AreEqual(new[]
             {
-                new TestModel() { Age = 1, Name = "a"},
-                new TestModel() { Age = 3, Name = "b"},
-                new TestModel() { Age = 1, Name = "c"}
+                new TestModel() {Age = 1, Name = "a"},
+                new TestModel() {Age = 3, Name = "b"},
+                new TestModel() {Age = 1, Name = "c"}
             }, results.Value);
         }
 
@@ -111,9 +112,9 @@ namespace Azure.Monitory.Query.Tests
 
             CollectionAssert.AreEqual(new[]
             {
-                new Dictionary<string, object>() { {"Age", 1}, {"Name", "a"}},
-                new Dictionary<string, object>() { {"Age", 3}, {"Name", "b"}},
-                new Dictionary<string, object>() { {"Age", 1}, {"Name", "c"}}
+                new Dictionary<string, object>() {{"Age", 1}, {"Name", "a"}},
+                new Dictionary<string, object>() {{"Age", 3}, {"Name", "b"}},
+                new Dictionary<string, object>() {{"Age", 1}, {"Name", "c"}}
             }, results.Value);
         }
 
@@ -130,9 +131,9 @@ namespace Azure.Monitory.Query.Tests
 
             CollectionAssert.AreEqual(new[]
             {
-                new Dictionary<string, object>() { {"Age", 1}, {"Name", "a"}},
-                new Dictionary<string, object>() { {"Age", 3}, {"Name", "b"}},
-                new Dictionary<string, object>() { {"Age", 1}, {"Name", "c"}}
+                new Dictionary<string, object>() {{"Age", 1}, {"Name", "a"}},
+                new Dictionary<string, object>() {{"Age", 3}, {"Name", "b"}},
+                new Dictionary<string, object>() {{"Age", 1}, {"Name", "c"}}
             }, results.Value);
         }
 
@@ -152,10 +153,186 @@ namespace Azure.Monitory.Query.Tests
             CollectionAssert.IsNotEmpty(result2.Tables[0].Columns);
         }
 
+        [RecordedTest]
+        public async Task CanQueryAllSupportedTypes()
+        {
+            var client = CreateClient();
+
+            Response<LogsQueryResult> results = await client.QueryAsync(TestEnvironment.WorkspaceId,
+                $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal, NullBool: bool)" +
+                "[" +
+                "datetime(2015-12-31 23:59:59.9)," +
+                "false," +
+                "guid(74be27de-1e4e-49d9-b579-fe0b331d3642)," +
+                "12345," +
+                "1234567890123," +
+                "12345.6789," +
+                "\"string value\"," +
+                "10s," +
+                "decimal(0.10101)," +
+                "bool(null)" +
+                "]");
+
+            LogsQueryResultRow row = results.Value.PrimaryTable.Rows[0];
+
+            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.GetDateTimeOffset("DateTime"));
+            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.GetDateTimeOffset(0));
+            Assert.AreEqual("2015-12-31T23:59:59.9Z", row.GetObject("DateTime"));
+            Assert.AreEqual(false, row.GetBoolean("Bool"));
+            Assert.AreEqual(false, row.GetBoolean(1));
+            Assert.AreEqual(false, row.GetObject("Bool"));
+            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.GetGuid("Guid"));
+            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.GetGuid(2));
+            Assert.AreEqual("74be27de-1e4e-49d9-b579-fe0b331d3642", row.GetObject("Guid"));
+            Assert.AreEqual(12345, row.GetInt32("Int"));
+            Assert.AreEqual(12345, row.GetInt32(3));
+            Assert.AreEqual(12345, row.GetObject("Int"));
+            Assert.AreEqual(1234567890123, row.GetInt64("Long"));
+            Assert.AreEqual(1234567890123, row.GetInt64(4));
+            Assert.AreEqual(1234567890123, row.GetObject("Long"));
+            Assert.AreEqual(12345.6789d, row.GetDouble("Double"));
+            Assert.AreEqual(12345.6789d, row.GetDouble(5));
+            Assert.AreEqual(12345.6789d, row.GetObject("Double"));
+            Assert.AreEqual("string value", row.GetString("String"));
+            Assert.AreEqual("string value", row.GetString(6));
+            Assert.AreEqual("string value", row.GetObject("String"));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), row.GetTimeSpan("Timespan"));
+            Assert.AreEqual(TimeSpan.FromSeconds(10), row.GetTimeSpan(7));
+            Assert.AreEqual("00:00:10", row.GetObject("Timespan"));
+            Assert.AreEqual(0.10101m, row.GetDecimal("Decimal"));
+            Assert.AreEqual(0.10101m, row.GetDecimal(8));
+            Assert.AreEqual("0.10101", row.GetObject("Decimal"));
+            Assert.True(row.IsNull("NullBool"));
+            Assert.True(row.IsNull(9));
+            Assert.IsNull(row.GetObject("NullBool"));
+        }
+
+        [RecordedTest]
+        public async Task CanQueryAllSupportedTypesIntoModel()
+        {
+            var client = CreateClient();
+
+            Response<IReadOnlyList<TestModelForTypes>> results = await client.QueryAsync<TestModelForTypes>(TestEnvironment.WorkspaceId,
+                $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal)" +
+                "[" +
+                "datetime(2015-12-31 23:59:59.9)," +
+                "false," +
+                "guid(74be27de-1e4e-49d9-b579-fe0b331d3642)," +
+                "12345," +
+                "1234567890123," +
+                "12345.6789," +
+                "'string value'," +
+                "10s," +
+                "decimal(0.10101)" +
+                "]");
+
+            TestModelForTypes row = results.Value[0];
+
+            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.DateTime);
+            Assert.AreEqual(false, row.Bool);
+            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.Guid);
+            Assert.AreEqual(12345, row.Int);
+            Assert.AreEqual(1234567890123, row.Long);
+            Assert.AreEqual(12345.6789d, row.Double);
+            Assert.AreEqual("string value", row.String);
+            Assert.AreEqual(TimeSpan.FromSeconds(10), row.Timespan);
+            Assert.AreEqual(0.10101m, row.Decimal);
+        }
+
+        [RecordedTest]
+        public async Task CanQueryAllSupportedTypesIntoModelNullable()
+        {
+            var client = CreateClient();
+
+            Response<IReadOnlyList<TestModelForTypesNullable>> results = await client.QueryAsync<TestModelForTypesNullable>(TestEnvironment.WorkspaceId,
+                $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal)" +
+                "[" +
+                "datetime(2015-12-31 23:59:59.9)," +
+                "false," +
+                "guid(74be27de-1e4e-49d9-b579-fe0b331d3642)," +
+                "12345," +
+                "1234567890123," +
+                "12345.6789," +
+                "'string value'," +
+                "10s," +
+                "decimal(0.10101)" +
+                "]");
+
+            TestModelForTypesNullable row = results.Value[0];
+
+            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), row.DateTime);
+            Assert.AreEqual(false, row.Bool);
+            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), row.Guid);
+            Assert.AreEqual(12345, row.Int);
+            Assert.AreEqual(1234567890123, row.Long);
+            Assert.AreEqual(12345.6789d, row.Double);
+            Assert.AreEqual("string value", row.String);
+            Assert.AreEqual(TimeSpan.FromSeconds(10), row.Timespan);
+            Assert.AreEqual(0.10101m, row.Decimal);
+        }
+
+        [RecordedTest]
+        public async Task CanQueryAllSupportedTypesIntoModelNulls()
+        {
+            var client = CreateClient();
+
+            Response<IReadOnlyList<TestModelForTypesNullable>> results = await client.QueryAsync<TestModelForTypesNullable>(TestEnvironment.WorkspaceId,
+                $"datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal)" +
+                "[" +
+                "datetime(null)," +
+                "bool(null)," +
+                "guid(null)," +
+                "int(null)," +
+                "long(null)," +
+                "double(null)," +
+                "'I cant be null'," +
+                "timespan(null)," +
+                "decimal(null)," +
+                "]");
+
+            TestModelForTypesNullable row = results.Value[0];
+
+            Assert.IsNull(row.DateTime);
+            Assert.IsNull(row.Bool);
+            Assert.IsNull(row.Guid);
+            Assert.IsNull(row.Int);
+            Assert.IsNull(row.Long);
+            Assert.IsNull(row.Double);
+            Assert.AreEqual("I cant be null", row.String);
+            Assert.IsNull(row.Timespan);
+            Assert.IsNull(row.Decimal);
+        }
+
         private record TestModel
         {
             public string Name { get; set; }
             public int Age { get; set; }
+        }
+
+        private record TestModelForTypes
+        {
+            public DateTimeOffset DateTime { get; set; }
+            public bool Bool { get; set; }
+            public Guid Guid { get; set; }
+            public int Int { get; set; }
+            public long Long { get; set; }
+            public Double Double { get; set; }
+            public String String { get; set; }
+            public TimeSpan Timespan { get; set; }
+            public Decimal Decimal { get; set; }
+        }
+
+        private record TestModelForTypesNullable
+        {
+            public DateTimeOffset? DateTime { get; set; }
+            public bool? Bool { get; set; }
+            public Guid? Guid { get; set; }
+            public int? Int { get; set; }
+            public long? Long { get; set; }
+            public Double? Double { get; set; }
+            public String String { get; set; }
+            public TimeSpan? Timespan { get; set; }
+            public Decimal? Decimal { get; set; }
         }
     }
 }

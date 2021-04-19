@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Monitory.Query.Models
 {
@@ -23,16 +25,25 @@ namespace Azure.Monitory.Query.Models
         public int GetInt32(int index) => _row[index].GetInt32();
         public long GetInt64(int index) => _row[index].GetInt64();
         public bool GetBoolean(int index) => _row[index].GetBoolean();
-        public decimal GetDecimal(int index) => _row[index].GetDecimal();
-        public float GetSingle(int index) => _row[index].GetSingle();
+        public decimal GetDecimal(int index) => decimal.Parse(_row[index].GetString(), CultureInfo.InvariantCulture);
+        public double GetDouble(int index) => _row[index].GetDouble();
         public string GetString(int index) => _row[index].GetString();
+        public DateTimeOffset GetDateTimeOffset(int index) => _row[index].GetDateTimeOffset();
+        public TimeSpan GetTimeSpan(int index) => _row[index].GetTimeSpan("c");
+        public Guid GetGuid(int index) => _row[index].GetGuid();
+
+        public bool IsNull(int index) => _row[index].ValueKind == JsonValueKind.Null;
 
         public int GetInt32(string name) => GetInt32(_columns[name]);
         public long GetInt64(string name) => GetInt64(_columns[name]);
         public bool GetBoolean(string name) => GetBoolean(_columns[name]);
         public decimal GetDecimal(string name) => GetDecimal(_columns[name]);
-        public float GetSingle(string name) => GetSingle(_columns[name]);
+        public double GetDouble(string name) => GetDouble(_columns[name]);
         public string GetString(string name) => GetString(_columns[name]);
+        public DateTimeOffset GetDateTimeOffset(string name) => GetDateTimeOffset(_columns[name]);
+        public TimeSpan GetTimeSpan(string name) => GetTimeSpan(_columns[name]);
+        public Guid GetGuid(string name) => GetGuid(_columns[name]);
+        public bool IsNull(string name) => IsNull(_columns[name]);
 
         public object GetObject(int index)
         {
