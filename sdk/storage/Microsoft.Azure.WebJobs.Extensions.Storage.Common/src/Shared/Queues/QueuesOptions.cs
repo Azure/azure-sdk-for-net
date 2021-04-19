@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Host
         /// Both the <see cref="NewBatchThreshold"/> and <see cref="BatchSize"/> settings control how many messages are being processed in parallel.
         /// The job keeps requesting messages in batches of <see cref="BatchSize"/> size until number of messages currently being processed
         /// is above <see cref="NewBatchThreshold"/>. Then the job requests new batch of messages only if number of currently processed messages
-        /// drops below <see cref="NewBatchThreshold"/>.
+        /// drops at or below <see cref="NewBatchThreshold"/>.
         ///
         /// The maximum number of messages processed in parallel by the job is <see cref="NewBatchThreshold"/> plus <see cref="BatchSize"/>.
         /// </remarks>
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.WebJobs.Host
         /// Both the <see cref="NewBatchThreshold"/> and <see cref="BatchSize"/> settings control how many messages are being processed in parallel.
         /// The job keeps requesting messages in batches of <see cref="BatchSize"/> size until number of messages currently being processed
         /// is above <see cref="NewBatchThreshold"/>. Then the job requests new batch of messages only if number of currently processed messages
-        /// drops below <see cref="NewBatchThreshold"/>.
+        /// drops at or below <see cref="NewBatchThreshold"/>.
         ///
         /// The maximum number of messages processed in parallel by the job is <see cref="NewBatchThreshold"/> plus <see cref="BatchSize"/>.
         /// </remarks>
