@@ -135,8 +135,6 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<CommunicationUserIdentifierAndToken> CreateUserAndToken(IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scopes, nameof(scopes));
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUserAndToken)}");
             scope.Start();
             try
@@ -155,8 +153,6 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateUserAndTokenAsync(IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scopes, nameof(scopes));
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(CreateUserAndToken)}");
             scope.Start();
             try
@@ -176,8 +172,6 @@ namespace Azure.Communication.Identity
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response DeleteUser(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(communicationUser, nameof(communicationUser));
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(DeleteUser)}");
             scope.Start();
             try
@@ -196,8 +190,6 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken"> The cancellation token to use.</param>
         public virtual async Task<Response> DeleteUserAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(communicationUser, nameof(communicationUser));
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(DeleteUser)}");
             scope.Start();
             try
@@ -218,9 +210,6 @@ namespace Azure.Communication.Identity
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<AccessToken> GetToken(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(communicationUser, nameof(communicationUser));
-            Argument.AssertNotNull(scopes, nameof(scopes));
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetToken)}");
             scope.Start();
             try
@@ -241,9 +230,6 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<AccessToken>> GetTokenAsync(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(communicationUser, nameof(communicationUser));
-            Argument.AssertNotNull(scopes, nameof(scopes));
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(GetToken)}");
             scope.Start();
             try
@@ -264,8 +250,6 @@ namespace Azure.Communication.Identity
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response RevokeTokens(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(communicationUser, nameof(communicationUser));
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(RevokeTokens)}");
             scope.Start();
             try
@@ -284,8 +268,6 @@ namespace Azure.Communication.Identity
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response> RevokeTokensAsync(CommunicationUserIdentifier communicationUser, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(communicationUser, nameof(communicationUser));
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CommunicationIdentityClient)}.{nameof(RevokeTokens)}");
             scope.Start();
             try

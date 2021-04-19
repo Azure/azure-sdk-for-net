@@ -70,9 +70,10 @@ namespace Azure.Communication.Identity.Tests
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
                 Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: null, scopes: new[] { CommunicationTokenScope.Chat });
             }
-            catch (ArgumentNullException ex)
+            catch (NullReferenceException ex)
             {
-                Assert.AreEqual("communicationUser", ex.ParamName);
+                Assert.NotNull(ex.Message);
+                Console.WriteLine(ex.Message);
                 return;
             }
             Assert.Fail("RevokeTokensAsync should have thrown an exception.");
@@ -103,9 +104,10 @@ namespace Azure.Communication.Identity.Tests
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
                 Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: null);
             }
-            catch (ArgumentNullException ex)
+            catch (NullReferenceException ex)
             {
-                Assert.AreEqual("scopes", ex.ParamName);
+                Assert.NotNull(ex.Message);
+                Console.WriteLine(ex.Message);
                 return;
             }
             Assert.Fail("CreateUserAndTokenAsync should have thrown an exception.");
@@ -119,9 +121,10 @@ namespace Azure.Communication.Identity.Tests
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
                 Response deleteResponse = await client.DeleteUserAsync(communicationUser: null);
             }
-            catch (ArgumentNullException ex)
+            catch (NullReferenceException ex)
             {
-                Assert.AreEqual("communicationUser", ex.ParamName);
+                Assert.NotNull(ex.Message);
+                Console.WriteLine(ex.Message);
                 return;
             }
             Assert.Fail("DeleteUserAsync should have thrown an exception.");
@@ -135,9 +138,10 @@ namespace Azure.Communication.Identity.Tests
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
                 Response deleteResponse = await client.RevokeTokensAsync(communicationUser: null);
             }
-            catch (ArgumentNullException ex)
+            catch (NullReferenceException ex)
             {
-                Assert.AreEqual("communicationUser", ex.ParamName);
+                Assert.NotNull(ex.Message);
+                Console.WriteLine(ex.Message);
                 return;
             }
             Assert.Fail("RevokeTokensAsync should have thrown an exception.");
