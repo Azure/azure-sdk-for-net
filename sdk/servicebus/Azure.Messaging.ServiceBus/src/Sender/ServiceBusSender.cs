@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -189,6 +188,8 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(messages, nameof(messages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
+            _connection.ThrowIfClosed();
+
             IReadOnlyList<ServiceBusMessage> messageList = messages switch
             {
                 IReadOnlyList<ServiceBusMessage> alreadyList => alreadyList,
@@ -299,6 +300,8 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
+            _connection.ThrowIfClosed();
+
             options = options?.Clone() ?? new CreateMessageBatchOptions();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.CreateMessageBatchStart(Identifier);
@@ -334,6 +337,8 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(messageBatch, nameof(messageBatch));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
+            _connection.ThrowIfClosed();
+
             if (messageBatch.Count == 0)
             {
                 return;
@@ -419,6 +424,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(messages, nameof(messages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
+            _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             IReadOnlyList<ServiceBusMessage> messageList = messages switch
@@ -486,8 +492,9 @@ namespace Azure.Messaging.ServiceBus
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
+            _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             // the sequence numbers MUST be in array form for them to be encoded correctly

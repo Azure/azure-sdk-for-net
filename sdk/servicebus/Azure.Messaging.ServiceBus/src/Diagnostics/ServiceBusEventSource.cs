@@ -190,6 +190,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int RequestAuthorizationCompleteEvent = 106;
         internal const int RequestAuthorizationExceptionEvent = 107;
 
+        internal const int ProcessorClientClosedExceptionEvent = 108;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -775,6 +777,15 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(ProcessorMessageHandlerExceptionEvent, identifier, sequenceNumber, exception);
+            }
+        }
+
+        [Event(ProcessorClientClosedExceptionEvent, Level = EventLevel.Error, Message = "{0}: The Service Bus client associated with the processor was closed by the host application.  The processor cannot continue and is shutting down.")]
+        public void ProcessorClientClosedException(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ProcessorClientClosedExceptionEvent, identifier);
             }
         }
 

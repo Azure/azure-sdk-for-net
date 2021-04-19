@@ -252,6 +252,8 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            _connection.ThrowIfClosed();
+
             if (maxWaitTime.HasValue)
             {
                 Argument.AssertPositive(maxWaitTime.Value, nameof(maxWaitTime));
@@ -438,8 +440,9 @@ namespace Azure.Messaging.ServiceBus
             int maxMessages,
             CancellationToken cancellationToken)
         {
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             Logger.PeekMessageStart(Identifier, sequenceNumber, maxMessages);
@@ -527,6 +530,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            _connection.ThrowIfClosed();
             ThrowIfNotPeekLockMode();
             ThrowIfLockTokenIsEmpty(lockToken);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -614,6 +618,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            _connection.ThrowIfClosed();
             ThrowIfNotPeekLockMode();
             ThrowIfLockTokenIsEmpty(lockToken);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -798,6 +803,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            _connection.ThrowIfClosed();
             ThrowIfNotPeekLockMode();
             ThrowIfLockTokenIsEmpty(lockToken);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -891,6 +897,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            _connection.ThrowIfClosed();
             ThrowIfNotPeekLockMode();
             ThrowIfLockTokenIsEmpty(lockToken);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -978,8 +985,9 @@ namespace Azure.Messaging.ServiceBus
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
             Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             // the sequence numbers MUST be in array form for them to be encoded correctly
@@ -1067,6 +1075,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            _connection.ThrowIfClosed();
             ThrowIfNotPeekLockMode();
             ThrowIfSessionReceiver();
             ThrowIfLockTokenIsEmpty(lockToken);
