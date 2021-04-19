@@ -197,6 +197,25 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
+        [Test]
+        public async Task SendingSmsFromNullNumberShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                SmsSendResult result = await client.SendAsync(
+                   from: null,
+                   to: TestEnvironment.ToPhoneNumber,
+                   message: "Hi");
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("from", ex.ParamName);
+                return;
+            }
+            Assert.Fail("SendAsync should have thrown an exception.");
+        }
+
         public void assertHappyPath(SmsSendResult sendResult)
         {
             Assert.True(sendResult.Successful);
