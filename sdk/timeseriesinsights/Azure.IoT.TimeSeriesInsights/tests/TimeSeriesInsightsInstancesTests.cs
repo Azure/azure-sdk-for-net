@@ -53,9 +53,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 {
                     // Create TSI instances
                     Response<TimeSeriesOperationError[]> createInstancesResult = await client
-                    .Instances
-                    .CreateOrReplaceAsync(timeSeriesInstances)
-                    .ConfigureAwait(false);
+                        .Instances
+                        .CreateOrReplaceAsync(timeSeriesInstances)
+                        .ConfigureAwait(false);
 
                     // Assert that the result error array does not contain any object that is set
                     createInstancesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);

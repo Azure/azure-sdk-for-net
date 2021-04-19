@@ -48,7 +48,9 @@ namespace Azure.Search.Documents.Tests.Samples
             // Create a service client.
             AzureKeyCredential credential = new AzureKeyCredential(key);
             SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential, options);
-            /*@@*/ indexClient = resources.GetIndexClient(options);
+#if !SNIPPET
+            indexClient = resources.GetIndexClient(options);
+#endif
 
             // Create the FieldBuilder using the same serializer.
             FieldBuilder fieldBuilder = new FieldBuilder
@@ -57,8 +59,11 @@ namespace Azure.Search.Documents.Tests.Samples
             };
 
             // Create the index using FieldBuilder.
-            //@@SearchIndex index = new SearchIndex("movies")
-            /*@@*/ SearchIndex index = new SearchIndex(Recording.Random.GetName())
+#if SNIPPET
+            SearchIndex index = new SearchIndex("movies")
+#else
+            SearchIndex index = new SearchIndex(Recording.Random.GetName())
+#endif
             {
                 Fields = fieldBuilder.Build(typeof(Movie)),
                 Suggesters =

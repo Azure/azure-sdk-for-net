@@ -23,7 +23,7 @@ namespace Azure.DigitalTwins.Core
     /// <example>
     /// Here's an example of how to use the BasicRelationship helper class to serialize and create a relationship from a building digital twin to a floor digital twin.
     ///
-    /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicRelationship">
+    /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicRelationship" language="csharp">
     /// var buildingFloorRelationshipPayload = new BasicRelationship
     /// {
     ///     Id = &quot;buildingFloorRelationshipId&quot;,
@@ -45,7 +45,7 @@ namespace Azure.DigitalTwins.Core
     ///
     /// Here's an example of how to use the BasicRelationship helper class to get and deserialize a relationship.
     ///
-    /// <code snippet="Snippet:DigitalTwinsSampleGetBasicRelationship">
+    /// <code snippet="Snippet:DigitalTwinsSampleGetBasicRelationship" language="csharp">
     /// Response&lt;BasicRelationship&gt; getBasicRelationshipResponse = await client.GetRelationshipAsync&lt;BasicRelationship&gt;(
     ///     &quot;buildingTwinId&quot;,
     ///     &quot;buildingFloorRelationshipId&quot;);
@@ -98,6 +98,7 @@ namespace Azure.DigitalTwins.Core
         [JsonExtensionData]
 #pragma warning disable CA2227 // Collection properties should be readonly
         public IDictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
+
 #pragma warning restore CA2227 // Collection properties should be readonly
     }
 }

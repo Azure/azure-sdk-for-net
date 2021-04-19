@@ -96,19 +96,19 @@ namespace Microsoft.Extensions.Hosting
                         options.EventProcessorOptions.DefaultStartingPosition = EventPosition.Latest;
                         break;
                     case OffsetType.FromEnqueuedTime:
-                        try
+                        if (!options.InitialOffsetOptions.EnqueuedTimeUtc.HasValue)
                         {
-                            options.EventProcessorOptions.DefaultStartingPosition = EventPosition.FromEnqueuedTime(options.InitialOffsetOptions.EnqueuedTimeUtc.Value);
+                            throw new InvalidOperationException(
+                                "A time must be specified for 'enqueuedTimeUtc', when " +
+                                "'initialOffsetOptions.type' is set to 'fromEnqueuedTime'.");
                         }
-                        catch (FormatException fe)
-                        {
-                            string message = $"{nameof(EventHubOptions)}:{nameof(InitialOffsetOptions)}:{nameof(InitialOffsetOptions.EnqueuedTimeUtc)} is configured with an invalid format. " +
-                                "Please use a format supported by DateTime.Parse().  e.g. 'yyyy-MM-ddTHH:mm:ssZ'";
-                            throw new InvalidOperationException(message, fe);
-                        }
+
+                        options.EventProcessorOptions.DefaultStartingPosition =
+                            EventPosition.FromEnqueuedTime(options.InitialOffsetOptions.EnqueuedTimeUtc.Value);
                         break;
                     default:
-                        throw new InvalidOperationException("An unsupported value was supplied for initialOffsetOptions.type");
+                        throw new InvalidOperationException(
+                            "An unsupported value was supplied for initialOffsetOptions.type");
                 }
                 // If not specified, EventProcessor's default offset will apply
             }

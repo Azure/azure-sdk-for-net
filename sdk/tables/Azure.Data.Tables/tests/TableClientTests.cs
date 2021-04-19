@@ -26,6 +26,7 @@ namespace Azure.Data.Tables.Tests
         private TableEntity entityWithoutPK = new TableEntity { { TableConstants.PropertyNames.RowKey, "row" } };
         private TableEntity entityWithoutRK = new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" } };
         private TableEntity validEntity = new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" }, { TableConstants.PropertyNames.RowKey, "row" } };
+        private const string signature = "sig";
 
         [SetUp]
         public void TestSetup()
@@ -48,7 +49,7 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(() => new TableClient(_url, TableName, credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the TablesSharedKeyCredential.");
 
-            Assert.That(() => new TableClient(_urlHttp, TableName, new AzureSasCredential("sig")), Throws.InstanceOf<ArgumentException>(), "The constructor should validate the Uri is https when using a SAS token.");
+            Assert.That(() => new TableClient(_urlHttp, TableName, new AzureSasCredential(signature)), Throws.InstanceOf<ArgumentException>(), "The constructor should validate the Uri is https when using a SAS token.");
 
             Assert.That(() => new TableClient(_urlHttp, TableName, null), Throws.InstanceOf<ArgumentException>(), "The constructor should not accept a null credential");
 
@@ -186,7 +187,15 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void CreatedEnumPropertiesAreSerializedProperly()
         {
-            var entity = new EnumEntity { PartitionKey = "partitionKey", RowKey = "01", Timestamp = DateTime.Now, MyFoo = Foo.Two, MyNullableFoo = null, ETag = ETag.All };
+            var entity = new EnumEntity
+            {
+                PartitionKey = "partitionKey",
+                RowKey = "01",
+                Timestamp = DateTime.Now,
+                MyFoo = Foo.Two,
+                MyNullableFoo = null,
+                ETag = ETag.All
+            };
 
             // Create the new entities.
             var dictEntity = entity.ToOdataAnnotatedDictionary();
@@ -201,7 +210,16 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void EnumPropertiesAreDeSerializedProperly()
         {
-            var entity = new EnumEntity { PartitionKey = "partitionKey", RowKey = "01", Timestamp = DateTime.Now, MyFoo = Foo.Two, MyNullableFoo = null, MyNullableFoo2 = NullableFoo.Two, ETag = ETag.All };
+            var entity = new EnumEntity
+            {
+                PartitionKey = "partitionKey",
+                RowKey = "01",
+                Timestamp = DateTime.Now,
+                MyFoo = Foo.Two,
+                MyNullableFoo = null,
+                MyNullableFoo2 = NullableFoo.Two,
+                ETag = ETag.All
+            };
 
             // Create the new entities.
             var dictEntity = entity.ToOdataAnnotatedDictionary();
@@ -279,11 +297,13 @@ namespace Azure.Data.Tables.Tests
             public NullableFoo? MyNullableFoo { get; set; }
             public NullableFoo? MyNullableFoo2 { get; set; }
         }
+
         public enum Foo
         {
             One,
             Two
         }
+
         public enum NullableFoo
         {
             One,
