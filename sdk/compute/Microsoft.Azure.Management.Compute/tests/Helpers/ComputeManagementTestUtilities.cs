@@ -15,7 +15,7 @@ namespace Compute.Tests
 {
     public static class ComputeManagementTestUtilities
     {
-        public static string DefaultLocation = "SoutheastAsia";
+        public static string DefaultLocation = "centraluseuap";
 
         public static ComputeManagementClient GetComputeManagementClient(MockContext context, RecordedDelegatingHandler handler = null)
         {

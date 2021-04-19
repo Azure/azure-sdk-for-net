@@ -78,16 +78,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// length of the binary array is 65535 bytes. &lt;br&gt;&lt;br&gt; For
         /// using cloud-init for your VM, see [Using cloud-init to customize a
         /// Linux VM during
-        /// creation](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)</param>
+        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init)</param>
         /// <param name="windowsConfiguration">Specifies Windows operating
         /// system settings on the virtual machine.</param>
         /// <param name="linuxConfiguration">Specifies the Linux operating
         /// system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a
         /// list of supported Linux distributions, see [Linux on Azure-Endorsed
-        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-        /// &lt;br&gt;&lt;br&gt; For running non-endorsed distributions, see
-        /// [Information for Non-Endorsed
-        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).</param>
+        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).</param>
         /// <param name="secrets">Specifies set of certificates that should be
         /// installed onto the virtual machines in the scale set.</param>
         public VirtualMachineScaleSetOSProfile(string computerNamePrefix = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>))
@@ -173,7 +170,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// array is 65535 bytes. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For
         /// using cloud-init for your VM, see [Using cloud-init to customize a
         /// Linux VM during
-        /// creation](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
+        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init)
         /// </summary>
         [JsonProperty(PropertyName = "customData")]
         public string CustomData { get; set; }
@@ -189,10 +186,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies the Linux operating system settings on the
         /// virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For a list of
         /// supported Linux distributions, see [Linux on Azure-Endorsed
-        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For running non-endorsed
-        /// distributions, see [Information for Non-Endorsed
-        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
+        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).
         /// </summary>
         [JsonProperty(PropertyName = "linuxConfiguration")]
         public LinuxConfiguration LinuxConfiguration { get; set; }

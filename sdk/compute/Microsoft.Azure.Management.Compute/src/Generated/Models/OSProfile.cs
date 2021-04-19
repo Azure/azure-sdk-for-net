@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// (Linux):** 64 characters. &lt;br&gt;&lt;br&gt; For naming
         /// conventions and restrictions see [Azure infrastructure services
         /// implementation
-        /// guidelines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-infrastructure-subscription-accounts-guidelines?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#1-naming-conventions).</param>
+        /// guidelines](https://docs.microsoft.com/azure/azure-resource-manager/management/resource-name-rules).</param>
         /// <param name="adminUsername">Specifies the name of the administrator
         /// account. &lt;br&gt;&lt;br&gt; This property cannot be updated after
         /// the VM is created. &lt;br&gt;&lt;br&gt; **Windows-only
@@ -89,16 +89,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// VMs](https://azure.microsoft.com/en-us/blog/custom-data-and-cloud-init-on-windows-azure/)
         /// &lt;br&gt;&lt;br&gt; For using cloud-init for your Linux VM, see
         /// [Using cloud-init to customize a Linux VM during
-        /// creation](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)</param>
+        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init)</param>
         /// <param name="windowsConfiguration">Specifies Windows operating
         /// system settings on the virtual machine.</param>
         /// <param name="linuxConfiguration">Specifies the Linux operating
         /// system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a
         /// list of supported Linux distributions, see [Linux on Azure-Endorsed
-        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-        /// &lt;br&gt;&lt;br&gt; For running non-endorsed distributions, see
-        /// [Information for Non-Endorsed
-        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).</param>
+        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).</param>
         /// <param name="secrets">Specifies set of certificates that should be
         /// installed onto the virtual machine.</param>
         /// <param name="allowExtensionOperations">Specifies whether extension
@@ -138,7 +135,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// characters. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For naming
         /// conventions and restrictions see [Azure infrastructure services
         /// implementation
-        /// guidelines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-infrastructure-subscription-accounts-guidelines?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#1-naming-conventions).
+        /// guidelines](https://docs.microsoft.com/azure/azure-resource-manager/management/resource-name-rules).
         /// </summary>
         [JsonProperty(PropertyName = "computerName")]
         public string ComputerName { get; set; }
@@ -210,7 +207,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// VMs](https://azure.microsoft.com/en-us/blog/custom-data-and-cloud-init-on-windows-azure/)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For using cloud-init for your
         /// Linux VM, see [Using cloud-init to customize a Linux VM during
-        /// creation](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
+        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init)
         /// </summary>
         [JsonProperty(PropertyName = "customData")]
         public string CustomData { get; set; }
@@ -226,10 +223,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies the Linux operating system settings on the
         /// virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For a list of
         /// supported Linux distributions, see [Linux on Azure-Endorsed
-        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For running non-endorsed
-        /// distributions, see [Information for Non-Endorsed
-        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json).
+        /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).
         /// </summary>
         [JsonProperty(PropertyName = "linuxConfiguration")]
         public LinuxConfiguration LinuxConfiguration { get; set; }
