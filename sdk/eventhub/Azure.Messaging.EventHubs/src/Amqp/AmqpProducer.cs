@@ -186,6 +186,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(events, nameof(events));
             Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
+            Argument.AssertNotClosed(ConnectionScope.IsDisposed, nameof(EventHubConnection));
 
             AmqpMessage messageFactory() => MessageConverter.CreateBatchFromEvents(events, sendOptions?.PartitionKey);
             await SendAsync(messageFactory, sendOptions?.PartitionKey, cancellationToken).ConfigureAwait(false);
@@ -210,6 +211,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(eventBatch, nameof(eventBatch));
             Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
+            Argument.AssertNotClosed(ConnectionScope.IsDisposed, nameof(EventHubConnection));
 
             // Make a defensive copy of the messages in the batch.
 
@@ -236,6 +238,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(options, nameof(options));
             Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
+            Argument.AssertNotClosed(ConnectionScope.IsDisposed, nameof(EventHubConnection));
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -308,6 +311,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override async ValueTask<PartitionPublishingProperties> ReadInitializationPublishingPropertiesAsync(CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
+            Argument.AssertNotClosed(ConnectionScope.IsDisposed, nameof(EventHubConnection));
 
             // If the properties were already initialized, use them.
 

@@ -2163,6 +2163,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 deletionId: deletionId);
 
             // Assert
+            Assert.AreEqual(typeof(DataLakeDirectoryClient), restoredPathClient.GetType());
             await restoredPathClient.GetPropertiesAsync();
         }
 
