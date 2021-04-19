@@ -65,7 +65,7 @@ namespace Azure.Data.Tables.Tests
             await CosmosThrottleWrapper(async () => await tableClient.CreateAsync().ConfigureAwait(false));
 
             // Check that the table was created.
-            var tableResponses = (await service.GetTablesAsync(filter:TablesFilter.Create($"TableName eq {validTableName}")).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            var tableResponses = (await service.GetTablesAsync(filter:TableOdataFilter.Create($"TableName eq {validTableName}")).ToEnumerableAsync().ConfigureAwait(false)).ToList();
             Assert.That(() => tableResponses, Is.Not.Empty);
 
             // Delete the table using the TableClient method.
