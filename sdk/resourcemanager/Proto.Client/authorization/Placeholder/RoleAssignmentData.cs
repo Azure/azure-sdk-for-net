@@ -18,7 +18,7 @@ namespace Proto.Authorization
         /// </summary>
         /// <param name="assign"> The Track2 management plane assignment. </param>
         public RoleAssignmentData(Azure.ResourceManager.Authorization.Models.RoleAssignment assign)
-            :base(assign.Id, assign.Name, assign.Type)
+            : base(assign.Id, assign.Name, assign.Type)
         {
             _model = assign;
             Scope = assign.Scope;
