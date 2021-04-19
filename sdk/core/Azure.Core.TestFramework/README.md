@@ -11,7 +11,7 @@ To start using the Test Framework, add a project reference using the alias `Azur
 </Project>
 
 ```
-As an example, see the [Template](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/tests/Azure.Template.Tests.csproj#L15) project.
+As an example, see the [Template](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/tests/Azure.Monitory.Query.Tests.csproj#L15) project.
 
 ## Sync-async tests
 

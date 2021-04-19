@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -11,135 +12,131 @@ namespace Azure.Monitory.Query
 {
     internal abstract class TypeBinder<TExchange>
     {
-        private Dictionary<Type, BoundTypeInfo> _cache = new();
+        private readonly ConcurrentDictionary<Type, BoundTypeInfo> _cache = new();
 
-        public T Deserialize<T>(TExchange source, TypeBinder<TExchange> binderImplementation)
+        public T Deserialize<T>(TExchange source)
         {
             var info = GetBinderInfo(typeof(T));
             var instance = Activator.CreateInstance<T>();
-            info.Deserialize(source, instance, binderImplementation);
+            info.Deserialize(source, instance, this);
             return instance;
         }
 
-        public void Serialize<T>(T value, TExchange destination, TypeBinder<TExchange> binderImplementation)
+        public void Serialize<T>(T value, TExchange destination)
         {
             var info = GetBinderInfo(typeof(T));
-            info.Serialize(value, destination, binderImplementation);
+            info.Serialize(value, destination, this);
         }
 
         private BoundTypeInfo GetBinderInfo(Type type)
         {
-            if (!_cache.TryGetValue(type, out BoundTypeInfo info))
-            {
-                _cache[type] = info = new BoundTypeInfo(type);
-            }
-
-            return info;
+            return _cache.GetOrAdd(type, static t => new(t));
         }
 
+        protected abstract void Set<T>(TExchange destination, T value, BoundMemberInfo memberInfo);
+        protected abstract bool TryGet<T>(BoundMemberInfo memberInfo, TExchange source, out T value);
 
-        public abstract void Set<T>(TExchange destination, T value, BoundMemberInfo memberInfo);
-        public abstract bool TryGet<T>(BoundMemberInfo memberInfo, TExchange source,  out T value);
-    }
-    internal class BoundTypeInfo
-    {
-        public BoundTypeInfo(Type type)
+        private class BoundTypeInfo
         {
-            List<BoundMemberInfo> members = new List<BoundMemberInfo>();
-            foreach (var memberInfo in type.GetMembers(BindingFlags.Public | BindingFlags.Instance))
+            public BoundTypeInfo(Type type)
             {
-                switch (memberInfo)
+                List<BoundMemberInfo> members = new List<BoundMemberInfo>();
+                foreach (var memberInfo in type.GetMembers(BindingFlags.Public | BindingFlags.Instance))
                 {
-                    case PropertyInfo propertyInfo:
-                        members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(propertyInfo.PropertyType), propertyInfo));
-                        break;
-                    case FieldInfo fieldInfo:
-                        members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(fieldInfo.FieldType), fieldInfo));
-                        break;
+                    switch (memberInfo)
+                    {
+                        case PropertyInfo propertyInfo:
+                            members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), propertyInfo.PropertyType), propertyInfo));
+                            break;
+                        case FieldInfo fieldInfo:
+                            members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), fieldInfo.FieldType), fieldInfo));
+                            break;
+                    }
+                }
+
+                Members = members.ToArray();
+            }
+
+            public BoundMemberInfo[] Members { get; }
+
+            public void Serialize(object o, TExchange destination, TypeBinder<TExchange> binderImplementation)
+            {
+                foreach (var member in Members)
+                {
+                    if (member.CanRead)
+                    {
+                        member.Serialize(o, destination, binderImplementation);
+                    }
                 }
             }
 
-            Members = members.ToArray();
-        }
-
-        public BoundMemberInfo[] Members { get; }
-
-        public void Serialize<TExchange>(object o, TExchange destination, TypeBinder<TExchange> binderImplementation)
-        {
-            foreach (var member in Members)
+            public void Deserialize(TExchange source, object o, TypeBinder<TExchange> binderImplementation)
             {
-                if (member.CanRead)
+                foreach (var member in Members)
                 {
-                    member.Serialize(o, destination, binderImplementation);
+                    if (member.CanWrite)
+                    {
+                        member.Deserialize(source, o, binderImplementation);
+                    }
                 }
             }
         }
 
-        public void Deserialize<TExchange>(TExchange source, object o, TypeBinder<TExchange> binderImplementation)
+        protected abstract class BoundMemberInfo
         {
-            foreach (var member in Members)
+            public BoundMemberInfo(MemberInfo memberInfo)
             {
-                if (member.CanWrite)
-                {
-                    member.Deserialize(source, o, binderImplementation);
-                }
+                MemberInfo = memberInfo;
             }
-        }
-    }
 
-    internal abstract class BoundMemberInfo
-    {
-        public BoundMemberInfo(MemberInfo memberInfo)
-        {
-            MemberInfo = memberInfo;
-        }
-
-        public string Name => MemberInfo.Name;
-        public MemberInfo MemberInfo { get; }
-        public abstract bool CanRead { get; }
-        public abstract bool CanWrite { get; }
-        public abstract void Serialize<TExchange>(object o, TExchange destination, TypeBinder<TExchange> binderImplementation);
-        public abstract void Deserialize<TExchange>(TExchange source, object o, TypeBinder<TExchange> binderImplementation);
-    }
-
-    public delegate T PropertyGetter<T>(object o);
-    public delegate void PropertySetter<T>(object o, T value);
-
-    internal sealed class BoundMemberInfo<T>: BoundMemberInfo
-    {
-        public BoundMemberInfo(PropertyInfo propertyInfo) : base(propertyInfo)
-        {
-            Getter = o => (T) propertyInfo.GetValue(o);
-            Setter = (o, v) => propertyInfo.SetValue(o, v);
-            CanRead = propertyInfo.CanRead;
-            CanWrite = propertyInfo.CanWrite;
+            public string Name => MemberInfo.Name;
+            public MemberInfo MemberInfo { get; }
+            public abstract bool CanRead { get; }
+            public abstract bool CanWrite { get; }
+            public abstract void Serialize(object o, TExchange destination, TypeBinder<TExchange> binderImplementation);
+            public abstract void Deserialize(TExchange source, object o, TypeBinder<TExchange> binderImplementation);
         }
 
-        public BoundMemberInfo(FieldInfo fieldInfo) : base(fieldInfo)
+        private delegate T PropertyGetter<T>(object o);
+
+        private delegate void PropertySetter<T>(object o, T value);
+
+        private sealed class BoundMemberInfo<T> : BoundMemberInfo
         {
-            Getter = o => (T) fieldInfo.GetValue(o);
-            Setter = (o, v) => fieldInfo.SetValue(o, v);
-            CanWrite = !fieldInfo.IsInitOnly;
-            CanRead = true;
-        }
-
-        private PropertyGetter<T> Getter { get; }
-
-        private PropertySetter<T> Setter { get; }
-
-        public override bool CanRead { get; }
-        public override bool CanWrite { get; }
-
-        public override void Serialize<TExchange>(object o, TExchange destination, TypeBinder<TExchange> binderImplementation)
-        {
-            binderImplementation.Set(destination, Getter(o), this);
-        }
-
-        public override void Deserialize<TExchange>(TExchange source, object o, TypeBinder<TExchange> binderImplementation)
-        {
-            if (binderImplementation.TryGet(this, source, out T value))
+            public BoundMemberInfo(PropertyInfo propertyInfo) : base(propertyInfo)
             {
-                Setter(o, value);
+                Getter = o => (T) propertyInfo.GetValue(o);
+                Setter = (o, v) => propertyInfo.SetValue(o, v);
+                CanRead = propertyInfo.CanRead;
+                CanWrite = propertyInfo.CanWrite;
+            }
+
+            public BoundMemberInfo(FieldInfo fieldInfo) : base(fieldInfo)
+            {
+                Getter = o => (T) fieldInfo.GetValue(o);
+                Setter = (o, v) => fieldInfo.SetValue(o, v);
+                CanWrite = !fieldInfo.IsInitOnly;
+                CanRead = true;
+            }
+
+            private PropertyGetter<T> Getter { get; }
+
+            private PropertySetter<T> Setter { get; }
+
+            public override bool CanRead { get; }
+            public override bool CanWrite { get; }
+
+            public override void Serialize(object o, TExchange destination, TypeBinder<TExchange> binderImplementation)
+            {
+                binderImplementation.Set(destination, Getter(o), this);
+            }
+
+            public override void Deserialize(TExchange source, object o, TypeBinder<TExchange> binderImplementation)
+            {
+                if (binderImplementation.TryGet(this, source, out T value))
+                {
+                    Setter(o, value);
+                }
             }
         }
     }

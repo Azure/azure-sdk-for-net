@@ -10,10 +10,6 @@ namespace Azure.Monitory.Query
 {
     internal class RowBinder: TypeBinder<LogsQueryResultRow>
     {
-        public RowBinder()
-        {
-        }
-
         internal IReadOnlyList<T> BindResults<T>(LogsQueryResult response)
         {
             // TODO: this is very slow
@@ -53,7 +49,7 @@ namespace Azure.Monitory.Query
                 {
                     foreach (var row in table.Rows)
                     {
-                        results.Add(Deserialize<T>(row, this));
+                        results.Add(Deserialize<T>(row));
                     }
                 }
             }
@@ -62,12 +58,12 @@ namespace Azure.Monitory.Query
             return results;
         }
 
-        public override void Set<T>(LogsQueryResultRow destination, T value, BoundMemberInfo memberInfo)
+        protected override void Set<T>(LogsQueryResultRow destination, T value, BoundMemberInfo memberInfo)
         {
             throw new NotSupportedException();
         }
 
-        public override bool TryGet<T>(BoundMemberInfo memberInfo, LogsQueryResultRow source, out T value)
+        protected override bool TryGet<T>(BoundMemberInfo memberInfo, LogsQueryResultRow source, out T value)
         {
             if (!source.TryGetColumn(memberInfo.Name, out int column))
             {

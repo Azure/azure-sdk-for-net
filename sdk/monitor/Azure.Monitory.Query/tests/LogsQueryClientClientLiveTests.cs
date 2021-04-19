@@ -9,7 +9,7 @@ using Azure.Monitory.Query;
 using Azure.Monitory.Query.Models;
 using NUnit.Framework;
 
-namespace Azure.Template.Tests
+namespace Azure.Monitory.Query.Tests
 {
     public class LogsQueryClientClientLiveTests: RecordedTestBase<MonitorQueryClientTestEnvironment>
     {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Template.Tests
+namespace Azure.Monitory.Query.Tests
 {
     public class LogSenderClient
     {
