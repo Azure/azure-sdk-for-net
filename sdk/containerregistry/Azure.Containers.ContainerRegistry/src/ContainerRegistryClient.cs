@@ -53,7 +53,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Ge the service endpoint for this client.
         /// </summary>
-        public Uri Endpoint {  get { return _endpoint; } }
+        public Uri RegistryUri {  get { return _endpoint; } }
 
         /// <summary> List repositories. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,19 +186,32 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Create a new <see cref="ContainerRepositoryClient"/> object for the specified repository.
-        /// The new <see cref="ContainerRepositoryClient"/> uses the same request
+        /// Create a new <see cref="ContainerRepository"/> object for the specified repository.
+        /// The new <see cref="ContainerRepository"/> uses the same request
         /// pipeline as the <see cref="ContainerRegistryClient"/>.
         /// </summary>
         /// <param name="repository"> The repository to reference. </param>
-        /// <returns> A new <see cref="ContainerRepositoryClient"/> for the desired repository. </returns>
-        public virtual ContainerRepositoryClient GetRepositoryClient(string repository)
+        /// <returns> A new <see cref="ContainerRepository"/> for the desired repository. </returns>
+        public virtual ContainerRepository GetRepository(string repository)
         {
-            return new ContainerRepositoryClient(_endpoint,
-                repository,
-                _clientDiagnostics,
-                _pipeline,
-                _acrAuthPipeline);
+            throw new NotImplementedException();
+            //return new ContainerRepository(_endpoint,
+            //    repository,
+            //    _clientDiagnostics,
+            //    _pipeline,
+            //    _acrAuthPipeline);
+        }
+
+        /// <summary>
+        /// </summary>
+        public virtual RegistryArtifact GetRegistryArtifact(ArtifactMoniker moniker)
+        {
+            throw new NotImplementedException();
+            //return new ContainerRepository(_endpoint,
+            //    repository,
+            //    _clientDiagnostics,
+            //    _pipeline,
+            //    _acrAuthPipeline);
         }
     }
 }

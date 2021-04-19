@@ -879,7 +879,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public async Task<Response<RegistryArtifactProperties>> GetRegistryArtifactPropertiesAsync(string name, string digest, CancellationToken cancellationToken = default)
+        public async Task<Response<ManifestProperties>> GetRegistryArtifactPropertiesAsync(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -896,9 +896,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 case 200:
                     {
-                        RegistryArtifactProperties value = default;
+                        ManifestProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegistryArtifactProperties.DeserializeRegistryArtifactProperties(document.RootElement);
+                        value = ManifestProperties.DeserializeManifestProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -911,7 +911,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public Response<RegistryArtifactProperties> GetRegistryArtifactProperties(string name, string digest, CancellationToken cancellationToken = default)
+        public Response<ManifestProperties> GetRegistryArtifactProperties(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -928,9 +928,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 case 200:
                     {
-                        RegistryArtifactProperties value = default;
+                        ManifestProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegistryArtifactProperties.DeserializeRegistryArtifactProperties(document.RootElement);
+                        value = ManifestProperties.DeserializeManifestProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -967,7 +967,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public async Task<Response<RegistryArtifactProperties>> UpdateManifestAttributesAsync(string name, string digest, ContentProperties value = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManifestProperties>> UpdateManifestAttributesAsync(string name, string digest, ContentProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -984,9 +984,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 case 200:
                     {
-                        RegistryArtifactProperties value0 = default;
+                        ManifestProperties value0 = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = RegistryArtifactProperties.DeserializeRegistryArtifactProperties(document.RootElement);
+                        value0 = ManifestProperties.DeserializeManifestProperties(document.RootElement);
                         return Response.FromValue(value0, message.Response);
                     }
                 default:
@@ -1000,7 +1000,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public Response<RegistryArtifactProperties> UpdateManifestAttributes(string name, string digest, ContentProperties value = null, CancellationToken cancellationToken = default)
+        public Response<ManifestProperties> UpdateManifestAttributes(string name, string digest, ContentProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -1017,9 +1017,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 case 200:
                     {
-                        RegistryArtifactProperties value0 = default;
+                        ManifestProperties value0 = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = RegistryArtifactProperties.DeserializeRegistryArtifactProperties(document.RootElement);
+                        value0 = ManifestProperties.DeserializeManifestProperties(document.RootElement);
                         return Response.FromValue(value0, message.Response);
                     }
                 default:

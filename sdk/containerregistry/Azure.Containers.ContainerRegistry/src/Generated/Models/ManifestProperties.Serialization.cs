@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class RegistryArtifactProperties
+    public partial class ManifestProperties
     {
-        internal static RegistryArtifactProperties DeserializeRegistryArtifactProperties(JsonElement element)
+        internal static ManifestProperties DeserializeManifestProperties(JsonElement element)
         {
             Optional<string> imageName = default;
             Optional<string> digest = default;
@@ -131,7 +131,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new RegistryArtifactProperties(imageName.Value, digest.Value, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture.Value, os.Value, Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
+            return new ManifestProperties(imageName.Value, digest.Value, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture.Value, os.Value, Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
         }
     }
 }

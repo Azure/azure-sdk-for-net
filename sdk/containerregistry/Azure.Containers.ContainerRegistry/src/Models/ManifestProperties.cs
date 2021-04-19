@@ -9,9 +9,10 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes details. </summary>
-    public partial class RegistryArtifactProperties
+    [CodeGenModel("RegistryArtifactProperties")]
+    public partial class ManifestProperties
     {
-        internal RegistryArtifactProperties(string digest, string architecture, string operatingSystem)
+        internal ManifestProperties(string digest, string architecture, string operatingSystem)
         {
             this.Digest = digest;
             this.CpuArchitecture = architecture;
@@ -22,11 +23,11 @@ namespace Azure.Containers.ContainerRegistry
         internal IReadOnlyList<ManifestAttributesManifestReferences> References { get; }
 
         /// <summary></summary>
-        public IReadOnlyList<RegistryArtifactProperties> RegistryArtifacts
+        public IReadOnlyList<ManifestProperties> RegistryArtifacts
         {
             get
             {
-                List<RegistryArtifactProperties> artifacts = new List<RegistryArtifactProperties>();
+                List<ManifestProperties> artifacts = new List<ManifestProperties>();
 
                 foreach (var reference in this.References)
                 {
@@ -37,9 +38,9 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal static RegistryArtifactProperties FromManifestAttributesManifestReferences(ManifestAttributesManifestReferences reference)
+        internal static ManifestProperties FromManifestAttributesManifestReferences(ManifestAttributesManifestReferences reference)
         {
-            return new RegistryArtifactProperties(
+            return new ManifestProperties(
                 reference.Digest,
                 reference.CpuArchitecture,
                 reference.OperatingSystem);

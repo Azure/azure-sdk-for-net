@@ -12,16 +12,16 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes details. </summary>
-    public partial class RegistryArtifactProperties
+    public partial class ManifestProperties
     {
-        /// <summary> Initializes a new instance of RegistryArtifactProperties. </summary>
-        internal RegistryArtifactProperties()
+        /// <summary> Initializes a new instance of ManifestProperties. </summary>
+        internal ManifestProperties()
         {
             References = new ChangeTrackingList<ManifestAttributesManifestReferences>();
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RegistryArtifactProperties. </summary>
+        /// <summary> Initializes a new instance of ManifestProperties. </summary>
         /// <param name="repository"> Image name. </param>
         /// <param name="digest"> Manifest. </param>
         /// <param name="size"> Image size. </param>
@@ -32,7 +32,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="references"> List of manifest attributes details. </param>
         /// <param name="tags"> List of tags. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
-        internal RegistryArtifactProperties(string repository, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
+        internal ManifestProperties(string repository, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
         {
             Repository = repository;
             Digest = digest;
