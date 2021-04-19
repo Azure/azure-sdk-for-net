@@ -54,7 +54,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         .ExecuteAsync(_queryRequest, _storeType, null, null, _cancellationToken)
                         .ConfigureAwait(false);
 
-                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value, _eventProperties);
+                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value);
 
                     return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
                 }
@@ -72,7 +72,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         .ExecuteAsync(_queryRequest, _storeType, nextLink, null, _cancellationToken)
                         .ConfigureAwait(false);
 
-                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value, _eventProperties);
+                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value);
 
                     return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
                 }
@@ -97,7 +97,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     Response<QueryResultPage> response = _queryClient
                         .Execute(_queryRequest, _storeType, null, null, _cancellationToken);
 
-                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value, _eventProperties);
+                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value);
 
                     return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
                 }
@@ -114,7 +114,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     Response<QueryResultPage> response = _queryClient
                         .Execute(_queryRequest, _storeType, nextLink, null, _cancellationToken);
 
-                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value, _eventProperties);
+                    TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value);
 
                     return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
                 }

@@ -68,6 +68,15 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         Console.WriteLine($"{timeSeriesPoint.Timestamp}: {result}");
                     }
 
+                    await foreach (Page<TimeSeriesPoint> page in queryEventsPages.GetResultsAsync().AsPages())
+                    {
+                        foreach (var item in page.Values)
+                        {
+                            double result = (double)item.GetValue("Humidity");
+                            Console.WriteLine($"{item.Timestamp}: {result}");
+                        }
+                    }
+
                     foreach (var property in queryEventsPages.GetProperties())
                     {
                         Console.WriteLine($"Property: {property.Name} - {property.Type}");

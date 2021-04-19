@@ -8,44 +8,20 @@ namespace Azure.IoT.TimeSeriesInsights
 {
     internal class QueryHelper
     {
-        public static TimeSeriesPoint[] CreateQueryResponse(QueryResultPage value, HashSet<EventProperty> _eventProperties)
+        public static TimeSeriesPoint[] CreateQueryResponse(QueryResultPage value)
         {
             var result = new List<TimeSeriesPoint>();
 
-            for (int i = 0; i < value.Timestamps.Count; i++)
+            var propertyNameToPageValues = new Dictionary<string, PropertyValues>();
+            foreach (PropertyValues property in value.Properties)
             {
-                DateTimeOffset timestamp = value.Timestamps[i];
-                var point = new TimeSeriesPoint(timestamp);
+                propertyNameToPageValues[property.Name] = property;
+            }
 
-                foreach (PropertyValues property in value.Properties)
-                {
-                    var eventProperty = new EventProperty(property.Name, property.Type);
-                    TimeSeriesValue tsValue;
-                    if (property.Type == PropertyTypes.Bool)
-                    {
-                        tsValue = new TimeSeriesValue((bool)property.Values[i]);
-                    }
-                    else if (property.Type == PropertyTypes.Double || property.Type == PropertyTypes.Long)
-                    {
-                        tsValue = new TimeSeriesValue((double)property.Values[i]);
-                    }
-                    else if (property.Type == PropertyTypes.String)
-                    {
-                        tsValue = new TimeSeriesValue((string)property.Values[i]);
-                    }
-                    else if (property.Type == PropertyTypes.DateTime)
-                    {
-                        tsValue = new TimeSeriesValue((DateTimeOffset)property.Values[i]);
-                    }
-                    else
-                    {
-                        tsValue = null; // TODO: ADD MORE TYPES TO BE SUPPORTED IN THE VARIANT TYPE
-                    }
-
-                    point.Values[eventProperty] = tsValue;
-                    _eventProperties.Add(eventProperty);
-                }
-
+            for (int index = 0; index < value.Timestamps.Count; index++)
+            {
+                DateTimeOffset timestamp = value.Timestamps[index];
+                var point = new TimeSeriesPoint(propertyNameToPageValues, index, timestamp);
                 result.Add(point);
             }
 

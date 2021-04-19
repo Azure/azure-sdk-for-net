@@ -13,33 +13,23 @@ namespace Azure.IoT.TimeSeriesInsights
     public struct TimeSeriesPoint
     {
         /// <summary>
-        /// Timestamp of the point.
         /// </summary>
         public DateTimeOffset Timestamp { get; }
 
-        /// <summary>
-        /// List of property values associated with the point.
-        /// </summary>
-        public IDictionary<EventProperty, TimeSeriesValue> Values { get; }
+        private readonly IDictionary<string, PropertyValues> _propertyNameToPageValues;
+        private readonly int _rowNumber;
 
         /// <summary>
-        /// Create a new instance of TimeSeriesPoint.
         /// </summary>
+        /// <param name="propertyNameToPageValues"></param>
+        /// <param name="rowNumber"></param>
         /// <param name="timestamp"></param>
-        public TimeSeriesPoint(DateTimeOffset timestamp)
+        public TimeSeriesPoint(IDictionary<string, PropertyValues> propertyNameToPageValues, int rowNumber, DateTimeOffset timestamp)
         {
             Timestamp = timestamp;
-            Values = new Dictionary<EventProperty, TimeSeriesValue>();
-        }
 
-        /// <summary>
-        /// Get the property names associated with this point.
-        /// </summary>
-        /// <returns></returns>
-        public string[] GetPropertyNames()
-        {
-            ICollection<EventProperty> keys = Values.Keys;
-            return keys.Select((key) => key.Name).ToArray();
+            _propertyNameToPageValues = propertyNameToPageValues;
+            _rowNumber = rowNumber;
         }
 
         /// <summary>
@@ -49,9 +39,14 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <returns></returns>
         public TimeSeriesValue GetValue(string property)
         {
-            ICollection<EventProperty> keys = Values.Keys.ToList();
-            EventProperty eventProperty = keys.First((key) => key.Name == property);
-            return Values[eventProperty];
+            if (!_propertyNameToPageValues.TryGetValue(property, out PropertyValues propertyValues))
+            {
+                return null;
+            }
+            else
+            {
+                return propertyValues.Values[_rowNumber];
+            }
         }
     }
 }
