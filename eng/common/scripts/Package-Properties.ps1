@@ -39,7 +39,7 @@ class PackageProps
         if (Test-Path (Join-Path $directoryPath "README.md"))
         {
             $this.ReadMePath = Join-Path $directoryPath "README.md"
-        } 
+        }
         else
         {
             $this.ReadMePath = $null
@@ -48,7 +48,7 @@ class PackageProps
         if (Test-Path (Join-Path $directoryPath "CHANGELOG.md"))
         {
             $this.ChangeLogPath = Join-Path $directoryPath "CHANGELOG.md"
-        } 
+        }
         else
         {
             $this.ChangeLogPath = $null
@@ -114,7 +114,7 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
             {
                 $pkgPropsResult += Get-PkgPropsForEntireService -serviceDirectoryPath $dir.FullName
             }
-        } 
+        }
         else
         {
             $pkgPropsResult = Get-PkgPropsForEntireService -serviceDirectoryPath (Join-Path $RepoRoot "sdk" $ServiceDirectory)
@@ -124,7 +124,7 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
     return $pkgPropsResult
 }
 
-# Given the metadata url under https://github.com/Azure/azure-sdk/tree/master/_data/releases/latest, 
+# Given the metadata url under https://github.com/Azure/azure-sdk/tree/master/_data/releases/latest,
 # the function will return the csv metadata back as part of response.
 function Get-CSVMetadata ([string]$MetadataUri=$MetadataUri)
 {
@@ -155,17 +155,7 @@ function Get-PkgPropsForEntireService ($serviceDirectoryPath)
         }
     }
 
-    $ciYmlFiles = Get-ChildItem $serviceDirectoryPath -filter "ci.yml"
-    foreach($ciYmlFile in $ciYmlFiles)
-    {
-        $activeArtifactList = Get-ArtifactListFromYml -ciYmlPath $ciYmlFile.FullName
-        foreach ($artifact in $activeArtifactList)
-        {
-            $packageProps += $projectProps | Where-Object { $_.ArtifactName -eq $artifact["name"] -and $_.Group -eq $artifact["groupId"] }
-        }
-    }
-
-    return $packageProps
+    return $projectProps
 }
 
 function Get-ArtifactListFromYml ($ciYmlPath)
@@ -187,7 +177,7 @@ function Get-ArtifactListFromYml ($ciYmlPath)
     {
         $artifactsInCI = $ciYmlObj["stages"][0]["parameters"]["Artifacts"]
     }
-    elseif ($ciYmlObj.Contains("extends")) 
+    elseif ($ciYmlObj.Contains("extends"))
     {
         $artifactsInCI = $ciYmlObj["extends"]["parameters"]["Artifacts"]
     }
