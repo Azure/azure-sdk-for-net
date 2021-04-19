@@ -4,7 +4,7 @@ languages:
 - csharp
 products:
 - azure
-- azure-communication
+- azure-communication-services
 name: Azure Communication SMS samples for .NET
 description: Samples for the Azure.Communication.Sms client library
 ---

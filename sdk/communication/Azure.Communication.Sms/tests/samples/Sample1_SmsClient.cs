@@ -3,8 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Identity;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.Sms.Tests.samples
