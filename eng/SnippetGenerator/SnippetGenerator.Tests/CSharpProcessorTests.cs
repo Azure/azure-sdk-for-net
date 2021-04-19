@@ -15,6 +15,9 @@ namespace SnippetGenerator.Tests
         {
             var actual = CSharpProcessor.Process(code, SnippetProvider);
             Assert.AreEqual(expected, actual);
+
+            var reProcessed = CSharpProcessor.Process(actual, SnippetProvider);
+            Assert.AreEqual(expected, reProcessed);
         }
 
         private string SnippetProvider(string s) => Processed;
@@ -55,7 +58,7 @@ namespace SnippetGenerator.Tests
             yield return new[]
             {
                 @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
-                @"    /// <code snippet=""Snippet:Example"" example=""true""></code>" + Environment.NewLine +
+                @"    /// <example snippet=""Snippet:Example""></example>" + Environment.NewLine +
                 "     foo",
                 @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
                 @"    /// <example>" + Environment.NewLine +
