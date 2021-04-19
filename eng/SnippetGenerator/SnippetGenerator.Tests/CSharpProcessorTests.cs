@@ -61,8 +61,8 @@ namespace SnippetGenerator.Tests
                 @"    /// <example snippet=""Snippet:Example""></example>" + Environment.NewLine +
                 "     foo",
                 @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
-                @"    /// <example>" + Environment.NewLine +
-                @"    /// <code snippet=""Snippet:Example"">" + Environment.NewLine +
+                @"    /// <example snippet=""Snippet:Example"">" + Environment.NewLine +
+                @"    /// <code>" + Environment.NewLine +
                 $"    /// {Processed} </code>" + Environment.NewLine +
                 @"    /// </example>" + Environment.NewLine +
                 "     foo"
