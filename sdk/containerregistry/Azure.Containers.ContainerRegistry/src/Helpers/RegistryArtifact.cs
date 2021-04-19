@@ -15,6 +15,12 @@ namespace Azure.Containers.ContainerRegistry
         //private readonly ClientDiagnostics _clientDiagnostics = null;
         //private readonly ContainerRegistryRepositoryRestClient _restClient = null;
 
+        /// <summary>
+        /// </summary>
+        protected RegistryArtifact()
+        {
+        }
+
         #region Registry Artifact/Manifest methods
 
         /// <summary> Get registry artifact properties by tag or digest. </summary>
