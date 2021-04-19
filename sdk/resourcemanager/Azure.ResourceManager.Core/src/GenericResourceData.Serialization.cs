@@ -168,8 +168,6 @@ namespace Azure.ResourceManager.Core
                 Kind = kind.Value,
                 ManagedBy = managedBy.Value,
                 Sku = sku.Value,
-                Id = id.Value,
-                Location = location.Value,
             };
             if (data.Tags != null)
             {
