@@ -97,19 +97,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <summary>
         /// Initializes a new instance of the ManagementGroupsAPIClient class.
         /// </summary>
-        /// <param name='httpClient'>
-        /// HttpClient to be used
-        /// </param>
-        /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling ManagementGroupsAPIClient.Dispose(). False: will not dispose provided httpClient</param>
-        protected ManagementGroupsAPIClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
-        {
-            Initialize();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the ManagementGroupsAPIClient class.
-        /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
@@ -201,6 +188,8 @@ namespace Microsoft.Azure.Management.ManagementGroups
                 Credentials.InitializeServiceClient(this);
             }
         }
+
+ 
 
         /// <summary>
         /// Initializes a new instance of the ManagementGroupsAPIClient class.
