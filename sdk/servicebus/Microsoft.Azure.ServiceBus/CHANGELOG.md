@@ -1,4 +1,8 @@
 # Release History
+
+## 5.2.0-beta.1 (Unreleased)
+
+
 ## 5.1.3 (2021-04-15)
 
 Update package description to include pointer to the new Azure.Messaging.ServiceBus package and the migration guide.
@@ -30,14 +34,14 @@ Update package description to include pointer to the new Azure.Messaging.Service
 - Improved XML API-documentation [PR 11028](https://github.com/Azure/azure-sdk-for-net/pull/11028)
 - Bugfix - `ForwardTo` should not error on 260 character name [PR 11059](https://github.com/Azure/azure-sdk-for-net/pull/11059)
 
-## 4.1.2
+## 4.1.2 
 - Same as version 4.1.1 but has pdb symbols published
 
-## 4.1.1
+## 4.1.1 
 ### Bug fixes
 - Ignore OperationCanceledException while closing Message Pump. [PR 8449](https://github.com/Azure/azure-sdk-for-net/pull/8449)
 
-## 4.1.0
+## 4.1.0 
 ### Improvements
 - Support for creation of `SqlFilter` for subscriptions with parameter of type `TimeSpan`. [PR 7325](https://github.com/Azure/azure-sdk-for-net/pull/7325)
 
@@ -48,7 +52,7 @@ Update package description to include pointer to the new Azure.Messaging.Service
 - Avoid potential dead-locks. [PR 8059](https://github.com/Azure/azure-sdk-for-net/pull/8059)
 - Adding default idle timeout for the underlying `AmqpConnection` object. [PR 7944](https://github.com/Azure/azure-sdk-for-net/pull/7944)
 
-## 4.0.0
+## 4.0.0 
 ### Breaking Changes
 - Allow clients to report if they own or share the underlying connection string [PR 6037](https://github.com/Azure/azure-sdk-for-net/pull/6037)
 - RBAC support - Allow more flexible ways to provide authentication [PR 6393](https://github.com/Azure/azure-sdk-for-net/pull/6393) (broken)
