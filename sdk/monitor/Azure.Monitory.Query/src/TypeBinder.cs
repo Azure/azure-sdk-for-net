@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Reflection;
 
 #pragma warning disable SA1402
@@ -103,24 +104,41 @@ namespace Azure.Monitory.Query
 
         private sealed class BoundMemberInfo<T> : BoundMemberInfo
         {
-            public BoundMemberInfo(PropertyInfo propertyInfo) : base(propertyInfo)
+            private static ParameterExpression InputParameter = Expression.Parameter(typeof(object), "input");
+            private static ParameterExpression ValueParameter = Expression.Parameter(typeof(T), "value");
+
+            public BoundMemberInfo(PropertyInfo propertyInfo) : this(propertyInfo, propertyInfo.CanRead, propertyInfo.CanWrite)
             {
-                Getter = o => (T) propertyInfo.GetValue(o);
-                Setter = (o, v) => propertyInfo.SetValue(o, v);
-                CanRead = propertyInfo.CanRead;
-                CanWrite = propertyInfo.CanWrite;
             }
 
-            public BoundMemberInfo(FieldInfo fieldInfo) : base(fieldInfo)
+            public BoundMemberInfo(FieldInfo fieldInfo) : this(fieldInfo, true, !fieldInfo.IsInitOnly)
             {
-                Getter = o => (T) fieldInfo.GetValue(o);
-                Setter = (o, v) => fieldInfo.SetValue(o, v);
-                CanWrite = !fieldInfo.IsInitOnly;
-                CanRead = true;
+            }
+
+            private BoundMemberInfo(MemberInfo memberInfo, bool canRead, bool canWrite) : base(memberInfo)
+            {
+                CanRead = canRead;
+                CanWrite = canWrite;
+
+                if (canRead)
+                {
+                    Getter = Expression.Lambda<PropertyGetter<T>>(
+                        Expression.MakeMemberAccess(Expression.Convert(InputParameter, memberInfo.DeclaringType), memberInfo),
+                        InputParameter).Compile();
+                }
+
+                if (canWrite)
+                {
+                    Setter = Expression.Lambda<PropertySetter<T>>(
+                        Expression.Assign(
+                            Expression.MakeMemberAccess(
+                                Expression.Convert(InputParameter, memberInfo.DeclaringType),
+                                memberInfo), ValueParameter),
+                        InputParameter, ValueParameter).Compile();
+                }
             }
 
             private PropertyGetter<T> Getter { get; }
-
             private PropertySetter<T> Setter { get; }
 
             public override bool CanRead { get; }

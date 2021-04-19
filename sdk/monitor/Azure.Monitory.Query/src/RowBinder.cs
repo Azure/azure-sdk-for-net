@@ -12,7 +12,6 @@ namespace Azure.Monitory.Query
     {
         internal IReadOnlyList<T> BindResults<T>(LogsQueryResult response)
         {
-            // TODO: this is very slow
             List<T> results = new List<T>();
             if (typeof(IDictionary<string, object>).IsAssignableFrom(typeof(T)))
             {
