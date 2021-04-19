@@ -344,6 +344,8 @@ namespace Azure.Storage
             public const string FileSystemName = "FileSystem";
 
             public const string DeletionId = "deletionid";
+
+            public const string DirectoryResourceType = "directory";
         }
 
         /// <summary>
