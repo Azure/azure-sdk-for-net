@@ -1,0 +1,77 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/general?model-version=2020-02-01\u0026showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "87",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-ce5ede362eb0f940b89ebc2dd7600f66-e44de38079d40543-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "2bbb7414e3ce80e03f8df0adf3eb7d0c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "0",
+            "text": "Bill Gates | Microsoft | New Mexico",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "7702abac-0d29-4abf-beaf-332a6e081008",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
+        "Date": "Wed, 24 Feb 2021 16:57:48 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "55"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "id": "0",
+            "entities": [
+              {
+                "text": "Bill Gates",
+                "category": "Person",
+                "offset": 0,
+                "length": 10,
+                "confidenceScore": 0.6
+              },
+              {
+                "text": "Microsoft",
+                "category": "Organization",
+                "offset": 13,
+                "length": 9,
+                "confidenceScore": 0.85
+              },
+              {
+                "text": "New Mexico",
+                "category": "Location",
+                "subcategory": "GPE",
+                "offset": 25,
+                "length": 10,
+                "confidenceScore": 0.63
+              }
+            ],
+            "warnings": []
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2020-02-01"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1654409937",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+  }
+}

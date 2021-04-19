@@ -31,7 +31,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// include: 'OK', 'OKDuplicate', 'ErrorSource', 'ErrorImageFormat',
         /// 'ErrorImageSize', 'ErrorStorage', 'ErrorLimitExceed',
         /// 'ErrorTagLimitExceed', 'ErrorRegionLimitExceed', 'ErrorUnknown',
-        /// 'ErrorNegativeAndRegularTagOnSameImage'</param>
+        /// 'ErrorNegativeAndRegularTagOnSameImage', 'ErrorImageDimensions',
+        /// 'ErrorInvalidTag'</param>
         /// <param name="image">The image.</param>
         public ImageCreateResult(string sourceUrl = default(string), string status = default(string), Image image = default(Image))
         {
@@ -57,7 +58,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// 'OKDuplicate', 'ErrorSource', 'ErrorImageFormat', 'ErrorImageSize',
         /// 'ErrorStorage', 'ErrorLimitExceed', 'ErrorTagLimitExceed',
         /// 'ErrorRegionLimitExceed', 'ErrorUnknown',
-        /// 'ErrorNegativeAndRegularTagOnSameImage'
+        /// 'ErrorNegativeAndRegularTagOnSameImage', 'ErrorImageDimensions',
+        /// 'ErrorInvalidTag'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }

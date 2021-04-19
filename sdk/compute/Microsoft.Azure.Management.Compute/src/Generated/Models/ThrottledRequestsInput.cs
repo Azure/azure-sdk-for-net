@@ -38,8 +38,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Name.</param>
         /// <param name="groupByResourceName">Group query result by Resource
         /// Name.</param>
-        public ThrottledRequestsInput(string blobContainerSasUri, System.DateTime fromTime, System.DateTime toTime, bool? groupByThrottlePolicy = default(bool?), bool? groupByOperationName = default(bool?), bool? groupByResourceName = default(bool?))
-            : base(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName)
+        /// <param name="groupByClientApplicationId">Group query result by
+        /// Client Application ID.</param>
+        /// <param name="groupByUserAgent">Group query result by User
+        /// Agent.</param>
+        public ThrottledRequestsInput(string blobContainerSasUri, System.DateTime fromTime, System.DateTime toTime, bool? groupByThrottlePolicy = default(bool?), bool? groupByOperationName = default(bool?), bool? groupByResourceName = default(bool?), bool? groupByClientApplicationId = default(bool?), bool? groupByUserAgent = default(bool?))
+            : base(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent)
         {
             CustomInit();
         }

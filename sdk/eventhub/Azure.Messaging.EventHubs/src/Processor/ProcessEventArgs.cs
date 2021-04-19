@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   also provides a way of creating a checkpoint based on the information contained in the associated event.
     /// </summary>
     ///
-    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+    /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
     ///
     public struct ProcessEventArgs
     {
@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <remarks>
-        ///   Ownership of this data, including the memory that holds its <see cref="EventData.Body" />,
+        ///   Ownership of this data, including the memory that holds its <see cref="EventData.EventBody" />,
         ///   is assumed to transfer to consumers of the <see cref="ProcessEventArgs" />.  It may be considered
         ///   immutable and is safe to access so long as the reference is held.
         /// </remarks>

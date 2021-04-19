@@ -45,6 +45,30 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
+        [Fact(Skip="Flaky test. Tracked by #16265")]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task ReceiveLotOfMessagesWithoutSettling()
+        {
+            // 5000 is the default limit on amqp session incoming window
+            int messageCount = 5010;
+            await ServiceBusScope.UsingQueueAsync(false, false, async queueName =>
+            {
+                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.PeekLock);
+
+                try
+                {
+                    await this.ReceiveDeleteTestCase(sender, receiver, messageCount);
+                }
+                finally
+                {
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
+                }
+            });
+        }
+
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]

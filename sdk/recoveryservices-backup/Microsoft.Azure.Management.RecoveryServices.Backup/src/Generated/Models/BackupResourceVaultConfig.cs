@@ -30,9 +30,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the BackupResourceVaultConfig class.
         /// </summary>
         /// <param name="storageModelType">Storage type. Possible values
-        /// include: 'Invalid', 'GeoRedundant', 'LocallyRedundant'</param>
+        /// include: 'Invalid', 'GeoRedundant', 'LocallyRedundant',
+        /// 'ZoneRedundant', 'ReadAccessGeoZoneRedundant'</param>
         /// <param name="storageType">Storage type. Possible values include:
-        /// 'Invalid', 'GeoRedundant', 'LocallyRedundant'</param>
+        /// 'Invalid', 'GeoRedundant', 'LocallyRedundant', 'ZoneRedundant',
+        /// 'ReadAccessGeoZoneRedundant'</param>
         /// <param name="storageTypeState">Locked or Unlocked. Once a machine
         /// is registered against a resource, the storageTypeState is always
         /// Locked. Possible values include: 'Invalid', 'Locked',
@@ -58,14 +60,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets storage type. Possible values include: 'Invalid',
-        /// 'GeoRedundant', 'LocallyRedundant'
+        /// 'GeoRedundant', 'LocallyRedundant', 'ZoneRedundant',
+        /// 'ReadAccessGeoZoneRedundant'
         /// </summary>
         [JsonProperty(PropertyName = "storageModelType")]
         public string StorageModelType { get; set; }
 
         /// <summary>
         /// Gets or sets storage type. Possible values include: 'Invalid',
-        /// 'GeoRedundant', 'LocallyRedundant'
+        /// 'GeoRedundant', 'LocallyRedundant', 'ZoneRedundant',
+        /// 'ReadAccessGeoZoneRedundant'
         /// </summary>
         [JsonProperty(PropertyName = "storageType")]
         public string StorageType { get; set; }

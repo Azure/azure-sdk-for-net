@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -42,6 +43,15 @@ namespace SecurityCenter.Tests
             return securityCenterClient;
         }
 
+        private static SecurityCenterClient GetSecurityCenterClientWithLocation(MockContext context, string location)
+        {
+            var client = GetSecurityCenterClient(context);
+
+            client.AscLocation = location;
+
+            return client;
+        }
+
         #endregion
 
         #region Alerts
@@ -66,9 +76,15 @@ namespace SecurityCenter.Tests
 
                 var alerts = await securityCenterClient.Alerts.ListAsync();
                 ValidateAlerts(alerts);
+                
+                var firstAlert = alerts.First();
+				var alertLocation = GetAlertLocation(firstAlert.Id);
+				var clientWithLocation = GetSecurityCenterClientWithLocation(context, alertLocation);
+                var alertName = firstAlert.Name;
+                var resourceGroupName = Regex.Match(firstAlert.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value;
 
-                var alert = securityCenterClient.Alerts.GetResourceGroupLevelAlerts(alerts.First().Name, Regex.Match(alerts.First().Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
-                ValidateAlert(alert);
+                var foundAlert = await clientWithLocation.Alerts.GetResourceGroupLevelAlertsAsync(alertName, resourceGroupName);
+                ValidateAlert(foundAlert);
             }
         }
 
@@ -82,10 +98,18 @@ namespace SecurityCenter.Tests
                 var alerts = await securityCenterClient.Alerts.ListAsync();
                 ValidateAlerts(alerts);
 
-                var alert = securityCenterClient.Alerts.GetSubscriptionLevelAlert(alerts.First().Name);
+                var firstAlert = alerts.First();
+                var alertLocation = GetAlertLocation(firstAlert.Id);
+                var clientWithLocation = GetSecurityCenterClientWithLocation(context, alertLocation);
+                var alert = clientWithLocation.Alerts.GetSubscriptionLevelAlert(firstAlert.Name);
 
                 ValidateAlert(alert);
             }
+        }
+
+        private string GetAlertLocation(string id)
+        {
+            return Regex.Match(id, @"(?<=locations/)[^/]+?(?=/)").Value;
         }
 
         [Fact]

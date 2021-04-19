@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Amqp;
+using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
@@ -51,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void TranslateServiceExceptionTranslatesAmqpExceptions()
         {
             var eventHub = "someHub";
-            var exception = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, eventHub);
+            var exception = new AmqpException(new Error { Condition = AmqpError.ServerBusyError });
             var translated = exception.TranslateServiceException(eventHub);
 
             Assert.That(translated, Is.Not.Null, "An exception should have been returned.");
@@ -60,6 +61,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventHubsException, Is.Not.Null, "The exception type should be appropriate for the `Server Busy` scenario.");
             Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceBusy), "The exception reason should indicate `Server Busy`.");
             Assert.That(eventHubsException.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
+            Assert.That(eventHubsException.InnerException, Is.EqualTo(exception), "The original exception should have been embedded.");
         }
 
         /// <summary>
@@ -80,6 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventHubsException, Is.Not.Null, "The exception type should be appropriate for the `Server Busy` scenario.");
             Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceTimeout), "The exception reason should indicate a service timeout.");
             Assert.That(eventHubsException.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
+            Assert.That(eventHubsException.InnerException, Is.EqualTo(exception), "The original exception should have been embedded.");
         }
 
         /// <summary>
@@ -91,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void TranslateServiceExceptionTranslatesOperationCanceledWithEmbeddedAmqpException()
         {
             var eventHub = "someHub";
-            var exception = new OperationCanceledException("oops", AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, eventHub));
+            var exception = new OperationCanceledException("oops", new AmqpException(new Error { Condition = AmqpError.ServerBusyError }));
             var translated = exception.TranslateServiceException(eventHub);
 
             Assert.That(translated, Is.Not.Null, "An exception should have been returned.");
@@ -100,6 +103,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventHubsException, Is.Not.Null, "The exception type should be appropriate for the `Server Busy` scenario.");
             Assert.That(eventHubsException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceBusy), "The exception reason should indicate `Server Busy`.");
             Assert.That(eventHubsException.EventHubName, Is.EqualTo(eventHub), "The Event Hub name should match.");
+            Assert.That(eventHubsException.InnerException, Is.EqualTo(exception.InnerException), "The AMQP exception should have been embedded.");
         }
 
         /// <summary>
@@ -197,6 +201,23 @@ namespace Azure.Messaging.EventHubs.Tests
             var exception = sourceException.TranslateConnectionCloseDuringLinkCreationException("dummy");
 
             Assert.That(exception, Is.SameAs(sourceException), "The exception should not have been translated.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ExceptionExtensions.TranslateConnectionCloseDuringLinkCreationException" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TranslateConnectionCloseDuringLinkCreationExceptionDetectsTheConnectionClosedObjectDisposedException()
+        {
+            var sourceException = new ObjectDisposedException("foo");
+            var exception = (sourceException.TranslateConnectionCloseDuringLinkCreationException("dummy") as EventHubsException);
+
+            Assert.That(exception, Is.Not.Null, "The exception should have been translated to an Event Hubs exception.");
+            Assert.That(exception.IsTransient, Is.False, "The translation exception should not allow retries.");
+            Assert.That(exception.Reason, Is.EqualTo(EventHubsException.FailureReason.ClientClosed), "The translated exception should have the correct failure reason.");
+            Assert.That(exception.InnerException, Is.EqualTo(sourceException), "The translated exception should wrap the source exception.");
         }
     }
 }

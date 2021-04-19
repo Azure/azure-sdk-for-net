@@ -1,28 +1,109 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareProperties
+    /// <summary>
+    /// Properties of a share.
+    /// </summary>
+    public class ShareProperties
     {
         /// <summary>
-        /// Update the Metadata property based on the value stored
-        /// in the parent XML node
+        /// Last-Modified.
         /// </summary>
-        /// <param name="element">XML element</param>
-        /// <param name="value">value for element</param>
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Files.Shares.Models.ShareProperties value)
-        {
-            System.Xml.Linq.XElement parent = element.Parent;
-            value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            System.Xml.Linq.XElement child = parent.Element(System.Xml.Linq.XName.Get("Metadata", ""));
-            if (child != null)
-            {
-                foreach (System.Xml.Linq.XElement _pair in child.Elements())
-                {
-                    value.Metadata[_pair.Name.LocalName] = _pair.Value;
-                }
-            }
-        }
+        public DateTimeOffset? LastModified { get; internal set; }
+
+        /// <summary>
+        /// Etag.
+        /// </summary>
+        public ETag? ETag { get; internal set; }
+
+        /// <summary>
+        /// ProvisionedIops.
+        /// </summary>
+        public int? ProvisionedIops { get; internal set; }
+
+        /// <summary>
+        /// ProvisionedIngressMBps
+        /// </summary>
+        public int? ProvisionedIngressMBps { get; internal set; }
+
+        /// <summary>
+        /// ProvisionedEgressMBps.
+        /// </summary>
+        public int? ProvisionedEgressMBps { get; internal set; }
+
+        /// <summary>
+        /// NextAllowedQuotaDowngradeTime.
+        /// </summary>
+        public DateTimeOffset? NextAllowedQuotaDowngradeTime { get; internal set; }
+
+        /// <summary>
+        /// DeletedTime.
+        /// </summary>
+        public DateTimeOffset? DeletedOn { get; internal set; }
+
+        /// <summary>
+        /// RemainingRetentionDays.
+        /// </summary>
+        public int? RemainingRetentionDays { get; internal set; }
+
+        /// <summary>
+        /// AccessTier.
+        /// </summary>
+        public string AccessTier { get; internal set; }
+
+        /// <summary>
+        /// AccessTierChangeTime.
+        /// </summary>
+        public DateTimeOffset? AccessTierChangeTime { get; internal set; }
+
+        /// <summary>
+        /// AccessTierTransitionState.
+        /// </summary>
+        public string AccessTierTransitionState { get; internal set; }
+
+        /// <summary>
+        /// The current lease status of the share.
+        /// </summary>
+        public ShareLeaseStatus? LeaseStatus { get; internal set; }
+
+        /// <summary>
+        /// Lease state of the share.
+        /// </summary>
+        public ShareLeaseState? LeaseState { get; internal set; }
+
+        /// <summary>
+        /// When a share is leased, specifies whether the lease is of infinite or fixed duration.
+        /// </summary>
+        public ShareLeaseDuration? LeaseDuration { get; internal set; }
+
+        /// <summary>
+        /// EnabledProtocols.
+        /// </summary>
+        public ShareProtocols? Protocols { get; internal set; }
+
+        /// <summary>
+        /// RootSquash.
+        /// </summary>
+        public ShareRootSquash? RootSquash { get; internal set; }
+
+        /// <summary>
+        /// QuotaInGB.
+        /// </summary>
+        public int? QuotaInGB { get; internal set; }
+
+        /// <summary>
+        /// Metadata.
+        /// </summary>
+        public IDictionary<string, string> Metadata { get; internal set; }
+
+        /// <summary>
+        /// Internal constructor.
+        /// </summary>
+        internal ShareProperties() { }
     }
 }

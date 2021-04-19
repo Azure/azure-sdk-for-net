@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Azure.Attestation.Tests
 {
-    public class AttestationTestFixture : IDisposable
+    public class AttestationTestFixture : TestEnvironment, IDisposable
     {
         public AttestationTestFixture()
         {

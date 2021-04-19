@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -116,7 +117,8 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         private static bool ShouldRetryException(Exception exception)
         {
-            // There's there's an ambient transaction - should not retry
+            // There's an ambient transaction - should not retry
+
             if (Transaction.Current != null)
             {
                 return false;
@@ -141,6 +143,8 @@ namespace Azure.Messaging.ServiceBus.Core
 
                 case TimeoutException _:
                 case SocketException _:
+                case IOException _:
+                case UnauthorizedAccessException _:
                     return true;
 
                 default:

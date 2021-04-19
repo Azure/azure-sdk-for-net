@@ -2,10 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -28,9 +32,19 @@ namespace Azure.Storage.Files.Shares.Specialized
         protected virtual ShareFileClient FileClient => _file;
 
         /// <summary>
+        /// The <see cref="ShareClient"/> to manage leases for.
+        /// </summary>
+        private readonly ShareClient _share;
+
+        /// <summary>
+        /// The <see cref="ShareClient"/> to manage leases for.
+        /// </summary>
+        protected virtual ShareClient ShareClient => _share;
+
+        /// <summary>
         /// Gets the URI of the object being leased.
         /// </summary>
-        public Uri Uri => FileClient?.Uri;
+        public Uri Uri => FileClient?.Uri ?? ShareClient?.Uri;
 
         /// <summary>
         /// Gets the Lease ID for this lease.
@@ -38,21 +52,14 @@ namespace Azure.Storage.Files.Shares.Specialized
         public virtual string LeaseId { get; private set; }
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send
-        /// every request.
+        /// <see cref="ShareClientConfiguration"/>.
         /// </summary>
-        private HttpPipeline Pipeline => FileClient?.Pipeline;
+        internal virtual ShareClientConfiguration ClientConfiguration => FileClient?.ClientConfiguration ?? ShareClient?.ClientConfiguration;
 
         /// <summary>
-        /// The version of the service to use when sending requests.
+        /// The <see cref="TimeSpan"/> representing an infinite lease duration.
         /// </summary>
-        internal virtual ShareClientOptions.ServiceVersion Version => FileClient.Version;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => FileClient?.ClientDiagnostics;
+        public static readonly TimeSpan InfiniteLeaseDuration = TimeSpan.FromSeconds(Constants.File.Lease.InfiniteLeaseDuration);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareLeaseClient"/> class
@@ -61,6 +68,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         protected ShareLeaseClient()
         {
             _file = null;
+            _share = null;
         }
 
         /// <summary>
@@ -77,6 +85,33 @@ namespace Azure.Storage.Files.Shares.Specialized
         {
             _file = client ?? throw Errors.ArgumentNull(nameof(client));
             LeaseId = leaseId ?? CreateUniqueLeaseId();
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(client.Uri)
+            {
+                ShareName = null,
+                DirectoryOrFilePath = null
+            };
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareLeaseClient"/> class.
+        /// </summary>
+        /// <param name="client">
+        /// A <see cref="ShareClient"/> representing the share being leased.
+        /// </param>
+        /// <param name="leaseId">
+        /// An optional lease ID.  If no lease ID is provided, a random lease
+        /// ID will be created.
+        /// </param>
+        public ShareLeaseClient(ShareClient client, string leaseId = null)
+        {
+            _share = client ?? throw Errors.ArgumentNull(nameof(client));
+            LeaseId = leaseId ?? CreateUniqueLeaseId();
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(client.Uri)
+            {
+                ShareName = null
+            };
         }
 
         /// <summary>
@@ -85,9 +120,97 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// <returns>A unique lease ID.</returns>
         private static string CreateUniqueLeaseId() => Guid.NewGuid().ToString();
 
+        /// <summary>
+        /// Ensure either the File or Share is present.
+        /// </summary>
+        private void EnsureClient()
+        {
+            if (FileClient == null && ShareClient == null)
+            {
+                // This can only happen if someone's not being careful while mocking
+                throw ShareErrors.FileOrShareMissing(nameof(ShareLeaseClient), nameof(FileClient), nameof(ShareClient));
+            }
+        }
+
         #region Acquire
         /// <summary>
-        /// The <see cref="Acquire"/> operation acquires a lease on
+        /// The <see cref="Acquire(TimeSpan?, CancellationToken)"/> operation acquires a lease on
+        /// the file.
+        ///
+        /// If the file does not have an active lease, the File service
+        /// creates a lease on the file and returns it.  If the
+        /// file has an active lease, you can only request a new lease
+        /// using the active lease ID as <see cref="LeaseId"/>
+        ///
+        /// </summary>
+        /// <param name="duration">
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
+        /// Files only support infinite lease.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
+        /// <param name="cancellationToken">
+        /// </param>
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{Lease}"/> describing the lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileLease> Acquire(
+            TimeSpan? duration = default,
+            CancellationToken cancellationToken = default) =>
+            AcquireInternal(
+                duration: duration,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="AcquireAsync(TimeSpan?, CancellationToken)"/> operation acquires a lease on
+        /// the file.
+        ///
+        /// If the file does not have an active lease, the File service
+        /// creates a lease on the file and returns it.  If the
+        /// file has an active lease, you can only request a new lease
+        /// using the active lease ID as <see cref="LeaseId"/>.
+        ///
+        /// </summary>
+        /// <param name="duration">
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
+        /// Files only support infinite lease.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{Lease}"/> describing the lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileLease>> AcquireAsync(
+            TimeSpan? duration = default,
+            CancellationToken cancellationToken = default) =>
+            await AcquireInternal(
+                duration: duration,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="AcquireAsync(CancellationToken)"/> operation acquires a lease on
         /// the file.
         ///
         /// If the file does not have an active lease, the File service
@@ -107,15 +230,19 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareFileLease> Acquire(
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            CancellationToken cancellationToken) =>
             AcquireInternal(
-                false, // async
-                cancellationToken)
+                duration: default,
+                async: false,
+                cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="AcquireAsync"/> operation acquires a lease on
+        /// The <see cref="AcquireAsync(CancellationToken)"/> operation acquires a lease on
         /// the file.
         ///
         /// If the file does not have an active lease, the File service
@@ -135,11 +262,15 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareFileLease>> AcquireAsync(
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            CancellationToken cancellationToken) =>
             await AcquireInternal(
-                true, // async
-                cancellationToken)
+                duration: default,
+                async: true,
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -152,6 +283,13 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// using the active lease ID as <see cref="LeaseId"/>.
         ///
         /// </summary>
+        /// <param name="duration">
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -167,38 +305,95 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareFileLease>> AcquireInternal(
+            TimeSpan? duration,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
+            EnsureClient();
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Acquire)}");
+
                 try
                 {
-                    return await FileRestClient.File.AcquireLeaseAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        Version.ToVersionString(),
-                        duration: Constants.File.Lease.InfiniteLeaseDuration,
-                        proposedLeaseId: LeaseId,
-                        async: async,
-                        operationName: $"{nameof(ShareLeaseClient)}.{nameof(Acquire)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    if (FileClient != null)
+                    {
+                        ResponseWithHeaders<FileAcquireLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await FileClient.FileRestClient.AcquireLeaseAsync(
+                                duration: (int)Constants.File.Lease.InfiniteLeaseDuration,
+                                proposedLeaseId: LeaseId,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = FileClient.FileRestClient.AcquireLease(
+                                duration: (int)Constants.File.Lease.InfiniteLeaseDuration,
+                                proposedLeaseId: LeaseId,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToShareFileLease(),
+                            response.GetRawResponse());
+                    }
+                    else
+                    {
+                        // Int64 is an overflow safe cast relative to TimeSpan.MaxValue
+                        long serviceDuration;
+
+                        if (duration.HasValue && duration.Value >= TimeSpan.Zero)
+                        {
+                            serviceDuration = Convert.ToInt64(duration.Value.TotalSeconds);
+                        }
+                        else
+                        {
+                            serviceDuration = Constants.File.Lease.InfiniteLeaseDuration;
+                        }
+
+                        ResponseWithHeaders<ShareAcquireLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await ShareClient.ShareRestClient.AcquireLeaseAsync(
+                                duration: (int)serviceDuration,
+                                proposedLeaseId: LeaseId,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = ShareClient.ShareRestClient.AcquireLease(
+                                duration: (int)serviceDuration,
+                                proposedLeaseId: LeaseId,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToShareFileLease(),
+                            response.GetRawResponse());
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -292,34 +487,75 @@ namespace Azure.Storage.Files.Shares.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
+            EnsureClient();
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Release)}");
+
                 try
                 {
-                    return await FileRestClient.File.ReleaseLeaseAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        leaseId: LeaseId,
-                        Version.ToVersionString(),
-                        async: async,
-                        operationName: $"{nameof(ShareLeaseClient)}.{nameof(Release)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    if (FileClient != null)
+                    {
+                        ResponseWithHeaders<FileReleaseLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await FileClient.FileRestClient.ReleaseLeaseAsync(
+                                leaseId: LeaseId,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = FileClient.FileRestClient.ReleaseLease(
+                                leaseId: LeaseId,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToFileLeaseReleaseInfo(),
+                            response.GetRawResponse());
+                    }
+                    else
+                    {
+                        ResponseWithHeaders<ShareReleaseLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await ShareClient.ShareRestClient.ReleaseLeaseAsync(
+                                leaseId: LeaseId,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = ShareClient.ShareRestClient.ReleaseLease(
+                                leaseId: LeaseId,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToFileLeaseReleaseInfo(),
+                            response.GetRawResponse());
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -418,36 +654,81 @@ namespace Azure.Storage.Files.Shares.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
+            EnsureClient();
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(proposedId)}: {proposedId}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Change)}");
+
                 try
                 {
-                    return await FileRestClient.File.ChangeLeaseAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        leaseId: LeaseId,
-                        Version.ToVersionString(),
-                        proposedLeaseId: proposedId,
-                        async: async,
-                        operationName: $"{nameof(ShareLeaseClient)}.{nameof(Change)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+
+                    if (FileClient != null)
+                    {
+                        ResponseWithHeaders<FileChangeLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await FileClient.FileRestClient.ChangeLeaseAsync(
+                                leaseId: LeaseId,
+                                proposedLeaseId: proposedId,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = FileClient.FileRestClient.ChangeLease(
+                                leaseId: LeaseId,
+                                proposedLeaseId: proposedId,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToShareFileLease(),
+                            response.GetRawResponse());
+                    }
+                    else
+                    {
+                        ResponseWithHeaders<ShareChangeLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await ShareClient.ShareRestClient.ChangeLeaseAsync(
+                                leaseId: LeaseId,
+                                proposedLeaseId: proposedId,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = ShareClient.ShareRestClient.ChangeLease(
+                                leaseId: LeaseId,
+                                proposedLeaseId: proposedId,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToShareFileLease(),
+                            response.GetRawResponse());
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -547,39 +828,229 @@ namespace Azure.Storage.Files.Shares.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
+            EnsureClient();
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Break)}");
+
                 try
                 {
-                    return (await FileRestClient.File.BreakLeaseAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        Version.ToVersionString(),
-                        leaseId: LeaseId,
-                        async: async,
-                        operationName: $"{nameof(ShareLeaseClient)}.{nameof(Break)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false))
-                        .ToLease();
+                    scope.Start();
+
+                    if (FileClient != null)
+                    {
+                        ResponseWithHeaders<FileBreakLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await FileClient.FileRestClient.BreakLeaseAsync(
+                                leaseAccessConditions: null,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = FileClient.FileRestClient.BreakLease(
+                                leaseAccessConditions: null,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToShareFileLease(),
+                            response.GetRawResponse());
+                    }
+                    else
+                    {
+                        ResponseWithHeaders<ShareBreakLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await ShareClient.ShareRestClient.BreakLeaseAsync(
+                                breakPeriod: null,
+                                leaseAccessConditions: null,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = ShareClient.ShareRestClient.BreakLease(
+                                breakPeriod: null,
+                                leaseAccessConditions: null,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToShareFileLease(),
+                            response.GetRawResponse());
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
         #endregion Break
+
+        #region Renew
+        /// <summary>
+        /// The <see cref="Renew"/> operation renews the
+        /// shares's previously-acquired lease.  This API does not
+        /// support files.
+        ///
+        /// The lease can be renewed if the leaseId
+        /// matches that associated with the share.  Note that the
+        /// lease may be renewed even if it has expired as long as the share
+        /// has not been leased again since the expiration of that
+        /// lease.  When you renew a lease, the lease duration clock resets.
+        ///
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileLease}"/> describing the lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileLease> Renew(
+            CancellationToken cancellationToken = default) =>
+            RenewInternal(
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="RenewAsync"/> operation renews the
+        /// shares's previously-acquired lease.  This API does not
+        /// support files.
+        ///
+        /// The lease can be renewed if the leaseId
+        /// matches that associated with the share.  Note that the
+        /// lease may be renewed even if it has expired as long as the share
+        /// has not been leased again since the expiration of that
+        /// lease.  When you renew a lease, the lease duration clock resets.
+        ///
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileLease}"/> describing the lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileLease>> RenewAsync(
+            CancellationToken cancellationToken = default) =>
+            await RenewInternal(
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="RenewInternal"/> operation renews the
+        /// shares's previously-acquired lease.  This API does not
+        /// support files.
+        ///
+        /// The lease can be renewed if the leaseId
+        /// matches that associated with the share.  Note that the
+        /// lease may be renewed even if it has expired as long as the share
+        /// has not been leased again since the expiration of that
+        /// lease.  When you renew a lease, the lease duration clock resets.
+        ///
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileLease}"/> describing the lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareFileLease>> RenewInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            EnsureClient();
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareLeaseClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(LeaseId)}: {LeaseId}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareLeaseClient)}.{nameof(Renew)}");
+
+                try
+                {
+                    scope.Start();
+                    if (FileClient != null)
+                    {
+                        throw new InvalidOperationException($"{nameof(Renew)} only supports Share Leases");
+                    }
+                    else
+                    {
+                        ResponseWithHeaders<ShareRenewLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await ShareClient.ShareRestClient.RenewLeaseAsync(
+                                leaseId: LeaseId,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = ShareClient.ShareRestClient.RenewLease(
+                                leaseId: LeaseId,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToShareFileLease(),
+                            response.GetRawResponse());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareLeaseClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion Renew
     }
 
     /// <summary>
@@ -601,6 +1072,21 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// </param>
         public static ShareLeaseClient GetShareLeaseClient(
             this ShareFileClient client,
+            string leaseId = null) =>
+            new ShareLeaseClient(client, leaseId);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareLeaseClient"/> class.
+        /// </summary>
+        /// <param name="client">
+        /// A <see cref="ShareClient"/> representing the share being leased.
+        /// </param>
+        /// <param name="leaseId">
+        /// An optional lease ID.  If no lease ID is provided, a random lease
+        /// ID will be created.
+        /// </param>
+        public static ShareLeaseClient GetShareLeaseClient(
+            this ShareClient client,
             string leaseId = null) =>
             new ShareLeaseClient(client, leaseId);
     }

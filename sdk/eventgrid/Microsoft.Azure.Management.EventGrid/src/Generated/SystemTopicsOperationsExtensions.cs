@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.EventGrid
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -179,12 +177,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='systemTopicName'>
             /// Name of the system topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the system topic.
+            /// <param name='systemTopicUpdateParameters'>
+            /// SystemTopic update information.
             /// </param>
-            public static SystemTopic Update(this ISystemTopicsOperations operations, string resourceGroupName, string systemTopicName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static SystemTopic Update(this ISystemTopicsOperations operations, string resourceGroupName, string systemTopicName, SystemTopicUpdateParameters systemTopicUpdateParameters)
             {
-                return operations.UpdateAsync(resourceGroupName, systemTopicName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, systemTopicName, systemTopicUpdateParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -202,15 +200,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='systemTopicName'>
             /// Name of the system topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the system topic.
+            /// <param name='systemTopicUpdateParameters'>
+            /// SystemTopic update information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SystemTopic> UpdateAsync(this ISystemTopicsOperations operations, string resourceGroupName, string systemTopicName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SystemTopic> UpdateAsync(this ISystemTopicsOperations operations, string resourceGroupName, string systemTopicName, SystemTopicUpdateParameters systemTopicUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, systemTopicName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, systemTopicName, systemTopicUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -456,12 +454,12 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='systemTopicName'>
             /// Name of the system topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the system topic.
+            /// <param name='systemTopicUpdateParameters'>
+            /// SystemTopic update information.
             /// </param>
-            public static SystemTopic BeginUpdate(this ISystemTopicsOperations operations, string resourceGroupName, string systemTopicName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static SystemTopic BeginUpdate(this ISystemTopicsOperations operations, string resourceGroupName, string systemTopicName, SystemTopicUpdateParameters systemTopicUpdateParameters)
             {
-                return operations.BeginUpdateAsync(resourceGroupName, systemTopicName, tags).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, systemTopicName, systemTopicUpdateParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -479,15 +477,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='systemTopicName'>
             /// Name of the system topic.
             /// </param>
-            /// <param name='tags'>
-            /// Tags of the system topic.
+            /// <param name='systemTopicUpdateParameters'>
+            /// SystemTopic update information.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SystemTopic> BeginUpdateAsync(this ISystemTopicsOperations operations, string resourceGroupName, string systemTopicName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SystemTopic> BeginUpdateAsync(this ISystemTopicsOperations operations, string resourceGroupName, string systemTopicName, SystemTopicUpdateParameters systemTopicUpdateParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, systemTopicName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, systemTopicName, systemTopicUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

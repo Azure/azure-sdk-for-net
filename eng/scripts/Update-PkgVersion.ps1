@@ -14,9 +14,6 @@ The Name of the Service Directory
 .PARAMETER PackageName
 The Name of the Package
 
-.PARAMETER PackageDirName
-Used in the case where the package directory name is different from the package name. e.g in cognitiveservice packages
-
 .PARAMETER NewVersionString
 Use this to overide version incement logic and set a version specified by this parameter
 
@@ -28,61 +25,77 @@ Update-PkgVersion.ps1 -ServiceDirectory core -PackageName Azure.Core
 Updating package version for Azure.Core with a specified verion
 Update-PkgVersion.ps1 -ServiceDirectory core -PackageName Azure.Core -NewVersionString 2.0.5
 
-Updating package version for Microsoft.Azure.CognitiveServices.AnomalyDetector
-Update-PkgVersion.ps1 -ServiceDirectory cognitiveservices -PackageName Microsoft.Azure.CognitiveServices.AnomalyDetector -PackageDirName AnomalyDetector
+Updating package version for Azure.Core with a specified verion and release date
+Update-PkgVersion.ps1 -ServiceDirectory core -PackageName Azure.Core -NewVersionString 2.0.5 -ReleaseDate "2020-05-01"
 
 #>
 
 [CmdletBinding()]
 Param (
-    [ValidateNotNullOrEmpty()]
-    [string] $RepoRoot = "${PSScriptRoot}/../..",
-    [Parameter(Mandatory=$True)]
-    [string] $ServiceDirectory,
-    [Parameter(Mandatory=$True)]
-    [string] $PackageName,
-    [string] $PackageDirName,
-    [string] $NewVersionString
+  [ValidateNotNullOrEmpty()]
+  [string] $RepoRoot = "${PSScriptRoot}/../..",
+  [Parameter(Mandatory=$True)]
+  [string] $ServiceDirectory,
+  [Parameter(Mandatory=$True)]
+  [string] $PackageName,
+  [string] $NewVersionString,
+  [string] $ReleaseDate
 )
 
-. ${PSScriptRoot}\..\common\scripts\SemVer.ps1
+. (Join-Path $PSScriptRoot ".." common scripts common.ps1)
 
-# Updated Version in csproj and changelog using computed or set NewVersionString
-function Update-Version([AzureEngSemanticVersion]$SemVer, $Unreleased=$True, $ReplaceVersion=$False)
-{
-    Write-Verbose "New Version: ${NewPackageVersion}"
-    if ($SemVer.HasValidPrereleaseLabel() -ne $true){
-        Write-Error "Invalid prerelease label"
-        exit 1
-    }
+$pkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
+$csprojPath = Join-Path $pkgProperties.DirectoryPath src "${PackageName}.csproj"
+$csproj = new-object xml
+$csproj.PreserveWhitespace = $true
+$csproj.Load($csprojPath)
+$propertyGroup = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node.ParentNode
+$packageVersion = $propertyGroup.Version
 
-    ${PackageVersion}.Node.InnerText = $SemVer.ToString()
-    $CsprojData.Save($PackageCsprojPath)
+$packageSemVer = [AzureEngSemanticVersion]::new($packageVersion)
+$packageOldSemVer = [AzureEngSemanticVersion]::new($packageVersion)
+Write-Host "Current Version: ${PackageVersion}"
 
-    # Increment Version in ChangeLog file
-    & "${PSScriptRoot}/../common/Update-Change-Log.ps1" -Version $SemVer.ToString() -ChangeLogPath $ChangelogPath -Unreleased $Unreleased -ReplaceVersion $ReplaceVersion
+if ([System.String]::IsNullOrEmpty($NewVersionString)) {
+  $packageSemVer.IncrementAndSetToPrerelease()
+
+  & "${PSScriptRoot}/../common/scripts/Update-ChangeLog.ps1" -Version $packageSemVer.ToString() `
+  -ChangelogPath $pkgProperties.ChangeLogPath -Unreleased $True
+}
+else {
+  $packageSemVer = [AzureEngSemanticVersion]::new($NewVersionString)
+
+  & "${PSScriptRoot}/../common/scripts/Update-ChangeLog.ps1" -Version $packageSemVer.ToString() `
+  -ChangelogPath $pkgProperties.ChangeLogPath -Unreleased $False `
+  -ReplaceLatestEntryTitle $True -ReleaseDate $ReleaseDate
 }
 
-# Obtain Current Package Version
-if ([System.String]::IsNullOrEmpty($PackageDirName)) {$PackageDirName = $PackageName}
-$CsprojData = New-Object -TypeName XML
-$CsprojData.PreserveWhitespace = $True
-$PackageCsprojPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "src" "${PackageName}.csproj"
-$ChangelogPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "CHANGELOG.md"
-$CsprojData.Load($PackageCsprojPath)
-$PackageVersion = Select-XML -Xml $CsprojData -XPath '/Project/PropertyGroup/Version'
+Write-Host "New Version: ${packageSemVer}"
 
-if ([System.String]::IsNullOrEmpty($NewVersionString))
-{
-    $SemVer = [AzureEngSemanticVersion]::new($PackageVersion)
-    Write-Verbose "Current Version: ${PackageVersion}"
+# Allow the prerelease label to also be preview until all those ship as GA
+if ($packageSemVer.PrereleaseLabel -eq "preview") {
+  $packageSemVer.DefaultPrereleaseLabel = "preview"
+}
 
-    $SemVer.IncrementAndSetToPrerelease()
-    Update-Version -SemVer $SemVer
+if ($packageSemVer.HasValidPrereleaseLabel() -ne $true){
+  Write-Error "Invalid prerelease label"
+  exit 1
 }
-else
-{
-    # Use specified VersionString
-    $SemVer = [AzureEngSemanticVersion]::new($NewVersionString)
-    Update-Version -SemVer $SemVer -Unreleased $False -ReplaceVersion $True
+
+if (!$packageOldSemVer.IsPrerelease -and ($packageVersion -ne $NewVersionString)) {
+  $whitespace = $propertyGroup["Version"].PreviousSibling
+  if (!$propertyGroup.ApiCompatVersion) {
+    $propertyGroup.InsertAfter($csproj.CreateElement("ApiCompatVersion"), $propertyGroup["Version"]) | Out-Null
+    $propertyGroup.InsertAfter($whitespace.Clone(), $propertyGroup["Version"]) | Out-Null
+  }
+  $ApiCompatVersionComment = "The ApiCompatVersion is managed automatically and should not generally be modified manually."
+  if (!($propertyGroup.InnerXml -Match $ApiCompatVersionComment)){
+    $comment = $csproj.CreateComment($ApiCompatVersionComment);
+    $propertyGroup.InsertAfter($comment, $propertyGroup["Version"]) | Out-Null
+    $propertyGroup.InsertAfter($whitespace.Clone(), $propertyGroup["Version"]) | Out-Null
+  }
+  $propertyGroup.ApiCompatVersion = $packageOldSemVer.ToString()
 }
+
+$propertyGroup.Version = $packageSemVer.ToString()
+$csproj.Save($csprojPath)

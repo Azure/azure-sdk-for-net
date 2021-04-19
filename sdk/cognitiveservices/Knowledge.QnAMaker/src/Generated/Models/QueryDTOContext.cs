@@ -31,7 +31,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// <param name="previousQnaId">Previous QnA Id - qnaId of the top
         /// result.</param>
         /// <param name="previousUserQuery">Previous user query.</param>
-        public QueryDTOContext(string previousQnaId = default(string), string previousUserQuery = default(string))
+        public QueryDTOContext(int? previousQnaId = default(int?), string previousUserQuery = default(string))
             : base(previousQnaId, previousUserQuery)
         {
             CustomInit();

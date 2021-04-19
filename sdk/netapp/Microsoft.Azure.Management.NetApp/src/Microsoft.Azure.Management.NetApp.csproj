@@ -9,13 +9,17 @@
     <Description>Provides NetApp storage management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure NetApp Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.NetApp</AssemblyName>
-    <Version>1.5.1</Version>
+    <Version>1.11.0</Version>
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Version 1.5.1 relates to NetApp Files (ANF) 2019-11-01.
-          - Fix MountTarget property in Volume
-
+        Version 1.11.0 relates to NetApp Files (ANF) 2020-12-01.
+          - Added AllowLocalNfsUsersWithLdap to ActiveDirectory
+          - Added VolumeName to Backup and backup patch
+          - Added VolumeBackupStatus operation to get status of backup operation
+          - Added LdapEnabled to Volume and VolumePatch
+          - Removed name1 from SnapshotPolicy, SnapshotPolicy Patch and SnapshotPolicy Details
+          
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.
           Volumes reside within an account pool, a container representing the total data allocation available. A typical usage might be:

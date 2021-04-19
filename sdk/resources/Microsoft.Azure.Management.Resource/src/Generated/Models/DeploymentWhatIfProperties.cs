@@ -59,10 +59,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// deployment.</param>
         /// <param name="onErrorDeployment">The deployment on error
         /// behavior.</param>
+        /// <param name="expressionEvaluationOptions">Specifies whether
+        /// template expressions are evaluated within the scope of the parent
+        /// template or nested template. Only applicable to nested templates.
+        /// If not specified, default value is outer.</param>
         /// <param name="whatIfSettings">Optional What-If operation
         /// settings.</param>
-        public DeploymentWhatIfProperties(DeploymentMode mode, object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DebugSetting debugSetting = default(DebugSetting), OnErrorDeployment onErrorDeployment = default(OnErrorDeployment), DeploymentWhatIfSettings whatIfSettings = default(DeploymentWhatIfSettings))
-            : base(mode, template, templateLink, parameters, parametersLink, debugSetting, onErrorDeployment)
+        public DeploymentWhatIfProperties(DeploymentMode mode, object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DebugSetting debugSetting = default(DebugSetting), OnErrorDeployment onErrorDeployment = default(OnErrorDeployment), ExpressionEvaluationOptions expressionEvaluationOptions = default(ExpressionEvaluationOptions), DeploymentWhatIfSettings whatIfSettings = default(DeploymentWhatIfSettings))
+            : base(mode, template, templateLink, parameters, parametersLink, debugSetting, onErrorDeployment, expressionEvaluationOptions)
         {
             WhatIfSettings = whatIfSettings;
             CustomInit();

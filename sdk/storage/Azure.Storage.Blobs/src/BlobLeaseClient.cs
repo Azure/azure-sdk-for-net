@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 
@@ -52,18 +53,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        private HttpPipeline Pipeline => BlobClient?.Pipeline ?? BlobContainerClient.Pipeline;
+        private HttpPipeline Pipeline => BlobClient?.ClientConfiguration.Pipeline ?? BlobContainerClient.ClientConfiguration.Pipeline;
 
         /// <summary>
         /// The version of the service to use when sending requests.
         /// </summary>
-        internal virtual BlobClientOptions.ServiceVersion Version => BlobClient?.Version ?? BlobContainerClient.Version;
+        internal virtual BlobClientOptions.ServiceVersion Version => BlobClient?.ClientConfiguration.Version ?? BlobContainerClient.ClientConfiguration.Version;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => BlobClient?.ClientDiagnostics ?? BlobContainerClient.ClientDiagnostics;
+        internal virtual ClientDiagnostics ClientDiagnostics => BlobClient?.ClientConfiguration.ClientDiagnostics ?? BlobContainerClient.ClientConfiguration.ClientDiagnostics;
 
         /// <summary>
         /// The <see cref="TimeSpan"/> representing an infinite lease duration.
@@ -145,16 +146,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// using the active lease ID as <see cref="LeaseId"/>, but you can
         /// specify a new <paramref name="duration"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="duration">
         /// Specifies the duration of the lease, in seconds, or specify
         /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
         /// A non-infinite lease can be between 15 and 60 seconds.
-        /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -175,12 +178,12 @@ namespace Azure.Storage.Blobs.Specialized
             AcquireInternal(
                 duration,
                 conditions,
-                false, // async
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="AcquireAsync"/> operation acquires a lease on
+        /// The <see cref="Acquire"/> operation acquires a lease on
         /// the blob or container.  The lease <paramref name="duration"/> must
         /// be between 15 to 60 seconds, or infinite (-1).
         ///
@@ -190,16 +193,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// using the active lease ID as <see cref="LeaseId"/>, but you can
         /// specify a new <paramref name="duration"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="duration">
         /// Specifies the duration of the lease, in seconds, or specify
         /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
         /// A non-infinite lease can be between 15 and 60 seconds.
-        /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -220,7 +226,7 @@ namespace Azure.Storage.Blobs.Specialized
             await AcquireInternal(
                 duration,
                 conditions,
-                true, // async
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -235,16 +241,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// using the active lease ID as <see cref="LeaseId"/>, but you can
         /// specify a new <paramref name="duration"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="duration">
         /// Specifies the duration of the lease, in seconds, or specify
         /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
         /// A non-infinite lease can be between 15 and 60 seconds.
-        /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on acquiring a lease.
         /// </param>
         /// <param name="async">
@@ -278,25 +287,51 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(duration)}: {duration}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobLeaseClient)}.{nameof(Acquire)}");
+
                 try
                 {
+                    scope.Start();
+                    string tagCondition = null;
+                    if (conditions is BlobLeaseRequestConditions leaseConditions)
+                    {
+                        tagCondition = leaseConditions?.TagConditions;
+                    }
+
                     if (BlobClient != null)
                     {
-                        return await BlobRestClient.Blob.AcquireLeaseAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            Uri,
-                            version: Version.ToVersionString(),
-                            duration: serviceDuration,
-                            proposedLeaseId: LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch,
-                            ifNoneMatch: conditions?.IfNoneMatch,
-                            async: async,
-                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Acquire)}",
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+                        ResponseWithHeaders<BlobAcquireLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await BlobClient.BlobRestClient.AcquireLeaseAsync(
+                                duration: serviceDuration,
+                                proposedLeaseId: LeaseId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifTags: tagCondition,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = BlobClient.BlobRestClient.AcquireLease(
+                                duration: serviceDuration,
+                                proposedLeaseId: LeaseId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifTags: tagCondition,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
                     else
                     {
@@ -306,29 +341,44 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(conditions.IfMatch),
                                 nameof(conditions.IfNoneMatch));
                         }
-                        return await BlobRestClient.Container.AcquireLeaseAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            Uri,
-                            version: Version.ToVersionString(),
-                            duration: serviceDuration,
-                            proposedLeaseId: LeaseId,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            async: async,
-                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Acquire)}",
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+
+                        ResponseWithHeaders<ContainerAcquireLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await BlobContainerClient.ContainerRestClient.AcquireLeaseAsync(
+                                duration: serviceDuration,
+                                proposedLeaseId: LeaseId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = BlobContainerClient.ContainerRestClient.AcquireLease(
+                                duration: serviceDuration,
+                                proposedLeaseId: LeaseId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -345,10 +395,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// container has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -381,10 +433,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// container has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -417,10 +471,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// container has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on renewing a lease.
         /// </param>
         /// <param name="async">
@@ -450,24 +506,49 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobLeaseClient)}.{nameof(Renew)}");
+
                 try
                 {
+                    scope.Start();
+                    string tagConditions = null;
+                    if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
+                    {
+                        tagConditions = ((BlobLeaseRequestConditions)conditions).TagConditions;
+                    }
+
                     if (BlobClient != null)
                     {
-                        return await BlobRestClient.Blob.RenewLeaseAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            Uri,
-                            leaseId: LeaseId,
-                            version: Version.ToVersionString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch,
-                            ifNoneMatch: conditions?.IfNoneMatch,
-                            async: async,
-                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Renew)}",
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+                        ResponseWithHeaders<BlobRenewLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await BlobClient.BlobRestClient.RenewLeaseAsync(
+                                leaseId: LeaseId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifTags: tagConditions,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = BlobClient.BlobRestClient.RenewLease(
+                                leaseId: LeaseId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifTags: tagConditions,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
                     else
                     {
@@ -477,28 +558,42 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(conditions.IfMatch),
                                 nameof(conditions.IfNoneMatch));
                         }
-                        return await BlobRestClient.Container.RenewLeaseAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            Uri,
-                            leaseId: LeaseId,
-                            version: Version.ToVersionString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            async: async,
-                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Renew)}",
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+
+                        ResponseWithHeaders<ContainerRenewLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await BlobContainerClient.ContainerRestClient.RenewLeaseAsync(
+                                leaseId: LeaseId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = BlobContainerClient.ContainerRestClient.RenewLease(
+                                leaseId: LeaseId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -514,10 +609,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// lease allows another client to immediately acquire the lease for the
         /// container or blob as soon as the release is complete.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -550,10 +647,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// lease allows another client to immediately acquire the lease for the
         /// container or blob as soon as the release is complete.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -586,10 +685,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// lease allows another client to immediately acquire the lease for the
         /// container or blob as soon as the release is complete.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on releasing a lease.
         /// </param>
         /// <param name="async">
@@ -624,26 +725,50 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobLeaseClient)}.{nameof(Release)}");
+
                 try
                 {
+                    scope.Start();
+                    string tagConditions = default;
+
+                    if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
+                    {
+                        tagConditions = ((BlobLeaseRequestConditions)conditions).TagConditions;
+                    }
+
                     if (BlobClient != null)
                     {
-                        Response<BlobInfo> response =
-                            await BlobRestClient.Blob.ReleaseLeaseAsync(
-                                ClientDiagnostics,
-                                Pipeline,
-                                Uri,
+                        ResponseWithHeaders<BlobReleaseLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await BlobClient.BlobRestClient.ReleaseLeaseAsync(
                                 leaseId: LeaseId,
-                                version: Version.ToVersionString(),
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                ifMatch: conditions?.IfMatch,
-                                ifNoneMatch: conditions?.IfNoneMatch,
-                                async: async,
-                                operationName: $"{nameof(BlobLeaseClient)}.{nameof(Release)}",
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifTags: tagConditions,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
-                        return Response.FromValue(new ReleasedObjectInfo(response.Value), response.GetRawResponse());
+                        }
+                        else
+                        {
+                            response = BlobClient.BlobRestClient.ReleaseLease(
+                                leaseId: LeaseId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifTags: tagConditions,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToReleasedObjectInfo(),
+                            response.GetRawResponse());
                     }
                     else
                     {
@@ -653,30 +778,42 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(RequestConditions.IfMatch),
                                 nameof(RequestConditions.IfNoneMatch));
                         }
-                        Response<BlobContainerInfo> response =
-                            await BlobRestClient.Container.ReleaseLeaseAsync(
-                                ClientDiagnostics,
-                                Pipeline,
-                                Uri,
+
+                        ResponseWithHeaders<ContainerReleaseLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await BlobContainerClient.ContainerRestClient.ReleaseLeaseAsync(
                                 leaseId: LeaseId,
-                                version: Version.ToVersionString(),
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                async: async,
-                                operationName: $"{nameof(BlobLeaseClient)}.{nameof(Release)}",
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
-                        return Response.FromValue(new ReleasedObjectInfo(response.Value), response.GetRawResponse());
+                        }
+                        else
+                        {
+                            response = BlobContainerClient.ContainerRestClient.ReleaseLease(
+                                leaseId: LeaseId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToReleasedObjectInfo(),
+                            response.GetRawResponse());
                     }
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -688,7 +825,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="proposedId">
         /// An optional proposed lease ID, in a GUID string format. A
@@ -696,7 +835,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// proposed lease ID is not in the correct format.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on changing a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -726,7 +865,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="proposedId">
         /// An optional proposed lease ID, in a GUID string format. A
@@ -734,7 +875,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// proposed lease ID is not in the correct format.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on changing a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -764,7 +905,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="proposedId">
         /// An optional proposed lease ID, in a GUID string format. A
@@ -772,7 +915,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// proposed lease ID is not in the correct format.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on changing a lease.
         /// </param>
         /// <param name="async">
@@ -805,25 +948,51 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
                     $"{nameof(proposedId)}: {proposedId}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobLeaseClient)}.{nameof(Change)}");
+
                 try
                 {
+                    scope.Start();
+                    string tagCondition = null;
+                    if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
+                    {
+                        tagCondition = ((BlobLeaseRequestConditions)conditions).TagConditions;
+                    }
+
                     if (BlobClient != null)
                     {
-                        return await BlobRestClient.Blob.ChangeLeaseAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            Uri,
-                            leaseId: LeaseId,
-                            proposedLeaseId: proposedId,
-                            version: Version.ToVersionString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch,
-                            ifNoneMatch: conditions?.IfNoneMatch,
-                            async: async,
-                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Change)}",
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+                        ResponseWithHeaders<BlobChangeLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await BlobClient.BlobRestClient.ChangeLeaseAsync(
+                                leaseId: LeaseId,
+                                proposedLeaseId: proposedId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifTags: tagCondition,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = BlobClient.BlobRestClient.ChangeLease(
+                                leaseId: LeaseId,
+                                proposedLeaseId: proposedId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifTags: tagCondition,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
                     else
                     {
@@ -833,29 +1002,44 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(conditions.IfMatch),
                                 nameof(conditions.IfNoneMatch));
                         }
-                        return await BlobRestClient.Container.ChangeLeaseAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            Uri,
-                            leaseId: LeaseId,
-                            proposedLeaseId: proposedId,
-                            version: Version.ToVersionString(),
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            async: async,
-                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Change)}",
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+
+                        ResponseWithHeaders<ContainerChangeLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await BlobContainerClient.ContainerRestClient.ChangeLeaseAsync(
+                                leaseId: LeaseId,
+                                proposedLeaseId: proposedId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = BlobContainerClient.ContainerRestClient.ChangeLease(
+                                leaseId: LeaseId,
+                                proposedLeaseId: proposedId,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -871,7 +1055,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// specify a matching lease ID.  When a lease is broken, the lease
         /// break <paramref name="breakPeriod"/> is allowed to elapse,
         /// during which time no lease operation except
-        /// <see cref="Break"/> and <see cref="Release"/> can be
+        /// <see cref="Break(TimeSpan?, RequestConditions, CancellationToken)"/>
+        /// and <see cref="Release"/> can be
         /// performed on the blob or container.  When a lease is successfully
         /// broken, the response indicates the interval in seconds until a new
         /// lease can be acquired.
@@ -880,7 +1065,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// immediately acquire a blob or container lease that has been
         /// released.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="breakPeriod">
         /// Specifies the proposed duration the lease should continue before
@@ -893,7 +1080,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -927,7 +1114,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// specify a matching lease ID.  When a lease is broken, the lease
         /// break <paramref name="breakPeriod"/> is allowed to elapse,
         /// during which time no lease operation except
-        /// <see cref="BreakAsync"/> and <see cref="ReleaseAsync"/> can be
+        /// <see cref="BreakAsync(TimeSpan?, RequestConditions, CancellationToken)"/>
+        /// and <see cref="ReleaseAsync"/> can be
         /// performed on the blob or container.  When a lease is successfully
         /// broken, the response indicates the interval in seconds until a new
         /// lease can be acquired.
@@ -936,7 +1124,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// immediately acquire a blob or container lease that has been
         /// released.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="breakPeriod">
         /// Specifies the proposed duration the lease should continue before
@@ -949,7 +1139,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
         /// <param name="cancellationToken">
@@ -983,7 +1173,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// specify a matching lease ID.  When a lease is broken, the lease
         /// break <paramref name="breakPeriod"/> is allowed to elapse,
         /// during which time no lease operation except
-        /// <see cref="BreakAsync"/> and <see cref="ReleaseAsync"/> can be
+        /// <see cref="BreakAsync"/>
+        /// and <see cref="ReleaseAsync"/> can be
         /// performed on the blob or container.  When a lease is successfully
         /// broken, the response indicates the interval in seconds until a new
         /// lease can be acquired.
@@ -992,7 +1183,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// immediately acquire a blob or container lease that has been
         /// released.
         ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container" />.
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
         /// </summary>
         /// <param name="breakPeriod">
         /// Specifies the proposed duration the lease should continue before
@@ -1005,7 +1198,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// lease period elapses, and an infinite lease breaks immediately.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="RequestConditions"/> to add
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
         /// conditions on breaking a lease.
         /// </param>
         /// <param name="async">
@@ -1038,25 +1231,49 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(breakPeriod)}: {breakPeriod}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobLeaseClient)}.{nameof(Break)}");
+
                 try
                 {
+                    scope.Start();
+                    string tagConditions = null;
+                    if (conditions != null && conditions.GetType() == typeof(BlobLeaseRequestConditions))
+                    {
+                        tagConditions = ((BlobLeaseRequestConditions)conditions).TagConditions;
+                    }
+
                     if (BlobClient != null)
                     {
-                        return (await BlobRestClient.Blob.BreakLeaseAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            Uri,
-                            version: Version.ToVersionString(),
-                            breakPeriod: serviceBreakPeriod,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            ifMatch: conditions?.IfMatch,
-                            ifNoneMatch: conditions?.IfNoneMatch,
-                            async: async,
-                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Break)}",
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false))
-                            .ToLease();
+                        ResponseWithHeaders<BlobBreakLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await BlobClient.BlobRestClient.BreakLeaseAsync(
+                                breakPeriod: serviceBreakPeriod,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifTags: tagConditions,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = BlobClient.BlobRestClient.BreakLease(
+                                breakPeriod: serviceBreakPeriod,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                ifMatch: conditions?.IfMatch?.ToString(),
+                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                ifTags: tagConditions,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
                     else
                     {
@@ -1066,29 +1283,42 @@ namespace Azure.Storage.Blobs.Specialized
                                 nameof(conditions.IfMatch),
                                 nameof(conditions.IfNoneMatch));
                         }
-                        return (await BlobRestClient.Container.BreakLeaseAsync(
-                            ClientDiagnostics,
-                            Pipeline,
-                            Uri,
-                            version: Version.ToVersionString(),
-                            breakPeriod: serviceBreakPeriod,
-                            ifModifiedSince: conditions?.IfModifiedSince,
-                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                            async: async,
-                            operationName: $"{nameof(BlobLeaseClient)}.{nameof(Break)}",
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false))
-                            .ToLease();
+
+                        ResponseWithHeaders<ContainerBreakLeaseHeaders> response;
+
+                        if (async)
+                        {
+                            response = await BlobContainerClient.ContainerRestClient.BreakLeaseAsync(
+                                breakPeriod: serviceBreakPeriod,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = BlobContainerClient.ContainerRestClient.BreakLease(
+                                breakPeriod: serviceBreakPeriod,
+                                ifModifiedSince: conditions?.IfModifiedSince,
+                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        return Response.FromValue(
+                            response.ToBlobLease(),
+                            response.GetRawResponse());
                     }
                 }
                 catch (Exception ex)
                 {
                     Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     Pipeline.LogMethodExit(nameof(BlobLeaseClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1115,7 +1345,7 @@ namespace Azure.Storage.Blobs.Specialized
         public static BlobLeaseClient GetBlobLeaseClient(
             this BlobBaseClient client,
             string leaseId = null) =>
-            new BlobLeaseClient(client, leaseId);
+            client.GetBlobLeaseClientCore(leaseId);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobLeaseClient"/> class.
@@ -1131,6 +1361,6 @@ namespace Azure.Storage.Blobs.Specialized
         public static BlobLeaseClient GetBlobLeaseClient(
             this BlobContainerClient client,
             string leaseId = null) =>
-            new BlobLeaseClient(client, leaseId);
+            client.GetBlobLeaseClientCore(leaseId);
     }
 }

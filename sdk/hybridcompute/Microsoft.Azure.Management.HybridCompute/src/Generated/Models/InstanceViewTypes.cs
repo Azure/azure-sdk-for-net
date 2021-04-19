@@ -10,45 +10,12 @@
 
 namespace Microsoft.Azure.Management.HybridCompute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for InstanceViewTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum InstanceViewTypes
+    public static class InstanceViewTypes
     {
-        [EnumMember(Value = "instanceView")]
-        InstanceView
-    }
-    internal static class InstanceViewTypesEnumExtension
-    {
-        internal static string ToSerializedValue(this InstanceViewTypes? value)
-        {
-            return value == null ? null : ((InstanceViewTypes)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this InstanceViewTypes value)
-        {
-            switch( value )
-            {
-                case InstanceViewTypes.InstanceView:
-                    return "instanceView";
-            }
-            return null;
-        }
-
-        internal static InstanceViewTypes? ParseInstanceViewTypes(this string value)
-        {
-            switch( value )
-            {
-                case "instanceView":
-                    return InstanceViewTypes.InstanceView;
-            }
-            return null;
-        }
+        public const string InstanceView = "instanceView";
     }
 }

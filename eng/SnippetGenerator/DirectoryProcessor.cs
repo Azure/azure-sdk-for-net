@@ -21,13 +21,14 @@ namespace SnippetGenerator
         private readonly Lazy<List<Snippet>> _snippets;
         private static readonly Regex _markdownOnlyRegex = new Regex(
             @"(?<indent>\s*)//@@\s*(?<line>.*)",
-            RegexOptions.Compiled | RegexOptions.Singleline);
+            RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
         private const string _codeOnlyPattern = "/*@@*/";
         private static readonly Regex _regionRegex = new Regex(
             @"^(?<indent>\s*)(#region|#endregion)\s*(?<line>.*)",
-            RegexOptions.Compiled | RegexOptions.Singleline);
+            RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
 
         private UTF8Encoding _utf8EncodingWithoutBOM;
+        private static string[] _snippetPreprocessorSymbols = new [] {"SNIPPET"};
 
         public DirectoryProcessor(string directory)
         {
@@ -204,11 +205,19 @@ namespace SnippetGenerator
             var list = new List<Snippet>();
             foreach (var file in Directory.GetFiles(baseDirectory, "*.cs", SearchOption.AllDirectories))
             {
-                var syntaxTree = CSharpSyntaxTree.ParseText(
-                    File.ReadAllText(file),
-                    new CSharpParseOptions(LanguageVersion.Preview),
-                    path: file);
-                list.AddRange(GetAllSnippets(syntaxTree));
+                try
+                {
+                    var syntaxTree = CSharpSyntaxTree.ParseText(
+                        File.ReadAllText(file),
+                        new CSharpParseOptions(LanguageVersion.Preview, preprocessorSymbols: _snippetPreprocessorSymbols),
+                        path: file);
+
+                    list.AddRange(GetAllSnippets(syntaxTree));
+                }
+                catch (Exception e)
+                {
+                    throw new InvalidOperationException($"Failed to discover snippets from file {file}", e);
+                }
             }
 
             return list;
@@ -217,12 +226,21 @@ namespace SnippetGenerator
         private Snippet[] GetAllSnippets(SyntaxTree syntaxTree)
         {
             var snippets = new List<Snippet>();
+            var newRoot = PreprocessorDirectiveRemover.Instance.Visit(syntaxTree.GetRoot());
+            syntaxTree = syntaxTree.WithRootAndOptions(newRoot, syntaxTree.Options);
+
             var directiveWalker = new DirectiveWalker();
             directiveWalker.Visit(syntaxTree.GetRoot());
 
             foreach (var region in directiveWalker.Regions)
             {
-                var syntaxTrivia = region.Item1.EndOfDirectiveToken.LeadingTrivia.First(t => t.IsKind(SyntaxKind.PreprocessingMessageTrivia));
+                var leadingTrivia = region.Item1.EndOfDirectiveToken.LeadingTrivia;
+                if (!leadingTrivia.Any())
+                {
+                    // Skip unnamed regions
+                    continue;
+                }
+                var syntaxTrivia = leadingTrivia.First(t => t.IsKind(SyntaxKind.PreprocessingMessageTrivia));
                 var fromBounds = TextSpan.FromBounds(
                     region.Item1.GetLocation().SourceSpan.End,
                     region.Item2.GetLocation().SourceSpan.Start);
@@ -237,6 +255,41 @@ namespace SnippetGenerator
             return snippets.ToArray();
         }
 
+        class PreprocessorDirectiveRemover : CSharpSyntaxRewriter
+        {
+            public static PreprocessorDirectiveRemover Instance = new PreprocessorDirectiveRemover();
+            private PreprocessorDirectiveRemover() : base(visitIntoStructuredTrivia: true)
+            {
+            }
+
+            public override SyntaxTrivia VisitTrivia(SyntaxTrivia trivia)
+            {
+                if (trivia.Kind() == SyntaxKind.DisabledTextTrivia)
+                    return SyntaxFactory.Whitespace("");
+
+                return base.VisitTrivia(trivia);
+            }
+
+            public override SyntaxNode VisitIfDirectiveTrivia(IfDirectiveTriviaSyntax node)
+            {
+                return null;
+            }
+
+            public override SyntaxNode VisitElifDirectiveTrivia(ElifDirectiveTriviaSyntax node)
+            {
+                return null;
+            }
+
+            public override SyntaxNode VisitElseDirectiveTrivia(ElseDirectiveTriviaSyntax node)
+            {
+                return null;
+            }
+
+            public override SyntaxNode VisitEndIfDirectiveTrivia(EndIfDirectiveTriviaSyntax node)
+            {
+                return null;
+            }
+        }
         class DirectiveWalker : CSharpSyntaxWalker
         {
             private Stack<RegionDirectiveTriviaSyntax> _regions = new Stack<RegionDirectiveTriviaSyntax>();

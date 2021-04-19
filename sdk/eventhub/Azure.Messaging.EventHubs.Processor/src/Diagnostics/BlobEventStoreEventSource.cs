@@ -28,14 +28,25 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   use for logging.
         /// </summary>
         ///
-        public static BlobEventStoreEventSource Log { get; } = new BlobEventStoreEventSource();
+        public static BlobEventStoreEventSource Log { get; } = new BlobEventStoreEventSource(EventSourceName);
 
         /// <summary>
-        ///   Prevents an instance of the <see cref="BlobEventStoreEventSource"/> class from being created
+        ///   Prevents an instance of the <see cref="BlobEventStoreEventSource" /> class from being created
         ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
-        internal BlobEventStoreEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
+        protected BlobEventStoreEventSource()
+        {
+        }
+
+        /// <summary>
+        ///   Prevents an instance of the <see cref="BlobEventStoreEventSource" /> class from being created
+        ///   outside the scope of this library.  Exposed for testing purposes only.
+        /// </summary>
+        ///
+        /// <param name="eventSourceName">The name to assign to the event source.</param>
+        ///
+        private BlobEventStoreEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue)
         {
         }
 
@@ -43,16 +54,18 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   Indicates that a <see cref="BlobsCheckpointStore" /> was created.
         /// </summary>
         ///
+        /// <param name="typeName">The type name for the checkpoint store.</param>
         /// <param name="accountName">The Storage account name corresponding to the associated container client.</param>
         /// <param name="containerName">The name of the associated container client.</param>
         ///
         [Event(20, Level = EventLevel.Verbose, Message = "{0} created. AccountName: '{1}'; ContainerName: '{2}'.")]
-        public virtual void BlobsCheckpointStoreCreated(string accountName,
+        public virtual void BlobsCheckpointStoreCreated(string typeName,
+                                                        string accountName,
                                                         string containerName)
         {
             if (IsEnabled())
             {
-                WriteEvent(20, nameof(BlobsCheckpointStore), accountName ?? string.Empty, containerName ?? string.Empty);
+                WriteEvent(20, typeName, accountName ?? string.Empty, containerName ?? string.Empty);
             }
         }
 
@@ -328,10 +341,10 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         ///
         [Event(33, Level = EventLevel.Informational, Message = "Completed the attempt to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.")]
-        public virtual void  UpdateCheckpointComplete(string partitionId,
-                                                      string fullyQualifiedNamespace,
-                                                      string eventHubName,
-                                                      string consumerGroup)
+        public virtual void UpdateCheckpointComplete(string partitionId,
+                                                     string fullyQualifiedNamespace,
+                                                     string eventHubName,
+                                                     string consumerGroup)
         {
             if (IsEnabled())
             {
@@ -350,11 +363,11 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
         [Event(34, Level = EventLevel.Error, Message = "An exception occurred when creating/updating a checkpoint for  partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.  ErrorMessage: '{4}'.")]
-        public virtual void  UpdateCheckpointError(string partitionId,
-                                                   string fullyQualifiedNamespace,
-                                                   string eventHubName,
-                                                   string consumerGroup,
-                                                   string errorMessage)
+        public virtual void UpdateCheckpointError(string partitionId,
+                                                  string fullyQualifiedNamespace,
+                                                  string eventHubName,
+                                                  string consumerGroup,
+                                                  string errorMessage)
         {
             if (IsEnabled())
             {
@@ -380,6 +393,71 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(35, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an attempt to retrieve a checkpoint has started.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        ///
+        [Event(36, Level = EventLevel.Informational, Message = "Starting to retrieve checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; PartitionId: '{3}'.")]
+        public virtual void GetCheckpointStart(string fullyQualifiedNamespace,
+                                        string eventHubName,
+                                        string consumerGroup,
+                                        string partitionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(36, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an attempt to retrieve a checkpoint has completed.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        ///
+        [Event(37, Level = EventLevel.Informational, Message = "Completed retrieving checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'. PartitionId: '{3}'.")]
+        public virtual void GetCheckpointComplete(string fullyQualifiedNamespace,
+                                                    string eventHubName,
+                                                    string consumerGroup,
+                                                    string partitionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(37, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(38, Level = EventLevel.Error, Message = "An exception occurred when retrieving checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; PartitionId: '{3}'; ErrorMessage: '{4}'.")]
+        public virtual void GetCheckpointError(string fullyQualifiedNamespace,
+                                                 string eventHubName,
+                                                 string consumerGroup,
+                                                 string partitionId,
+                                                 string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(38, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
     }

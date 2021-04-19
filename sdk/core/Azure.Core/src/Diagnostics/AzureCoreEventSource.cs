@@ -11,6 +11,7 @@ namespace Azure.Core.Diagnostics
     {
         private const string EventSourceName = "Azure-Core";
 
+        private const int BackgroundRefreshFailedEvent = 19;
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
         private const int RequestContentTextEvent = 17;
@@ -26,15 +27,22 @@ namespace Azure.Core.Diagnostics
         private const int ErrorResponseContentBlockEvent = 12;
         private const int ErrorResponseContentTextBlockEvent = 16;
         private const int RequestRetryingEvent = 10;
+        private const int ExceptionResponseEvent = 18;
 
         private AzureCoreEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
 
         public static AzureCoreEventSource Singleton { get; } = new AzureCoreEventSource();
 
-        [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}")]
-        public void Request(string requestId, string method, string uri, string headers)
+        [Event(BackgroundRefreshFailedEvent, Level = EventLevel.Informational, Message = "Background token refresh [{0}] failed with exception {1}")]
+        public void BackgroundRefreshFailed(string requestId, string exception)
         {
-            WriteEvent(RequestEvent, requestId, method, uri, headers);
+            WriteEvent(BackgroundRefreshFailedEvent, requestId, exception);
+        }
+
+        [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}client assembly: {4}")]
+        public void Request(string requestId, string method, string uri, string headers, string? clientAssembly)
+        {
+            WriteEvent(RequestEvent, requestId, method, uri, headers, clientAssembly);
         }
 
         [Event(RequestContentEvent, Level = EventLevel.Verbose, Message = "Request [{0}] content: {1}")]
@@ -109,16 +117,22 @@ namespace Azure.Core.Diagnostics
             WriteEvent(ErrorResponseContentTextBlockEvent, requestId, blockNumber, content);
         }
 
-        [Event(RequestRetryingEvent, Level = EventLevel.Informational, Message = "Request [{0}] retry number: {1}")]
-        public void RequestRetrying(string requestId, int retryNumber)
+        [Event(RequestRetryingEvent, Level = EventLevel.Informational, Message = "Request [{0}] retry number {1} took {2:00.0}s")]
+        public void RequestRetrying(string requestId, int retryNumber, double seconds)
         {
-            WriteEvent(RequestRetryingEvent, requestId, retryNumber);
+            WriteEvent(RequestRetryingEvent, requestId, retryNumber, seconds);
         }
 
         [Event(ResponseDelayEvent, Level = EventLevel.Warning, Message = "Response [{0}] took {1:00.0}s")]
         public void ResponseDelay(string requestId, double seconds)
         {
             WriteEvent(ResponseDelayEvent, requestId, seconds);
+        }
+
+        [Event(ExceptionResponseEvent, Level = EventLevel.Informational, Message = "Request [{0}] exception {1}")]
+        public void ExceptionResponse(string requestId, string exception)
+        {
+            WriteEvent(ExceptionResponseEvent, requestId, exception);
         }
     }
 }

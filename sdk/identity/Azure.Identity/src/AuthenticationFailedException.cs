@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// An exception class raised for errors in authenticating client requests.
     /// </summary>
+    [Serializable]
     public class AuthenticationFailedException : Exception
     {
         /// <summary>
@@ -32,9 +34,14 @@ namespace Azure.Identity
         {
         }
 
-        internal static AuthenticationFailedException CreateAggregateException(string message, IList<Exception> innerExceptions)
+        /// <summary>
+        /// A constructor used for serialization.
+        /// </summary>
+        /// <param name="info">The <see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The <see cref="StreamingContext"/>.</param>
+        /// <returns></returns>
+        protected AuthenticationFailedException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            return new AuthenticationFailedException(message, new AggregateException("Multiple exceptions were encountered while attempting to authenticate.", innerExceptions.ToArray()));
         }
     }
 }

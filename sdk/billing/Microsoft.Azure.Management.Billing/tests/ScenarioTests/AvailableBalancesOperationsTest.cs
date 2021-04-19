@@ -14,8 +14,8 @@ namespace Billing.Tests.ScenarioTests
 {
     public class AvailableBalancesOperationsTest : TestBase
     {
-        private const string BillingAccountName = "723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31";
-        private const string BillingProfileName = "H6RI-TXWC-BG7-PGB";
+        private const string BillingAccountName = "c017063b-18ad-5e26-f4af-a4d7eff204cb:171df24e-c924-4c58-9daa-a0bdb1686fef_2019-05-31";
+        private const string BillingProfileName = "RZKZ-H3N4-BG7-TGB";
         private const string BillingProfileCurrency = "USD";
 
         [Fact]
@@ -31,11 +31,11 @@ namespace Billing.Tests.ScenarioTests
                 var billingMgmtClient = BillingTestUtilities.GetBillingManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // Get the available balance
-                var availableBalance = billingMgmtClient.AvailableBalances.GetByBillingProfile(BillingAccountName, BillingProfileName);
+                var availableBalance = billingMgmtClient.AvailableBalances.Get(BillingAccountName, BillingProfileName);
 
                 // Verify the response
                 Assert.NotNull(availableBalance);
-                Assert.Equal(50, availableBalance.Amount.Value);
+                Assert.Equal(372.8, availableBalance.Amount.Value);
                 Assert.Equal(BillingProfileCurrency, availableBalance.Amount.Currency);
             }
         }

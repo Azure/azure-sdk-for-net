@@ -12,7 +12,12 @@ namespace Azure.AI.FormRecognizer.Training
     [CodeGenModel("TrainSourceFilter")]
     public partial class TrainingFileFilter
     {
-        internal TrainingFileFilter()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrainingFileFilter"/> class which is
+        /// used by the <see cref="FormTrainingClient"/> to filter the documents by name in the
+        /// source path provided for training.
+        /// </summary>
+        public TrainingFileFilter()
         {
         }
 
@@ -26,7 +31,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// A flag to indicate whether subfolders within the set of prefix folders should be included
         /// when searching for content to be preprocessed.
         /// </summary>
-        public bool IncludeSubFolders { get; set; } = false;
-
+        [CodeGenMember("IncludeSubFolders")]
+        public bool IncludeSubfolders { get; set; } = false;
     }
 }

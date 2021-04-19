@@ -389,6 +389,62 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
+            /// Get delivery attributes for an event subscription.
+            /// </summary>
+            /// <remarks>
+            /// Get all delivery attributes for an event subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='systemTopicName'>
+            /// Name of the system topic.
+            /// </param>
+            /// <param name='eventSubscriptionName'>
+            /// Name of the event subscription to be created. Event subscription names must
+            /// be between 3 and 100 characters in length and use alphanumeric letters
+            /// only.
+            /// </param>
+            public static DeliveryAttributeListResult GetDeliveryAttributes(this ISystemTopicEventSubscriptionsOperations operations, string resourceGroupName, string systemTopicName, string eventSubscriptionName)
+            {
+                return operations.GetDeliveryAttributesAsync(resourceGroupName, systemTopicName, eventSubscriptionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get delivery attributes for an event subscription.
+            /// </summary>
+            /// <remarks>
+            /// Get all delivery attributes for an event subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='systemTopicName'>
+            /// Name of the system topic.
+            /// </param>
+            /// <param name='eventSubscriptionName'>
+            /// Name of the event subscription to be created. Event subscription names must
+            /// be between 3 and 100 characters in length and use alphanumeric letters
+            /// only.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeliveryAttributeListResult> GetDeliveryAttributesAsync(this ISystemTopicEventSubscriptionsOperations operations, string resourceGroupName, string systemTopicName, string eventSubscriptionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeliveryAttributesWithHttpMessagesAsync(resourceGroupName, systemTopicName, eventSubscriptionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update an event subscription for a system topic.
             /// </summary>
             /// <remarks>

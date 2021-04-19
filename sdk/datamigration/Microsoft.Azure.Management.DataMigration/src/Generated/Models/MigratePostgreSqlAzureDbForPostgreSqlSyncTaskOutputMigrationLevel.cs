@@ -38,7 +38,17 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="sourceServer">Source server name</param>
         /// <param name="targetServerVersion">Target server version</param>
         /// <param name="targetServer">Target server name</param>
-        public MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputMigrationLevel(string id = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string sourceServerVersion = default(string), string sourceServer = default(string), string targetServerVersion = default(string), string targetServer = default(string))
+        /// <param name="sourceServerType">Source server type. Possible values
+        /// include: 'Access', 'DB2', 'MySQL', 'Oracle', 'SQL', 'Sybase',
+        /// 'PostgreSQL', 'MongoDB', 'SQLRDS', 'MySQLRDS',
+        /// 'PostgreSQLRDS'</param>
+        /// <param name="targetServerType">Target server type. Possible values
+        /// include: 'SQLServer', 'SQLDB', 'SQLDW', 'SQLMI', 'AzureDBForMySql',
+        /// 'AzureDBForPostgresSQL', 'MongoDB'</param>
+        /// <param name="state">Migration status. Possible values include:
+        /// 'UNDEFINED', 'VALIDATING', 'PENDING', 'COMPLETE',
+        /// 'ACTION_REQUIRED', 'FAILED'</param>
+        public MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputMigrationLevel(string id = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string sourceServerVersion = default(string), string sourceServer = default(string), string targetServerVersion = default(string), string targetServer = default(string), string sourceServerType = default(string), string targetServerType = default(string), string state = default(string))
             : base(id)
         {
             StartedOn = startedOn;
@@ -47,6 +57,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             SourceServer = sourceServer;
             TargetServerVersion = targetServerVersion;
             TargetServer = targetServer;
+            SourceServerType = sourceServerType;
+            TargetServerType = targetServerType;
+            State = state;
             CustomInit();
         }
 
@@ -90,6 +103,29 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetServer")]
         public string TargetServer { get; private set; }
+
+        /// <summary>
+        /// Gets source server type. Possible values include: 'Access', 'DB2',
+        /// 'MySQL', 'Oracle', 'SQL', 'Sybase', 'PostgreSQL', 'MongoDB',
+        /// 'SQLRDS', 'MySQLRDS', 'PostgreSQLRDS'
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceServerType")]
+        public string SourceServerType { get; private set; }
+
+        /// <summary>
+        /// Gets target server type. Possible values include: 'SQLServer',
+        /// 'SQLDB', 'SQLDW', 'SQLMI', 'AzureDBForMySql',
+        /// 'AzureDBForPostgresSQL', 'MongoDB'
+        /// </summary>
+        [JsonProperty(PropertyName = "targetServerType")]
+        public string TargetServerType { get; private set; }
+
+        /// <summary>
+        /// Gets migration status. Possible values include: 'UNDEFINED',
+        /// 'VALIDATING', 'PENDING', 'COMPLETE', 'ACTION_REQUIRED', 'FAILED'
+        /// </summary>
+        [JsonProperty(PropertyName = "state")]
+        public string State { get; private set; }
 
     }
 }

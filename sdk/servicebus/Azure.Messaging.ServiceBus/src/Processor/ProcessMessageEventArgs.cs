@@ -14,22 +14,16 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     public class ProcessMessageEventArgs : EventArgs
     {
-
         /// <summary>
         /// The received message to be processed.
         /// </summary>
         public ServiceBusReceivedMessage Message { get; }
 
         /// <summary>
-        /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
+        /// The processor's <see cref="System.Threading.CancellationToken"/> instance which will be
+        /// cancelled when <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
         /// </summary>
         public CancellationToken CancellationToken { get; }
-
-        /// <summary>
-        /// Indicates whether the user has settled the message as part of their callback.
-        /// If they have done so, we will not autocomplete.
-        /// </summary>
-        internal bool IsMessageSettled { get; set; }
 
         private readonly ServiceBusReceiver _receiver;
 
@@ -37,111 +31,83 @@ namespace Azure.Messaging.ServiceBus
         /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
         /// </summary>
         ///
-        /// <param name="message"></param>
-        /// <param name="receiver"></param>
-        /// <param name="cancellationToken"></param>
-        internal ProcessMessageEventArgs(ServiceBusReceivedMessage message, ServiceBusReceiver receiver, CancellationToken cancellationToken)
+        /// <param name="message">The message to be processed.</param>
+        /// <param name="receiver">The receiver instance that can be used to perform message settlement.</param>
+        /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
+        /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
+        /// </param>
+        public ProcessMessageEventArgs(ServiceBusReceivedMessage message, ServiceBusReceiver receiver, CancellationToken cancellationToken)
         {
             Message = message;
             _receiver = receiver;
             CancellationToken = cancellationToken;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="propertiesToModify"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task AbandonAsync(
+        ///<inheritdoc cref="ServiceBusReceiver.AbandonMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
+        public virtual async Task AbandonMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
-            await _receiver.AbandonAsync(message, propertiesToModify, cancellationToken)
+            await _receiver.AbandonMessageAsync(message, propertiesToModify, cancellationToken)
             .ConfigureAwait(false);
-            IsMessageSettled = true;
+            message.IsSettled = true;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task CompleteAsync(
+        ///<inheritdoc cref="ServiceBusReceiver.CompleteMessageAsync(ServiceBusReceivedMessage, CancellationToken)"/>
+        public virtual async Task CompleteMessageAsync(
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
         {
-            await _receiver.CompleteAsync(
+            await _receiver.CompleteMessageAsync(
                 message,
                 cancellationToken)
             .ConfigureAwait(false);
-            IsMessageSettled = true;
+            message.IsSettled = true;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="deadLetterReason"></param>
-        /// <param name="deadLetterErrorDescription"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task DeadLetterAsync(
+        ///<inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, string, string, CancellationToken)"/>
+        public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
             string deadLetterErrorDescription = default,
             CancellationToken cancellationToken = default)
         {
-            await _receiver.DeadLetterAsync(
+            await _receiver.DeadLetterMessageAsync(
                 message,
                 deadLetterReason,
                 deadLetterErrorDescription,
                 cancellationToken)
             .ConfigureAwait(false);
-            IsMessageSettled = true;
+            message.IsSettled = true;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="propertiesToModify"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task DeadLetterAsync(
+        ///<inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
+        public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
-            await _receiver.DeadLetterAsync(
+            await _receiver.DeadLetterMessageAsync(
                 message,
                 propertiesToModify,
                 cancellationToken)
             .ConfigureAwait(false);
-            IsMessageSettled = true;
+            message.IsSettled = true;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="propertiesToModify"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task DeferAsync(
+        ///<inheritdoc cref="ServiceBusReceiver.DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
+        public virtual async Task DeferMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
-            await _receiver.DeferAsync(
+            await _receiver.DeferMessageAsync(
                 message,
                 propertiesToModify,
                 cancellationToken)
             .ConfigureAwait(false);
-            IsMessageSettled = true;
+            message.IsSettled = true;
         }
     }
 }

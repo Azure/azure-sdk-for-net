@@ -240,9 +240,13 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
-            public static void Delete(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId)
+            /// <param name='forceDeletion'>
+            /// Optional parameter to force delete a virtual machine from a VM scale set.
+            /// (Feature in Preview)
+            /// </param>
+            public static void Delete(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? forceDeletion = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, vmScaleSetName, instanceId).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, vmScaleSetName, instanceId, forceDeletion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -260,12 +264,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
+            /// <param name='forceDeletion'>
+            /// Optional parameter to force delete a virtual machine from a VM scale set.
+            /// (Feature in Preview)
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? forceDeletion = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, forceDeletion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -384,7 +392,8 @@ namespace Microsoft.Azure.Management.Compute
             /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
-            /// The list parameters.
+            /// The list parameters. Allowed values are 'instanceView',
+            /// 'instanceView/statuses'.
             /// </param>
             public static IPage<VirtualMachineScaleSetVM> List(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, ODataQuery<VirtualMachineScaleSetVM> odataQuery = default(ODataQuery<VirtualMachineScaleSetVM>), string select = default(string))
             {
@@ -407,7 +416,8 @@ namespace Microsoft.Azure.Management.Compute
             /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
-            /// The list parameters.
+            /// The list parameters. Allowed values are 'instanceView',
+            /// 'instanceView/statuses'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -609,6 +619,64 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// The operation to retrieve SAS URIs of boot diagnostic logs for a virtual
+            /// machine in a VM scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='instanceId'>
+            /// The instance ID of the virtual machine.
+            /// </param>
+            /// <param name='sasUriExpirationTimeInMinutes'>
+            /// Expiration duration in minutes for the SAS URIs with a value between 1 to
+            /// 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not specified, SAS URIs will be
+            /// generated with a default expiration duration of 120 minutes.
+            /// </param>
+            public static RetrieveBootDiagnosticsDataResult RetrieveBootDiagnosticsData(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, int? sasUriExpirationTimeInMinutes = default(int?))
+            {
+                return operations.RetrieveBootDiagnosticsDataAsync(resourceGroupName, vmScaleSetName, instanceId, sasUriExpirationTimeInMinutes).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to retrieve SAS URIs of boot diagnostic logs for a virtual
+            /// machine in a VM scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='instanceId'>
+            /// The instance ID of the virtual machine.
+            /// </param>
+            /// <param name='sasUriExpirationTimeInMinutes'>
+            /// Expiration duration in minutes for the SAS URIs with a value between 1 to
+            /// 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not specified, SAS URIs will be
+            /// generated with a default expiration duration of 120 minutes.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RetrieveBootDiagnosticsDataResult> RetrieveBootDiagnosticsDataAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, int? sasUriExpirationTimeInMinutes = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RetrieveBootDiagnosticsDataWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, sasUriExpirationTimeInMinutes, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Performs maintenance on a virtual machine in a VM scale set.
             /// </summary>
             /// <param name='operations'>
@@ -653,7 +721,7 @@ namespace Microsoft.Azure.Management.Compute
 
             /// <summary>
             /// The operation to simulate the eviction of spot virtual machine in a VM
-            /// scale set. The eviction will occur within 30 minutes of calling the API
+            /// scale set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -674,7 +742,7 @@ namespace Microsoft.Azure.Management.Compute
 
             /// <summary>
             /// The operation to simulate the eviction of spot virtual machine in a VM
-            /// scale set. The eviction will occur within 30 minutes of calling the API
+            /// scale set.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -966,9 +1034,13 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
-            public static void BeginDelete(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId)
+            /// <param name='forceDeletion'>
+            /// Optional parameter to force delete a virtual machine from a VM scale set.
+            /// (Feature in Preview)
+            /// </param>
+            public static void BeginDelete(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? forceDeletion = default(bool?))
             {
-                operations.BeginDeleteAsync(resourceGroupName, vmScaleSetName, instanceId).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, vmScaleSetName, instanceId, forceDeletion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -986,12 +1058,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
+            /// <param name='forceDeletion'>
+            /// Optional parameter to force delete a virtual machine from a VM scale set.
+            /// (Feature in Preview)
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? forceDeletion = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, forceDeletion, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

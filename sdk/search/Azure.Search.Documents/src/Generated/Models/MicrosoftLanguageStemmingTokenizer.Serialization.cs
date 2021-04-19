@@ -8,24 +8,24 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class MicrosoftLanguageStemmingTokenizer : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxTokenLength != null)
+            if (Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength");
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (IsSearchTokenizer != null)
+            if (Optional.IsDefined(IsSearchTokenizer))
             {
                 writer.WritePropertyName("isSearchTokenizer");
                 writer.WriteBooleanValue(IsSearchTokenizer.Value);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language");
                 writer.WriteStringValue(Language.Value.ToSerialString());
@@ -39,9 +39,9 @@ namespace Azure.Search.Documents.Models
 
         internal static MicrosoftLanguageStemmingTokenizer DeserializeMicrosoftLanguageStemmingTokenizer(JsonElement element)
         {
-            int? maxTokenLength = default;
-            bool? isSearchTokenizer = default;
-            MicrosoftStemmingTokenizerLanguage? language = default;
+            Optional<int> maxTokenLength = default;
+            Optional<bool> isSearchTokenizer = default;
+            Optional<MicrosoftStemmingTokenizerLanguage> language = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -50,6 +50,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxTokenLength = property.Value.GetInt32();
@@ -59,6 +60,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isSearchTokenizer = property.Value.GetBoolean();
@@ -68,6 +70,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     language = property.Value.GetString().ToMicrosoftStemmingTokenizerLanguage();
@@ -84,7 +87,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new MicrosoftLanguageStemmingTokenizer(odataType, name, maxTokenLength, isSearchTokenizer, language);
+            return new MicrosoftLanguageStemmingTokenizer(odataType, name, Optional.ToNullable(maxTokenLength), Optional.ToNullable(isSearchTokenizer), Optional.ToNullable(language));
         }
     }
 }

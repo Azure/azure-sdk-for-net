@@ -2,24 +2,25 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    public class ServiceBusLiveTestBase : ServiceBusTestBase
+    public abstract class ServiceBusLiveTestBase : ServiceBusTestBase
     {
         public ServiceBusTestEnvironment TestEnvironment { get; } = ServiceBusTestEnvironment.Instance;
 
-        protected ServiceBusClient GetNoRetryClient()
+        protected ServiceBusClient CreateNoRetryClient()
         {
             var options =
                 new ServiceBusClientOptions
                 {
                     RetryOptions = new ServiceBusRetryOptions
                     {
-                        TryTimeout = TimeSpan.FromSeconds(5),
+                        TryTimeout = TimeSpan.FromSeconds(10),
                         MaxRetries = 0
                     }
                 };
@@ -28,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 options);
         }
 
-        protected ServiceBusClient GetClient(int tryTimeout = 10)
+        protected ServiceBusClient CreateClient(int tryTimeout = 15)
         {
             var retryOptions = new ServiceBusRetryOptions();
             if (tryTimeout != default)

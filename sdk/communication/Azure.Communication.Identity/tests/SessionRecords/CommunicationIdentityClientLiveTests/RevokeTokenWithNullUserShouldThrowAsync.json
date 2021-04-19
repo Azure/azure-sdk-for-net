@@ -1,0 +1,7 @@
+{
+  "Entries": [],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "645538259"
+  }
+}

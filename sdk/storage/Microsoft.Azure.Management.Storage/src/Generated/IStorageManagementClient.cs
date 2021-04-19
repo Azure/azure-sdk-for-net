@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Management.Storage
         IStorageAccountsOperations StorageAccounts { get; }
 
         /// <summary>
+        /// Gets the IDeletedAccountsOperations.
+        /// </summary>
+        IDeletedAccountsOperations DeletedAccounts { get; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         IUsagesOperations Usages { get; }
@@ -93,6 +98,11 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the IManagementPoliciesOperations.
         /// </summary>
         IManagementPoliciesOperations ManagementPolicies { get; }
+
+        /// <summary>
+        /// Gets the IBlobInventoryPoliciesOperations.
+        /// </summary>
+        IBlobInventoryPoliciesOperations BlobInventoryPolicies { get; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
@@ -133,6 +143,26 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the IFileSharesOperations.
         /// </summary>
         IFileSharesOperations FileShares { get; }
+
+        /// <summary>
+        /// Gets the IQueueServicesOperations.
+        /// </summary>
+        IQueueServicesOperations QueueServices { get; }
+
+        /// <summary>
+        /// Gets the IQueueOperations.
+        /// </summary>
+        IQueueOperations Queue { get; }
+
+        /// <summary>
+        /// Gets the ITableServicesOperations.
+        /// </summary>
+        ITableServicesOperations TableServices { get; }
+
+        /// <summary>
+        /// Gets the ITableOperations.
+        /// </summary>
+        ITableOperations Table { get; }
 
     }
 }

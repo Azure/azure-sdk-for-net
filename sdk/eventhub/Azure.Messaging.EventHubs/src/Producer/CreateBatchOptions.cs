@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventHubs.Producer
     public class CreateBatchOptions : SendEventOptions
     {
         /// <summary>The requested maximum size to allow for the batch, in bytes.</summary>
-        private long? _maximumSizeInBytes = null;
+        private long? _maximumSizeInBytes;
 
         /// <summary>
         ///   The maximum size to allow for a single batch of events, in bytes.
@@ -39,20 +39,6 @@ namespace Azure.Messaging.EventHubs.Producer
                 _maximumSizeInBytes = value;
             }
         }
-
-        /// <summary>
-        ///   Creates a new copy of the current <see cref="CreateBatchOptions" />, cloning its attributes into a new instance.
-        /// </summary>
-        ///
-        /// <returns>A new copy of <see cref="CreateBatchOptions" />.</returns>
-        ///
-        internal CreateBatchOptions Clone() =>
-            new CreateBatchOptions
-            {
-                PartitionId = PartitionId,
-                PartitionKey = PartitionKey,
-                _maximumSizeInBytes = MaximumSizeInBytes
-            };
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -82,5 +68,19 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="CreateBatchOptions" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="CreateBatchOptions" />.</returns>
+        ///
+        internal new CreateBatchOptions Clone() =>
+            new CreateBatchOptions
+            {
+                PartitionId = PartitionId,
+                PartitionKey = PartitionKey,
+                _maximumSizeInBytes = _maximumSizeInBytes
+            };
     }
 }

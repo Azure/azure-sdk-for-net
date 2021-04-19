@@ -31,28 +31,14 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the EventChannelFilter class.
         /// </summary>
-        /// <param name="subjectBeginsWith">An optional string to filter events
-        /// for an event channel based on a resource path prefix.
-        /// The format of this depends on the publisher of the events. Wildcard
-        /// characters are not supported in this path.</param>
-        /// <param name="subjectEndsWith">An optional string to filter events
-        /// for an event channel based on a resource path suffix.
-        /// Wildcard characters are not supported in this path.</param>
-        /// <param name="includedEventTypes">A list of applicable event types
-        /// that need to be part of the event channel. If it is desired to
-        /// subscribe to all default event types, set the IncludedEventTypes to
-        /// null.</param>
-        /// <param name="isSubjectCaseSensitive">Specifies if the
-        /// SubjectBeginsWith and SubjectEndsWith properties of the filter
-        /// should be compared in a case sensitive manner.</param>
+        /// <param name="enableAdvancedFilteringOnArrays">Allows advanced
+        /// filters to be evaluated against an array of values instead of
+        /// expecting a singular value.</param>
         /// <param name="advancedFilters">An array of advanced filters that are
         /// used for filtering event channels.</param>
-        public EventChannelFilter(string subjectBeginsWith = default(string), string subjectEndsWith = default(string), IList<string> includedEventTypes = default(IList<string>), bool? isSubjectCaseSensitive = default(bool?), IList<AdvancedFilter> advancedFilters = default(IList<AdvancedFilter>))
+        public EventChannelFilter(bool? enableAdvancedFilteringOnArrays = default(bool?), IList<AdvancedFilter> advancedFilters = default(IList<AdvancedFilter>))
         {
-            SubjectBeginsWith = subjectBeginsWith;
-            SubjectEndsWith = subjectEndsWith;
-            IncludedEventTypes = includedEventTypes;
-            IsSubjectCaseSensitive = isSubjectCaseSensitive;
+            EnableAdvancedFilteringOnArrays = enableAdvancedFilteringOnArrays;
             AdvancedFilters = advancedFilters;
             CustomInit();
         }
@@ -63,37 +49,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets an optional string to filter events for an event
-        /// channel based on a resource path prefix.
-        /// The format of this depends on the publisher of the events. Wildcard
-        /// characters are not supported in this path.
+        /// Gets or sets allows advanced filters to be evaluated against an
+        /// array of values instead of expecting a singular value.
         /// </summary>
-        [JsonProperty(PropertyName = "subjectBeginsWith")]
-        public string SubjectBeginsWith { get; set; }
-
-        /// <summary>
-        /// Gets or sets an optional string to filter events for an event
-        /// channel based on a resource path suffix.
-        /// Wildcard characters are not supported in this path.
-        /// </summary>
-        [JsonProperty(PropertyName = "subjectEndsWith")]
-        public string SubjectEndsWith { get; set; }
-
-        /// <summary>
-        /// Gets or sets a list of applicable event types that need to be part
-        /// of the event channel. If it is desired to subscribe to all default
-        /// event types, set the IncludedEventTypes to null.
-        /// </summary>
-        [JsonProperty(PropertyName = "includedEventTypes")]
-        public IList<string> IncludedEventTypes { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies if the SubjectBeginsWith and SubjectEndsWith
-        /// properties of the filter
-        /// should be compared in a case sensitive manner.
-        /// </summary>
-        [JsonProperty(PropertyName = "isSubjectCaseSensitive")]
-        public bool? IsSubjectCaseSensitive { get; set; }
+        [JsonProperty(PropertyName = "enableAdvancedFilteringOnArrays")]
+        public bool? EnableAdvancedFilteringOnArrays { get; set; }
 
         /// <summary>
         /// Gets or sets an array of advanced filters that are used for

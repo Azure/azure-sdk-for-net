@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='extensionParameters'>
             /// Parameters supplied to the Create Virtual Machine Extension operation.
             /// </param>
-            public static VirtualMachineExtension CreateOrUpdate(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineExtension extensionParameters)
+            public static VirtualMachineScaleSetVMExtension CreateOrUpdate(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineScaleSetVMExtension extensionParameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters).GetAwaiter().GetResult();
             }
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineExtension> CreateOrUpdateAsync(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSetVMExtension> CreateOrUpdateAsync(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineScaleSetVMExtension extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='extensionParameters'>
             /// Parameters supplied to the Update Virtual Machine Extension operation.
             /// </param>
-            public static VirtualMachineExtension Update(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineExtensionUpdate extensionParameters)
+            public static VirtualMachineScaleSetVMExtension Update(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineScaleSetVMExtensionUpdate extensionParameters)
             {
                 return operations.UpdateAsync(resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters).GetAwaiter().GetResult();
             }
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineExtension> UpdateAsync(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSetVMExtension> UpdateAsync(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineScaleSetVMExtensionUpdate extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='expand'>
             /// The expand expression to apply on the operation.
             /// </param>
-            public static VirtualMachineExtension Get(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, string expand = default(string))
+            public static VirtualMachineScaleSetVMExtension Get(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, string expand = default(string))
             {
                 return operations.GetAsync(resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, expand).GetAwaiter().GetResult();
             }
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineExtension> GetAsync(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSetVMExtension> GetAsync(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='expand'>
             /// The expand expression to apply on the operation.
             /// </param>
-            public static VirtualMachineExtensionsListResult List(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string expand = default(string))
+            public static VirtualMachineScaleSetVMExtensionsListResult List(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string expand = default(string))
             {
                 return operations.ListAsync(resourceGroupName, vmScaleSetName, instanceId, expand).GetAwaiter().GetResult();
             }
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineExtensionsListResult> ListAsync(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSetVMExtensionsListResult> ListAsync(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, expand, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='extensionParameters'>
             /// Parameters supplied to the Create Virtual Machine Extension operation.
             /// </param>
-            public static VirtualMachineExtension BeginCreateOrUpdate(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineExtension extensionParameters)
+            public static VirtualMachineScaleSetVMExtension BeginCreateOrUpdate(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineScaleSetVMExtension extensionParameters)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters).GetAwaiter().GetResult();
             }
@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineExtension> BeginCreateOrUpdateAsync(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineExtension extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSetVMExtension> BeginCreateOrUpdateAsync(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineScaleSetVMExtension extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -377,7 +377,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='extensionParameters'>
             /// Parameters supplied to the Update Virtual Machine Extension operation.
             /// </param>
-            public static VirtualMachineExtension BeginUpdate(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineExtensionUpdate extensionParameters)
+            public static VirtualMachineScaleSetVMExtension BeginUpdate(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineScaleSetVMExtensionUpdate extensionParameters)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters).GetAwaiter().GetResult();
             }
@@ -406,7 +406,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineExtension> BeginUpdateAsync(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualMachineScaleSetVMExtension> BeginUpdateAsync(this IVirtualMachineScaleSetVMExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, string vmExtensionName, VirtualMachineScaleSetVMExtensionUpdate extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, vmExtensionName, extensionParameters, null, cancellationToken).ConfigureAwait(false))
                 {

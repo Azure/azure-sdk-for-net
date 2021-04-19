@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 ["1"] = new TransportProducerPool.PoolItem("0", transportProducer),
                 ["2"] = new TransportProducerPool.PoolItem("0", transportProducer),
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), startingPool);
 
             GetExpirationCallBack(transportProducerPool).Invoke(null);
 
@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 // An expired item in the pool
                 ["0"] = new TransportProducerPool.PoolItem("0", transportProducer, removeAfter: oneMinuteAgo)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), startingPool);
 
             // This call should refresh the timespan associated to the item
             _ = transportProducerPool.GetPooledProducer("0");
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
             var connection = new MockConnection(() => transportProducer);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
-            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy));
             var expectedTime = DateTimeOffset.UtcNow.AddMinutes(10);
 
             await using var pooledProducer = transportProducerPool.GetPooledProducer("0");
@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 // An expired item in the pool
                 ["0"] = new TransportProducerPool.PoolItem("0", transportProducer, removeAfter: oneMinuteAgo)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), startingPool);
 
             var pooledProducer = transportProducerPool.GetPooledProducer("0");
             startingPool.TryGetValue("0", out var poolItem);
@@ -148,7 +148,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ["0"] = new TransportProducerPool.PoolItem("0", transportProducer)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), startingPool);
 
             var pooledProducer = transportProducerPool.GetPooledProducer("0", TimeSpan.FromMinutes(-1));
 
@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ["0"] = new TransportProducerPool.PoolItem("0", partitionProducer)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, eventHubProducer: transportProducer);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), eventHubProducer: transportProducer);
 
             var returnedProducer = transportProducerPool.GetPooledProducer(partitionId).TransportProducer as ObservableTransportProducerMock;
 
@@ -202,7 +202,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ["0"] = new TransportProducerPool.PoolItem("0", partitionProducer.Object)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, eventHubProducer: transportProducer.Object);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), eventHubProducer: transportProducer.Object);
 
             transportProducer
                 .Setup(producer => producer.CloseAsync(It.IsAny<CancellationToken>()))
@@ -229,7 +229,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ["0"] = new TransportProducerPool.PoolItem("0", partitionProducer.Object)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, eventHubProducer: transportProducer.Object);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(partition => connection.CreateTransportProducer(partition, TransportProducerFeatures.None, null, retryPolicy), eventHubProducer: transportProducer.Object);
 
             partitionProducer
                 .Setup(producer => producer.CloseAsync(It.IsAny<CancellationToken>()))
@@ -264,7 +264,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public bool WasClosed = false;
 
             public MockConnection(string namespaceName = "fakeNamespace",
-                                  string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net").Object)
+                                  string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>()).Object)
             {
             }
 
@@ -302,6 +302,8 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             internal override TransportProducer CreateTransportProducer(string partitionId,
+                                                                        TransportProducerFeatures requestedFeatures,
+                                                                        PartitionPublishingOptions partitionOptions,
                                                                         EventHubsRetryPolicy retryPolicy) => TransportProducerFactory();
 
             internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
@@ -359,6 +361,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 return new ValueTask<TransportEventBatch>(Task.FromResult((TransportEventBatch)new MockTransportBatch()));
             }
 
+            public override ValueTask<PartitionPublishingProperties> ReadInitializationPublishingPropertiesAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
+
             public override Task CloseAsync(CancellationToken cancellationToken)
             {
                 WasCloseCalled = true;
@@ -378,6 +382,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public override long MaximumSizeInBytes { get; }
             public override long SizeInBytes { get; }
             public override int Count { get; }
+            public override TransportProducerFeatures ActiveFeatures { get; }
             public override bool TryAdd(EventData eventData) => throw new NotImplementedException();
             public override IEnumerable<T> AsEnumerable<T>() => throw new NotImplementedException();
             public override void Dispose() => throw new NotImplementedException();

@@ -1,0 +1,4 @@
+bin/
+obj/
+!.vscode/
+!.vscode/launch.json

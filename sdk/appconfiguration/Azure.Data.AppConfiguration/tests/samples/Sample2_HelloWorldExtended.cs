@@ -45,7 +45,6 @@ namespace Azure.Data.AppConfiguration.Samples
             await client.SetConfigurationSettingAsync(instancesToUpdate);
             #endregion
 
-
             #region Snippet:AzConfigSample2_GetConfigurationSettingsAsync
             var selector = new SettingSelector { LabelFilter = "production" };
 

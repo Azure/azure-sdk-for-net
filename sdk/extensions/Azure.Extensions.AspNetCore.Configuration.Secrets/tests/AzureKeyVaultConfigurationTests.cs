@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using NUnit.Framework;
@@ -37,8 +39,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 foreach (var secret in page)
                 {
                     mock.Setup(client => client.GetSecretAsync(secret.Name, null, default))
-                        .Callback((string name, string label, CancellationToken token) => getSecretCallback(name))
-                        .ReturnsAsync(Response.FromValue(secret, Mock.Of<Response>()));
+                        .Returns(async (string name, string label, CancellationToken token) =>
+                        {
+                            await getSecretCallback(name);
+                            return Response.FromValue(secret, Mock.Of<Response>());
+                        }
+                    );
                 }
             }
         }
@@ -79,7 +85,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new KeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
             {
                 provider.Load();
 
@@ -116,7 +122,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new EndsWithOneKeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new EndsWithOneKeyVaultSecretManager() }))
             {
                 provider.Load();
 
@@ -144,7 +150,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
             {
                 provider.Load();
 
@@ -171,7 +177,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act & Assert
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
             {
                 provider.Load();
 
@@ -424,12 +430,90 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
             {
                 provider.Load();
 
                 // Assert
                 Assert.AreEqual("Value1", provider.Get("Section:Secret1"));
+            }
+        }
+
+        [Test]
+        public void HandleCollisions()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client,
+                new[]
+                {
+                    CreateSecret("Section---Secret1", "Value1")
+                },
+                new[]
+                {
+                    CreateSecret("Section--Secret1", "Value2")
+                }
+            );
+
+            // Act
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManagerMultiDash() }))
+            {
+                provider.Load();
+
+                // Assert
+                Assert.AreEqual("Value1", provider.Get("Section:Secret1"));
+            }
+        }
+
+        [Test]
+        public void HandleCollisionsUseLatestValue()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client,
+                new[]
+                {
+                    CreateSecret("Section----Secret1", "Value1", updated: new DateTimeOffset(new DateTime(2038, 1, 19), TimeSpan.Zero))
+                },
+                new[]
+                {
+                    CreateSecret("Section---Secret1", "Value2", updated: new DateTimeOffset(new DateTime(2038, 1, 20), TimeSpan.Zero))
+                },
+                new[]
+                {
+                    CreateSecret("Section--Secret1", "Value3", updated: new DateTimeOffset(new DateTime(2038, 1, 18), TimeSpan.Zero))
+                }
+            );
+
+            // Act
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManagerMultiDash() }))
+            {
+                provider.Load();
+
+                // Assert
+                Assert.AreEqual("Value2", provider.Get("Section:Secret1"));
+            }
+        }
+
+        [Test]
+        public void CanCustomizeSecretTransformation()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client,
+                new[]
+                {
+                    CreateSecret("Secret1", "{\"innerKey1\": \"innerValue1\", \"innerKey2\": \"innerValue2\"}", updated: new DateTimeOffset(new DateTime(2038, 1, 19), TimeSpan.Zero)),
+                    CreateSecret("Secret2", "{\"innerKey3\": \"innerValue3\"}", updated: new DateTimeOffset(new DateTime(2038, 1, 18), TimeSpan.Zero))
+                }
+            );
+
+            // Act
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new JsonKeyVaultSecretManager() }))
+            {
+                provider.Load();
+
+                // Assert
+                Assert.AreEqual("innerValue1", provider.Get("innerKey1"));
+                Assert.AreEqual("innerValue2", provider.Get("innerKey2"));
+                Assert.AreEqual("innerValue3", provider.Get("innerKey3"));
             }
         }
 
@@ -458,7 +542,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager());
+            var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() });
             provider.Load();
             await tcs.Task;
 
@@ -468,21 +552,60 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
         }
 
         [Test]
+        public void LimitsMaxParallelism()
+        {
+            var expectedCount = 100;
+            var currentParallel = 0;
+            var maxParallel = 0;
+            var client = new Mock<SecretClient>();
+
+            // Create 10 pages of 10 secrets
+            var pages = Enumerable.Range(0, 10).Select(a =>
+                Enumerable.Range(0, 10).Select(b => CreateSecret("Secret" + (a * 10 + b), (a * 10 + b).ToString())).ToArray()
+            ).ToArray();
+
+            SetPages(client,
+                async (string id) =>
+                {
+                    var i = Interlocked.Increment(ref currentParallel);
+
+                    maxParallel = Math.Max(i, maxParallel);
+
+                    await Task.Delay(30);
+                    Interlocked.Decrement(ref currentParallel);
+                },
+                pages
+            );
+
+            // Act
+            var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() });
+            provider.Load();
+
+            // Assert
+            for (int i = 0; i < expectedCount; i++)
+            {
+                Assert.AreEqual(i.ToString(), provider.Get("Secret" + i));
+            }
+
+            Assert.LessOrEqual(maxParallel, 32);
+        }
+
+        [Test]
         public void ConstructorThrowsForNullManager()
         {
-            Assert.Throws<ArgumentNullException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), null));
+            Assert.Throws<ArgumentNullException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), new AzureKeyVaultConfigurationOptions() { Manager = null }));
         }
 
         [Test]
         public void ConstructorThrowsForZeroRefreshPeriodValue()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), new KeyVaultSecretManager(), TimeSpan.Zero));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(),  new AzureKeyVaultConfigurationOptions() { ReloadInterval = TimeSpan.Zero }));
         }
 
         [Test]
         public void ConstructorThrowsForNegativeRefreshPeriodValue()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), new KeyVaultSecretManager(), TimeSpan.FromMilliseconds(-1)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(),  new AzureKeyVaultConfigurationOptions() { ReloadInterval = TimeSpan.FromMilliseconds(-1) }));
         }
 
         private class EndsWithOneKeyVaultSecretManager : KeyVaultSecretManager
@@ -498,11 +621,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             private TaskCompletionSource<object> _releaseTaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
             private TaskCompletionSource<object> _signalTaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            public ReloadControlKeyVaultProvider(SecretClient client, KeyVaultSecretManager manager, TimeSpan? reloadPollDelay = null) : base(client, manager, reloadPollDelay)
+            public ReloadControlKeyVaultProvider(SecretClient client, KeyVaultSecretManager manager, TimeSpan? reloadPollDelay = null)
+                : base(client, new AzureKeyVaultConfigurationOptions() { Manager =  manager, ReloadInterval = reloadPollDelay})
             {
             }
 
-            protected override async Task WaitForReload()
+            internal override async Task WaitForReload()
             {
                 _signalTaskCompletionSource.SetResult(null);
                 await _releaseTaskCompletionSource.Task.TimeoutAfter(TimeSpan.FromSeconds(10));
@@ -524,6 +648,36 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 _releaseTaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
                 _signalTaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
                 releaseTaskCompletionSource.SetResult(null);
+            }
+        }
+
+        private class KeyVaultSecretManagerMultiDash : KeyVaultSecretManager
+        {
+            public override string GetKey(KeyVaultSecret secret)
+            {
+                return secret.Name
+                            .Replace("----", ConfigurationPath.KeyDelimiter)
+                            .Replace("---", ConfigurationPath.KeyDelimiter)
+                            .Replace("--", ConfigurationPath.KeyDelimiter);
+            }
+        }
+
+        private class JsonKeyVaultSecretManager: KeyVaultSecretManager
+        {
+            public override Dictionary<string, string> GetData(IEnumerable<KeyVaultSecret> secrets)
+            {
+                var data = new Dictionary<string, string>();
+                foreach (var secret in secrets)
+                {
+                    using var doc = JsonDocument.Parse(secret.Value);
+
+                    foreach (var property in doc.RootElement.EnumerateObject())
+                    {
+                        data[property.Name] = property.Value.GetString();
+                    }
+                }
+
+                return data;
             }
         }
     }

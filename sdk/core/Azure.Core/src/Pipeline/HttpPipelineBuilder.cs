@@ -17,7 +17,7 @@ namespace Azure.Core.Pipeline
         /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
         /// </summary>
         /// <param name="options">The customer provided client options object.</param>
-        /// <param name="perRetryPolicies">Client provided per-call policies.</param>
+        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
         /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
         public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] perRetryPolicies)
         {
@@ -71,8 +71,10 @@ namespace Azure.Core.Pipeline
 
             if (diagnostics.IsLoggingEnabled)
             {
+                string assemblyName = options.GetType().Assembly!.GetName().Name!;
+
                 policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit,
-                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray()));
+                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray(), assemblyName));
             }
 
             policies.Add(new ResponseBodyPolicy(options.Retry.NetworkTimeout));
@@ -91,9 +93,9 @@ namespace Azure.Core.Pipeline
         {
             const string PackagePrefix = "Azure.";
 
-            Assembly clientAssembly = options.GetType().Assembly;
+            Assembly clientAssembly = options.GetType().Assembly!;
 
-            AssemblyInformationalVersionAttribute versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            AssemblyInformationalVersionAttribute? versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             if (versionAttribute == null)
             {
                 throw new InvalidOperationException($"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{clientAssembly.FullName}' (inferred from the use of options type '{options.GetType().FullName}').");
@@ -101,13 +103,13 @@ namespace Azure.Core.Pipeline
 
             string version = versionAttribute.InformationalVersion;
 
-            string assemblyName = clientAssembly.GetName().Name;
+            string assemblyName = clientAssembly.GetName().Name!;
             if (assemblyName.StartsWith(PackagePrefix, StringComparison.Ordinal))
             {
                 assemblyName = assemblyName.Substring(PackagePrefix.Length);
             }
 
-            int hashSeparator = version.IndexOf('+');
+            int hashSeparator = version.IndexOfOrdinal('+');
             if (hashSeparator != -1)
             {
                 version = version.Substring(0, hashSeparator);

@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="location">Location of the resource.</param>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="tags">Tags of the resource.</param>
         /// <param name="provisioningState">Provisioning state of the system
         /// topic. Possible values include: 'Creating', 'Updating', 'Deleting',
@@ -47,13 +47,19 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="topicType">TopicType for the system topic.</param>
         /// <param name="metricResourceId">Metric resource id for the system
         /// topic.</param>
-        public SystemTopic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string source = default(string), string topicType = default(string), string metricResourceId = default(string))
+        /// <param name="identity">Identity information for the
+        /// resource.</param>
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public SystemTopic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string source = default(string), string topicType = default(string), string metricResourceId = default(string), IdentityInfo identity = default(IdentityInfo), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
             Source = source;
             TopicType = topicType;
             MetricResourceId = metricResourceId;
+            Identity = identity;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -87,6 +93,18 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.metricResourceId")]
         public string MetricResourceId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets identity information for the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityInfo Identity { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

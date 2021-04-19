@@ -13,7 +13,7 @@ namespace FaceSDK.Tests
     {
         private static readonly string detectionModel = DetectionModel.Detection01;
 
-        private static readonly string recognitionModel = RecognitionModel.Recognition02;
+        private static readonly string recognitionModel = RecognitionModel.Recognition04;
 
         [Fact]
         public void FaceDetectionWithAttributes()
@@ -152,6 +152,105 @@ namespace FaceSDK.Tests
         }
 
         [Fact]
+        public void FaceDetection03WithAttributes()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "FaceDetection03WithAttributes");
+                IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
+                using (FileStream stream = new FileStream(Path.Combine("TestImages", "detection2.jpg"), FileMode.Open))
+                {
+                    IList<DetectedFace> faceList = client.Face.DetectWithStreamAsync(
+                        stream,
+                        true,
+                        true,
+                        new List<FaceAttributeType>()
+                            {
+                            FaceAttributeType.Mask
+                            },
+                        detectionModel: DetectionModel.Detection03,
+                        recognitionModel: recognitionModel,
+                        returnRecognitionModel: true
+                        ).Result;
+
+                    Assert.Equal(1, faceList.Count);
+                    var face = faceList[0];
+
+                    // Ensure face rectangle coordinates return correctly
+                    Assert.True(face.FaceRectangle.Top > 0);
+                    Assert.True(face.FaceRectangle.Left > 0);
+                    Assert.True(face.FaceRectangle.Width > 0);
+                    Assert.True(face.FaceRectangle.Height > 0);
+
+                    // Ensure face ID return correctly
+                    Assert.True(face.FaceId != null);
+
+                    // Ensure attributes match image
+                    Assert.Equal(MaskType.NoMask, face.FaceAttributes.Mask.Type);
+                    Assert.False(face.FaceAttributes.Mask.NoseAndMouthCovered);
+
+                    // Ensure face landmarks are de-serialized correctly.
+                    var landMarks = face.FaceLandmarks;
+                    Assert.True(landMarks.PupilLeft.X > 0);
+                    Assert.True(landMarks.PupilLeft.Y > 0);
+                    Assert.True(landMarks.PupilRight.X > 0);
+                    Assert.True(landMarks.PupilRight.Y > 0);
+                    Assert.True(landMarks.NoseTip.X > 0);
+                    Assert.True(landMarks.NoseTip.Y > 0);
+                    Assert.True(landMarks.MouthLeft.X > 0);
+                    Assert.True(landMarks.MouthLeft.Y > 0);
+                    Assert.True(landMarks.MouthRight.X > 0);
+                    Assert.True(landMarks.MouthRight.Y > 0);
+                    Assert.True(landMarks.EyebrowLeftOuter.X > 0);
+                    Assert.True(landMarks.EyebrowLeftInner.Y > 0);
+                    Assert.True(landMarks.EyeLeftOuter.X > 0);
+                    Assert.True(landMarks.EyeLeftOuter.Y > 0);
+                    Assert.True(landMarks.EyeLeftTop.X > 0);
+                    Assert.True(landMarks.EyeLeftTop.Y > 0);
+                    Assert.True(landMarks.EyeLeftBottom.X > 0);
+                    Assert.True(landMarks.EyeLeftBottom.Y > 0);
+                    Assert.True(landMarks.EyeLeftInner.X > 0);
+                    Assert.True(landMarks.EyeLeftInner.Y > 0);
+                    Assert.True(landMarks.EyebrowRightInner.X > 0);
+                    Assert.True(landMarks.EyebrowRightInner.Y > 0);
+                    Assert.True(landMarks.EyebrowRightOuter.X > 0);
+                    Assert.True(landMarks.EyebrowRightOuter.Y > 0);
+                    Assert.True(landMarks.EyeRightInner.X > 0);
+                    Assert.True(landMarks.EyeRightInner.Y > 0);
+                    Assert.True(landMarks.EyeRightTop.X > 0);
+                    Assert.True(landMarks.EyeRightTop.Y > 0);
+                    Assert.True(landMarks.EyeRightBottom.X > 0);
+                    Assert.True(landMarks.EyeRightBottom.Y > 0);
+                    Assert.True(landMarks.EyeRightOuter.X > 0);
+                    Assert.True(landMarks.EyeRightOuter.Y > 0);
+                    Assert.True(landMarks.NoseRootLeft.X > 0);
+                    Assert.True(landMarks.NoseRootLeft.Y > 0);
+                    Assert.True(landMarks.NoseRootRight.X > 0);
+                    Assert.True(landMarks.NoseRootRight.Y > 0);
+                    Assert.True(landMarks.NoseLeftAlarTop.X > 0);
+                    Assert.True(landMarks.NoseLeftAlarTop.Y > 0);
+                    Assert.True(landMarks.NoseRightAlarTop.X > 0);
+                    Assert.True(landMarks.NoseRightAlarTop.Y > 0);
+                    Assert.True(landMarks.NoseLeftAlarOutTip.X > 0);
+                    Assert.True(landMarks.NoseLeftAlarOutTip.Y > 0);
+                    Assert.True(landMarks.NoseRightAlarOutTip.X > 0);
+                    Assert.True(landMarks.NoseRightAlarOutTip.Y > 0);
+                    Assert.True(landMarks.UpperLipTop.X > 0);
+                    Assert.True(landMarks.UpperLipTop.Y > 0);
+                    Assert.True(landMarks.UpperLipBottom.X > 0);
+                    Assert.True(landMarks.UpperLipBottom.Y > 0);
+                    Assert.True(landMarks.UnderLipTop.X > 0);
+                    Assert.True(landMarks.UnderLipTop.Y > 0);
+                    Assert.True(landMarks.UnderLipBottom.X > 0);
+                    Assert.True(landMarks.UnderLipBottom.Y > 0);
+
+                    // Ensure recognitionModel return correctly.
+                    Assert.Equal(face.RecognitionModel, recognitionModel);
+                }
+            }
+        }
+
+        [Fact]
         public void FaceDetectionNoFace()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -182,7 +281,7 @@ namespace FaceSDK.Tests
                 Sadness = 0.03,
                 Surprise = 0.01
             };
-            
+
             // Act
             var rankedList = emotions.ToRankedList().ToList();
 

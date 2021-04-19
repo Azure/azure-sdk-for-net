@@ -4,7 +4,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus;
 
 namespace Azure.Messaging.ServiceBus.Authorization
 {
@@ -16,51 +15,33 @@ namespace Azure.Messaging.ServiceBus.Authorization
     ///
     internal class ServiceBusTokenCredential : TokenCredential
     {
-        /// <summary>The default scope used for token authentication with EventHubs.</summary>
-        private const string DefaultScope = "https://servicebus.azure.net/.default";
-
-        /// <summary>
-        ///   The Service Bus resource to which the token is intended to serve as authorization.
-        /// </summary>
-        ///
-        public string Resource { get; }
+        /// <summary>The <see cref="TokenCredential" /> that forms the basis of this security token.</summary>
+        private readonly TokenCredential _credential;
 
         /// <summary>
         ///   Indicates whether the credential is based on an Service Bus
-        ///   shared access signature.
+        ///   shared access policy.
         /// </summary>
         ///
         /// <value><c>true</c> if the credential should be considered a SAS credential; otherwise, <c>false</c>.</value>
         ///
-        public bool IsSharedAccessSignatureCredential { get; }
-
-        /// <summary>
-        ///   The <see cref="TokenCredential" /> that forms the basis of this security token.
-        /// </summary>
-        ///
-        private TokenCredential Credential { get; }
+        public bool IsSharedAccessCredential { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusTokenCredential"/> class.
         /// </summary>
         ///
         /// <param name="tokenCredential">The <see cref="TokenCredential" /> on which to base the token.</param>
-        /// <param name="serviceBusResource">The Service Bus resource to which the token is intended to serve as authorization.</param>
         ///
-        public ServiceBusTokenCredential(
-            TokenCredential tokenCredential,
-            string serviceBusResource)
+        public ServiceBusTokenCredential(TokenCredential tokenCredential)
         {
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
-            Argument.AssertNotNullOrEmpty(serviceBusResource, nameof(serviceBusResource));
 
-            Credential = tokenCredential;
-            Resource = serviceBusResource;
+            _credential = tokenCredential;
 
-            IsSharedAccessSignatureCredential =
-                (tokenCredential is ServiceBusSharedKeyCredential)
-                || (tokenCredential is SharedAccessSignatureCredential)
-                || ((tokenCredential as ServiceBusTokenCredential)?.IsSharedAccessSignatureCredential == true);
+            IsSharedAccessCredential =
+                (tokenCredential is SharedAccessCredential)
+                || ((tokenCredential as ServiceBusTokenCredential)?.IsSharedAccessCredential == true);
         }
 
         /// <summary>
@@ -76,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
         public override AccessToken GetToken(
             TokenRequestContext requestContext,
             CancellationToken cancellationToken) =>
-            Credential.GetToken(requestContext, cancellationToken);
+            _credential.GetToken(requestContext, cancellationToken);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
@@ -91,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
         public override ValueTask<AccessToken> GetTokenAsync(
             TokenRequestContext requestContext,
             CancellationToken cancellationToken) =>
-            Credential.GetTokenAsync(requestContext, cancellationToken);
+            _credential.GetTokenAsync(requestContext, cancellationToken);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
@@ -103,6 +84,6 @@ namespace Azure.Messaging.ServiceBus.Authorization
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
         public ValueTask<AccessToken> GetTokenUsingDefaultScopeAsync(CancellationToken cancellationToken) =>
-            GetTokenAsync(new TokenRequestContext(new string[] { DefaultScope }), cancellationToken);
+            GetTokenAsync(new TokenRequestContext(new string[] { Constants.DefaultScope }), cancellationToken);
     }
 }

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -30,13 +29,27 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the TemplateLink class.
         /// </summary>
-        /// <param name="uri">The URI of the template to deploy.</param>
+        /// <param name="uri">The URI of the template to deploy. Use either the
+        /// uri or id property, but not both.</param>
+        /// <param name="id">The resource id of a Template Spec. Use either the
+        /// id or uri property, but not both.</param>
+        /// <param name="relativePath">The relativePath property can be used to
+        /// deploy a linked template at a location relative to the parent. If
+        /// the parent template was linked with a TemplateSpec, this will
+        /// reference an artifact in the TemplateSpec.  If the parent was
+        /// linked with a URI, the child deployment will be a combination of
+        /// the parent and relativePath URIs</param>
         /// <param name="contentVersion">If included, must match the
         /// ContentVersion in the template.</param>
-        public TemplateLink(string uri, string contentVersion = default(string))
+        /// <param name="queryString">The query string (for example, a SAS
+        /// token) to be used with the templateLink URI.</param>
+        public TemplateLink(string uri = default(string), string id = default(string), string relativePath = default(string), string contentVersion = default(string), string queryString = default(string))
         {
             Uri = uri;
+            Id = id;
+            RelativePath = relativePath;
             ContentVersion = contentVersion;
+            QueryString = queryString;
             CustomInit();
         }
 
@@ -46,10 +59,29 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the URI of the template to deploy.
+        /// Gets or sets the URI of the template to deploy. Use either the uri
+        /// or id property, but not both.
         /// </summary>
         [JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource id of a Template Spec. Use either the id
+        /// or uri property, but not both.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the relativePath property can be used to deploy a
+        /// linked template at a location relative to the parent. If the parent
+        /// template was linked with a TemplateSpec, this will reference an
+        /// artifact in the TemplateSpec.  If the parent was linked with a URI,
+        /// the child deployment will be a combination of the parent and
+        /// relativePath URIs
+        /// </summary>
+        [JsonProperty(PropertyName = "relativePath")]
+        public string RelativePath { get; set; }
 
         /// <summary>
         /// Gets or sets if included, must match the ContentVersion in the
@@ -59,17 +91,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string ContentVersion { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the query string (for example, a SAS token) to be used
+        /// with the templateLink URI.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Uri == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Uri");
-            }
-        }
+        [JsonProperty(PropertyName = "queryString")]
+        public string QueryString { get; set; }
+
     }
 }

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// addressable path of the collections resource.</param>
         /// <param name="_users">A system generated property that specifies the
         /// addressable path of the users resource.</param>
-        public SqlDatabaseGetPropertiesResource(string id, string _rid = default(string), object _ts = default(object), string _etag = default(string), string _colls = default(string), string _users = default(string))
+        public SqlDatabaseGetPropertiesResource(string id, string _rid = default(string), double? _ts = default(double?), string _etag = default(string), string _colls = default(string), string _users = default(string))
         {
             Id = id;
             this._rid = _rid;
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// timestamp of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "_ts")]
-        public object _ts { get; private set; }
+        public double? _ts { get; private set; }
 
         /// <summary>
         /// Gets a system generated property representing the resource etag

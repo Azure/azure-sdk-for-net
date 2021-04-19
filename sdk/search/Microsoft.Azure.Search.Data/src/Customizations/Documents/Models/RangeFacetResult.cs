@@ -10,13 +10,13 @@ namespace Microsoft.Azure.Search.Models
     /// </summary>
     /// <typeparam name="T">
     /// A type that matches the type of the field to which the facet was applied. Valid types include
-    /// <c cref="System.DateTimeOffset">DateTimeOffset</c>, <c cref="System.Double">Double</c>, and
-    /// <c cref="System.Int64">Int64</c> (long in C#, int64 in F#).
+    /// <see cref="System.DateTimeOffset" />, <see cref="System.Double" />, and
+    /// <see cref="System.Int64" /> (long in C#, int64 in F#).
     /// </typeparam>
     public class RangeFacetResult<T> where T : struct
     {
         /// <summary>
-        /// Creates a new instance of the <c cref="RangeFacetResult{T}">RangeFacetResult</c> class.
+        /// Creates a new instance of the <see cref="RangeFacetResult{T}" /> class.
         /// </summary>
         /// <param name="count">The approximate count of documents falling within the bucket described by this facet.</param>
         /// <param name="from">A value indicating the inclusive lower bound of the facet's range, or <c>null</c> to indicate that there is

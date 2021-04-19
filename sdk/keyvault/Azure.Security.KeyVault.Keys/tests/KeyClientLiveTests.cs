@@ -16,7 +16,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         private const int PagedKeyCount = 2;
 
-        public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
+        public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
+            : this(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+        {
+        }
+
+        protected KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, serviceVersion, mode)
         {
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
             Matcher = new RecordMatcher(compareBodies: false);
@@ -29,9 +35,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             // is always made.  This allows tests to be replayed independently and in any order
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                Client = GetClient();
-
-                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+                ChallengeBasedAuthenticationPolicy.ClearCache();
             }
         }
 
@@ -107,7 +111,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 CurveName = curveName,
             };
 
-            KeyVaultKey keyNoHsmCurve = await Client.CreateEcKeyAsync(ecCurveKey);
+            KeyVaultKey keyNoHsmCurve = null;
+            try
+            {
+                keyNoHsmCurve = await Client.CreateEcKeyAsync(ecCurveKey);
+            }
+            catch (RequestFailedException ex) when (ex.ErrorCode == "KeyCurveNotSupported")
+            {
+                Assert.Ignore(ex.Message);
+            }
 
             RegisterForCleanup(keyNoHsmCurve.Name);
 
@@ -636,7 +648,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
             DeletedKey deletedKey = operation.Value;
 
-            await WaitForDeletedKey(keyName);
+            // Wait a little longer since live tests are failing with only a 2s delay.
+            await WaitForDeletedKey(keyName, TimeSpan.FromSeconds(5));
 
             DeletedKey polledSecret = await Client.GetDeletedKeyAsync(keyName);
 
@@ -892,13 +905,17 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 RegisterForCleanup(Key.Name);
             }
 
+            List<Task> deletingKeys = new List<Task>();
             foreach (KeyVaultKey deletedKey in createdKeys)
             {
-                await WaitForDeletedKey(deletedKey.Name);
+                // WaitForDeletedKey disables recording, so we can wait concurrently.
+                // Wait a little longer for deleting keys since tests occasionally fail after max attempts.
+                deletingKeys.Add(WaitForDeletedKey(deletedKey.Name, delay: TimeSpan.FromSeconds(5)));
             }
 
-            List<DeletedKey> allKeys = await Client.GetDeletedKeysAsync().ToEnumerableAsync();
+            await Task.WhenAll(deletingKeys);
 
+            List<DeletedKey> allKeys = await Client.GetDeletedKeysAsync().ToEnumerableAsync();
             foreach (KeyVaultKey createdKey in createdKeys)
             {
                 KeyVaultKey returnedKey = allKeys.Single(s => s.Properties.Name == createdKey.Name);
@@ -931,13 +948,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public async Task GetPropertiesOfKeyVersionsNonExisting()
         {
-            int count = 0;
             List<KeyProperties> allKeys = await Client.GetPropertiesOfKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
-            foreach (KeyProperties key in allKeys)
-            {
-                count++;
-            }
-            Assert.AreEqual(0, count);
+            Assert.AreEqual(0, allKeys.Count);
         }
     }
 }

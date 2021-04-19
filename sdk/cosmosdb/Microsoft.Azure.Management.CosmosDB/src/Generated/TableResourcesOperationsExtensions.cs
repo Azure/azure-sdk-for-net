@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -307,13 +307,105 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Migrate an Azure Cosmos DB Table from manual throughput to autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateTableToAutoscale(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName)
+            {
+                return operations.MigrateTableToAutoscaleAsync(resourceGroupName, accountName, tableName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Table from manual throughput to autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateTableToAutoscaleAsync(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateTableToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Table from autoscale to manual throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateTableToManualThroughput(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName)
+            {
+                return operations.MigrateTableToManualThroughputAsync(resourceGroupName, accountName, tableName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Table from autoscale to manual throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateTableToManualThroughputAsync(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateTableToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update an Azure Cosmos DB Table
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -336,7 +428,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -365,7 +457,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -385,7 +477,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -408,7 +500,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -431,7 +523,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -448,6 +540,98 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task<ThroughputSettingsGetResults> BeginUpdateTableThroughputAsync(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateTableThroughputWithHttpMessagesAsync(resourceGroupName, accountName, tableName, updateThroughputParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Table from manual throughput to autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateTableToAutoscale(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName)
+            {
+                return operations.BeginMigrateTableToAutoscaleAsync(resourceGroupName, accountName, tableName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Table from manual throughput to autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateTableToAutoscaleAsync(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateTableToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Table from autoscale to manual throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateTableToManualThroughput(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName)
+            {
+                return operations.BeginMigrateTableToManualThroughputAsync(resourceGroupName, accountName, tableName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Table from autoscale to manual throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='tableName'>
+            /// Cosmos DB table name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateTableToManualThroughputAsync(this ITableResourcesOperations operations, string resourceGroupName, string accountName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateTableToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, tableName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

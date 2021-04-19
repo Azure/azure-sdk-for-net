@@ -17,9 +17,9 @@ namespace IntegrationTestCommon
     using Microsoft.Azure.Management.Batch.Models;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using System.Text;
-    using Microsoft.WindowsAzure.Storage.Blob;
     using BatchTestCommon;
     using Microsoft.Rest;
+    using Azure.Storage.Blobs.Specialized;
 
     public class IntegrationTestCommon
     {
@@ -109,80 +109,72 @@ namespace IntegrationTestCommon
 
         public static async Task EnableAutoStorageAsync()
         {
-            using (BatchManagementClient managementClient = OpenBatchManagementClient())
-            {
-                //TODO: Why do we need this...?
-                ServicePointManager.ServerCertificateValidationCallback =
-                    delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-                    {
-                        HttpWebRequest request = sender as HttpWebRequest;
-                        if (request != null)
-                        {
-                            if (request.Address.ToString().Contains(TestCommon.Configuration.BatchManagementUrl))
-                            {
-                                return true;
-                            }
-                        }
-                        return sslPolicyErrors == SslPolicyErrors.None; //use the default validation for all other certificates
-                    };
-
-                //If the account doesn't already have auto storage enabled, enable it
-                BatchAccount batchAccount = await managementClient.BatchAccount.GetAsync(TestCommon.Configuration.BatchAccountResourceGroup, TestCommon.Configuration.BatchAccountName);
-                if (batchAccount.AutoStorage == null)
+            using BatchManagementClient managementClient = OpenBatchManagementClient();
+            //TODO: Why do we need this...?
+            ServicePointManager.ServerCertificateValidationCallback =
+                delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
                 {
-                    const string classicStorageAccountGroup = "Microsoft.ClassicStorage";
-                    const string storageAccountGroup = "Microsoft.Storage";
-                    string resourceFormatString = $"/subscriptions/{TestCommon.Configuration.BatchSubscription}/resourceGroups/{TestCommon.Configuration.StorageAccountResourceGroup}/providers/" + "{0}" +
-                        $"/storageAccounts/{TestCommon.Configuration.StorageAccountName}";
-
-                    string classicStorageAccountFullResourceId = string.Format(resourceFormatString, classicStorageAccountGroup);
-                    string storageAccountFullResourceId = string.Format(resourceFormatString, storageAccountGroup);
-
-                    var updateParameters = new BatchAccountUpdateParameters()
+                    if (sender is HttpWebRequest request)
                     {
-                        AutoStorage = new AutoStorageBaseProperties
+                        if (request.Address.ToString().Contains(TestCommon.Configuration.BatchManagementUrl))
                         {
-                            StorageAccountId = classicStorageAccountFullResourceId
+                            return true;
                         }
+                    }
+                    return sslPolicyErrors == SslPolicyErrors.None; //use the default validation for all other certificates
                     };
-                    try
-                    {
-                        await managementClient.BatchAccount.UpdateAsync(TestCommon.Configuration.BatchAccountResourceGroup, TestCommon.Configuration.BatchAccountName, updateParameters);
-                    }
-                    catch (Exception e) when (e.Message.Contains("The specified storage account could not be found"))
-                    {
-                        //If the storage account could not be found, it might be because we looked in "Classic" -- in that case swallow
-                        //the exception.
-                    }
 
-                    updateParameters.AutoStorage.StorageAccountId = storageAccountFullResourceId;
+            //If the account doesn't already have auto storage enabled, enable it
+            BatchAccount batchAccount = await managementClient.BatchAccount.GetAsync(TestCommon.Configuration.BatchAccountResourceGroup, TestCommon.Configuration.BatchAccountName);
+            if (batchAccount.AutoStorage == null)
+            {
+                const string classicStorageAccountGroup = "Microsoft.ClassicStorage";
+                const string storageAccountGroup = "Microsoft.Storage";
+                string resourceFormatString = $"/subscriptions/{TestCommon.Configuration.BatchSubscription}/resourceGroups/{TestCommon.Configuration.StorageAccountResourceGroup}/providers/" + "{0}" +
+                    $"/storageAccounts/{TestCommon.Configuration.StorageAccountName}";
+
+                string classicStorageAccountFullResourceId = string.Format(resourceFormatString, classicStorageAccountGroup);
+                string storageAccountFullResourceId = string.Format(resourceFormatString, storageAccountGroup);
+
+                var updateParameters = new BatchAccountUpdateParameters()
+                {
+                    AutoStorage = new AutoStorageBaseProperties
+                    {
+                        StorageAccountId = classicStorageAccountFullResourceId
+                    }
+                };
+                try
+                {
                     await managementClient.BatchAccount.UpdateAsync(TestCommon.Configuration.BatchAccountResourceGroup, TestCommon.Configuration.BatchAccountName, updateParameters);
                 }
+                catch (Exception e) when (e.Message.Contains("The specified storage account could not be found"))
+                {
+                    //If the storage account could not be found, it might be because we looked in "Classic" -- in that case swallow
+                    //the exception.
+                }
+
+                updateParameters.AutoStorage.StorageAccountId = storageAccountFullResourceId;
+                await managementClient.BatchAccount.UpdateAsync(TestCommon.Configuration.BatchAccountResourceGroup, TestCommon.Configuration.BatchAccountName, updateParameters);
             }
         }
 
         public static async Task UploadTestApplicationAsync(string storageUrl)
         {
-            CloudBlockBlob blob = new CloudBlockBlob(new Uri(storageUrl));
-
             const string dummyPackageContentFile = @"TestApplicationPackage.zip";
 
-            using (MemoryStream fakeApplicationPackageZip = new MemoryStream())
+            using MemoryStream fakeApplicationPackageZip = new MemoryStream();
+            using (ZipArchive zip = new ZipArchive(fakeApplicationPackageZip, ZipArchiveMode.Create, leaveOpen: true))
             {
-                using (ZipArchive zip = new ZipArchive(fakeApplicationPackageZip, ZipArchiveMode.Create, leaveOpen: true))
-                {
-                    ZipArchiveEntry entry = zip.CreateEntry(dummyPackageContentFile);
-                    using (var s = entry.Open())
-                    {
-                        byte[] bytes = Encoding.UTF8.GetBytes("The quick brown fox jumps over the lazy dog.");
-                        s.Write(bytes, 0, bytes.Length);
-                    }
-                }
-
-                fakeApplicationPackageZip.Seek(0, SeekOrigin.Begin);
-
-                await blob.UploadFromStreamAsync(fakeApplicationPackageZip).ConfigureAwait(false);
+                ZipArchiveEntry entry = zip.CreateEntry(dummyPackageContentFile);
+                using var s = entry.Open();
+                byte[] bytes = Encoding.UTF8.GetBytes("The quick brown fox jumps over the lazy dog.");
+                s.Write(bytes, 0, bytes.Length);
             }
+
+            fakeApplicationPackageZip.Seek(0, SeekOrigin.Begin);
+
+            BlockBlobClient blobClient = new BlockBlobClient(new Uri(storageUrl));
+            await blobClient.UploadAsync(fakeApplicationPackageZip).ConfigureAwait(false);
         }
 
         public static string GetTemporaryCertificateFilePath(string fileName)

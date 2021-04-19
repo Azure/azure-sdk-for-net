@@ -26,15 +26,14 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   The set of test cases for understanding whether a credential is considered to be
         ///   based on a shared access signature.
         /// </summary>
-        public static IEnumerable<object[]> SharedAccessSignatureCredentialTestCases()
+        ///
+        public static IEnumerable<object[]> SharedAccessCredentialTestCases()
         {
             TokenCredential credentialMock = Mock.Of<TokenCredential>();
             var signature = new SharedAccessSignature("hub", "keyName", "key", "TOkEn!", DateTimeOffset.UtcNow.AddHours(4));
 
-            yield return new object[] { new SharedAccessSignatureCredential(signature), true };
-            yield return new object[] { new EventHubSharedKeyCredential("blah", "foo"), true };
-            yield return new object[] { new EventHubTokenCredential(new EventHubSharedKeyCredential("blah", "foo"), "hub"), true };
-            yield return new object[] { new EventHubTokenCredential(credentialMock, "thing"), false };
+            yield return new object[] { new SharedAccessCredential(signature), true };
+            yield return new object[] { new EventHubTokenCredential(credentialMock), false };
             yield return new object[] { credentialMock, false };
         }
 
@@ -45,19 +44,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheCredential()
         {
-            Assert.That(() => new EventHubTokenCredential(null, "anything!"), Throws.ArgumentNullException);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the constructor.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(null)]
-        [TestCase("")]
-        public void ConstructorValidatesTheResource(string resource)
-        {
-            Assert.That(() => new EventHubTokenCredential(Mock.Of<TokenCredential>(), resource), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventHubTokenCredential(null), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -68,14 +55,12 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesInitializesProperties()
         {
             TokenCredential sourceCredential = Mock.Of<TokenCredential>();
-            var resource = "the resource value";
-            var credential = new EventHubTokenCredential(sourceCredential, resource);
+            var credential = new EventHubTokenCredential(sourceCredential);
 
             var credentialPropertyValue = typeof(EventHubTokenCredential)
-                .GetProperty("Credential", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetField("_credential", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(credential);
 
-            Assert.That(credential.Resource, Is.EqualTo(resource), "The resource should match.");
             Assert.That(credentialPropertyValue, Is.SameAs(sourceCredential), "The source credential should have been retained.");
         }
 
@@ -89,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new Mock<TokenCredential>();
             var accessToken = new AccessToken("token", new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero));
             var resource = "the resource value";
-            var credential = new EventHubTokenCredential(mockCredential.Object, resource);
+            var credential = new EventHubTokenCredential(mockCredential.Object);
 
             mockCredential
                 .Setup(cred => cred.GetToken(It.Is<TokenRequestContext>(value => value.Scopes.FirstOrDefault() == resource), It.IsAny<CancellationToken>()))
@@ -112,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new Mock<TokenCredential>();
             var accessToken = new AccessToken("token", new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero));
             var resource = "the resource value";
-            var credential = new EventHubTokenCredential(mockCredential.Object, resource);
+            var credential = new EventHubTokenCredential(mockCredential.Object);
 
             mockCredential
                 .Setup(cred => cred.GetTokenAsync(It.Is<TokenRequestContext>(value => value.Scopes.FirstOrDefault() == resource), It.IsAny<CancellationToken>()))
@@ -126,17 +111,17 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubTokenCredential.IsSharedAccessSignatureCredential" />
+        ///   Verifies functionality of the <see cref="EventHubTokenCredential.IsSharedAccessCredential" />
         ///   property.
         /// </summary>
         ///
         [Test]
-        [TestCaseSource(nameof(SharedAccessSignatureCredentialTestCases))]
-        public void IsSharedAccessSignatureCredentialRecognizesSasCredentials(TokenCredential credential,
-                                                                              bool expectedResult)
+        [TestCaseSource(nameof(SharedAccessCredentialTestCases))]
+        public void IsSharedAccessCredentialRecognizesSasCredentials(TokenCredential credential,
+                                                                     bool expectedResult)
         {
-            var eventHubsCredential = new EventHubTokenCredential(credential, "dummy");
-            Assert.That(eventHubsCredential.IsSharedAccessSignatureCredential, Is.EqualTo(expectedResult));
+            var eventHubsCredential = new EventHubTokenCredential(credential);
+            Assert.That(eventHubsCredential.IsSharedAccessCredential, Is.EqualTo(expectedResult));
         }
     }
 }

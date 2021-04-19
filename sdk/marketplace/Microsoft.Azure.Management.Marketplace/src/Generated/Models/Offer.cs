@@ -45,11 +45,18 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// <param name="eTag">Identifier for purposes of race
         /// condition</param>
         /// <param name="privateStoreId">Private store unique id</param>
-        /// <param name="createdBy">Private store offer creator name</param>
-        /// <param name="createdDate">Private store offer created date</param>
+        /// <param name="createdAt">Private store offer creation date</param>
+        /// <param name="modifiedAt">Private store offer modification
+        /// date</param>
         /// <param name="specificPlanIdsLimitation">Plan ids limitation for
         /// this offer</param>
-        public Offer(string id = default(string), string name = default(string), string type = default(string), string uniqueOfferId = default(string), string offerDisplayName = default(string), string publisherDisplayName = default(string), string eTag = default(string), string privateStoreId = default(string), string createdBy = default(string), string createdDate = default(string), IList<string> specificPlanIdsLimitation = default(IList<string>))
+        /// <param name="updateSuppressedDueIdempotence">Indicating whether the
+        /// offer was not updated to db (true = not updated). If the allow list
+        /// is identical to the existed one in db, the offer would not be
+        /// updated.</param>
+        /// <param name="iconFileUris">Icon File Uris</param>
+        /// <param name="plans">Offer plans</param>
+        public Offer(string id = default(string), string name = default(string), string type = default(string), string uniqueOfferId = default(string), string offerDisplayName = default(string), string publisherDisplayName = default(string), string eTag = default(string), string privateStoreId = default(string), string createdAt = default(string), string modifiedAt = default(string), IList<string> specificPlanIdsLimitation = default(IList<string>), bool? updateSuppressedDueIdempotence = default(bool?), IDictionary<string, string> iconFileUris = default(IDictionary<string, string>), IList<Plan> plans = default(IList<Plan>))
             : base(id, name, type)
         {
             UniqueOfferId = uniqueOfferId;
@@ -57,9 +64,12 @@ namespace Microsoft.Azure.Management.Marketplace.Models
             PublisherDisplayName = publisherDisplayName;
             ETag = eTag;
             PrivateStoreId = privateStoreId;
-            CreatedBy = createdBy;
-            CreatedDate = createdDate;
+            CreatedAt = createdAt;
+            ModifiedAt = modifiedAt;
             SpecificPlanIdsLimitation = specificPlanIdsLimitation;
+            UpdateSuppressedDueIdempotence = updateSuppressedDueIdempotence;
+            IconFileUris = iconFileUris;
+            Plans = plans;
             CustomInit();
         }
 
@@ -100,16 +110,16 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         public string PrivateStoreId { get; private set; }
 
         /// <summary>
-        /// Gets private store offer creator name
+        /// Gets private store offer creation date
         /// </summary>
-        [JsonProperty(PropertyName = "properties.createdBy")]
-        public string CreatedBy { get; private set; }
+        [JsonProperty(PropertyName = "properties.createdAt")]
+        public string CreatedAt { get; private set; }
 
         /// <summary>
-        /// Gets private store offer created date
+        /// Gets private store offer modification date
         /// </summary>
-        [JsonProperty(PropertyName = "properties.createdDate")]
-        public string CreatedDate { get; private set; }
+        [JsonProperty(PropertyName = "properties.modifiedAt")]
+        public string ModifiedAt { get; private set; }
 
         /// <summary>
         /// Gets or sets plan ids limitation for this offer
@@ -117,5 +127,24 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         [JsonProperty(PropertyName = "properties.specificPlanIdsLimitation")]
         public IList<string> SpecificPlanIdsLimitation { get; set; }
 
+        /// <summary>
+        /// Gets or sets indicating whether the offer was not updated to db
+        /// (true = not updated). If the allow list is identical to the existed
+        /// one in db, the offer would not be updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.updateSuppressedDueIdempotence")]
+        public bool? UpdateSuppressedDueIdempotence { get; set; }
+
+        /// <summary>
+        /// Gets or sets icon File Uris
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.iconFileUris")]
+        public IDictionary<string, string> IconFileUris { get; set; }
+
+        /// <summary>
+        /// Gets or sets offer plans
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.plans")]
+        public IList<Plan> Plans { get; set; }
     }
 }

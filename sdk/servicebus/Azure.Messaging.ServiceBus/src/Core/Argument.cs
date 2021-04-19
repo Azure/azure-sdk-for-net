@@ -110,9 +110,9 @@ namespace Azure.Core
         ///
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="argumentValue"/> is less than <paramref name="minimumValue"/>.</exception>
         ///
-        public static void AssertAtLeast(long argumentValue, long minimumValue, string argumentName)
+        public static void AssertAtLeast<T>(T argumentValue, T minimumValue, string argumentName)where T : notnull, IComparable<T>
         {
-            if (argumentValue < minimumValue)
+            if (minimumValue.CompareTo(argumentValue) > 0)
             {
                 throw new ArgumentOutOfRangeException(argumentName, $"The value supplied must be greater than or equal to {minimumValue}.");
             }
@@ -131,25 +131,6 @@ namespace Azure.Core
             if (wasDisposed)
             {
                 throw new ObjectDisposedException(targetName, string.Format(CultureInfo.CurrentCulture, Resources.ClosedInstanceCannotPerformOperation, targetName));
-            }
-        }
-
-        /// <summary>
-        ///   Ensures that an instance has not been closed, throwing an
-        ///   <see cref="ServiceBusException" /> if that invariant is not met.
-        /// </summary>
-        ///
-        /// <param name="wasClosed"><c>true</c> if the target instance has been closed; otherwise, <c>false</c>.</param>
-        /// <param name="targetName">The name of the target instance that is being verified.</param>
-        ///
-        public static void AssertNotClosed(bool wasClosed, string targetName)
-        {
-            if (wasClosed)
-            {
-                throw new ServiceBusException(
-                    string.Format(CultureInfo.CurrentCulture, Resources.ClosedInstanceCannotPerformOperation, targetName),
-                    ServiceBusException.FailureReason.ClientClosed,
-                    targetName);
             }
         }
 

@@ -31,9 +31,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="name">Name of a load balancer SKU. Possible values
         /// include: 'Basic', 'Standard'</param>
-        public LoadBalancerSku(string name = default(string))
+        /// <param name="tier">Tier of a load balancer SKU. Possible values
+        /// include: 'Regional', 'Global'</param>
+        public LoadBalancerSku(string name = default(string), string tier = default(string))
         {
             Name = name;
+            Tier = tier;
             CustomInit();
         }
 
@@ -48,6 +51,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets tier of a load balancer SKU. Possible values include:
+        /// 'Regional', 'Global'
+        /// </summary>
+        [JsonProperty(PropertyName = "tier")]
+        public string Tier { get; set; }
 
     }
 }

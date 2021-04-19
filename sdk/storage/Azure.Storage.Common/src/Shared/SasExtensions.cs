@@ -183,7 +183,7 @@ namespace Azure.Storage.Sas
         /// <returns></returns>
         internal static string FormatTimesForSasSigning(DateTimeOffset time) =>
             // "yyyy-MM-ddTHH:mm:ssZ"
-            (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+            (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// Helper method to add query param key value pairs to StringBuilder
@@ -198,95 +198,43 @@ namespace Azure.Storage.Sas
             .Append('=')
             .Append(value);
 
-        /// <summary>
-        /// Builds the query parameter string for the SasQueryParameters instance.
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="stringBuilder">
-        /// StringBuilder instance to add the query params to
-        /// </param>
-        internal static void AppendProperties(this SasQueryParameters parameters, StringBuilder stringBuilder)
+        internal static string ValidateAndSanitizeRawPermissions(string permissions,
+            List<char> validPermissionsInOrder)
         {
-            if (!string.IsNullOrWhiteSpace(parameters.Version))
+            if (permissions == null)
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Version, parameters.Version);
+                return null;
             }
 
-            if (parameters.Services != null)
+            // Convert permissions string to lower case.
+            permissions = permissions.ToLowerInvariant();
+
+            HashSet<char> validPermissionsSet = new HashSet<char>(validPermissionsInOrder);
+            HashSet<char> permissionsSet = new HashSet<char>();
+
+            foreach (char permission in permissions)
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Services, parameters.Services.Value.ToPermissionsString());
+                // Check that each permission is a real SAS permission.
+                if (!validPermissionsSet.Contains(permission))
+                {
+                    throw new ArgumentException($"{permission} is not a valid SAS permission");
+                }
+
+                // Add permission to permissionsSet for re-ordering.
+                permissionsSet.Add(permission);
             }
 
-            if (parameters.ResourceTypes != null)
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (char permission in validPermissionsInOrder)
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ResourceTypes, parameters.ResourceTypes.Value.ToPermissionsString());
+                if (permissionsSet.Contains(permission))
+                {
+                    stringBuilder.Append(permission);
+                }
             }
 
-            if (parameters.Protocol != default)
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Protocol, parameters.Protocol.ToProtocolString());
-            }
-
-            if (parameters.StartsOn != DateTimeOffset.MinValue)
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(parameters.StartsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
-            }
-
-            if (parameters.ExpiresOn != DateTimeOffset.MinValue)
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(parameters.ExpiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
-            }
-
-            var ipr = parameters.IPRange.ToString();
-            if (ipr.Length > 0)
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.IPRange, ipr);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.Identifier))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Identifier, parameters.Identifier);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.Resource))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Resource, parameters.Resource);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.Permissions))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Permissions, parameters.Permissions);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.CacheControl))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.CacheControl, WebUtility.UrlEncode(parameters.CacheControl));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ContentDisposition))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentDisposition, WebUtility.UrlEncode(parameters.ContentDisposition));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ContentEncoding))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentEncoding, WebUtility.UrlEncode(parameters.ContentEncoding));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ContentLanguage))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentLanguage, WebUtility.UrlEncode(parameters.ContentLanguage));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ContentType))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentType, WebUtility.UrlEncode(parameters.ContentType));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.Signature))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(parameters.Signature));
-            }
+            return stringBuilder.ToString();
         }
     }
 }

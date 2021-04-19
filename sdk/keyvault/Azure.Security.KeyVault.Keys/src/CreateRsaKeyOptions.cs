@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// The properties needed to create an Elliptic Curve key using the <see cref="KeyClient"/>.
+    /// The properties needed to create an RSA key using the <see cref="KeyClient"/>.
     /// </summary>
     public class CreateRsaKeyOptions : CreateKeyOptions
     {
@@ -25,6 +25,11 @@ namespace Azure.Security.KeyVault.Keys
         /// Gets or sets the key size in bits, such as 2048, 3072, or 4096. If null, the service default is used.
         /// </summary>
         public int? KeySize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the public exponent for a RSA key.
+        /// </summary>
+        public int? PublicExponent { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether to create a hardware-protected key in a hardware security module (HSM).

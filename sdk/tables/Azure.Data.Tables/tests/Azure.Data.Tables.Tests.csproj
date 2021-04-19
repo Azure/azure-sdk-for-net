@@ -1,26 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <EnableApiCompat>false</EnableApiCompat>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="nunit" />
-    <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Moq" />
+    <Compile Remove="perf\**"/>
+    <EmbeddedResource Remove="perf\**"/>
+    <None Remove="perf\**"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.Data.Tables.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
+    <PackageReference Include="NUnit"/>
+    <PackageReference Include="NUnit3TestAdapter"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+    <PackageReference Include="Moq"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)"/>
+    <ProjectReference Include="..\src\Azure.Data.Tables.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\"/>
+  </ItemGroup>
 </Project>

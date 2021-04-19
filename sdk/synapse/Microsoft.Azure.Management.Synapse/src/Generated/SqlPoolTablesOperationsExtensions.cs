@@ -87,6 +87,64 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
+            /// Get Sql pool table
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table.
+            /// </param>
+            public static SqlPoolTable Get(this ISqlPoolTablesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName)
+            {
+                return operations.GetAsync(resourceGroupName, workspaceName, sqlPoolName, schemaName, tableName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get Sql pool table
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SqlPoolTable> GetAsync(this ISqlPoolTablesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, schemaName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets tables of a given schema in a SQL pool
             /// </summary>
             /// <remarks>

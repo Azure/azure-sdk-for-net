@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -17,36 +16,41 @@ namespace Azure.Identity
     /// </summary>
     public class AuthenticationRecord
     {
+        internal const string CurrentVersion = "1.0";
         private const string UsernamePropertyName = "username";
         private const string AuthorityPropertyName = "authority";
         private const string HomeAccountIdPropertyName = "homeAccountId";
         private const string TenantIdPropertyName = "tenantId";
+        private const string ClientIdPropertyName = "clientId";
+        private const string VersionPropertyName = "version";
 
         private static readonly JsonEncodedText s_usernamePropertyNameBytes = JsonEncodedText.Encode(UsernamePropertyName);
         private static readonly JsonEncodedText s_authorityPropertyNameBytes = JsonEncodedText.Encode(AuthorityPropertyName);
         private static readonly JsonEncodedText s_homeAccountIdPropertyNameBytes = JsonEncodedText.Encode(HomeAccountIdPropertyName);
         private static readonly JsonEncodedText s_tenantIdPropertyNameBytes = JsonEncodedText.Encode(TenantIdPropertyName);
+        private static readonly JsonEncodedText s_clientIdPropertyNameBytes = JsonEncodedText.Encode(ClientIdPropertyName);
+        private static readonly JsonEncodedText s_versionPropertyNameBytes = JsonEncodedText.Encode(VersionPropertyName);
 
         internal AuthenticationRecord()
         {
-
         }
 
-        internal AuthenticationRecord(AuthenticationResult authResult)
+        internal AuthenticationRecord(AuthenticationResult authResult, string clientId)
         {
             Username = authResult.Account.Username;
             Authority = authResult.Account.Environment;
             AccountId = authResult.Account.HomeAccountId;
             TenantId = authResult.TenantId;
+            ClientId = clientId;
         }
 
-        internal AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId)
+        internal AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId, string clientId)
         {
-
             Username = username;
             Authority = authority;
-            AccountId = new AccountId(homeAccountId);
+            AccountId = BuildAccountIdFromString(homeAccountId);
             TenantId = tenantId;
+            ClientId = clientId;
         }
 
         /// <summary>
@@ -69,7 +73,13 @@ namespace Azure.Identity
         /// </summary>
         public string TenantId { get; private set; }
 
+        /// <summary>
+        /// The client id of the application which performed the original authentication
+        /// </summary>
+        public string ClientId { get; private set; }
+
         internal AccountId AccountId { get; private set; }
+        internal string Version { get; private set; } = CurrentVersion;
 
         /// <summary>
         /// Serializes the <see cref="AuthenticationRecord"/> to the specified <see cref="Stream"/>.
@@ -78,7 +88,8 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public void Serialize(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
 
             SerializeAsync(stream, false, cancellationToken).EnsureCompleted();
         }
@@ -90,11 +101,11 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public async Task SerializeAsync(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
 
             await SerializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
         }
-
 
         /// <summary>
         /// Deserializes the <see cref="AuthenticationRecord"/> from the specified <see cref="Stream"/>.
@@ -103,7 +114,8 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public static AuthenticationRecord Deserialize(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
 
             return DeserializeAsync(stream, false, cancellationToken).EnsureCompleted();
         }
@@ -115,7 +127,8 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public static async Task<AuthenticationRecord> DeserializeAsync(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
 
             return await DeserializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
         }
@@ -124,7 +137,6 @@ namespace Azure.Identity
         {
             using (var json = new Utf8JsonWriter(stream))
             {
-
                 json.WriteStartObject();
 
                 json.WriteString(s_usernamePropertyNameBytes, Username);
@@ -134,6 +146,10 @@ namespace Azure.Identity
                 json.WriteString(s_homeAccountIdPropertyNameBytes, HomeAccountId);
 
                 json.WriteString(s_tenantIdPropertyNameBytes, TenantId);
+
+                json.WriteString(s_clientIdPropertyNameBytes, ClientId);
+
+                json.WriteString(s_versionPropertyNameBytes, Version);
 
                 json.WriteEndObject();
 
@@ -165,15 +181,42 @@ namespace Azure.Identity
                         authProfile.Authority = prop.Value.GetString();
                         break;
                     case HomeAccountIdPropertyName:
-                        authProfile.AccountId = new AccountId(prop.Value.GetString());
+                        authProfile.AccountId = BuildAccountIdFromString(prop.Value.GetString());
                         break;
                     case TenantIdPropertyName:
                         authProfile.TenantId = prop.Value.GetString();
+                        break;
+                    case ClientIdPropertyName:
+                        authProfile.ClientId = prop.Value.GetString();
+                        break;
+                    case VersionPropertyName:
+                        authProfile.Version = prop.Value.GetString();
+                        if (authProfile.Version != CurrentVersion)
+                        {
+                            throw new InvalidOperationException($"Attempted to deserialize an {nameof(AuthenticationRecord)} with a version that is not the current version. Expected: '{CurrentVersion}', Actual: '{authProfile.Version}'");
+                        }
                         break;
                 }
             }
 
             return authProfile;
+        }
+
+        private static AccountId BuildAccountIdFromString(string homeAccountId)
+        {
+            //For the Microsoft identity platform (formerly named Azure AD v2.0), the identifier is the concatenation of
+            // Microsoft.Identity.Client.AccountId.ObjectId and Microsoft.Identity.Client.AccountId.TenantId separated by a dot.
+            var homeAccountSegments = homeAccountId.Split('.');
+            AccountId accountId;
+            if (homeAccountSegments.Length == 2)
+            {
+                accountId = new AccountId(homeAccountId, homeAccountSegments[0], homeAccountSegments[1]);
+            }
+            else
+            {
+                accountId = new AccountId(homeAccountId);
+            }
+            return accountId;
         }
     }
 }

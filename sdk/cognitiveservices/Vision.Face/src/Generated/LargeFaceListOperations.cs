@@ -55,25 +55,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// an optional userData and recognitionModel.
         /// &lt;br /&gt; Large face list is a list of faces, up to 1,000,000 faces, and
         /// used by [Face - Find
-        /// Similar](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395237).
+        /// Similar](https://docs.microsoft.com/rest/api/faceapi/face/findsimilar).
         /// &lt;br /&gt; After creation, user should use [LargeFaceList Face -
-        /// Add](/docs/services/563879b61984550e40cbbe8d/operations/5a158c10d2de3616c086f2d3)
+        /// Add](https://docs.microsoft.com/rest/api/faceapi/largefacelist/addfacefromurl)
         /// to import the faces and [LargeFaceList -
-        /// Train](/docs/services/563879b61984550e40cbbe8d/operations/5a158422d2de3616c086f2d1)
-        /// to make it ready for [Face - Find
-        /// Similar](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395237).
-        /// No image will be stored. Only the extracted face features are stored on
-        /// server until [LargeFaceList -
-        /// Delete](/docs/services/563879b61984550e40cbbe8d/operations/5a1580d5d2de3616c086f2cd)
+        /// Train](https://docs.microsoft.com/rest/api/faceapi/largefacelist/train) to
+        /// make it ready for [Face - Find
+        /// Similar](https://docs.microsoft.com/rest/api/faceapi/face/findsimilar). No
+        /// image will be stored. Only the extracted face features are stored on server
+        /// until [LargeFaceList -
+        /// Delete](https://docs.microsoft.com/rest/api/faceapi/largefacelist/delete)
         /// is called.
         /// &lt;br /&gt; Find Similar is used for scenario like finding celebrity-like
         /// faces, similar face filtering, or as a light way face identification. But
         /// if the actual use is to identify person, please use
-        /// [PersonGroup](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395244)
-        /// /
-        /// [LargePersonGroup](/docs/services/563879b61984550e40cbbe8d/operations/599acdee6ac60f11b48b5a9d)
+        /// [PersonGroup](https://docs.microsoft.com/rest/api/faceapi/persongroup) /
+        /// [LargePersonGroup](https://docs.microsoft.com/rest/api/faceapi/largepersongroup)
         /// and [Face -
-        /// Identify](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395239).
+        /// Identify](https://docs.microsoft.com/rest/api/faceapi/face/identify).
         /// &lt;br/&gt;'recognitionModel' should be specified to associate with this
         /// large face list. The default value for 'recognitionModel' is
         /// 'recognition_01', if the latest model needed, please explicitly specify the
@@ -81,13 +80,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// large face list will use the recognition model that's already associated
         /// with the collection. Existing face features in a large face list can't be
         /// updated to features extracted by another version of recognition model.
-        /// * 'recognition_01': The default recognition model for [LargeFaceList-
-        /// Create](/docs/services/563879b61984550e40cbbe8d/operations/5a157b68d2de3616c086f2cc).
-        /// All those large face lists created before 2019 March are bonded with this
-        /// recognition model.
-        /// * 'recognition_02': Recognition model released in 2019 March.
-        /// 'recognition_02' is recommended since its overall accuracy is improved
-        /// compared with 'recognition_01'.
+        /// Please refer to [Specify a recognition
+        /// model](https://docs.microsoft.com/azure/cognitive-services/face/face-api-how-to-topics/specify-recognition-model).
         ///
         /// Large face list quota:
         /// * Free-tier subscription quota: 64 large face lists.
@@ -103,7 +97,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// User specified data. Length should not exceed 16KB.
         /// </param>
         /// <param name='recognitionModel'>
-        /// Possible values include: 'recognition_01', 'recognition_02'
+        /// Possible values include: 'recognition_01', 'recognition_02',
+        /// 'recognition_03', 'recognition_04'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -936,7 +931,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// List large face lists’ information of largeFaceListId, name, userData and
         /// recognitionModel. &lt;br /&gt;
         /// To get face information inside largeFaceList use [LargeFaceList Face -
-        /// Get](/docs/services/563879b61984550e40cbbe8d/operations/5a158cf2d2de3616c086f2d5)&lt;br
+        /// Get](https://docs.microsoft.com/rest/api/faceapi/largefacelist/getface)&lt;br
         /// /&gt;
         /// * Large face lists are stored in alphabetical order of largeFaceListId.
         /// * "start" parameter (string, optional) is a user-provided largeFaceListId
@@ -1751,13 +1746,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// persistedFaceId representing the added face. No image will be stored. Only
         /// the extracted face feature will be stored on server until [LargeFaceList
         /// Face -
-        /// Delete](/docs/services/563879b61984550e40cbbe8d/operations/5a158c8ad2de3616c086f2d4)
+        /// Delete](https://docs.microsoft.com/rest/api/faceapi/largefacelist/deleteface)
         /// or [LargeFaceList -
-        /// Delete](/docs/services/563879b61984550e40cbbe8d/operations/5a1580d5d2de3616c086f2cd)
+        /// Delete](https://docs.microsoft.com/rest/api/faceapi/largefacelist/delete)
         /// is called.
         /// &lt;br /&gt; Note persistedFaceId is different from faceId generated by
         /// [Face -
-        /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236).
+        /// Detect](https://docs.microsoft.com/rest/api/faceapi/face/detectwithurl).
         /// * Higher face image quality means better recognition precision. Please
         /// consider high-quality faces: frontal, clear, and face size is 200x200
         /// pixels (100 pixels between eyes) or bigger.
@@ -1766,7 +1761,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// * "targetFace" rectangle should contain one face. Zero or multiple faces
         /// will be regarded as an error. If the provided "targetFace" rectangle is not
         /// returned from [Face -
-        /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236),
+        /// Detect](https://docs.microsoft.com/rest/api/faceapi/face/detectwithurl),
         /// there’s no guarantee to detect and add the face successfully.
         /// * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose,
         /// or large occlusions will cause failures.
@@ -1777,16 +1772,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// will need a proportionally larger minimum face size.
         /// * Different 'detectionModel' values can be provided. To use and compare
         /// different detection models, please refer to [How to specify a detection
-        /// model](https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/specify-detection-model)
-        /// | Model | Recommended use-case(s) |
-        /// | ---------- | -------- |
-        /// | 'detection_01': | The default detection model for [LargeFaceList - Add
-        /// Face](/docs/services/563879b61984550e40cbbe8d/operations/5a158c10d2de3616c086f2d3).
-        /// Recommend for near frontal face detection. For scenarios with exceptionally
-        /// large angle (head-pose) faces, occluded faces or wrong image orientation,
-        /// the faces in such cases may not be detected. |
-        /// | 'detection_02': | Detection model released in 2019 May with improved
-        /// accuracy especially on small, side and blurry faces. |
+        /// model](https://docs.microsoft.com/azure/cognitive-services/face/face-api-how-to-topics/specify-detection-model)
         ///
         /// Quota:
         /// * Free-tier subscription quota: 1,000 faces per large face list.
@@ -1815,7 +1801,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Face - Detect or (Large)FaceList - Add Face or (Large)PersonGroup - Add
         /// Face. The default value is 'detection_01', if another model is needed,
         /// please explicitly specify it. Possible values include: 'detection_01',
-        /// 'detection_02'
+        /// 'detection_02', 'detection_03'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2220,13 +2206,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// persistedFaceId representing the added face. No image will be stored. Only
         /// the extracted face feature will be stored on server until [LargeFaceList
         /// Face -
-        /// Delete](/docs/services/563879b61984550e40cbbe8d/operations/5a158c8ad2de3616c086f2d4)
+        /// Delete](https://docs.microsoft.com/rest/api/faceapi/largefacelist/deleteface)
         /// or [LargeFaceList -
-        /// Delete](/docs/services/563879b61984550e40cbbe8d/operations/5a1580d5d2de3616c086f2cd)
+        /// Delete](https://docs.microsoft.com/rest/api/faceapi/largefacelist/delete)
         /// is called.
         /// &lt;br /&gt; Note persistedFaceId is different from faceId generated by
         /// [Face -
-        /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236).
+        /// Detect](https://docs.microsoft.com/rest/api/faceapi/face/detectwithurl).
         /// * Higher face image quality means better recognition precision. Please
         /// consider high-quality faces: frontal, clear, and face size is 200x200
         /// pixels (100 pixels between eyes) or bigger.
@@ -2235,7 +2221,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// * "targetFace" rectangle should contain one face. Zero or multiple faces
         /// will be regarded as an error. If the provided "targetFace" rectangle is not
         /// returned from [Face -
-        /// Detect](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236),
+        /// Detect](https://docs.microsoft.com/rest/api/faceapi/face/detectwithurl),
         /// there’s no guarantee to detect and add the face successfully.
         /// * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose,
         /// or large occlusions will cause failures.
@@ -2246,16 +2232,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// will need a proportionally larger minimum face size.
         /// * Different 'detectionModel' values can be provided. To use and compare
         /// different detection models, please refer to [How to specify a detection
-        /// model](https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/specify-detection-model)
-        /// | Model | Recommended use-case(s) |
-        /// | ---------- | -------- |
-        /// | 'detection_01': | The default detection model for [LargeFaceList - Add
-        /// Face](/docs/services/563879b61984550e40cbbe8d/operations/5a158c10d2de3616c086f2d3).
-        /// Recommend for near frontal face detection. For scenarios with exceptionally
-        /// large angle (head-pose) faces, occluded faces or wrong image orientation,
-        /// the faces in such cases may not be detected. |
-        /// | 'detection_02': | Detection model released in 2019 May with improved
-        /// accuracy especially on small, side and blurry faces. |
+        /// model](https://docs.microsoft.com/azure/cognitive-services/face/face-api-how-to-topics/specify-detection-model).
         ///
         /// Quota:
         /// * Free-tier subscription quota: 1,000 faces per large face list.
@@ -2284,7 +2261,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Face - Detect or (Large)FaceList - Add Face or (Large)PersonGroup - Add
         /// Face. The default value is 'detection_01', if another model is needed,
         /// please explicitly specify it. Possible values include: 'detection_01',
-        /// 'detection_02'
+        /// 'detection_02', 'detection_03'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.Network.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,15 +33,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="certificateAuthority">The CA used for intermediate CA
         /// generation.</param>
-        /// <param name="excludedDomains">List of domains which are excluded
-        /// from TLS termination.</param>
-        /// <param name="trustedRootCertificates">Certificates which are to be
-        /// trusted by the firewall.</param>
-        public FirewallPolicyTransportSecurity(FirewallPolicyCertificateAuthority certificateAuthority = default(FirewallPolicyCertificateAuthority), IList<string> excludedDomains = default(IList<string>), IList<FirewallPolicyTrustedRootCertificate> trustedRootCertificates = default(IList<FirewallPolicyTrustedRootCertificate>))
+        public FirewallPolicyTransportSecurity(FirewallPolicyCertificateAuthority certificateAuthority = default(FirewallPolicyCertificateAuthority))
         {
             CertificateAuthority = certificateAuthority;
-            ExcludedDomains = excludedDomains;
-            TrustedRootCertificates = trustedRootCertificates;
             CustomInit();
         }
 
@@ -57,19 +49,6 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "certificateAuthority")]
         public FirewallPolicyCertificateAuthority CertificateAuthority { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of domains which are excluded from TLS
-        /// termination.
-        /// </summary>
-        [JsonProperty(PropertyName = "excludedDomains")]
-        public IList<string> ExcludedDomains { get; set; }
-
-        /// <summary>
-        /// Gets or sets certificates which are to be trusted by the firewall.
-        /// </summary>
-        [JsonProperty(PropertyName = "trustedRootCertificates")]
-        public IList<FirewallPolicyTrustedRootCertificate> TrustedRootCertificates { get; set; }
 
     }
 }

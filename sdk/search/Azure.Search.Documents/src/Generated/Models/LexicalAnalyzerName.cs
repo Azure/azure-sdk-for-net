@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all text analyzers supported by Azure Cognitive Search. </summary>
     public readonly partial struct LexicalAnalyzerName : IEquatable<LexicalAnalyzerName>
@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="LexicalAnalyzerName"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LexicalAnalyzerName(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
@@ -83,8 +84,8 @@ namespace Azure.Search.Documents.Models
         private const string PlLuceneValue = "pl.lucene";
         private const string PtBrMicrosoftValue = "pt-BR.microsoft";
         private const string PtBrLuceneValue = "pt-BR.lucene";
-        private const string PtMicrosoftValue = "pt-PT.microsoft";
-        private const string PtLuceneValue = "pt-PT.lucene";
+        private const string PtPtMicrosoftValue = "pt-PT.microsoft";
+        private const string PtPtLuceneValue = "pt-PT.lucene";
         private const string PaMicrosoftValue = "pa.microsoft";
         private const string RoMicrosoftValue = "ro.microsoft";
         private const string RoLuceneValue = "ro.lucene";
@@ -240,9 +241,9 @@ namespace Azure.Search.Documents.Models
         /// <summary> Lucene analyzer for Portuguese (Brazil). </summary>
         public static LexicalAnalyzerName PtBrLucene { get; } = new LexicalAnalyzerName(PtBrLuceneValue);
         /// <summary> Microsoft analyzer for Portuguese (Portugal). </summary>
-        public static LexicalAnalyzerName PtMicrosoft { get; } = new LexicalAnalyzerName(PtMicrosoftValue);
+        public static LexicalAnalyzerName PtPtMicrosoft { get; } = new LexicalAnalyzerName(PtPtMicrosoftValue);
         /// <summary> Lucene analyzer for Portuguese (Portugal). </summary>
-        public static LexicalAnalyzerName PtLucene { get; } = new LexicalAnalyzerName(PtLuceneValue);
+        public static LexicalAnalyzerName PtPtLucene { get; } = new LexicalAnalyzerName(PtPtLuceneValue);
         /// <summary> Microsoft analyzer for Punjabi. </summary>
         public static LexicalAnalyzerName PaMicrosoft { get; } = new LexicalAnalyzerName(PaMicrosoftValue);
         /// <summary> Microsoft analyzer for Romanian. </summary>

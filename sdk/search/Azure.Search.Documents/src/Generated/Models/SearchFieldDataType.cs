@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the data type of a field in a search index. </summary>
     public readonly partial struct SearchFieldDataType : IEquatable<SearchFieldDataType>
@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchFieldDataType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

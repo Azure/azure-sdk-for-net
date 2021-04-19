@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.WebSites
             AppServicePlans = new AppServicePlansOperations(this);
             ResourceHealthMetadata = new ResourceHealthMetadataOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-08-01";
+            ApiVersion = "2020-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

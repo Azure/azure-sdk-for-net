@@ -56,11 +56,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="dataFormat">The data format of the message. Optionally
         /// the data format can be added to each message. Possible values
         /// include: 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
-        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET',
-        /// 'ORC'</param>
+        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
+        /// 'APACHEAVRO', 'W3CLOGFILE'</param>
         /// <param name="eventSystemProperties">System properties of the iot
         /// hub</param>
-        public IotHubDataConnection(string iotHubResourceId, string consumerGroup, string sharedAccessPolicyName, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>))
+        /// <param name="provisioningState">The provisioned state of the
+        /// resource. Possible values include: 'Running', 'Creating',
+        /// 'Deleting', 'Succeeded', 'Failed', 'Moving'</param>
+        public IotHubDataConnection(string iotHubResourceId, string consumerGroup, string sharedAccessPolicyName, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string provisioningState = default(string))
             : base(id, name, type, location)
         {
             IotHubResourceId = iotHubResourceId;
@@ -70,6 +73,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             DataFormat = dataFormat;
             EventSystemProperties = eventSystemProperties;
             SharedAccessPolicyName = sharedAccessPolicyName;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -109,7 +113,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Gets or sets the data format of the message. Optionally the data
         /// format can be added to each message. Possible values include:
         /// 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', 'TXT',
-        /// 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC'
+        /// 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC',
+        /// 'APACHEAVRO', 'W3CLOGFILE'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataFormat")]
         public string DataFormat { get; set; }
@@ -125,6 +130,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sharedAccessPolicyName")]
         public string SharedAccessPolicyName { get; set; }
+
+        /// <summary>
+        /// Gets the provisioned state of the resource. Possible values
+        /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
+        /// 'Moving'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.

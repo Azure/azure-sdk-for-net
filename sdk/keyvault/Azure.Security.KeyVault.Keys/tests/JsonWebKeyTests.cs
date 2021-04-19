@@ -15,6 +15,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
     public class JsonWebKeyTests
     {
         [Test]
+        public void EmptyKeyOps()
+        {
+            JsonWebKey jwk = new JsonWebKey(null);
+            Assert.IsEmpty(jwk.KeyOps);
+        }
+
+        [Test]
         public void AesDefaultsKeyOps()
         {
             using Aes aes = Aes.Create();
@@ -70,16 +77,20 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.Throws<InvalidOperationException>(() => jwk.ToAes());
         }
 
-        [Test]
-        public void ToAesInvalidKey()
+        [TestCase(KeyType.OctValue)]
+        [TestCase(KeyType.OctHsmValue)]
+        public void ToAesInvalidKey(string keyType)
         {
             JsonWebKey jwk = new JsonWebKey
             {
-                KeyType = KeyType.Oct,
+                KeyType = new KeyType(keyType),
                 K = null,
             };
 
-            Assert.Throws<InvalidOperationException>(() => jwk.ToAes());
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => jwk.ToAes());
+
+            // This should always be expected for oct-HSM because the HSM won't release the key.
+            Assert.AreEqual("key does not contain a value", ex.Message);
         }
 
         [TestCase(false)]
@@ -424,7 +435,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private static bool HasPrivateKey(JsonWebKey jwk)
         {
-            if (jwk.KeyType == KeyType.Oct)
+            if (jwk.KeyType == KeyType.Oct || jwk.KeyType == KeyType.OctHsm)
             {
                 return jwk.K != null;
             }

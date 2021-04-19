@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -14,12 +12,12 @@ namespace Azure.Core.TestFramework
     [ClientTestFixture]
     public abstract class ClientTestBase
     {
-        private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();
+        protected static readonly ProxyGenerator ProxyGenerator = new ProxyGenerator();
 
         private static readonly IInterceptor s_useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
         private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
         private static readonly IInterceptor s_diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
-
+        private static Dictionary<Type, Exception> s_clientValidation = new Dictionary<Type, Exception>();
         public bool IsAsync { get; }
 
         public bool TestDiagnostics { get; set; } = true;
@@ -29,35 +27,53 @@ namespace Azure.Core.TestFramework
             IsAsync = isAsync;
         }
 
-        public virtual TClient CreateClient<TClient>(params object[] args) where TClient : class
+        protected TClient CreateClient<TClient>(params object[] args) where TClient : class
         {
             return InstrumentClient((TClient)Activator.CreateInstance(typeof(TClient), args));
         }
 
-        public virtual TClient InstrumentClient<TClient>(TClient client) where TClient : class => InstrumentClient(client, null);
+        public TClient InstrumentClient<TClient>(TClient client) where TClient : class => (TClient)InstrumentClient(typeof(TClient), client, null);
 
-        public virtual TClient InstrumentClient<TClient>(TClient client, IEnumerable<IInterceptor> preInterceptors) where TClient : class
+        protected TClient InstrumentClient<TClient>(TClient client, IEnumerable<IInterceptor> preInterceptors) where TClient : class => (TClient)InstrumentClient(typeof(TClient), client, preInterceptors);
+
+        protected internal virtual object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
         {
-            Debug.Assert(!client.GetType().Name.EndsWith("Proxy"), $"{nameof(client)} was already instrumented");
-
-            if (ClientValidation<TClient>.Validated == false)
+            if (client is IProxyTargetAccessor)
             {
-                foreach (MethodInfo methodInfo in typeof(TClient).GetMethods(BindingFlags.Instance | BindingFlags.Public))
-                {
-                    if (methodInfo.Name.EndsWith("Async") && !methodInfo.IsVirtual)
-                    {
-                        ClientValidation<TClient>.ValidationException = new InvalidOperationException($"Client type contains public non-virtual async method {methodInfo.Name}");
-
-                        break;
-                    }
-                }
-
-                ClientValidation<TClient>.Validated = true;
+                // Already instrumented
+                return client;
             }
 
-            if (ClientValidation<TClient>.ValidationException != null)
+            lock (s_clientValidation)
             {
-                throw ClientValidation<TClient>.ValidationException;
+                if (!s_clientValidation.TryGetValue(clientType, out var validationException))
+                {
+                    foreach (MethodInfo methodInfo in clientType.GetMethods(BindingFlags.Instance | BindingFlags.Public))
+                    {
+                        if (methodInfo.Name.EndsWith("Async") && !methodInfo.IsVirtual)
+                        {
+                            validationException = new InvalidOperationException($"Client type contains public non-virtual async method {methodInfo.Name}");
+
+                            break;
+                        }
+
+                        if (methodInfo.Name.EndsWith("Client") &&
+                            methodInfo.Name.StartsWith("Get") &&
+                            !methodInfo.IsVirtual)
+                        {
+                            validationException = new InvalidOperationException($"Client type contains public non-virtual Get*Client method {methodInfo.Name}");
+
+                            break;
+                        }
+                    }
+
+                    s_clientValidation[clientType] = validationException;
+                }
+
+                if (validationException != null)
+                {
+                    throw validationException;
+                }
             }
 
             List<IInterceptor> interceptors = new List<IInterceptor>();
@@ -66,10 +82,14 @@ namespace Azure.Core.TestFramework
                 interceptors.AddRange(preInterceptors);
             }
 
+            interceptors.Add(new GetOriginalInterceptor(client));
+
             if (TestDiagnostics)
             {
                 interceptors.Add(s_diagnosticScopeValidatingInterceptor);
             }
+
+            interceptors.Add(new InstrumentResultInterceptor(this));
 
             // Ignore the async method interceptor entirely if we're running a
             // a SyncOnly test
@@ -80,15 +100,23 @@ namespace Azure.Core.TestFramework
                 interceptors.Add(IsAsync ? s_avoidSyncInterceptor : s_useSyncInterceptor);
             }
 
-            return s_proxyGenerator.CreateClassProxyWithTarget(client, interceptors.ToArray());
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                clientType,
+                new[] {typeof(IInstrumented)},
+                client,
+                interceptors.ToArray());
         }
 
-
-        private static class ClientValidation<TClient>
+        protected internal virtual object InstrumentOperation(Type operationType, object operation)
         {
-            public static bool Validated;
+            return operation;
+        }
 
-            public static Exception ValidationException;
+        protected T GetOriginal<T>(T instrumented)
+        {
+            if (instrumented == null) throw new ArgumentNullException(nameof(instrumented));
+            var i = instrumented as IInstrumented ?? throw new InvalidOperationException($"{instrumented.GetType()} is not an instrumented type");
+            return (T) i.Original;
         }
     }
 }

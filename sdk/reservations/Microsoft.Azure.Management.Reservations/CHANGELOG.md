@@ -1,5 +1,17 @@
 ## Microsoft.Azure.Management.Reservations release notes
 
+### Changes in 1.15.0-preview
+**Notes**
+
+* Add quota GA APIs.
+* Removed AutoQuotaIncrease APIs from GA version. It's available in preview version -1.14.0-preview.
+
+### Changes in 1.14.0-preview
+**Notes**
+
+* Add quota APIs.
+* Add AutoQuotaIncrease APIs.
+
 ### Changes in 1.9.0-preview
 
 **Notes**

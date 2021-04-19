@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class AesCryptographyProvider : LocalCryptographyProvider
     {
-        internal AesCryptographyProvider(KeyVaultKey key) : base(key)
+        internal AesCryptographyProvider(JsonWebKey keyMaterial, KeyProperties keyProperties, bool localOnly) : base(keyMaterial, keyProperties, localOnly)
         {
         }
 
@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             if (KeyMaterial != null)
             {
-                if (operation == KeyOperation.WrapKey || operation == KeyOperation.UnwrapKey)
+                if (operation == KeyOperation.Encrypt || operation == KeyOperation.Decrypt || operation == KeyOperation.WrapKey || operation == KeyOperation.UnwrapKey)
                 {
                     return KeyMaterial.SupportsOperation(operation);
                 }
@@ -27,26 +27,84 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return false;
         }
 
+        public override DecryptResult Decrypt(DecryptParameters parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            ThrowIfTimeInvalid();
+
+            EncryptionAlgorithm algorithm = parameters.Algorithm;
+            if (algorithm.GetAesCbcEncryptionAlgorithm() is AesCbc aesCbc)
+            {
+                using ICryptoTransform decryptor = aesCbc.CreateDecryptor(KeyMaterial.K, parameters.Iv);
+
+                byte[] ciphertext = parameters.Ciphertext;
+                byte[] plaintext = decryptor.TransformFinalBlock(ciphertext, 0, ciphertext.Length);
+
+                return new DecryptResult
+                {
+                    Algorithm = algorithm,
+                    KeyId = KeyMaterial.Id,
+                    Plaintext = plaintext,
+                };
+            }
+            else
+            {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Decrypt), algorithm);
+                return null;
+            }
+        }
+
+        public override EncryptResult Encrypt(EncryptParameters parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            ThrowIfTimeInvalid();
+
+            EncryptionAlgorithm algorithm = parameters.Algorithm;
+            if (algorithm.GetAesCbcEncryptionAlgorithm() is AesCbc aesCbc)
+            {
+                // Make sure the IV is initialized.
+                parameters.Initialize();
+
+                using ICryptoTransform encryptor = aesCbc.CreateEncryptor(KeyMaterial.K, parameters.Iv);
+
+                byte[] plaintext = parameters.Plaintext;
+                byte[] ciphertext = encryptor.TransformFinalBlock(plaintext, 0, plaintext.Length);
+
+                return new EncryptResult
+                {
+                    Algorithm = algorithm,
+                    KeyId = KeyMaterial.Id,
+                    Ciphertext = ciphertext,
+                    Iv = parameters.Iv,
+                };
+            }
+            else
+            {
+                KeysEventSource.Singleton.AlgorithmNotSupported(nameof(Encrypt), algorithm);
+                return null;
+            }
+        }
+
         public override UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(encryptedKey, nameof(encryptedKey));
 
-            int algorithmKeySizeBytes = algorithm.GetKeySizeInBytes();
-            if (algorithmKeySizeBytes == 0)
+            AesKw keyWrapAlgorithm = algorithm.GetAesKeyWrapAlgorithm();
+            if (keyWrapAlgorithm == null)
             {
                 KeysEventSource.Singleton.AlgorithmNotSupported(nameof(UnwrapKey), algorithm);
                 return null;
             }
 
             int keySizeBytes = GetKeySizeInBytes();
-            if (keySizeBytes < algorithmKeySizeBytes)
+            if (keySizeBytes < keyWrapAlgorithm.KeySizeInBytes)
             {
-                throw new ArgumentException($"Key wrap algorithm {algorithm} key size {algorithmKeySizeBytes} is greater than the underlying key size {keySizeBytes}");
+                throw new ArgumentException($"Key wrap algorithm {algorithm} key size {keyWrapAlgorithm.KeySizeInBytes} is greater than the underlying key size {keySizeBytes}");
             }
 
-            byte[] sizedKey = (keySizeBytes == algorithmKeySizeBytes) ? KeyMaterial.K : KeyMaterial.K.Take(algorithmKeySizeBytes);
-
-            using ICryptoTransform decryptor = AesKw.CreateDecryptor(sizedKey);
+            using ICryptoTransform decryptor = keyWrapAlgorithm.CreateDecryptor(KeyMaterial.K);
 
             byte[] key = decryptor.TransformFinalBlock(encryptedKey, 0, encryptedKey.Length);
             return new UnwrapResult
@@ -63,22 +121,20 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             ThrowIfTimeInvalid();
 
-            int algorithmKeySizeBytes = algorithm.GetKeySizeInBytes();
-            if (algorithmKeySizeBytes == 0)
+            AesKw keyWrapAlgorithm = algorithm.GetAesKeyWrapAlgorithm();
+            if (keyWrapAlgorithm == null)
             {
                 KeysEventSource.Singleton.AlgorithmNotSupported(nameof(WrapKey), algorithm);
                 return null;
             }
 
             int keySizeBytes = GetKeySizeInBytes();
-            if (keySizeBytes < algorithmKeySizeBytes)
+            if (keySizeBytes < keyWrapAlgorithm.KeySizeInBytes)
             {
-                throw new ArgumentException($"Key wrap algorithm {algorithm} key size {algorithmKeySizeBytes} is greater than the underlying key size {keySizeBytes}");
+                throw new ArgumentException($"Key wrap algorithm {algorithm} key size {keyWrapAlgorithm.KeySizeInBytes} is greater than the underlying key size {keySizeBytes}");
             }
 
-            byte[] sizedKey = (keySizeBytes == algorithmKeySizeBytes) ? KeyMaterial.K : KeyMaterial.K.Take(algorithmKeySizeBytes);
-
-            using ICryptoTransform encryptor = AesKw.CreateEncryptor(sizedKey);
+            using ICryptoTransform encryptor = keyWrapAlgorithm.CreateEncryptor(KeyMaterial.K);
 
             byte[] encryptedKey = encryptor.TransformFinalBlock(key, 0, key.Length);
             return new WrapResult
@@ -89,11 +145,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             };
         }
 
-        private int GetKeySizeInBits()
-        {
-            return GetKeySizeInBytes() << 3;
-        }
-
         private int GetKeySizeInBytes()
         {
             if (KeyMaterial.K != null)
@@ -102,7 +153,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
 
             return 0;
-
         }
     }
 }

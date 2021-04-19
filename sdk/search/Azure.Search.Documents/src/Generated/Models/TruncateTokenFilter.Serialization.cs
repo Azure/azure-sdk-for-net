@@ -8,14 +8,14 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class TruncateTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Length != null)
+            if (Optional.IsDefined(Length))
             {
                 writer.WritePropertyName("length");
                 writer.WriteNumberValue(Length.Value);
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Models
 
         internal static TruncateTokenFilter DeserializeTruncateTokenFilter(JsonElement element)
         {
-            int? length = default;
+            Optional<int> length = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -38,6 +38,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     length = property.Value.GetInt32();
@@ -54,7 +55,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new TruncateTokenFilter(odataType, name, length);
+            return new TruncateTokenFilter(odataType, name, Optional.ToNullable(length));
         }
     }
 }

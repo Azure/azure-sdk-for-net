@@ -1,0 +1,122 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/general?showStats=true\u0026stringIndexType=Utf16CodeUnit",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "190",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-3d8b12b3fc06514789ba36c53927c471-e2b196df0186df4c-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "3c7b09ea57a0a9f84c938c05ff06e377",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "1",
+            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+            "language": "en"
+          },
+          {
+            "id": "2",
+            "text": "Microsoft fue fundado por Bill Gates y Paul Allen.",
+            "language": "es"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4f026eb4-9949-4e33-8abe-771259c42cf4",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
+        "Date": "Wed, 24 Feb 2021 16:56:06 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "47"
+      },
+      "ResponseBody": {
+        "statistics": {
+          "documentsCount": 2,
+          "validDocumentsCount": 2,
+          "erroneousDocumentsCount": 0,
+          "transactionsCount": 2
+        },
+        "documents": [
+          {
+            "id": "1",
+            "statistics": {
+              "charactersCount": 51,
+              "transactionsCount": 1
+            },
+            "entities": [
+              {
+                "text": "Microsoft",
+                "category": "Organization",
+                "offset": 0,
+                "length": 9,
+                "confidenceScore": 0.97
+              },
+              {
+                "text": "Bill Gates",
+                "category": "Person",
+                "offset": 25,
+                "length": 10,
+                "confidenceScore": 1.0
+              },
+              {
+                "text": "Paul Allen",
+                "category": "Person",
+                "offset": 40,
+                "length": 10,
+                "confidenceScore": 0.99
+              }
+            ],
+            "warnings": []
+          },
+          {
+            "id": "2",
+            "statistics": {
+              "charactersCount": 50,
+              "transactionsCount": 1
+            },
+            "entities": [
+              {
+                "text": "Microsoft",
+                "category": "Organization",
+                "offset": 0,
+                "length": 9,
+                "confidenceScore": 0.97
+              },
+              {
+                "text": "Bill Gates",
+                "category": "Person",
+                "offset": 26,
+                "length": 10,
+                "confidenceScore": 0.99
+              },
+              {
+                "text": "Paul Allen",
+                "category": "Person",
+                "offset": 39,
+                "length": 10,
+                "confidenceScore": 0.99
+              }
+            ],
+            "warnings": []
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2021-01-15"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "541291504",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+  }
+}

@@ -9,76 +9,106 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchField : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
-            if (IsKey != null)
+            if (Optional.IsDefined(IsKey))
             {
                 writer.WritePropertyName("key");
                 writer.WriteBooleanValue(IsKey.Value);
             }
-            if (IsRetrievable != null)
+            if (Optional.IsDefined(IsRetrievable))
             {
                 writer.WritePropertyName("retrievable");
                 writer.WriteBooleanValue(IsRetrievable.Value);
             }
-            if (IsSearchable != null)
+            if (Optional.IsDefined(IsSearchable))
             {
                 writer.WritePropertyName("searchable");
                 writer.WriteBooleanValue(IsSearchable.Value);
             }
-            if (IsFilterable != null)
+            if (Optional.IsDefined(IsFilterable))
             {
                 writer.WritePropertyName("filterable");
                 writer.WriteBooleanValue(IsFilterable.Value);
             }
-            if (IsSortable != null)
+            if (Optional.IsDefined(IsSortable))
             {
                 writer.WritePropertyName("sortable");
                 writer.WriteBooleanValue(IsSortable.Value);
             }
-            if (IsFacetable != null)
+            if (Optional.IsDefined(IsFacetable))
             {
                 writer.WritePropertyName("facetable");
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
-            if (Analyzer != null)
+            if (Optional.IsDefined(AnalyzerName))
             {
-                writer.WritePropertyName("analyzer");
-                writer.WriteStringValue(Analyzer.Value.ToString());
+                if (AnalyzerName != null)
+                {
+                    writer.WritePropertyName("analyzer");
+                    writer.WriteStringValue(AnalyzerName.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("analyzer");
+                }
             }
-            if (SearchAnalyzer != null)
+            if (Optional.IsDefined(SearchAnalyzerName))
             {
-                writer.WritePropertyName("searchAnalyzer");
-                writer.WriteStringValue(SearchAnalyzer.Value.ToString());
+                if (SearchAnalyzerName != null)
+                {
+                    writer.WritePropertyName("searchAnalyzer");
+                    writer.WriteStringValue(SearchAnalyzerName.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("searchAnalyzer");
+                }
             }
-            if (IndexAnalyzer != null)
+            if (Optional.IsDefined(IndexAnalyzerName))
             {
-                writer.WritePropertyName("indexAnalyzer");
-                writer.WriteStringValue(IndexAnalyzer.Value.ToString());
+                if (IndexAnalyzerName != null)
+                {
+                    writer.WritePropertyName("indexAnalyzer");
+                    writer.WriteStringValue(IndexAnalyzerName.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("indexAnalyzer");
+                }
             }
-            if (SynonymMaps != null)
+            if (Optional.IsDefined(Normalizer))
+            {
+                if (Normalizer != null)
+                {
+                    writer.WritePropertyName("normalizer");
+                    writer.WriteStringValue(Normalizer.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("normalizer");
+                }
+            }
+            if (Optional.IsCollectionDefined(SynonymMapNames))
             {
                 writer.WritePropertyName("synonymMaps");
                 writer.WriteStartArray();
-                foreach (var item in SynonymMaps)
+                foreach (var item in SynonymMapNames)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Fields != null)
+            if (Optional.IsCollectionDefined(Fields))
             {
                 writer.WritePropertyName("fields");
                 writer.WriteStartArray();
@@ -95,25 +125,22 @@ namespace Azure.Search.Documents.Models
         {
             string name = default;
             SearchFieldDataType type = default;
-            bool? key = default;
-            bool? retrievable = default;
-            bool? searchable = default;
-            bool? filterable = default;
-            bool? sortable = default;
-            bool? facetable = default;
-            LexicalAnalyzerName? analyzer = default;
-            LexicalAnalyzerName? searchAnalyzer = default;
-            LexicalAnalyzerName? indexAnalyzer = default;
-            IList<string> synonymMaps = default;
-            IList<SearchField> fields = default;
+            Optional<bool> key = default;
+            Optional<bool> retrievable = default;
+            Optional<bool> searchable = default;
+            Optional<bool> filterable = default;
+            Optional<bool> sortable = default;
+            Optional<bool> facetable = default;
+            Optional<LexicalAnalyzerName?> analyzer = default;
+            Optional<LexicalAnalyzerName?> searchAnalyzer = default;
+            Optional<LexicalAnalyzerName?> indexAnalyzer = default;
+            Optional<LexicalNormalizerName?> normalizer = default;
+            Optional<IList<string>> synonymMaps = default;
+            Optional<IList<SearchField>> fields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -126,6 +153,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     key = property.Value.GetBoolean();
@@ -135,6 +163,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retrievable = property.Value.GetBoolean();
@@ -144,6 +173,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     searchable = property.Value.GetBoolean();
@@ -153,6 +183,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filterable = property.Value.GetBoolean();
@@ -162,6 +193,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sortable = property.Value.GetBoolean();
@@ -171,6 +203,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     facetable = property.Value.GetBoolean();
@@ -180,6 +213,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        analyzer = null;
                         continue;
                     }
                     analyzer = new LexicalAnalyzerName(property.Value.GetString());
@@ -189,6 +223,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        searchAnalyzer = null;
                         continue;
                     }
                     searchAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
@@ -198,28 +233,33 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        indexAnalyzer = null;
                         continue;
                     }
                     indexAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("normalizer"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        normalizer = null;
+                        continue;
+                    }
+                    normalizer = new LexicalNormalizerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("synonymMaps"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     synonymMaps = array;
                     continue;
@@ -228,25 +268,19 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SearchField> array = new List<SearchField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(DeserializeSearchField(item));
-                        }
+                        array.Add(DeserializeSearchField(item));
                     }
                     fields = array;
                     continue;
                 }
             }
-            return new SearchField(name, type, key, retrievable, searchable, filterable, sortable, facetable, analyzer, searchAnalyzer, indexAnalyzer, synonymMaps, fields);
+            return new SearchField(name, type, Optional.ToNullable(key), Optional.ToNullable(retrievable), Optional.ToNullable(searchable), Optional.ToNullable(filterable), Optional.ToNullable(sortable), Optional.ToNullable(facetable), Optional.ToNullable(analyzer), Optional.ToNullable(searchAnalyzer), Optional.ToNullable(indexAnalyzer), Optional.ToNullable(normalizer), Optional.ToList(synonymMaps), Optional.ToList(fields));
         }
     }
 }

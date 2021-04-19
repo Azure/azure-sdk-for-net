@@ -33,16 +33,16 @@ namespace Azure.Messaging.EventHubs.Amqp
             switch (instance)
             {
                 case AmqpException amqpEx:
-                    return AmqpError.CreateExceptionForError(amqpEx.Error, eventHubName);
+                    return AmqpError.CreateExceptionForError(amqpEx.Error, eventHubName, amqpEx);
 
                 case OperationCanceledException operationEx when (operationEx.InnerException is AmqpException):
-                    return AmqpError.CreateExceptionForError(((AmqpException)operationEx.InnerException).Error, eventHubName);
+                    return AmqpError.CreateExceptionForError(((AmqpException)operationEx.InnerException).Error, eventHubName, operationEx.InnerException);
 
                 case OperationCanceledException operationEx when (operationEx.InnerException != null):
                     return operationEx.InnerException;
 
                 case OperationCanceledException operationEx when (!(operationEx is TaskCanceledException)):
-                    return new EventHubsException(eventHubName, operationEx.Message, EventHubsException.FailureReason.ServiceTimeout);
+                    return new EventHubsException(eventHubName, operationEx.Message, EventHubsException.FailureReason.ServiceTimeout, operationEx);
 
                 default:
                     return instance;
@@ -69,6 +69,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                 case InvalidOperationException _ when (instance.Message.IndexOf("when the connection is closing", StringComparison.InvariantCultureIgnoreCase) >= 0):
                 case TaskCanceledException _:
                     return new EventHubsException(true, eventHubName, Resources.CouldNotCreateLink, EventHubsException.FailureReason.ServiceCommunicationProblem, instance);
+
+                case ObjectDisposedException _:
+                    return new EventHubsException(false, eventHubName, Resources.CouldNotCreateLink, EventHubsException.FailureReason.ClientClosed, instance);
 
                 default:
                     return instance;

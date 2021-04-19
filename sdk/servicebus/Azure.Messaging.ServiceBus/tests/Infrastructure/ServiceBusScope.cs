@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// <summary>The number of seconds to use as the basis for backing off on retry attempts.</summary>
         private const double RetryExponentialBackoffSeconds = 3.0;
 
-        /// <summary>The number of seconds to use as the basis for applying jitter to retry back-off calculations.</summary>
+        /// <summary>The number of seconds to use as the basis for applying jitter to retry backoff calculations.</summary>
         private const double RetryBaseJitterSeconds = 60.0;
 
         /// <summary>The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.</summary>
@@ -44,6 +44,9 @@ namespace Azure.Messaging.ServiceBus.Tests
 
         /// <summary>The random number generator to use for each requesting thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
+
+        ///<summary>The URI for the location of the resource manager for the active cloud environment.</summary>
+        private static readonly Uri ResourceManagerUri = new Uri(ServiceBusTestEnvironment.Instance.ResourceManagerUrl);
 
         /// <summary>The seed to use for random number generation.</summary>
         private static int s_randomSeed = Environment.TickCount;
@@ -66,7 +69,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             string CreateName() => $"net-servicebus-{ Guid.NewGuid().ToString("D").Substring(0, 30) }";
 
-            using (var client = new ServiceBusManagementClient(new TokenCredentials(token)) { SubscriptionId = azureSubscription })
+            using (var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription })
             {
                 var location = await QueryResourceGroupLocationAsync(token, resourceGroup, azureSubscription).ConfigureAwait(false);
 
@@ -91,7 +94,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
             var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
-            using (var client = new ServiceBusManagementClient(new TokenCredentials(token)) { SubscriptionId = azureSubscription })
+            using (var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription })
             {
                 await CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName)).ConfigureAwait(false);
             }
@@ -119,6 +122,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                                                              bool enableSession,
                                                              bool forceQueueCreation = false,
                                                              TimeSpan? lockDuration = default,
+                                                             string overrideNamespace = default,
                                                              [CallerMemberName] string caller = "")
         {
             // If there was an override and the force flag is not set for creation, then build a scope
@@ -135,12 +139,12 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
             var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
-            var serviceBusNamespace = ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
+            var serviceBusNamespace = overrideNamespace ?? ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
             var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
-            using (var client = new ServiceBusManagementClient(new TokenCredentials(token)) { SubscriptionId = azureSubscription })
+            using (var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription })
             {
                 var queueParameters = new SBQueue(enablePartitioning: enablePartitioning, requiresSession: enableSession, maxSizeInMegabytes: 1024, lockDuration: lockDuration);
                 var queue = await CreateRetryPolicy<SBQueue>().ExecuteAsync(() => client.Queues.CreateOrUpdateAsync(resourceGroup, serviceBusNamespace, CreateName(), queueParameters)).ConfigureAwait(false);
@@ -182,7 +186,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var serviceBusNamespace = ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
             var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
-            using (var client = new ServiceBusManagementClient(new TokenCredentials(token)) { SubscriptionId = azureSubscription })
+            using (var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription })
             {
                 // If there was an override and the force flag is not set for creation, then build a scope for the
                 // specified topic.  Query the topic resource to build the list of its subscriptions for the scope.
@@ -236,7 +240,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                                                                           string resourceGroupName,
                                                                           string subscriptionId)
         {
-            using var client = new ResourceManagementClient(new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId };
+            using var client = new ResourceManagementClient(ResourceManagerUri, new TokenCredentials(accessToken)) { SubscriptionId = subscriptionId };
             {
                 ResourceGroup resourceGroup = await CreateRetryPolicy<ResourceGroup>().ExecuteAsync(() => client.ResourceGroups.GetAsync(resourceGroupName));
                 return resourceGroup.Location;
@@ -251,7 +255,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         private static async Task<string> AquireManagementTokenAsync()
         {
-            ManagementToken token = s_managementToken;
+            var token = s_managementToken;
+            var authority = new Uri(new Uri(ServiceBusTestEnvironment.Instance.AuthorityHostUrl), ServiceBusTestEnvironment.Instance.TenantId).ToString();
 
             // If there was no current token, or it is within the buffer for expiration, request a new token.
             // There is a benign race condition here, where there may be multiple requests in-flight for a new token.  Since
@@ -260,9 +265,9 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
+                var context = new AuthenticationContext(authority);
                 var credential = new ClientCredential(ServiceBusTestEnvironment.Instance.ClientId, ServiceBusTestEnvironment.Instance.ClientSecret);
-                var context = new AuthenticationContext($"https://login.windows.net/{ ServiceBusTestEnvironment.Instance.TenantId }");
-                var result = await context.AcquireTokenAsync("https://management.core.windows.net/", credential);
+                var result = await context.AcquireTokenAsync(ServiceBusTestEnvironment.Instance.ServiceManagementUrl, credential);
 
                 if ((string.IsNullOrEmpty(result?.AccessToken)))
                 {
@@ -301,7 +306,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <param name="maxRetryAttempts">The maximum retry attempts to allow.</param>
         /// <param name="exponentialBackoffSeconds">The number of seconds to use as the basis for backing off on retry attempts.</param>
-        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry back-off calculations.</param>
+        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry backoff calculations.</param>
         ///
         /// <returns>The retry policy in which to execute the management operation.</returns>
         ///
@@ -318,7 +323,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <param name="maxRetryAttempts">The maximum retry attempts to allow.</param>
         /// <param name="exponentialBackoffSeconds">The number of seconds to use as the basis for backing off on retry attempts.</param>
-        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry back-off calculations.</param>
+        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry backoff calculations.</param>
         ///
         /// <returns>The retry policy in which to execute the management operation.</returns>
         ///
@@ -394,7 +399,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 default:
                     return false;
-            };
+            }
         }
 
         /// <summary>
@@ -402,7 +407,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         /// <param name="attempt">The current attempt number.</param>
-        /// <param name="exponentialBackoffSeconds">The exponential back-off amount,, in seconds.</param>
+        /// <param name="exponentialBackoffSeconds">The exponential backoff amount, in seconds.</param>
         /// <param name="baseJitterSeconds">The amount of base jitter to include, in seconds.</param>
         ///
         /// <returns>The interval to wait before retrying the attempted operation.</returns>
@@ -483,7 +488,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
                     var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
-                    using var client = new ServiceBusManagementClient(new TokenCredentials(token)) { SubscriptionId = azureSubscription };
+                    using var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription };
                     await CreateRetryPolicy().ExecuteAsync(() => client.Queues.DeleteAsync(resourceGroup, NamespaceName, QueueName)).ConfigureAwait(false);
                 }
                 catch
@@ -580,7 +585,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
                     var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
-                    using var client = new ServiceBusManagementClient(new TokenCredentials(token)) { SubscriptionId = azureSubscription };
+                    using var client = new ServiceBusManagementClient(ResourceManagerUri, new TokenCredentials(token)) { SubscriptionId = azureSubscription };
                     await CreateRetryPolicy().ExecuteAsync(() => client.Topics.DeleteAsync(resourceGroup, NamespaceName, TopicName)).ConfigureAwait(false);
                 }
                 catch

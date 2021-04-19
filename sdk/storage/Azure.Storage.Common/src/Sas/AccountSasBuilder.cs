@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
 
 namespace Azure.Storage.Sas
 {
@@ -10,7 +12,8 @@ namespace Azure.Storage.Sas
     /// <see cref="AccountSasBuilder"/> is used to generate an account level
     /// Shared Access Signature (SAS) for Azure Storage services.
     /// For more information, see
-    /// <see href="https://docs.microsoft.com/rest/api/storageservices/constructing-an-account-sas" />.
+    /// <see href="https://docs.microsoft.com/rest/api/storageservices/constructing-an-account-sas">
+    /// Create an account SAS</see>.
     /// </summary>
     public class AccountSasBuilder
     {
@@ -76,6 +79,55 @@ namespace Azure.Storage.Sas
         public AccountSasResourceTypes ResourceTypes { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AccountSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor has been deprecated. Please consider using
+        /// <see cref="AccountSasBuilder(AccountSasPermissions, DateTimeOffset, AccountSasServices, AccountSasResourceTypes)"/>
+        /// to create a Service SAS. This change does not have any impact on how
+        /// your application generates or makes use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AccountSasBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountSasBuilder"/>
+        /// class to create a Blob Container Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="services">
+        /// Specifies the services accessible from an account level shared access
+        /// signature.
+        /// </param>
+        /// <param name="resourceTypes">
+        /// Specifies the resource types accessible from an account level shared
+        /// access signature.
+        /// </param>
+        public AccountSasBuilder(
+            AccountSasPermissions permissions,
+            DateTimeOffset expiresOn,
+            AccountSasServices services,
+            AccountSasResourceTypes resourceTypes)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+            Services = services;
+            ResourceTypes = resourceTypes;
+        }
+
+        /// <summary>
         /// Sets the permissions for an account SAS.
         /// </summary>
         /// <param name="permissions">
@@ -92,8 +144,25 @@ namespace Azure.Storage.Sas
         /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
         public void SetPermissions(string rawPermissions)
         {
-            Permissions = rawPermissions;
+            Permissions = SasExtensions.ValidateAndSanitizeRawPermissions(
+                permissions: rawPermissions,
+                validPermissionsInOrder: s_validPermissionsInOrder);
         }
+
+        private static readonly List<char> s_validPermissionsInOrder = new List<char>
+        {
+            Constants.Sas.Permissions.Read,
+            Constants.Sas.Permissions.Write,
+            Constants.Sas.Permissions.Delete,
+            Constants.Sas.Permissions.DeleteBlobVersion,
+            Constants.Sas.Permissions.List,
+            Constants.Sas.Permissions.Add,
+            Constants.Sas.Permissions.Create,
+            Constants.Sas.Permissions.Update,
+            Constants.Sas.Permissions.Process,
+            Constants.Sas.Permissions.Tag,
+            Constants.Sas.Permissions.FilterByTags,
+        };
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this

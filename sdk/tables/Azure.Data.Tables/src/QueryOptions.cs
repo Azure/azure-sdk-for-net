@@ -3,7 +3,6 @@
 
 namespace Azure.Data.Tables.Models
 {
-    ///<inheritdoc/>
     internal partial class QueryOptions
     { }
 }

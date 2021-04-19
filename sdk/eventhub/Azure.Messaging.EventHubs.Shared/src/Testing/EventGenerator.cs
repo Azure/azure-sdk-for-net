@@ -26,6 +26,23 @@ namespace Azure.Messaging.EventHubs.Tests
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
         /// <summary>
+        ///   Creates a buffer of read-only memory with random values to serve
+        ///   as the body of an event.
+        /// </summary>
+        ///
+        /// <param name="bodySizeBytes">The size of the body, in bytes.</param>
+        ///
+        /// <returns>A memory buffer of the requested size range containing randomized data.</returns>
+        ///
+        public static ReadOnlyMemory<byte> CreateRandomBody(long bodySizeBytes)
+        {
+            var buffer = new byte[bodySizeBytes];
+            RandomNumberGenerator.Value.NextBytes(buffer);
+
+            return buffer;
+        }
+
+        /// <summary>
         ///   Creates a set of events with random data and random body size.
         /// </summary>
         ///
@@ -37,6 +54,28 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             const int minimumBodySize = 15;
             const int maximumBodySize = 83886;
+
+            for (var index = 0; index < numberOfEvents; ++index)
+            {
+                var buffer = new byte[RandomNumberGenerator.Value.Next(minimumBodySize, maximumBodySize)];
+                RandomNumberGenerator.Value.NextBytes(buffer);
+
+                yield return CreateEventFromBody(buffer);
+            }
+        }
+
+        /// <summary>
+        ///   Creates a set of events with random data and a small body size.
+        /// </summary>
+        ///
+        /// <param name="numberOfEvents">The number of events to create.</param>
+        ///
+        /// <returns>The requested set of events.</returns>
+        ///
+        public static IEnumerable<EventData> CreateSmallEvents(int numberOfEvents)
+        {
+            const int minimumBodySize = 5;
+            const int maximumBodySize = 25;
 
             for (var index = 0; index < numberOfEvents; ++index)
             {
@@ -62,6 +101,25 @@ namespace Azure.Messaging.EventHubs.Tests
             currentEvent.Properties.Add(IdPropertyName, Guid.NewGuid().ToString());
 
             return currentEvent;
+        }
+
+        /// <summary>
+        ///   Creates and configures an <see cref="EventData" /> instance using the
+        ///   provided <paramref name="eventBody" /> as the embedded data.
+        /// </summary>
+        ///
+        /// <param name="numberOfEvents">The number of events to create.</param>
+        /// <param name="eventBody">The set of bytes to use as the data body of the event.</param>
+        ///
+        /// <returns>The requested set of events.</returns>
+        ///
+        public static IEnumerable<EventData> CreateEventsFromBody(int numberOfEvents,
+                                                                  ReadOnlyMemory<byte> eventBody)
+        {
+            for (var index = 0; index < numberOfEvents; ++index)
+            {
+                yield return CreateEventFromBody(eventBody);
+            }
         }
 
         /// <summary>
@@ -111,7 +169,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
                 else
                 {
-                   queuedEvents.Dequeue();
+                    queuedEvents.Dequeue();
                 }
             }
 

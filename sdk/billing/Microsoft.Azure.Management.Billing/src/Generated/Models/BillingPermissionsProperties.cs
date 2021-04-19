@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// class.
         /// </summary>
         /// <param name="actions">The set of actions that the caller is allowed
-        /// to do</param>
-        /// <param name="notActions">The set of actions the caller is not
-        /// allowed to do</param>
+        /// to perform.</param>
+        /// <param name="notActions">The set of actions that the caller is not
+        /// allowed to perform.</param>
         public BillingPermissionsProperties(IList<string> actions = default(IList<string>), IList<string> notActions = default(IList<string>))
         {
             Actions = actions;
@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the set of actions that the caller is allowed to do
+        /// Gets the set of actions that the caller is allowed to perform.
         /// </summary>
         [JsonProperty(PropertyName = "actions")]
         public IList<string> Actions { get; private set; }
 
         /// <summary>
-        /// Gets the set of actions the caller is not allowed to do
+        /// Gets the set of actions that the caller is not allowed to perform.
         /// </summary>
         [JsonProperty(PropertyName = "notActions")]
         public IList<string> NotActions { get; private set; }

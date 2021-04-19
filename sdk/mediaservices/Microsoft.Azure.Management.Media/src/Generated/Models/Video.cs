@@ -32,19 +32,24 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="label">An optional label for the codec. The label can
         /// be used to control muxing behavior.</param>
-        /// <param name="keyFrameInterval">The distance between two key frames,
-        /// thereby defining a group of pictures (GOP). The value should be a
-        /// non-zero integer in the range [1, 30] seconds, specified in ISO
-        /// 8601 format. The default is 2 seconds (PT2S).</param>
+        /// <param name="keyFrameInterval">The distance between two key frames.
+        /// The value should be non-zero in the range [0.5, 20] seconds,
+        /// specified in ISO 8601 format. The default is 2 seconds(PT2S). Note
+        /// that this setting is ignored if VideoSyncMode.Passthrough is set,
+        /// where the KeyFrameInterval value will follow the input source
+        /// setting.</param>
         /// <param name="stretchMode">The resizing mode - how the input video
         /// will be resized to fit the desired output resolution(s). Default is
         /// AutoSize. Possible values include: 'None', 'AutoSize',
         /// 'AutoFit'</param>
-        public Video(string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?))
+        /// <param name="syncMode">The Video Sync Mode. Possible values
+        /// include: 'Auto', 'Passthrough', 'Cfr', 'Vfr'</param>
+        public Video(string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?), VideoSyncMode? syncMode = default(VideoSyncMode?))
             : base(label)
         {
             KeyFrameInterval = keyFrameInterval;
             StretchMode = stretchMode;
+            SyncMode = syncMode;
             CustomInit();
         }
 
@@ -54,10 +59,11 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the distance between two key frames, thereby defining
-        /// a group of pictures (GOP). The value should be a non-zero integer
-        /// in the range [1, 30] seconds, specified in ISO 8601 format. The
-        /// default is 2 seconds (PT2S).
+        /// Gets or sets the distance between two key frames. The value should
+        /// be non-zero in the range [0.5, 20] seconds, specified in ISO 8601
+        /// format. The default is 2 seconds(PT2S). Note that this setting is
+        /// ignored if VideoSyncMode.Passthrough is set, where the
+        /// KeyFrameInterval value will follow the input source setting.
         /// </summary>
         [JsonProperty(PropertyName = "keyFrameInterval")]
         public System.TimeSpan? KeyFrameInterval { get; set; }
@@ -69,6 +75,13 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "stretchMode")]
         public StretchMode? StretchMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Video Sync Mode. Possible values include: 'Auto',
+        /// 'Passthrough', 'Cfr', 'Vfr'
+        /// </summary>
+        [JsonProperty(PropertyName = "syncMode")]
+        public VideoSyncMode? SyncMode { get; set; }
 
     }
 }

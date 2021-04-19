@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.HybridCompute/machines/WIN-9DFUIQ7NP1B/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments?api-version=2020-06-25",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjY2MzY3ZTEtY2Y3ZC00MDdiLWJhMzktNTMyMzBjYzc5MDcxL3Jlc291cmNlR3JvdXBzL2dlVGVzdFJlc291cmNlR3JvdXAwMDIvcHJvdmlkZXJzL01pY3Jvc29mdC5IeWJyaWRDb21wdXRlL21hY2hpbmVzL1dJTi05REZVSVE3TlAxQi9wcm92aWRlcnMvTWljcm9zb2Z0Lkd1ZXN0Q29uZmlndXJhdGlvbi9ndWVzdENvbmZpZ3VyYXRpb25Bc3NpZ25tZW50cz9hcGktdmVyc2lvbj0yMDIwLTA2LTI1",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "21ce9392-86c1-4ad9-9b85-b594a4c273e7"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28801.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.GuestConfiguration.GuestConfigurationClient/1.3.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "f713a7b3-85f6-45bb-acaf-affd85c2db35"
+        ],
+        "x-ms-correlation-request-id": [
+          "f713a7b3-85f6-45bb-acaf-affd85c2db35"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20200713T164454Z:f713a7b3-85f6-45bb-acaf-affd85c2db35"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 13 Jul 2020 16:44:54 GMT"
+        ],
+        "Content-Length": [
+          "1049"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"westcentralus\",\r\n      \"id\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.HybridCompute/machines/WIN-9DFUIQ7NP1B/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol\",\r\n      \"name\": \"AuditSecureProtocol\",\r\n      \"properties\": {\r\n        \"complianceStatus\": \"Compliant\",\r\n        \"assignmentHash\": \"\",\r\n        \"parameterHash\": \"\",\r\n        \"latestReportId\": \"/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/geTestResourceGroup002/providers/Microsoft.HybridCompute/machines/WIN-9DFUIQ7NP1B/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/451457c6-16ff-4361-8a44-ce5ed193835e\",\r\n        \"lastComplianceStatusChecked\": \"2020-06-05T00:36:29Z\",\r\n        \"context\": null,\r\n        \"guestConfiguration\": {\r\n          \"kind\": null,\r\n          \"name\": \"AuditSecureProtocol\",\r\n          \"version\": \"1.0.0.3\",\r\n          \"contentUri\": null,\r\n          \"contentHash\": null,\r\n          \"contentType\": null,\r\n          \"assignmentType\": null,\r\n          \"configurationParameter\": [],\r\n          \"configurationProtectedParameter\": [],\r\n          \"configurationSetting\": null\r\n        },\r\n        \"provisioningState\": null\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "f66367e1-cf7d-407b-ba39-53230cc79071"
+  }
+}

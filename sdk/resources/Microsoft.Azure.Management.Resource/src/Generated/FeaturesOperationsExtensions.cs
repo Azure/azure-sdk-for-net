@@ -168,6 +168,46 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Unregisters the preview feature for the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider.
+            /// </param>
+            /// <param name='featureName'>
+            /// The name of the feature to unregister.
+            /// </param>
+            public static FeatureResult Unregister(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
+            {
+                return operations.UnregisterAsync(resourceProviderNamespace, featureName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Unregisters the preview feature for the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider.
+            /// </param>
+            /// <param name='featureName'>
+            /// The name of the feature to unregister.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<FeatureResult> UnregisterAsync(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UnregisterWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all the preview features that are available through AFEC for the
             /// subscription.
             /// </summary>

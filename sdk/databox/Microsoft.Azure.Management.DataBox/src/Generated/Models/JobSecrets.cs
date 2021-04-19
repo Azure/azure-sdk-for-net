@@ -10,12 +10,14 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The base class for the secrets
     /// </summary>
+    [Newtonsoft.Json.JsonObject("JobSecrets")]
     public partial class JobSecrets
     {
         /// <summary>
@@ -31,9 +33,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="dcAccessSecurityCode">Dc Access Security Code for
         /// Customer Managed Shipping</param>
-        public JobSecrets(DcAccessSecurityCode dcAccessSecurityCode = default(DcAccessSecurityCode))
+        /// <param name="error">Error while fetching the secrets.</param>
+        public JobSecrets(DcAccessSecurityCode dcAccessSecurityCode = default(DcAccessSecurityCode), CloudError error = default(CloudError))
         {
             DcAccessSecurityCode = dcAccessSecurityCode;
+            Error = error;
             CustomInit();
         }
 
@@ -43,10 +47,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets dc Access Security Code for Customer Managed Shipping
+        /// Gets dc Access Security Code for Customer Managed Shipping
         /// </summary>
         [JsonProperty(PropertyName = "dcAccessSecurityCode")]
-        public DcAccessSecurityCode DcAccessSecurityCode { get; set; }
+        public DcAccessSecurityCode DcAccessSecurityCode { get; private set; }
+
+        /// <summary>
+        /// Gets error while fetching the secrets.
+        /// </summary>
+        [JsonProperty(PropertyName = "error")]
+        public CloudError Error { get; private set; }
 
     }
 }

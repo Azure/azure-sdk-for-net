@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
 
 namespace Azure.Data.Tables
 {
-
     /// <summary>
     /// Create exceptions for common error cases.
     /// </summary>
@@ -17,6 +15,8 @@ namespace Azure.Data.Tables
 
         public static ArgumentOutOfRangeException InvalidSasProtocol(string protocol, string sasProtocol)
             => new ArgumentOutOfRangeException(protocol, $"Invalid {sasProtocol} value");
+        public static ArgumentException InvalidResourceType(char s)
+            => new ArgumentException($"Invalid resource type: '{s}'");
 
         public static InvalidOperationException SasMissingData(string paramName)
             => new InvalidOperationException($"SAS is missing required parameter: {paramName}");

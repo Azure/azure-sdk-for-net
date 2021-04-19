@@ -43,7 +43,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="serviceLevel">serviceLevel</param>
         /// <param name="usageThreshold">usageThreshold</param>
         /// <param name="exportPolicy">exportPolicy</param>
-        public VolumePatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string serviceLevel = default(string), long? usageThreshold = default(long?), VolumePatchPropertiesExportPolicy exportPolicy = default(VolumePatchPropertiesExportPolicy))
+        /// <param name="throughputMibps">Maximum throughput in Mibps that can
+        /// be achieved by this volume</param>
+        /// <param name="dataProtection">DataProtection</param>
+        public VolumePatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string serviceLevel = default(string), long? usageThreshold = default(long?), VolumePatchPropertiesExportPolicy exportPolicy = default(VolumePatchPropertiesExportPolicy), double? throughputMibps = default(double?), VolumePatchPropertiesDataProtection dataProtection = default(VolumePatchPropertiesDataProtection))
         {
             Location = location;
             Id = id;
@@ -53,6 +56,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
             ServiceLevel = serviceLevel;
             UsageThreshold = usageThreshold;
             ExportPolicy = exportPolicy;
+            ThroughputMibps = throughputMibps;
+            DataProtection = dataProtection;
             CustomInit();
         }
 
@@ -122,6 +127,23 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public VolumePatchPropertiesExportPolicy ExportPolicy { get; set; }
 
         /// <summary>
+        /// Gets or sets maximum throughput in Mibps that can be achieved by
+        /// this volume
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.throughputMibps")]
+        public double? ThroughputMibps { get; set; }
+
+        /// <summary>
+        /// Gets or sets dataProtection
+        /// </summary>
+        /// <remarks>
+        /// DataProtection type volumes include an object containing details of
+        /// the replication
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.dataProtection")]
+        public VolumePatchPropertiesDataProtection DataProtection { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -129,13 +151,27 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (UsageThreshold > 109951162777600)
+            if (UsageThreshold != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "UsageThreshold", 109951162777600);
+                if (UsageThreshold > 109951162777600)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "UsageThreshold", 109951162777600);
+                }
+                if (UsageThreshold < 107374182400)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
+                }
             }
-            if (UsageThreshold < 107374182400)
+            if (ThroughputMibps != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
+                if (ThroughputMibps > 4500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ThroughputMibps", 4500);
+                }
+                if (ThroughputMibps < 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 1);
+                }
             }
         }
     }

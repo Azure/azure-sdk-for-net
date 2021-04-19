@@ -84,16 +84,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='replicationName'>
             /// The name of the replication.
             /// </param>
-            /// <param name='location'>
-            /// The location of the resource. This cannot be changed after the resource is
-            /// created.
+            /// <param name='replication'>
+            /// The parameters for creating a replication.
             /// </param>
-            /// <param name='tags'>
-            /// The tags of the resource.
-            /// </param>
-            public static Replication Create(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, string location, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static Replication Create(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, Replication replication)
             {
-                return operations.CreateAsync(resourceGroupName, registryName, replicationName, location, tags).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, registryName, replicationName, replication).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -112,19 +108,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='replicationName'>
             /// The name of the replication.
             /// </param>
-            /// <param name='location'>
-            /// The location of the resource. This cannot be changed after the resource is
-            /// created.
-            /// </param>
-            /// <param name='tags'>
-            /// The tags of the resource.
+            /// <param name='replication'>
+            /// The parameters for creating a replication.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Replication> CreateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Replication> CreateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, Replication replication, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, location, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, replication, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -192,9 +184,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='tags'>
             /// The tags for the replication.
             /// </param>
-            public static Replication Update(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            /// <param name='regionEndpointEnabled'>
+            /// Specifies whether the replication's regional endpoint is enabled. Requests
+            /// will not be routed to a replication whose regional endpoint is disabled,
+            /// however its data will continue to be synced with other replications.
+            /// </param>
+            public static Replication Update(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? regionEndpointEnabled = default(bool?))
             {
-                return operations.UpdateAsync(resourceGroupName, registryName, replicationName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, registryName, replicationName, tags, regionEndpointEnabled).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -216,12 +213,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='tags'>
             /// The tags for the replication.
             /// </param>
+            /// <param name='regionEndpointEnabled'>
+            /// Specifies whether the replication's regional endpoint is enabled. Requests
+            /// will not be routed to a replication whose regional endpoint is disabled,
+            /// however its data will continue to be synced with other replications.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Replication> UpdateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Replication> UpdateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? regionEndpointEnabled = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, tags, regionEndpointEnabled, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -283,16 +285,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='replicationName'>
             /// The name of the replication.
             /// </param>
-            /// <param name='location'>
-            /// The location of the resource. This cannot be changed after the resource is
-            /// created.
+            /// <param name='replication'>
+            /// The parameters for creating a replication.
             /// </param>
-            /// <param name='tags'>
-            /// The tags of the resource.
-            /// </param>
-            public static Replication BeginCreate(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, string location, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static Replication BeginCreate(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, Replication replication)
             {
-                return operations.BeginCreateAsync(resourceGroupName, registryName, replicationName, location, tags).GetAwaiter().GetResult();
+                return operations.BeginCreateAsync(resourceGroupName, registryName, replicationName, replication).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -311,19 +309,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='replicationName'>
             /// The name of the replication.
             /// </param>
-            /// <param name='location'>
-            /// The location of the resource. This cannot be changed after the resource is
-            /// created.
-            /// </param>
-            /// <param name='tags'>
-            /// The tags of the resource.
+            /// <param name='replication'>
+            /// The parameters for creating a replication.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Replication> BeginCreateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Replication> BeginCreateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, Replication replication, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, location, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, replication, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -391,9 +385,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='tags'>
             /// The tags for the replication.
             /// </param>
-            public static Replication BeginUpdate(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            /// <param name='regionEndpointEnabled'>
+            /// Specifies whether the replication's regional endpoint is enabled. Requests
+            /// will not be routed to a replication whose regional endpoint is disabled,
+            /// however its data will continue to be synced with other replications.
+            /// </param>
+            public static Replication BeginUpdate(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? regionEndpointEnabled = default(bool?))
             {
-                return operations.BeginUpdateAsync(resourceGroupName, registryName, replicationName, tags).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, registryName, replicationName, tags, regionEndpointEnabled).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -415,12 +414,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='tags'>
             /// The tags for the replication.
             /// </param>
+            /// <param name='regionEndpointEnabled'>
+            /// Specifies whether the replication's regional endpoint is enabled. Requests
+            /// will not be routed to a replication whose regional endpoint is disabled,
+            /// however its data will continue to be synced with other replications.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Replication> BeginUpdateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Replication> BeginUpdateAsync(this IReplicationsOperations operations, string resourceGroupName, string registryName, string replicationName, IDictionary<string, string> tags = default(IDictionary<string, string>), bool? regionEndpointEnabled = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, registryName, replicationName, tags, regionEndpointEnabled, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

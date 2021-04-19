@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private const string CertificateSubjectName = "CertificateSubjectName";
         private const string CertificateThumbprint = "CertificateThumbprint";
         private const string KeyVaultCertificateSecretIdentifier = "KeyVaultCertificateSecretIdentifier";
+        private const string KeyVaultUserAssignedManagedIdentityId = "KeyVaultUserAssignedManagedIdentityId";
         private const string CertificateStoreLocation = "CertificateStoreLocation";
         private const string MsiRetryTimeout = "MsiRetryTimeout";
 
@@ -56,7 +57,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
         /// <param name="azureAdInstance"></param>
         /// <returns></returns>
-        internal static NonInteractiveAzureServiceTokenProviderBase Create(string connectionString, string azureAdInstance, IHttpClientFactory httpClientFactory = null)
+        internal static NonInteractiveAzureServiceTokenProviderBase Create(string connectionString, string azureAdInstance, IHttpClientFactory httpClientFactory = default)
         {
             Dictionary<string, string> connectionSettings = ParseConnectionString(connectionString);
 
@@ -125,7 +126,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                 azureAdInstance,
                                 connectionSettings[TenantId],
                                 0,
-                                new AdalAuthenticationContext(httpClientFactory));
+                                authenticationContext: new AdalAuthenticationContext(httpClientFactory));
                     }
                     else if (connectionSettings.ContainsKey(CertificateThumbprint) ||
                              connectionSettings.ContainsKey(CertificateSubjectName))
@@ -138,6 +139,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     {
                         ValidateMsiRetryTimeout(connectionSettings, connectionString);
 
+                        var msiRetryTimeout = connectionSettings.ContainsKey(MsiRetryTimeout)
+                            ? int.Parse(connectionSettings[MsiRetryTimeout])
+                            : 0;
+                        connectionSettings.TryGetValue(KeyVaultUserAssignedManagedIdentityId, out var keyVaultUserAssignedManagedIdentityId);
+
                         azureServiceTokenProvider =
                             new ClientCertificateAzureServiceTokenProvider(
                                 connectionSettings[AppId],
@@ -147,10 +153,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                 azureAdInstance,
                                 connectionSettings.ContainsKey(TenantId) // tenantId can be specified in connection string or retrieved from Key Vault access token later
                                     ? connectionSettings[TenantId]
-                                    : default(string),
-                                connectionSettings.ContainsKey(MsiRetryTimeout)
-                                    ? int.Parse(connectionSettings[MsiRetryTimeout])
-                                    : 0,
+                                    : default,
+                                msiRetryTimeout,
+                                keyVaultUserAssignedManagedIdentityId,
                                 new AdalAuthenticationContext(httpClientFactory));
                     }
                     else if (connectionSettings.ContainsKey(AppKey))

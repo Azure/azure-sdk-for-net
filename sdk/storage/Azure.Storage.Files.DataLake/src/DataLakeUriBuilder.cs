@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -100,7 +101,11 @@ namespace Azure.Storage.Files.DataLake
             set
             {
                 ResetUri();
-                if (value == "/")
+                if (value == null)
+                {
+                    _directoryOrFilePath = null;
+                }
+                else if (value == "/")
                 {
                     _directoryOrFilePath = value;
                 }
@@ -110,6 +115,7 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
         }
+
         private string _directoryOrFilePath;
 
         /// <summary>
@@ -224,9 +230,8 @@ namespace Azure.Storage.Files.DataLake
                     }
                     else
                     {
-                        DirectoryOrFilePath = directoryOrFilePath;
+                        DirectoryOrFilePath = directoryOrFilePath.UnescapePath();
                     }
-
                 }
             }
 
@@ -275,15 +280,18 @@ namespace Azure.Storage.Files.DataLake
 
                 if (account != null)
                 {
-                    StringBuilder stringBuilder = new StringBuilder(Host);
-
                     // Replace "dfs" with "blob"
-                    stringBuilder.Replace(
-                        Constants.DataLake.DfsUriSuffix,
-                        Constants.DataLake.BlobUriSuffix,
-                        AccountName.Length + 1,
-                        3);
-                    Host = stringBuilder.ToString();
+                    int serviceIndex = Host.IndexOf(Constants.DataLake.DfsUriSuffix, StringComparison.OrdinalIgnoreCase);
+                    if (serviceIndex > 0)
+                    {
+                        StringBuilder stringBuilder = new StringBuilder(Host);
+                        stringBuilder.Replace(
+                            Constants.DataLake.DfsUriSuffix,
+                            Constants.DataLake.BlobUriSuffix,
+                            serviceIndex,
+                            3);
+                        Host = stringBuilder.ToString();
+                    }
                 }
             }
 
@@ -301,17 +309,18 @@ namespace Azure.Storage.Files.DataLake
 
                 if (account != null)
                 {
-                    StringBuilder stringBuilder = new StringBuilder(Host);
-
-                    // Replace "blob" with "dfs"
-                    stringBuilder.Replace(
-                        Constants.DataLake.BlobUriSuffix,
-                        Constants.DataLake.DfsUriSuffix,
-                        AccountName.Length + 1,
-                        4);
-                    Host = stringBuilder.ToString();
+                    int serviceIndex = Host.IndexOf(Constants.DataLake.BlobUriSuffix, StringComparison.OrdinalIgnoreCase);
+                    if (serviceIndex > 0)
+                    {
+                        StringBuilder stringBuilder = new StringBuilder(Host);
+                        stringBuilder.Replace(
+                            Constants.DataLake.BlobUriSuffix,
+                            Constants.DataLake.DfsUriSuffix,
+                            serviceIndex,
+                            4);
+                        Host = stringBuilder.ToString();
+                    }
                 }
-
             }
 
             return ToUri();
@@ -348,20 +357,21 @@ namespace Azure.Storage.Files.DataLake
             // regular style Uri will already have account name in domain
             if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
-                path.Append("/").Append(AccountName);
+                path.Append('/').Append(AccountName);
             }
             if (!string.IsNullOrWhiteSpace(FileSystemName))
             {
-                path.Append("/").Append(FileSystemName);
+                path.Append('/').Append(FileSystemName);
                 if (!string.IsNullOrWhiteSpace(DirectoryOrFilePath))
                 {
                     if (DirectoryOrFilePath == "/")
                     {
-                        path.Append(DirectoryOrFilePath);
+                        path.Append(_directoryOrFilePath);
                     }
                     else
                     {
-                        path.Append("/").Append(DirectoryOrFilePath);
+                        // Encode path.
+                        path.Append('/').Append(DirectoryOrFilePath.EscapePath());
                     }
                 }
             }
@@ -371,14 +381,14 @@ namespace Azure.Storage.Files.DataLake
             if (!string.IsNullOrWhiteSpace(Snapshot))
             {
                 if (query.Length > 0)
-                { query.Append("&"); }
-                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
+                { query.Append('&'); }
+                query.Append(Constants.SnapshotParameterName).Append('=').Append(Snapshot);
             }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {
                 if (query.Length > 0)
-                { query.Append("&"); }
+                { query.Append('&'); }
                 query.Append(sas);
             }
 

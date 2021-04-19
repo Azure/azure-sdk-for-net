@@ -9,14 +9,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class CjkBigramTokenFilter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IgnoreScripts != null)
+            if (Optional.IsCollectionDefined(IgnoreScripts))
             {
                 writer.WritePropertyName("ignoreScripts");
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputUnigrams != null)
+            if (Optional.IsDefined(OutputUnigrams))
             {
                 writer.WritePropertyName("outputUnigrams");
                 writer.WriteBooleanValue(OutputUnigrams.Value);
@@ -40,8 +40,8 @@ namespace Azure.Search.Documents.Models
 
         internal static CjkBigramTokenFilter DeserializeCjkBigramTokenFilter(JsonElement element)
         {
-            IList<CjkBigramTokenFilterScripts> ignoreScripts = default;
-            bool? outputUnigrams = default;
+            Optional<IList<CjkBigramTokenFilterScripts>> ignoreScripts = default;
+            Optional<bool> outputUnigrams = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -50,6 +50,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CjkBigramTokenFilterScripts> array = new List<CjkBigramTokenFilterScripts>();
@@ -64,6 +65,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     outputUnigrams = property.Value.GetBoolean();
@@ -80,7 +82,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new CjkBigramTokenFilter(odataType, name, ignoreScripts, outputUnigrams);
+            return new CjkBigramTokenFilter(odataType, name, Optional.ToList(ignoreScripts), Optional.ToNullable(outputUnigrams));
         }
     }
 }

@@ -12,10 +12,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.Azure.Management.EventHub" />
+    <PackageReference Include="Microsoft.Azure.Management.Storage" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Moq" />
+    <PackageReference Include="Polly" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,22 +29,21 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
-  <!-- Import Azure.Core shared source -->
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Azure.Core\Argument.cs" />
-  </ItemGroup>
+  <!-- Import the Azure.Core reference -->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Import Event Hubs shared source -->
+  <Import Project="..\src\Azure.Messaging.EventHubs.Shared.Authorization.projitems" Label="Authorization" />
+  <Import Project="..\src\Azure.Messaging.EventHubs.Shared.BlobCheckpointStore.projitems" Label="CheckpointStore" />
   <Import Project="..\src\Azure.Messaging.EventHubs.Shared.Core.projitems" Label="Core" />
   <Import Project="..\src\Azure.Messaging.EventHubs.Shared.Diagnostics.projitems" Label="Diagnostics" />
-  <Import Project="..\src\Azure.Messaging.EventHubs.Shared.Authorization.projitems" Label="Authorization" />
   <Import Project="..\src\Azure.Messaging.EventHubs.Shared.Processor.projitems" Label="Processor" />
+  <Import Project="..\src\Azure.Messaging.EventHubs.Shared.Testing.projitems" Label="Testing" />
+  <Import Project="..\src\Azure.Messaging.EventHubs.Shared.BlobStorageTesting.projitems" Label="BlobStorageTesting" />
 
+  <!-- Import Azure.Core shared source -->
   <ItemGroup>
-    <Compile Include="..\src\Testing\EventDataExtensions.cs" Link="SharedSource\Testing\EventDataExtensions.cs" />
-    <Compile Include="..\src\Testing\InMemoryStorageManager.cs" Link="SharedSource\Testing\InMemoryStorageManager.cs" />
-    <Compile Include="..\src\Testing\MockEventData.cs" Link="SharedSource\Testing\MockEventData.cs" />
-    <Compile Include="..\src\Testing\TaskExtensions.cs" Link="SharedSource\Testing\TaskExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource\Azure.Core" />
   </ItemGroup>
 
   <!--Embed the shared resources -->
@@ -59,7 +64,4 @@
       <CustomToolNamespace>Azure.Messaging.EventHubs</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
-
-  <!-- Import the Azure.Core reference -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>

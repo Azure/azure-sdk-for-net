@@ -109,12 +109,12 @@ namespace Compute.Tests
                     var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmScaleSet.Name);
                     ValidateVMScaleSet(inputVMScaleSet, getResponse);
 
-                    inputVMScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1;
+                    inputVMScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1V2;
                     VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
                     {
                         Extensions = new List<VirtualMachineScaleSetExtension>()
                             {
-                                GetTestVMSSVMExtension(),
+                                GetTestVMSSVMExtension(autoUpdateMinorVersion:false),
                             }
                     };
                     inputVMScaleSet.VirtualMachineProfile.ExtensionProfile = extensionProfile;
@@ -176,7 +176,7 @@ namespace Compute.Tests
                     {
                         Extensions = new List<VirtualMachineScaleSetExtension>()
                             {
-                                GetTestVMSSVMExtension(),
+                                GetTestVMSSVMExtension(autoUpdateMinorVersion:false),
                             }
                     };
                  

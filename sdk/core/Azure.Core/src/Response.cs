@@ -12,7 +12,9 @@ namespace Azure
     /// <summary>
     /// Represents the HTTP response from the service.
     /// </summary>
+#pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Response : IDisposable
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
         /// Gets the HTTP status code.
@@ -38,6 +40,42 @@ namespace Azure
         /// Get the HTTP response headers.
         /// </summary>
         public virtual ResponseHeaders Headers => new ResponseHeaders(this);
+
+        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
+        private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
+
+        /// <summary>
+        /// Gets the contents of HTTP response, if it is available.
+        /// </summary>
+        /// <remarks>
+        /// Throws <see cref="InvalidOperationException"/> when <see cref="ContentStream"/> is not a <see cref="MemoryStream"/>.
+        /// </remarks>
+        public virtual BinaryData Content
+        {
+            get
+            {
+                if (ContentStream == null)
+                {
+                    return s_EmptyBinaryData;
+                }
+
+                MemoryStream? memoryContent = ContentStream as MemoryStream;
+
+                if (memoryContent == null)
+                {
+                    throw new InvalidOperationException($"The response is not fully buffered.");
+                }
+
+                if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
+                {
+                    return new BinaryData(segment.AsMemory());
+                }
+                else
+                {
+                    throw new InvalidOperationException($"The {nameof(ContentStream)}'s internal buffer cannot be accessed.");
+                }
+            }
+        }
 
         /// <summary>
         /// Frees resources held by this <see cref="Response"/> instance.

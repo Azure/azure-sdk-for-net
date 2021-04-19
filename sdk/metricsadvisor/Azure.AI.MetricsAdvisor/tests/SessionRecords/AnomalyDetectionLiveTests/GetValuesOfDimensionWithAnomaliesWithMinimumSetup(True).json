@@ -1,0 +1,112 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c/anomalies/dimension/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "127",
+        "Content-Type": "application/json",
+        "traceparent": "00-118671b155a8c04bafaee42d0e72e96e-18fa7e1d0aef6249-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210205.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "11b15dd584359f3249c01600a8fedb99",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "startTime": "2020-10-01T00:00:00Z",
+        "endTime": "2020-10-31T00:00:00Z",
+        "dimensionName": "city",
+        "dimensionFilter": {
+          "dimension": {}
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "45af4db0-8981-4cab-969a-2e4d8ca66ad0",
+        "Content-Length": "692",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 05 Feb 2021 20:34:48 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "1084",
+        "X-Request-ID": "45af4db0-8981-4cab-969a-2e4d8ca66ad0"
+      },
+      "ResponseBody": {
+        "value": [
+          "__SUM__",
+          "Karachi",
+          "Los Angeles",
+          "Delhi",
+          "Manila",
+          "Seoul",
+          "Mumbai",
+          "Beijing",
+          "New York",
+          "Miami",
+          "Mexico City",
+          "Tianjin",
+          "Philadelphia",
+          "Osaka",
+          "Santiago",
+          "Istanbul",
+          "Taipei",
+          "Moscow",
+          "Kolkata",
+          "Madrid",
+          "Shenzhen",
+          "Lahore",
+          "Dallas",
+          "Belo Horizonte",
+          "Jakarta",
+          "Lima",
+          "Wuhan",
+          "Hyderabad",
+          "Cairo",
+          "Bogota",
+          "Shanghai",
+          "Paris",
+          "Bangkok",
+          "Houston",
+          "London",
+          "Chennai",
+          "Kinshasa",
+          "Dhaka",
+          "Buenos Aires",
+          "Bengaluru",
+          "Tokyo",
+          "Lagos",
+          "Hong Kong",
+          "Guangzhou",
+          "Chicago",
+          "Tehran",
+          "Sao Paulo",
+          "Chongqing",
+          "Rio de Janeiro",
+          "Boston",
+          "Ho Chi Minh City",
+          "Barcelona",
+          "Washington",
+          "Shenyang",
+          "Saint Petersburg",
+          "Guadalajara",
+          "Singapore",
+          "Dongguan",
+          "Luanda",
+          "Baghdad",
+          "Haora",
+          "Toronto"
+        ],
+        "@nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "RandomSeed": "1018134812"
+  }
+}

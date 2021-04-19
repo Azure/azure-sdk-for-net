@@ -7,9 +7,9 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    internal static class IndexerExecutionStatusExtensions
+    internal static partial class IndexerExecutionStatusExtensions
     {
         public static string ToSerialString(this IndexerExecutionStatus value) => value switch
         {

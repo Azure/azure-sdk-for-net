@@ -7,6 +7,10 @@ namespace Azure.AI.FormRecognizer
     {
         public const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
+        public const string OperationLocationHeader = "Operation-Location";
+
+        public const string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
+
         public const float DefaultConfidenceValue = 1.0f;
     }
 }

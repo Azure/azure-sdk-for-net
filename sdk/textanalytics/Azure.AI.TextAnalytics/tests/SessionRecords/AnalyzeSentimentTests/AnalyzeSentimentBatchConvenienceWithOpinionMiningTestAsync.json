@@ -1,0 +1,251 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/sentiment?showStats=false\u0026opinionMining=true\u0026stringIndexType=Utf16CodeUnit",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "197",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-0221c495507534428e52b280b39a6325-180cd084f6dad445-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "99f36dc03d5b69cad15ff682fb68e8a9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "0",
+            "text": "The park was clean and pretty. The bathrooms and restaurant were not clean.",
+            "language": "en"
+          },
+          {
+            "id": "1",
+            "text": "The food and service is not good.",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "822721c6-771a-42c4-80f1-5176e35da865",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
+        "Date": "Wed, 24 Feb 2021 19:08:13 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "106"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "id": "0",
+            "sentiment": "mixed",
+            "confidenceScores": {
+              "positive": 0.5,
+              "neutral": 0.0,
+              "negative": 0.5
+            },
+            "sentences": [
+              {
+                "sentiment": "positive",
+                "confidenceScores": {
+                  "positive": 1.0,
+                  "neutral": 0.0,
+                  "negative": 0.0
+                },
+                "offset": 0,
+                "length": 30,
+                "text": "The park was clean and pretty.",
+                "targets": [
+                  {
+                    "sentiment": "positive",
+                    "confidenceScores": {
+                      "positive": 1.0,
+                      "negative": 0.0
+                    },
+                    "offset": 4,
+                    "length": 4,
+                    "text": "park",
+                    "relations": [
+                      {
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/0/assessments/0"
+                      },
+                      {
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/0/assessments/1"
+                      }
+                    ]
+                  }
+                ],
+                "assessments": [
+                  {
+                    "sentiment": "positive",
+                    "confidenceScores": {
+                      "positive": 1.0,
+                      "negative": 0.0
+                    },
+                    "offset": 13,
+                    "length": 5,
+                    "text": "clean",
+                    "isNegated": false
+                  },
+                  {
+                    "sentiment": "positive",
+                    "confidenceScores": {
+                      "positive": 1.0,
+                      "negative": 0.0
+                    },
+                    "offset": 23,
+                    "length": 6,
+                    "text": "pretty",
+                    "isNegated": false
+                  }
+                ]
+              },
+              {
+                "sentiment": "negative",
+                "confidenceScores": {
+                  "positive": 0.0,
+                  "neutral": 0.0,
+                  "negative": 1.0
+                },
+                "offset": 31,
+                "length": 44,
+                "text": "The bathrooms and restaurant were not clean.",
+                "targets": [
+                  {
+                    "sentiment": "negative",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "negative": 0.99
+                    },
+                    "offset": 35,
+                    "length": 9,
+                    "text": "bathrooms",
+                    "relations": [
+                      {
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/1/assessments/0"
+                      }
+                    ]
+                  },
+                  {
+                    "sentiment": "negative",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "negative": 0.99
+                    },
+                    "offset": 49,
+                    "length": 10,
+                    "text": "restaurant",
+                    "relations": [
+                      {
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/1/assessments/0"
+                      }
+                    ]
+                  }
+                ],
+                "assessments": [
+                  {
+                    "sentiment": "negative",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "negative": 0.99
+                    },
+                    "offset": 69,
+                    "length": 5,
+                    "text": "clean",
+                    "isNegated": true
+                  }
+                ]
+              }
+            ],
+            "warnings": []
+          },
+          {
+            "id": "1",
+            "sentiment": "negative",
+            "confidenceScores": {
+              "positive": 0.0,
+              "neutral": 0.0,
+              "negative": 1.0
+            },
+            "sentences": [
+              {
+                "sentiment": "negative",
+                "confidenceScores": {
+                  "positive": 0.0,
+                  "neutral": 0.0,
+                  "negative": 1.0
+                },
+                "offset": 0,
+                "length": 33,
+                "text": "The food and service is not good.",
+                "targets": [
+                  {
+                    "sentiment": "negative",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "negative": 0.99
+                    },
+                    "offset": 4,
+                    "length": 4,
+                    "text": "food",
+                    "relations": [
+                      {
+                        "relationType": "assessment",
+                        "ref": "#/documents/1/sentences/0/assessments/0"
+                      }
+                    ]
+                  },
+                  {
+                    "sentiment": "negative",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "negative": 0.99
+                    },
+                    "offset": 13,
+                    "length": 7,
+                    "text": "service",
+                    "relations": [
+                      {
+                        "relationType": "assessment",
+                        "ref": "#/documents/1/sentences/0/assessments/0"
+                      }
+                    ]
+                  }
+                ],
+                "assessments": [
+                  {
+                    "sentiment": "negative",
+                    "confidenceScores": {
+                      "positive": 0.01,
+                      "negative": 0.99
+                    },
+                    "offset": 28,
+                    "length": 4,
+                    "text": "good",
+                    "isNegated": true
+                  }
+                ]
+              }
+            ],
+            "warnings": []
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2020-04-01"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1809635661",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+  }
+}

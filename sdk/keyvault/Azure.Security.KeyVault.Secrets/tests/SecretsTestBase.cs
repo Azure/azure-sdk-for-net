@@ -13,11 +13,12 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 {
     [ClientTestFixture(
         SecretClientOptions.ServiceVersion.V7_0,
-        SecretClientOptions.ServiceVersion.V7_1_Preview)]
+        SecretClientOptions.ServiceVersion.V7_1,
+        SecretClientOptions.ServiceVersion.V7_2)]
     [NonParallelizable]
     public abstract class SecretsTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(10);
         private readonly SecretClientOptions.ServiceVersion _serviceVersion;
 
         public SecretClient Client { get; set; }
@@ -30,20 +31,29 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
         private KeyVaultTestEventListener _listener;
 
-        protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base(isAsync)
+        protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
         }
 
-        internal SecretClient GetClient(TestRecording recording = null)
+        internal SecretClient GetClient()
         {
-            recording ??= Recording;
-
             return InstrumentClient
                 (new SecretClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(new SecretClientOptions(_serviceVersion))));
+                    InstrumentClientOptions(
+                        new SecretClientOptions(_serviceVersion)
+                        {
+                            Diagnostics =
+                            {
+                                LoggedHeaderNames =
+                                {
+                                    "x-ms-request-id",
+                                }
+                            },
+                        })));
         }
 
         public override void StartTestRecording()

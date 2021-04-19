@@ -2,12 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
@@ -32,7 +35,7 @@ namespace Azure.Search.Documents
         /// The name of the Search Service, lazily obtained from the
         /// <see cref="Endpoint"/>.
         /// </summary>
-        private string _serviceName = null;
+        private string _serviceName;
 
         /// <summary>
         /// Gets the name of the Search Service.
@@ -46,6 +49,12 @@ namespace Azure.Search.Documents
         public virtual string IndexName { get; }
 
         /// <summary>
+        /// Gets an <see cref="ObjectSerializer"/> that can be used to
+        /// customize the serialization of strongly typed models.
+        /// </summary>
+        internal ObjectSerializer Serializer { get; }
+
+        /// <summary>
         /// Gets the authenticated <see cref="HttpPipeline"/> used for sending
         /// requests to the Search Service.
         /// </summary>
@@ -55,7 +64,7 @@ namespace Azure.Search.Documents
         /// Gets the <see cref="Azure.Core.Pipeline.ClientDiagnostics"/> used
         /// to provide tracing support for the client library.
         /// </summary>
-        private ClientDiagnostics ClientDiagnostics { get; }
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// Gets the REST API version of the Search Service to use when making
@@ -91,7 +100,7 @@ namespace Azure.Search.Documents
         /// Required.  The API key credential used to authenticate requests
         /// against the search service.  You need to use an admin key to
         /// modify the documents in a Search Index.  See
-        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/>
+        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see>
         /// for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <exception cref="ArgumentNullException">
@@ -127,7 +136,7 @@ namespace Azure.Search.Documents
         /// Required.  The API key credential used to authenticate requests
         /// against the search service.  You need to use an admin key to
         /// modify the documents in a Search Index.  See
-        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/>
+        /// <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see>
         /// for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <param name="options">
@@ -157,6 +166,7 @@ namespace Azure.Search.Documents
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
             IndexName = indexName;
+            Serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
             Pipeline = options.Build(credential);
             Version = options.Version;
@@ -165,13 +175,14 @@ namespace Azure.Search.Documents
                 ClientDiagnostics,
                 Pipeline,
                 endpoint.ToString(),
-                IndexName,
+                indexName,
+                null,
                 Version.ToVersionString());
         }
 
         /// <summary>
         /// Initializes a new instance of the SearchClient class from a
-        /// <see cref="SearchServiceClient"/>.
+        /// <see cref="SearchIndexClient"/>.
         /// </summary>
         /// <param name="endpoint">
         /// Required.  The URI endpoint of the Search Service.  This is likely
@@ -180,6 +191,9 @@ namespace Azure.Search.Documents
         /// </param>
         /// <param name="indexName">
         /// Required.  The name of the Search Index.
+        /// </param>
+        /// <param name="serializer">
+        /// An optional customized serializer to use for search documents.
         /// </param>
         /// <param name="pipeline">
         /// The authenticated <see cref="HttpPipeline"/> used for sending
@@ -196,6 +210,7 @@ namespace Azure.Search.Documents
         internal SearchClient(
             Uri endpoint,
             string indexName,
+            ObjectSerializer serializer,
             HttpPipeline pipeline,
             ClientDiagnostics diagnostics,
             SearchClientOptions.ServiceVersion version)
@@ -206,11 +221,12 @@ namespace Azure.Search.Documents
             Debug.Assert(pipeline != null);
             Debug.Assert(diagnostics != null);
             Debug.Assert(
-                SearchClientOptions.ServiceVersion.V2019_05_06_Preview <= version &&
+                SearchClientOptions.ServiceVersion.V2020_06_30 <= version &&
                 version <= SearchClientOptions.LatestVersion);
 
             Endpoint = endpoint;
             IndexName = indexName;
+            Serializer = serializer;
             ClientDiagnostics = diagnostics;
             Pipeline = pipeline;
             Version = version;
@@ -220,17 +236,27 @@ namespace Azure.Search.Documents
                 Pipeline,
                 endpoint.ToString(),
                 IndexName,
+                null,
                 Version.ToVersionString());
         }
+
+        /// <summary>
+        /// Get a SearchIndexClient with the same pipeline.
+        /// </summary>
+        /// <returns>A SearchIndexClient.</returns>
+        internal SearchIndexClient GetSearchIndexClient() =>
+            new SearchIndexClient(
+                Endpoint,
+                Serializer,
+                Pipeline,
+                ClientDiagnostics,
+                Version);
         #endregion ctors
 
         #region GetDocumentCount
         /// <summary>
         /// Retrieves a count of the number of documents in this search index.
         /// </summary>
-        /// <param name="options">
-        /// Options to customize the operation's behavior.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be canceled.
@@ -240,7 +266,6 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         public virtual Response<long> GetDocumentCount(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(GetDocumentCount)}");
@@ -248,7 +273,6 @@ namespace Azure.Search.Documents
             try
             {
                 return Protocol.Count(
-                    options?.ClientRequestId,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -261,9 +285,6 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Retrieves a count of the number of documents in this search index.
         /// </summary>
-        /// <param name="options">
-        /// Options to customize the operation's behavior.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be canceled.
@@ -273,7 +294,6 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         public virtual async Task<Response<long>> GetDocumentCountAsync(
-            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(GetDocumentCount)}");
@@ -281,7 +301,6 @@ namespace Azure.Search.Documents
             try
             {
                 return await Protocol.CountAsync(
-                    options?.ClientRequestId,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -300,157 +319,7 @@ namespace Azure.Search.Documents
         /// look up specific details about that document. You can only get one
         /// document at a time.  Use Search to get multiple documents in a
         /// single request.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
-        /// </summary>
-        /// <param name="key">
-        /// Required.  An string value that uniquely identifies each document
-        /// in the index.  The key is sometimes referred to as a document ID.
-        /// See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/>
-        /// for the rules for constructing valid document keys.
-        /// </param>
-        /// <param name="options">
-        /// Options to customize the operation's behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// The document corresponding to the <paramref name="key"/>.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// The non-generic overloads of the GetDocument and GetDocumentAsync
-        /// that return a <see cref="SearchDocument"/> make a best-effort
-        /// attempt to map JSON types in the response payload to .NET types.
-        /// See <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </remarks>
-        public virtual Response<SearchDocument> GetDocument(
-            string key,
-            GetDocumentOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            GetDocumentInternal<SearchDocument>(
-                key,
-                options,
-                async: false,
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// Retrieves a document from Azure Cognitive Search.  This is useful
-        /// when a user clicks on a specific search result, and you want to
-        /// look up specific details about that document. You can only get one
-        /// document at a time.  Use Search to get multiple documents in a
-        /// single request.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
-        /// </summary>
-        /// <param name="key">
-        /// Required.  An string value that uniquely identifies each document
-        /// in the index.  The key is sometimes referred to as a document ID.
-        /// See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/>
-        /// for the rules for constructing valid document keys.
-        /// </param>
-        /// <param name="options">
-        /// Options to customize the operation's behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// The document corresponding to the <paramref name="key"/>.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// The non-generic overloads of the GetDocument and GetDocumentAsync
-        /// that return a <see cref="SearchDocument"/> make a best-effort
-        /// attempt to map JSON types in the response payload to .NET types.
-        /// This mapping does not have the benefit of precise type information
-        /// from the index, so the mapping is not always correct. In
-        /// particular, be aware of the following cases:
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// Any numeric value without a decimal point will be deserialized to
-        /// a System.Int32 (int in C#, int32 in F#) if it can be converted or
-        /// a System.Int64 (long in C#, int64 in F#) otherwise.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Special double-precision floating point values such as NaN and
-        /// Infinity will be deserialized as type System.String rather than
-        /// System.Double, even if they are in arrays with regular floating
-        /// point values.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Any string field with a value formatted like a DateTimeOffset will
-        /// be deserialized incorrectly. This applies to such values in arrays
-        /// of strings as well.  We recommend storing such values in
-        /// Edm.DateTimeOffset fields rather than Edm.String fields.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Any Edm.DateTimeOffset field will be deserialized as a
-        /// System.DateTimeOffset, not System.DateTime.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Any empty JSON array will be deserialized as an array of
-        /// System.Object (object[] in C#, obj[] in F#).
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Any array of a primitive type will be deserialized as an array of
-        /// its corresponding .NET type, not as an array of System.Object,
-        /// unless the values cannot all be deserialized to the same type. For
-        /// example, the arrays [3.14, "NaN"] and
-        /// ["hello", "2016-10-10T17:41:05.123-07:00"] will both deserialize as
-        /// arrays of System.Object (object[] in C#, obj[] in F#).  This is
-        /// because special double values always deserialize as strings, while
-        /// strings that look like DateTimeOffset always deserialize as
-        /// DateTimeOffset.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Complex fields will be recursively deserialized into instances of
-        /// type <see cref="SearchDocument"/>.  Similarly, complex collection
-        /// fields will be deserialized into arrays of such instances.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        public virtual async Task<Response<SearchDocument>> GetDocumentAsync(
-            string key,
-            GetDocumentOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await GetDocumentInternal<SearchDocument>(
-                key,
-                options,
-                async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// Retrieves a document from Azure Cognitive Search.  This is useful
-        /// when a user clicks on a specific search result, and you want to
-        /// look up specific details about that document. You can only get one
-        /// document at a time.  Use Search to get multiple documents in a
-        /// single request.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -460,7 +329,7 @@ namespace Azure.Search.Documents
         /// Required.  An string value that uniquely identifies each document
         /// in the index.  The key is sometimes referred to as a document ID.
         /// See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/naming-rules">Naming rules</see>
         /// for the rules for constructing valid document keys.
         /// </param>
         /// <param name="options">
@@ -477,11 +346,12 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The generic overloads of the GetDocument and GetDocumentAsync
-        /// methods support mapping of Azure Search field types to .NET types
-        /// via the type parameter T.  Note that all search field types except
+        /// The generic overloads of the <see cref="GetDocument"/> and
+        /// <see cref="GetDocumentAsync"/> methods support mapping of Azure
+        /// Search field types to .NET types via the type parameter
+        /// <typeparamref name="T"/>.  Note that all search field types except
         /// collections are nullable, so we recommend using nullable types for
-        /// the properties of T. See
+        /// the properties of <typeparamref name="T"/>. See
         /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
         /// for more information.
         /// </remarks>
@@ -502,7 +372,7 @@ namespace Azure.Search.Documents
         /// look up specific details about that document. You can only get one
         /// document at a time.  Use Search to get multiple documents in a
         /// single request.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Lookup-Document"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -512,7 +382,7 @@ namespace Azure.Search.Documents
         /// Required.  An string value that uniquely identifies each document
         /// in the index.  The key is sometimes referred to as a document ID.
         /// See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Naming-rules"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/naming-rules">Naming rules</see>
         /// for the rules for constructing valid document keys.
         /// </param>
         /// <param name="options">
@@ -529,11 +399,12 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The generic overloads of the GetDocument and GetDocumentAsync
+        /// The <see cref="GetDocument"/> and <see cref="GetDocumentAsync"/>
         /// methods support mapping of Azure Search field types to .NET types
-        /// via the type parameter T.  Note that all search field types except
-        /// collections are nullable, so we recommend using nullable types for
-        /// the properties of T.  The type mapping is as follows:
+        /// via the type parameter <typeparamref name="T"/>.  Note that all
+        /// search field types except collections are nullable, so we recommend
+        /// using nullable types for the properties of <typeparamref name="T"/>.
+        /// The type mapping is as follows:
         /// <list type="table">
         /// <listheader>
         /// <term>Search field type</term>
@@ -541,32 +412,32 @@ namespace Azure.Search.Documents
         /// </listheader>
         /// <item>
         /// <term>Edm.String</term>
-        /// <description>System.String (string in C# and F#)</description>
+        /// <description><see cref="String"/> (string in C# and F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.Boolean</term>
-        /// <description>System.Nullable&lt;System.Boolean&gt; (bool? in C#,\
+        /// <description><see cref="Nullable{Boolean}"/> (bool? in C#,\
         /// Nullable&lt;bool&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.Double</term>
-        /// <description>System.Nullable&lt;System.Double&gt; (double? in C#,
+        /// <description><see cref="Nullable{Double}"/> (double? in C#,
         /// Nullable&lt;float&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.Int32</term>
-        /// <description>System.Nullable&lt;System.Int32&gt; (int? in C#,
+        /// <description><see cref="Nullable{Int32}"/> (int? in C#,
         /// Nullable&lt;int&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.Int64</term>
-        /// <description>System.Nullable&lt;System.Int64&gt; (long? in C#,
+        /// <description><see cref="Nullable{Int64}"/> (long? in C#,
         /// Nullable&lt;int64&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.DateTimeOffset</term>
         /// <description>
-        /// System.Nullable&lt;System.DateTimeOffset&gt; (DateTimeOffset? in
+        /// <see cref="Nullable{DateTimeOffset}"/> (DateTimeOffset? in
         /// C#, Nullable&lt;DateTimeOffset&gt; in F#) or
         /// System.Nullable&lt;System.DateTime&gt; (DateTime? in C#,
         /// Nullable&lt;DateTime&gt; in F#). Both types work, although we
@@ -593,8 +464,7 @@ namespace Azure.Search.Documents
         /// </item>
         /// <item>
         /// <term>Edm.GeographyPoint</term>
-        /// <description>Currently treated as a complex object but will soon be
-        /// replaced with something like Microsoft.Spatial.GeographyPoint
+        /// <description> Azure.Core.GeoJson.GeoPoint
         /// </description>
         /// </item>
         /// <item>
@@ -608,52 +478,93 @@ namespace Azure.Search.Documents
         /// </item>
         /// <item>
         /// <term>Collection(Edm.String)</term>
-        /// <description>IEnumerable&lt;System.String&gt; (seq&lt;string&gt;
+        /// <description><see cref="IEnumerable{String}"/> (seq&lt;string&gt;
         /// in F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.Boolean)</term>
-        /// <description>IEnumerable&lt;System.Boolean&gt; (seq&lt;bool&gt; in
+        /// <description><see cref="IEnumerable{Boolean}"/> (seq&lt;bool&gt; in
         /// F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.Double)</term>
-        /// <description>IEnumerable&lt;System.Double&gt; (seq&lt;float&gt; in
+        /// <description><see cref="IEnumerable{Double}"/> (seq&lt;float&gt; in
         /// F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.Int32)</term>
-        /// <description>IEnumerable&lt;System.Int32&gt; (seq&lt;int&gt; in
+        /// <description><see cref="IEnumerable{Int32}"/> (seq&lt;int&gt; in
         /// F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.Int64)</term>
-        /// <description>IEnumerable&lt;System.Int64&gt; (seq&lt;int64&gt; in
+        /// <description><see cref="IEnumerable{Int64}"/> (seq&lt;int64&gt; in
         /// F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.DateTimeOffset)</term>
         /// <description>
-        /// IEnumerable&lt;System.DateTimeOffset&gt; or
-        /// IEnumerable&lt;System.DateTime&gt; (seq&lt;DateTimeOffset&gt; or
+        /// <see cref="IEnumerable{DateTimeOffset}"/> or
+        /// <see cref="IEnumerable{DateTime}"/> (seq&lt;DateTimeOffset&gt; or
         /// seq&lt;DateTime&gt; in F#). Both types work, although we recommend
-        /// using IEnumerable&lt;System.DateTimeOffset&gt;.  See the notes
+        /// using <see cref="IEnumerable{DateTimeOffset}"/>.  See the notes
         /// above on Edm.DateTimeOffset for details.
         /// </description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.GeographyPoint)</term>
-        /// <description>Currently treated like Collection(Edm.ComplexType) but
-        /// will soon be replaced with something more like
-        /// IEnumerable&lt;Microsoft.Spatial.GeographyPoint&gt;
-        /// (seq&lt;GeographyPoint&gt; in F#)</description>
+        /// <description>sequence of Azure.Core.GeoJson.GeoPoint
+        /// (seq&lt;GeoPoint&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Collection(Edm.ComplexType)</term>
         /// <description>
-        /// IEnumerable&lt;U&gt; (seq&lt;U&gt; in F#) where U is any type that
-        /// can be deserialized from the JSON objects in the complex collection
-        /// field. This can be a value type or a reference type.
+        /// <see cref="IEnumerable{T}"/> (seq&lt;T&gt; in F#) where T is any
+        /// type that can be deserialized from the JSON objects in the complex
+        /// collection field. This can be a value type or a reference type.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// You can also use the dynamic <see cref="SearchDocument"/> as your
+        /// <typeparamref name="T"/> and we will attempt to map JSON types in
+        /// the response payload to .NET types. This mapping does not
+        /// have the benefit of precise type information from the index, so the
+        /// mapping is not always correct. In particular, be aware of the
+        /// following cases:
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Any numeric value without a decimal point will be deserialized to
+        /// a <see cref="Int32"/> (int in C#, int32 in F#) if it can be
+        /// converted or a <see cref="Int64"/> (long in C#, int64 in F#)
+        /// otherwise.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Special double-precision floating point values such as NaN and
+        /// Infinity will be deserialized as type <see cref="String"/> rather
+        /// than <see cref="Double"/>, even if they are in arrays with regular
+        /// floating point values.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Any Edm.DateTimeOffset field will be deserialized as a
+        /// <see cref="DateTimeOffset"/>, not <see cref="DateTime"/>.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Any empty JSON array will be deserialized as an array of
+        /// <see cref="Object"/> (object[] in C#, obj[] in F#).
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Complex fields will be recursively deserialized into instances of
+        /// type <see cref="SearchDocument"/>.  Similarly, complex collection
+        /// fields will be deserialized into arrays of such instances.
         /// </description>
         /// </item>
         /// </list>
@@ -680,7 +591,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateGetRequest(key, options?.SelectedFieldsOrNull, options?.ClientRequestId);
+                using HttpMessage message = Protocol.CreateGetRequest(key, options?.SelectedFieldsOrNull);
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -693,9 +604,11 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                     {
-                        T value = async ?
-                            await message.Response.ContentStream.DeserializeAsync<T>(cancellationToken).ConfigureAwait(false) :
-                            message.Response.ContentStream.Deserialize<T>();
+                        T value = await message.Response.ContentStream.DeserializeAsync<T>(
+                            Serializer,
+                            async,
+                            cancellationToken)
+                            .ConfigureAwait(false);
                         return Response.FromValue(value, message.Response);
                     }
                     default:
@@ -715,111 +628,7 @@ namespace Azure.Search.Documents
         #region Search
         /// <summary>
         /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
-        /// </summary>
-        /// <param name="searchText">
-        /// A full-text search query expression;  Use "*" or omit this
-        /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/>
-        /// for more information about search query syntax.
-        /// </param>
-        /// <param name="options">
-        /// Options that allow specifying filtering, sorting, faceting, paging,
-        /// and other search query behaviors.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Response containing the documents matching the query.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// <para>
-        /// The non-generic overloads of the Search and SearchAsync methods
-        /// make a best-effort attempt to map JSON types in the response
-        /// payload to .NET types. See
-        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </para>
-        /// <para>
-        /// Azure Cognitive Search might not be able to include all results in
-        /// a single response in which case <see cref="SearchResults{T}.GetResults"/>
-        /// will automatically continue making additional requests as you
-        /// enumerate through the results.  You can also process the results a
-        /// page at a time with the <see cref="Pageable{T}.AsPages(string, int?)"/>
-        /// method.
-        /// </para>
-        /// </remarks>
-        public virtual Response<SearchResults<SearchDocument>> Search(
-            string searchText,
-            SearchOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            SearchInternal<SearchDocument>(
-                searchText,
-                options,
-                async: false,
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
-        /// </summary>
-        /// <param name="searchText">
-        /// A full-text search query expression;  Use "*" or omit this
-        /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/>
-        /// for more information about search query syntax.
-        /// </param>
-        /// <param name="options">
-        /// Options that allow specifying filtering, sorting, faceting, paging,
-        /// and other search query behaviors.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Response containing the documents matching the query.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// <para>
-        /// The non-generic overloads of the Search and SearchAsync methods
-        /// make a best-effort attempt to map JSON types in the response
-        /// payload to .NET types. See
-        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </para>
-        /// <para>
-        /// Azure Cognitive Search might not be able to include all results in
-        /// a single response in which case
-        /// <see cref="SearchResults{T}.GetResultsAsync"/> will automatically
-        /// continue making additional requests as you enumerate through the
-        /// results.  You can also process the results a page at a time with
-        /// the <see cref="AsyncPageable{T}.AsPages(string, int?)"/> method.
-        /// </para>
-        /// </remarks>
-        public async virtual Task<Response<SearchResults<SearchDocument>>> SearchAsync(
-            string searchText,
-            SearchOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await SearchInternal<SearchDocument>(
-                searchText,
-                options,
-                async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -828,7 +637,7 @@ namespace Azure.Search.Documents
         /// <param name="searchText">
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/>
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
         /// for more information about search query syntax.
         /// </param>
         /// <param name="options">
@@ -847,9 +656,11 @@ namespace Azure.Search.Documents
         /// </exception>
         /// <remarks>
         /// <para>
-        /// The generic overloads of the Search and SearchAsync methods support
-        /// mapping of search field types to .NET types via the type parameter
-        /// T. See  <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// Search and SearchAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
         /// for more details on the type mapping.
         /// </para>
         /// <para>
@@ -874,7 +685,7 @@ namespace Azure.Search.Documents
 
         /// <summary>
         /// Searches for documents in the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -883,7 +694,7 @@ namespace Azure.Search.Documents
         /// <param name="searchText">
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.  See
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Simple-query-syntax-in-Azure-Search"/>
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
         /// for more information about search query syntax.
         /// </param>
         /// <param name="options">
@@ -902,9 +713,11 @@ namespace Azure.Search.Documents
         /// </exception>
         /// <remarks>
         /// <para>
-        /// The generic overloads of the Search and SearchAsync methods support
-        /// mapping of search field types to .NET types via the type parameter
-        /// T. See  <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// Search and SearchAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
         /// for more details on the type mapping.
         /// </para>
         /// <para>
@@ -961,7 +774,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateSearchPostRequest(options, options.ClientRequestId);
+                using HttpMessage message = Protocol.CreateSearchPostRequest(options);
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -975,9 +788,12 @@ namespace Azure.Search.Documents
                     case 200:
                     {
                         // Deserialize the results
-                        SearchResults<T> results = async ?
-                            await message.Response.ContentStream.DeserializeAsync<SearchResults<T>>(cancellationToken).ConfigureAwait(false) :
-                            message.Response.ContentStream.Deserialize<SearchResults<T>>();
+                        SearchResults<T> results = await SearchResults<T>.DeserializeAsync(
+                            message.Response.ContentStream,
+                            Serializer,
+                            async,
+                            cancellationToken)
+                            .ConfigureAwait(false);
 
                         // Cache the client and raw response so we can abstract
                         // away server-side paging
@@ -1008,111 +824,7 @@ namespace Azure.Search.Documents
         /// if you enable suggestions on a city field, typing "sea" produces
         /// documents containing "Seattle", "Sea Tac", and "Seaside" (all
         /// actual city names) for that field.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/suggestions"/>
-        /// </summary>
-        /// <param name="searchText">
-        /// The search text to use to suggest documents. Must be at least 1
-        /// character, and no more than 100 characters.
-        /// </param>
-        /// <param name="suggesterName">
-        /// The name of the suggester as specified in the suggesters collection
-        /// that's part of the index definition.
-        /// </param>
-        /// <param name="options">
-        /// Options for filtering, sorting, and other suggestions query
-        /// behaviors.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Response containing suggestion query results from an index.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// The non-generic overloads of the Suggest and SuggestAsync methods
-        /// make a best-effort attempt to map JSON types in the response
-        /// payload to .NET types. See
-        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </remarks>
-        public virtual Response<SuggestResults<SearchDocument>> Suggest(
-            string searchText,
-            string suggesterName,
-            SuggestOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            SuggestInternal<SearchDocument>(
-                searchText,
-                suggesterName,
-                options,
-                async: false,
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// Executes a "search-as-you-type" query consisting of a partial text
-        /// input (three character minimum).  It returns matching text found in
-        /// suggester-aware fields.  Azure Cognitive Search looks for matching
-        /// values in fields that are predefined in a Suggester.  For example,
-        /// if you enable suggestions on a city field, typing "sea" produces
-        /// documents containing "Seattle", "Sea Tac", and "Seaside" (all
-        /// actual city names) for that field.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/suggestions"/>
-        /// </summary>
-        /// <param name="searchText">
-        /// The search text to use to suggest documents. Must be at least 1
-        /// character, and no more than 100 characters.
-        /// </param>
-        /// <param name="suggesterName">
-        /// The name of the suggester as specified in the suggesters collection
-        /// that's part of the index definition.
-        /// </param>
-        /// <param name="options">
-        /// Options for filtering, sorting, and other suggestions query
-        /// behaviors.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Response containing suggestion query results from an index.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// The non-generic overloads of the Suggest and SuggestAsync methods
-        /// make a best-effort attempt to map JSON types in the response
-        /// payload to .NET types. See
-        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </remarks>
-        public virtual async Task<Response<SuggestResults<SearchDocument>>> SuggestAsync(
-            string searchText,
-            string suggesterName,
-            SuggestOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await SuggestInternal<SearchDocument>(
-                searchText,
-                suggesterName,
-                options,
-                async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// Executes a "search-as-you-type" query consisting of a partial text
-        /// input (three character minimum).  It returns matching text found in
-        /// suggester-aware fields.  Azure Cognitive Search looks for matching
-        /// values in fields that are predefined in a Suggester.  For example,
-        /// if you enable suggestions on a city field, typing "sea" produces
-        /// documents containing "Seattle", "Sea Tac", and "Seaside" (all
-        /// actual city names) for that field.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/suggestions"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions">Suggestions</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -1141,9 +853,11 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The generic overloads of the Suggest and SuggestAsync methods support
-        /// mapping of search field types to .NET types via the type parameter
-        /// T. See  <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// Suggest and SuggestAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
         /// for more details on the type mapping.
         /// </remarks>
         public virtual Response<SuggestResults<T>> Suggest<T>(
@@ -1167,7 +881,7 @@ namespace Azure.Search.Documents
         /// if you enable suggestions on a city field, typing "sea" produces
         /// documents containing "Seattle", "Sea Tac", and "Seaside" (all
         /// actual city names) for that field.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/suggestions"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/suggestions">Suggestions</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
@@ -1196,9 +910,11 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The generic overloads of the Suggest and SuggestAsync methods support
-        /// mapping of search field types to .NET types via the type parameter
-        /// T. See  <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// Suggest and SuggestAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
         /// for more details on the type mapping.
         /// </remarks>
         public virtual async Task<Response<SuggestResults<T>>> SuggestAsync<T>(
@@ -1229,7 +945,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateSuggestPostRequest(options, options.ClientRequestId);
+                using HttpMessage message = Protocol.CreateSuggestPostRequest(options);
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1242,9 +958,12 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                     {
-                        SuggestResults<T> suggestions = async ?
-                            await message.Response.ContentStream.DeserializeAsync<SuggestResults<T>>(cancellationToken).ConfigureAwait(false) :
-                            message.Response.ContentStream.Deserialize<SuggestResults<T>>();
+                        SuggestResults<T> suggestions = await SuggestResults<T>.DeserializeAsync(
+                            message.Response.ContentStream,
+                            Serializer,
+                            async,
+                            cancellationToken)
+                            .ConfigureAwait(false);
                         return Response.FromValue(suggestions, message.Response);
                     }
                     default:
@@ -1265,7 +984,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Suggests query terms based on input text and matching documents in
         /// the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Autocomplete"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete">Autocomplete</see>
         /// </summary>
         /// <param name="searchText">
         /// The search text on which to base autocomplete results.
@@ -1314,7 +1033,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Suggests query terms based on input text and matching documents in
         /// the search index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Autocomplete"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/autocomplete">Autocomplete</see>
         /// </summary>
         /// <param name="searchText">
         /// The search text on which to base autocomplete results.
@@ -1372,8 +1091,8 @@ namespace Azure.Search.Documents
             options.SuggesterName = suggesterName;
 
             return async ?
-                await Protocol.AutocompletePostAsync(options, options.ClientRequestId, cancellationToken).ConfigureAwait(false) :
-                Protocol.AutocompletePost(options, options.ClientRequestId, cancellationToken);
+                await Protocol.AutocompletePostAsync(options, cancellationToken).ConfigureAwait(false) :
+                Protocol.AutocompletePost(options, cancellationToken);
         }
         #endregion Autocomplete
 
@@ -1381,111 +1100,13 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the search
         /// index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
-        /// </summary>
-        /// <param name="documents">
-        /// The batch of document index actions.
-        /// </param>
-        /// <param name="options">
-        /// Options that allow specifying document indexing behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Response containing the status of operations for all actions in the
-        /// batch of actions.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// <para>
-        /// The non-generic overloads of the Index and IndexAsync methods make
-        /// a best-effort attempt to map JSON types in the response payload to
-        /// .NET types.  See
-        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </para>
-        /// <para>
-        /// By default, an exception will only be thrown if the entire request
-        /// fails.  Individual failures are described in the
-        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
-        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
-        /// exceptions thrown on partial failure.
-        /// </para>
-        /// </remarks>
-        public virtual Response<IndexDocumentsResult> IndexDocuments(
-            IndexDocumentsBatch<SearchDocument> documents,
-            IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            IndexDocumentsInternal<SearchDocument>(
-                documents,
-                options,
-                async: false,
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// Sends a batch of upload, merge, and/or delete actions to the search
-        /// index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
-        /// </summary>
-        /// <param name="documents">
-        /// The batch of document index actions.
-        /// </param>
-        /// <param name="options">
-        /// Options that allow specifying document indexing behavior.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate notifications
-        /// that the operation should be canceled.
-        /// </param>
-        /// <returns>
-        /// Response containing the status of operations for all actions in the
-        /// batch of actions.
-        /// </returns>
-        /// <exception cref="RequestFailedException">
-        /// Thrown when a failure is returned by the Search Service.
-        /// </exception>
-        /// <remarks>
-        /// <para>
-        /// The non-generic overloads of the Index and IndexAsync methods make
-        /// a best-effort attempt to map JSON types in the response payload to
-        /// .NET types.  See
-        /// <see cref="GetDocumentAsync(string, GetDocumentOptions, CancellationToken)"/>
-        /// for more information.
-        /// </para>
-        /// <para>
-        /// By default, an exception will only be thrown if the entire request
-        /// fails.  Individual failures are described in the
-        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
-        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
-        /// exceptions thrown on partial failure.
-        /// </para>
-        /// </remarks>
-        public async virtual Task<Response<IndexDocumentsResult>> IndexDocumentsAsync(
-            IndexDocumentsBatch<SearchDocument> documents,
-            IndexDocumentsOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await IndexDocumentsInternal<SearchDocument>(
-                documents,
-                options,
-                async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// Sends a batch of upload, merge, and/or delete actions to the search
-        /// index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents">Add, Update or Delete Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">
+        /// <param name="batch">
         /// The batch of document index actions.
         /// </param>
         /// <param name="options">
@@ -1515,15 +1136,16 @@ namespace Azure.Search.Documents
         /// fails.  Individual failures are described in the
         /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
         /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
-        /// exceptions thrown on partial failure.
+        /// individual <see cref="RequestFailedException"/>s wrapped into an
+        /// <see cref="AggregateException"/> that's thrown on partial failure.
         /// </para>
         /// </remarks>
         public virtual Response<IndexDocumentsResult> IndexDocuments<T>(
-            IndexDocumentsBatch<T> documents,
+            IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options = null,
             CancellationToken cancellationToken = default) =>
             IndexDocumentsInternal<T>(
-                documents,
+                batch,
                 options,
                 async: false,
                 cancellationToken)
@@ -1532,13 +1154,13 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Sends a batch of upload, merge, and/or delete actions to the search
         /// index.
-        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"/>
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents">Add, Update or Delete Documents</see>
         /// </summary>
         /// <typeparam name="T">
         /// The .NET type that maps to the index schema. Instances of this type
         /// can be retrieved as documents from the index.
         /// </typeparam>
-        /// <param name="documents">
+        /// <param name="batch">
         /// The batch of document index actions.
         /// </param>
         /// <param name="options">
@@ -1568,27 +1190,28 @@ namespace Azure.Search.Documents
         /// fails.  Individual failures are described in the
         /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
         /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
-        /// exceptions thrown on partial failure.
+        /// individual <see cref="RequestFailedException"/>s wrapped into an
+        /// <see cref="AggregateException"/> that's thrown on partial failure.
         /// </para>
-        /// </remarks>
+        /// </remarks>>
         public async virtual Task<Response<IndexDocumentsResult>> IndexDocumentsAsync<T>(
-            IndexDocumentsBatch<T> documents,
+            IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options = null,
             CancellationToken cancellationToken = default) =>
             await IndexDocumentsInternal<T>(
-                documents,
+                batch,
                 options,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         private async Task<Response<IndexDocumentsResult>> IndexDocumentsInternal<T>(
-            IndexDocumentsBatch<T> documents,
+            IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options,
             bool async,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNull(batch, nameof(batch));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(IndexDocuments)}");
             scope.Start();
@@ -1607,14 +1230,16 @@ namespace Azure.Search.Documents
                     uri.AppendPath("/docs/search.index", false);
                     uri.AppendQuery("api-version", Version.ToVersionString(), true);
                     request.Uri = uri;
-                    if (options?.ClientRequestId != null)
-                    {
-                        request.ClientRequestId = options?.ClientRequestId.ToString();
-                    }
                     request.Headers.Add("Accept", "application/json; odata.metadata=none");
                     request.Headers.Add("Content-Type", "application/json");
-                    using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-                    content.JsonWriter.WriteObjectValue(documents);
+                    Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+                    await batch.SerializeAsync(
+                        content.JsonWriter,
+                        Serializer,
+                        JsonSerialization.SerializerOptions,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
                     request.Content = content;
                 }
 
@@ -1640,25 +1265,36 @@ namespace Azure.Search.Documents
                             JsonDocument.Parse(message.Response.ContentStream, default);
                         IndexDocumentsResult value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
 
-                        // TODO: #10593 - Ensure input and output document order is in sync while batching
-                        // (waiting until we figure out the broader batching
-                        // story)
-
                         // Optionally throw an exception if any individual
                         // write failed
                         if (options?.ThrowOnAnyError == true)
                         {
+                            List<RequestFailedException> failures = new List<RequestFailedException>();
+                            List<string> failedKeys = new List<string>();
                             foreach (IndexingResult result in value.Results)
                             {
                                 if (!result.Succeeded)
                                 {
-                                    // TODO: #10594 - Aggregate the failed operations into a single exception
-                                    // (waiting until we figure out the broader
-                                    // batching story)
-                                    throw new RequestFailedException(result.Status, result.ErrorMessage);
+                                    failedKeys.Add(result.Key);
+                                    var ex = new RequestFailedException(result.Status, result.ErrorMessage);
+                                    ex.Data["Key"] = result.Key;
+                                    failures.Add(ex);
                                 }
                             }
+                            if (failures.Count > 0)
+                            {
+                                throw new AggregateException(
+                                    $"Failed to index document(s): " + string.Join(", ", failedKeys) + ".",
+                                    failures);
+                            }
                         }
+
+                        // TODO: #10593 - Ensure input and output document
+                        // order is in sync while batching (this is waiting on
+                        // both our broader batching story and adding something
+                        // on the client that can potentially indicate the Key
+                        // column since we have no way to tell that at present.)
+
                         return Response.FromValue(value, message.Response);
                     }
                     default:
@@ -1674,5 +1310,594 @@ namespace Azure.Search.Documents
             }
         }
         #endregion IndexDocuments
+
+        #region Index Documents Conveniences
+        /// <summary>
+        /// Upload documents to the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to upload.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the UploadDocuments and UploadDocumentsAsync
+        /// methods support mapping of search field types to .NET types via the
+        /// type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        public virtual Response<IndexDocumentsResult> UploadDocuments<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(UploadDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments<T>(
+                    IndexDocumentsBatch.Upload<T>(documents),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upload documents to the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to upload.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the UploadDocuments and UploadDocumentsAsync
+        /// methods support mapping of search field types to .NET types via the
+        /// type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        public virtual async Task<Response<IndexDocumentsResult>> UploadDocumentsAsync<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(UploadDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync<T>(
+                    IndexDocumentsBatch.Upload<T>(documents),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Merge documents to the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to merge.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the MergeDocuments and MergeDocumentsAsync
+        /// methods support mapping of search field types to .NET types via the
+        /// type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        public virtual Response<IndexDocumentsResult> MergeDocuments<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(MergeDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments<T>(
+                    IndexDocumentsBatch.Merge<T>(documents),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Merge documents to the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to merge.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the MergeDocuments and MergeDocumentsAsync
+        /// methods support mapping of search field types to .NET types via the
+        /// type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        public virtual async Task<Response<IndexDocumentsResult>> MergeDocumentsAsync<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(MergeDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync<T>(
+                    IndexDocumentsBatch.Merge<T>(documents),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Merge or upload documents to the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to merge or upload.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the MergeOrUploadDocuments and
+        /// MergeOrUploadDocumentsAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        public virtual Response<IndexDocumentsResult> MergeOrUploadDocuments<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(MergeOrUploadDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments<T>(
+                    IndexDocumentsBatch.MergeOrUpload<T>(documents),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Merge or upload documents to the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to merge or upload.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the MergeOrUploadDocuments and
+        /// MergeOrUploadDocumentsAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        public virtual async Task<Response<IndexDocumentsResult>> MergeOrUploadDocumentsAsync<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(MergeOrUploadDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync<T>(
+                    IndexDocumentsBatch.MergeOrUpload<T>(documents),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete documents from the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to delete.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the DeleteDocuments and DeleteDocumentsAsync
+        /// methods support mapping of search field types to .NET types via the
+        /// type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        public virtual Response<IndexDocumentsResult> DeleteDocuments<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(DeleteDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments<T>(
+                    IndexDocumentsBatch.Delete<T>(documents),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete documents from the index as a batch.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="documents">The documents to delete.</param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// The generic overloads of the DeleteDocuments and DeleteDocumentsAsync
+        /// methods support mapping of search field types to .NET types via the
+        /// type parameter T. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        public virtual async Task<Response<IndexDocumentsResult>> DeleteDocumentsAsync<T>(
+            IEnumerable<T> documents,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(DeleteDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync<T>(
+                    IndexDocumentsBatch.Delete<T>(documents),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete documents from the index as a batch given only their keys.
+        /// </summary>
+        /// <param name="keyName">
+        /// The name of the key field that uniquely identifies documents in
+        /// the index.
+        /// </param>
+        /// <param name="keyValues">
+        /// The keys of the documents to delete.
+        /// </param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        public virtual Response<IndexDocumentsResult> DeleteDocuments(
+            string keyName,
+            IEnumerable<string> keyValues,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(DeleteDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexDocuments(
+                    IndexDocumentsBatch.Delete(keyName, keyValues),
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete documents from the index as a batch given only their keys.
+        /// </summary>
+        /// <param name="keyName">
+        /// The name of the key field that uniquely identifies documents in
+        /// the index.
+        /// </param>
+        /// <param name="keyValues">
+        /// The keys of the documents to delete.
+        /// </param>
+        /// <param name="options">
+        /// Options that allow specifying document indexing behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the status of operations for all actions in the
+        /// batch of actions.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// By default, an exception will only be thrown if the entire request
+        /// fails.  Individual failures are described in the
+        /// <see cref="IndexDocumentsResult.Results"/> collection.  You can set
+        /// <see cref="IndexDocumentsOptions.ThrowOnAnyError"/> if you want
+        /// exceptions thrown on partial failure.
+        /// </para>
+        /// </remarks>
+        public virtual async Task<Response<IndexDocumentsResult>> DeleteDocumentsAsync(
+            string keyName,
+            IEnumerable<string> keyValues,
+            IndexDocumentsOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(DeleteDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexDocumentsAsync(
+                    IndexDocumentsBatch.Delete(keyName, keyValues),
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+        #endregion Index Documents Conveniences
     }
 }

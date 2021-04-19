@@ -4,18 +4,17 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Identity;
+using Azure.Messaging.ServiceBus.Core;
 using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
-    public class ServiceBusTestBase
+    public abstract class ServiceBusTestBase
     {
-        protected IEnumerable<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
+        protected List<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
         {
             var messages = new List<ServiceBusMessage>();
             for (int i = 0; i < count; i++)
@@ -29,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             for (int i = 0; i < count; i++)
             {
-                Assert.That(() => batch.TryAdd(GetMessage(sessionId, partitionKey)), Is.True, "A message was rejected by the batch; all messages should be accepted.");
+                Assert.That(() => batch.TryAddMessage(GetMessage(sessionId, partitionKey)), Is.True, "A message was rejected by the batch; all messages should be accepted.");
             }
 
             return batch;
@@ -37,6 +36,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
         protected Task ExceptionHandler(ProcessErrorEventArgs eventArgs)
         {
+            Assert.IsNotNull(eventArgs.CancellationToken);
             Assert.Fail(eventArgs.Exception.ToString());
             return Task.CompletedTask;
         }
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             var msg = new ServiceBusMessage(GetRandomBuffer(100))
             {
-                Label = $"test-{Guid.NewGuid()}",
+                Subject = $"test-{Guid.NewGuid()}",
                 MessageId = Guid.NewGuid().ToString()
             };
             if (sessionId != null)
@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             return msg;
         }
 
-        protected byte[] GetRandomBuffer(long size)
+        public static byte[] GetRandomBuffer(long size)
         {
             var chars =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
@@ -81,11 +81,32 @@ namespace Azure.Messaging.ServiceBus.Tests
 
         internal ServiceBusConnection GetMockedConnection()
         {
+            var mockTransportReceiver = new Mock<TransportReceiver>();
+            mockTransportReceiver
+                .Setup(receiver => receiver.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Returns(async (int maximumMessageCount, TimeSpan? maxWaitTime, CancellationToken cancellationToken) =>
+                {
+                    await Task.Delay(Timeout.Infinite, cancellationToken);
+                    throw new NotImplementedException();
+                });
+
             var mockConnection = new Mock<ServiceBusConnection>();
 
             mockConnection
                 .Setup(connection => connection.RetryOptions)
                 .Returns(new ServiceBusRetryOptions());
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportReceiver(
+                    It.IsAny<string>(),
+                    It.IsAny<ServiceBusRetryPolicy>(),
+                    It.IsAny<ServiceBusReceiveMode>(),
+                    It.IsAny<uint>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(mockTransportReceiver.Object);
             return mockConnection.Object;
         }
     }

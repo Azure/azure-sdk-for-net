@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using System.Transactions;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -24,13 +26,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
     ///
     /// <seealso cref="Azure.Messaging.ServiceBus.Core.TransportSender" />
     ///
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable. The AmqpSender doesn't own the connection scope.
     internal class AmqpSender : TransportSender
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private bool _closed = false;
+        private bool _closed;
 
         /// <summary>The count of send operations performed by this instance; this is used to tag deliveries for the AMQP link.</summary>
-        private int _deliveryCount = 0;
+        private int _deliveryCount;
 
         /// <summary>
         ///   Indicates whether or not this sender has been closed.
@@ -49,9 +53,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly string _entityPath;
 
         /// <summary>
-        /// An optional entity path to route the message through. Useful for transactions.
+        /// The identifier for the sender.
         /// </summary>
-        private readonly string _viaEntityPath;
+        private readonly string _identifier;
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -64,7 +68,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         private readonly AmqpConnectionScope _connectionScope;
-
         private readonly FaultTolerantAmqpObject<SendingAmqpLink> _sendLink;
 
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
@@ -83,9 +86,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="entityPath">The name of the entity to which messages will be sent.</param>
-        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
+        /// <param name="identifier">The identifier for the sender.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -98,16 +101,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public AmqpSender(
             string entityPath,
-            string viaEntityPath,
             AmqpConnectionScope connectionScope,
-            ServiceBusRetryPolicy retryPolicy)
+            ServiceBusRetryPolicy retryPolicy,
+            string identifier)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             _entityPath = entityPath;
-            _viaEntityPath = viaEntityPath;
+            _identifier = identifier;
             _retryPolicy = retryPolicy;
             _connectionScope = connectionScope;
 
@@ -120,15 +123,24 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 });
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
-                timeout => _connectionScope.OpenManagementLinkAsync(
-                    _entityPath,
-                    timeout,
-                    CancellationToken.None),
+                timeout => OpenManagementLinkAsync(timeout),
                 link =>
                 {
                     link.Session?.SafeClose();
                     link.SafeClose();
                 });
+        }
+
+        private async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
+            TimeSpan timeout)
+        {
+            RequestResponseAmqpLink link = await _connectionScope.OpenManagementLinkAsync(
+                _entityPath,
+                _identifier,
+                timeout,
+                CancellationToken.None).ConfigureAwait(false);
+            link.Closed += OnManagementLinkClosed;
+            return link;
         }
 
         /// <summary>
@@ -145,25 +157,24 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>An <see cref="ServiceBusMessageBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
-        public override async ValueTask<TransportMessageBatch> CreateBatchAsync(
-            CreateBatchOptions options,
+        public override async ValueTask<TransportMessageBatch> CreateMessageBatchAsync(
+            CreateMessageBatchOptions options,
             CancellationToken cancellationToken)
         {
-            TransportMessageBatch messageBatch = null;
-            Task createBatchTask = _retryPolicy.RunOperation(async (timeout) =>
-            {
-                messageBatch = await CreateBatchInternalAsync(
-                    options,
-                    timeout).ConfigureAwait(false);
-            },
-            _connectionScope,
-            cancellationToken);
-            await createBatchTask.ConfigureAwait(false);
-            return messageBatch;
+            return await _retryPolicy.RunOperation(static async (value, timeout, _) =>
+                {
+                    var (sender, options) = value;
+                    return await sender.CreateMessageBatchInternalAsync(
+                        options,
+                        timeout).ConfigureAwait(false);
+                },
+                (this, options),
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
         }
 
-        internal async ValueTask<TransportMessageBatch> CreateBatchInternalAsync(
-            CreateBatchOptions options,
+        internal async ValueTask<TransportMessageBatch> CreateMessageBatchInternalAsync(
+            CreateMessageBatchOptions options,
             TimeSpan timeout)
         {
             Argument.AssertNotNull(options, nameof(options));
@@ -198,12 +209,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusMessageBatch messageBatch,
             CancellationToken cancellationToken)
         {
-            AmqpMessage messageFactory() => AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messageBatch.AsEnumerable<ServiceBusMessage>());
-            await _retryPolicy.RunOperation(async (timeout) =>
-                await SendBatchInternalAsync(
-                    messageFactory,
-                    timeout,
-                    cancellationToken).ConfigureAwait(false),
+            await _retryPolicy.RunOperation(static async (value, timeout, token) =>
+                {
+                    var (sender, messageBatch) = value;
+                    await sender.SendBatchInternalAsync(
+                        messageBatch,
+                        timeout,
+                        token).ConfigureAwait(false);
+                },
+                (this, messageBatch.AsEnumerable<ServiceBusMessage>()),
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
@@ -212,12 +226,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///    Sends a set of messages to the associated Queue/Topic using a batched approach.
         /// </summary>
         ///
-        /// <param name="messageFactory"></param>
+        /// <param name="messages"></param>
         /// <param name="timeout"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         internal virtual async Task SendBatchInternalAsync(
-            Func<AmqpMessage> messageFactory,
+            IEnumerable<ServiceBusMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
@@ -226,10 +240,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                using (AmqpMessage batchMessage = messageFactory())
+                using (AmqpMessage batchMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messages))
                 {
-
-                    string messageHash = batchMessage.GetHashCode().ToString();
+                    string messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
                     ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
                     Transaction ambientTransaction = Transaction.Current;
@@ -248,7 +261,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     if (batchMessage.SerializedMessageSize > MaxMessageSize)
                     {
-                        throw new ServiceBusException(string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusException.FailureReason.MessageSizeExceeded);
+                        throw new ServiceBusException(string.Format(CultureInfo.InvariantCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusFailureReason.MessageSizeExceeded);
                     }
 
                     // Attempt to send the message batch.
@@ -274,7 +287,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     link?.GetTrackingId(),
                     null,
-                    link?.IsClosing() ?? false))
+                    HasLinkCommunicationError(link)))
                 .Throw();
 
                 throw; // will never be reached
@@ -291,15 +304,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="messages">The list of messages to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task SendAsync(
-            IList<ServiceBusMessage> messages,
+            IReadOnlyList<ServiceBusMessage> messages,
             CancellationToken cancellationToken)
         {
-            AmqpMessage messageFactory() => AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messages);
-            await _retryPolicy.RunOperation(async (timeout) =>
-             await SendBatchInternalAsync(
-                    messageFactory,
-                    timeout,
-                    cancellationToken).ConfigureAwait(false),
+            await _retryPolicy.RunOperation(static async (value, timeout, token) =>
+                {
+                    var (sender, messages) = value;
+                    await sender.SendBatchInternalAsync(
+                        messages,
+                        timeout,
+                        token).ConfigureAwait(false);
+                },
+                (this, messages),
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
@@ -345,109 +361,117 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
+        private void OnSenderLinkClosed(object sender, EventArgs e) =>
+            ServiceBusEventSource.Log.SendLinkClosed(
+                _identifier,
+                sender);
+
+        private void OnManagementLinkClosed(object managementLink, EventArgs e) =>
+            ServiceBusEventSource.Log.ManagementLinkClosed(
+                _identifier,
+                managementLink);
+
         /// <summary>
         ///
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="messages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task<long> ScheduleMessageAsync(
-            ServiceBusMessage message,
+        public override async Task<IReadOnlyList<long>> ScheduleMessagesAsync(
+            IReadOnlyList<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)
         {
-            long sequenceNumber = 0;
-            Task scheduleTask = _retryPolicy.RunOperation(async (timeout) =>
-            {
-                sequenceNumber = await ScheduleMessageInternalAsync(
-                    message,
-                    timeout,
-                    cancellationToken).ConfigureAwait(false);
-            },
-            _connectionScope,
-            cancellationToken);
-            await scheduleTask.ConfigureAwait(false);
-            return sequenceNumber;
+            return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
+                {
+                    var (sender, messages) = value;
+                    return await sender
+                        .ScheduleMessageInternalAsync(
+                            messages,
+                            timeout,
+                            token).ConfigureAwait(false);
+                },
+                (this, messages),
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="messages"></param>
         /// <param name="timeout"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        internal async Task<long> ScheduleMessageInternalAsync(
-            ServiceBusMessage message,
+        internal async Task<IReadOnlyList<long>> ScheduleMessageInternalAsync(
+            IReadOnlyList<ServiceBusMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {
             var sendLink = default(SendingAmqpLink);
             try
             {
-                using (AmqpMessage amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message))
+                var request = AmqpRequestMessage.CreateRequest(
+                        ManagementConstants.Operations.ScheduleMessageOperation,
+                        timeout,
+                        null);
+
+                if (_sendLink.TryGetOpenedObject(out sendLink))
                 {
+                    request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
+                }
 
-                    var request = AmqpRequestMessage.CreateRequest(
-                            ManagementConstants.Operations.ScheduleMessageOperation,
-                            timeout,
-                            null);
-
-                    if (_sendLink.TryGetOpenedObject(out sendLink))
-                    {
-                        request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
-                    }
-
+                List<AmqpMap> entries = new List<AmqpMap>();
+                foreach (ServiceBusMessage message in messages)
+                {
+                    using AmqpMessage amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message);
+                    var entry = new AmqpMap();
                     ArraySegment<byte>[] payload = amqpMessage.GetPayload();
                     var buffer = new BufferListStream(payload);
                     ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
+                    entry[ManagementConstants.Properties.Message] = value;
+                    entry[ManagementConstants.Properties.MessageId] = message.MessageId;
 
-                    var entry = new AmqpMap();
+                    if (!string.IsNullOrWhiteSpace(message.SessionId))
                     {
-                        entry[ManagementConstants.Properties.Message] = value;
-                        entry[ManagementConstants.Properties.MessageId] = message.MessageId;
-
-                        if (!string.IsNullOrWhiteSpace(message.SessionId))
-                        {
-                            entry[ManagementConstants.Properties.SessionId] = message.SessionId;
-                        }
-
-                        if (!string.IsNullOrWhiteSpace(message.PartitionKey))
-                        {
-                            entry[ManagementConstants.Properties.PartitionKey] = message.PartitionKey;
-                        }
-
-                        if (!string.IsNullOrWhiteSpace(message.ViaPartitionKey))
-                        {
-                            entry[ManagementConstants.Properties.ViaPartitionKey] = message.ViaPartitionKey;
-                        }
+                        entry[ManagementConstants.Properties.SessionId] = message.SessionId;
                     }
 
-                    request.Map[ManagementConstants.Properties.Messages] = new List<AmqpMap> { entry };
-
-
-                    AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
-                        _connectionScope,
-                        _managementLink,
-                        request,
-                        timeout).ConfigureAwait(false);
-
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                    if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+                    if (!string.IsNullOrWhiteSpace(message.PartitionKey))
                     {
-                        var sequenceNumbers = amqpResponseMessage.GetValue<long[]>(ManagementConstants.Properties.SequenceNumbers);
-                        if (sequenceNumbers == null || sequenceNumbers.Length < 1)
-                        {
-                            throw new ServiceBusException(true, "Could not schedule message successfully.");
-                        }
-
-                        return sequenceNumbers[0];
-
+                        entry[ManagementConstants.Properties.PartitionKey] = message.PartitionKey;
                     }
-                    else
+
+                    if (!string.IsNullOrWhiteSpace(message.TransactionPartitionKey))
                     {
-                        throw amqpResponseMessage.ToMessagingContractException();
+                        entry[ManagementConstants.Properties.ViaPartitionKey] = message.TransactionPartitionKey;
                     }
+
+                    entries.Add(entry);
+                }
+
+                request.Map[ManagementConstants.Properties.Messages] = entries;
+
+                AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
+                    _connectionScope,
+                    _managementLink,
+                    request,
+                    timeout).ConfigureAwait(false);
+
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+                {
+                    var sequenceNumbers = amqpResponseMessage.GetValue<long[]>(ManagementConstants.Properties.SequenceNumbers);
+                    if (sequenceNumbers == null || sequenceNumbers.Length < 1)
+                    {
+                        throw new ServiceBusException(true, "Could not schedule message successfully.");
+                    }
+
+                    return sequenceNumbers;
+                }
+                else
+                {
+                    throw amqpResponseMessage.ToMessagingContractException();
                 }
             }
             catch (Exception exception)
@@ -456,7 +480,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     sendLink?.GetTrackingId(),
                     null,
-                    sendLink?.IsClosing() ?? false))
+                    HasLinkCommunicationError(sendLink)))
                 .Throw();
 
                 throw; // will never be reached
@@ -466,34 +490,35 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///
         /// </summary>
-        /// <param name="sequenceNumber"></param>
+        /// <param name="sequenceNumbers"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async Task CancelScheduledMessageAsync(
-            long sequenceNumber,
+        public override async Task CancelScheduledMessagesAsync(
+            long[] sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Task cancelMessageTask = _retryPolicy.RunOperation(async (timeout) =>
-            {
-                await CancelScheduledMessageInternalAsync(
-                    sequenceNumber,
-                    timeout,
-                    cancellationToken).ConfigureAwait(false);
-            },
-            _connectionScope,
-            cancellationToken);
-            await cancelMessageTask.ConfigureAwait(false);
+            await _retryPolicy.RunOperation(static async (value, timeout, token) =>
+                {
+                    var (sender, sequenceNumbers) = value;
+                    await sender.CancelScheduledMessageInternalAsync(
+                        sequenceNumbers,
+                        timeout,
+                        token).ConfigureAwait(false);
+                },
+                (this, sequenceNumbers),
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="sequenceNumber"></param>
+        /// <param name="sequenceNumbers"></param>
         /// <param name="timeout"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task CancelScheduledMessageInternalAsync(
-            long sequenceNumber,
+            long[] sequenceNumbers,
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {
@@ -510,7 +535,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
                 }
 
-                request.Map[ManagementConstants.Properties.SequenceNumbers] = new[] { sequenceNumber };
+                request.Map[ManagementConstants.Properties.SequenceNumbers] = sequenceNumbers;
 
                 AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
                         _connectionScope,
@@ -531,7 +556,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     exception,
                     sendLink?.GetTrackingId(),
                     null,
-                    sendLink?.IsClosing() ?? false))
+                    HasLinkCommunicationError(sendLink)))
                 .Throw();
 
                 throw; // will never be reached
@@ -560,27 +585,37 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            SendingAmqpLink link = await _connectionScope.OpenSenderLinkAsync(
-                _entityPath,
-                _viaEntityPath,
-                timeout,
-                cancellationToken).ConfigureAwait(false);
-
-            if (!MaxMessageSize.HasValue)
+            ServiceBusEventSource.Log.CreateSendLinkStart(_identifier);
+            try
             {
-                // This delay is necessary to prevent the link from causing issues for subsequent
-                // operations after creating a batch.  Without it, operations using the link consistently
-                // timeout.  The length of the delay does not appear significant, just the act of introducing
-                // an asynchronous delay.
-                //
-                // For consistency the value used by the legacy Service Bus client has been brought forward and
-                // used here.
+                SendingAmqpLink link = await _connectionScope.OpenSenderLinkAsync(
+                    entityPath: _entityPath,
+                    identifier: _identifier,
+                    timeout: timeout,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                await Task.Delay(15, cancellationToken).ConfigureAwait(false);
-                MaxMessageSize = (long)link.Settings.MaxMessageSize;
+                if (!MaxMessageSize.HasValue)
+                {
+                    // This delay is necessary to prevent the link from causing issues for subsequent
+                    // operations after creating a batch.  Without it, operations using the link consistently
+                    // timeout.  The length of the delay does not appear significant, just the act of introducing
+                    // an asynchronous delay.
+                    //
+                    // For consistency the value used by the legacy Service Bus client has been brought forward and
+                    // used here.
+
+                    await Task.Delay(15, cancellationToken).ConfigureAwait(false);
+                    MaxMessageSize = (long)link.Settings.MaxMessageSize;
+                }
+                ServiceBusEventSource.Log.CreateSendLinkComplete(_identifier);
+                link.Closed += OnSenderLinkClosed;
+                return link;
             }
-
-            return link;
+            catch (Exception ex)
+            {
+                ServiceBusEventSource.Log.CreateSendLinkException(_identifier, ex.ToString());
+                throw;
+            }
         }
 
         /// <summary>
@@ -595,5 +630,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private static TimeSpan UseMinimum(TimeSpan firstOption,
                                            TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
 
+        private bool HasLinkCommunicationError(SendingAmqpLink link) =>
+            !_closed && (link?.IsClosing() ?? false);
     }
 }

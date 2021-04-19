@@ -6,25 +6,25 @@ namespace Microsoft.Azure.ServiceBus
     /// <summary>Action taking place when <see cref="ExceptionReceivedEventArgs"/> is raised.</summary>
     public static class ExceptionReceivedEventArgsAction
     {
-        /// <summary>Message completion operation</summary>
+        /// <summary>Message completion operation.</summary>
         public const string Complete = "Complete";
 
-        /// <summary>Message abandon operation</summary>
+        /// <summary>Message abandon operation.</summary>
         public const string Abandon = "Abandon";
 
-        /// <summary>User message handler invocation</summary>
+        /// <summary>User message handler invocation.</summary>
         public const string UserCallback = "UserCallback";
 
-        /// <summary>Message receive operation</summary>
+        /// <summary>Message receive operation.</summary>
         public const string Receive = "Receive";
 
-        /// <summary>Message lock renewal operation</summary>
+        /// <summary>Message lock renewal operation.</summary>
         public const string RenewLock = "RenewLock";
 
-        /// <summary>Session start operation</summary>
+        /// <summary>Session start operation.</summary>
         public const string AcceptMessageSession = "AcceptMessageSession";
 
-        /// <summary>Session close operation</summary>
+        /// <summary>Session close operation.</summary>
         public const string CloseMessageSession = "CloseMessageSession";
     }
 }

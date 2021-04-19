@@ -13,7 +13,7 @@ computation and filtering. Processing may also involve distribution or storage o
 Event Hub consumers are often robust and high-scale platform infrastructure parts with built-in analytics capabilities, like Azure 
 Stream Analytics, Apache Spark, or Apache Storm.  
 
-This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/en-us/develop/net/).
+This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](https://azure.microsoft.com/develop/net/).
 
 Use the client library for Event Hubs to:
 
@@ -25,13 +25,13 @@ Use the client library for Event Hubs to:
 
 - Receive events from one or more publishers, transform them to better meet the needs of your ecosystem, then publish the transformed events to a new stream for consumers to observe.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Microsoft.Azure.EventHubs) | [Package (NuGet)](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) | [API reference documentation](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/event-hubs?view=azure-dotnet) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Microsoft.Azure.EventHubs) | [Package (NuGet)](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/overview/azure/event-hubs?view=azure-dotnet) | [Product documentation](https://docs.microsoft.com/azure/event-hubs/)
 
 ## Getting started
 
-The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](http://azure.microsoft.com/en-us/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
+The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](https://azure.microsoft.com/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
 
-If you are not already familiar with Azure Event Hubs, please review: [What is Event Hubs?](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-about).
+If you are not already familiar with Azure Event Hubs, please review: [What is Event Hubs?](https://docs.microsoft.com/azure/event-hubs/event-hubs-about).
 
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
@@ -45,8 +45,8 @@ For the best development experience, developers should use the official Microsof
 
 Code samples for the Azure Event Hubs client library that detail how to get started and how to implement common scenarios can be found in the following locations:
 
-- [Azure Code Samples](https://azure.microsoft.com/en-us/resources/samples/?sort=0&service=event-hubs&platform=dotnet)
-- [Azure Event Hubs Documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
+- [Azure Code Samples](https://azure.microsoft.com/resources/samples/?sort=0&service=event-hubs&platform=dotnet)
+- [Azure Event Hubs Documentation](https://docs.microsoft.com/azure/event-hubs/)
 - [Azure Event Hubs Sample Repository](https://github.com/Azure/azure-event-hubs/tree/master/samples)
 - [Azure Event Hubs Notification Sample](https://github.com/Azure-Samples/event-hubs-dotnet-user-notifications)
 - [Azure Event Hubs Publishing Sample](https://github.com/Azure-Samples/event-hubs-dotnet-ingest)
@@ -102,7 +102,7 @@ For additional insight and context, the development, release, and issue history 
 
 ## Versioning information
 
-The Azure Event Hubs client library uses [the semantic versioning scheme.](http://semver.org/)
+The Azure Event Hubs client library uses [the semantic versioning scheme.](https://semver.org/)
 
 ## Target frameworks
 
@@ -114,8 +114,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 ## Additional documentation
 
-- [Azure Event Hubs General Documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
-- [Azure Event Hubs REST API Reference](https://docs.microsoft.com/en-us/rest/api/eventhub/)
-- [Azure Event Hubs SDK for .NET Documentation](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/event-hubs?view=azure-dotnet)
+- [Azure Event Hubs General Documentation](https://docs.microsoft.com/azure/event-hubs/)
+- [Azure Event Hubs REST API Reference](https://docs.microsoft.com/rest/api/eventhub/)
+- [Azure Event Hubs SDK for .NET Documentation](https://docs.microsoft.com/dotnet/api/overview/azure/event-hubs?view=azure-dotnet)
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FMicrosoft.Azure.EventHubs%2FREADME.png)

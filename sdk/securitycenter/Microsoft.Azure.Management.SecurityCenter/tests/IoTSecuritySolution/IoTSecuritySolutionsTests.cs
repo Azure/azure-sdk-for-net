@@ -13,15 +13,16 @@ using Xunit;
 
 namespace SecurityCenter.Tests
 {
-    public class IoTSecuritySolutionTests : TestBase
+    public class IotSecuritySolutionTests : TestBase
     {
         #region Test setup
 
-        private static readonly string SubscriptionId = "075423e9-7d33-4166-8bdf-3920b04e3735";
-        private static readonly string ResourceGroupName = "ResourceGroup-CUS";
-        private static readonly string IotHubName = "IotHub-CUS";
-        private static readonly string SolutionName = "IotHub-CUS";
-        private static readonly string WorkspaceName = "LogAnalytics-CUS";
+        private static readonly string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
+        private static readonly string ResourceGroupName = "IOT-ResourceGroup-CUS";
+        private static readonly string IotHubName = "SDK-IotHub-CUS";
+        private static readonly string SolutionName = "securitySolution";
+        private static readonly string SolutionNameToDelete = "securitySolutionToDelete";
+        private static readonly string WorkspaceName = "SDK-IotHub-LA-CUS";
         private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
 
@@ -69,9 +70,14 @@ namespace SecurityCenter.Tests
 
             var udrp = new UserDefinedResourcesProperties("where type != \"microsoft.devices/iothubs\" | where name contains \"v2\"", new[] { SubscriptionId });
 
-            IoTSecuritySolutionModel iotSecuritySolutionData = new IoTSecuritySolutionModel(
-                WorkspaceResourceId, $"{SolutionName}-{WorkspaceName}", new[] { IotHubResourceId },
-                location: AscLocation, userDefinedResources: udrp);
+            var iotSecuritySolutionData = new IoTSecuritySolutionModel()
+            {
+                Workspace = WorkspaceResourceId,
+                DisplayName = $"{SolutionName}-{WorkspaceName}",
+                IotHubs = new[] { IotHubResourceId },
+                Location = AscLocation,
+                UserDefinedResources = udrp,
+            };
 
             using (var context = MockContext.Start(this.GetType()))
             {
@@ -88,7 +94,11 @@ namespace SecurityCenter.Tests
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var lst = securityCenterClient.IotSecuritySolution.ListByResourceGroup(ResourceGroupName);
-                securityCenterClient.IotSecuritySolution.Delete(ResourceGroupName, SolutionName);
+                securityCenterClient.IotSecuritySolution.Delete(ResourceGroupName, SolutionNameToDelete);
+                Assert.Throws<CloudException>(() =>
+                {
+                    securityCenterClient.IotSecuritySolution.Get(ResourceGroupName, SolutionNameToDelete);
+                });
             }
         }
 
@@ -102,7 +112,7 @@ namespace SecurityCenter.Tests
 
             using (var context = MockContext.Start(this.GetType()))
             {
-                var securityCenterClient = GetSecurityCenterClient(context);                
+                var securityCenterClient = GetSecurityCenterClient(context);
                 var ret = securityCenterClient.IotSecuritySolution.Update(ResourceGroupName, SolutionName, updateIotSecuritySolutionData);
                 ret.Validate();
             }

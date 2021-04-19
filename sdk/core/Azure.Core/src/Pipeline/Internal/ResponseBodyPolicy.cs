@@ -25,15 +25,11 @@ namespace Azure.Core.Pipeline
             _networkTimeout = networkTimeout;
         }
 
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
-        }
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
+            ProcessAsync(message, pipeline, true);
 
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
             ProcessAsync(message, pipeline, false).EnsureCompleted();
-        }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
@@ -41,7 +37,6 @@ namespace Azure.Core.Pipeline
             using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
             cts.CancelAfter(_networkTimeout);
-
             try
             {
                 message.CancellationToken = cts.Token;
@@ -68,19 +63,33 @@ namespace Azure.Core.Pipeline
 
             if (message.BufferResponse)
             {
-                var bufferedStream = new MemoryStream();
-                if (async)
+                if (_networkTimeout != Timeout.InfiniteTimeSpan)
                 {
-                    await CopyToAsync(responseContentStream, bufferedStream, cts).ConfigureAwait(false);
-                }
-                else
-                {
-                    CopyTo(responseContentStream, bufferedStream, message.CancellationToken);
+                    cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
                 }
 
-                responseContentStream.Dispose();
-                bufferedStream.Position = 0;
-                message.Response.ContentStream = bufferedStream;
+                try
+                {
+                    var bufferedStream = new MemoryStream();
+                    if (async)
+                    {
+                        await CopyToAsync(responseContentStream, bufferedStream, cts).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        CopyTo(responseContentStream, bufferedStream, cts);
+                    }
+
+                    responseContentStream.Dispose();
+                    bufferedStream.Position = 0;
+                    message.Response.ContentStream = bufferedStream;
+                }
+                // We dispose stream on timeout so catch and check if cancellation token was cancelled
+                catch (ObjectDisposedException)
+                {
+                    cts.Token.ThrowIfCancellationRequested();
+                    throw;
+                }
             }
             else if (_networkTimeout != Timeout.InfiniteTimeSpan)
             {
@@ -96,7 +105,9 @@ namespace Azure.Core.Pipeline
                 while (true)
                 {
                     cancellationTokenSource.CancelAfter(_networkTimeout);
+#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                     int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
+#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
                     if (bytesRead == 0) break;
                     await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
                 }
@@ -108,7 +119,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private static void CopyTo(Stream source, Stream destination, CancellationToken cancellationToken)
+        private void CopyTo(Stream source, Stream destination, CancellationTokenSource cancellationTokenSource)
         {
             byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
             try
@@ -116,12 +127,14 @@ namespace Azure.Core.Pipeline
                 int read;
                 while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
+                    cancellationTokenSource.Token.ThrowIfCancellationRequested();
+                    cancellationTokenSource.CancelAfter(_networkTimeout);
                     destination.Write(buffer, 0, read);
                 }
             }
             finally
             {
+                cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
                 ArrayPool<byte>.Shared.Return(buffer);
             }
         }

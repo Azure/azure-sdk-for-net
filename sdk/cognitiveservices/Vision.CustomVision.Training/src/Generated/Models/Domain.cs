@@ -11,8 +11,17 @@
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Domains are used as the starting point for your project. Each domain is
+    /// optimized for specific types of images. Domains with compact in their
+    /// name can be exported. For more information visit the &lt;a
+    /// href="https://go.microsoft.com/fwlink/?linkid=2117014"&gt;domain
+    /// documentation&lt;/a&gt;.
+    /// </summary>
     public partial class Domain
     {
         /// <summary>
@@ -26,15 +35,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Domain class.
         /// </summary>
-        /// <param name="type">Possible values include: 'Classification',
+        /// <param name="id">Domain id.</param>
+        /// <param name="name">Name of the domain, describing the types of
+        /// images used to train it.</param>
+        /// <param name="type">Domain type: Classification or ObjectDetection.
+        /// Possible values include: 'Classification',
         /// 'ObjectDetection'</param>
-        public Domain(System.Guid id = default(System.Guid), string name = default(string), string type = default(string), bool exportable = default(bool), bool enabled = default(bool))
+        /// <param name="exportable">Indicating if the domain is
+        /// exportable.</param>
+        /// <param name="enabled">Indicating if the domain is enabled.</param>
+        /// <param name="exportablePlatforms">Platforms that the domain can be
+        /// exported to.</param>
+        /// <param name="modelInformation">Model information.</param>
+        public Domain(System.Guid id = default(System.Guid), string name = default(string), string type = default(string), bool exportable = default(bool), bool enabled = default(bool), IList<string> exportablePlatforms = default(IList<string>), ModelInformation modelInformation = default(ModelInformation))
         {
             Id = id;
             Name = name;
             Type = type;
             Exportable = exportable;
             Enabled = enabled;
+            ExportablePlatforms = exportablePlatforms;
+            ModelInformation = modelInformation;
             CustomInit();
         }
 
@@ -44,30 +65,61 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets domain id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
+        /// Gets name of the domain, describing the types of images used to
+        /// train it.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets possible values include: 'Classification', 'ObjectDetection'
+        /// Gets domain type: Classification or ObjectDetection. Possible
+        /// values include: 'Classification', 'ObjectDetection'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
+        /// Gets indicating if the domain is exportable.
         /// </summary>
         [JsonProperty(PropertyName = "exportable")]
         public bool Exportable { get; private set; }
 
         /// <summary>
+        /// Gets indicating if the domain is enabled.
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool Enabled { get; private set; }
 
+        /// <summary>
+        /// Gets platforms that the domain can be exported to.
+        /// </summary>
+        [JsonProperty(PropertyName = "exportablePlatforms")]
+        public IList<string> ExportablePlatforms { get; private set; }
+
+        /// <summary>
+        /// Gets model information.
+        /// </summary>
+        [JsonProperty(PropertyName = "modelInformation")]
+        public ModelInformation ModelInformation { get; private set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ModelInformation != null)
+            {
+                ModelInformation.Validate();
+            }
+        }
     }
 }

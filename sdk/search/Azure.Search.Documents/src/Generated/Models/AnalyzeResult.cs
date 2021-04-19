@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The result of testing an analyzer on text. </summary>
     internal partial class AnalyzeResult
     {
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="tokens"> The list of tokens returned by the analyzer specified in the request. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tokens"/> is null. </exception>
         internal AnalyzeResult(IEnumerable<AnalyzedTokenInfo> tokens)
         {
             if (tokens == null)
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(tokens));
             }
 
-            Tokens = tokens.ToArray();
+            Tokens = tokens.ToList();
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>

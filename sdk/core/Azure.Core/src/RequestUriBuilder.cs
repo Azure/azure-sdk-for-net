@@ -8,7 +8,7 @@ using System.Text;
 namespace Azure.Core
 {
     /// <summary>
-    /// Provides a custom constructor for uniform resource identifiers (URIs) and modifies URIs for the <see cref="System.Uri" /> class.
+    /// Provides a custom builder for Uniform Resource Identifiers (URIs) and modifies URIs for the <see cref="System.Uri" /> class.
     /// </summary>
     public class RequestUriBuilder
     {
@@ -95,7 +95,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Gets or sets the password associated with the user that accesses the URI and the query information.
+        /// Gets or sets the path to the resource referenced by the URI.
         /// </summary>
         public string Path
         {
@@ -123,12 +123,12 @@ namespace Azure.Core
         private int PathLength => HasQuery ? _queryIndex : _pathAndQuery.Length;
 
         /// <summary>
-        /// Gets the path to the resource referenced by the URI.
+        /// Gets the path and query string to the resource referenced by the URI.
         /// </summary>
         public string PathAndQuery => _pathAndQuery.ToString();
 
         /// <summary>
-        /// Replaces values inside this instance with values provided in <paramref name="value"/> parameter.
+        /// Replaces values inside this instance with values provided in the <paramref name="value"/> parameter.
         /// </summary>
         /// <param name="value">The <see cref="Uri"/> instance to get values from.</param>
         public void Reset(Uri value)
@@ -142,10 +142,10 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Gets the <see cref="System.Uri"></see> instance constructed by the specified <see cref="RequestUriBuilder"/> instance.
+        /// Gets the <see cref="System.Uri"/> instance constructed by the specified <see cref="RequestUriBuilder"/> instance.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.Uri"></see> that contains the URI constructed by the <see cref="RequestUriBuilder"/>.
+        /// A <see cref="System.Uri"/> that contains the URI constructed by the <see cref="RequestUriBuilder"/>.
         /// </returns>
         public Uri ToUri()
         {
@@ -198,18 +198,20 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Appends escaped <paramref name="value"/> to <see cref="Path"/> without adding path separator.
+        /// Escapes and appends the <paramref name="value"/> to <see cref="Path"/> without adding path separator.
+        /// Path segments and any other characters will be escaped, e.g. "/" will be escaped as "%3a".
         /// </summary>
-        /// <param name="value">The value to append.</param>
+        /// <param name="value">The value to escape and append.</param>
         public void AppendPath(string value)
         {
             AppendPath(value, escape: true);
         }
 
         /// <summary>
-        /// Appends optionally escaped <paramref name="value"/> to <see cref="Path"/> without adding path separator.
+        /// Optionally escapes and appends the <paramref name="value"/> to <see cref="Path"/> without adding path separator.
+        /// If <paramref name="escape"/> is true, path segments and any other characters will be escaped, e.g. "/" will be escaped as "%3a".
         /// </summary>
-        /// <param name="value">The value to append.</param>
+        /// <param name="value">The value to optionally escape and append.</param>
         /// <param name="escape">Whether value should be escaped.</param>
         public void AppendPath(string value, bool escape)
         {
@@ -250,12 +252,18 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Returns a string representation of this <see cref="RequestUriBuilder"/> i.
+        /// Returns a string representation of this <see cref="RequestUriBuilder"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A string representation of this <see cref="RequestUriBuilder"/>.</returns>
         public override string ToString()
         {
-            var stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder(
+                (Scheme?.Length ?? 0) +
+                3 + // ://
+                (Host?.Length ?? 0) +
+                _pathAndQuery.Length +
+                10 // optimistic padding
+                );
             stringBuilder.Append(Scheme);
             stringBuilder.Append("://");
             stringBuilder.Append(Host);

@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
         /// <param name="results"> The list of status information for each document in the indexing request. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal IndexDocumentsResult(IEnumerable<IndexingResult> results)
         {
             if (results == null)
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(results));
             }
 
-            Results = results.ToArray();
+            Results = results.ToList();
         }
 
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>

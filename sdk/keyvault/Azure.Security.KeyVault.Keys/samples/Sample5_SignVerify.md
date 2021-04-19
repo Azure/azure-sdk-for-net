@@ -1,7 +1,7 @@
 # Signing and verifying keys
 
 This sample demonstrates how to sign data with both a RSA key and an EC key.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
+To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) for links and instructions.
 
 ## Creating a KeyClient
 
@@ -20,22 +20,22 @@ First, we'll create both an RSA key and an EC key which will be used to sign and
 
 ```C# Snippet:KeysSample5CreateKey
 string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
-var rsaKey = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
+var rsaKeyOptions = new CreateRsaKeyOptions(rsaKeyName, hardwareProtected: false)
 {
     KeySize = 2048,
 };
 
 string ecKeyName = $"CloudEcKey-{Guid.NewGuid()}";
-var ecKey = new CreateEcKeyOptions(ecKeyName, hardwareProtected: false)
+var ecKeyOptions = new CreateEcKeyOptions(ecKeyName, hardwareProtected: false)
 {
     CurveName = KeyCurveName.P256K,
 };
 
-KeyVaultKey cloudRsaKey = keyClient.CreateRsaKey(rsaKey);
-Debug.WriteLine($"Key is returned with name {cloudRsaKey.Name} and type {cloudRsaKey.KeyType}");
+KeyVaultKey rsaKey = keyClient.CreateRsaKey(rsaKeyOptions);
+Debug.WriteLine($"Key is returned with name {rsaKey.Name} and type {rsaKey.KeyType}");
 
-KeyVaultKey cloudEcKey = keyClient.CreateEcKey(ecKey);
-Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcKey.KeyType}");
+KeyVaultKey ecKey = keyClient.CreateEcKey(ecKeyOptions);
+Debug.WriteLine($"Key is returned with name {ecKey.Name} and type {ecKey.KeyType}");
 ```
 
 ## Creating CryptographyClients
@@ -43,9 +43,9 @@ Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcK
 Then, we create the `CryptographyClient` which can perform cryptographic operations with the key we just created using the same credential created above.
 
 ```C# Snippet:KeysSample5CryptographyClient
-var rsaCryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
+var rsaCryptoClient = new CryptographyClient(rsaKey.Id, new DefaultAzureCredential());
 
-var ecCryptoClient = new CryptographyClient(cloudEcKey.Id, new DefaultAzureCredential());
+var ecCryptoClient = new CryptographyClient(ecKey.Id, new DefaultAzureCredential());
 ```
 
 ## Signing keys with the Sign and Verify methods
@@ -110,7 +110,7 @@ Debug.WriteLine($"Verified the signature using the algorithm {ecVerifyDataResult
 
 To see the full example source, see:
 
-* [Synchronous Sample5_SignVerify.cs](../tests/samples/Sample5_SignVerify.cs)
-* [Asynchronous Sample5_SignVerifyAsync.cs](../tests/samples/Sample5_SignVerifyAsync.cs)
+* [Synchronous Sample5_SignVerify.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample5_SignVerify.cs)
+* [Asynchronous Sample5_SignVerifyAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample5_SignVerifyAsync.cs)
 
-[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md

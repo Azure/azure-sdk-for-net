@@ -18,15 +18,6 @@ namespace Azure.Batch.Unit.Tests
 
     public class GetFileRequestByteRangeTests
     {
-        private ITestOutputHelper testOutputHelper;
-        private const int DefaultServerTimeoutInSeconds = 30;
-        private static readonly TimeSpan DefaultClientTimeout = TimeSpan.FromSeconds(60);
-
-        public GetFileRequestByteRangeTests(ITestOutputHelper testOutputHelper)
-        {
-            this.testOutputHelper = testOutputHelper;
-        }
-
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public async Task WhenGettingTaskFileUsingReadAsString_OcpRangeHeaderIsSet()
@@ -124,17 +115,15 @@ namespace Azure.Batch.Unit.Tests
             // properties" call to the Batch service and instead builds a fake NodeFile.
             BatchClientBehavior getFakeNodeFile = CreateFakeNodeFileInterceptor<TPropertiesRequest, TPropertiesOptions, TPropertiesHeaders>();
 
-            using (BatchClient client = ClientUnitTestCommon.CreateDummyClient())
-            {
-                client.CustomBehaviors.Add(confirmByteRangeIsSet);
-                client.CustomBehaviors.Add(getFakeNodeFile);
-                // Get a NodeFile object by invoking the "get file properties" API.
-                Microsoft.Azure.Batch.NodeFile nodeFile = await getNodeFilePropertiesFunc(client);
-                // The download func invokes the "get file" API where the OcpRange header is actually set
-                await downloadFileFunc(nodeFile, byteRange);
-                // Verify the OcpRange validation interceptor was actually invoked
-                Assert.True(invocationTracker.WasInvoked);
-            }
+            using BatchClient client = ClientUnitTestCommon.CreateDummyClient();
+            client.CustomBehaviors.Add(confirmByteRangeIsSet);
+            client.CustomBehaviors.Add(getFakeNodeFile);
+            // Get a NodeFile object by invoking the "get file properties" API.
+            Microsoft.Azure.Batch.NodeFile nodeFile = await getNodeFilePropertiesFunc(client);
+            // The download func invokes the "get file" API where the OcpRange header is actually set
+            await downloadFileFunc(nodeFile, byteRange);
+            // Verify the OcpRange validation interceptor was actually invoked
+            Assert.True(invocationTracker.WasInvoked);
         }
 
         private Protocol.RequestInterceptor CreateOcpRangeConfirmationInterceptor<TRequest, TOptions, THeaders>(
@@ -147,8 +136,7 @@ namespace Azure.Batch.Unit.Tests
         {
             return new Protocol.RequestInterceptor(request =>
             {
-                TRequest getFileRequest = request as TRequest;
-                if (getFileRequest != null)
+                if (request is TRequest getFileRequest)
                 {
                     getFileRequest.ServiceRequestFunc = t =>
                     {
@@ -174,8 +162,7 @@ namespace Azure.Batch.Unit.Tests
         {
             return new Protocol.RequestInterceptor(request =>
             {
-                TRequest getFilePropertiesRequest = request as TRequest;
-                if (getFilePropertiesRequest != null)
+                if (request is TRequest getFilePropertiesRequest)
                 {
                     getFilePropertiesRequest.ServiceRequestFunc = t =>
                     {

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines the names of all tokenizers supported by Azure Cognitive Search. </summary>
     public readonly partial struct LexicalTokenizerName : IEquatable<LexicalTokenizerName>
@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="LexicalTokenizerName"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LexicalTokenizerName(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

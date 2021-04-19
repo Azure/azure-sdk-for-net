@@ -11,14 +11,32 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormTable
     {
-        internal FormTable(DataTable_internal table, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
+        internal FormTable(DataTable table, IReadOnlyList<ReadResult> readResults, int pageIndex)
         {
-            ReadResult_internal readResult = readResults[pageIndex];
+            ReadResult readResult = readResults[pageIndex];
 
             PageNumber = readResult.Page;
             ColumnCount = table.Columns;
             RowCount = table.Rows;
             Cells = ConvertCells(table.Cells, readResults, readResult.Page);
+            // Need to verify why Bounding Box is not returned from the service
+            // https://github.com/Azure/azure-sdk-for-net/issues/16827
+            BoundingBox = table.BoundingBox == null ? new FieldBoundingBox(new List<float>()) : new FieldBoundingBox(table.BoundingBox);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormTable"/> class.
+        /// </summary>
+        /// <param name="pageNumber">The 1-based number of the page in which this table is present.</param>
+        /// <param name="columnCount">The number of columns in this table.</param>
+        /// <param name="rowCount">The number of rows in this table.</param>
+        /// <param name="cells">A list of cells contained in this table.</param>
+        internal FormTable(int pageNumber, int columnCount, int rowCount, IReadOnlyList<FormTableCell> cells)
+        {
+            PageNumber = pageNumber;
+            ColumnCount = columnCount;
+            RowCount = rowCount;
+            Cells = cells;
         }
 
         /// <summary>
@@ -41,9 +59,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public int RowCount { get; }
 
-        // TODO: implement table indexer
-        // TODO: Handling column-span?
-        // https://github.com/Azure/azure-sdk-for-net/issues/9975
+        /// <summary> Bounding box of the table. </summary>
+        public FieldBoundingBox BoundingBox { get; }
 
         /// <summary>
         /// </summary>
@@ -64,7 +81,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
-        private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell_internal> cellsResult, IReadOnlyList<ReadResult_internal> readResults, int pageNumber)
+        private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell> cellsResult, IReadOnlyList<ReadResult> readResults, int pageNumber)
         {
             List<FormTableCell> cells = new List<FormTableCell>();
 

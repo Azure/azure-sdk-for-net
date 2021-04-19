@@ -7,9 +7,9 @@
 
 using System;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    internal static class CjkBigramTokenFilterScriptsExtensions
+    internal static partial class CjkBigramTokenFilterScriptsExtensions
     {
         public static string ToSerialString(this CjkBigramTokenFilterScripts value) => value switch
         {

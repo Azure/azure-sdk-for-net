@@ -8,25 +8,21 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchIndexerWarning
     {
         internal static SearchIndexerWarning DeserializeSearchIndexerWarning(JsonElement element)
         {
-            string key = default;
+            Optional<string> key = default;
             string message = default;
-            string name = default;
-            string details = default;
-            string documentationLink = default;
+            Optional<string> name = default;
+            Optional<string> details = default;
+            Optional<string> documentationLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     key = property.Value.GetString();
                     continue;
                 }
@@ -37,33 +33,21 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("details"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     details = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("documentationLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     documentationLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new SearchIndexerWarning(key, message, name, details, documentationLink);
+            return new SearchIndexerWarning(key.Value, message, name.Value, details.Value, documentationLink.Value);
         }
     }
 }

@@ -34,10 +34,14 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         /// <param name="tier">The service tier</param>
         /// <param name="name">The SKU name</param>
-        public Sku(string tier = default(string), string name = default(string))
+        /// <param name="capacity">If the SKU supports scale out/in then the
+        /// capacity integer should be included. If scale out/in is not
+        /// possible for the resource this may be omitted.</param>
+        public Sku(string tier = default(string), string name = default(string), int? capacity = default(int?))
         {
             Tier = tier;
             Name = name;
+            Capacity = capacity;
             CustomInit();
         }
 
@@ -57,6 +61,14 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the SKU supports scale out/in then the capacity
+        /// integer should be included. If scale out/in is not possible for the
+        /// resource this may be omitted.
+        /// </summary>
+        [JsonProperty(PropertyName = "capacity")]
+        public int? Capacity { get; set; }
 
     }
 }

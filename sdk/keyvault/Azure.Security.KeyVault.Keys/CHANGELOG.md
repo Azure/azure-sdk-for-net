@@ -1,7 +1,91 @@
 # Release History
 
-## 4.1.0-preview.2 (Unreleased)
+## 4.2.0-beta.6 (Unreleased)
 
+
+## 4.2.0-beta.5 (2021-03-09)
+
+### Added
+
+- `LocalCryptographyClientOptions` has been added to configure diagnostics for `CryptographyClient` when used for local-only operations.
+
+### Removed
+
+- `LocalCryptographyClient` has been removed. Use `CryptographyClient` with a `JsonWebKey` instead.
+
+## 4.2.0-beta.4 (2021-02-10)
+
+### Added
+
+- Added `CreateEcKeyOptions` class.
+- Added `CreateEcKey` and `CreateEcKeyAsync` methods to the `KeyClient` class.
+- Added constructor to `KeyVaultKeyIdentifier` to parse a `Uri`.
+
+### Changed
+
+- The default service version is now "7.2" (still in preview).
+- Renamed `EncryptOptions` to `EncryptParameters`.
+- Renamed `DecryptOptions` to `DecryptParameters`.
+- Made `EncryptParameters.AdditionalAuthenticatedData` read-only, requiring it to be passed to the constructor.
+- Made `DecryptParameters.AdditionalAuthenticatedData` read-only, requiring it to be passed to the constructor.
+
+### Removed
+
+- Removed local cryptographic support for AES-GCM.
+- Removed `Export` and `ExportAsync` methods from `KeyClient`.
+- Removed `Exportable` property from `KeyProperties`'.
+- Removed `KeyReleasePolicy` class and associated properties.
+- Removed `KeyVaultKeyIdentifier.Parse` and `KeyVaultKeyIdentifier.TryParse` in favor of the added constructor.
+
+## 4.2.0-beta.3 (2020-11-12)
+
+### Added
+
+- Added `KeyType.OctHsm` to support "oct-HSM" key operations.
+- Added AES-GCM and AES-CBC support for encrypting and decrypting, including new `Encrypt` and `Decrypt` overloads.
+- Added support for Secure Key Release including the `Export` method on `KeyClient` and `ReleasePolicy` property on various models.
+
+## 4.2.0-beta.2 (2020-10-06)
+
+- Bug fixes and performance improvements.
+
+## 4.2.0-beta.1 (2020-09-08)
+
+### Added
+
+- Added `KeyVaultKeyIdentifier` to parse key URIs.
+- Added `LocalCryptographyClient` to do cryptography operations locally using a `JsonWebKey`.
+
+### Changed
+
+- Clarified documentation for `KeyClientBuilderExtensions` methods.
+
+## 4.1.0 (2020-08-11)
+
+### Added
+
+- Added "import" value to `KeyOperation` enumeration.
+- Added `RecoverableDays` property to `KeyProperties`.
+
+### Changed
+
+- Default service version is now 7.1.
+
+## 4.0.4 (2020-07-09)
+
+### Fixed
+
+- The "get" permission is no longer required to resolve keys for `KeyResolver` ([#11574](https://github.com/Azure/azure-sdk-for-net/issues/11574))
+
+### Minor changes
+
+- Make public `JsonWebKey` properties settable ([#12084](https://github.com/Azure/azure-sdk-for-net/issues/12084))
+
+## 4.0.3 (2020-03-18)
+
+### Fixed
+
+- Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
 
 ## 4.1.0-preview.1 (2020-03-09)
 
@@ -9,12 +93,6 @@
 
 - Add "import" value to `KeyOperation` enumeration.
 - Add `RecoverableDays` property to `KeyProperties`.
-
-## 4.0.3 (2020-03-18)
-
-### Fixed
-
-- Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
 
 ## 4.0.2 (2020-03-03)
 
@@ -30,7 +108,7 @@
 
 - Challenge-based authentication requests are only sent over HTTPS.
 
-## 4.0.0 (2019-11)
+## 4.0.0 (2019-11-01)
 
 ### Breaking changes
 
@@ -88,7 +166,7 @@ https://aka.ms/azure-sdk-preview1-net.
 This library is not a direct replacement for `Microsoft.Azure.KeyVault`. Applications
 using that library would require code changes to use `Azure.Security.KeyVault.Keys`.
 This package's
-[documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys/Readme.md)
+[documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md)
 and
 [samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples)
 demonstrate the new API.
@@ -103,7 +181,7 @@ only).
 - Asynchronous and synchronous APIs in the `Azure.Security.KeyVault.Keys` package.
 - Authentication using `Azure.Identity` credentials
   - see this package's
-  [documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys/Readme.md)
+  [documentation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md)
   , and the
   [Azure Identity documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity)
   for more information

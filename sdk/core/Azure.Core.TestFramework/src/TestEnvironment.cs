@@ -9,6 +9,10 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Identity;
+using System.ComponentModel;
+using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
 {
@@ -18,7 +22,9 @@ namespace Azure.Core.TestFramework
     /// </summary>
     public abstract class TestEnvironment
     {
-        private static readonly string RepositoryRoot;
+        [EditorBrowsableAttribute(EditorBrowsableState.Never)]
+        public static string RepositoryRoot { get; }
+
         private readonly string _prefix;
 
         private TokenCredential _credential;
@@ -26,15 +32,34 @@ namespace Azure.Core.TestFramework
 
         private readonly Dictionary<string, string> _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        protected TestEnvironment(string serviceName)
+        protected TestEnvironment()
         {
-            _prefix = serviceName.ToUpperInvariant() + "_";
             if (RepositoryRoot == null)
             {
                 throw new InvalidOperationException("Unexpected error, repository root not found");
             }
 
-            var testEnvironmentFile = Path.Combine(RepositoryRoot, "sdk", serviceName, "test-resources.json.env");
+            var testProject = GetSourcePath(GetType().Assembly);
+            var sdkDirectory = Path.GetFullPath(Path.Combine(RepositoryRoot, "sdk"));
+            var serviceName = Path.GetFullPath(testProject)
+                .Substring(sdkDirectory.Length)
+                .Trim(Path.DirectorySeparatorChar)
+                .Split(Path.DirectorySeparatorChar).FirstOrDefault();
+
+            if (string.IsNullOrWhiteSpace(serviceName))
+            {
+                throw new InvalidOperationException($"Unable to determine the service name from test project path {testProject}");
+            }
+
+            var serviceSdkDirectory = Path.Combine(sdkDirectory, serviceName);
+            if (!Directory.Exists(sdkDirectory))
+            {
+                throw new InvalidOperationException($"SDK directory {serviceSdkDirectory} not found");
+            }
+
+            _prefix = serviceName.ToUpperInvariant() + "_";
+
+            var testEnvironmentFile = Path.Combine(serviceSdkDirectory, "test-resources.json.env");
             if (File.Exists(testEnvironmentFile))
             {
                 var json = JsonDocument.Parse(
@@ -67,7 +92,7 @@ namespace Azure.Core.TestFramework
             RepositoryRoot = directoryInfo?.Parent?.FullName;
         }
 
-        internal RecordedTestMode? Mode { get; set; }
+        public RecordedTestMode? Mode { get; set; }
 
         /// <summary>
         ///   The name of the Azure subscription containing the resource group to be used for Live tests. Recorded.
@@ -95,6 +120,26 @@ namespace Azure.Core.TestFramework
         public string TenantId => GetRecordedVariable("TENANT_ID");
 
         /// <summary>
+        ///   The URL of the Azure Resource Manager to be used for management plane operations. Recorded.
+        /// </summary>
+        public string ResourceManagerUrl => GetRecordedOptionalVariable("RESOURCE_MANAGER_URL");
+
+        /// <summary>
+        ///   The URL of the Azure Service Management endpoint to be used for management plane authentication. Recorded.
+        /// </summary>
+        public string ServiceManagementUrl => GetRecordedOptionalVariable("SERVICE_MANAGEMENT_URL");
+
+        /// <summary>
+        ///   The URL of the Azure Authority host to be used for authentication. Recorded.
+        /// </summary>
+        public string AuthorityHostUrl => GetRecordedOptionalVariable("AZURE_AUTHORITY_HOST");
+
+        /// <summary>
+        ///   The suffix for Azure Storage accounts for the active cloud environment, such as "core.windows.net".  Recorded.
+        /// </summary>
+        public string StorageEndpointSuffix => GetRecordedOptionalVariable("STORAGE_ENDPOINT_SUFFIX");
+
+        /// <summary>
         ///   The client id of the Azure Active Directory service principal to use during Live tests. Recorded.
         /// </summary>
         public string ClientId => GetRecordedVariable("CLIENT_ID");
@@ -115,19 +160,11 @@ namespace Azure.Core.TestFramework
 
                 if (Mode == RecordedTestMode.Playback)
                 {
-                    _credential = new TestCredential();
+                    _credential = new MockCredential();
                 }
                 else
                 {
-                    // Don't take a hard dependency on Azure.Identity
-                    var type = Type.GetType("Azure.Identity.ClientSecretCredential, Azure.Identity");
-                    if (type == null)
-                    {
-                        throw new InvalidOperationException("Azure.Identity must be referenced to use Credential in Live environment.");
-                    }
-
-                    _credential = (TokenCredential) Activator.CreateInstance(
-                        type,
+                    _credential = new ClientSecretCredential(
                         GetVariable("TENANT_ID"),
                         GetVariable("CLIENT_ID"),
                         GetVariable("CLIENT_SECRET")
@@ -143,6 +180,14 @@ namespace Azure.Core.TestFramework
         /// </summary>
         protected string GetRecordedOptionalVariable(string name)
         {
+            return GetRecordedOptionalVariable(name, _ => { });
+        }
+
+        /// <summary>
+        /// Returns and records an environment variable value when running live or recorded value during playback.
+        /// </summary>
+        protected string GetRecordedOptionalVariable(string name, Action<RecordedVariableOptions> options)
+        {
             if (Mode == RecordedTestMode.Playback)
             {
                 return GetRecordedValue(name);
@@ -150,8 +195,28 @@ namespace Azure.Core.TestFramework
 
             string value = GetOptionalVariable(name);
 
-            SetRecordedValue(name, value);
+            if (!Mode.HasValue)
+            {
+                return value;
+            }
 
+            if (_recording == null)
+            {
+                throw new InvalidOperationException("Recorded value should not be set outside the test method invocation");
+            }
+
+            // If the value was populated, sanitize before recording it.
+
+            string sanitizedValue = value;
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                var optionsInstance = new RecordedVariableOptions();
+                options?.Invoke(optionsInstance);
+                sanitizedValue = optionsInstance.Apply(sanitizedValue);
+            }
+
+            _recording?.SetVariable(name, sanitizedValue);
             return value;
         }
 
@@ -161,26 +226,38 @@ namespace Azure.Core.TestFramework
         /// </summary>
         protected string GetRecordedVariable(string name)
         {
-            var value = GetRecordedOptionalVariable(name);
+            return GetRecordedVariable(name, null);
+        }
+
+        /// <summary>
+        /// Returns and records an environment variable value when running live or recorded value during playback.
+        /// Throws when variable is not found.
+        /// </summary>
+        protected string GetRecordedVariable(string name, Action<RecordedVariableOptions> options)
+        {
+            var value = GetRecordedOptionalVariable(name, options);
             EnsureValue(name, value);
             return value;
         }
 
         /// <summary>
-        /// Returns an environment variable value.
-        /// Throws when variable is not found.
+        /// Returns an environment variable value or null when variable is not found.
         /// </summary>
         protected string GetOptionalVariable(string name)
         {
             var prefixedName = _prefix + name;
 
-            // Environment variables override the environment file
-            var value = Environment.GetEnvironmentVariable(prefixedName) ??
-                        Environment.GetEnvironmentVariable(name);
+            // Prefixed name overrides non-prefixed
+            var value = Environment.GetEnvironmentVariable(prefixedName);
 
             if (value == null)
             {
                 _environmentFile.TryGetValue(prefixedName, out value);
+            }
+
+            if (value == null)
+            {
+                value = Environment.GetEnvironmentVariable(name);
             }
 
             if (value == null)
@@ -229,31 +306,84 @@ namespace Azure.Core.TestFramework
             return _recording.GetVariable(name, null);
         }
 
-        private void SetRecordedValue(string name, string value)
+        internal static string GetSourcePath(Assembly assembly)
         {
-            if (!Mode.HasValue)
-            {
-                return;
-            }
+            if (assembly == null)
+                throw new ArgumentNullException(nameof(assembly));
 
-            if (_recording == null)
+            var testProject = assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "SourcePath").Value;
+            if (string.IsNullOrEmpty(testProject))
             {
-                throw new InvalidOperationException("Recorded value should not be set outside the test method invocation");
+                throw new InvalidOperationException($"Unable to determine the test directory for {assembly}");
             }
-
-            _recording?.SetVariable(name, value);
+            return testProject;
         }
 
-        private class TestCredential : TokenCredential
-        {
-            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
-            }
+        /// <summary>
+        /// Determines if the current environment is Azure DevOps.
+        /// </summary>
+        public static bool GlobalIsRunningInCI => Environment.GetEnvironmentVariable("TF_BUILD") != null;
 
-            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        /// <summary>
+        /// Determines if the current global test mode.
+        /// </summary>
+        internal static RecordedTestMode GlobalTestMode
+        {
+            get
             {
-                return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue);
+                string modeString = TestContext.Parameters["TestMode"] ?? Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+
+                RecordedTestMode mode = RecordedTestMode.Playback;
+                if (!string.IsNullOrEmpty(modeString))
+                {
+                    mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);
+                }
+
+                return mode;
+            }
+        }
+
+        /// <summary>
+        /// Determines if tests that use <see cref="ClientTestFixtureAttribute"/> should only test the latest version.
+        /// </summary>
+        internal static bool GlobalTestOnlyLatestVersion
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["OnlyLiveTestLatestServiceVersion"] ?? Environment.GetEnvironmentVariable("AZURE_ONLY_TEST_LATEST_SERVICE_VERSION");
+
+                bool.TryParse(switchString, out bool onlyTestLatestServiceVersion);
+
+                return onlyTestLatestServiceVersion;
+            }
+        }
+
+        /// <summary>
+        /// Determines service versions that would be tested in tests that use <see cref="ClientTestFixtureAttribute"/>.
+        /// NOTE: this variable only narrows the set of versions defined in the attribute
+        /// </summary>
+        internal static string[] GlobalTestServiceVersions
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["LiveTestServiceVersions"] ?? Environment.GetEnvironmentVariable("AZURE_LIVE_TEST_SERVICE_VERSIONS") ?? string.Empty;
+
+                return switchString.Split(new char[] {',', ';'}, StringSplitOptions.RemoveEmptyEntries);
+            }
+        }
+
+        /// <summary>
+        /// Determines if tests that use <see cref="RecordedTestAttribute"/> should try to re-record on failure.
+        /// </summary>
+        internal static bool GlobalDisableAutoRecording
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["DisableAutoRecording"] ?? Environment.GetEnvironmentVariable("AZURE_DISABLE_AUTO_RECORDING");
+
+                bool.TryParse(switchString, out bool disableAutoRecording);
+
+                return disableAutoRecording || GlobalIsRunningInCI;
             }
         }
     }
