@@ -303,6 +303,47 @@ namespace Azure.Monitory.Query.Tests
             Assert.IsNull(row.Decimal);
         }
 
+        [RecordedTest]
+        public async Task CanQueryIntoPrimitive()
+        {
+            var client = CreateClient();
+
+            Assert.AreEqual(DateTimeOffset.Parse("2015-12-31 23:59:59.9+00:00"), (await client.QueryAsync<DateTimeOffset>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(2015-12-31 23:59:59.9) ]")).Value[0]);
+            Assert.AreEqual(false, (await client.QueryAsync<bool>(TestEnvironment.WorkspaceId, $"datatable (Bool: bool) [ false ]")).Value[0]);
+            Assert.AreEqual(Guid.Parse("74be27de-1e4e-49d9-b579-fe0b331d3642"), (await client.QueryAsync<Guid>(TestEnvironment.WorkspaceId, $"datatable (Guid: guid) [ guid(74be27de-1e4e-49d9-b579-fe0b331d3642) ]")).Value[0]);
+            Assert.AreEqual(12345, (await client.QueryAsync<int>(TestEnvironment.WorkspaceId, $"datatable (Int: int) [ 12345 ]")).Value[0]);
+            Assert.AreEqual(1234567890123, (await client.QueryAsync<long>(TestEnvironment.WorkspaceId, $"datatable (Long: long) [ 1234567890123 ]")).Value[0]);
+            Assert.AreEqual(12345.6789d, (await client.QueryAsync<double>(TestEnvironment.WorkspaceId, $"datatable (Double: double) [ 12345.6789 ]")).Value[0]);
+            Assert.AreEqual("string value", (await client.QueryAsync<string>(TestEnvironment.WorkspaceId, $"datatable (String: string) [ \"string value\" ]")).Value[0]);
+            Assert.AreEqual(TimeSpan.FromSeconds(10), (await client.QueryAsync<TimeSpan>(TestEnvironment.WorkspaceId, $"datatable (Timespan: timespan) [ 10s ]")).Value[0]);
+            Assert.AreEqual(0.10101m, (await client.QueryAsync<decimal>(TestEnvironment.WorkspaceId, $"datatable (Decimal: decimal) [ decimal(0.10101) ]")).Value[0]);
+        }
+
+        [RecordedTest]
+        public async Task CanQueryIntoNullablePrimitive()
+        {
+            var client = CreateClient();
+
+            Assert.IsNull((await client.QueryAsync<DateTimeOffset?>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(null) ]")).Value[0]);
+            Assert.IsNull((await client.QueryAsync<bool?>(TestEnvironment.WorkspaceId, $"datatable (Bool: bool) [ bool(null) ]")).Value[0]);
+            Assert.IsNull((await client.QueryAsync<Guid?>(TestEnvironment.WorkspaceId, $"datatable (Guid: guid) [ guid(null) ]")).Value[0]);
+            Assert.IsNull((await client.QueryAsync<int?>(TestEnvironment.WorkspaceId, $"datatable (Int: int) [ int(null) ]")).Value[0]);
+            Assert.IsNull((await client.QueryAsync<long?>(TestEnvironment.WorkspaceId, $"datatable (Long: long) [ long(null) ]")).Value[0]);
+            Assert.IsNull((await client.QueryAsync<double?>(TestEnvironment.WorkspaceId, $"datatable (Double: double) [ double(null) ]")).Value[0]);
+            Assert.IsNull((await client.QueryAsync<TimeSpan?>(TestEnvironment.WorkspaceId, $"datatable (Timespan: timespan) [ timespan(null) ]")).Value[0]);
+            Assert.IsNull((await client.QueryAsync<decimal?>(TestEnvironment.WorkspaceId, $"datatable (Decimal: decimal) [ decimal(null) ]")).Value[0]);
+        }
+
+        [RecordedTest]
+        public async Task CanQueryIntoNullablePrimitiveNull()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryAsync<DateTimeOffset?>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(null) ]");
+
+            Assert.IsNull(results.Value[0]);
+        }
+
         private record TestModel
         {
             public string Name { get; set; }

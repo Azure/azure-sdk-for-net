@@ -6,18 +6,18 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "117",
+        "Content-Length": "315",
         "Content-Type": "application/json",
-        "traceparent": "00-0db71accffa1594d8c3494015d838469-b76623c775e55d4c-00",
+        "traceparent": "00-4ce65dc2b0f4464b9baa3a4f227e46c4-994af7d0f2229d48-00",
         "User-Agent": [
           "azsdk-net-Monitory.Query/1.0.0-alpha.20210419.1",
           "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "d36f33f97f3b8afbfd44a3fa76ab65e8",
+        "x-ms-client-request-id": "98b8c415e308f138f95c4bcffb555830",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA1_CL |project StringColumn_s, IntColumn_d, BoolColumn_b, FloatColumn_d |order by StringColumn_s asc"
+        "query": "datatable (DateTime: datetime, Bool:bool, Guid: guid, Int: int, Long:long, Double: double, String: string, Timespan: timespan, Decimal: decimal)[datetime(2015-12-31 23:59:59.9),false,guid(74be27de-1e4e-49d9-b579-fe0b331d3642),12345,1234567890123,12345.6789,\u0027string value\u0027,10s,decimal(0.10101)]"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -25,7 +25,7 @@
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Age": "71",
         "Connection": "keep-alive",
-        "Content-Length": "279",
+        "Content-Length": "493",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Mon, 19 Apr 2021 23:51:55 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
@@ -33,7 +33,7 @@
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-6ddc976cfd-jz75n",
+        "Via": "1.1 draft-oms-6ddc976cfd-9r6nz",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -42,40 +42,53 @@
             "name": "PrimaryResult",
             "columns": [
               {
-                "name": "StringColumn_s",
-                "type": "string"
+                "name": "DateTime",
+                "type": "datetime"
               },
               {
-                "name": "IntColumn_d",
-                "type": "real"
-              },
-              {
-                "name": "BoolColumn_b",
+                "name": "Bool",
                 "type": "bool"
               },
               {
-                "name": "FloatColumn_d",
+                "name": "Guid",
+                "type": "guid"
+              },
+              {
+                "name": "Int",
+                "type": "int"
+              },
+              {
+                "name": "Long",
+                "type": "long"
+              },
+              {
+                "name": "Double",
                 "type": "real"
+              },
+              {
+                "name": "String",
+                "type": "string"
+              },
+              {
+                "name": "Timespan",
+                "type": "timespan"
+              },
+              {
+                "name": "Decimal",
+                "type": "decimal"
               }
             ],
             "rows": [
               [
-                "a",
-                1,
+                "2015-12-31T23:59:59.9Z",
                 false,
-                0
-              ],
-              [
-                "b",
-                3,
-                true,
-                1.20000005
-              ],
-              [
-                "c",
-                1,
-                false,
-                1.10000002
+                "74be27de-1e4e-49d9-b579-fe0b331d3642",
+                12345,
+                1234567890123,
+                12345.6789,
+                "string value",
+                "00:00:10",
+                "0.10101"
               ]
             ]
           }
@@ -84,7 +97,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1577816746",
+    "RandomSeed": "679609132",
     "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254"
   }
 }

@@ -41,7 +41,18 @@ namespace Azure.Monitory.Query
 
             public BoundTypeInfo(Type type)
             {
-                _isPrimitive = type == typeof(string) || type.IsPrimitive;
+                Type innerType = type;
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                {
+                    innerType = type.GetGenericArguments()[0];
+                }
+
+                _isPrimitive = innerType == typeof(string) ||
+                               innerType == typeof(DateTimeOffset) ||
+                               innerType == typeof(TimeSpan) ||
+                               innerType == typeof(Guid) ||
+                               innerType == typeof(decimal) ||
+                               innerType.IsPrimitive;
 
                 if (!_isPrimitive)
                 {

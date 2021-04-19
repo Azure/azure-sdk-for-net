@@ -65,8 +65,9 @@ namespace Azure.Monitory.Query
             }
 
             if (source.IsNull(column) &&
+                (!typeof(T).IsValueType ||
                 typeof(T).IsGenericType &&
-                typeof(T).GetGenericTypeDefinition() == typeof(Nullable<>))
+                typeof(T).GetGenericTypeDefinition() == typeof(Nullable<>)))
             {
                 value = default;
                 return true;
