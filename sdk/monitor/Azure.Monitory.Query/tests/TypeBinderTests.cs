@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Monitory.Query.Tests
@@ -17,12 +18,16 @@ namespace Azure.Monitory.Query.Tests
                 { "IntField", 2 },
                 { "StringProperty", "1" },
                 { "StringField", "2" },
+                { "IgnoredProperty", "5" },
+                { "renamed_property", "renamed value"}
             });
 
             Assert.AreEqual(1, model.IntProperty);
             Assert.AreEqual(2, model.IntField);
             Assert.AreEqual("1", model.StringProperty);
             Assert.AreEqual("2", model.StringField);
+            Assert.AreEqual("Ignore me", model.IgnoredProperty);
+            Assert.AreEqual("renamed value", model.RenamedProperty);
         }
 
         [Test]
@@ -35,7 +40,8 @@ namespace Azure.Monitory.Query.Tests
                 IntProperty = 1,
                 IntField = 2,
                 StringProperty = "1",
-                StringField = "2"
+                StringField = "2",
+                RenamedProperty = "renamed value"
             }, dictionary);
 
             Assert.AreEqual(1, dictionary["IntProperty"]);
@@ -46,6 +52,8 @@ namespace Azure.Monitory.Query.Tests
             Assert.AreEqual("2", dictionary["StringField"]);
             Assert.AreEqual("3", dictionary["StringReadOnlyProperty"]);
             Assert.AreEqual("42", dictionary["StringReadOnlyField"]);
+            Assert.AreEqual("renamed value", dictionary["renamed_property"]);
+            Assert.False(dictionary.ContainsKey("IgnoredProperty"));
         }
 
 #pragma warning disable 414
@@ -63,6 +71,12 @@ namespace Azure.Monitory.Query.Tests
 
             public string StringReadOnlyProperty { get; } = "3";
             public readonly string StringReadOnlyField = "42";
+
+            [IgnoreDataMember]
+            public string IgnoredProperty { get; set; } = "Ignore me";
+
+            [DataMember(Name = "renamed_property")]
+            public string RenamedProperty { get; set; } = "renamed property";
         }
 #pragma warning restore 649
 #pragma warning restore 414

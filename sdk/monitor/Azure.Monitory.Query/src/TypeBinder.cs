@@ -6,8 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-
-#pragma warning disable SA1402
+using System.Runtime.Serialization;
 
 namespace Azure.Monitory.Query
 {
@@ -44,6 +43,11 @@ namespace Azure.Monitory.Query
                 List<BoundMemberInfo> members = new List<BoundMemberInfo>();
                 foreach (var memberInfo in type.GetMembers(BindingFlags.Public | BindingFlags.Instance))
                 {
+                    if (memberInfo.IsDefined(typeof(IgnoreDataMemberAttribute)))
+                    {
+                        continue;
+                    }
+
                     switch (memberInfo)
                     {
                         case PropertyInfo propertyInfo:
@@ -88,9 +92,14 @@ namespace Azure.Monitory.Query
             public BoundMemberInfo(MemberInfo memberInfo)
             {
                 MemberInfo = memberInfo;
+                Name = MemberInfo.Name;
+                if (memberInfo.GetCustomAttribute<DataMemberAttribute>() is { Name: not null } dataMemberAttribute)
+                {
+                    Name = dataMemberAttribute.Name;
+                }
             }
 
-            public string Name => MemberInfo.Name;
+            public string Name { get; }
             public MemberInfo MemberInfo { get; }
             public abstract bool CanRead { get; }
             public abstract bool CanWrite { get; }
