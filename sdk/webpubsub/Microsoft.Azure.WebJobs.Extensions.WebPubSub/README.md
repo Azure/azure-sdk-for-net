@@ -1,4 +1,4 @@
-# Azure WebJobs EventGrid client library for .NET
+# Azure WebJobs Web PubSub client library for .NET
 
 This extension provides functionality for receiving Web PubSub webhook calls in Azure Functions, allowing you to easily write functions that respond to any event published to Web PubSub.
 
@@ -64,8 +64,8 @@ public static async Task RunAsync(
 
 ### Functions that uses Web PubSub trigger
 
-```C# Snippet:EventGridTriggerFunction
-[FunctionName("EventGridTriggerFunction")]
+```C# Snippet:WebPubSubTriggerFunction
+[FunctionName("WebPubSubTriggerFunction")]
 public static async Task<MessageResponse> RunAsync(
     [WebPubSubTrigger("message", EventType.User)] 
     ConnectionContext context,
@@ -105,7 +105,7 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.WebJobs.Extensions.EventGrid%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FMicrosoft.Azure.WebJobs.Extensions.WebPubSub%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/search/Microsoft.Azure.WebJobs.Extensions.WebPubSub/src
