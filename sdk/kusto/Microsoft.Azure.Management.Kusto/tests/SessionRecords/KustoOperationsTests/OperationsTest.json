@@ -127,8 +127,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/providers/Microsoft.Kusto/operations?api-version=2020-09-18",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vb3BlcmF0aW9ucz9hcGktdmVyc2lvbj0yMDIwLTA5LTE4",
+      "RequestUri": "/providers/Microsoft.Kusto/operations?api-version=2021-01-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuS3VzdG8vb3BlcmF0aW9ucz9hcGktdmVyc2lvbj0yMDIxLTAxLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

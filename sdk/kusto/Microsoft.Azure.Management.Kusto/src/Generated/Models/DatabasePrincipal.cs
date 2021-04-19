@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         /// <param name="role">Database principal role. Possible values
         /// include: 'Admin', 'Ingestor', 'Monitor', 'User',
-        /// 'UnrestrictedViewers', 'Viewer'</param>
+        /// 'UnrestrictedViewer', 'Viewer'</param>
         /// <param name="name">Database principal name.</param>
         /// <param name="type">Database principal type. Possible values
         /// include: 'App', 'Group', 'User'</param>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
 
         /// <summary>
         /// Gets or sets database principal role. Possible values include:
-        /// 'Admin', 'Ingestor', 'Monitor', 'User', 'UnrestrictedViewers',
+        /// 'Admin', 'Ingestor', 'Monitor', 'User', 'UnrestrictedViewer',
         /// 'Viewer'
         /// </summary>
         [JsonProperty(PropertyName = "role")]

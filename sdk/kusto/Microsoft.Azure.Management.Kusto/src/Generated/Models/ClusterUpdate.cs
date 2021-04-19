@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Initializes a new instance of the ClusterUpdate class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="sku">The SKU of the cluster.</param>
@@ -139,12 +139,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string State { get; private set; }
 
         /// <summary>
-        /// Gets the provisioned state of the resource. Possible values
+        /// Gets or sets the provisioned state of the resource. Possible values
         /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets the cluster URI.

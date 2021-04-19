@@ -12,15 +12,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
 {
 
     /// <summary>
-    /// Defines values for DatabasePrincipalRole.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class DatabasePrincipalRole
+    public static class CreatedByType
     {
-        public const string Admin = "Admin";
-        public const string Ingestor = "Ingestor";
-        public const string Monitor = "Monitor";
         public const string User = "User";
-        public const string UnrestrictedViewer = "UnrestrictedViewer";
-        public const string Viewer = "Viewer";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }

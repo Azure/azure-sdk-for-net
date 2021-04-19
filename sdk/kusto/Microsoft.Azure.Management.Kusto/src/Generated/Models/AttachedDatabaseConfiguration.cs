@@ -44,12 +44,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="defaultPrincipalsModificationKind">The default
         /// principals modification kind. Possible values include: 'Union',
         /// 'Replace', 'None'</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="location">Resource location.</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
@@ -57,7 +57,9 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="attachedDatabaseNames">The list of databases from the
         /// clusterResourceId which are currently attached to the
         /// cluster.</param>
-        public AttachedDatabaseConfiguration(string databaseName, string clusterResourceId, string defaultPrincipalsModificationKind, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), IList<string> attachedDatabaseNames = default(IList<string>))
+        /// <param name="tableLevelSharingProperties">Table level sharing
+        /// specifications</param>
+        public AttachedDatabaseConfiguration(string databaseName, string clusterResourceId, string defaultPrincipalsModificationKind, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), IList<string> attachedDatabaseNames = default(IList<string>), TableLevelSharingProperties tableLevelSharingProperties = default(TableLevelSharingProperties))
             : base(id, name, type)
         {
             Location = location;
@@ -66,6 +68,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             ClusterResourceId = clusterResourceId;
             AttachedDatabaseNames = attachedDatabaseNames;
             DefaultPrincipalsModificationKind = defaultPrincipalsModificationKind;
+            TableLevelSharingProperties = tableLevelSharingProperties;
             CustomInit();
         }
 
@@ -81,12 +84,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets the provisioned state of the resource. Possible values
+        /// Gets or sets the provisioned state of the resource. Possible values
         /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the database which you would like to
@@ -116,6 +119,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultPrincipalsModificationKind")]
         public string DefaultPrincipalsModificationKind { get; set; }
+
+        /// <summary>
+        /// Gets or sets table level sharing specifications
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tableLevelSharingProperties")]
+        public TableLevelSharingProperties TableLevelSharingProperties { get; set; }
 
         /// <summary>
         /// Validate the object.

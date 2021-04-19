@@ -12,15 +12,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
 {
 
     /// <summary>
-    /// Defines values for DatabasePrincipalRole.
+    /// Defines values for Status.
     /// </summary>
-    public static class DatabasePrincipalRole
+    public static class Status
     {
-        public const string Admin = "Admin";
-        public const string Ingestor = "Ingestor";
-        public const string Monitor = "Monitor";
-        public const string User = "User";
-        public const string UnrestrictedViewer = "UnrestrictedViewer";
-        public const string Viewer = "Viewer";
+        public const string Succeeded = "Succeeded";
+        public const string Canceled = "Canceled";
+        public const string Failed = "Failed";
+        public const string Running = "Running";
     }
 }

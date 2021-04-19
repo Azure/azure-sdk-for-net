@@ -38,12 +38,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="eventHubResourceId">The resource ID of the event hub
         /// to be used to create a data connection.</param>
         /// <param name="consumerGroup">The event hub consumer group.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tableName">The table where the data should be
         /// ingested. Optionally the table information can be added to each
@@ -63,7 +63,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Moving'</param>
-        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string compression = default(string), string provisioningState = default(string))
+        /// <param name="managedIdentityResourceId">The resource ID of a
+        /// managed identity (system or user assigned) to be used to
+        /// authenticate with event hub.</param>
+        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string compression = default(string), string provisioningState = default(string), string managedIdentityResourceId = default(string))
             : base(id, name, type, location)
         {
             EventHubResourceId = eventHubResourceId;
@@ -74,6 +77,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             EventSystemProperties = eventSystemProperties;
             Compression = compression;
             ProvisioningState = provisioningState;
+            ManagedIdentityResourceId = managedIdentityResourceId;
             CustomInit();
         }
 
@@ -133,12 +137,19 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string Compression { get; set; }
 
         /// <summary>
-        /// Gets the provisioned state of the resource. Possible values
+        /// Gets or sets the provisioned state of the resource. Possible values
         /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
         /// 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of a managed identity (system or user
+        /// assigned) to be used to authenticate with event hub.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedIdentityResourceId")]
+        public string ManagedIdentityResourceId { get; set; }
 
         /// <summary>
         /// Validate the object.
