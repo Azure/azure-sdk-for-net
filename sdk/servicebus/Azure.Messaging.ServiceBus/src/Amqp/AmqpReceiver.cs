@@ -784,7 +784,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
             }
 
-            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new Guid[]{ lockToken };
+            amqpRequestMessage.Map[ManagementConstants.Properties.LockToken] = lockToken;
             amqpRequestMessage.Map[ManagementConstants.Properties.DispositionStatus] = dispositionStatus.ToString().ToLowerInvariant();
 
             if (deadLetterReason != null)
@@ -1033,7 +1033,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
             }
-            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new[] { new Guid(lockToken) };
+            amqpRequestMessage.Map[ManagementConstants.Properties.LockToken] = new Guid(lockToken);
 
             AmqpResponseMessage amqpResponseMessage = await ExecuteRequest(
                 timeout,
@@ -1041,8 +1041,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
             {
-                DateTime[] lockedUntilUtcTimes = amqpResponseMessage.GetValue<DateTime[]>(ManagementConstants.Properties.Expirations);
-                lockedUntil = lockedUntilUtcTimes[0];
+                DateTime lockedUntilUtcTime = amqpResponseMessage.GetValue<DateTime>(ManagementConstants.Properties.Expiration);
+                lockedUntil = lockedUntilUtcTime;
             }
             else
             {
