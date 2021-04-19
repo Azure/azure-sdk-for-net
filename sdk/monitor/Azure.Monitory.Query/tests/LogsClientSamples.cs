@@ -156,7 +156,7 @@ namespace Azure.Monitory.Query.Tests
         public class MyLogEntryModel
         {
             public string ResourceGroup { get; set; }
-            public string Count { get; set; }
+            public int Count { get; set; }
         }
         #endregion
     }

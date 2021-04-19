@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using Azure.Monitory.Query.Models;
 
 namespace Azure.Monitory.Query
@@ -31,17 +30,6 @@ namespace Azure.Monitory.Query
                     }
                 }
             }
-            else if (typeof(T).IsValueType || typeof(T) == typeof(string))
-            {
-                foreach (var table in response.Tables)
-                {
-                    foreach (var row in table.Rows)
-                    {
-                        // TODO: Validate
-                        results.Add((T)Convert.ChangeType(row.GetObject(0), typeof(T), CultureInfo.InvariantCulture));
-                    }
-                }
-            }
             else
             {
                 foreach (var table in response.Tables)
@@ -53,7 +41,6 @@ namespace Azure.Monitory.Query
                 }
             }
 
-            // TODO: Maybe support record construction
             return results;
         }
 
@@ -64,7 +51,14 @@ namespace Azure.Monitory.Query
 
         protected override bool TryGet<T>(BoundMemberInfo memberInfo, LogsQueryResultRow source, out T value)
         {
-            if (!source.TryGetColumn(memberInfo.Name, out int column))
+            int column;
+
+            // Binding entire row to a primitive
+            if (memberInfo == null)
+            {
+                column = 0;
+            }
+            else if (!source.TryGetColumn(memberInfo.Name, out column))
             {
                 value = default;
                 return false;
@@ -74,6 +68,7 @@ namespace Azure.Monitory.Query
             else if (typeof(T) == typeof(string)) value = (T)(object)source.GetString(column);
             else if (typeof(T) == typeof(bool)) value = (T)(object)source.GetBoolean(column);
             else if (typeof(T) == typeof(long)) value = (T)(object)source.GetInt64(column);
+            else if (typeof(T) == typeof(decimal)) value = (T)(object)source.GetDecimal(column);
             else if (typeof(T) == typeof(object)) value = (T)source.GetObject(column);
             else
             {

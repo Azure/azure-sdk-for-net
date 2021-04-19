@@ -17,9 +17,7 @@ namespace Azure.Monitory.Query
         public T Deserialize<T>(TExchange source)
         {
             var info = GetBinderInfo(typeof(T));
-            var instance = Activator.CreateInstance<T>();
-            info.Deserialize(source, instance, this);
-            return instance;
+            return info.Deserialize<T>(source, this);
         }
 
         public void Serialize<T>(T value, TExchange destination)
@@ -38,35 +36,41 @@ namespace Azure.Monitory.Query
 
         private class BoundTypeInfo
         {
+            private readonly bool _isPrimitive;
+            private readonly BoundMemberInfo[] _members;
+
             public BoundTypeInfo(Type type)
             {
-                List<BoundMemberInfo> members = new List<BoundMemberInfo>();
-                foreach (var memberInfo in type.GetMembers(BindingFlags.Public | BindingFlags.Instance))
+                _isPrimitive = type == typeof(string) || type.IsPrimitive;
+
+                if (!_isPrimitive)
                 {
-                    if (memberInfo.IsDefined(typeof(IgnoreDataMemberAttribute)))
+                    List<BoundMemberInfo> members = new List<BoundMemberInfo>();
+                    foreach (var memberInfo in type.GetMembers(BindingFlags.Public | BindingFlags.Instance))
                     {
-                        continue;
+                        if (memberInfo.IsDefined(typeof(IgnoreDataMemberAttribute)))
+                        {
+                            continue;
+                        }
+
+                        switch (memberInfo)
+                        {
+                            case PropertyInfo propertyInfo:
+                                members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), propertyInfo.PropertyType), propertyInfo));
+                                break;
+                            case FieldInfo fieldInfo:
+                                members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), fieldInfo.FieldType), fieldInfo));
+                                break;
+                        }
                     }
 
-                    switch (memberInfo)
-                    {
-                        case PropertyInfo propertyInfo:
-                            members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), propertyInfo.PropertyType), propertyInfo));
-                            break;
-                        case FieldInfo fieldInfo:
-                            members.Add((BoundMemberInfo) Activator.CreateInstance(typeof(BoundMemberInfo<>).MakeGenericType(typeof(TExchange), fieldInfo.FieldType), fieldInfo));
-                            break;
-                    }
+                    _members = members.ToArray();
                 }
-
-                Members = members.ToArray();
             }
 
-            public BoundMemberInfo[] Members { get; }
-
-            public void Serialize(object o, TExchange destination, TypeBinder<TExchange> binderImplementation)
+            public void Serialize<T>(T o, TExchange destination, TypeBinder<TExchange> binderImplementation)
             {
-                foreach (var member in Members)
+                foreach (var member in _members)
                 {
                     if (member.CanRead)
                     {
@@ -75,15 +79,28 @@ namespace Azure.Monitory.Query
                 }
             }
 
-            public void Deserialize(TExchange source, object o, TypeBinder<TExchange> binderImplementation)
+            public T Deserialize<T>(TExchange source, TypeBinder<TExchange> binderImplementation)
             {
-                foreach (var member in Members)
+                if (_isPrimitive)
+                {
+                    if (!binderImplementation.TryGet(null, source, out T result))
+                    {
+                        throw new InvalidOperationException($"Unable to deserialize into a primitive type {typeof(T)}");
+                    }
+
+                    return result;
+                }
+
+                T o = Activator.CreateInstance<T>();
+                foreach (var member in _members)
                 {
                     if (member.CanWrite)
                     {
                         member.Deserialize(source, o, binderImplementation);
                     }
                 }
+
+                return o;
             }
         }
 
@@ -107,14 +124,14 @@ namespace Azure.Monitory.Query
             public abstract void Deserialize(TExchange source, object o, TypeBinder<TExchange> binderImplementation);
         }
 
-        private delegate T PropertyGetter<T>(object o);
+        private delegate TProperty PropertyGetter<TProperty>(object o);
 
-        private delegate void PropertySetter<T>(object o, T value);
+        private delegate void PropertySetter<TProperty>(object o, TProperty value);
 
-        private sealed class BoundMemberInfo<T> : BoundMemberInfo
+        private sealed class BoundMemberInfo<TProperty> : BoundMemberInfo
         {
             private static ParameterExpression InputParameter = Expression.Parameter(typeof(object), "input");
-            private static ParameterExpression ValueParameter = Expression.Parameter(typeof(T), "value");
+            private static ParameterExpression ValueParameter = Expression.Parameter(typeof(TProperty), "value");
 
             public BoundMemberInfo(PropertyInfo propertyInfo) : this(propertyInfo, propertyInfo.CanRead, propertyInfo.CanWrite)
             {
@@ -131,14 +148,14 @@ namespace Azure.Monitory.Query
 
                 if (canRead)
                 {
-                    Getter = Expression.Lambda<PropertyGetter<T>>(
+                    Getter = Expression.Lambda<PropertyGetter<TProperty>>(
                         Expression.MakeMemberAccess(Expression.Convert(InputParameter, memberInfo.DeclaringType), memberInfo),
                         InputParameter).Compile();
                 }
 
                 if (canWrite)
                 {
-                    Setter = Expression.Lambda<PropertySetter<T>>(
+                    Setter = Expression.Lambda<PropertySetter<TProperty>>(
                         Expression.Assign(
                             Expression.MakeMemberAccess(
                                 Expression.Convert(InputParameter, memberInfo.DeclaringType),
@@ -147,8 +164,8 @@ namespace Azure.Monitory.Query
                 }
             }
 
-            private PropertyGetter<T> Getter { get; }
-            private PropertySetter<T> Setter { get; }
+            private PropertyGetter<TProperty> Getter { get; }
+            private PropertySetter<TProperty> Setter { get; }
 
             public override bool CanRead { get; }
             public override bool CanWrite { get; }
@@ -160,7 +177,7 @@ namespace Azure.Monitory.Query
 
             public override void Deserialize(TExchange source, object o, TypeBinder<TExchange> binderImplementation)
             {
-                if (binderImplementation.TryGet(this, source, out T value))
+                if (binderImplementation.TryGet(this, source, out TProperty value))
                 {
                     Setter(o, value);
                 }
