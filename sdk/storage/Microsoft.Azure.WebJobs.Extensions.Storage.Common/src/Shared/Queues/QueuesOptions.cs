@@ -194,5 +194,18 @@ namespace Microsoft.Azure.WebJobs.Host
 
             return options.ToString(Formatting.Indented);
         }
+
+        internal QueuesOptions Clone()
+        {
+            return new QueuesOptions()
+            {
+                BatchSize = BatchSize,
+                MaxDequeueCount = MaxDequeueCount,
+                MaxPollingInterval = MaxPollingInterval,
+                MessageEncoding = MessageEncoding,
+                NewBatchThreshold = NewBatchThreshold,
+                VisibilityTimeout = VisibilityTimeout,
+            };
+        }
     }
 }
