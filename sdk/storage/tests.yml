@@ -15,6 +15,8 @@ extends:
     MatrixReplace:
     # Use dedicated storage pool in canadacentral with higher memory capacity
     - Pool=(.*)-general/$1-storage
+    Clouds: Public
+    SupportedClouds: Public,PrivatePreview
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
     EnvVars:
