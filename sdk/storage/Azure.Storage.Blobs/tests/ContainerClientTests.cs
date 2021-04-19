@@ -1290,12 +1290,14 @@ namespace Azure.Storage.Blobs.Test
             await container.CreateIfNotExistsAsync();
             var id = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
+            var leaseClient = InstrumentClient(container.GetBlobLeaseClient(id));
 
             // Act
-            Response<BlobLease> response = await InstrumentClient(container.GetBlobLeaseClient(id)).AcquireAsync(duration: duration);
+            Response<BlobLease> response = await leaseClient.AcquireAsync(duration: duration);
 
             // Assert
             Assert.AreEqual(id, response.Value.LeaseId);
+            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
 
             // Cleanup
             await container.DeleteIfExistsAsync(conditions: new BlobRequestConditions { LeaseId = response.Value.LeaseId });
@@ -1396,15 +1398,16 @@ namespace Azure.Storage.Blobs.Test
 
             var id = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
+            var leaseClient = InstrumentClient(container.GetBlobLeaseClient(id));
 
-            Response<BlobLease> leaseResponse = await InstrumentClient(container.GetBlobLeaseClient(id)).AcquireAsync(
-                duration: duration);
+            Response<BlobLease> leaseResponse = await leaseClient.AcquireAsync(duration: duration);
 
             // Act
             Response<BlobLease> renewResponse = await InstrumentClient(container.GetBlobLeaseClient(leaseResponse.Value.LeaseId)).RenewAsync();
 
             // Assert
             Assert.IsNotNull(renewResponse.GetRawResponse().Headers.RequestId);
+            Assert.AreEqual(renewResponse.Value.LeaseId, leaseClient.LeaseId);
 
             // Cleanup
             await container.DeleteIfExistsAsync(conditions: new BlobRequestConditions { LeaseId = renewResponse.Value.LeaseId });
@@ -1681,12 +1684,14 @@ namespace Azure.Storage.Blobs.Test
             var duration = TimeSpan.FromSeconds(15);
             Response<BlobLease> leaseResponse = await InstrumentClient(test.Container.GetBlobLeaseClient(id)).AcquireAsync(duration);
             var newId = Recording.Random.NewGuid().ToString();
+            var leaseClient = InstrumentClient(test.Container.GetBlobLeaseClient(id));
 
             // Act
-            Response<BlobLease> changeResponse = await InstrumentClient(test.Container.GetBlobLeaseClient(id)).ChangeAsync(newId);
+            Response<BlobLease> changeResponse = await leaseClient.ChangeAsync(newId);
 
             // Assert
             Assert.AreEqual(newId, changeResponse.Value.LeaseId);
+            Assert.AreEqual(changeResponse.Value.LeaseId, leaseClient.LeaseId);
 
             // Cleanup
             await InstrumentClient(test.Container.GetBlobLeaseClient(changeResponse.Value.LeaseId)).ReleaseAsync();
