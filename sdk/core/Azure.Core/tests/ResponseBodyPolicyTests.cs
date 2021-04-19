@@ -174,18 +174,16 @@ namespace Azure.Core.Tests
         {
             var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            MockTransport mockTransport = new MockTransport(r =>
+            MockTransport mockTransport = new MockTransport((_, ct) =>
             {
-                tcs.Task.Wait();
+                tcs.Task.Wait(ct);
                 return null;
             });
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await SendRequestAsync(mockTransport, message =>
+            Assert.ThrowsAsync<OperationCanceledException>(async () => await SendRequestAsync(mockTransport, message =>
             {
                 message.SetProperty("NetworkTimeoutOverride", TimeSpan.FromMilliseconds(30));
             }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false));
-
-            tcs.SetCanceled();
         }
 
         [Test]
