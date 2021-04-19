@@ -121,6 +121,10 @@ namespace Azure.Data.Tables
         public virtual Azure.Response SetProperties(Azure.Data.Tables.Models.TableServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(Azure.Data.Tables.Models.TableServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class TablesFilter
+    {
+        public static string Create(System.FormattableString filter) { throw null; }
+    }
     public partial class TableSharedKeyCredential
     {
         public TableSharedKeyCredential(string accountName, string accountKey) { }
@@ -286,7 +290,7 @@ namespace Azure.Data.Tables.Models
     public partial class TableItem
     {
         internal TableItem() { }
-        public string TableName { get { throw null; } }
+        public string Name { get { throw null; } }
     }
     public partial class TableMetrics
     {

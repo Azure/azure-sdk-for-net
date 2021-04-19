@@ -141,7 +141,7 @@ namespace Azure.Storage.Blobs.Specialized
             _pipeline = BlobServiceClientInternals.GetHttpPipeline(client);
             BlobClientOptions options = BlobServiceClientInternals.GetClientOptions(client);
             _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new StorageClientDiagnostics(options);
 
             // Construct a dummy pipeline for processing batch sub-operations
             // if we don't have one cached on the service
@@ -171,7 +171,7 @@ namespace Azure.Storage.Blobs.Specialized
             _pipeline = BlobServiceClientInternals.GetHttpPipeline(blobServiceClient);
             BlobClientOptions options = BlobServiceClientInternals.GetClientOptions(blobServiceClient);
             _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new StorageClientDiagnostics(options);
 
             // Construct a dummy pipeline for processing batch sub-operations
             // if we don't have one cached on the service

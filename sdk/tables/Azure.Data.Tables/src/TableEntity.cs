@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.InteropServices.ComTypes;
 using Azure.Core;
 
 namespace Azure.Data.Tables

@@ -4,7 +4,7 @@ languages:
 - csharp
 products:
 - azure
-- azure-communication
+- azure-communication-services
 name: Azure Communication Identity samples for .NET
 description: Samples for the Azure.Communication.Identity client library
 ---

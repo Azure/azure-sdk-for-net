@@ -43,7 +43,7 @@ namespace Azure.Core.TestFramework
                 context.CurrentResult = innerCommand.Execute(context);
 
                 // Check the result
-                if (IsTestFailedWithRecordingMismatch(context) && !TestEnvironment.IsRunningInCI)
+                if (IsTestFailedWithRecordingMismatch(context) && !TestEnvironment.GlobalDisableAutoRecording)
                 {
                     var originalResult = context.CurrentResult;
                     context.CurrentResult = context.CurrentTest.MakeTestResult();

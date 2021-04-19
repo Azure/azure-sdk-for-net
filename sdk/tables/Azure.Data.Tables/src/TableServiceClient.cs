@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
@@ -42,6 +41,7 @@ namespace Azure.Data.Tables
                     var builder = new TableUriBuilder(_endpoint);
                     _accountName = builder.AccountName;
                 }
+
                 return _accountName;
             }
         }
@@ -56,7 +56,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <param name="credential">The shared access signature credential used to sign requests.</param>
         public TableServiceClient(Uri endpoint, AzureSasCredential credential)
-                : this(endpoint, credential, options: null)
+            : this(endpoint, credential, options: null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
         }
@@ -96,6 +96,7 @@ namespace Azure.Data.Tables
             {
                 throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
             }
+
             Argument.AssertNotNull(credential, nameof(credential));
         }
 
@@ -166,7 +167,7 @@ namespace Azure.Data.Tables
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { policy }, new ResponseClassifier());
 
             _version = options.VersionString;
-            _diagnostics = new ClientDiagnostics(options);
+            _diagnostics = new TablesClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);
@@ -182,14 +183,16 @@ namespace Azure.Data.Tables
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             var endpointString = endpoint.AbsoluteUri;
             string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint)?.AbsoluteUri;
-            HttpPipeline pipeline = sasCredential switch
+
+            HttpPipelinePolicy authPolicy = sasCredential switch
             {
-                null => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { policy }, new ResponseClassifier()),
-                _ => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new HttpPipelinePolicy[] { policy, new AzureSasCredentialSynchronousPolicy(sasCredential) }, new ResponseClassifier())
+                null => policy,
+                _ => new AzureSasCredentialSynchronousPolicy(sasCredential)
             };
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { authPolicy }, new ResponseClassifier());
 
             _version = options.VersionString;
-            _diagnostics = new ClientDiagnostics(options);
+            _diagnostics = new TablesClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);
@@ -267,9 +270,10 @@ namespace Azure.Data.Tables
                     try
                     {
                         var response = await _tableOperations.QueryAsync(
-                            null,
-                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
-                            cancellationToken).ConfigureAwait(false);
+                                null,
+                                new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                                cancellationToken)
+                            .ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                     }
                     catch (Exception ex)
@@ -285,9 +289,10 @@ namespace Azure.Data.Tables
                     try
                     {
                         var response = await _tableOperations.QueryAsync(
-                            nextTableName: nextLink,
-                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
-                            cancellationToken).ConfigureAwait(false);
+                                nextTableName: nextLink,
+                                new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                                cancellationToken)
+                            .ConfigureAwait(false);
                         return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                     }
                     catch (Exception ex)
@@ -319,9 +324,9 @@ namespace Azure.Data.Tables
                     try
                     {
                         var response = _tableOperations.Query(
-                                null,
-                                new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
-                                cancellationToken);
+                            null,
+                            new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
+                            cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                     }
                     catch (Exception ex)
@@ -356,7 +361,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">
         /// Returns only tables that satisfy the specified filter expression.
-        /// For example, the following expression would filter tables with a TableName of 'foo': <c>e => e.TableName == "foo"</c>.
+        /// For example, the following expression would filter tables with a Name of 'foo': <c>e => e.Name == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
         /// The maximum number of entities that will be returned per page.
@@ -385,7 +390,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">
         /// Returns only tables that satisfy the specified filter expression.
-        /// For example, the following expression would filter tables with a TableName of 'foo': <c>e => e.TableName == "foo"</c>.
+        /// For example, the following expression would filter tables with a Name of 'foo': <c>e => e.Name == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
         /// The maximum number of entities that will be returned per page.
@@ -666,8 +671,8 @@ namespace Azure.Data.Tables
         internal static bool IsPremiumEndpoint(Uri endpoint)
         {
             return (endpoint.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase) && endpoint.Port != 10002) ||
-                endpoint.Host.IndexOf(TableConstants.CosmosTableDomain, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                endpoint.Host.IndexOf(TableConstants.LegacyCosmosTableDomain, StringComparison.OrdinalIgnoreCase) >= 0;
+                   endpoint.Host.IndexOf(TableConstants.CosmosTableDomain, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                   endpoint.Host.IndexOf(TableConstants.LegacyCosmosTableDomain, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         /// <summary>

@@ -37,8 +37,8 @@ param (
     [Parameter(ParameterSetName = 'Default+Provisioner', Mandatory = $true)]
     [Parameter(ParameterSetName = 'ResourceGroup+Provisioner', Mandatory = $true)]
     [string] $ProvisionerApplicationSecret,
-    
-    [Parameter(ParameterSetName = 'Default', Mandatory = $true, Position = 0)]
+
+    [Parameter(ParameterSetName = 'Default', Position = 0)]
     [Parameter(ParameterSetName = 'Default+Provisioner')]
     [Parameter(ParameterSetName = 'ResourceGroup')]
     [Parameter(ParameterSetName = 'ResourceGroup+Provisioner')]
@@ -122,18 +122,17 @@ if ($ProvisionerApplicationId) {
 
 $context = Get-AzContext
 
-# Make sure $BaseName is set.
-if (!$BaseName) {
-
-    $UserName =  if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
-    # Remove spaces, etc. that may be in $UserName
-    $UserName = $UserName -replace '\W'
-
-    $BaseName = "$UserName$ServiceDirectory"
-    Log "BaseName was not set. Using default base name '$BaseName'"
-}
-
 if (!$ResourceGroupName) {
+    # Make sure $BaseName is set.
+    if (!$BaseName) {
+        $UserName = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
+        # Remove spaces, etc. that may be in $UserName
+        $UserName = $UserName -replace '\W'
+
+        $BaseName = "$UserName$ServiceDirectory"
+        Log "BaseName was not set. Using default base name '$BaseName'"
+    }
+
     # Format the resource group name like in New-TestResources.ps1.
     $ResourceGroupName = "rg-$BaseName"
 }

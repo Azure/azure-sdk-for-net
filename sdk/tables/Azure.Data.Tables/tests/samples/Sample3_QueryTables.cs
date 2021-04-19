@@ -37,7 +37,7 @@ namespace Azure.Data.Tables.Samples
 
             foreach (TableItem table in queryTableResults)
             {
-                Console.WriteLine(table.TableName);
+                Console.WriteLine(table.Name);
             }
             #endregion
 

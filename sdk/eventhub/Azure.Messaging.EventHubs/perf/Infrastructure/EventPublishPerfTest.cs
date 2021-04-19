@@ -25,10 +25,10 @@ namespace Azure.Messaging.EventHubs.Perf
         /// <summary>The producer instance for publishing events; shared across all concurrent instances of the scenario.</summary>
         private static EventHubProducerClient s_producer;
 
-        /// <summary>The body to use when creating events.</summary>
+        /// <summary>The body to use when creating events; shared across all concurrent instances of the scenario.</summary>
         private static ReadOnlyMemory<byte> s_eventBody;
 
-        /// <summary>The set of options to use when publishing events.</summary>
+        /// <summary>The set of options to use when publishing events; shared across all concurrent instances of the scenario.</summary>
         private static SendEventOptions s_sendOptions;
 
         /// <summary>

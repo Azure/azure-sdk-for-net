@@ -92,8 +92,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             while (!backupOperation.HasCompleted)
             {
                 backupOperation.UpdateStatus();
-                /*@@*/ await DelayAsync(TimeSpan.FromSeconds(3));
-                //@@Thread.Sleep(3000);
+#if SNIPPET
+                Thread.Sleep(3000);
+#else
+                await DelayAsync(TimeSpan.FromSeconds(3));
+#endif
             }
 
             // Get the Uri for the location of you backup blob.
@@ -113,8 +116,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
             while (!restoreOperation.HasCompleted)
             {
                 restoreOperation.UpdateStatus();
-                /*@@*/ await DelayAsync(TimeSpan.FromSeconds(3));
-                //@@Thread.Sleep(3000);
+#if SNIPPET
+                Thread.Sleep(3000);
+#else
+                await DelayAsync(TimeSpan.FromSeconds(3));
+#endif
             }
             Uri restoreResult = backupOperation.Value.FolderUri;
             #endregion

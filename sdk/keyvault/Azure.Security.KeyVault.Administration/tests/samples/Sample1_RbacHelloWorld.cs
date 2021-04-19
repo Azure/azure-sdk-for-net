@@ -103,11 +103,14 @@ namespace Azure.Security.KeyVault.Administration.Samples
             string servicePrincipalObjectId = _objectId;
 
             #region Snippet:CreateRoleAssignment
-            //@@string definitionIdToAssign = "<roleDefinitionId>";
-            //@@string servicePrincipalObjectId = "<objectId>";
+#if SNIPPET
+            string definitionIdToAssign = "<roleDefinitionId>";
+            string servicePrincipalObjectId = "<objectId>";
 
-            //@@KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectI);
-            /*@@*/KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId);
+            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectI);
+#else
+            KeyVaultRoleAssignment createdAssignment = client.CreateRoleAssignment(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId);
+#endif
             #endregion
 
             #region Snippet:GetRoleAssignment
@@ -136,11 +139,14 @@ namespace Azure.Security.KeyVault.Administration.Samples
             string servicePrincipalObjectId = _objectId;
 
             #region Snippet:CreateRoleAssignmentAsync
-            //@@string definitionIdToAssign = "<roleDefinitionId>";
-            //@@string servicePrincipalObjectId = "<objectId>";
+#if SNIPPET
+            string definitionIdToAssign = "<roleDefinitionId>";
+            string servicePrincipalObjectId = "<objectId>";
 
-            //@@KeyVaultRoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectId);
-            /*@@*/KeyVaultRoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId).ConfigureAwait(false);
+            KeyVaultRoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectId);
+#else
+            KeyVaultRoleAssignment createdAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Global, definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId).ConfigureAwait(false);
+#endif
             #endregion
 
             #region Snippet:GetRoleAssignmentAsync

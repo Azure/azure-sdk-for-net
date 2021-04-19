@@ -3,6 +3,12 @@
 ## 1.3.0-beta.1 (Unreleased)
 
 
+## 1.2.2 (2021-04-12)
+
+### Fixes and improvements
+
+- Updated core dependencies to bring in security vulnerability fixes that are addressed in `Azure.Core v1.13.0` and `System.Memory.Data v1.0.2`
+
 ## 1.2.1 (2021-02-03)
 
 ### Fixes and improvements
@@ -84,15 +90,3 @@ Note that these breaking changes are only breaking changes from the **preview** 
 ### New features
 
 - Initial preview of Azure.DigitalTwins.Core SDK
-
-### Breaking changes
-
-- N/A
-
-### Added
-
-- N/A
-
-### Fixes and improvements
-
-- N/A
