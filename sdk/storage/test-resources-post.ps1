@@ -46,6 +46,7 @@ $content =
       <TenantType>Cloud</TenantType>
       <AccountName>$PrimaryAccountName</AccountName>
       <AccountKey>$PrimaryAccountKey</AccountKey>
+      <BlobServiceEndpoint>https://$PrimaryAccountName.blob.core.windows.net</BlobServiceEndpoint>
       <QueueServiceEndpoint>https://$PrimaryAccountName.queue.core.windows.net</QueueServiceEndpoint>
       <TableServiceEndpoint>https://$PrimaryAccountName.table.core.windows.net</TableServiceEndpoint>
       <FileServiceEndpoint>https://$PrimaryAccountName.file.core.windows.net</FileServiceEndpoint>
