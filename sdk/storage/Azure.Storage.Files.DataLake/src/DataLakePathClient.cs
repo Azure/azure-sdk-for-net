@@ -77,7 +77,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// <see cref="DataLakeClientConfiguration"/>.
         /// </summary>
-        internal readonly DataLakeClientConfiguration _clientConfiguration;
+        private readonly DataLakeClientConfiguration _clientConfiguration;
 
         /// <summary>
         /// <see cref="DataLakeClientConfiguration"/>.
