@@ -966,10 +966,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RetryOnAuthorizationPermissionMismatch]
         public async Task GetAccessControlAsync_PathIdentitySAS()
         {
-            if ("x".Contains("x"))
-            {
-                throw new RequestFailedException("AuthorizationPermissionMismatch");
-            }
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
