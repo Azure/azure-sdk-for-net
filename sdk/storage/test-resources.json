@@ -18,10 +18,6 @@
                 "description": "The principal to assign the role to. This is application object id."
             }
         }
-        "storageEndpointSuffix": {
-            "type": "string",
-            "defaultValue": "core.windows.net"
-        }
     },
     "variables": {
         "mgmtApiVersion": "2019-06-01",
@@ -370,6 +366,25 @@
             }
         }
     ],
+    "functions": [
+      {
+        "namespace": "url",
+        "members": {
+          "serviceEndpointSuffix":{
+             "parameters": [
+               {
+                 "name": "endpoint",
+                 "type": "string"
+               }
+             ],
+             "output": {
+               "type": "string",
+               "value": "[substring(parameters('endpoint'), add(indexOf(parameters('endpoint'), '.'),1))]"
+             }
+          }
+        }
+      }
+    ],
   "outputs": {
     "PRIMARY_STORAGE_ACCOUNT_NAME": {
       "type": "string",
@@ -378,6 +393,10 @@
     "PRIMARY_STORAGE_ACCOUNT_KEY": {
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).keys[0].value]"
+    },
+    "PRIMARY_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX": {
+        "type": "string",
+        "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob)]"
     },
     "SECONDARY_STORAGE_ACCOUNT_NAME": {
       "type": "string",
@@ -438,10 +457,6 @@
     "KEYVAULT_URI":{
       "type": "string",
       "value": "[variables('azureKeyVaultUrl')]"
-    },
-    "ENDPOINT_SUFFIX": {
-        "type": "string",
-        "value": "[parameters('storageEndpointSuffix')]"
     }
   }
 }
