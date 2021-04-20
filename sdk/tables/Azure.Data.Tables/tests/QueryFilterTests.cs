@@ -35,7 +35,7 @@ namespace Azure.Data.Tables.Tests
             new object[] { TableOdataFilter.Create($"String ge {SomeString}"), $"String ge '{SomeString}'" },
             new object[] { TableOdataFilter.Create($"String ge {StringWithSingleQuotes}"), $"String ge 'so''meS''tri''ng'" },
             new object[] { TableOdataFilter.Create($"Guid eq {s_someGuid}"), $"Guid eq guid'{s_someGuidString}'" },
-            new object[] { TableOdataFilter.Create($"Int64 ge {SomeInt64}L"), $"Int64 ge {SomeInt64}L" },
+            new object[] { TableOdataFilter.Create($"Int64 ge {SomeInt64}"), $"Int64 ge {SomeInt64}L" },
             new object[] { TableOdataFilter.Create($"Double ge {SomeDouble}"), $"Double ge {SomeDouble}" },
             new object[] { TableOdataFilter.Create($"Int32 ge {SomeInt}"), $"Int32 ge {SomeInt}" },
             new object[] { TableOdataFilter.Create($"DateTimeOffset ge {s_someDateTimeOffset}"), $"DateTimeOffset ge datetime'{s_someDateTimeOffsetRoundtrip}'" },

@@ -48,11 +48,13 @@ namespace Azure.Data.Tables
                     ushort x => x.ToString(CultureInfo.InvariantCulture),
                     int x => x.ToString(CultureInfo.InvariantCulture),
                     uint x => x.ToString(CultureInfo.InvariantCulture),
-                    long x => x.ToString(CultureInfo.InvariantCulture),
-                    ulong x => x.ToString(CultureInfo.InvariantCulture),
                     decimal x => x.ToString(CultureInfo.InvariantCulture),
                     float x => x.ToString(CultureInfo.InvariantCulture),
                     double x => x.ToString(CultureInfo.InvariantCulture),
+
+                    // Int64
+                    long x => x.ToString(CultureInfo.InvariantCulture) + "L",
+                    ulong x => x.ToString(CultureInfo.InvariantCulture) + "L",
 
                     // Guid
                     Guid x => $"{XmlConstants.LiteralPrefixGuid}'{x.ToString()}'",
