@@ -39,16 +39,9 @@ namespace Azure.ResourceManager.Core.Tests
             _ = GetArmClient(options); // setup providers client
             var subOp = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, asetid);
-            try
-            {
-                await genericResourceOperations.GetAsync();
-                Assert.Fail("No RequestFailedException thrown");
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.AreEqual(ex.Status, 404);
-                Assert.True(ex.Message.Contains("ResourceNotFound"));
-            }
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
+            Assert.AreEqual(404, exception.Status);
+            Assert.True(exception.Message.Contains("ResourceNotFound"));
         }
 
         [TestCase]
@@ -60,15 +53,8 @@ namespace Azure.ResourceManager.Core.Tests
             _ = GetArmClient(options); // setup providers client
             var subOp = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, asetid);
-            try
-            {
-                await genericResourceOperations.GetAsync();
-                Assert.Fail("No InvalidOperationException thrown");
-            }
-            catch (InvalidOperationException ex)
-            {
-                Assert.IsTrue(ex.Message.Equals($"An invalid resouce id was given {asetid}"));
-            }
+            InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await genericResourceOperations.GetAsync());
+            Assert.IsTrue(exception.Message.Equals($"An invalid resouce id was given {asetid}"));
         }
 
         [TestCase]
@@ -81,15 +67,8 @@ namespace Azure.ResourceManager.Core.Tests
             var client = GetArmClient(options);
             var subOp = await client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, rgid);
-            try
-            {
-                await genericResourceOperations.GetAsync();
-                Assert.Fail("No RequestFailedException thrown");
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.IsTrue(ex.Message.Contains("InvalidApiVersionParameter"));
-            }
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
+            Assert.IsTrue(exception.Message.Contains("InvalidApiVersionParameter"));
         }
 
         [TestCase]

@@ -182,8 +182,19 @@ namespace Azure.Core.TestFramework
         {
             return ProxyGenerator.CreateClassProxyWithTarget(
                 operationType,
-                new[] {typeof(IInstrumented)},
+                new[] { typeof(IInstrumented) },
                 operation,
+                new GetOriginalInterceptor(operation),
+                new OperationInterceptor(Mode == RecordedTestMode.Playback));
+        }
+
+        protected object InstrumentMgmtOperation(Type operationType, object operation, ManagementInterceptor managementInterceptor)
+        {
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                operationType,
+                new[] { typeof(IInstrumented) },
+                operation,
+                managementInterceptor,
                 new GetOriginalInterceptor(operation),
                 new OperationInterceptor(Mode == RecordedTestMode.Playback));
         }
