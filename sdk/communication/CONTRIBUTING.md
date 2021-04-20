@@ -10,7 +10,7 @@ Let's get started with how to set up the repo itself.
 
 To get started, open the file "sdk\communication\Azure.Communication.sln". Then, at the root directory, invoke `msbuild eng\mgmt.proj /p:scope=Communication`. 
 
-Once the package has been buily, let's jump on how to run the tests to see that everything is in order.
+Once the package has been built, let's jump on how to run the tests to see that everything is in order.
 
 ## Testing
 
