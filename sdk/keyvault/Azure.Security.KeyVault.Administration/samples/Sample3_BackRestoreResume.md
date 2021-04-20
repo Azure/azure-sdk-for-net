@@ -12,7 +12,7 @@ and check for status or wait for completion.
 
 ```C# Snippet:ResumeBackupAsync
 // Construct a new KeyVaultBackupClient or use an existing one.
-KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
 // Construct a BackupOperation using a KeyVaultBackupClient and the Id from a previously started operation.
 BackupOperation backupOperation = new BackupOperation(client, backupOperationId);

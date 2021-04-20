@@ -26,6 +26,8 @@ namespace Azure.Storage.Test.Shared
         BlobClientOptions.ServiceVersion.V2020_04_08,
         BlobClientOptions.ServiceVersion.V2020_06_12,
         BlobClientOptions.ServiceVersion.V2020_08_04,
+        StorageVersionExtensions.LatestVersion,
+        StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
         LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
     public abstract class BlobTestBase : StorageTestBase

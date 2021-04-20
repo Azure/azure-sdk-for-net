@@ -17,7 +17,7 @@ namespace Azure.Monitory.Query.Models
         {
             string name = default;
             IReadOnlyList<LogsQueryResultColumn> columns = default;
-            IReadOnlyList<IList<string>> rows = default;
+            JsonElement rows = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -37,17 +37,7 @@ namespace Azure.Monitory.Query.Models
                 }
                 if (property.NameEquals("rows"))
                 {
-                    List<IList<string>> array = new List<IList<string>>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        List<string> array0 = new List<string>();
-                        foreach (var item0 in item.EnumerateArray())
-                        {
-                            array0.Add(item0.GetString());
-                        }
-                        array.Add(array0);
-                    }
-                    rows = array;
+                    rows = property.Value.Clone();
                     continue;
                 }
             }

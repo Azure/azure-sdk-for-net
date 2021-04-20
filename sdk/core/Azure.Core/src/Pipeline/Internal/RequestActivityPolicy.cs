@@ -90,6 +90,10 @@ namespace Azure.Core.Pipeline
 
                 activity.AddTag("http.status_code", message.Response.Status.ToString(CultureInfo.InvariantCulture));
                 activity.AddTag("serviceRequestId", message.Response.Headers.RequestId);
+                if (message.ResponseClassifier.IsErrorResponse(message))
+                {
+                    activity.AddTag("otel.status_code", "ERROR");
+                }
             }
             finally
             {

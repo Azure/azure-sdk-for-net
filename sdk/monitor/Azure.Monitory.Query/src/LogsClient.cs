@@ -2,6 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -33,6 +37,20 @@ namespace Azure.Monitory.Query
 
         protected LogsClient()
         {
+        }
+
+        public virtual Response<IReadOnlyList<T>> Query<T>(string workspaceId, string query, CancellationToken cancellationToken = default)
+        {
+            Response<LogsQueryResult> response = Query(workspaceId, query, cancellationToken);
+
+            return Response.FromValue(RowBinder.BindResults<T>(response), response.GetRawResponse());
+        }
+
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, CancellationToken cancellationToken = default)
+        {
+            Response<LogsQueryResult> response = await QueryAsync(workspaceId, query, cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue(RowBinder.BindResults<T>(response), response.GetRawResponse());
         }
 
         public virtual Response<LogsQueryResult> Query(string workspaceId, string query, CancellationToken cancellationToken = default)
