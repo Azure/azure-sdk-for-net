@@ -33,8 +33,13 @@ namespace Azure.Data.Tables.Sas
         public string Scheme
         {
             get => _scheme;
-            set { ResetUri(); _scheme = value; }
+            set
+            {
+                ResetUri();
+                _scheme = value;
+            }
         }
+
         private string _scheme;
 
         /// <summary>
@@ -46,8 +51,13 @@ namespace Azure.Data.Tables.Sas
         public string Host
         {
             get => _host;
-            set { ResetUri(); _host = value; }
+            set
+            {
+                ResetUri();
+                _host = value;
+            }
         }
+
         private string _host;
 
         /// <summary>
@@ -56,8 +66,13 @@ namespace Azure.Data.Tables.Sas
         public int Port
         {
             get => _port;
-            set { ResetUri(); _port = value; }
+            set
+            {
+                ResetUri();
+                _port = value;
+            }
         }
+
         private int _port;
 
         /// <summary>
@@ -66,8 +81,13 @@ namespace Azure.Data.Tables.Sas
         public string AccountName
         {
             get => _accountName;
-            set { ResetUri(); _accountName = value; }
+            set
+            {
+                ResetUri();
+                _accountName = value;
+            }
         }
+
         private string _accountName;
 
         /// <summary>
@@ -78,8 +98,13 @@ namespace Azure.Data.Tables.Sas
         public string Tablename
         {
             get => _tablename;
-            set { ResetUri(); _tablename = value; }
+            set
+            {
+                ResetUri();
+                _tablename = value;
+            }
         }
+
         private string _tablename;
 
         /// <summary>
@@ -89,8 +114,13 @@ namespace Azure.Data.Tables.Sas
         public TableSasQueryParameters Sas
         {
             get => _sas;
-            set { ResetUri(); _sas = value; }
+            set
+            {
+                ResetUri();
+                _sas = value;
+            }
         }
+
         private TableSasQueryParameters _sas;
 
         /// <summary>
@@ -100,8 +130,13 @@ namespace Azure.Data.Tables.Sas
         public string Query
         {
             get => _query;
-            set { ResetUri(); _query = value; }
+            set
+            {
+                ResetUri();
+                _query = value;
+            }
         }
+
         private string _query;
 
         /// <summary>
@@ -128,6 +163,10 @@ namespace Azure.Data.Tables.Sas
             if (paramsMap.ContainsKey(TableConstants.Sas.Parameters.Version))
             {
                 Sas = new TableSasQueryParameters(paramsMap);
+                if (string.IsNullOrEmpty(Tablename))
+                {
+                    Tablename = Sas?.TableName;
+                }
             }
             Query = paramsMap.ToString();
         }
