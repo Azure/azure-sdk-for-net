@@ -18,6 +18,10 @@
                 "description": "The principal to assign the role to. This is application object id."
             }
         }
+        "storageEndpointSuffix": {
+            "type": "string",
+            "defaultValue": "core.windows.net"
+        }
     },
     "variables": {
         "mgmtApiVersion": "2019-06-01",
@@ -434,6 +438,10 @@
     "KEYVAULT_URI":{
       "type": "string",
       "value": "[variables('azureKeyVaultUrl')]"
+    },
+    "ENDPOINT_SUFFIX": {
+        "type": "string",
+        "value": "[parameters('storageEndpointSuffix')]"
     }
   }
 }
