@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         private KeyVaultTestEventListener _listener;
 
         public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
         }
@@ -204,31 +204,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation, TimeSpan? pollingInterval = null)
         {
-            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-            pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : pollingInterval ?? TimeSpan.FromSeconds(1);
-
-            try
-            {
-                if (IsAsync)
-                {
-                    await operation.WaitForCompletionAsync(pollingInterval.Value, cts.Token);
-                }
-                else
-                {
-                    while (!operation.HasCompleted)
-                    {
-                        operation.UpdateStatus(cts.Token);
-
-                        await Task.Delay(pollingInterval.Value, cts.Token);
-                    }
-                }
-            }
-            catch (TaskCanceledException)
-            {
-                Assert.Inconclusive("Timed out while waiting for operation {0}", operation.Id);
-            }
-
-            return operation.Value;
+            pollingInterval ??= TimeSpan.FromSeconds(1);
+            return await operation.WaitForCompletionAsync(pollingInterval.Value, default).TimeoutAfter(TimeSpan.FromMinutes(1));
         }
 
         protected Task WaitForDeletedCertificate(string name)

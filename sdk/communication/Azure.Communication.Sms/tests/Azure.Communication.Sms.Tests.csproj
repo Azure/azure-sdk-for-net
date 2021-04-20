@@ -19,4 +19,9 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\\ConnectionString.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\samples\README.md" Link="samples\README.md" />
+    <None Include="..\samples\Sample1_SendSms.md" Link="samples\Sample1_SendSms.md" />
+    <None Include="..\samples\Sample1_SendSmsAsync.md" Link="samples\Sample1_SendSmsAsync.md" />
+  </ItemGroup>
 </Project>

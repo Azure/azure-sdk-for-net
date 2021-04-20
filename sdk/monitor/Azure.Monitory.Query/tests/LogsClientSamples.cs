@@ -41,8 +41,11 @@ namespace Azure.Template.Tests
             #region Snippet:QueryLogsPrintTable
 
             LogsClient client = new LogsClient(new DefaultAzureCredential());
-            /*@@*/string workspaceId = TestEnvironment.WorkspaceId;
-            //@@string workspaceId = "<workspace_id>";
+#if SNIPPET
+            string workspaceId = "<workspace_id>";
+#else
+            string workspaceId = TestEnvironment.WorkspaceId;
+#endif
             Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated");
 
             LogsQueryResultTable table = response.Value.PrimaryTable;
@@ -74,8 +77,11 @@ namespace Azure.Template.Tests
             #region Snippet:QueryLogsAsPrimitive
 
             LogsClient client = new LogsClient(new DefaultAzureCredential());
-            /*@@*/string workspaceId = TestEnvironment.WorkspaceId;
-            //@@string workspaceId = "<workspace_id>";
+#if SNIPPET
+            string workspaceId = "<workspace_id>";
+#else
+            string workspaceId = TestEnvironment.WorkspaceId;
+#endif
 
             // Query TOP 10 resource groups by event count
             Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(workspaceId,
@@ -95,8 +101,11 @@ namespace Azure.Template.Tests
             #region Snippet:QueryLogsAsModels
 
             LogsClient client = new LogsClient(new DefaultAzureCredential());
-            /*@@*/string workspaceId = TestEnvironment.WorkspaceId;
-            //@@string workspaceId = "<workspace_id>";
+#if SNIPPET
+            string workspaceId = "<workspace_id>";
+#else
+            string workspaceId = TestEnvironment.WorkspaceId;
+#endif
 
             // Query TOP 10 resource groups by event count
             Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(workspaceId,
@@ -116,8 +125,11 @@ namespace Azure.Template.Tests
             #region Snippet:BatchQuery
 
             LogsClient client = new LogsClient(new DefaultAzureCredential());
-            /*@@*/string workspaceId = TestEnvironment.WorkspaceId;
-            //@@string workspaceId = "<workspace_id>";
+#if SNIPPET
+            string workspaceId = "<workspace_id>";
+#else
+            string workspaceId = TestEnvironment.WorkspaceId;
+#endif
 
             // Query TOP 10 resource groups by event count
             // And total event count

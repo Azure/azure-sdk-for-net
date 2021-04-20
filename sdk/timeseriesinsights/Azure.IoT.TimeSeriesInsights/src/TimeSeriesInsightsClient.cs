@@ -23,6 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
         private readonly ModelSettingsRestClient _modelSettingsRestClient;
         private readonly TimeSeriesInstancesRestClient _timeSeriesInstancesRestClient;
         private readonly TimeSeriesTypesRestClient _timeSeriesTypesRestClient;
+        private readonly TimeSeriesHierarchiesRestClient _timeSeriesHierarchiesRestClient;
         private readonly QueryRestClient _queryRestClient;
 
         /// <summary>
@@ -39,6 +40,11 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Types client to perform various Time Series Insights types operations.
         /// </summary>
         public virtual TypesClient Types { get; private set; }
+
+        /// <summary>
+        /// Hierarchies client to perform various Time Series Insights hierarchies operations.
+        /// </summary>
+        public virtual HierarchiesClient Hierarchies { get; private set; }
 
         /// <summary>
         /// Query client that can be used to perform query operations on Time Series Insights.
@@ -103,11 +109,13 @@ namespace Azure.IoT.TimeSeriesInsights
             _modelSettingsRestClient = new ModelSettingsRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _timeSeriesInstancesRestClient = new TimeSeriesInstancesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _timeSeriesTypesRestClient = new TimeSeriesTypesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
+            _timeSeriesHierarchiesRestClient = new TimeSeriesHierarchiesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
 
             ModelSettings = new ModelSettingsClient(_modelSettingsRestClient, _clientDiagnostics);
             Instances = new InstancesClient(_timeSeriesInstancesRestClient, _clientDiagnostics);
             Types = new TypesClient(_timeSeriesTypesRestClient, _clientDiagnostics);
+            Hierarchies = new HierarchiesClient(_timeSeriesHierarchiesRestClient, _clientDiagnostics);
             Query = new QueryClient(_queryRestClient, _clientDiagnostics);
         }
 

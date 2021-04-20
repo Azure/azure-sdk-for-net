@@ -15,6 +15,9 @@ namespace SnippetGenerator.Tests
         {
             var actual = CSharpProcessor.Process(code, SnippetProvider);
             Assert.AreEqual(expected, actual);
+
+            var reProcessed = CSharpProcessor.Process(actual, SnippetProvider);
+            Assert.AreEqual(expected, reProcessed);
         }
 
         private string SnippetProvider(string s) => Processed;
@@ -23,33 +26,46 @@ namespace SnippetGenerator.Tests
         {
             yield return new[]
             {
-                @"   /// </remarks>
-    /// <code snippet=""Snippet:A""></code>
-    foo
-        {",
-                $@"   /// </remarks>
-    /// <code snippet=""Snippet:A"">
-    /// {Processed} </code>
-    foo
-        {{",
+                @"    /// </remarks>" + Environment.NewLine +
+                @"    /// <code snippet=""Snippet:A""></code>" + Environment.NewLine +
+                "    foo" + Environment.NewLine +
+                "        {",
+                @"    /// </remarks>" + Environment.NewLine +
+                @"    /// <code snippet=""Snippet:A"">" + Environment.NewLine +
+                $"    /// {Processed} </code>" + Environment.NewLine +
+                "    foo" + Environment.NewLine +
+                "        {"
             };
 
             yield return new[]
             {
                 @"/// <code snippet=""Snippet:B""></code>",
-                $@"/// <code snippet=""Snippet:B"">
-/// {Processed} </code>"
+                @"/// <code snippet=""Snippet:B"">" + Environment.NewLine +
+                $"/// {Processed} </code>"
             };
 
             yield return new[]
             {
-                @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:
-    /// <code snippet=""Snippet:C""></code>
-    foo",
-                $@"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:
-    /// <code snippet=""Snippet:C"">
-    /// {Processed} </code>
-    foo"
+                @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
+                @"    /// <code snippet=""Snippet:C""></code>" + Environment.NewLine +
+                "     foo",
+                @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
+                @"    /// <code snippet=""Snippet:C"">" + Environment.NewLine +
+                $"    /// {Processed} </code>" + Environment.NewLine +
+                "     foo"
+            };
+
+            yield return new[]
+            {
+                @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
+                @"    /// <example snippet=""Snippet:Example""></example>" + Environment.NewLine +
+                "     foo",
+                @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
+                @"    /// <example snippet=""Snippet:Example"">" + Environment.NewLine +
+                @"    /// <code>" + Environment.NewLine +
+                $"    /// {Processed} </code>" + Environment.NewLine +
+                @"    /// </example>" + Environment.NewLine +
+                "     foo"
             };
         }
     }

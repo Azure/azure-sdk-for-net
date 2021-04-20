@@ -13,12 +13,12 @@ using Azure.Storage.Sas;
 
 namespace Azure.AI.Translation.Document.Tests
 {
-    public class DocumentTranslationLiveTestBase : RecordedTestBase<DocumentTranslationTestEnvironment>
+    public abstract class DocumentTranslationLiveTestBase : RecordedTestBase<DocumentTranslationTestEnvironment>
     {
         protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 30);
 
         public DocumentTranslationLiveTestBase(bool isAsync, RecordedTestMode? mode = null)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(isAsync, mode)
         {
             Sanitizer = new DocumentTranslationRecordedTestSanitizer();
         }

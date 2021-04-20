@@ -84,3 +84,12 @@ directive:
       }
     }
 ```
+
+### Discriminator properties have to be required
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.MediaJobOutput
+  transform: $.required.push("@odata.type")
+```

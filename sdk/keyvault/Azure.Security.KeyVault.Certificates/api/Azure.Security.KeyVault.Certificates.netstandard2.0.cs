@@ -206,7 +206,7 @@ namespace Azure.Security.KeyVault.Certificates
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public Azure.Security.KeyVault.Certificates.CertificateOperationProperties Properties { get { throw null; } }
+        public virtual Azure.Security.KeyVault.Certificates.CertificateOperationProperties Properties { get { throw null; } }
         public override Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy Value { get { throw null; } }
         public virtual void Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public virtual System.Threading.Tasks.Task CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

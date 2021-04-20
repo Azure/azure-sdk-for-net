@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Tests
         /// value is pulled from the AZURE_TEST_MODE environment variable.
         /// </param>
         public SearchTestBase(bool async, SearchClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(async, mode)
         {
             ServiceVersion = serviceVersion;
             Sanitizer = new SearchRecordedTestSanitizer();
