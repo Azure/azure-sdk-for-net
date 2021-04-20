@@ -42,7 +42,6 @@ namespace Azure.Template.Tests
                 data = stream.ToArray();
             }
 
-            var s = Encoding.UTF8.GetString(data);
             var request = _pipeline.CreateRequest();
             request.Uri.Reset(new Uri($"https://{_workspaceId}.{_ingestEndpointSuffix}/api/logs?api-version=2016-04-01"));
             request.Method = RequestMethod.Post;
