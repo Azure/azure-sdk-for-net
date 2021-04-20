@@ -2262,12 +2262,14 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             var leaseId = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
+            var leaseClient = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
 
             // Act
-            Response<DataLakeLease> response = await InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration);
+            Response<DataLakeLease> response = await leaseClient.AcquireAsync(duration);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
         }
 
         [RecordedTest]
@@ -2357,6 +2359,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.AreEqual(response.Value.LeaseId, lease.LeaseId);
         }
 
         [RecordedTest]
@@ -2538,6 +2541,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.AreEqual(response.Value.LeaseId, lease.LeaseId);
         }
 
         [RecordedTest]
