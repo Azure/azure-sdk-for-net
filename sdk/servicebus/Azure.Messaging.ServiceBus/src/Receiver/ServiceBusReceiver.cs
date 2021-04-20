@@ -448,7 +448,7 @@ namespace Azure.Messaging.ServiceBus
                 DiagnosticProperty.ProducerKind);
             scope.Start();
 
-            IReadOnlyList<ServiceBusReceivedMessage> messages = new List<ServiceBusReceivedMessage>();
+            IReadOnlyList<ServiceBusReceivedMessage> messages;
             try
             {
                 messages = await InnerReceiver.PeekMessagesAsync(
