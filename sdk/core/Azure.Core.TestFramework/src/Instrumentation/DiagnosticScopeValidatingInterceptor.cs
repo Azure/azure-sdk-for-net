@@ -225,7 +225,7 @@ namespace Azure.Core.TestFramework
             protected DiagnosticScopeValidatingAsyncEnumerable()
             {
             }
-            
+
             public DiagnosticScopeValidatingAsyncEnumerable(AsyncPageable<T> pageable, MethodInfo methodInfo)
             {
                 if (pageable == null) throw new ArgumentNullException(nameof(pageable), "Operations returning [Async]Pageable should never return null.");

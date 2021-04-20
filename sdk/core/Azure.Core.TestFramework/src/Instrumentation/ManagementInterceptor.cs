@@ -29,23 +29,7 @@ namespace Azure.Core.TestFramework
             }
 
             var type = result.GetType();
-            if (type.Name.StartsWith("Task"))
-            {
-                if (((Task)result).IsFaulted || ((Task)result).Status == TaskStatus.WaitingForActivation)
-                    return;
-
-                var taskResultType = type.GetGenericArguments()[0];
-                if (taskResultType.Name.StartsWith("ArmResponse") || taskResultType.Name.StartsWith("ArmOperation"))
-                {
-                    var taskResult = result.GetType().GetProperty("Result").GetValue(result);
-                    var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
-                    var method = typeof(Task).GetMethod("FromResult", BindingFlags.Public | BindingFlags.Static);
-                    var genericType = taskResultType.Name.StartsWith("Ph") ? taskResultType.BaseType : taskResultType; //TODO: remove after 5279 and 5284
-                    var genericMethod = method.MakeGenericMethod(genericType);
-                    invocation.ReturnValue = genericMethod.Invoke(null, new object[] { instrumentedResult });
-                }
-            }
-            else if (type.Name.StartsWith("ValueTask"))
+            if (type.Name.StartsWith("ValueTask"))
             {
                 if ((bool)type.GetProperty("IsFaulted").GetValue(result))
                     return;
