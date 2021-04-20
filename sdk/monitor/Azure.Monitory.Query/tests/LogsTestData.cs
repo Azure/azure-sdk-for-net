@@ -14,7 +14,11 @@ namespace Azure.Template.Tests
     // Increment the DataVersion when changing the values to force a re-send
     public class LogsTestData
     {
-        private static readonly string DataVersion = "2";
+        private static readonly string DataVersion = "3";
+        // The data retention time is 31 day by-default so we need to make sure the data we posted is still
+        // being retained.
+        // Make the windows start the monday of a previous week.
+        private DateTimeOffset RetentionWindowStart;
 
         public static string IntColumnNameSent = "IntColumn";
         public static string IntColumnName = IntColumnNameSent + "_d";
@@ -28,46 +32,51 @@ namespace Azure.Template.Tests
         public static string FloatColumnNameSent = "FloatColumn";
         public static string FloatColumnName = FloatColumnNameSent + "_d";
 
-        public static string TimeGeneratedColumnNameSent = "TimeGenerated";
-        public static string TimeGeneratedColumnName = FloatColumnNameSent + "_d";
+        public static string TimeGeneratedColumnNameSent = "EventTimeGenerated";
+        public static string TimeGeneratedColumnName = TimeGeneratedColumnNameSent + "_d";
 
-        public static readonly List<Dictionary<string, object>> TableA = new()
-        {
-            new()
-            {
-                { IntColumnNameSent, 1},
-                { StringColumnNameSent, "a"},
-                { BoolColumnNameSent, false},
-                { FloatColumnNameSent, 0f },
-                { TimeGeneratedColumnNameSent, DateTimeOffset.Parse("2015-12-31T23:59:59.9Z") }
-            },
-            new()
-            {
-                { IntColumnNameSent, 3},
-                { StringColumnNameSent, "b"},
-                { BoolColumnNameSent, true},
-                { FloatColumnNameSent, 1.2f },
-                { TimeGeneratedColumnNameSent, DateTimeOffset.Parse("2016-12-31T23:59:59.9Z") }
-            },
-            new()
-            {
-                { IntColumnNameSent, 1},
-                { StringColumnNameSent, "c"},
-                { BoolColumnNameSent, false},
-                { FloatColumnNameSent, 1.1f },
-                { TimeGeneratedColumnNameSent, DateTimeOffset.Parse("2017-12-31T23:59:59.9Z") }
-            },
-        };
+        public readonly List<Dictionary<string, object>> TableA;
 
-        private static string TableANameSent = nameof(TableA) + DataVersion;
-        public static string TableAName = TableANameSent + "_CL";
+        private string TableANameSent => nameof(TableA) + DataVersion + "_" + RetentionWindowStart.DayOfYear;
+        public string TableAName => TableANameSent + "_CL";
 
         private readonly MonitorQueryClientTestEnvironment _testEnvironment;
-        private bool _initialized;
+        private static bool _initialized;
 
-        public LogsTestData(MonitorQueryClientTestEnvironment testEnvironment)
+        public LogsTestData(RecordedTestBase<MonitorQueryClientTestEnvironment> test)
         {
-            _testEnvironment = testEnvironment;
+            _testEnvironment = test.TestEnvironment;
+
+            // Make sure we don't need to re-record every week
+            RetentionWindowStart = test.Recording.Now.AddDays(DayOfWeek.Monday - DateTimeOffset.Now.DayOfWeek - 7);
+
+            TableA = new()
+            {
+                new()
+                {
+                    { IntColumnNameSent, 1},
+                    { StringColumnNameSent, "a"},
+                    { BoolColumnNameSent, false},
+                    { FloatColumnNameSent, 0f },
+                    { TimeGeneratedColumnNameSent, RetentionWindowStart }
+                },
+                new()
+                {
+                    { IntColumnNameSent, 3},
+                    { StringColumnNameSent, "b"},
+                    { BoolColumnNameSent, true},
+                    { FloatColumnNameSent, 1.2f },
+                    { TimeGeneratedColumnNameSent, RetentionWindowStart.AddDays(2) }
+                },
+                new()
+                {
+                    { IntColumnNameSent, 1},
+                    { StringColumnNameSent, "c"},
+                    { BoolColumnNameSent, false},
+                    { FloatColumnNameSent, 1.1f },
+                    { TimeGeneratedColumnNameSent, RetentionWindowStart.AddDays(5) }
+                },
+            };
         }
 
         public async Task InitializeAsync()

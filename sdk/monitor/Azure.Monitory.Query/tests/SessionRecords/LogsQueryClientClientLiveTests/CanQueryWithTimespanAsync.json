@@ -6,33 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "102",
+        "Content-Length": "54",
         "Content-Type": "application/json",
-        "traceparent": "00-2b09dfca34b0bc4195f87734d9ce9064-2991b5b79e5a0746-00",
+        "traceparent": "00-9fc79949db514946a9d29cf061f28089-8735f2ba3eda9145-00",
         "User-Agent": [
           "azsdk-net-Monitory.Query/1.0.0-alpha.20210420.1",
           "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "d3c806a83a8d010a8270095172b48f15",
+        "x-ms-client-request-id": "78a3791e3c716b70d3bb26a4aa909da5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA3_102_CL |project-rename Name = StringColumn_s, Age = IntColumn_d |order by Name asc"
+        "query": "TableA3_102_CL",
+        "timespan": "P7DT0.0000722S"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "909",
+        "Content-Length": "803",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 20 Apr 2021 17:54:03 GMT",
+        "Date": "Tue, 20 Apr 2021 17:54:08 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-6f48f8487b-bqc6h",
+        "Via": "1.1 draft-oms-6f48f8487b-zkrjs",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -69,11 +70,11 @@
                 "type": "string"
               },
               {
-                "name": "Age",
+                "name": "IntColumn_d",
                 "type": "real"
               },
               {
-                "name": "Name",
+                "name": "StringColumn_s",
                 "type": "string"
               },
               {
@@ -94,21 +95,6 @@
               }
             ],
             "rows": [
-              [
-                "9a15b791-8d2f-436f-a734-25d128c72254",
-                "RestAPI",
-                "",
-                "",
-                "2021-04-12T17:36:03.689Z",
-                "",
-                "",
-                1,
-                "a",
-                false,
-                0,
-                "TableA3_102_CL",
-                ""
-              ],
               [
                 "9a15b791-8d2f-436f-a734-25d128c72254",
                 "RestAPI",
@@ -146,8 +132,8 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-20T10:54:03.4307244-07:00",
-    "RandomSeed": "195466269",
+    "DateTimeOffsetNow": "2021-04-20T10:54:07.5288214-07:00",
+    "RandomSeed": "388550729",
     "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254"
   }
 }

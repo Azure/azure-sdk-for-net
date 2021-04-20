@@ -22,7 +22,7 @@ namespace Azure.Template.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _logsTestData = new LogsTestData(TestEnvironment);
+            _logsTestData = new LogsTestData(this);
             await _logsTestData.InitializeAsync();
         }
 
@@ -40,7 +40,7 @@ namespace Azure.Template.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync(TestEnvironment.WorkspaceId,
-                $"{LogsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} |" +
                 $"project {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName}, {LogsTestData.BoolColumnName}, {LogsTestData.FloatColumnName} |" +
                 $"order by {LogsTestData.StringColumnName} asc");
 
@@ -66,7 +66,7 @@ namespace Azure.Template.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId,
-                $"{LogsTestData.TableAName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc");
+                $"{_logsTestData.TableAName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc");
 
             CollectionAssert.AreEqual(new[] {"a","b","c"}, results.Value);
         }
@@ -76,9 +76,9 @@ namespace Azure.Template.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync<int>(TestEnvironment.WorkspaceId, $"{LogsTestData.TableAName} | count");
+            var results = await client.QueryAsync<int>(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | count");
 
-            Assert.AreEqual(LogsTestData.TableA.Count, results.Value[0]);
+            Assert.AreEqual(_logsTestData.TableA.Count, results.Value[0]);
         }
 
         [RecordedTest]
@@ -87,7 +87,7 @@ namespace Azure.Template.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<TestModel>(TestEnvironment.WorkspaceId,
-                $"{LogsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"order by Name asc");
 
@@ -105,7 +105,7 @@ namespace Azure.Template.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<Dictionary<string, object>>(TestEnvironment.WorkspaceId,
-                $"{LogsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"project Name, Age |" +
                 $"order by Name asc");
@@ -124,7 +124,7 @@ namespace Azure.Template.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<IDictionary<string, object>>(TestEnvironment.WorkspaceId,
-                $"{LogsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"project Name, Age |" +
                 $"order by Name asc");
@@ -156,12 +156,12 @@ namespace Azure.Template.Tests
         [RecordedTest]
         public async Task CanQueryWithTimespan()
         {
-            // Get the time of the second event and add a bit of buffer to it (events are 1y apart)
-            var timespan = (DateTimeOffset)LogsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent] - DateTimeOffset.Now;
+            // Get the time of the second event and add a bit of buffer to it (events are 2d apart)
+            var timespan = DateTimeOffset.Now - (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
             timespan = timespan.Add(TimeSpan.FromDays(1));
 
             var client = CreateClient();
-            var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId, LogsTestData.TableAName, timespan);
+            var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId, _logsTestData.TableAName, timespan);
 
             // We should get the second and the third events
             Assert.AreEqual(2, results.Value.Count);
@@ -170,14 +170,14 @@ namespace Azure.Template.Tests
         [RecordedTest]
         public async Task CanQueryBatchWithTimespan()
         {
-            // Get the time of the second event and add a bit of buffer to it (events are 1y apart)
-            var timespan = (DateTimeOffset)LogsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent] - DateTimeOffset.Now;
+            // Get the time of the second event and add a bit of buffer to it (events are 2d apart)
+            var timespan = DateTimeOffset.Now - (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
             timespan = timespan.Add(TimeSpan.FromDays(1));
 
             var client = CreateClient();
             LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
-            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, LogsTestData.TableAName);
-            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, LogsTestData.TableAName, timespan);
+            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName);
+            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName, timespan);
             Response<LogsBatchQueryResult> response = await batch.SubmitAsync();
 
             var result1 = response.Value.GetResult(id1);

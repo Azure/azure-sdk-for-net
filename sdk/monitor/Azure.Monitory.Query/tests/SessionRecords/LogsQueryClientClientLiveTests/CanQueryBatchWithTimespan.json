@@ -1,0 +1,278 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/$batch",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "298",
+        "Content-Type": "application/json",
+        "traceparent": "00-fecc02b9e196f34b83d70ac498981c35-c51c018477c6444f-00",
+        "User-Agent": [
+          "azsdk-net-Monitory.Query/1.0.0-alpha.20210420.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "d0750064cd74826afe42399856ccfe5d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "requests": [
+          {
+            "id": "0",
+            "body": {
+              "query": "TableA3_102_CL"
+            },
+            "path": "/query",
+            "method": "POST",
+            "workspace": "9a15b791-8d2f-436f-a734-25d128c72254"
+          },
+          {
+            "id": "1",
+            "body": {
+              "query": "TableA3_102_CL",
+              "timespan": "P7DT0.0011464S"
+            },
+            "path": "/query",
+            "method": "POST",
+            "workspace": "9a15b791-8d2f-436f-a734-25d128c72254"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Apr 2021 17:54:03 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "Via": "1.1 draft-oms-6f48f8487b-zgxv4",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "responses": [
+          {
+            "id": "0",
+            "status": 200,
+            "body": {
+              "tables": [
+                {
+                  "name": "PrimaryResult",
+                  "columns": [
+                    {
+                      "name": "TenantId",
+                      "type": "string"
+                    },
+                    {
+                      "name": "SourceSystem",
+                      "type": "string"
+                    },
+                    {
+                      "name": "MG",
+                      "type": "string"
+                    },
+                    {
+                      "name": "ManagementGroupName",
+                      "type": "string"
+                    },
+                    {
+                      "name": "TimeGenerated",
+                      "type": "datetime"
+                    },
+                    {
+                      "name": "Computer",
+                      "type": "string"
+                    },
+                    {
+                      "name": "RawData",
+                      "type": "string"
+                    },
+                    {
+                      "name": "IntColumn_d",
+                      "type": "real"
+                    },
+                    {
+                      "name": "StringColumn_s",
+                      "type": "string"
+                    },
+                    {
+                      "name": "BoolColumn_b",
+                      "type": "bool"
+                    },
+                    {
+                      "name": "FloatColumn_d",
+                      "type": "real"
+                    },
+                    {
+                      "name": "Type",
+                      "type": "string"
+                    },
+                    {
+                      "name": "_ResourceId",
+                      "type": "string"
+                    }
+                  ],
+                  "rows": [
+                    [
+                      "9a15b791-8d2f-436f-a734-25d128c72254",
+                      "RestAPI",
+                      "",
+                      "",
+                      "2021-04-12T17:36:03.689Z",
+                      "",
+                      "",
+                      1,
+                      "a",
+                      false,
+                      0,
+                      "TableA3_102_CL",
+                      ""
+                    ],
+                    [
+                      "9a15b791-8d2f-436f-a734-25d128c72254",
+                      "RestAPI",
+                      "",
+                      "",
+                      "2021-04-14T17:36:03.689Z",
+                      "",
+                      "",
+                      3,
+                      "b",
+                      true,
+                      1.2,
+                      "TableA3_102_CL",
+                      ""
+                    ],
+                    [
+                      "9a15b791-8d2f-436f-a734-25d128c72254",
+                      "RestAPI",
+                      "",
+                      "",
+                      "2021-04-17T17:36:03.689Z",
+                      "",
+                      "",
+                      1,
+                      "c",
+                      false,
+                      1.1,
+                      "TableA3_102_CL",
+                      ""
+                    ]
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "1",
+            "status": 200,
+            "body": {
+              "tables": [
+                {
+                  "name": "PrimaryResult",
+                  "columns": [
+                    {
+                      "name": "TenantId",
+                      "type": "string"
+                    },
+                    {
+                      "name": "SourceSystem",
+                      "type": "string"
+                    },
+                    {
+                      "name": "MG",
+                      "type": "string"
+                    },
+                    {
+                      "name": "ManagementGroupName",
+                      "type": "string"
+                    },
+                    {
+                      "name": "TimeGenerated",
+                      "type": "datetime"
+                    },
+                    {
+                      "name": "Computer",
+                      "type": "string"
+                    },
+                    {
+                      "name": "RawData",
+                      "type": "string"
+                    },
+                    {
+                      "name": "IntColumn_d",
+                      "type": "real"
+                    },
+                    {
+                      "name": "StringColumn_s",
+                      "type": "string"
+                    },
+                    {
+                      "name": "BoolColumn_b",
+                      "type": "bool"
+                    },
+                    {
+                      "name": "FloatColumn_d",
+                      "type": "real"
+                    },
+                    {
+                      "name": "Type",
+                      "type": "string"
+                    },
+                    {
+                      "name": "_ResourceId",
+                      "type": "string"
+                    }
+                  ],
+                  "rows": [
+                    [
+                      "9a15b791-8d2f-436f-a734-25d128c72254",
+                      "RestAPI",
+                      "",
+                      "",
+                      "2021-04-14T17:36:03.689Z",
+                      "",
+                      "",
+                      3,
+                      "b",
+                      true,
+                      1.2,
+                      "TableA3_102_CL",
+                      ""
+                    ],
+                    [
+                      "9a15b791-8d2f-436f-a734-25d128c72254",
+                      "RestAPI",
+                      "",
+                      "",
+                      "2021-04-17T17:36:03.689Z",
+                      "",
+                      "",
+                      1,
+                      "c",
+                      false,
+                      1.1,
+                      "TableA3_102_CL",
+                      ""
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-04-20T10:54:02.8340088-07:00",
+    "RandomSeed": "1342496839",
+    "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254"
+  }
+}
