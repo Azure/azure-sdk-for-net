@@ -3,7 +3,7 @@ namespace Azure.Monitory.Query
     public partial class LogsBatchQuery
     {
         protected LogsBatchQuery() { }
-        public virtual string AddQuery(string workspaceId, string query) { throw null; }
+        public virtual string AddQuery(string workspaceId, string query, System.TimeSpan? timeSpan = default(System.TimeSpan?)) { throw null; }
         public virtual Azure.Response<Azure.Monitory.Query.Models.LogsBatchQueryResult> Submit(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.LogsBatchQueryResult>> SubmitAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -13,10 +13,10 @@ namespace Azure.Monitory.Query
         public LogsClient(Azure.Core.TokenCredential credential) { }
         public LogsClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.LogsClientOptions options) { }
         public virtual Azure.Monitory.Query.LogsBatchQuery CreateBatchQuery() { throw null; }
-        public virtual Azure.Response<Azure.Monitory.Query.Models.LogsQueryResult> Query(string workspaceId, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.LogsQueryResult>> QueryAsync(string workspaceId, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> Query<T>(string workspaceId, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Monitory.Query.Models.LogsQueryResult> Query(string workspaceId, string query, System.TimeSpan? timeSpan = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.LogsQueryResult>> QueryAsync(string workspaceId, string query, System.TimeSpan? timeSpan = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, System.TimeSpan? timeSpan = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> Query<T>(string workspaceId, string query, System.TimeSpan? timeSpan = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LogsClientOptions : Azure.Core.ClientOptions
     {
