@@ -7,7 +7,7 @@ using Azure.Core.TestFramework;
 using Azure.Monitory.Query;
 using NUnit.Framework;
 
-namespace Azure.Template.Tests
+namespace Azure.Monitory.Query.Tests
 {
     public class MetricsQueryClientLiveTests : RecordedTestBase<MonitorQueryClientTestEnvironment>
     {

@@ -2,6 +2,8 @@
 
 ## 3.1.0-beta.5 (Unreleased)
 
+### New Features
+- Updated the `FormRecognizerModelFactory` class to support missing model types for mocking.
 
 ## 3.0.1 (2021-04-09)
 

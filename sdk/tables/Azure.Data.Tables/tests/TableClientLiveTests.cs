@@ -65,7 +65,7 @@ namespace Azure.Data.Tables.Tests
             await CosmosThrottleWrapper(async () => await tableClient.CreateAsync().ConfigureAwait(false));
 
             // Check that the table was created.
-            var tableResponses = (await service.GetTablesAsync(filter:TablesFilter.Create($"TableName eq {validTableName}")).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            var tableResponses = (await service.GetTablesAsync(filter:TableOdataFilter.Create($"TableName eq {validTableName}")).ToEnumerableAsync().ConfigureAwait(false)).ToList();
             Assert.That(() => tableResponses, Is.Not.Empty);
 
             // Delete the table using the TableClient method.
@@ -97,7 +97,7 @@ namespace Azure.Data.Tables.Tests
             string token = sas.Sign(credential);
 
             // Create the TableServiceClient using the SAS URI.
-            TableClient sasTableclient = InstrumentClient(new TableClient(new Uri(ServiceUri), tableName, new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
+            TableClient sasTableclient = InstrumentClient(new TableClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are able to query the table from the service.
 
@@ -145,7 +145,7 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClient using the SAS URI.
             // Intentionally add the SAS to the endpoint arg as well as the credential to validate de-duping
-            TableClient sasTableclient = InstrumentClient(new TableClient(sasUri.Uri, tableName, new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
+            TableClient sasTableclient = InstrumentClient(new TableClient(sasUri.Uri, new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are able to query the table from the service.
 

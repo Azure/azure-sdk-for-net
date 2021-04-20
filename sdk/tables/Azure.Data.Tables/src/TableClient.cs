@@ -54,26 +54,45 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> <see cref="AzureSasCredential"/>.
+        /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> which contains a SAS token.
         /// See <see cref="GetSasBuilder(TableSasPermissions, DateTimeOffset)" /> for creating a SAS token.
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
-        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/{table_name}?{sas_token}" or "https://{account_name}.table.cosmos.azure.com/{table_name}?{sas_token}".
         /// </param>
-        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
+        /// </param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
+        public TableClient(Uri endpoint, TableClientOptions options = null)
+            : this(endpoint, null, default, options)
+        {
+            if (endpoint.Scheme != Uri.UriSchemeHttps)
+            {
+                throw new ArgumentException("Cannot a use SAS token credential without HTTPS.", nameof(endpoint));
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> and <see cref="AzureSasCredential"/>.
+        /// See <see cref="GetSasBuilder(TableSasPermissions, DateTimeOffset)" /> for creating a SAS token.
+        /// </summary>
+        /// <param name="endpoint">
+        /// A <see cref="Uri"/> referencing the table service account.
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/{table_name}" or "https://{account_name}.table.cosmos.azure.com/{table_name}".
+        /// </param>
         /// <param name="credential">The shared access signature credential used to sign requests.</param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
-        public TableClient(Uri endpoint, string tableName, AzureSasCredential credential, TableClientOptions options = null)
-            : this(endpoint, tableName, default, credential, options)
+        public TableClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
+            : this(endpoint, null, default, credential, options)
         {
-            Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            if (endpoint.Scheme != "https")
+            if (endpoint.Scheme != Uri.UriSchemeHttps)
             {
                 throw new ArgumentException("Cannot a use SAS token credential without HTTPS.", nameof(endpoint));
             }
@@ -92,7 +111,6 @@ namespace Azure.Data.Tables
         public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential)
             : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), default, null)
         {
-            Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(credential, nameof(credential));
         }
 
@@ -112,7 +130,6 @@ namespace Azure.Data.Tables
         public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential, TableClientOptions options = null)
             : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), default, options)
         {
-            Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(credential, nameof(credential));
         }
 
@@ -121,7 +138,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="connectionString">
         /// A connection string includes the authentication information
-        /// required for your application to access data in an Azure Storage
+        /// required for your application to access data in an Azure Table
         /// account at runtime.
         ///
         /// For more information,
@@ -178,8 +195,23 @@ namespace Azure.Data.Tables
 
         internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
         {
-            Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            // If we were provided no tableName, try to parse it from the endpoint.
+            if (string.IsNullOrEmpty(tableName))
+            {
+                tableName = new TableSasBuilder(endpoint).TableName;
+            }
+
+            // If the sasCredential is provided, we can extract the tableName from it.
+            if (string.IsNullOrEmpty(tableName) && sasCredential != null)
+            {
+                var builder = new UriBuilder(endpoint);
+                builder.Query = sasCredential.Signature;
+                tableName = new TableSasBuilder(builder.Uri).TableName;
+            }
+
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             _endpoint = endpoint;
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
@@ -554,7 +586,7 @@ namespace Azure.Data.Tables
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
-                else if (mode == TableUpdateMode.Merge)
+                if (mode == TableUpdateMode.Merge)
                 {
                     return await _tableOperations.MergeEntityAsync(Name,
                             entity.PartitionKey,
@@ -564,10 +596,7 @@ namespace Azure.Data.Tables
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
-                else
-                {
-                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
-                }
+                throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
             }
             catch (Exception ex)
             {
@@ -603,7 +632,7 @@ namespace Azure.Data.Tables
                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken);
                 }
-                else if (mode == TableUpdateMode.Merge)
+                if (mode == TableUpdateMode.Merge)
                 {
                     return _tableOperations.MergeEntity(Name,
                         entity.PartitionKey,
@@ -612,10 +641,7 @@ namespace Azure.Data.Tables
                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken);
                 }
-                else
-                {
-                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
-                }
+                throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
             }
             catch (Exception ex)
             {
@@ -665,7 +691,7 @@ namespace Azure.Data.Tables
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
-                else if (mode == TableUpdateMode.Merge)
+                if (mode == TableUpdateMode.Merge)
                 {
                     return await _tableOperations.MergeEntityAsync(Name,
                             entity.PartitionKey,
@@ -676,10 +702,7 @@ namespace Azure.Data.Tables
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
-                else
-                {
-                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
-                }
+                throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
             }
             catch (Exception ex)
             {
@@ -728,7 +751,7 @@ namespace Azure.Data.Tables
                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken);
                 }
-                else if (mode == TableUpdateMode.Merge)
+                if (mode == TableUpdateMode.Merge)
                 {
                     return _tableOperations.MergeEntity(Name,
                         entity.PartitionKey,
@@ -738,10 +761,7 @@ namespace Azure.Data.Tables
                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken);
                 }
-                else
-                {
-                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
-                }
+                throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
             }
             catch (Exception ex)
             {
@@ -1128,6 +1148,13 @@ namespace Azure.Data.Tables
         public static string CreateQueryFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
 
         /// <summary>
+        /// Create an OData filter expression from an interpolated string.  The interpolated values will be quoted and escaped as necessary.
+        /// </summary>
+        /// <param name="filter">An interpolated filter string.</param>
+        /// <returns>A valid OData filter expression.</returns>
+        public static string CreateQueryFilter(FormattableString filter) => TableOdataFilter.Create(filter);
+
+        /// <summary>
         /// Create a <see cref="TableTransactionalBatch" /> for the given <paramref name="partitionKey"/> value.
         /// </summary>
         /// <param name="partitionKey">The partitionKey context for the batch.</param>
@@ -1163,10 +1190,7 @@ namespace Azure.Data.Tables
             {
                 return null;
             }
-            else
-            {
-                return $"{headers.XMsContinuationNextPartitionKey} {headers.XMsContinuationNextRowKey}";
-            }
+            return $"{headers.XMsContinuationNextPartitionKey} {headers.XMsContinuationNextRowKey}";
         }
 
         internal static (string NextPartitionKey, string NextRowKey) ParseContinuationToken(string continuationToken)

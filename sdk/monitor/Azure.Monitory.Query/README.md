@@ -30,7 +30,7 @@ You can map query results to a model using the `LogsClient.QueryAsync<T>` method
 public class MyLogEntryModel
 {
     public string ResourceGroup { get; set; }
-    public string Count { get; set; }
+    public int Count { get; set; }
 }
 ```
 
