@@ -5,10 +5,11 @@ namespace Azure.Storage.Tests.Shared
 {
     /// <summary>
     /// We have plenty of tests that fail in live mode because RBAC roles assignments has not yet propagated.
+    /// It may take up to 5 minutes for replication to finish.
     /// </summary>
     public class RetryOnAuthorizationPermissionMismatchAttribute : RetryOnFailedRequestAttribute
     {
-        public RetryOnAuthorizationPermissionMismatchAttribute() : base(60, 10, "AuthorizationPermissionMismatch")
+        public RetryOnAuthorizationPermissionMismatchAttribute() : base(30, 10, "AuthorizationPermissionMismatch")
         {
         }
     }
