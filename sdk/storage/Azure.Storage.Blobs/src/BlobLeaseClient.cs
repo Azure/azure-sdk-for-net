@@ -44,10 +44,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         public Uri Uri => BlobClient?.Uri ?? BlobContainerClient?.Uri;
 
+        private string _leaseId;
         /// <summary>
         /// Gets the Lease ID for this lease.
         /// </summary>
-        public virtual volatile string LeaseId { get; private set; }
+        public virtual string LeaseId
+        {
+            get => Volatile.Read(ref _leaseId);
+            private set => Volatile.Write(ref _leaseId, value);
+        }
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
