@@ -49,14 +49,6 @@ namespace Azure.Monitory.Query
 }
 namespace Azure.Monitory.Query.Models
 {
-    public partial class LocalizableString
-    {
-        internal LocalizableString() { }
-        public string LocalizedValue { get { throw null; } }
-        public string Value { get { throw null; } }
-        public static implicit operator string (Azure.Monitory.Query.Models.LocalizableString localizableString) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class LogsBatchQueryResult
     {
         internal LogsBatchQueryResult() { }
@@ -106,14 +98,14 @@ namespace Azure.Monitory.Query.Models
     public partial class MetadataValue
     {
         internal MetadataValue() { }
-        public Azure.Monitory.Query.Models.LocalizableString Name { get { throw null; } }
+        public string Name { get { throw null; } }
         public string Value { get { throw null; } }
     }
     public partial class Metric
     {
         internal Metric() { }
         public string Id { get { throw null; } }
-        public Azure.Monitory.Query.Models.LocalizableString Name { get { throw null; } }
+        public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.TimeSeriesElement> Timeseries { get { throw null; } }
         public string Type { get { throw null; } }
         public Azure.Monitory.Query.Models.MetricUnit Unit { get { throw null; } }
@@ -136,11 +128,11 @@ namespace Azure.Monitory.Query.Models
     public partial class MetricDefinition
     {
         internal MetricDefinition() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.LocalizableString> Dimensions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Dimensions { get { throw null; } }
         public string Id { get { throw null; } }
         public bool? IsDimensionRequired { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricAvailability> MetricAvailabilities { get { throw null; } }
-        public Azure.Monitory.Query.Models.LocalizableString Name { get { throw null; } }
+        public string Name { get { throw null; } }
         public string Namespace { get { throw null; } }
         public Azure.Monitory.Query.Models.MetricAggregationType? PrimaryAggregationType { get { throw null; } }
         public string ResourceId { get { throw null; } }
