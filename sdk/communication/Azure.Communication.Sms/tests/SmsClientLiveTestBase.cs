@@ -27,7 +27,7 @@ namespace Azure.Communication.Sms.Tests
         public SmsClient CreateSmsClient()
         {
             var connectionString = TestEnvironment.LiveTestConnectionString;
-            SmsClient client = new SmsClient(connectionString, InstrumentClientOptions(new SmsClientOptions()));
+            SmsClient client = new SmsClient(connectionString, CreateSmsClientOptionsWithCorrelationVectorLogs());
 
             #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
             //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal

@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Template.Tests
+namespace Azure.Monitory.Query.Tests
 {
     public class LogSenderClientOptions : ClientOptions
     {

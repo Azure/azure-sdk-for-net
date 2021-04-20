@@ -33,12 +33,14 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            #region Snippet:FormRecognizerRecognizeCustomFormsFromFile
+#if SNIPPET
+            string modelId = "<modelId>";
+            string filePath = "<filePath>";
+#else
             string filePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
             string modelId = model.ModelId;
-
-            #region Snippet:FormRecognizerRecognizeCustomFormsFromFile
-            //@@ string modelId = "<modelId>";
-            //@@ string filePath = "<filePath>";
+#endif
 
             using var stream = new FileStream(filePath, FileMode.Open);
 

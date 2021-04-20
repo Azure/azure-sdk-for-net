@@ -507,7 +507,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ReceiveAsyncValidatesConnectionClosed()
+        public void ReceiveAsyncValidatesConnectionClosed()
         {
             var endpoint = new Uri("amqps://not.real.com");
             var eventHub = "eventHubName";
@@ -519,10 +519,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());
 
             var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null);
-            scope.Dispose();
-
             var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, true, null, null, null, scope, Mock.Of<AmqpMessageConverter>(), retryPolicy);
-            await consumer.CloseAsync(CancellationToken.None);
+
+            scope.Dispose();
 
             Assert.That(async () => await consumer.ReceiveAsync(100, null, CancellationToken.None),
                 Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));

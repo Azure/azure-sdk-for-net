@@ -23,10 +23,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string invoicePath = FormRecognizerTestEnvironment.CreatePath("recommended_invoice.jpg");
-
             #region Snippet:FormRecognizerSampleRecognizeInvoicesFileStream
-            //@@ string invoicePath = "<invoicePath>";
+#if SNIPPET
+            string invoicePath = "<invoicePath>";
+#else
+            string invoicePath = FormRecognizerTestEnvironment.CreatePath("recommended_invoice.jpg");
+#endif
 
             using var stream = new FileStream(invoicePath, FileMode.Open);
             var options = new RecognizeInvoicesOptions() { Locale = "en-US" };

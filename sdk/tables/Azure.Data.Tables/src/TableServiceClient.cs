@@ -92,7 +92,7 @@ namespace Azure.Data.Tables
         public TableServiceClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
             : this(endpoint, default, credential, options)
         {
-            if (endpoint.Scheme != "https")
+            if (endpoint.Scheme != Uri.UriSchemeHttps)
             {
                 throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
             }
@@ -681,5 +681,12 @@ namespace Azure.Data.Tables
         /// <param name="filter">A filter expression.</param>
         /// <returns>The string representation of the filter expression.</returns>
         public static string CreateQueryFilter(Expression<Func<TableItem, bool>> filter) => TableClient.Bind(filter);
+
+        /// <summary>
+        /// Create an OData filter expression from an interpolated string.  The interpolated values will be quoted and escaped as necessary.
+        /// </summary>
+        /// <param name="filter">An interpolated filter string.</param>
+        /// <returns>A valid OData filter expression.</returns>
+        public static string CreateQueryFilter(FormattableString filter) => TableOdataFilter.Create(filter);
     }
 }

@@ -22,10 +22,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            Uri invoiceUri = FormRecognizerTestEnvironment.CreateUri("recommended_invoice.jpg");
-
             #region Snippet:FormRecognizerSampleRecognizeInvoicesUri
-            //@@ Uri invoiceUri = <invoiceUri>;
+#if SNIPPET
+            Uri invoiceUri = <invoiceUri>;
+#else
+            Uri invoiceUri = FormRecognizerTestEnvironment.CreateUri("recommended_invoice.jpg");
+#endif
             var options = new RecognizeInvoicesOptions() { Locale = "en-US" };
 
             RecognizeInvoicesOperation operation = await client.StartRecognizeInvoicesFromUriAsync(invoiceUri, options);

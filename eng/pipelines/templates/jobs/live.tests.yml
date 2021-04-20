@@ -84,12 +84,17 @@ jobs:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
 
+      - template: /eng/common/TestResources/build-test-resource-config.yml
+        parameters:
+          SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
+          SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
+
       - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
           ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
             Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-          SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
           ArmTemplateParameters: $(ArmTemplateParameters)
 
       - pwsh: |
@@ -122,7 +127,7 @@ jobs:
       - template: /eng/common/TestResources/remove-test-resources.yml
         parameters:
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-          SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
 
       - task: PublishTestResults@2
         condition: always()
