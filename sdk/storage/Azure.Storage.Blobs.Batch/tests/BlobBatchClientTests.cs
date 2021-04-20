@@ -221,7 +221,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             var serviceClient = GetServiceClient_SharedKey();
-            var sas = GetAccountSasCredentials().SasToken;
+            var sas = GetAccountSasCredentials(version: ToSasVersion(_serviceVersion)).SasToken;
             var sasServiceClient = InstrumentClient(new BlobServiceClient(serviceClient.Uri, new AzureSasCredential(sas), GetOptions()));
             await using TestScenario scenario = Scenario(sasServiceClient);
             Uri[] blobs = await scenario.CreateBlobUrisAsync(test.Container, 2);
@@ -318,7 +318,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
             {
-                BlobContainerName = containerName
+                BlobContainerName = containerName,
+                Version = ToSasVersion(_serviceVersion)
             };
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
@@ -400,7 +401,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
             {
-                BlobContainerName = containerName
+                BlobContainerName = containerName,
+                Version = ToSasVersion(_serviceVersion)
             };
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
@@ -638,7 +640,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
             {
-                BlobContainerName = containerName
+                BlobContainerName = containerName,
+                Version = ToSasVersion(_serviceVersion)
             };
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)
@@ -720,7 +723,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
             {
-                BlobContainerName = containerName
+                BlobContainerName = containerName,
+                Version = ToSasVersion(_serviceVersion)
             };
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(scenario.Service.Uri)

@@ -602,7 +602,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
             };
             sasBuilder.SetPermissions(DataLakeSasPermissions.All);
             SasQueryParameters sourceSasQueryParameters = sasBuilder.ToSasQueryParameters(GetStorageSharedKeyCredentials());
@@ -617,7 +618,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-2),
                 ExpiresOn = Recording.UtcNow.AddHours(+2),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
             };
             sasBuilder.SetPermissions(DataLakeSasPermissions.All);
             SasQueryParameters destSasQueryParameters = sasBuilder.ToSasQueryParameters(GetStorageSharedKeyCredentials());
@@ -3496,7 +3498,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder
             {
                 FileSystemName = fileSystemName,
-                Identifier = signedIdentifierId
+                Identifier = signedIdentifierId,
+                Version = ToSasVersion(_serviceVersion)
             };
             DataLakeSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(GetStorageSharedKeyCredentials());
 
@@ -5115,7 +5118,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(serviceUri)
             {
                 FileSystemName = fileSystemName,
-                DirectoryOrFilePath = path
+                DirectoryOrFilePath = path,
             };
             DataLakeSasPermissions permissions = DataLakeSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
@@ -5132,7 +5135,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 FileSystemName = fileSystemName,
                 Path = path,
-                IsDirectory = true
+                IsDirectory = true,
+                Version = ToSasVersion(_serviceVersion)
             };
             DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(serviceUri)
             {

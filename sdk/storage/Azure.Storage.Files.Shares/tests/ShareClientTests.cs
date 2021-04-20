@@ -59,6 +59,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Services = AccountSasServices.All,
                 ResourceTypes = AccountSasResourceTypes.All,
                 Protocol = SasProtocol.Https,
+                Version = ToSasVersion(_serviceVersion)
             };
 
             sasBuilder.SetPermissions(AccountSasPermissions.All);

@@ -125,7 +125,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
-            string sas = GetAccountSasCredentials().SasToken;
+            string sas = GetAccountSasCredentials(version: ToSasVersion(_serviceVersion)).SasToken;
             Uri uri = test.Container.GetParentBlobServiceClient().Uri;
 
             // Act

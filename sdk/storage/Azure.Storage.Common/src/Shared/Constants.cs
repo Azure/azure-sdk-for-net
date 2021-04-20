@@ -25,7 +25,7 @@ namespace Azure.Storage
         /// signatures.
         /// </summary>
         // TODO https://github.com/Azure/azure-sdk-for-net/issues/19575
-        public const string DefaultSasVersion = "2020-06-12";
+        public const string DefaultSasVersion = "2020-08-04";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.

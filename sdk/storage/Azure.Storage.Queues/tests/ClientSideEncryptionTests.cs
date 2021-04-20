@@ -33,8 +33,8 @@ namespace Azure.Storage.Queues.Test
         private readonly string SampleUTF8String = Encoding.UTF8.GetString(
             new byte[] { 0xe1, 0x9a, 0xa0, 0xe1, 0x9b, 0x87, 0xe1, 0x9a, 0xbb, 0x0a }); // valid UTF-8 bytes
 
-        public ClientSideEncryptionTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ClientSideEncryptionTests(bool async, QueueClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

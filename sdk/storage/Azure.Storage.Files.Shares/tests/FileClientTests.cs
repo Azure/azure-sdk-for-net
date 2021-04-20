@@ -859,7 +859,8 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareSasBuilder sasBuilder = new ShareSasBuilder
             {
                 ShareName = shareName,
-                Identifier = signedIdentifierId
+                Identifier = signedIdentifierId,
+                Version = ToSasVersion(_serviceVersion)
             };
             SasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
 

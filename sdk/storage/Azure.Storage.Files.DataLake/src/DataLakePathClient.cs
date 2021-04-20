@@ -77,7 +77,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// <see cref="DataLakeClientConfiguration"/>.
         /// </summary>
-        private readonly DataLakeClientConfiguration _clientConfiguration;
+        internal readonly DataLakeClientConfiguration _clientConfiguration;
 
         /// <summary>
         /// <see cref="DataLakeClientConfiguration"/>.
@@ -3531,7 +3531,8 @@ namespace Azure.Storage.Files.DataLake
             GenerateSasUri(new DataLakeSasBuilder(permissions, expiresOn)
             {
                 FileSystemName = FileSystemName,
-                Path = Path
+                Path = Path,
+                Version = StorageVersionExtensions.ToVersionString(ClientConfiguration.Version)
             });
 
         /// <summary>

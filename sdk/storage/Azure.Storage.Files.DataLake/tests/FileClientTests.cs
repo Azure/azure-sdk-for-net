@@ -4911,7 +4911,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeUriBuilder dataLakeUriBuilder = new DataLakeUriBuilder(serviceUri)
             {
                 FileSystemName = fileSystemName,
-                DirectoryOrFilePath = path
+                DirectoryOrFilePath = path,
             };
             DataLakeFileClient fileClient = InstrumentClient(new DataLakeFileClient(
                 dataLakeUriBuilder.ToUri(),
@@ -4925,7 +4925,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
             {
                 FileSystemName = fileSystemName,
-                Path = path
+                Path = path,
+                Version = ToSasVersion(_serviceVersion)
             };
             DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(serviceUri)
             {

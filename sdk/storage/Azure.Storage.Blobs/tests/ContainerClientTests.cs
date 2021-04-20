@@ -62,7 +62,8 @@ namespace Azure.Storage.Blobs.Test
             SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
                 AccountSasServices.All,
                 AccountSasResourceTypes.All,
-                AccountSasPermissions.All);
+                AccountSasPermissions.All,
+                ToSasVersion(_serviceVersion));
 
             StorageConnectionString conn1 = GetConnectionString(
                 credentials: sasCred,
@@ -118,7 +119,8 @@ namespace Azure.Storage.Blobs.Test
             SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
                 AccountSasServices.All,
                 AccountSasResourceTypes.Container,
-                AccountSasPermissions.All);
+                AccountSasPermissions.All,
+                ToSasVersion(_serviceVersion));
 
             StorageConnectionString conn = GetConnectionString(credentials: sasCred);
 
@@ -153,7 +155,8 @@ namespace Azure.Storage.Blobs.Test
             SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
                 AccountSasServices.All,
                 AccountSasResourceTypes.Service,
-                AccountSasPermissions.All);
+                AccountSasPermissions.All,
+                ToSasVersion(_serviceVersion));
 
             StorageConnectionString conn = GetConnectionString(credentials: sasCred);
 
@@ -172,7 +175,8 @@ namespace Azure.Storage.Blobs.Test
             SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
                 AccountSasServices.All,
                 AccountSasResourceTypes.All,
-                AccountSasPermissions.Read);
+                AccountSasPermissions.Read,
+                ToSasVersion(_serviceVersion));
 
             StorageConnectionString conn = GetConnectionString(credentials: sasCred);
 
@@ -196,7 +200,8 @@ namespace Azure.Storage.Blobs.Test
                 AccountSasServices.All,
                 AccountSasResourceTypes.All,
                 // include Delete so we can clean up the test
-                AccountSasPermissions.Write | AccountSasPermissions.Delete);
+                AccountSasPermissions.Write | AccountSasPermissions.Delete,
+                ToSasVersion(_serviceVersion));
 
             StorageConnectionString conn = GetConnectionString(credentials: sasCred);
 
@@ -298,7 +303,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
-            string sas = GetAccountSasCredentials().SasToken;
+            string sas = GetAccountSasCredentials(version: ToSasVersion(_serviceVersion)).SasToken;
             Uri uri = test.Container.Uri;
 
             // Act

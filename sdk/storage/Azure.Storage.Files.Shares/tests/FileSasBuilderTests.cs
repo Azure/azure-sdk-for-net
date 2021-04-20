@@ -128,7 +128,8 @@ namespace Azure.Storage.Files.Shares.Tests
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
                 Services = AccountSasServices.Files,
-                ResourceTypes = AccountSasResourceTypes.All
+                ResourceTypes = AccountSasResourceTypes.All,
+                Version = ToSasVersion(_serviceVersion)
             };
 
             accountSasBuilder.SetPermissions(permissionsString);
@@ -175,7 +176,8 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
-                ShareName = test.Share.Name
+                ShareName = test.Share.Name,
+                Version = ToSasVersion(_serviceVersion)
             };
 
             blobSasBuilder.SetPermissions(

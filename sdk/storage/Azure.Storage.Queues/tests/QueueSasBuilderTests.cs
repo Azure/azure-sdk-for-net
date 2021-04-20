@@ -16,8 +16,8 @@ namespace Azure.Storage.Queues.Test
     {
         private const string Permissions = "raup";
 
-        public QueueSasBuilderTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public QueueSasBuilderTests(bool async, QueueClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -123,7 +123,8 @@ namespace Azure.Storage.Queues.Test
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
                 Services = AccountSasServices.Queues,
-                ResourceTypes = AccountSasResourceTypes.All
+                ResourceTypes = AccountSasResourceTypes.All,
+                Version = ToSasVersion(_serviceVersion)
             };
 
             accountSasBuilder.SetPermissions(permissionsString);
@@ -169,7 +170,8 @@ namespace Azure.Storage.Queues.Test
             {
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
-                QueueName = test.Queue.Name
+                QueueName = test.Queue.Name,
+                Version = ToSasVersion(_serviceVersion)
             };
 
             queueSasBuilder.SetPermissions(

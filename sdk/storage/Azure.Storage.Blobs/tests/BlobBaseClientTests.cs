@@ -208,6 +208,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlobContainerName = client.BlobContainerName,
                 BlobName = client.Name,
+                Version = ToSasVersion(_serviceVersion)
             };
             var sas = sasBuilder.ToSasQueryParameters(userDelegationKey.Value, client.AccountName).ToString();
 
@@ -3368,7 +3369,7 @@ namespace Azure.Storage.Blobs.Test
                 blob.Name,
                 createResponse.Value.VersionId,
                 BlobVersionSasPermissions.Delete,
-                sasVersion: Constants.DefaultSasVersion);
+                sasVersion: ToSasVersion(_serviceVersion));
             BlobBaseClient versionBlob = new BlobBaseClient(
                 new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
 
@@ -3421,7 +3422,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobVersionSasPermissions.Delete,
                 userDelegationKey,
                 oauthService.AccountName,
-                Constants.DefaultSasVersion);
+                ToSasVersion(_serviceVersion));
             BlobBaseClient versionBlob = new BlobBaseClient(
                 new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
 
@@ -3451,7 +3452,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobSasPermissions.Read,
                 userDelegationKey,
                 oauthService.AccountName,
-                sasVersion: Constants.DefaultSasVersion);
+                sasVersion: ToSasVersion(_serviceVersion));
             BlobBaseClient versionBlob = new BlobBaseClient(
                 new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
 
@@ -3477,7 +3478,7 @@ namespace Azure.Storage.Blobs.Test
                 test.Container.Name,
                 blob.Name,
                 blobSasPermissions,
-                sasVersion: Constants.DefaultSasVersion);
+                sasVersion: ToSasVersion(_serviceVersion));
             BlobBaseClient versionBlob = new BlobBaseClient(
                 new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
 
@@ -3509,7 +3510,7 @@ namespace Azure.Storage.Blobs.Test
                 blobSasPermissions,
                 userDelegationKey,
                 oauthService.AccountName,
-                Constants.DefaultSasVersion);
+                ToSasVersion(_serviceVersion));
             BlobBaseClient versionBlob = new BlobBaseClient(
                 new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
 
@@ -3534,7 +3535,7 @@ namespace Azure.Storage.Blobs.Test
             SasQueryParameters sasQueryParameters = GetContainerSas(
                 test.Container.Name,
                 blobContainerSasPermissions,
-                sasVersion: Constants.DefaultSasVersion);
+                sasVersion: ToSasVersion(_serviceVersion));
             BlobBaseClient versionBlob = new BlobBaseClient(
                 new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
 
@@ -3565,7 +3566,7 @@ namespace Azure.Storage.Blobs.Test
                 blobContainerSasPermissions,
                 userDelegationKey,
                 oauthService.AccountName,
-                Constants.DefaultSasVersion);
+                ToSasVersion(_serviceVersion));
             BlobBaseClient versionBlob = new BlobBaseClient(
                 new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri}&{sasQueryParameters}"), GetOptions());
 
@@ -4083,7 +4084,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlobContainerName = containerName,
                 BlobName = blobName,
-                Identifier = signedIdentifierId
+                Identifier = signedIdentifierId,
+                Version = ToSasVersion(_serviceVersion)
             };
             BlobSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
 
@@ -4125,7 +4127,8 @@ namespace Azure.Storage.Blobs.Test
                 ContentDisposition = "\\content disposition?",
                 ContentEncoding = "\\content encoding?",
                 ContentLanguage = "\\content language?",
-                ContentType = "\\content type?"
+                ContentType = "\\content type?",
+                Version = ToSasVersion(_serviceVersion)
             };
             blobSasBuilder.SetPermissions(
                 BlobSasPermissions.All);
@@ -4301,7 +4304,7 @@ namespace Azure.Storage.Blobs.Test
                 permissions: SnapshotSasPermissions.Read,
                 userDelegationKey: userDelegationKey,
                 accountName: TestConfigOAuth.AccountName,
-                sasVersion: ToSasVersion(BlobClientOptions.LatestVersion));
+                sasVersion: ToSasVersion(_serviceVersion));
 
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
             {
@@ -5972,7 +5975,7 @@ namespace Azure.Storage.Blobs.Test
                 test.Container.Name,
                 blob.Name,
                 BlobSasPermissions.Tag,
-                sasVersion: Constants.DefaultSasVersion);
+                sasVersion: ToSasVersion(_serviceVersion));
             BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
@@ -5994,7 +5997,7 @@ namespace Azure.Storage.Blobs.Test
             SasQueryParameters sasQueryParameters = GetBlobSas(
                 test.Container.Name, blob.Name,
                 BlobSasPermissions.Read,
-                sasVersion: Constants.DefaultSasVersion);
+                sasVersion: ToSasVersion(_serviceVersion));
             BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
@@ -6026,7 +6029,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobSasPermissions.Tag,
                 userDelegationKey,
                 oauthService.AccountName,
-                sasVersion: Constants.DefaultSasVersion);
+                sasVersion: ToSasVersion(_serviceVersion));
 
             BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
@@ -6061,7 +6064,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobSasPermissions.Read,
                 userDelegationKey,
                 oauthService.AccountName,
-                sasVersion: Constants.DefaultSasVersion);
+                sasVersion: ToSasVersion(_serviceVersion));
 
             BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
@@ -6082,7 +6085,7 @@ namespace Azure.Storage.Blobs.Test
             SasQueryParameters sasQueryParameters = GetContainerSas(
                 test.Container.Name,
                 BlobContainerSasPermissions.Tag,
-                sasVersion: Constants.DefaultSasVersion);
+                sasVersion: ToSasVersion(_serviceVersion));
             BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
@@ -6104,7 +6107,7 @@ namespace Azure.Storage.Blobs.Test
             SasQueryParameters sasQueryParameters = GetContainerSas(
                 test.Container.Name,
                 BlobContainerSasPermissions.Read,
-                sasVersion: Constants.DefaultSasVersion);
+                sasVersion: ToSasVersion(_serviceVersion));
             BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
             Dictionary<string, string> tags = BuildTags();
@@ -6135,7 +6138,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerSasPermissions.Tag,
                 userDelegationKey,
                 oauthService.AccountName,
-                sasVersion: Constants.DefaultSasVersion);
+                sasVersion: ToSasVersion(_serviceVersion));
 
             BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 
@@ -6169,7 +6172,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobContainerSasPermissions.Read,
                 userDelegationKey,
                 oauthService.AccountName,
-                sasVersion: Constants.DefaultSasVersion);
+                sasVersion: ToSasVersion(_serviceVersion));
 
             BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri}?{sasQueryParameters}"), GetOptions());
 

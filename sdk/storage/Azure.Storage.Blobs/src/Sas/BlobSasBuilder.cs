@@ -532,7 +532,11 @@ namespace Azure.Storage.Sas
                     Resource = Constants.Sas.Resource.BlobVersion;
                 }
             }
-            Version = SasQueryParameters.DefaultSasVersion;
+
+            if (string.IsNullOrEmpty(Version))
+            {
+                Version = SasQueryParameters.DefaultSasVersion;
+            }
         }
 
         /// <summary>

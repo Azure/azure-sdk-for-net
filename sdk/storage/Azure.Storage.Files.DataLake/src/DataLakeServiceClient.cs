@@ -1227,11 +1227,15 @@ namespace Azure.Storage.Files.DataLake
             AccountSasPermissions permissions,
             DateTimeOffset expiresOn,
             AccountSasResourceTypes resourceTypes) =>
-            GenerateAccountSasUri(new AccountSasBuilder(
-                permissions,
-                expiresOn,
-                AccountSasServices.Blobs,
-                resourceTypes));
+            GenerateAccountSasUri(
+                new AccountSasBuilder(
+                    permissions,
+                    expiresOn,
+                    AccountSasServices.Blobs,
+                    resourceTypes)
+                {
+                    Version = StorageVersionExtensions.ToVersionString(ClientConfiguration.Version)
+                });
 
         /// <summary>
         /// The <see cref="GenerateAccountSasUri(AccountSasBuilder)"/> returns a <see cref="Uri"/>

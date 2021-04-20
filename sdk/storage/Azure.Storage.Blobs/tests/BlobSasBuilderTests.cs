@@ -278,7 +278,8 @@ namespace Azure.Storage.Blobs.Test
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
                 Services = AccountSasServices.Blobs,
-                ResourceTypes = AccountSasResourceTypes.All
+                ResourceTypes = AccountSasResourceTypes.All,
+                Version = ToSasVersion(_serviceVersion)
             };
 
             accountSasBuilder.SetPermissions(permissionsString);
@@ -326,7 +327,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
-                BlobContainerName = test.Container.Name
+                BlobContainerName = test.Container.Name,
+                Version = ToSasVersion(_serviceVersion)
             };
 
             blobSasBuilder.SetPermissions(
@@ -386,7 +388,8 @@ namespace Azure.Storage.Blobs.Test
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
                 BlobContainerName = test.Container.Name,
-                BlobName = blob.Name
+                BlobName = blob.Name,
+                Version = ToSasVersion(_serviceVersion)
             };
             blobSasBuilder.SetPermissions(permissions);
 
@@ -418,7 +421,8 @@ namespace Azure.Storage.Blobs.Test
             {
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
-                BlobContainerName = test.Container.Name
+                BlobContainerName = test.Container.Name,
+                Version = ToSasVersion(_serviceVersion)
             };
 
             blobSasBuilder.SetPermissions(permissions);
@@ -483,7 +487,8 @@ namespace Azure.Storage.Blobs.Test
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
                 BlobContainerName = containerName,
-                PreauthorizedAgentObjectId = preauthorizedAgentGuid
+                PreauthorizedAgentObjectId = preauthorizedAgentGuid,
+                Version = ToSasVersion(_serviceVersion)
             };
             BlobSasBuilder.SetPermissions(BlobSasPermissions.All);
 
@@ -520,7 +525,8 @@ namespace Azure.Storage.Blobs.Test
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(1),
                 BlobContainerName = containerName,
-                CorrelationId = Recording.Random.NewGuid().ToString()
+                CorrelationId = Recording.Random.NewGuid().ToString(),
+                Version = ToSasVersion(_serviceVersion)
             };
 
             blobSasBuilder.SetPermissions(BlobSasPermissions.All);

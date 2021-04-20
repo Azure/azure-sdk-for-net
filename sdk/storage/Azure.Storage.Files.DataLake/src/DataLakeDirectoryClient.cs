@@ -2405,7 +2405,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 FileSystemName = FileSystemName,
                 Path = Path,
-                IsDirectory = true
+                IsDirectory = true,
+                Version = StorageVersionExtensions.ToVersionString(ClientConfiguration.Version)
             });
 
         /// <summary>

@@ -21,8 +21,8 @@ namespace Azure.Storage.Queues.Test
 {
     public class QueueClientTests : QueueTestBase
     {
-        public QueueClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public QueueClientTests(bool async, QueueClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -60,7 +60,8 @@ namespace Azure.Storage.Queues.Test
             SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
                 AccountSasServices.All,
                 AccountSasResourceTypes.All,
-                AccountSasPermissions.All);
+                AccountSasPermissions.All,
+                ToSasVersion(_serviceVersion));
 
             StorageConnectionString conn1 = GetConnectionString(
                 credentials: sasCred,
@@ -1038,7 +1039,8 @@ namespace Azure.Storage.Queues.Test
             {
                 QueueName = test.Queue.Name,
                 StartsOn = Recording.UtcNow.AddHours(-1),
-                ExpiresOn = Recording.UtcNow.AddHours(1)
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                Version = ToSasVersion(_serviceVersion)
             };
             sasBuilder.SetPermissions("a");
             SasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
@@ -1084,7 +1086,8 @@ namespace Azure.Storage.Queues.Test
             QueueSasBuilder sasBuilder = new QueueSasBuilder
             {
                 QueueName = test.Queue.Name,
-                Identifier = signedIdentifierId
+                Identifier = signedIdentifierId,
+                Version = ToSasVersion(_serviceVersion)
             };
 
             SasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());

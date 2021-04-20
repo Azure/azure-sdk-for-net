@@ -15,8 +15,15 @@ using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Queues.Tests
 {
+    [ClientTestFixture(
+    StorageVersionExtensions.LatestVersion,
+    StorageVersionExtensions.MaxVersion,
+    RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
+    LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
     public class QueueTestBase : StorageTestBase
     {
+        protected readonly QueueClientOptions.ServiceVersion _serviceVersion;
+
         public string GetNewQueueName() => $"test-queue-{Recording.Random.NewGuid()}";
         public string GetNewMessageId() => $"test-message-{Recording.Random.NewGuid()}";
 
@@ -26,11 +33,10 @@ namespace Azure.Storage.Queues.Tests
         protected string SecondaryStorageTenantSecondaryHost() =>
             new Uri(TestConfigSecondary.QueueServiceSecondaryEndpoint).Host;
 
-        public QueueTestBase(bool async) : this(async, null) { }
-
-        public QueueTestBase(bool async, RecordedTestMode? mode = null)
+        public QueueTestBase(bool async, QueueClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            _serviceVersion = serviceVersion;
         }
 
         public QueueClientOptions GetOptions()
@@ -184,7 +190,8 @@ namespace Azure.Storage.Queues.Tests
                 ResourceTypes = resourceTypes,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
             };
             builder.SetPermissions(
                 AccountSasPermissions.Read |
@@ -205,7 +212,8 @@ namespace Azure.Storage.Queues.Tests
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                Version = ToSasVersion(_serviceVersion)
             };
             builder.SetPermissions(QueueAccountSasPermissions.Read | QueueAccountSasPermissions.Update | QueueAccountSasPermissions.Process | QueueAccountSasPermissions.Add);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
@@ -232,6 +240,21 @@ namespace Azure.Storage.Queues.Tests
             return new StorageConnectionString(
                     credentials,
                     queueStorageUri: queueUri);
+        }
+
+        public static string ToSasVersion(QueueClientOptions.ServiceVersion serviceVersion)
+        {
+            return serviceVersion switch
+            {
+                QueueClientOptions.ServiceVersion.V2019_02_02 => "2019-02-02",
+                QueueClientOptions.ServiceVersion.V2019_07_07 => "2019-07-07",
+                QueueClientOptions.ServiceVersion.V2019_12_12 => "2019-12-12",
+                QueueClientOptions.ServiceVersion.V2020_02_10 => "2020-02-10",
+                QueueClientOptions.ServiceVersion.V2020_04_08 => "2020-04-08",
+                QueueClientOptions.ServiceVersion.V2020_06_12 => "2020-06-12",
+                QueueClientOptions.ServiceVersion.V2020_08_04 => "2020-08-04",
+                _ => throw new ArgumentException("Invalid service version"),
+            };
         }
 
         public class DisposingQueue : IAsyncDisposable

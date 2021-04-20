@@ -235,7 +235,8 @@ namespace Azure.Storage.Test.Shared
         internal SharedAccessSignatureCredentials GetAccountSasCredentials(
             AccountSasServices services = AccountSasServices.All,
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All,
-            AccountSasPermissions permissions = AccountSasPermissions.All)
+            AccountSasPermissions permissions = AccountSasPermissions.All,
+            string version = null)
         {
             var sasBuilder = new AccountSasBuilder
             {
@@ -243,6 +244,7 @@ namespace Azure.Storage.Test.Shared
                 Services = services,
                 ResourceTypes = resourceTypes,
                 Protocol = SasProtocol.Https,
+                Version = version
             };
             sasBuilder.SetPermissions(permissions);
             var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);

@@ -1723,7 +1723,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder()
             {
                 FileSystemName = test.FileSystem.Name,
-                Identifier = signedIdentifiers[0].Id
+                Identifier = signedIdentifiers[0].Id,
+                Version = ToSasVersion(_serviceVersion)
             };
             DataLakeSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
 
@@ -2484,7 +2485,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
             {
-                FileSystemName = fileSystemName
+                FileSystemName = fileSystemName,
+                Version = ToSasVersion(_serviceVersion)
             };
             DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(serviceUri)
             {

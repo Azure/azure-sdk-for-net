@@ -882,7 +882,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                 resourceTypes: resourceTypes);
 
             // Assert
-            AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, AccountSasServices.Blobs, resourceTypes);
+            AccountSasBuilder sasBuilder = new AccountSasBuilder(
+                permissions,
+                expiresOn,
+                AccountSasServices.Blobs,
+                resourceTypes)
+            {
+                Version = ToSasVersion(_serviceVersion)
+            };
             UriBuilder expectedUri = new UriBuilder(blobEndpoint)
             {
                 Query = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential).ToString()
