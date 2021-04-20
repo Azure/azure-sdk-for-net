@@ -80,7 +80,7 @@ namespace Azure.Core.Tests
                 return mockResponse;
             });
 
-            Task<Response> requestTask = SendRequestAsync(mockTransport, _ => { }, s_enabledPolicy);
+            Task<Response> requestTask = SendGetRequest(mockTransport, s_enabledPolicy);
 
             await requestTask;
 
