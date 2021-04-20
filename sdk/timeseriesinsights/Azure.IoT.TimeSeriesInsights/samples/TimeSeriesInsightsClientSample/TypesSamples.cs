@@ -15,10 +15,10 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         /// </summary>
         public async Task RunSamplesAsync(TimeSeriesInsightsClient client)
         {
-            PrintHeader("TIME SERIES INSIGHTS TYPES SAMPLE");
+            // For the purpose of keeping code snippets readable to the user, hardcoded string literals are used in place of assigned variables, eg Ids.
+            // Despite not being a good code practice, this prevents code snippets from being out of context for the user when making API calls that accept Ids as parameters.
 
-            // Get model settings
-            TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
+            PrintHeader("TIME SERIES INSIGHTS TYPES SAMPLE");
 
             #region Snippet:TimeSeriesInsightsSampleCreateType
             // Create an aggregate type
@@ -32,8 +32,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             var timeSeriesTypesProperties = new Dictionary<string, string>
             {
-                { "Type1", Guid.NewGuid().ToString()},
-                { "Type2", Guid.NewGuid().ToString()}
+                { "Type1", "Type1Id"},
+                { "Type2", "Type2Id"}
             };
 
             foreach (KeyValuePair<string, string> property in timeSeriesTypesProperties)
@@ -68,6 +68,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #region Snippet:TimeSeriesInsightsSampleGetTypeById
             // Code snippet below shows getting a default Type using Id
             // The default type Id can be obtained programmatically by using the ModelSettings client.
+
+            TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
             Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await client
                 .Types
                 .GetByIdAsync(new string[] { modelSettings.DefaultTypeId })
@@ -129,10 +131,13 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             try
             {
                 #region Snippet:TimeSeriesInsightsSampleDeleteTypeById
-                // Delete types with list of Ids created above.
+
+                // Delete Time Series types with Ids
+
+                var typesIdsToDelete = new List<string> { "Type1Id", " Type2Id" };
                 Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
                     .Types
-                    .DeleteByIdAsync(timeSeriesTypesProperties.Values)
+                    .DeleteByIdAsync(typesIdsToDelete)
                     .ConfigureAwait(false);
 
                 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
@@ -142,6 +147,10 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                     if (result != null)
                     {
                         Console.WriteLine($"Failed to delete a Time Series Insights type: {result.Message}.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Deleted a Time Series Insights type successfully.");
                     }
                 }
                 #endregion Snippet:TimeSeriesInsightsSampleDeleteTypeById
