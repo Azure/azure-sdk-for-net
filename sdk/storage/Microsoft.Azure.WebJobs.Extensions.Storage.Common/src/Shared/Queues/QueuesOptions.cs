@@ -47,7 +47,17 @@ namespace Microsoft.Azure.WebJobs.Host
         }
 
         /// <summary>
-        /// Gets or sets the number of queue messages to retrieve and process in parallel (per job method).
+        /// Gets or sets the number of queue messages to retrieve from queue (per job method).
+        /// Must be in range within 1 and 32. The default is 16.
+        ///
+        /// <remarks>
+        /// Both the <see cref="NewBatchThreshold"/> and <see cref="BatchSize"/> settings control how many messages are being processed in parallel.
+        /// The job keeps requesting messages in batches of <see cref="BatchSize"/> size until number of messages currently being processed
+        /// is above <see cref="NewBatchThreshold"/>. Then the job requests new batch of messages only if number of currently processed messages
+        /// drops at or below <see cref="NewBatchThreshold"/>.
+        ///
+        /// The maximum number of messages processed in parallel by the job is <see cref="NewBatchThreshold"/> plus <see cref="BatchSize"/>.
+        /// </remarks>
         /// </summary>
         public int BatchSize
         {
@@ -70,7 +80,17 @@ namespace Microsoft.Azure.WebJobs.Host
         }
 
         /// <summary>
-        /// Gets or sets the threshold at which a new batch of messages will be fetched.
+        /// Gets or sets the threshold at which a new batch of messages will be fetched (per job method).
+        /// Must be zero or positive integer. If not set then it defaults to <code>BatchSize/2*processorCount</code>.
+        ///
+        /// <remarks>
+        /// Both the <see cref="NewBatchThreshold"/> and <see cref="BatchSize"/> settings control how many messages are being processed in parallel.
+        /// The job keeps requesting messages in batches of <see cref="BatchSize"/> size until number of messages currently being processed
+        /// is above <see cref="NewBatchThreshold"/>. Then the job requests new batch of messages only if number of currently processed messages
+        /// drops at or below <see cref="NewBatchThreshold"/>.
+        ///
+        /// The maximum number of messages processed in parallel by the job is <see cref="NewBatchThreshold"/> plus <see cref="BatchSize"/>.
+        /// </remarks>
         /// </summary>
         public int NewBatchThreshold
         {
@@ -193,6 +213,19 @@ namespace Microsoft.Azure.WebJobs.Host
             };
 
             return options.ToString(Formatting.Indented);
+        }
+
+        internal QueuesOptions Clone()
+        {
+            QueuesOptions copy = new QueuesOptions();
+            // making copy of private members, i.e. the _newBatchThreshold can be "unset" - copying that via properties would always set it.
+            copy._batchSize = _batchSize;
+            copy._maxDequeueCount = _maxDequeueCount;
+            copy._maxPollingInterval = _maxPollingInterval;
+            copy._messageEncoding = _messageEncoding;
+            copy._newBatchThreshold = _newBatchThreshold;
+            copy._visibilityTimeout = _visibilityTimeout;
+            return copy;
         }
     }
 }

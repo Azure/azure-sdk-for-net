@@ -3,9 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -41,27 +38,27 @@ namespace Azure.Monitory.Query
         {
         }
 
-        public virtual Response<IReadOnlyList<T>> Query<T>(string workspaceId, string query, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<T>> Query<T>(string workspaceId, string query, TimeSpan? timeSpan = null, CancellationToken cancellationToken = default)
         {
-            Response<LogsQueryResult> response = Query(workspaceId, query, cancellationToken);
+            Response<LogsQueryResult> response = Query(workspaceId, query, timeSpan, cancellationToken);
 
             return Response.FromValue(_rowBinder.BindResults<T>(response), response.GetRawResponse());
         }
 
-        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, TimeSpan? timeSpan = null, CancellationToken cancellationToken = default)
         {
-            Response<LogsQueryResult> response = await QueryAsync(workspaceId, query, cancellationToken).ConfigureAwait(false);
+            Response<LogsQueryResult> response = await QueryAsync(workspaceId, query, timeSpan,  cancellationToken).ConfigureAwait(false);
 
             return Response.FromValue(_rowBinder.BindResults<T>(response), response.GetRawResponse());
         }
 
-        public virtual Response<LogsQueryResult> Query(string workspaceId, string query, CancellationToken cancellationToken = default)
+        public virtual Response<LogsQueryResult> Query(string workspaceId, string query, TimeSpan? timeSpan = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return _queryClient.Execute(workspaceId, new QueryBody(query), null, cancellationToken);
+                return _queryClient.Execute(workspaceId, CreateQueryBody(query, timeSpan), null, cancellationToken);
             }
             catch (Exception e)
             {
@@ -70,13 +67,13 @@ namespace Azure.Monitory.Query
             }
         }
 
-        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, TimeSpan? timeSpan = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return await _queryClient.ExecuteAsync(workspaceId, new QueryBody(query), null, cancellationToken).ConfigureAwait(false);
+                return await _queryClient.ExecuteAsync(workspaceId, CreateQueryBody(query, timeSpan), null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -88,6 +85,17 @@ namespace Azure.Monitory.Query
         public virtual LogsBatchQuery CreateBatchQuery()
         {
             return new LogsBatchQuery(_clientDiagnostics, _queryClient, _rowBinder);
+        }
+
+        internal static QueryBody CreateQueryBody(string query, TimeSpan? timeSpan)
+        {
+            var queryBody = new QueryBody(query);
+            if (timeSpan != null)
+            {
+                queryBody.Timespan = TypeFormatters.ToString(timeSpan.Value, "P");
+            }
+
+            return queryBody;
         }
     }
 }

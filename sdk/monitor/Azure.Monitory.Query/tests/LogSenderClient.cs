@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -30,13 +31,24 @@ namespace Azure.Monitory.Query.Tests
 
         public async Task<Response> SendAsync(string tableName, IEnumerable<IDictionary<string, object>> values)
         {
-            var data = JsonSerializer.Serialize(values);
+            byte[] data;
+            using (var stream = new MemoryStream())
+            {
+                using (var writer = new Utf8JsonWriter(stream))
+                {
+                    writer.WriteObjectValue(values);
+                }
+
+                data = stream.ToArray();
+            }
+
             var request = _pipeline.CreateRequest();
             request.Uri.Reset(new Uri($"https://{_workspaceId}.{_ingestEndpointSuffix}/api/logs?api-version=2016-04-01"));
             request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Log-Type", tableName);
-            request.Content = data;
+            request.Headers.SetValue("time-generated-field", "EventTimeGenerated");
+            request.Content = RequestContent.Create(data);
 
             var response = await _pipeline.SendRequestAsync(request, default);
             if (response.Status != 200)

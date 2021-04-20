@@ -48,7 +48,7 @@ namespace Azure.Data.Tables.Tests
                 await tableClient.DeleteAsync().ConfigureAwait(false);
             }
 
-            Assert.That(table.TableName, Is.EqualTo(newTableName));
+            Assert.That(table.Name, Is.EqualTo(newTableName));
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Azure.Data.Tables.Tests
             await CosmosThrottleWrapper(async () => await tableClient.CreateAsync().ConfigureAwait(false));
 
             // Check that the table was created.
-            var tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{validTableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            var tableResponses = (await service.GetTablesAsync(filter:TableOdataFilter.Create($"TableName eq {validTableName}")).ToEnumerableAsync().ConfigureAwait(false)).ToList();
             Assert.That(() => tableResponses, Is.Not.Empty);
 
             // Delete the table using the TableClient method.
@@ -97,9 +97,55 @@ namespace Azure.Data.Tables.Tests
             string token = sas.Sign(credential);
 
             // Create the TableServiceClient using the SAS URI.
+            TableClient sasTableclient = InstrumentClient(new TableClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
 
-            var sasAuthedService = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
-            var sasTableclient = sasAuthedService.GetTableClient(tableName);
+            // Validate that we are able to query the table from the service.
+
+            Assert.That(async () => await sasTableclient.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false), Throws.Nothing);
+
+            // Validate that we are not able to upsert an entity to the table.
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
+            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
+            if (_endpointType == TableEndpointType.Storage)
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+            }
+            else
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
+            }
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableClient.
+        /// </summary>
+        [RecordedTest]
+        public void ValidateSasCredentialsDuplicateTokenInUriAndCred()
+        {
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+
+            var credential = new TableSharedKeyCredential(AccountName, AccountKey);
+
+            // Build a shared access signature with only Read permissions.
+
+            TableSasBuilder sas = client.GetSasBuilder(TableSasPermissions.Read, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            if (_endpointType == TableEndpointType.CosmosTable)
+            {
+                sas.Version = "2017-07-29";
+            }
+
+            string token = sas.Sign(credential);
+
+            // Build SAS Uri.
+            UriBuilder sasUri = new UriBuilder(ServiceUri)
+            {
+                Query = token
+            };
+
+            // Create the TableServiceClient using the SAS URI.
+            // Intentionally add the SAS to the endpoint arg as well as the credential to validate de-duping
+            TableClient sasTableclient = InstrumentClient(new TableClient(sasUri.Uri, new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are able to query the table from the service.
 
@@ -251,12 +297,7 @@ namespace Azure.Data.Tables.Tests
             const string originalValue = "This is the original";
             const string updatedValue = "This is new and improved!";
 
-            var entity = new TableEntity
-                {
-                    {"PartitionKey", PartitionKeyValue},
-                    {"RowKey", rowKeyValue},
-                    {propertyName, originalValue}
-                };
+            var entity = new TableEntity { { "PartitionKey", PartitionKeyValue }, { "RowKey", rowKeyValue }, { propertyName, originalValue } };
 
             // Create the new entity.
 
@@ -289,12 +330,7 @@ namespace Azure.Data.Tables.Tests
             const string originalValue = "This is the original";
             const string updatedValue = "This is new and improved!";
             const string updatedValue2 = "This changed due to a matching Etag";
-            var entity = new TableEntity
-                {
-                    {"PartitionKey", PartitionKeyValue},
-                    {"RowKey", rowKeyValue},
-                    {propertyName, originalValue}
-                };
+            var entity = new TableEntity { { "PartitionKey", PartitionKeyValue }, { "RowKey", rowKeyValue }, { propertyName, originalValue } };
 
             // Create the new entity.
 
@@ -346,12 +382,7 @@ namespace Azure.Data.Tables.Tests
             const string originalValue = "This is the original";
             const string updatedValue = "This is new and improved!";
             const string updatedValue2 = "This changed due to a matching Etag";
-            var entity = new TableEntity
-                {
-                    {"PartitionKey", PartitionKeyValue},
-                    {"RowKey", rowKeyValue},
-                    {propertyName, originalValue}
-                };
+            var entity = new TableEntity { { "PartitionKey", PartitionKeyValue }, { "RowKey", rowKeyValue }, { propertyName, originalValue } };
 
             // Create the new entity.
 
@@ -404,18 +435,8 @@ namespace Azure.Data.Tables.Tests
             const string originalValue = "This is the original";
             const string mergeValue = "This was merged!";
             const string mergeUpdatedValue = "merged value was updated!";
-            var entity = new TableEntity
-                {
-                    {"PartitionKey", PartitionKeyValue},
-                    {"RowKey", rowKeyValue},
-                    {propertyName, originalValue}
-                };
-            var partialEntity = new TableEntity
-                {
-                    {"PartitionKey", PartitionKeyValue},
-                    {"RowKey", rowKeyValue},
-                    {mergepropertyName, mergeValue}
-                };
+            var entity = new TableEntity { { "PartitionKey", PartitionKeyValue }, { "RowKey", rowKeyValue }, { propertyName, originalValue } };
+            var partialEntity = new TableEntity { { "PartitionKey", PartitionKeyValue }, { "RowKey", rowKeyValue }, { mergepropertyName, mergeValue } };
 
             // Create the new entity.
 
@@ -467,12 +488,7 @@ namespace Azure.Data.Tables.Tests
             const string rowKeyValue = "1";
             const string propertyName = "SomeStringProperty";
             const string originalValue = "This is the original";
-            var entity = new TableEntity
-                {
-                    {"PartitionKey", PartitionKeyValue},
-                    {"RowKey", rowKeyValue},
-                    {propertyName, originalValue}
-                };
+            var entity = new TableEntity { { "PartitionKey", PartitionKeyValue }, { "RowKey", rowKeyValue }, { propertyName, originalValue } };
 
             // Create the new entity.
 
@@ -548,6 +564,7 @@ namespace Azure.Data.Tables.Tests
             {
                 Assert.That(entityResults.First()[DoubleTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
             }
+
             Assert.That(entityResults.First()[DoubleDecimalTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
             Assert.That(entityResults.First()[IntTypePropertyName], Is.TypeOf<int>(), "The entity property should be of type int");
         }
@@ -579,6 +596,7 @@ namespace Azure.Data.Tables.Tests
             {
                 Assert.That(entityResults.First()[DoubleTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
             }
+
             Assert.That(entityResults.First()[DoubleDecimalTypePropertyName], Is.TypeOf<double>(), "The entity property should be of type double");
             Assert.That(entityResults.First()[IntTypePropertyName], Is.TypeOf<int>(), "The entity property should be of type int");
         }
@@ -701,12 +719,7 @@ namespace Azure.Data.Tables.Tests
             const string originalValue = "This is the original";
             const string updatedValue = "This is new and improved!";
 
-            var entity = new SimpleTestEntity
-            {
-                PartitionKey = PartitionKeyValue,
-                RowKey = rowKeyValue,
-                StringTypeProperty = originalValue,
-            };
+            var entity = new SimpleTestEntity { PartitionKey = PartitionKeyValue, RowKey = rowKeyValue, StringTypeProperty = originalValue, };
 
             // Create the new entity.
 
@@ -739,12 +752,7 @@ namespace Azure.Data.Tables.Tests
             const string originalValue = "This is the original";
             const string updatedValue = "This is new and improved!";
             const string updatedValue2 = "This changed due to a matching Etag";
-            var entity = new SimpleTestEntity
-            {
-                PartitionKey = PartitionKeyValue,
-                RowKey = rowKeyValue,
-                StringTypeProperty = originalValue,
-            };
+            var entity = new SimpleTestEntity { PartitionKey = PartitionKeyValue, RowKey = rowKeyValue, StringTypeProperty = originalValue, };
 
             // Create the new entity.
 
@@ -796,12 +804,7 @@ namespace Azure.Data.Tables.Tests
             const string originalValue = "This is the original";
             const string updatedValue = "This is new and improved!";
             const string updatedValue2 = "This changed due to a matching Etag";
-            var entity = new SimpleTestEntity
-            {
-                PartitionKey = PartitionKeyValue,
-                RowKey = rowKeyValue,
-                StringTypeProperty = originalValue,
-            };
+            var entity = new SimpleTestEntity { PartitionKey = PartitionKeyValue, RowKey = rowKeyValue, StringTypeProperty = originalValue, };
 
             // Create the new entity.
 
@@ -850,12 +853,7 @@ namespace Azure.Data.Tables.Tests
 
             const string rowKeyValue = "1";
             const string originalValue = "This is the original";
-            var entity = new SimpleTestEntity
-            {
-                PartitionKey = PartitionKeyValue,
-                RowKey = rowKeyValue,
-                StringTypeProperty = originalValue,
-            };
+            var entity = new SimpleTestEntity { PartitionKey = PartitionKeyValue, RowKey = rowKeyValue, StringTypeProperty = originalValue, };
 
             // Create the new entity.
 
@@ -945,11 +943,7 @@ namespace Azure.Data.Tables.Tests
         public async Task CreatedEnumEntitiesAreRoundtrippedProperly()
         {
             List<EnumEntity> entityResults;
-            var entitiesToCreate = new[]
-            {
-                new EnumEntity{ PartitionKey = PartitionKeyValue, RowKey = "01", MyFoo = Foo.Two, MyNullableFoo = NullableFoo.Two},
-                new EnumEntity{ PartitionKey = PartitionKeyValue, RowKey = "02", MyFoo = Foo.Two, MyNullableFoo = null},
-            };
+            var entitiesToCreate = new[] { new EnumEntity { PartitionKey = PartitionKeyValue, RowKey = "01", MyFoo = Foo.Two, MyNullableFoo = NullableFoo.Two }, new EnumEntity { PartitionKey = PartitionKeyValue, RowKey = "02", MyFoo = Foo.Two, MyNullableFoo = null }, };
 
             // Create the new entities.
 
@@ -979,10 +973,7 @@ namespace Azure.Data.Tables.Tests
         {
             // Create some policies.
 
-            var policyToCreate = new List<SignedIdentifier>
-            {
-                new SignedIdentifier("MyPolicy", new TableAccessPolicy(new DateTime(2020, 1,1,1,1,0,DateTimeKind.Utc), new DateTime(2021, 1,1,1,1,0,DateTimeKind.Utc), "r"))
-            };
+            var policyToCreate = new List<SignedIdentifier> { new SignedIdentifier("MyPolicy", new TableAccessPolicy(new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc), new DateTime(2021, 1, 1, 1, 1, 0, DateTimeKind.Utc), "r")) };
 
             await client.SetAccessPolicyAsync(tableAcl: policyToCreate);
 

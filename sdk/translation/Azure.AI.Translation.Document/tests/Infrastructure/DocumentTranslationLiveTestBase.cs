@@ -18,7 +18,7 @@ namespace Azure.AI.Translation.Document.Tests
         protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 30);
 
         public DocumentTranslationLiveTestBase(bool isAsync, RecordedTestMode? mode = null)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(isAsync, mode)
         {
             Sanitizer = new DocumentTranslationRecordedTestSanitizer();
         }

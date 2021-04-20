@@ -6,34 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "98",
+        "Content-Length": "102",
         "Content-Type": "application/json",
-        "traceparent": "00-288406bb4104814c9e00c6c7331dab85-9ded1f042a1af043-00",
+        "traceparent": "00-15ce2c73e450314283b5cf73fb5beb3e-2b9bfdbb1f9fb84b-00",
         "User-Agent": [
-          "azsdk-net-Monitory.Query/1.0.0-alpha.20210419.1",
+          "azsdk-net-Monitory.Query/1.0.0-alpha.20210420.1",
           "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "c52d0e51e5c8e5c8889a2b4b5aaaf98c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA1_CL |project-rename Name = StringColumn_s, Age = IntColumn_d |order by Name asc"
+        "query": "TableA1_102_CL |project-rename Name = StringColumn_s, Age = IntColumn_d |order by Name asc"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "70",
+        "Age": "4",
         "Connection": "keep-alive",
-        "Content-Length": "911",
+        "Content-Length": "897",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 19 Apr 2021 23:52:00 GMT",
+        "Date": "Tue, 20 Apr 2021 22:12:17 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-6ddc976cfd-w7htk",
+        "Via": "1.1 draft-oms-6ddc976cfd-4kgf6",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -100,14 +100,14 @@
                 "RestAPI",
                 "",
                 "",
-                "2021-04-09T20:34:02.075Z",
+                "2021-04-12T00:00:00Z",
                 "",
                 "",
                 1,
                 "a",
                 false,
                 0,
-                "TableA1_CL",
+                "TableA1_102_CL",
                 ""
               ],
               [
@@ -115,14 +115,14 @@
                 "RestAPI",
                 "",
                 "",
-                "2021-04-09T20:34:02.075Z",
+                "2021-04-14T00:00:00Z",
                 "",
                 "",
                 3,
                 "b",
                 true,
-                1.20000005,
-                "TableA1_CL",
+                1.2,
+                "TableA1_102_CL",
                 ""
               ],
               [
@@ -130,14 +130,14 @@
                 "RestAPI",
                 "",
                 "",
-                "2021-04-09T20:34:02.075Z",
+                "2021-04-17T00:00:00Z",
                 "",
                 "",
                 1,
                 "c",
                 false,
-                1.10000002,
-                "TableA1_CL",
+                1.1,
+                "TableA1_102_CL",
                 ""
               ]
             ]
@@ -147,6 +147,7 @@
     }
   ],
   "Variables": {
+    "DateTimeOffsetNow": "2021-04-20T15:12:17.0851794-07:00",
     "RandomSeed": "2106646577",
     "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254"
   }

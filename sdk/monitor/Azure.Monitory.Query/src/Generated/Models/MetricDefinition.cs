@@ -18,32 +18,32 @@ namespace Azure.Monitory.Query.Models
         {
             SupportedAggregationTypes = new ChangeTrackingList<MetricAggregationType>();
             MetricAvailabilities = new ChangeTrackingList<MetricAvailability>();
-            Dimensions = new ChangeTrackingList<LocalizableString>();
+            LocalizedDimensions = new ChangeTrackingList<LocalizableString>();
         }
 
         /// <summary> Initializes a new instance of MetricDefinition. </summary>
         /// <param name="isDimensionRequired"> Flag to indicate whether the dimension is required. </param>
         /// <param name="resourceId"> the resource identifier of the resource that emitted the metric. </param>
         /// <param name="namespace"> the namespace the metric belongs to. </param>
-        /// <param name="name"> the name and the display name of the metric, i.e. it is a localizable string. </param>
+        /// <param name="localizedName"> the name and the display name of the metric, i.e. it is a localizable string. </param>
         /// <param name="unit"> the unit of the metric. </param>
         /// <param name="primaryAggregationType"> the primary aggregation type value defining how to use the values for display. </param>
         /// <param name="supportedAggregationTypes"> the collection of what aggregation types are supported. </param>
         /// <param name="metricAvailabilities"> the collection of what aggregation intervals are available to be queried. </param>
         /// <param name="id"> the resource identifier of the metric definition. </param>
-        /// <param name="dimensions"> the name and the display name of the dimension, i.e. it is a localizable string. </param>
-        internal MetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString name, MetricUnit? unit, MetricAggregationType? primaryAggregationType, IReadOnlyList<MetricAggregationType> supportedAggregationTypes, IReadOnlyList<MetricAvailability> metricAvailabilities, string id, IReadOnlyList<LocalizableString> dimensions)
+        /// <param name="localizedDimensions"> the name and the display name of the dimension, i.e. it is a localizable string. </param>
+        internal MetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString localizedName, MetricUnit? unit, MetricAggregationType? primaryAggregationType, IReadOnlyList<MetricAggregationType> supportedAggregationTypes, IReadOnlyList<MetricAvailability> metricAvailabilities, string id, IReadOnlyList<LocalizableString> localizedDimensions)
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
             Namespace = @namespace;
-            Name = name;
+            LocalizedName = localizedName;
             Unit = unit;
             PrimaryAggregationType = primaryAggregationType;
             SupportedAggregationTypes = supportedAggregationTypes;
             MetricAvailabilities = metricAvailabilities;
             Id = id;
-            Dimensions = dimensions;
+            LocalizedDimensions = localizedDimensions;
         }
 
         /// <summary> Flag to indicate whether the dimension is required. </summary>
@@ -52,8 +52,6 @@ namespace Azure.Monitory.Query.Models
         public string ResourceId { get; }
         /// <summary> the namespace the metric belongs to. </summary>
         public string Namespace { get; }
-        /// <summary> the name and the display name of the metric, i.e. it is a localizable string. </summary>
-        public LocalizableString Name { get; }
         /// <summary> the unit of the metric. </summary>
         public MetricUnit? Unit { get; }
         /// <summary> the primary aggregation type value defining how to use the values for display. </summary>
@@ -64,7 +62,5 @@ namespace Azure.Monitory.Query.Models
         public IReadOnlyList<MetricAvailability> MetricAvailabilities { get; }
         /// <summary> the resource identifier of the metric definition. </summary>
         public string Id { get; }
-        /// <summary> the name and the display name of the dimension, i.e. it is a localizable string. </summary>
-        public IReadOnlyList<LocalizableString> Dimensions { get; }
     }
 }

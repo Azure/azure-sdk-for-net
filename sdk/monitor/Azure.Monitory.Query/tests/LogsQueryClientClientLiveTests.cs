@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -22,7 +23,7 @@ namespace Azure.Monitory.Query.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _logsTestData = new LogsTestData(TestEnvironment);
+            _logsTestData = new LogsTestData(this);
             await _logsTestData.InitializeAsync();
         }
 
@@ -40,7 +41,7 @@ namespace Azure.Monitory.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync(TestEnvironment.WorkspaceId,
-                $"{LogsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} |" +
                 $"project {LogsTestData.StringColumnName}, {LogsTestData.IntColumnName}, {LogsTestData.BoolColumnName}, {LogsTestData.FloatColumnName} |" +
                 $"order by {LogsTestData.StringColumnName} asc");
 
@@ -66,7 +67,7 @@ namespace Azure.Monitory.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId,
-                $"{LogsTestData.TableAName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc");
+                $"{_logsTestData.TableAName} | project {LogsTestData.StringColumnName} | order by {LogsTestData.StringColumnName} asc");
 
             CollectionAssert.AreEqual(new[] {"a", "b", "c"}, results.Value);
         }
@@ -76,9 +77,9 @@ namespace Azure.Monitory.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryAsync<int>(TestEnvironment.WorkspaceId, $"{LogsTestData.TableAName} | count");
+            var results = await client.QueryAsync<int>(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | count");
 
-            Assert.AreEqual(LogsTestData.TableA.Count, results.Value[0]);
+            Assert.AreEqual(_logsTestData.TableA.Count, results.Value[0]);
         }
 
         [RecordedTest]
@@ -87,7 +88,7 @@ namespace Azure.Monitory.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<TestModel>(TestEnvironment.WorkspaceId,
-                $"{LogsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"order by Name asc");
 
@@ -105,7 +106,7 @@ namespace Azure.Monitory.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<Dictionary<string, object>>(TestEnvironment.WorkspaceId,
-                $"{LogsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"project Name, Age |" +
                 $"order by Name asc");
@@ -124,7 +125,7 @@ namespace Azure.Monitory.Query.Tests
             var client = CreateClient();
 
             var results = await client.QueryAsync<IDictionary<string, object>>(TestEnvironment.WorkspaceId,
-                $"{LogsTestData.TableAName} |" +
+                $"{_logsTestData.TableAName} |" +
                 $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
                 $"project Name, Age |" +
                 $"order by Name asc");
@@ -342,6 +343,52 @@ namespace Azure.Monitory.Query.Tests
             var results = await client.QueryAsync<DateTimeOffset?>(TestEnvironment.WorkspaceId, $"datatable (DateTime: datetime) [ datetime(null) ]");
 
             Assert.IsNull(results.Value[0]);
+        }
+
+
+        [RecordedTest]
+        public async Task CanQueryWithTimespan()
+        {
+            // Get the time of the second event and add a bit of buffer to it (events are 2d apart)
+            var minOffset = (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
+            var timespan = Recording.UtcNow - minOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(1));
+
+            var client = CreateClient();
+            var results = await client.QueryAsync<string>(
+                TestEnvironment.WorkspaceId,
+                $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
+
+            // We should get the second and the third events
+            Assert.AreEqual(2, results.Value.Count);
+            // TODO: Switch to querying DateTimeOffset
+            Assert.True(results.Value.All(r => DateTimeOffset.Parse(r, null, DateTimeStyles.AssumeUniversal) >= minOffset));
+        }
+
+        [RecordedTest]
+        public async Task CanQueryBatchWithTimespan()
+        {
+            // Get the time of the second event and add a bit of buffer to it (events are 2d apart)
+            var minOffset = (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
+            var timespan = Recording.UtcNow - minOffset;
+            timespan = timespan.Add(TimeSpan.FromDays(1));
+
+            var client = CreateClient();
+            LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
+            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}");
+            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}", timespan);
+            Response<LogsBatchQueryResult> response = await batch.SubmitAsync();
+
+            var result1 = response.Value.GetResult<string>(id1);
+            var result2 = response.Value.GetResult<string>(id2);
+
+            // All rows
+            Assert.AreEqual(3, result1.Count);
+            // Filtered by the timestamp
+            Assert.AreEqual(2, result2.Count);
+            // TODO: Switch to querying DateTimeOffset
+            Assert.True(result2.All(r => DateTimeOffset.Parse(r, null, DateTimeStyles.AssumeUniversal) >= minOffset));
         }
 
         private record TestModel

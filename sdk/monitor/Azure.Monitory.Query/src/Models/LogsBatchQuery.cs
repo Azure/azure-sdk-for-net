@@ -30,14 +30,14 @@ namespace Azure.Monitory.Query
         {
         }
 
-        public virtual string AddQuery(string workspaceId, string query)
+        public virtual string AddQuery(string workspaceId, string query, TimeSpan? timeSpan = null)
         {
             var id = _counter.ToString("G", CultureInfo.InvariantCulture);
             _counter++;
             _batch.Requests.Add(new LogQueryRequest()
             {
                 Id = id,
-                Body = new QueryBody(query),
+                Body = LogsClient.CreateQueryBody(query, timeSpan),
                 Workspace = workspaceId
             });
             return id;
