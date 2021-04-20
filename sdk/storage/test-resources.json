@@ -384,10 +384,6 @@
       "type": "string",
       "value": "[variables('primaryAccountName')]"
     },
-    "PRIMARY_STORAGE_ACCOUNT_KEY": {
-      "type": "string",
-      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).keys[0].value]"
-    },
     "PRIMARY_ENCRYPTION_SCOPE": {
       "type": "string",
       "value": "[variables('primaryEncryptionScopeName')]"
