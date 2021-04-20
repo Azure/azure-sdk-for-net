@@ -13,8 +13,8 @@ using Azure.Test.Perf;
 namespace Azure.Messaging.EventHubs.Perf
 {
     /// <summary>
-    ///   The performance test scenario focused on publishing sets of events
-    ///   without a batch.
+    ///   The performance test scenario focused on reading events from an
+    ///   Event Hub partition.
     /// </summary>
     ///
     /// <seealso cref="EventHubsPerfTest" />
@@ -28,13 +28,15 @@ namespace Azure.Messaging.EventHubs.Perf
         protected static EventHubScope Scope { get; private set; }
 
         /// <summary>
-        ///   The set of consumer groups available for readers to reserve an instance of.
+        ///   The set of consumer groups available for readers to reserve an instance of; shared across
+        ///   all concurrent instances of the scenario.
         /// </summary>
         ///
         protected static ConcurrentQueue<string> ConsumerGroups { get; private set;}
 
         /// <summary>
-        ///   The identifier of the Event Hub partition from which events should be read.
+        ///   The identifier of the Event Hub partition from which events should be read; shared across
+        ///   all concurrent instances of the scenario.
         /// </summary>
         ///
         protected static string PartitionId { get; private set; }

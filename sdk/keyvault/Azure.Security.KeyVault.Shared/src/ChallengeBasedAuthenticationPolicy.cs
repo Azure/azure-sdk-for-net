@@ -19,8 +19,8 @@ namespace Azure.Security.KeyVault
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential) : base(credential, Array.Empty<string>())
         { }
 
-        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthenticateRequestOnChallengeAsync(HttpMessage, bool)" />
-        protected override async Task AuthenticateRequestAsync(HttpMessage message, bool async)
+        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequestOnChallengeAsync(HttpMessage, bool)" />
+        protected override async Task AuthorizeRequestAsync(HttpMessage message, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault
             }
         }
 
-        protected override async ValueTask<bool> AuthenticateRequestOnChallengeAsync(HttpMessage message, bool async)
+        protected override async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message, bool async)
         {
             if (message.Request.Content == null && message.TryGetProperty(KeyVaultStashedContentKey, out var content))
             {

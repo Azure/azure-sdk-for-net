@@ -21,8 +21,8 @@ namespace Azure.Storage.Blobs
         /// <summary> Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
         /// <summary> Identifies the sku name of the account. </summary>
-        public SkuName? SkuName => _response.Headers.TryGetValue("x-ms-sku-name", out string value) ? value.ToSkuName() : (SkuName?)null;
+        public SkuName? SkuName => _response.Headers.TryGetValue("x-ms-sku-name", out string value) ? value.ToSkuName() : null;
         /// <summary> Identifies the account kind. </summary>
-        public AccountKind? AccountKind => _response.Headers.TryGetValue("x-ms-account-kind", out string value) ? value.ToAccountKind() : (AccountKind?)null;
+        public AccountKind? AccountKind => _response.Headers.TryGetValue("x-ms-account-kind", out string value) ? value.ToAccountKind() : null;
     }
 }

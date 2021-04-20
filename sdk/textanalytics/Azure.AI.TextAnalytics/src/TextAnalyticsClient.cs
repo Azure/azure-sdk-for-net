@@ -62,7 +62,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(options, nameof(options));
 
             _baseUri = endpoint;
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
             _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, DefaultCognitiveScope));
@@ -101,7 +101,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(options, nameof(options));
 
             _baseUri = endpoint;
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
             _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));

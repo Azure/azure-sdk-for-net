@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.Data.Tables.Tests
 {
@@ -59,6 +58,7 @@ namespace Azure.Data.Tables.Tests
             {"GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints."},
             {"ValidateSasCredentialsWithRowKeyAndPartitionKeyRanges", "Shared access signature with PartitionKey or RowKey are not supported"},
             {"ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported"},
+            {"ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri", "SAS for account operations not supported"},
             {"ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported"},
         };
 

@@ -26,6 +26,6 @@ namespace Azure.Storage.Blobs
         /// <summary> String identifier for this copy operation. Use with Get Blob Properties to check the status of this copy operation, or pass to Abort Copy Blob to abort a pending copy. </summary>
         public string CopyId => _response.Headers.TryGetValue("x-ms-copy-id", out string value) ? value : null;
         /// <summary> State of the copy operation identified by x-ms-copy-id. </summary>
-        public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatus() : (CopyStatus?)null;
+        public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatus() : null;
     }
 }

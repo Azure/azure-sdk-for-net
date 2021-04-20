@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Data.Tables;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests

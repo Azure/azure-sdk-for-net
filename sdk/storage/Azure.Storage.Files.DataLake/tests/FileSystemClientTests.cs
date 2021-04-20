@@ -2086,12 +2086,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Assert.AreEqual(2, paths.Count);
 
-            Assert.AreEqual(deletedDirectory.Name, paths[0].Name);
+            Assert.AreEqual(deletedDirectory.Name, paths[0].Path);
             Assert.IsNotNull(paths[0].DeletedOn);
             Assert.IsNotNull(paths[0].DeletionId);
             Assert.IsNotNull(paths[0].RemainingRetentionDays);
 
-            Assert.AreEqual(deletedFile.Name, paths[1].Name);
+            Assert.AreEqual(deletedFile.Name, paths[1].Path);
             Assert.IsNotNull(paths[1].DeletedOn);
             Assert.IsNotNull(paths[1].DeletionId);
             Assert.IsNotNull(paths[1].RemainingRetentionDays);
@@ -2118,12 +2118,12 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             AsyncPageable<PathDeletedItem> response = test.FileSystem.GetDeletedPathsAsync(
-                path: directoryName);
+                pathPrefix: directoryName);
             IList<PathDeletedItem> paths = await response.ToListAsync();
 
             // Assert
             Assert.AreEqual(1, paths.Count);
-            Assert.AreEqual($"{directoryName}/{fileName}", paths[0].Name);
+            Assert.AreEqual($"{directoryName}/{fileName}", paths[0].Path);
         }
 
         [Test]
@@ -2163,6 +2163,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 deletionId: deletionId);
 
             // Assert
+            Assert.AreEqual(typeof(DataLakeDirectoryClient), restoredPathClient.GetType());
             await restoredPathClient.GetPropertiesAsync();
         }
 
