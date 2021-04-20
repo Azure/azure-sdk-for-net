@@ -157,7 +157,7 @@ namespace Azure.Template.Tests
         public async Task CanQueryWithTimespan()
         {
             // Get the time of the second event and add a bit of buffer to it (events are 2d apart)
-            var timespan = DateTimeOffset.Now - (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
+            var timespan = Recording.Now - (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
             timespan = timespan.Add(TimeSpan.FromDays(1));
 
             var client = CreateClient();
@@ -171,7 +171,7 @@ namespace Azure.Template.Tests
         public async Task CanQueryBatchWithTimespan()
         {
             // Get the time of the second event and add a bit of buffer to it (events are 2d apart)
-            var timespan = DateTimeOffset.Now - (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
+            var timespan = Recording.Now - (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
             timespan = timespan.Add(TimeSpan.FromDays(1));
 
             var client = CreateClient();
