@@ -26,6 +26,13 @@ $unencodedAuthToken = "nobody:$AccessToken"
 $unencodedAuthTokenBytes = [System.Text.Encoding]::UTF8.GetBytes($unencodedAuthToken)
 $encodedAuthToken = [System.Convert]::ToBase64String($unencodedAuthTokenBytes)
 
+# We are doing this here so that there is zero chance that this token is emitted in Azure Pipelines
+# build logs. Azure Pipelines will see this text and register the secret as a value it should *** out
+# before being transmitted to the server (and shown in logs). It means if the value is accidentally
+# leaked anywhere else that it won't be visible. The downside is that when the script is executed
+# on a local development box, it will be visible.
+Write-Host "##vso[task.setvariable variable=_throwawayencodedaccesstoken;issecret=true;]$($encodedAuthToken)"
+
 . (Join-Path $PSScriptRoot common.ps1)
 
 LogDebug "Checking for existing leases on run: $RunId"
