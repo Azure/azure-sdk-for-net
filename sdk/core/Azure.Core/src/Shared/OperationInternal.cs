@@ -10,11 +10,7 @@ namespace Azure.Core
 {
     internal class OperationInternal<TResult>
     {
-        private readonly string _operationTypeName;
-
         private readonly TimeSpan _defaultPollingInterval;
-
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         private readonly IOperation<TResult> _operation;
 
@@ -32,8 +28,8 @@ namespace Azure.Core
             ClientDiagnostics clientDiagnostics,
             TimeSpan? defaultPollingInterval)
         {
-            _operationTypeName = operationTypeName;
-            _clientDiagnostics = clientDiagnostics;
+            OperationTypeName = operationTypeName;
+            ClientDiagnostics = clientDiagnostics;
             _defaultPollingInterval = defaultPollingInterval ?? TimeSpan.FromSeconds(1);
         }
 
@@ -67,6 +63,10 @@ namespace Azure.Core
 
         public Response RawResponse { get; set; }
 
+        protected string OperationTypeName { get; }
+
+        protected ClientDiagnostics ClientDiagnostics { get; }
+
         protected RequestFailedException OperationFailedException { get; set; }
 
         public async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken) =>
@@ -93,40 +93,37 @@ namespace Azure.Core
             }
         }
 
-        protected virtual async Task<Response> UpdateResponseAsync(bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
-            Response response = async
-                ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
-                : _operation.GetResponse(cancellationToken);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{OperationTypeName}.UpdateStatus");
 
-            RawResponse = response;
-
-            var status = _operation.UpdateState(response);
-
-            if (status == CompletionStatus.Succeeded)
-            {
-                Value = _operation.ParseResponse(response);
-                HasCompleted = true;
-            }
-            else if (status == CompletionStatus.Failed)
-            {
-                OperationFailedException = _operation.GetOperationFailedException(response);
-                HasCompleted = true;
-
-                throw OperationFailedException;
-            }
-
-            return response;
-        }
-
-        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{_operationTypeName}.UpdateStatus");
+            _operation.AddAttributes(scope);
             scope.Start();
 
             try
             {
-                return await UpdateResponseAsync(async, cancellationToken).ConfigureAwait(false);
+                Response response = async
+                    ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
+                    : _operation.GetResponse(cancellationToken);
+
+                RawResponse = response;
+
+                var status = _operation.UpdateState(response);
+
+                if (status == CompletionStatus.Succeeded)
+                {
+                    Value = _operation.ParseResponse(response);
+                    HasCompleted = true;
+                }
+                else if (status == CompletionStatus.Failed)
+                {
+                    OperationFailedException = _operation.GetOperationFailedException(response);
+                    HasCompleted = true;
+
+                    throw OperationFailedException;
+                }
+
+                return response;
             }
             catch (RequestFailedException e)
             {
@@ -156,58 +153,81 @@ namespace Azure.Core
             _operation = operation;
         }
 
-        protected override async Task<Response> UpdateResponseAsync(bool async, CancellationToken cancellationToken)
+        protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
-            Response<TResponseType> response = async
-                ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
-                : _operation.GetResponse(cancellationToken);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{OperationTypeName}.UpdateStatus");
 
-            Response rawResponse = response.GetRawResponse();
-            RawResponse = rawResponse;
+            _operation.AddAttributes(scope);
+            scope.Start();
 
-            var status = _operation.UpdateState(response);
-
-            if (status == CompletionStatus.Succeeded)
+            try
             {
-                Value = _operation.ParseResponse(response);
-                HasCompleted = true;
+                Response<TResponseType> response = async
+                    ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
+                    : _operation.GetResponse(cancellationToken);
+
+                Response rawResponse = response.GetRawResponse();
+                RawResponse = rawResponse;
+
+                var status = _operation.UpdateState(response);
+
+                if (status == CompletionStatus.Succeeded)
+                {
+                    Value = _operation.ParseResponse(response);
+                    HasCompleted = true;
+                }
+                else if (status == CompletionStatus.Failed)
+                {
+                    OperationFailedException = _operation.GetOperationFailedException(response);
+                    HasCompleted = true;
+
+                    throw OperationFailedException;
+                }
+
+                return rawResponse;
             }
-            else if (status == CompletionStatus.Failed)
+            catch (RequestFailedException e)
             {
-                OperationFailedException = _operation.GetOperationFailedException(response);
-                HasCompleted = true;
-
-                throw OperationFailedException;
+                scope.Failed(e);
+                throw;
             }
-
-            return rawResponse;
+            catch (Exception e)
+            {
+                var requestFailedException = new RequestFailedException("Unexpected failure.", e);
+                scope.Failed(requestFailedException);
+                throw requestFailedException;
+            }
         }
     }
 
     internal interface IOperation<TResult>
     {
-        internal Task<Response> GetResponseAsync(CancellationToken cancellationToken);
+        Task<Response> GetResponseAsync(CancellationToken cancellationToken);
 
-        internal Response GetResponse(CancellationToken cancellationToken);
+        Response GetResponse(CancellationToken cancellationToken);
 
-        internal CompletionStatus UpdateState(Response response);
+        CompletionStatus UpdateState(Response response);
 
-        internal TResult ParseResponse(Response response);
+        TResult ParseResponse(Response response);
 
-        internal RequestFailedException GetOperationFailedException(Response response);
+        RequestFailedException GetOperationFailedException(Response response);
+
+        void AddAttributes(DiagnosticScope scope);
     }
 
     internal interface IOperation<TResult, TResponseType>
     {
-        internal Task<Response<TResponseType>> GetResponseAsync(CancellationToken cancellationToken);
+        Task<Response<TResponseType>> GetResponseAsync(CancellationToken cancellationToken);
 
-        internal Response<TResponseType> GetResponse(CancellationToken cancellationToken);
+        Response<TResponseType> GetResponse(CancellationToken cancellationToken);
 
-        internal CompletionStatus UpdateState(Response<TResponseType> response);
+        CompletionStatus UpdateState(Response<TResponseType> response);
 
-        internal TResult ParseResponse(Response<TResponseType> response);
+        TResult ParseResponse(Response<TResponseType> response);
 
-        internal RequestFailedException GetOperationFailedException(Response<TResponseType> response);
+        RequestFailedException GetOperationFailedException(Response<TResponseType> response);
+
+        void AddAttributes(DiagnosticScope scope);
     }
 
     internal enum CompletionStatus
