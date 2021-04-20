@@ -204,7 +204,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// </summary>
-        public virtual RegistryArtifact GetRegistryArtifact(ArtifactMoniker moniker)
+        public virtual RegistryArtifact GetRegistryArtifact(string repository, string tagOrDigest)
         {
             throw new NotImplementedException();
             //return new ContainerRepository(_endpoint,

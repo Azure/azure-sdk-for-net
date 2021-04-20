@@ -4,15 +4,15 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary>
-    /// Options to override default GetRegistryArtifact() behavior.
+    /// Options to override default GetManifests() behavior.
     /// </summary>
-    public class GetRegistryArtifactsOptions
+    public class GetArtifactManifestsOptions
     {
         /// <summary>
-        /// Construct an instance of GetRegistryArtifactOptions.
+        /// Construct an instance of GetManifestsOptions.
         /// </summary>
         /// <param name="orderBy"></param>
-        public GetRegistryArtifactsOptions(RegistryArtifactOrderBy orderBy)
+        public GetArtifactManifestsOptions(ManifestOrderBy orderBy)
         {
             this.OrderBy = orderBy;
         }
@@ -20,6 +20,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Get the option specified for ordering registry artifacts in the returned collection.
         /// </summary>
-        public RegistryArtifactOrderBy OrderBy { get; }
+        public ManifestOrderBy OrderBy { get; }
     }
 }

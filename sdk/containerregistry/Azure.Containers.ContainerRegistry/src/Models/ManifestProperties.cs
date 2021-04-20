@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry
         internal IReadOnlyList<ManifestAttributesManifestReferences> References { get; }
 
         /// <summary></summary>
-        public IReadOnlyList<ManifestProperties> RegistryArtifacts
+        public IReadOnlyList<ManifestProperties> Manifests
         {
             get
             {

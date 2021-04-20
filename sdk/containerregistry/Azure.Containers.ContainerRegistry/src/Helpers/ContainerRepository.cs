@@ -148,7 +148,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get the collection of registry artifacts for a repository. </summary>
         /// <param name="options"> Options to override default collection getting behavior. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ManifestProperties> GetRegistryArtifactsAsync(GetRegistryArtifactsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManifestProperties> GetArtifactManifestsAsync(GetArtifactManifestsOptions options = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
             //    async Task<Page<RegistryArtifactProperties>> FirstPageFunc(int? pageSizeHint)
@@ -190,7 +190,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get the collection of tags for a repository. </summary>
         /// <param name="options"> Options to override default collection getting behavior. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ManifestProperties> GetRegistryArtifacts(GetRegistryArtifactsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManifestProperties> GetArtifactManifests(GetArtifactManifestsOptions options = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
             //Page<RegistryArtifactProperties> FirstPageFunc(int? pageSizeHint)

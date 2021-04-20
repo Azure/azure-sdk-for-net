@@ -9,7 +9,8 @@ namespace Azure.Containers.ContainerRegistry
 {
     /// <summary>
     /// </summary>
-    public class ArtifactMoniker
+
+    internal class ArtifactMoniker
     {
         /// <summary>
         /// </summary>
