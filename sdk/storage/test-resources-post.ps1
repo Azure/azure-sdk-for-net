@@ -16,6 +16,7 @@ param (
 # outputs from the ARM deployment passed in from New-TestResources
 $PrimaryAccountName = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_NAME']
 $PrimaryAccountKey = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_KEY']
+$PrimaryEncryptionScope = $DeploymentOutputs['PRIMARY_ENCRYPTION_SCOPE']
 $SecondaryAccountName = $DeploymentOutputs['SECONDARY_STORAGE_ACCOUNT_NAME']
 $SecondaryAccountKey = $DeploymentOutputs['SECONDARY_STORAGE_ACCOUNT_KEY']
 $PremiumAccountName = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_NAME']
@@ -55,6 +56,7 @@ $content =
       <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
       <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;EndpointSuffix=core.windows.net</ConnectionString>
+      <EncryptionScope>$PrimaryEncryptionScope</EncryptionScope>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>PremiumTenant</TenantName>

@@ -277,7 +277,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [Ignore("#10044: Re-enable failing Storage tests")]
         public void Ctor_CPK_EncryptionScope()
         {
             // Arrange
@@ -512,7 +511,6 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
-        [Ignore("#10044: Re-enable failing Storage tests")]
         public async Task CreateAsync_EncryptionScopeOptions()
         {
             // Arrange
