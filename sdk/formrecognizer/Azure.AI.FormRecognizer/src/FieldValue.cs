@@ -27,12 +27,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// Initializes a new instance of the <see cref="FieldValue"/> structure.
         /// </summary>
         /// <param name="value">The actual field value.</param>
-        /// <param name="isPhoneNumber">Whether or not this value represents a phone number.</param>
-        internal FieldValue(string value, bool isPhoneNumber = false)
+        /// <param name="type">The data type of the field value.</param>
+        internal FieldValue(string value, FieldValueType type)
             : this()
         {
-            ValueType = isPhoneNumber ? FieldValueType.PhoneNumber : FieldValueType.String;
             ValueString = value;
+            ValueType = type;
         }
 
         /// <summary>
@@ -110,6 +110,17 @@ namespace Azure.AI.FormRecognizer.Models
         {
             ValueType = FieldValueType.SelectionMark;
             ValueSelectionMark = value;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        internal FieldValue(FieldValueGender value)
+            : this()
+        {
+            ValueType = FieldValueType.Gender;
+            ValueGender = value;
         }
 
         /// <summary>

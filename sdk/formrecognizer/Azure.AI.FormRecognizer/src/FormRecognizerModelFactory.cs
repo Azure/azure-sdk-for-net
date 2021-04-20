@@ -178,7 +178,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="value">The actual field value.</param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
         public static FieldValue FieldValueWithStringValueType(string value) =>
-            new FieldValue(value, isPhoneNumber: false);
+            new FieldValue(value, FieldValueType.String);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FieldValue"/> structure.
@@ -218,7 +218,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="value">The actual field value.</param>
         /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
         public static FieldValue FieldValueWithPhoneNumberValueType(string value) =>
-            new FieldValue(value, isPhoneNumber: true);
+            new FieldValue(value, FieldValueType.PhoneNumber);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FieldValue"/> structure.
@@ -253,6 +253,22 @@ namespace Azure.AI.FormRecognizer.Models
             new FieldValue(value);
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
+        public static FieldValue FieldValueWithCountryCodeValueType(string value) =>
+            new FieldValue(value, FieldValueType.Country);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        /// <returns>A new <see cref="FieldValue"/> instance for mocking.</returns>
+        public static FieldValue FieldValueWithGenderValueType(FieldValueGender value) =>
+            new FieldValue(value);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormField"/> class.
         /// </summary>
         /// <param name="name">Canonical name; uniquely identifies a field within the form.</param>
@@ -272,11 +288,28 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text">The text of this form element.</param>
         /// <param name="words">A list of the words that make up the line.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormLine"/> instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FormLine FormLine(FieldBoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormWord> words)
         {
             words = words?.ToList();
 
-            return new FormLine(boundingBox, pageNumber, text, words);
+            return new FormLine(boundingBox, pageNumber, text, words, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormLine"/> class.
+        /// </summary>
+        /// <param name="boundingBox">The quadrilateral bounding box that outlines the text of this element.</param>
+        /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
+        /// <param name="text">The text of this form element.</param>
+        /// <param name="words">A list of the words that make up the line.</param>
+        /// <param name="appearance">An object representing the appearance of the text line.</param>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormLine"/> instance for mocking.</returns>
+        public static FormLine FormLine(FieldBoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormWord> words, TextAppearance appearance)
+        {
+            words = words?.ToList();
+
+            return new FormLine(boundingBox, pageNumber, text, words, appearance);
         }
 
         /// <summary>
@@ -349,6 +382,18 @@ namespace Azure.AI.FormRecognizer.Models
             new FormRecognizerError(errorCode, message);
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormSelectionMark"/> class.
+        /// </summary>
+        /// <param name="boundingBox">The quadrilateral bounding box that outlines the element.</param>
+        /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
+        /// <param name="text">The text of selection mark value.</param>
+        /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
+        /// <param name="state">Selection mark state value.</param>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormSelectionMark"/> instance for mocking.</returns>
+        public static FormSelectionMark FormSelectionMark(FieldBoundingBox boundingBox, int pageNumber, string text, float confidence, SelectionMarkState state) =>
+            new FormSelectionMark(boundingBox, pageNumber, text, confidence, state);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormTable"/> class.
         /// </summary>
         /// <param name="pageNumber">The 1-based number of the page in which this table is present.</param>
@@ -356,11 +401,28 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="rowCount">The number of rows in this table.</param>
         /// <param name="cells">A list of cells contained in this table.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormTable"/> instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FormTable FormTable(int pageNumber, int columnCount, int rowCount, IReadOnlyList<FormTableCell> cells)
         {
             cells = cells?.ToList();
 
-            return new FormTable(pageNumber, columnCount, rowCount, cells);
+            return new FormTable(pageNumber, columnCount, rowCount, cells, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormTable"/> class.
+        /// </summary>
+        /// <param name="pageNumber">The 1-based number of the page in which this table is present.</param>
+        /// <param name="columnCount">The number of columns in this table.</param>
+        /// <param name="rowCount">The number of rows in this table.</param>
+        /// <param name="cells">A list of cells contained in this table.</param>
+        /// <param name="boundingBox">The quadrilateral bounding box that outlines the table.</param>
+        /// <returns>A new <see cref="FormRecognizer.Models.FormTable"/> instance for mocking.</returns>
+        public static FormTable FormTable(int pageNumber, int columnCount, int rowCount, IReadOnlyList<FormTableCell> cells, FieldBoundingBox boundingBox)
+        {
+            cells = cells?.ToList();
+
+            return new FormTable(pageNumber, columnCount, rowCount, cells, boundingBox);
         }
 
         /// <summary>
@@ -442,16 +504,22 @@ namespace Azure.AI.FormRecognizer.Models
             new RecognizedFormCollection(list);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormSelectionMark"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.TextAppearance"/> class.
         /// </summary>
-        /// <param name="boundingBox">The quadrilateral bounding box that outlines the element.</param>
-        /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
-        /// <param name="text">The text of selection mark value.</param>
+        /// <param name="style">An object representing the style of the text line.</param>
+        /// <returns>A new <see cref="FormRecognizer.Models.TextAppearance"/> instance for mocking.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="style"/> is null.</exception>
+        public static TextAppearance TextAppearance(TextStyle style) =>
+            new TextAppearance(style);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormRecognizer.Models.TextStyle"/> class.
+        /// </summary>
+        /// <param name="name">The text line style name.</param>
         /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
-        /// <param name="state">Selection mark state value.</param>
-        /// <returns>A new <see cref="FormRecognizer.Models.FormSelectionMark"/> instance for mocking.</returns>
-        public static FormSelectionMark FormSelectionMark(FieldBoundingBox boundingBox, int pageNumber, string text, float confidence, SelectionMarkState state) =>
-            new FormSelectionMark(boundingBox, pageNumber, text, confidence, state);
+        /// <returns>A new <see cref="FormRecognizer.Models.TextStyle"/> instance for mocking.</returns>
+        public static TextStyle TextStyle(TextStyleName name, float confidence) =>
+            new TextStyle(name, confidence);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.TrainingDocumentInfo"/> class.
