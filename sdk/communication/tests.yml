@@ -18,8 +18,8 @@ extends:
     CloudConfig:
       Public:
         SubscriptionConfiguration:
-          - $(sub-config-azure-cloud-test-resources)
-          - $(sub-config-communication-services-cloud-test-resources-test)
+          $(sub-config-azure-cloud-test-resources)
+          $(sub-config-communication-services-cloud-test-resources-test)
       Int:
         SubscriptionConfiguration: $(sub-config-communication-int-test-resources)
     Clouds: Public,Int
