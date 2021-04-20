@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Gets the Lease ID for this lease.
         /// </summary>
-        public virtual string LeaseId { get; private set; }
+        public virtual volatile string LeaseId { get; private set; }
 
         /// <summary>
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
