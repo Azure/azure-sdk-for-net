@@ -3,18 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
 using Azure.Monitory.Query.Models;
 
 namespace Azure.Monitory.Query
 {
-    internal class RowBinder
+    internal class RowBinder: TypeBinder<LogsQueryResultRow>
     {
-        internal static IReadOnlyList<T> BindResults<T>(LogsQueryResult response)
+        internal IReadOnlyList<T> BindResults<T>(LogsQueryResult response)
         {
-            // TODO: this is very slow
             List<T> results = new List<T>();
             if (typeof(IDictionary<string, object>).IsAssignableFrom(typeof(T)))
             {
@@ -34,42 +30,75 @@ namespace Azure.Monitory.Query
                     }
                 }
             }
-            else if (typeof(T).IsValueType || typeof(T) == typeof(string))
-            {
-                foreach (var table in response.Tables)
-                {
-                    foreach (var row in table.Rows)
-                    {
-                        // TODO: Validate
-                        results.Add((T)Convert.ChangeType(row.GetObject(0), typeof(T), CultureInfo.InvariantCulture));
-                    }
-                }
-            }
             else
             {
                 foreach (var table in response.Tables)
                 {
-                    var columnMap = table.Columns
-                        .Select((column, index) => (Property: typeof(T).GetProperty(column.Name, BindingFlags.Instance | BindingFlags.Public), index))
-                        .Where(columnMapping => columnMapping.Property?.SetMethod != null)
-                        .ToArray();
-
                     foreach (var row in table.Rows)
                     {
-                        T rowObject = Activator.CreateInstance<T>();
-
-                        foreach (var (property, index) in columnMap)
-                        {
-                            property.SetValue(rowObject, Convert.ChangeType(row.GetObject(index), property.PropertyType, CultureInfo.InvariantCulture));
-                        }
-
-                        results.Add(rowObject);
+                        results.Add(Deserialize<T>(row));
                     }
                 }
             }
 
-            // TODO: Maybe support record construction
             return results;
+        }
+
+        protected override void Set<T>(LogsQueryResultRow destination, T value, BoundMemberInfo memberInfo)
+        {
+            throw new NotSupportedException();
+        }
+
+        protected override bool TryGet<T>(BoundMemberInfo memberInfo, LogsQueryResultRow source, out T value)
+        {
+            int column;
+
+            // Binding entire row to a primitive
+            if (memberInfo == null)
+            {
+                column = 0;
+            }
+            else if (!source.TryGetColumn(memberInfo.Name, out column))
+            {
+                value = default;
+                return false;
+            }
+
+            if (source.IsNull(column) &&
+                (!typeof(T).IsValueType ||
+                typeof(T).IsGenericType &&
+                typeof(T).GetGenericTypeDefinition() == typeof(Nullable<>)))
+            {
+                value = default;
+                return true;
+            }
+
+            if (typeof(T) == typeof(int)) value = (T)(object)source.GetInt32(column);
+            else if (typeof(T) == typeof(string)) value = (T)(object)source.GetString(column);
+            else if (typeof(T) == typeof(bool)) value = (T)(object)source.GetBoolean(column);
+            else if (typeof(T) == typeof(long)) value = (T)(object)source.GetInt64(column);
+            else if (typeof(T) == typeof(decimal)) value = (T)(object)source.GetDecimal(column);
+            else if (typeof(T) == typeof(double)) value = (T)(object)source.GetDouble(column);
+            else if (typeof(T) == typeof(object)) value = (T)source.GetObject(column);
+            else if (typeof(T) == typeof(Guid)) value = (T)(object)source.GetGuid(column);
+            else if (typeof(T) == typeof(DateTimeOffset)) value = (T)(object)source.GetDateTimeOffset(column);
+            else if (typeof(T) == typeof(TimeSpan)) value = (T)(object)source.GetTimeSpan(column);
+
+            else if (typeof(T) == typeof(int?)) value = (T)(object)(int?)source.GetInt32(column);
+            else if (typeof(T) == typeof(bool?)) value = (T)(object)(bool?)source.GetBoolean(column);
+            else if (typeof(T) == typeof(long?)) value = (T)(object)(long?)source.GetInt64(column);
+            else if (typeof(T) == typeof(decimal?)) value = (T)(object)(decimal?)source.GetDecimal(column);
+            else if (typeof(T) == typeof(double?)) value = (T)(object)(double?)source.GetDouble(column);
+            else if (typeof(T) == typeof(Guid?)) value = (T)(object)(Guid?)source.GetGuid(column);
+            else if (typeof(T) == typeof(DateTimeOffset?)) value = (T)(object)(DateTimeOffset?)source.GetDateTimeOffset(column);
+            else if (typeof(T) == typeof(TimeSpan?)) value = (T)(object)(TimeSpan?)source.GetTimeSpan(column);
+
+            else
+            {
+                throw new NotSupportedException($"The {typeof(T)} type is not supported as a deserialization target.");
+            }
+
+            return true;
         }
     }
 }

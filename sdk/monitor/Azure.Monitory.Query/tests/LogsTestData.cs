@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Monitory.Query;
 
-namespace Azure.Template.Tests
+namespace Azure.Monitory.Query.Tests
 {
     // Logs take a long time to get ingested we send them only once and reuse for all the tests
     // Increment the DataVersion when changing the values to force a re-send

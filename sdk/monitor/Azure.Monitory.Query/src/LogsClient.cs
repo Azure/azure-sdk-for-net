@@ -16,6 +16,7 @@ namespace Azure.Monitory.Query
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
+        private readonly RowBinder _rowBinder;
 
         public LogsClient(TokenCredential credential) : this(credential, null)
         {
@@ -30,6 +31,7 @@ namespace Azure.Monitory.Query
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://api.loganalytics.io//.default"));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline);
+            _rowBinder = new RowBinder();
         }
 
         protected LogsClient()
@@ -40,14 +42,14 @@ namespace Azure.Monitory.Query
         {
             Response<LogsQueryResult> response = Query(workspaceId, query, timeSpan, cancellationToken);
 
-            return Response.FromValue(RowBinder.BindResults<T>(response), response.GetRawResponse());
+            return Response.FromValue(_rowBinder.BindResults<T>(response), response.GetRawResponse());
         }
 
         public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, TimeSpan? timeSpan = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = await QueryAsync(workspaceId, query, timeSpan,  cancellationToken).ConfigureAwait(false);
 
-            return Response.FromValue(RowBinder.BindResults<T>(response), response.GetRawResponse());
+            return Response.FromValue(_rowBinder.BindResults<T>(response), response.GetRawResponse());
         }
 
         public virtual Response<LogsQueryResult> Query(string workspaceId, string query, TimeSpan? timeSpan = null, CancellationToken cancellationToken = default)
@@ -82,7 +84,7 @@ namespace Azure.Monitory.Query
 
         public virtual LogsBatchQuery CreateBatchQuery()
         {
-            return new LogsBatchQuery(_clientDiagnostics, _queryClient);
+            return new LogsBatchQuery(_clientDiagnostics, _queryClient, _rowBinder);
         }
 
         internal static QueryBody CreateQueryBody(string query, TimeSpan? timeSpan)

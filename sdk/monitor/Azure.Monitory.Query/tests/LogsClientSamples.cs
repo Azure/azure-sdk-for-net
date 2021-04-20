@@ -11,7 +11,7 @@ using Azure.Monitory.Query;
 using Azure.Monitory.Query.Models;
 using NUnit.Framework;
 
-namespace Azure.Template.Tests
+namespace Azure.Monitory.Query.Tests
 {
     public class LogsClientSamples: SamplesBase<MonitorQueryClientTestEnvironment>
     {
@@ -156,7 +156,7 @@ namespace Azure.Template.Tests
         public class MyLogEntryModel
         {
             public string ResourceGroup { get; set; }
-            public string Count { get; set; }
+            public int Count { get; set; }
         }
         #endregion
     }
