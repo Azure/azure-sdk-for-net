@@ -36,6 +36,7 @@ namespace Azure.Template.Tests
             request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Log-Type", tableName);
+            request.Headers.SetValue( "time-generated-field", "TimeGenerated");
             request.Content = data;
 
             var response = await _pipeline.SendRequestAsync(request, default);

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -150,6 +151,42 @@ namespace Azure.Template.Tests
 
             CollectionAssert.IsNotEmpty(result1.Tables[0].Columns);
             CollectionAssert.IsNotEmpty(result2.Tables[0].Columns);
+        }
+
+        [RecordedTest]
+        public async Task CanQueryWithTimespan()
+        {
+            // Get the time of the second event and add a bit of buffer to it (events are 1y apart)
+            var timespan = (DateTimeOffset)LogsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent] - DateTimeOffset.Now;
+            timespan = timespan.Add(TimeSpan.FromDays(1));
+
+            var client = CreateClient();
+            var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId, LogsTestData.TableAName, timespan);
+
+            // We should get the second and the third events
+            Assert.AreEqual(2, results.Value.Count);
+        }
+
+        [RecordedTest]
+        public async Task CanQueryBatchWithTimespan()
+        {
+            // Get the time of the second event and add a bit of buffer to it (events are 1y apart)
+            var timespan = (DateTimeOffset)LogsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent] - DateTimeOffset.Now;
+            timespan = timespan.Add(TimeSpan.FromDays(1));
+
+            var client = CreateClient();
+            LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
+            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, LogsTestData.TableAName);
+            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, LogsTestData.TableAName, timespan);
+            Response<LogsBatchQueryResult> response = await batch.SubmitAsync();
+
+            var result1 = response.Value.GetResult(id1);
+            var result2 = response.Value.GetResult(id2);
+
+            // All rows
+            Assert.AreEqual(3, result1.PrimaryTable.Rows.Count);
+            // Filtered by the timestamp
+            Assert.AreEqual(2, result2.PrimaryTable.Rows.Count);
         }
 
         private record TestModel

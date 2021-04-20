@@ -14,7 +14,7 @@ namespace Azure.Template.Tests
     // Increment the DataVersion when changing the values to force a re-send
     public class LogsTestData
     {
-        private static readonly string DataVersion = "1";
+        private static readonly string DataVersion = "2";
 
         public static string IntColumnNameSent = "IntColumn";
         public static string IntColumnName = IntColumnNameSent + "_d";
@@ -28,11 +28,35 @@ namespace Azure.Template.Tests
         public static string FloatColumnNameSent = "FloatColumn";
         public static string FloatColumnName = FloatColumnNameSent + "_d";
 
+        public static string TimeGeneratedColumnNameSent = "TimeGenerated";
+        public static string TimeGeneratedColumnName = FloatColumnNameSent + "_d";
+
         public static readonly List<Dictionary<string, object>> TableA = new()
         {
-            new() { { IntColumnNameSent, 1}, { StringColumnNameSent, "a"}, { BoolColumnNameSent, false}, { FloatColumnNameSent, 0f } },
-            new() { { IntColumnNameSent, 3}, { StringColumnNameSent, "b"}, { BoolColumnNameSent, true}, { FloatColumnNameSent, 1.2f } },
-            new() { { IntColumnNameSent, 1}, { StringColumnNameSent, "c"}, { BoolColumnNameSent, false}, { FloatColumnNameSent, 1.1f } },
+            new()
+            {
+                { IntColumnNameSent, 1},
+                { StringColumnNameSent, "a"},
+                { BoolColumnNameSent, false},
+                { FloatColumnNameSent, 0f },
+                { TimeGeneratedColumnNameSent, DateTimeOffset.Parse("2015-12-31T23:59:59.9Z") }
+            },
+            new()
+            {
+                { IntColumnNameSent, 3},
+                { StringColumnNameSent, "b"},
+                { BoolColumnNameSent, true},
+                { FloatColumnNameSent, 1.2f },
+                { TimeGeneratedColumnNameSent, DateTimeOffset.Parse("2016-12-31T23:59:59.9Z") }
+            },
+            new()
+            {
+                { IntColumnNameSent, 1},
+                { StringColumnNameSent, "c"},
+                { BoolColumnNameSent, false},
+                { FloatColumnNameSent, 1.1f },
+                { TimeGeneratedColumnNameSent, DateTimeOffset.Parse("2017-12-31T23:59:59.9Z") }
+            },
         };
 
         private static string TableANameSent = nameof(TableA) + DataVersion;
