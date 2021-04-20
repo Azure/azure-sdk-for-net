@@ -20,8 +20,6 @@ namespace Azure.Core
 
         private TResult _value;
 
-        private RequestFailedException _requestFailedException;
-
         public OperationInternal(string operationTypeName,
             ClientDiagnostics clientDiagnostics,
             IOperation<TResult> operation,
@@ -39,6 +37,10 @@ namespace Azure.Core
             _defaultPollingInterval = defaultPollingInterval ?? TimeSpan.FromSeconds(1);
         }
 
+        public bool HasValue { get; private set; }
+
+        public bool HasCompleted { get; set; }
+
         public TResult Value
         {
             get
@@ -47,40 +49,25 @@ namespace Azure.Core
                 {
                     return _value;
                 }
-                else if (RequestFailedException != null)
+                else if (OperationFailedException != null)
                 {
-                    throw RequestFailedException;
+                    throw OperationFailedException;
                 }
                 else
                 {
                     throw new InvalidOperationException("The operation has not completed yet.");
                 }
             }
-            protected set
+            set
             {
                 _value = value;
                 HasValue = true;
-                HasCompleted = true;
             }
         }
 
-        public bool HasCompleted { get; private set; }
+        public Response RawResponse { get; set; }
 
-        public bool HasValue { get; private set; }
-
-        protected Response RawResponse { get; set; }
-
-        protected RequestFailedException RequestFailedException
-        {
-            get => _requestFailedException;
-            set
-            {
-                _requestFailedException = value;
-                HasCompleted = true;
-            }
-        }
-
-        public Response GetRawResponse() => RawResponse;
+        protected RequestFailedException OperationFailedException { get; set; }
 
         public async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken) =>
             await UpdateStatusAsync(async: true, cancellationToken).ConfigureAwait(false);
@@ -95,50 +82,51 @@ namespace Azure.Core
         {
             while (true)
             {
-                await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+                Response response = await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+
                 if (HasCompleted)
                 {
-                    return Response.FromValue(Value, GetRawResponse());
+                    return Response.FromValue(Value, response);
                 }
 
                 await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
             }
         }
 
-        protected virtual async Task UpdateOperationAsync(bool async, CancellationToken cancellationToken)
+        protected virtual async Task<Response> UpdateResponseAsync(bool async, CancellationToken cancellationToken)
         {
             Response response = async
-                    ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
-                    : _operation.GetResponse(cancellationToken);
+                ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
+                : _operation.GetResponse(cancellationToken);
 
             RawResponse = response;
 
-            var status = _operation.UpdateOperationStatus(response);
+            var status = _operation.UpdateState(response);
 
-            if (status == OperationInternalResponseStatus.Succeeded)
+            if (status == CompletionStatus.Succeeded)
             {
                 Value = _operation.ParseResponse(response);
+                HasCompleted = true;
             }
-            else if (status == OperationInternalResponseStatus.Failed)
+            else if (status == CompletionStatus.Failed)
             {
-                RequestFailedException = _operation.GetFailure(response);
-                throw RequestFailedException;
+                OperationFailedException = _operation.GetOperationFailedException(response);
+                HasCompleted = true;
+
+                throw OperationFailedException;
             }
+
+            return response;
         }
 
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
-            if (HasCompleted)
-            {
-                return GetRawResponse();
-            }
-
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{_operationTypeName}.UpdateStatus");
             scope.Start();
 
             try
             {
-                await UpdateOperationAsync(async, cancellationToken).ConfigureAwait(false);
+                return await UpdateResponseAsync(async, cancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException e)
             {
@@ -151,8 +139,6 @@ namespace Azure.Core
                 scope.Failed(requestFailedException);
                 throw requestFailedException;
             }
-
-            return GetRawResponse();
         }
     }
 
@@ -170,25 +156,31 @@ namespace Azure.Core
             _operation = operation;
         }
 
-        protected override async Task UpdateOperationAsync(bool async, CancellationToken cancellationToken)
+        protected override async Task<Response> UpdateResponseAsync(bool async, CancellationToken cancellationToken)
         {
             Response<TResponseType> response = async
-                    ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
-                    : _operation.GetResponse(cancellationToken);
+                ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
+                : _operation.GetResponse(cancellationToken);
 
-            RawResponse = response.GetRawResponse();
+            Response rawResponse = response.GetRawResponse();
+            RawResponse = rawResponse;
 
-            var status = _operation.UpdateOperationStatus(response);
+            var status = _operation.UpdateState(response);
 
-            if (status == OperationInternalResponseStatus.Succeeded)
+            if (status == CompletionStatus.Succeeded)
             {
                 Value = _operation.ParseResponse(response);
+                HasCompleted = true;
             }
-            else if (status == OperationInternalResponseStatus.Failed)
+            else if (status == CompletionStatus.Failed)
             {
-                RequestFailedException = _operation.GetFailure(response);
-                throw RequestFailedException;
+                OperationFailedException = _operation.GetOperationFailedException(response);
+                HasCompleted = true;
+
+                throw OperationFailedException;
             }
+
+            return rawResponse;
         }
     }
 
@@ -198,11 +190,11 @@ namespace Azure.Core
 
         internal Response GetResponse(CancellationToken cancellationToken);
 
-        internal OperationInternalResponseStatus UpdateOperationStatus(Response response);
+        internal CompletionStatus UpdateState(Response response);
 
         internal TResult ParseResponse(Response response);
 
-        internal RequestFailedException GetFailure(Response response);
+        internal RequestFailedException GetOperationFailedException(Response response);
     }
 
     internal interface IOperation<TResult, TResponseType>
@@ -211,14 +203,14 @@ namespace Azure.Core
 
         internal Response<TResponseType> GetResponse(CancellationToken cancellationToken);
 
-        internal OperationInternalResponseStatus UpdateOperationStatus(Response<TResponseType> response);
+        internal CompletionStatus UpdateState(Response<TResponseType> response);
 
         internal TResult ParseResponse(Response<TResponseType> response);
 
-        internal RequestFailedException GetFailure(Response<TResponseType> response);
+        internal RequestFailedException GetOperationFailedException(Response<TResponseType> response);
     }
 
-    internal enum OperationInternalResponseStatus
+    internal enum CompletionStatus
     {
         Pending,
         Succeeded,
