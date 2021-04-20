@@ -50,32 +50,41 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 .CreateOrReplaceAsync(timeSeriesTypes)
                 .ConfigureAwait(false);
 
-            // Check if the result error array does contain any object that is set
-            foreach (var result in createTypesResult.Value)
+            // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
+            // If the error object is set to null, this means the operation was a success.
+            for (int i = 0; i < createTypesResult.Value.Length; i++)
             {
-                if (result.Error != null)
+                if (createTypesResult.Value[i].Error == null)
                 {
-                    Console.WriteLine($"Failed to create a Time Series Insights type: {result.Error.Message}.");
+                    Console.WriteLine($"Created Time Series type successfully.");
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to create a Time Series Insights type: {createTypesResult.Value[i].Error.Message}.");
                 }
             }
             #endregion Snippet:TimeSeriesInsightsSampleCreateType
 
             #region Snippet:TimeSeriesInsightsSampleGetTypeById
             // Code snippet below shows getting a default Type using Id
+            // The default type Id can be obtained programmatically by using the ModelSettings client.
             Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await client
                 .Types
                 .GetByIdAsync(new string[] { modelSettings.DefaultTypeId })
                 .ConfigureAwait(false);
 
-            TimeSeriesTypeOperationResult getTypeByIdResult = getTypeByIdResults.Value[0];
-
-            if (getTypeByIdResult.TimeSeriesType != null)
+            // The response of calling the API contains a list of type or error objects corresponding by position to the input parameter array in the request.
+            // If the error object is set to null, this means the operation was a success.
+            for (int i = 0; i < getTypeByIdResults.Value.Length; i++)
             {
-                Console.WriteLine($"Retrieved Time Series Insights type with Id '{getTypeByIdResult.TimeSeriesType.Id}' and name '{getTypeByIdResult.TimeSeriesType.Name}'.");
-            }
-            else if (getTypeByIdResult.Error != null)
-            {
-                Console.WriteLine($"Failed to retrieve a Time Series Insights type with Id '{getTypeByIdResult.Error.Message}'.");
+                if (getTypeByIdResults.Value[i].Error == null)
+                {
+                    Console.WriteLine($"Retrieved Time Series type with Id: '{getTypeByIdResults.Value[i].TimeSeriesType.Id}'.");
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to retrieve a Time Series type due to '{getTypeByIdResults.Value[i].Error.Message}'.");
+                }
             }
             #endregion Snippet:TimeSeriesInsightsSampleGetTypeById
 
@@ -91,12 +100,17 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 .CreateOrReplaceAsync(timeSeriesTypes)
                 .ConfigureAwait(false);
 
-            // Check if the result error array does contain any object that is set
-            foreach (var result in createTypesResult.Value)
+            // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
+            // If the error object is set to null, this means the operation was a success.
+            for (int i = 0; i < updateTypesResult.Value.Length; i++)
             {
-                if (result.Error != null)
+                if (updateTypesResult.Value[i].Error == null)
                 {
-                    Console.WriteLine($"Failed to replace a Time Series Insights type: {result.Error.Message}.");
+                    Console.WriteLine($"Updated Time Series type successfully.");
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to update a Time Series Insights type due to: {updateTypesResult.Value[i].Error.Message}.");
                 }
             }
             #endregion Snippet:TimeSeriesInsightsSampleReplaceType
@@ -107,7 +121,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             await foreach (TimeSeriesType tsiType in getAllTypesResponse)
             {
-                Console.WriteLine($"Retrieved Time Series Insights type with Id: {tsiType?.Id} and Name: {tsiType?.Name}");
+                Console.WriteLine($"Retrieved Time Series Insights type with Id: '{tsiType?.Id}' and Name: '{tsiType?.Name}'");
             }
             #endregion Snippet:TimeSeriesInsightsSampleGetAllTypes
 
@@ -115,6 +129,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             try
             {
                 #region Snippet:TimeSeriesInsightsSampleDeleteTypeById
+                // Delete types with list of Ids created above.
                 Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
                     .Types
                     .DeleteByIdAsync(timeSeriesTypesProperties.Values)
