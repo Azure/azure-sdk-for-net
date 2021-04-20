@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    internal partial class PromptDTOQna : IUtf8JsonSerializable
+    public partial class QuestionAnswerContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,11 +35,11 @@ namespace Azure.AI.QuestionAnswering.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Optional.IsCollectionDefined(InternalMetadata))
             {
                 writer.WritePropertyName("metadata");
                 writer.WriteStartArray();
-                foreach (var item in Metadata)
+                foreach (var item in InternalMetadata)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -58,14 +58,14 @@ namespace Azure.AI.QuestionAnswering.Models
             writer.WriteEndObject();
         }
 
-        internal static PromptDTOQna DeserializePromptDTOQna(JsonElement element)
+        internal static QuestionAnswerContent DeserializeQuestionAnswerContent(JsonElement element)
         {
             Optional<int> id = default;
             string answer = default;
             Optional<string> source = default;
             IList<string> questions = default;
             Optional<IList<MetadataDTO>> metadata = default;
-            Optional<QnAdtoContext> context = default;
+            Optional<QuestionAnswerContentContext> context = default;
             Optional<string> lastUpdatedTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -121,7 +121,7 @@ namespace Azure.AI.QuestionAnswering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    context = QnAdtoContext.DeserializeQnAdtoContext(property.Value);
+                    context = QuestionAnswerContentContext.DeserializeQuestionAnswerContentContext(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedTimestamp"))
@@ -130,7 +130,7 @@ namespace Azure.AI.QuestionAnswering.Models
                     continue;
                 }
             }
-            return new PromptDTOQna(Optional.ToNullable(id), answer, source.Value, questions, Optional.ToList(metadata), context.Value, lastUpdatedTimestamp.Value);
+            return new QuestionAnswerContent(Optional.ToNullable(id), answer, source.Value, questions, Optional.ToList(metadata), context.Value, lastUpdatedTimestamp.Value);
         }
     }
 }

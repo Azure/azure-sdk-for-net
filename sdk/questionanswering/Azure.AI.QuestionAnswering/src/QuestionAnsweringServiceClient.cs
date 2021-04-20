@@ -83,6 +83,7 @@ namespace Azure.AI.QuestionAnswering
         /// </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>A response containing <see cref="EndpointKeys"/> for the given <see cref="Endpoint"/>.</returns>
+        /// <exception cref="RequestFailedException">The request failed. Check the <see cref="RequestFailedException.ErrorCode"/> for details.</exception>
         public virtual Response<EndpointKeys> GetEndpointKeys(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringServiceClient)}.{nameof(GetEndpointKeys)}");
@@ -104,6 +105,7 @@ namespace Azure.AI.QuestionAnswering
         /// </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>A response containing <see cref="EndpointKeys"/> for the given <see cref="Endpoint"/>.</returns>
+        /// <exception cref="RequestFailedException">The request failed. Check the <see cref="RequestFailedException.ErrorCode"/> for details.</exception>
         public virtual async Task<Response<EndpointKeys>> GetEndpointKeysAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringServiceClient)}.{nameof(GetEndpointKeys)}");
@@ -127,6 +129,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>A response containing <see cref="EndpointKeys"/> with the refreshed key.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="keyType"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The request failed. Check the <see cref="RequestFailedException.ErrorCode"/> for details.</exception>
         public virtual Response<EndpointKeys> RefreshEndpointKeys(string keyType, CancellationToken cancellationToken = default)
         {
             // TODO: better describe what values keyType accepts. Can it be the name of EndpointKeys properties?
@@ -152,6 +155,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>A response containing <see cref="EndpointKeys"/> with the refreshed key.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="keyType"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The request failed. Check the <see cref="RequestFailedException.ErrorCode"/> for details.</exception>
         public virtual async Task<Response<EndpointKeys>> RefreshEndpointKeysAsync(string keyType, CancellationToken cancellationToken = default)
         {
             // TODO: better describe what values keyType accepts. Can it be the name of EndpointKeys properties?
@@ -172,13 +176,20 @@ namespace Azure.AI.QuestionAnswering
         #endregion
 
         #region Knowledgebase operations
-        public virtual KnowledgebaseOperation CreateKnowledgebase(string name, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Creates a knowledgebase.
+        /// </summary>
+        /// <param name="parameters">Information about the knowledgebase to create.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>A <see cref="KnowledgebaseOperation"/> to monitor the long-running operation of creating a knowledgebase.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="parameters"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The request failed. Check the <see cref="RequestFailedException.ErrorCode"/> for details.</exception>
+        public virtual KnowledgebaseOperation CreateKnowledgebase(CreateKnowledgebaseParameters parameters, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringServiceClient)}.{nameof(CreateKnowledgebase)}");
             scope.Start();
-
-            // TODO: Rename and make CreateKbDTO and its dependencies public, then take as parameter.
-            CreateKbDTO parameters = new(name);
 
             try
             {
@@ -194,13 +205,20 @@ namespace Azure.AI.QuestionAnswering
             }
         }
 
-        public virtual async KnowledgebaseOperation CreateKnowledgebaseAsync(string name, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Creates a knowledgebase.
+        /// </summary>
+        /// <param name="parameters">Information about the knowledgebase to create.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>A <see cref="KnowledgebaseOperation"/> to monitor the long-running operation of creating a knowledgebase.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="parameters"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The request failed. Check the <see cref="RequestFailedException.ErrorCode"/> for details.</exception>
+        public virtual async Task<KnowledgebaseOperation> CreateKnowledgebaseAsync(CreateKnowledgebaseParameters parameters, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(QuestionAnsweringServiceClient)}.{nameof(CreateKnowledgebase)}");
             scope.Start();
-
-            // TODO: Rename and make CreateKbDTO and its dependencies public, then take as parameter.
-            CreateKbDTO parameters = new(name);
 
             try
             {

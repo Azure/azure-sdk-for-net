@@ -17,13 +17,13 @@ namespace Azure.AI.QuestionAnswering.Models
         public UpdateContextDTO()
         {
             PromptsToDelete = new ChangeTrackingList<int>();
-            PromptsToAdd = new ChangeTrackingList<PromptDTO>();
+            PromptsToAdd = new ChangeTrackingList<AnswerPrompt>();
         }
 
         /// <summary> List of prompts associated with qna to be deleted. </summary>
         public IList<int> PromptsToDelete { get; }
         /// <summary> List of prompts to be added to the qna. </summary>
-        public IList<PromptDTO> PromptsToAdd { get; }
+        public IList<AnswerPrompt> PromptsToAdd { get; }
         /// <summary>
         /// To mark if a prompt is relevant only with a previous question or not.
         /// true - Do not include this QnA as search result for queries without context

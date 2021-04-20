@@ -10,30 +10,30 @@ using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    internal partial class CreateKbDTO : IUtf8JsonSerializable
+    public partial class CreateKnowledgebaseParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Optional.IsCollectionDefined(QnaList))
+            if (Optional.IsCollectionDefined(QuestionAnswers))
             {
                 writer.WritePropertyName("qnaList");
                 writer.WriteStartArray();
-                foreach (var item in QnaList)
+                foreach (var item in QuestionAnswers)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Urls))
+            if (Optional.IsCollectionDefined(Uris))
             {
                 writer.WritePropertyName("urls");
                 writer.WriteStartArray();
-                foreach (var item in Urls)
+                foreach (var item in Uris)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }

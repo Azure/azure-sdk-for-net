@@ -10,21 +10,21 @@ using System.Collections.Generic;
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> Context of a QnA. </summary>
-    internal partial class QnAdtoContext : ContextDTO
+    public partial class QuestionAnswerContentContext : QuestionAnswerContext
     {
-        /// <summary> Initializes a new instance of QnAdtoContext. </summary>
-        public QnAdtoContext()
+        /// <summary> Initializes a new instance of QuestionAnswerContentContext. </summary>
+        public QuestionAnswerContentContext()
         {
         }
 
-        /// <summary> Initializes a new instance of QnAdtoContext. </summary>
+        /// <summary> Initializes a new instance of QuestionAnswerContentContext. </summary>
         /// <param name="isContextOnly">
         /// To mark if a prompt is relevant only with a previous question or not.
         /// true - Do not include this QnA as search result for queries without context
         /// false - ignores context and includes this QnA in search result.
         /// </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
-        internal QnAdtoContext(bool? isContextOnly, IList<PromptDTO> prompts) : base(isContextOnly, prompts)
+        internal QuestionAnswerContentContext(bool? isContextOnly, IList<AnswerPrompt> prompts) : base(isContextOnly, prompts)
         {
         }
     }

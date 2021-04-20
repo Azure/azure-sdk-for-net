@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> Context associated with Qna. </summary>
-    internal partial class ContextDTO
+    internal partial class QuestionAnswerContext
     {
-        /// <summary> Initializes a new instance of ContextDTO. </summary>
-        public ContextDTO()
+        /// <summary> Initializes a new instance of QuestionAnswerContext. </summary>
+        public QuestionAnswerContext()
         {
-            Prompts = new ChangeTrackingList<PromptDTO>();
+            Prompts = new ChangeTrackingList<AnswerPrompt>();
         }
 
-        /// <summary> Initializes a new instance of ContextDTO. </summary>
+        /// <summary> Initializes a new instance of QuestionAnswerContext. </summary>
         /// <param name="isContextOnly">
         /// To mark if a prompt is relevant only with a previous question or not.
         /// true - Do not include this QnA as search result for queries without context
         /// false - ignores context and includes this QnA in search result.
         /// </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
-        internal ContextDTO(bool? isContextOnly, IList<PromptDTO> prompts)
+        internal QuestionAnswerContext(bool? isContextOnly, IList<AnswerPrompt> prompts)
         {
             IsContextOnly = isContextOnly;
             Prompts = prompts;
@@ -39,6 +39,6 @@ namespace Azure.AI.QuestionAnswering.Models
         /// </summary>
         public bool? IsContextOnly { get; set; }
         /// <summary> List of prompts associated with the answer. </summary>
-        public IList<PromptDTO> Prompts { get; }
+        public IList<AnswerPrompt> Prompts { get; }
     }
 }

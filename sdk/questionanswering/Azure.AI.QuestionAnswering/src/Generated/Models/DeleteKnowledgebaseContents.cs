@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> PATCH body schema of Delete Operation in UpdateKb. </summary>
-    internal partial class DeleteKbContentsDTO
+    public partial class DeleteKnowledgebaseContents
     {
-        /// <summary> Initializes a new instance of DeleteKbContentsDTO. </summary>
-        public DeleteKbContentsDTO()
+        /// <summary> Initializes a new instance of DeleteKnowledgebaseContents. </summary>
+        public DeleteKnowledgebaseContents()
         {
             Ids = new ChangeTrackingList<int>();
             Sources = new ChangeTrackingList<string>();

@@ -8,7 +8,7 @@
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> An instance of UpdateKbContentsDTO for Update Operation. </summary>
-    internal partial class UpdateKbOperationDTOUpdate : UpdateKbContentsDTO
+    internal partial class UpdateKbOperationDTOUpdate : UpdateKnowledgebaseContents
     {
         /// <summary> Initializes a new instance of UpdateKbOperationDTOUpdate. </summary>
         public UpdateKbOperationDTOUpdate()

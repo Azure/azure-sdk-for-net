@@ -12,7 +12,6 @@ namespace Azure.AI.QuestionAnswering.Models
     /// <summary>
     /// A long-running operation for knowledgebase operations.
     /// </summary>
-    [CodeGenModel("Operation")]
     public partial class KnowledgebaseOperation : Operation
     {
         private readonly ClientDiagnostics _diagnostics;

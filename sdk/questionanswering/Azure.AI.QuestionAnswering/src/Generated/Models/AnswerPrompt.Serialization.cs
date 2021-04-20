@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    internal partial class PromptDTO : IUtf8JsonSerializable
+    internal partial class AnswerPrompt : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,11 +38,11 @@ namespace Azure.AI.QuestionAnswering.Models
             writer.WriteEndObject();
         }
 
-        internal static PromptDTO DeserializePromptDTO(JsonElement element)
+        internal static AnswerPrompt DeserializeAnswerPrompt(JsonElement element)
         {
             Optional<int> displayOrder = default;
             Optional<int> qnaId = default;
-            Optional<PromptDTOQna> qna = default;
+            Optional<AnswerPromptQna> qna = default;
             Optional<string> displayText = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,7 +73,7 @@ namespace Azure.AI.QuestionAnswering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    qna = PromptDTOQna.DeserializePromptDTOQna(property.Value);
+                    qna = AnswerPromptQna.DeserializeAnswerPromptQna(property.Value);
                     continue;
                 }
                 if (property.NameEquals("displayText"))
@@ -82,7 +82,7 @@ namespace Azure.AI.QuestionAnswering.Models
                     continue;
                 }
             }
-            return new PromptDTO(Optional.ToNullable(displayOrder), Optional.ToNullable(qnaId), qna.Value, displayText.Value);
+            return new AnswerPrompt(Optional.ToNullable(displayOrder), Optional.ToNullable(qnaId), qna.Value, displayText.Value);
         }
     }
 }

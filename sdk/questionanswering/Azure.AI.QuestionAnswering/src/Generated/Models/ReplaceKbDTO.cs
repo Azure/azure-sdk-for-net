@@ -17,7 +17,7 @@ namespace Azure.AI.QuestionAnswering.Models
         /// <summary> Initializes a new instance of ReplaceKbDTO. </summary>
         /// <param name="qnAList"> List of Q-A (QnADTO) to be added to the knowledgebase. Q-A Ids are assigned by the service and should be omitted. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="qnAList"/> is null. </exception>
-        public ReplaceKbDTO(IEnumerable<QnAdto> qnAList)
+        public ReplaceKbDTO(IEnumerable<QuestionAnswerContent> qnAList)
         {
             if (qnAList == null)
             {
@@ -28,6 +28,6 @@ namespace Azure.AI.QuestionAnswering.Models
         }
 
         /// <summary> List of Q-A (QnADTO) to be added to the knowledgebase. Q-A Ids are assigned by the service and should be omitted. </summary>
-        public IList<QnAdto> QnAList { get; }
+        public IList<QuestionAnswerContent> QnAList { get; }
     }
 }

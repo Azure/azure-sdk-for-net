@@ -13,13 +13,13 @@ using Azure.Core;
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> Q-A object. </summary>
-    internal partial class QnAdto
+    public partial class QuestionAnswerContent
     {
-        /// <summary> Initializes a new instance of QnAdto. </summary>
+        /// <summary> Initializes a new instance of QuestionAnswerContent. </summary>
         /// <param name="answer"> Answer text. </param>
         /// <param name="questions"> List of questions associated with the answer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="answer"/> or <paramref name="questions"/> is null. </exception>
-        public QnAdto(string answer, IEnumerable<string> questions)
+        public QuestionAnswerContent(string answer, IEnumerable<string> questions)
         {
             if (answer == null)
             {
@@ -32,24 +32,24 @@ namespace Azure.AI.QuestionAnswering.Models
 
             Answer = answer;
             Questions = questions.ToList();
-            Metadata = new ChangeTrackingList<MetadataDTO>();
+            InternalMetadata = new ChangeTrackingList<MetadataDTO>();
         }
 
-        /// <summary> Initializes a new instance of QnAdto. </summary>
+        /// <summary> Initializes a new instance of QuestionAnswerContent. </summary>
         /// <param name="id"> Unique id for the Q-A. </param>
         /// <param name="answer"> Answer text. </param>
         /// <param name="source"> Source from which Q-A was indexed. eg. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs. </param>
         /// <param name="questions"> List of questions associated with the answer. </param>
-        /// <param name="metadata"> List of metadata associated with the answer. </param>
+        /// <param name="internalMetadata"> List of metadata associated with the answer. </param>
         /// <param name="context"> Context of a QnA. </param>
         /// <param name="lastUpdatedTimestamp"> Timestamp when the QnA was last updated. </param>
-        internal QnAdto(int? id, string answer, string source, IList<string> questions, IList<MetadataDTO> metadata, QnAdtoContext context, string lastUpdatedTimestamp)
+        internal QuestionAnswerContent(int? id, string answer, string source, IList<string> questions, IList<MetadataDTO> internalMetadata, QuestionAnswerContentContext context, string lastUpdatedTimestamp)
         {
             Id = id;
             Answer = answer;
             Source = source;
             Questions = questions;
-            Metadata = metadata;
+            InternalMetadata = internalMetadata;
             Context = context;
             LastUpdatedTimestamp = lastUpdatedTimestamp;
         }
@@ -62,10 +62,8 @@ namespace Azure.AI.QuestionAnswering.Models
         public string Source { get; set; }
         /// <summary> List of questions associated with the answer. </summary>
         public IList<string> Questions { get; }
-        /// <summary> List of metadata associated with the answer. </summary>
-        public IList<MetadataDTO> Metadata { get; }
         /// <summary> Context of a QnA. </summary>
-        public QnAdtoContext Context { get; set; }
+        public QuestionAnswerContentContext Context { get; set; }
         /// <summary> Timestamp when the QnA was last updated. </summary>
         public string LastUpdatedTimestamp { get; set; }
     }

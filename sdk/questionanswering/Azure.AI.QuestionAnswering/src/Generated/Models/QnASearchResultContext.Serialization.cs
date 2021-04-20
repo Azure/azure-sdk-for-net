@@ -37,7 +37,7 @@ namespace Azure.AI.QuestionAnswering.Models
         internal static QnASearchResultContext DeserializeQnASearchResultContext(JsonElement element)
         {
             Optional<bool> isContextOnly = default;
-            Optional<IList<PromptDTO>> prompts = default;
+            Optional<IList<AnswerPrompt>> prompts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isContextOnly"))
@@ -57,10 +57,10 @@ namespace Azure.AI.QuestionAnswering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PromptDTO> array = new List<PromptDTO>();
+                    List<AnswerPrompt> array = new List<AnswerPrompt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PromptDTO.DeserializePromptDTO(item));
+                        array.Add(AnswerPrompt.DeserializeAnswerPrompt(item));
                     }
                     prompts = array;
                     continue;

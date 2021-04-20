@@ -57,7 +57,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="operationId"> Operation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<KnowledgebaseOperation, GetDetailsHeaders>> GetDetailsAsync(string operationId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Models.Operation, GetDetailsHeaders>> GetDetailsAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
@@ -71,9 +71,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 200:
                     {
-                        KnowledgebaseOperation value = default;
+                        Models.Operation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KnowledgebaseOperation.DeserializeKnowledgebaseOperation(document.RootElement);
+                        value = Models.Operation.DeserializeOperation(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -85,7 +85,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="operationId"> Operation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public ResponseWithHeaders<KnowledgebaseOperation, GetDetailsHeaders> GetDetails(string operationId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Models.Operation, GetDetailsHeaders> GetDetails(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
@@ -99,9 +99,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 200:
                     {
-                        KnowledgebaseOperation value = default;
+                        Models.Operation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KnowledgebaseOperation.DeserializeKnowledgebaseOperation(document.RootElement);
+                        value = Models.Operation.DeserializeOperation(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:

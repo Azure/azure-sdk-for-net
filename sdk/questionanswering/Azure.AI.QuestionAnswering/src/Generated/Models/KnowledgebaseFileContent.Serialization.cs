@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    internal partial class FileDTO : IUtf8JsonSerializable
+    public partial class KnowledgebaseFileContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("fileName");
-            writer.WriteStringValue(FileName);
+            writer.WriteStringValue(Name);
             writer.WritePropertyName("fileUri");
-            writer.WriteStringValue(FileUri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(IsUnstructured))
             {
                 writer.WritePropertyName("isUnstructured");

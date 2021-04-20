@@ -10,40 +10,40 @@ using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    internal partial class UpdateKbContentsDTO : IUtf8JsonSerializable
+    public partial class CreateKnowledgebaseContents : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsCollectionDefined(QnaList))
+            if (Optional.IsCollectionDefined(QuestionAnswers))
             {
                 writer.WritePropertyName("qnaList");
                 writer.WriteStartArray();
-                foreach (var item in QnaList)
+                foreach (var item in QuestionAnswers)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Urls))
+            if (Optional.IsCollectionDefined(Uris))
             {
                 writer.WritePropertyName("urls");
                 writer.WriteStartArray();
-                foreach (var item in Urls)
+                foreach (var item in Uris)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultAnswer))
+            if (Optional.IsCollectionDefined(Files))
             {
-                writer.WritePropertyName("defaultAnswer");
-                writer.WriteStringValue(DefaultAnswer);
+                writer.WritePropertyName("files");
+                writer.WriteStartArray();
+                foreach (var item in Files)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }

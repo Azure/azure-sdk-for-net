@@ -5,19 +5,18 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    public partial class KnowledgebaseOperation
+    internal partial class Operation
     {
-        internal static KnowledgebaseOperation DeserializeKnowledgebaseOperation(JsonElement element)
+        internal static Operation DeserializeOperation(JsonElement element)
         {
             Optional<OperationStateType> operationState = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> lastActionTimestamp = default;
+            Optional<string> createdTimestamp = default;
+            Optional<string> lastActionTimestamp = default;
             Optional<string> resourceLocation = default;
             Optional<string> userId = default;
             Optional<string> operationId = default;
@@ -36,22 +35,12 @@ namespace Azure.AI.QuestionAnswering.Models
                 }
                 if (property.NameEquals("createdTimestamp"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    createdTimestamp = property.Value.GetDateTimeOffset();
+                    createdTimestamp = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastActionTimestamp"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    lastActionTimestamp = property.Value.GetDateTimeOffset();
+                    lastActionTimestamp = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceLocation"))
@@ -76,11 +65,11 @@ namespace Azure.AI.QuestionAnswering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    errorResponse = Models.ErrorResponse.DeserializeErrorResponse(property.Value);
+                    errorResponse = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
             }
-            return new KnowledgebaseOperation(Optional.ToNullable(operationState), Optional.ToNullable(createdTimestamp), Optional.ToNullable(lastActionTimestamp), resourceLocation.Value, userId.Value, operationId.Value, errorResponse.Value);
+            return new Operation(Optional.ToNullable(operationState), createdTimestamp.Value, lastActionTimestamp.Value, resourceLocation.Value, userId.Value, operationId.Value, errorResponse.Value);
         }
     }
 }

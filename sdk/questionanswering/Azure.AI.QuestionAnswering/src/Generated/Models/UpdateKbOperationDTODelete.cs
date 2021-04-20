@@ -8,7 +8,7 @@
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> An instance of DeleteKbContentsDTO for delete Operation. </summary>
-    internal partial class UpdateKbOperationDTODelete : DeleteKbContentsDTO
+    internal partial class UpdateKbOperationDTODelete : DeleteKnowledgebaseContents
     {
         /// <summary> Initializes a new instance of UpdateKbOperationDTODelete. </summary>
         public UpdateKbOperationDTODelete()

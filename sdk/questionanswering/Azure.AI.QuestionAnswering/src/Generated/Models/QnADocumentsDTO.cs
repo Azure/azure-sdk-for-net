@@ -16,17 +16,17 @@ namespace Azure.AI.QuestionAnswering.Models
         /// <summary> Initializes a new instance of QnADocumentsDTO. </summary>
         internal QnADocumentsDTO()
         {
-            QnaDocuments = new ChangeTrackingList<QnAdto>();
+            QnaDocuments = new ChangeTrackingList<QuestionAnswerContent>();
         }
 
         /// <summary> Initializes a new instance of QnADocumentsDTO. </summary>
         /// <param name="qnaDocuments"> List of answers. </param>
-        internal QnADocumentsDTO(IReadOnlyList<QnAdto> qnaDocuments)
+        internal QnADocumentsDTO(IReadOnlyList<QuestionAnswerContent> qnaDocuments)
         {
             QnaDocuments = qnaDocuments;
         }
 
         /// <summary> List of answers. </summary>
-        public IReadOnlyList<QnAdto> QnaDocuments { get; }
+        public IReadOnlyList<QuestionAnswerContent> QnaDocuments { get; }
     }
 }

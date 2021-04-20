@@ -11,13 +11,13 @@ using System.Collections.Generic;
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> QnADTO - Either QnaId or QnADTO needs to be present in a PromptDTO object. </summary>
-    internal partial class PromptDTOQna : QnAdto
+    public partial class AnswerPromptQna : QuestionAnswerContent
     {
-        /// <summary> Initializes a new instance of PromptDTOQna. </summary>
+        /// <summary> Initializes a new instance of AnswerPromptQna. </summary>
         /// <param name="answer"> Answer text. </param>
         /// <param name="questions"> List of questions associated with the answer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="answer"/> or <paramref name="questions"/> is null. </exception>
-        public PromptDTOQna(string answer, IEnumerable<string> questions) : base(answer, questions)
+        public AnswerPromptQna(string answer, IEnumerable<string> questions) : base(answer, questions)
         {
             if (answer == null)
             {
@@ -29,15 +29,15 @@ namespace Azure.AI.QuestionAnswering.Models
             }
         }
 
-        /// <summary> Initializes a new instance of PromptDTOQna. </summary>
+        /// <summary> Initializes a new instance of AnswerPromptQna. </summary>
         /// <param name="id"> Unique id for the Q-A. </param>
         /// <param name="answer"> Answer text. </param>
         /// <param name="source"> Source from which Q-A was indexed. eg. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs. </param>
         /// <param name="questions"> List of questions associated with the answer. </param>
-        /// <param name="metadata"> List of metadata associated with the answer. </param>
+        /// <param name="internalMetadata"> List of metadata associated with the answer. </param>
         /// <param name="context"> Context of a QnA. </param>
         /// <param name="lastUpdatedTimestamp"> Timestamp when the QnA was last updated. </param>
-        internal PromptDTOQna(int? id, string answer, string source, IList<string> questions, IList<MetadataDTO> metadata, QnAdtoContext context, string lastUpdatedTimestamp) : base(id, answer, source, questions, metadata, context, lastUpdatedTimestamp)
+        internal AnswerPromptQna(int? id, string answer, string source, IList<string> questions, IList<MetadataDTO> internalMetadata, QuestionAnswerContentContext context, string lastUpdatedTimestamp) : base(id, answer, source, questions, internalMetadata, context, lastUpdatedTimestamp)
         {
         }
     }

@@ -10,11 +10,16 @@ using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    internal partial class CreateKbInputDTO : IUtf8JsonSerializable
+    public partial class UpdateKnowledgebaseContents : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
             if (Optional.IsCollectionDefined(QnaList))
             {
                 writer.WritePropertyName("qnaList");
@@ -35,15 +40,10 @@ namespace Azure.AI.QuestionAnswering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (Optional.IsDefined(DefaultAnswer))
             {
-                writer.WritePropertyName("files");
-                writer.WriteStartArray();
-                foreach (var item in Files)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("defaultAnswer");
+                writer.WriteStringValue(DefaultAnswer);
             }
             writer.WriteEndObject();
         }

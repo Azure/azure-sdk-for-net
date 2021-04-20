@@ -8,19 +8,19 @@
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> Prompt for an answer. </summary>
-    internal partial class PromptDTO
+    internal partial class AnswerPrompt
     {
-        /// <summary> Initializes a new instance of PromptDTO. </summary>
-        public PromptDTO()
+        /// <summary> Initializes a new instance of AnswerPrompt. </summary>
+        public AnswerPrompt()
         {
         }
 
-        /// <summary> Initializes a new instance of PromptDTO. </summary>
+        /// <summary> Initializes a new instance of AnswerPrompt. </summary>
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
         /// <param name="qnaId"> Qna id corresponding to the prompt - if QnaId is present, QnADTO object is ignored. </param>
         /// <param name="qna"> QnADTO - Either QnaId or QnADTO needs to be present in a PromptDTO object. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
-        internal PromptDTO(int? displayOrder, int? qnaId, PromptDTOQna qna, string displayText)
+        internal AnswerPrompt(int? displayOrder, int? qnaId, AnswerPromptQna qna, string displayText)
         {
             DisplayOrder = displayOrder;
             QnaId = qnaId;
@@ -33,7 +33,7 @@ namespace Azure.AI.QuestionAnswering.Models
         /// <summary> Qna id corresponding to the prompt - if QnaId is present, QnADTO object is ignored. </summary>
         public int? QnaId { get; set; }
         /// <summary> QnADTO - Either QnaId or QnADTO needs to be present in a PromptDTO object. </summary>
-        public PromptDTOQna Qna { get; set; }
+        public AnswerPromptQna Qna { get; set; }
         /// <summary> Text displayed to represent a follow up question prompt. </summary>
         public string DisplayText { get; set; }
     }

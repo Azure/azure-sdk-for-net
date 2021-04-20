@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    internal partial class ContextDTO : IUtf8JsonSerializable
+    public partial class QuestionAnswerContentContext : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,10 +34,10 @@ namespace Azure.AI.QuestionAnswering.Models
             writer.WriteEndObject();
         }
 
-        internal static ContextDTO DeserializeContextDTO(JsonElement element)
+        internal static QuestionAnswerContentContext DeserializeQuestionAnswerContentContext(JsonElement element)
         {
             Optional<bool> isContextOnly = default;
-            Optional<IList<PromptDTO>> prompts = default;
+            Optional<IList<AnswerPrompt>> prompts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isContextOnly"))
@@ -57,16 +57,16 @@ namespace Azure.AI.QuestionAnswering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PromptDTO> array = new List<PromptDTO>();
+                    List<AnswerPrompt> array = new List<AnswerPrompt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PromptDTO.DeserializePromptDTO(item));
+                        array.Add(AnswerPrompt.DeserializeAnswerPrompt(item));
                     }
                     prompts = array;
                     continue;
                 }
             }
-            return new ContextDTO(Optional.ToNullable(isContextOnly), Optional.ToList(prompts));
+            return new QuestionAnswerContentContext(Optional.ToNullable(isContextOnly), Optional.ToList(prompts));
         }
     }
 }

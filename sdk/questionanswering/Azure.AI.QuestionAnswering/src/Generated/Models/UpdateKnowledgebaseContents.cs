@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> PATCH body schema for Update operation in Update Kb. </summary>
-    internal partial class UpdateKbContentsDTO
+    public partial class UpdateKnowledgebaseContents
     {
-        /// <summary> Initializes a new instance of UpdateKbContentsDTO. </summary>
-        public UpdateKbContentsDTO()
+        /// <summary> Initializes a new instance of UpdateKnowledgebaseContents. </summary>
+        public UpdateKnowledgebaseContents()
         {
             QnaList = new ChangeTrackingList<UpdateQnaDTO>();
             Urls = new ChangeTrackingList<string>();

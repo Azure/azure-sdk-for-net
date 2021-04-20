@@ -15,23 +15,23 @@ namespace Azure.AI.QuestionAnswering.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(QnaList))
+            if (Optional.IsCollectionDefined(QuestionAnswers))
             {
                 writer.WritePropertyName("qnaList");
                 writer.WriteStartArray();
-                foreach (var item in QnaList)
+                foreach (var item in QuestionAnswers)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Urls))
+            if (Optional.IsCollectionDefined(Uris))
             {
                 writer.WritePropertyName("urls");
                 writer.WriteStartArray();
-                foreach (var item in Urls)
+                foreach (var item in Uris)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }

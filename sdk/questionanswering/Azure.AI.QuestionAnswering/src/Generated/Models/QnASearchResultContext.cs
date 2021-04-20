@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> Context object of the QnA. </summary>
-    internal partial class QnASearchResultContext : ContextDTO
+    internal partial class QnASearchResultContext : QuestionAnswerContext
     {
         /// <summary> Initializes a new instance of QnASearchResultContext. </summary>
         public QnASearchResultContext()
@@ -24,7 +24,7 @@ namespace Azure.AI.QuestionAnswering.Models
         /// false - ignores context and includes this QnA in search result.
         /// </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
-        internal QnASearchResultContext(bool? isContextOnly, IList<PromptDTO> prompts) : base(isContextOnly, prompts)
+        internal QnASearchResultContext(bool? isContextOnly, IList<AnswerPrompt> prompts) : base(isContextOnly, prompts)
         {
         }
     }

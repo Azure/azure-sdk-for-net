@@ -16,6 +16,44 @@ tag: release_5_0_preview.2
 
 These are transforms that should be in the swagger, or at least declared as transforms in the service [readme.md](https://github.com/Azure/azure-rest-api-specs/blob/f80541db7532f4e71e6f64c1bb1bde86b8620c67/specification/cognitiveservices/data-plane/QnAMaker/readme.md).
 
+### Rename models to be exposed publicly
+
+The renames should be done to the swagger directly, or at least contained within the readme.md in Azure/azure-rest-api-specs for all languages' benefit.
+
+``` yaml
+directive:
+- rename-model:
+    from: EndpointKeysDTO
+    to: EndpointKeys
+- rename-model:
+    from: CreateKbDTO
+    to: CreateKnowledgebaseParameters
+- rename-model:
+    from: CreateKbInputDTO
+    to: CreateKnowledgebaseContents
+- rename-model:
+    from: DeleteKbContentsDTO
+    to: DeleteKnowledgebaseContents
+- rename-model:
+    from: UpdateKbContentsDTO
+    to: UpdateKnowledgebaseContents
+- rename-model:
+    from: FileDTO
+    to: KnowledgebaseFileContent
+- rename-model:
+    from: QnADTO
+    to: QuestionAnswerContent
+- rename-model:
+    from: PromptDTO
+    to: AnswerPrompt
+- rename-model:
+    from: PromptDTOQna
+    to: AnswerPromptContent
+- rename-model:
+    from: ContextDTO
+    to: QuestionAnswerContext
+```
+
 ### Name StringIndexType parameter enum
 
 The `StringIndexType` parameter declares an enum but the AutoRest.CSharp add-in, at least, uses the ordinal to call it simply `Enum4`, which could change if enums are added later.

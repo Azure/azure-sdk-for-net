@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> Post body schema for CreateKb operation. </summary>
-    internal partial class CreateKbDTO
+    public partial class CreateKnowledgebaseParameters
     {
-        /// <summary> Initializes a new instance of CreateKbDTO. </summary>
+        /// <summary> Initializes a new instance of CreateKnowledgebaseParameters. </summary>
         /// <param name="name"> Friendly name for the knowledgebase. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CreateKbDTO(string name)
+        public CreateKnowledgebaseParameters(string name)
         {
             if (name == null)
             {
@@ -25,19 +25,13 @@ namespace Azure.AI.QuestionAnswering.Models
             }
 
             Name = name;
-            QnaList = new ChangeTrackingList<QnAdto>();
-            Urls = new ChangeTrackingList<string>();
-            Files = new ChangeTrackingList<FileDTO>();
+            QuestionAnswers = new ChangeTrackingList<QuestionAnswerContent>();
+            Uris = new ChangeTrackingList<Uri>();
+            Files = new ChangeTrackingList<KnowledgebaseFileContent>();
         }
 
         /// <summary> Friendly name for the knowledgebase. </summary>
         public string Name { get; }
-        /// <summary> List of Q-A (QnADTO) to be added to the knowledgebase. Q-A Ids are assigned by the service and should be omitted. </summary>
-        public IList<QnAdto> QnaList { get; }
-        /// <summary> List of URLs to be used for extracting Q-A. </summary>
-        public IList<string> Urls { get; }
-        /// <summary> List of files from which to Extract Q-A. </summary>
-        public IList<FileDTO> Files { get; }
         /// <summary> Enable hierarchical extraction of Q-A from files and urls. Value to be considered False if this field is not present. </summary>
         public bool? EnableHierarchicalExtraction { get; set; }
         /// <summary> Text string to be used as the answer in any Q-A which has no extracted answer from the document but has a hierarchy. Required when EnableHierarchicalExtraction field is set to True. </summary>

@@ -15,7 +15,7 @@ namespace Azure.AI.QuestionAnswering.Models
     {
         internal static QnADocumentsDTO DeserializeQnADocumentsDTO(JsonElement element)
         {
-            Optional<IReadOnlyList<QnAdto>> qnaDocuments = default;
+            Optional<IReadOnlyList<QuestionAnswerContent>> qnaDocuments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("qnaDocuments"))
@@ -25,10 +25,10 @@ namespace Azure.AI.QuestionAnswering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<QnAdto> array = new List<QnAdto>();
+                    List<QuestionAnswerContent> array = new List<QuestionAnswerContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QnAdto.DeserializeQnAdto(item));
+                        array.Add(QuestionAnswerContent.DeserializeQuestionAnswerContent(item));
                     }
                     qnaDocuments = array;
                     continue;
