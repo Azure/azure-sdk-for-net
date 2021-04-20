@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -260,6 +261,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
+        /// <remarks>
+        ///   The caller is assumed to hold ownership over the message once it has been created, including
+        ///   ensuring proper disposal.
+        /// </remarks>
+        ///
         private static AmqpMessage BuildAmqpBatchFromMessages(IEnumerable<AmqpMessage> source,
                                                               string partitionKey)
         {
@@ -301,12 +307,20 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The <see cref="AmqpMessage" /> constructed from the source event.</returns>
         ///
+        /// <remarks>
+        ///   The caller is assumed to hold ownership over the message once it has been created, including
+        ///   ensuring proper disposal.
+        /// </remarks>
+        ///
         private static AmqpMessage BuildAmqpMessageFromEvent(EventData source,
                                                              string partitionKey)
         {
-            var bodyBytes = source.EventBody.ToMemory();
-            var body = new ArraySegment<byte>((bodyBytes.IsEmpty) ? Array.Empty<byte>() : bodyBytes.ToArray());
-            var message = AmqpMessage.Create(new Data { Value = body });
+            if (!MemoryMarshal.TryGetArray(source.EventBody.ToMemory(), out var bodySegment))
+            {
+                bodySegment = new ArraySegment<byte>(source.EventBody.ToArray());
+            }
+
+            var message = AmqpMessage.Create(new Data { Value = bodySegment });
 
             if ((source.HasProperties) && (source.Properties.Count > 0))
             {
@@ -354,9 +368,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static EventData BuildEventFromAmqpMessage(AmqpMessage source)
         {
-            ReadOnlyMemory<byte> body = (source.BodyType.HasFlag(SectionFlag.Data))
-                ? ReadStreamToMemory(source.BodyStream)
-                : ReadOnlyMemory<byte>.Empty;
+            var body = (source.BodyType.HasFlag(SectionFlag.Data))
+                ? ReadAmqpDataBody(source.DataBody)
+                : new BinaryData(ReadOnlyMemory<byte>.Empty);
 
             ParsedAnnotations systemAnnotations = ParseSystemAnnotations(source);
 
@@ -752,31 +766,62 @@ namespace Azure.Messaging.EventHubs.Amqp
                 return new ArraySegment<byte>();
             }
 
-            using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-            stream.CopyTo(memStream, StreamBufferSizeInBytes);
+            switch (stream)
+            {
+                case BufferListStream bufferListStream:
+                    return bufferListStream.ReadBytes((int)stream.Length);
 
-            return new ArraySegment<byte>(memStream.ToArray());
+                default:
+                {
+                    using var memStream = new MemoryStream(StreamBufferSizeInBytes);
+                    stream.CopyTo(memStream, StreamBufferSizeInBytes);
+                    return new ArraySegment<byte>(memStream.ToArray());
+                }
+            }
         }
 
         /// <summary>
-        ///   Converts a stream to a set of memory bytes.
+        ///   Reads the data body of an AMQP message, transforming it for use
+        ///   as the body of an <see cref="EventData" /> instance.
         /// </summary>
         ///
-        /// <param name="stream">The stream to read and capture in memory.</param>
+        /// <param name="body">The body data set of an AMQP message.</param>
         ///
-        /// <returns>The set of memory bytes containing the stream data.</returns>
+        /// <returns>A <see cref="BinaryData" /> representation of the <paramref name="body"/>.</returns>
         ///
-        private static ReadOnlyMemory<byte> ReadStreamToMemory(Stream stream)
+        private static BinaryData ReadAmqpDataBody(IEnumerable<Data> body)
         {
-            if (stream == null)
+            var writer = new ArrayBufferWriter<byte>();
+
+            foreach (var data in body)
             {
-                return ReadOnlyMemory<byte>.Empty;
+                var dataBytes = GetDataBytes(data);
+                dataBytes.CopyTo(writer.GetMemory(dataBytes.Length));
+
+                writer.Advance(dataBytes.Length);
             }
 
-            using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-            stream.CopyTo(memStream, StreamBufferSizeInBytes);
+            return (writer.WrittenCount > 0)
+                ? BinaryData.FromBytes(writer.WrittenMemory)
+                : new BinaryData(Array.Empty<byte>());
+        }
 
-            return new ReadOnlyMemory<byte>(memStream.ToArray());
+        /// <summary>
+        ///   Gets the bytes that comprise an AMQP data instance.
+        /// </summary>
+        ///
+        /// <param name="data">The data to read the bytes from.</param>
+        ///
+        /// <returns>The set of bytes extracted from the <paramref name="data" />.</returns>
+        ///
+        private static ReadOnlyMemory<byte> GetDataBytes(Data data)
+        {
+            return data.Value switch
+            {
+                byte[] byteArray => byteArray,
+                ArraySegment<byte> segment => segment,
+                _ => ReadOnlyMemory<byte>.Empty
+            };
         }
 
         /// <summary>

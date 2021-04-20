@@ -6,17 +6,13 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Authorization\**" />
-    <EmbeddedResource Remove="Authorization\**" />
-    <None Remove="Authorization\**" />
-  </ItemGroup>
 
    <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Azure.Management.EventHub" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />

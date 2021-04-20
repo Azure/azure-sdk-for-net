@@ -171,7 +171,7 @@ namespace Azure.IoT.DeviceUpdate
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
-                    return Response.FromValue<Update>(null, message.Response);
+                    return Response.FromValue((Update)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -211,7 +211,7 @@ namespace Azure.IoT.DeviceUpdate
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
-                    return Response.FromValue<Update>(null, message.Response);
+                    return Response.FromValue((Update)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -677,7 +677,7 @@ namespace Azure.IoT.DeviceUpdate
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
-                    return Response.FromValue<File>(null, message.Response);
+                    return Response.FromValue((File)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -722,7 +722,7 @@ namespace Azure.IoT.DeviceUpdate
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
-                    return Response.FromValue<File>(null, message.Response);
+                    return Response.FromValue((File)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -842,7 +842,7 @@ namespace Azure.IoT.DeviceUpdate
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 304:
-                    return ResponseWithHeaders.FromValue<Models.Operation, UpdatesGetOperationHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue((Models.Operation)null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -873,7 +873,7 @@ namespace Azure.IoT.DeviceUpdate
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 304:
-                    return ResponseWithHeaders.FromValue<Models.Operation, UpdatesGetOperationHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue((Models.Operation)null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Net;
 using System.Runtime.ExceptionServices;
@@ -268,7 +267,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken, entityPath).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 ServiceBusEventSource.Log.CreateManagementLinkComplete(identifier);
                 return link;
@@ -327,7 +326,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken, entityPath).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             return link;
         }
@@ -363,7 +362,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken, entityPath).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             return link;
@@ -424,7 +423,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TransportBase transport = await initiator.ConnectTaskAsync(timeout).ConfigureAwait(false);
 
             var connection = new AmqpConnection(transport, amqpSettings, connectionSetings);
-            await OpenAmqpObjectAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+            await OpenAmqpObjectAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), CancellationToken.None).ConfigureAwait(false);
 
             // Create the CBS link that will be used for authorization.  The act of creating the link will associate
             // it with the connection.
@@ -481,7 +480,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
                 session = connection.CreateSession(sessionSettings);
 
-                await OpenAmqpObjectAsync(session, timeout).ConfigureAwait(false);
+                await OpenAmqpObjectAsync(session, timeout, cancellationToken, entityPath).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the link.
@@ -696,7 +695,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             session = connection.CreateSession(sessionSettings);
 
-            await OpenAmqpObjectAsync(session, timeout).ConfigureAwait(false);
+            await OpenAmqpObjectAsync(session, timeout, CancellationToken.None).ConfigureAwait(false);
             return session;
         }
 
@@ -976,15 +975,44 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="target">The target AMQP object to open.</param>
         /// <param name="timeout">The timeout to apply when opening the link.</param>
+        /// <param name="cancellationToken">Token to signal cancellation of the operation.</param>
+        /// <param name="entityPath">The path of the entity associated with the AMQP object being opened, if any.</param>
         protected virtual async Task OpenAmqpObjectAsync(
             AmqpObject target,
-            TimeSpan timeout)
+            TimeSpan timeout,
+            CancellationToken cancellationToken,
+            string entityPath = default)
         {
             try
             {
-                await target.OpenAsync(timeout).ConfigureAwait(false);
+                var openObjectCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                // use a static delegate with tuple state to avoid allocating a closure
+                using var registration = cancellationToken.Register(static state =>
+                {
+                    var (tcs, target) = ((TaskCompletionSource<object>, AmqpObject)) state;
+                    if (tcs.TrySetCanceled())
+                    {
+                        target.SafeClose();
+                    }
+                }, (openObjectCompletionSource, target), useSynchronizationContext: false);
+
+                static async Task Open(AmqpObject target, TimeSpan timeout, TaskCompletionSource<object> openObjectCompletionSource)
+                {
+                    try
+                    {
+                        await target.OpenAsync(timeout).ConfigureAwait(false);
+                        openObjectCompletionSource.TrySetResult(null);
+                    }
+                    catch (Exception ex)
+                    {
+                        openObjectCompletionSource.TrySetException(ex);
+                    }
+                }
+                _ = Open(target, timeout, openObjectCompletionSource);
+                await openObjectCompletionSource.Task.ConfigureAwait(false);
             }
-            catch
+            catch (Exception ex)
             {
                 switch (target)
                 {
@@ -994,13 +1022,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     case RequestResponseAmqpLink linkTarget:
                         linkTarget.Session?.SafeClose();
                         break;
-
-                    default:
-                        break;
                 }
 
                 target.SafeClose();
-                throw;
+
+                // The AMQP library may throw an InvalidOperationException or one of its derived types, such as
+                // ObjectDisposedException if the underlying network state changes.  While normally terminal, in this
+                // context, these exception types are safe to retry.  Translate them so that the retry policy
+                // can correctly interpret.
+
+                switch (ex)
+                {
+                    case InvalidOperationException:
+                        throw new ServiceBusException(true, Resources.CouldNotCreateLink, entityPath, ServiceBusFailureReason.ServiceCommunicationProblem, ex);
+
+                    default:
+                        throw;
+                }
             }
         }
 

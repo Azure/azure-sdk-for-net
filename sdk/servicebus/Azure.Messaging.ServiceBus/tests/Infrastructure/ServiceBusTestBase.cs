@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             return msg;
         }
 
-        protected byte[] GetRandomBuffer(long size)
+        public static byte[] GetRandomBuffer(long size)
         {
             var chars =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
@@ -104,7 +104,8 @@ namespace Azure.Messaging.ServiceBus.Tests
                     It.IsAny<uint>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
-                    It.IsAny<bool>()))
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(mockTransportReceiver.Object);
             return mockConnection.Object;
         }

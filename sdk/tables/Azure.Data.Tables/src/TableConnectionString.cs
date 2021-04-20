@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
 using Azure.Core;
 using AccountSetting = System.Collections.Generic.KeyValuePair<string, System.Func<string, bool>>;
@@ -191,7 +188,8 @@ namespace Azure.Data.Tables
                 settings.TryGetSegmentValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out sasToken);
 
             var matchesAutomaticEndpointsSpec = settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountNameSetting, out var accountName) &&
-                settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey);
+                (settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey) ||
+              settings.TryGetSegmentValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out sasToken));
 
             settings.TryGetSegmentValue(TableConstants.ConnectionStrings.TableEndpointSetting, out var primary);
             var endpointSuffix = settings.GetSegmentValueOrDefault(TableConstants.ConnectionStrings.EndpointSuffixSetting, TableConstants.ConnectionStrings.DefaultEndpointSuffix);

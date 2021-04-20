@@ -52,13 +52,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public SqlServerLinkedService(object connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+        /// <param name="alwaysEncryptedSettings">Sql always encrypted
+        /// properties.</param>
+        public SqlServerLinkedService(object connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object), SqlAlwaysEncryptedProperties alwaysEncryptedSettings = default(SqlAlwaysEncryptedProperties))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
             UserName = userName;
             Password = password;
             EncryptedCredential = encryptedCredential;
+            AlwaysEncryptedSettings = alwaysEncryptedSettings;
             CustomInit();
         }
 
@@ -96,6 +99,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object EncryptedCredential { get; set; }
 
         /// <summary>
+        /// Gets or sets sql always encrypted properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.alwaysEncryptedSettings")]
+        public SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -107,6 +116,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (ConnectionString == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
+            }
+            if (AlwaysEncryptedSettings != null)
+            {
+                AlwaysEncryptedSettings.Validate();
             }
         }
     }

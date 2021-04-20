@@ -53,7 +53,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets the properties of the pending certificate operation.
         /// </summary>
-        public CertificateOperationProperties Properties { get; private set; }
+        public virtual CertificateOperationProperties Properties { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether the operation has reached a terminal state.

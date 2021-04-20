@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -10,29 +11,33 @@ namespace Azure.Core.TestFramework
     [LiveOnly]
     public abstract class SamplesBase<TEnvironment>: LiveTestBase<TEnvironment> where TEnvironment : TestEnvironment, new()
     {
-        private string _previousClientId;
-        private string _previousClientSecret;
-        private string _previousClientTenantId;
+        private static AsyncLocal<TokenCredential> CurrentCredential = new AsyncLocal<TokenCredential>();
 
         // Initialize the environment so new DefaultAzureCredential() works
         [OneTimeSetUp]
         public virtual void SetupDefaultAzureCredential()
         {
-            _previousClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
-            _previousClientSecret = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
-            _previousClientTenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
-
-            Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", TestEnvironment.ClientId);
-            Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", TestEnvironment.ClientSecret);
-            Environment.SetEnvironmentVariable("AZURE_TENANT_ID", TestEnvironment.TenantId);
+            CurrentCredential.Value = TestEnvironment.Credential;
         }
 
-        [OneTimeTearDown]
-        public virtual void TearDownDefaultAzureCredential()
+        /// <summary>
+        /// This class is intended to shade the Identity.DefaultAzureCredential to prevent it from caching the credential chain.
+        /// </summary>
+        protected class DefaultAzureCredential: TokenCredential
         {
-            Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", _previousClientId);
-            Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", _previousClientSecret);
-            Environment.SetEnvironmentVariable("AZURE_TENANT_ID", _previousClientTenantId);
+            public DefaultAzureCredential(bool includeInteractiveCredentials = false)
+            {
+            }
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return CurrentCredential.Value.GetTokenAsync(requestContext, cancellationToken);
+            }
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return CurrentCredential.Value.GetToken(requestContext, cancellationToken);
+            }
         }
     }
 }

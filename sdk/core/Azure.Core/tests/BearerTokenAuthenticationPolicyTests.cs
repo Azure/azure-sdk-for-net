@@ -3,13 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -604,6 +602,47 @@ namespace Azure.Core.Tests
             responseMre.Set();
 
             Assert.CatchAsync<OperationCanceledException>(async () => await secondRequestTask);
+        }
+
+        [Test]
+        [Repeat(10)]
+        public void BearerTokenAuthenticationPolicy_UnobservedTaskException()
+        {
+            var unobservedTaskExceptionWasRaised = false;
+            var expectedFailedException = new RequestFailedException("Communication Error");
+            try
+            {
+                TaskScheduler.UnobservedTaskException += UnobservedTaskExceptionHandler;
+                var credential =
+                    new TokenCredentialStub((_, ct) => throw expectedFailedException,
+                        IsAsync);
+
+                var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+                MockTransport transport = CreateMockTransport((_) => new MockResponse(500));
+
+                Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await SendRequestAsync(transport, request => { request.Uri.Scheme = "https"; }, policy));
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+            }
+            finally
+            {
+                TaskScheduler.UnobservedTaskException -= UnobservedTaskExceptionHandler;
+            }
+
+            Assert.False(unobservedTaskExceptionWasRaised, "UnobservedTaskException should not be raised");
+
+            void UnobservedTaskExceptionHandler(object sender, UnobservedTaskExceptionEventArgs args)
+            {
+                if (args.Exception.InnerException == null ||
+                    args.Exception.InnerException.ToString() != expectedFailedException.ToString())
+                    return;
+
+                args.SetObserved();
+                unobservedTaskExceptionWasRaised = true;
+            }
         }
 
         private class TokenCredentialStub : TokenCredential

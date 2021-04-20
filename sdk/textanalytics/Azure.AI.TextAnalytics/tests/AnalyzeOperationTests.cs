@@ -44,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             //Take the first page
             AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -77,7 +77,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchConvenienceDocuments, batchActions, "en");
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             //Take the first page
             AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -136,7 +136,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             //Take the first page
             AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -194,14 +194,14 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(0, operation.ActionsFailed);
             Assert.AreEqual(0, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(0, operation.TotalActions);
+            Assert.AreEqual(0, operation.ActionsTotal);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.AreEqual(0, operation.ActionsFailed);
             Assert.AreEqual(4, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(4, operation.TotalActions);
+            Assert.AreEqual(4, operation.ActionsTotal);
             Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
             Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
             Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
@@ -313,12 +313,12 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.Throws<InvalidOperationException>(() => operation.GetValues());
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             // try async
             //There most be 2 pages as service limit is 20 documents per page
@@ -394,7 +394,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions, "en");
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             //Take the first page
             AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -471,7 +471,7 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions, "en");
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             //Take the first page
             AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -502,7 +502,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(documents, batchActions, "en");
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             //Take the first page
             AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -553,7 +553,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions, options);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             //Take the first page
             AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();

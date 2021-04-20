@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 parameters.Validate();
             }
-            string apiVersion = "2017-05-15-preview";
+            string apiVersion = "2019-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -382,7 +382,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "softwareUpdateConfigurationName");
             }
-            string apiVersion = "2017-05-15-preview";
+            string apiVersion = "2019-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -605,7 +605,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "softwareUpdateConfigurationName");
             }
-            string apiVersion = "2017-05-15-preview";
+            string apiVersion = "2019-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -809,7 +809,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "automationAccountName");
             }
-            string apiVersion = "2017-05-15-preview";
+            string apiVersion = "2019-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

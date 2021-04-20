@@ -50,6 +50,11 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
+        /// <summary>
+        /// Ge the service endpoint for this client.
+        /// </summary>
+        public Uri Endpoint {  get { return _endpoint; } }
+
         /// <summary> List repositories. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<string> GetRepositoriesAsync(CancellationToken cancellationToken = default)
@@ -142,6 +147,58 @@ namespace Azure.Containers.ContainerRegistry
             // See: https://tools.ietf.org/html/rfc5988#section-5
 
             return linkValue?.Substring(1, linkValue.IndexOf('>') - 1);
+        }
+
+        /// <summary> Delete the repository identified by `repostitory`. </summary>
+        /// <param name="repository"> Repository name (including the namespace). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DeleteRepositoryResult>> DeleteRepositoryAsync(string repository, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
+            scope.Start();
+            try
+            {
+                return await _restClient.DeleteRepositoryAsync(repository, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete the repository identified by `repostitory`. </summary>
+        /// <param name="repository"> Repository name (including the namespace). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DeleteRepositoryResult> DeleteRepository(string repository, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
+            scope.Start();
+            try
+            {
+                return _restClient.DeleteRepository(repository, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a new <see cref="ContainerRepositoryClient"/> object for the specified repository.
+        /// The new <see cref="ContainerRepositoryClient"/> uses the same request
+        /// pipeline as the <see cref="ContainerRegistryClient"/>.
+        /// </summary>
+        /// <param name="repository"> The repository to reference. </param>
+        /// <returns> A new <see cref="ContainerRepositoryClient"/> for the desired repository. </returns>
+        public virtual ContainerRepositoryClient GetRepositoryClient(string repository)
+        {
+            return new ContainerRepositoryClient(_endpoint,
+                repository,
+                _clientDiagnostics,
+                _pipeline,
+                _acrAuthPipeline);
         }
     }
 }

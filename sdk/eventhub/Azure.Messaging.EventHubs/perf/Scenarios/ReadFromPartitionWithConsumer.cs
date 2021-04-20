@@ -11,8 +11,8 @@ using Azure.Test.Perf;
 namespace Azure.Messaging.EventHubs.Perf.Scenarios
 {
     /// <summary>
-    ///   The performance test scenario focused on publishing events
-    ///   to an Event Hubs partition.
+    ///   The performance test scenario focused on reading events from an
+    ///   Event Hub partition using the <see cref="EventHubConsumerClient" />.
     /// </summary>
     ///
     /// <seealso cref="ReadPerfTest" />
@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         ///
         public async override Task SetupAsync()
         {
-            await base.SetupAsync();
+            await base.SetupAsync().ConfigureAwait(false);
 
             // Attempt to take a consumer group from the available set; to ensure that the
             // test scenario can support the requested level of parallelism without violating
@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventHubs.Perf.Scenarios
         {
             await _readEnumerator.DisposeAsync();
             await _consumer.CloseAsync().ConfigureAwait(false);
-            await base.CleanupAsync();
+            await base.CleanupAsync().ConfigureAwait(false);
         }
 
         /// <summary>

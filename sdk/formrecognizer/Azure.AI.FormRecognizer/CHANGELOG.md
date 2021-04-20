@@ -1,10 +1,20 @@
 # Release History
 
-## 3.1.0-beta.4 (Unreleased)
+## 3.1.0-beta.5 (Unreleased)
+
+
+## 3.0.1 (2021-04-09)
+
+### Key Bug Fixes
+- Updated dependency versions.
+
+## 3.1.0-beta.4 (2021-04-06)
 
 ### New Features
+- Added support for pre-built passports and US driver licenses recognition with the `StartRecognizeIdDocuments` API.
 - Expanded the set of document languages that can be provided to the `StartRecognizeContent` API.
 - Added property `Pages` to `RecognizeBusinessCardsOptions`, `RecognizeCustomFormsOptions`, `RecognizeInvoicesOptions`, and `RecognizeReceiptsOptions` to specify the page numbers to recognize.
+- Added property `ReadingOrder` to `RecognizeContentOptions` to specify the order in which recognized text lines are returned.
 
 ### Breaking changes
 - The client defaults to the latest supported service version, which currently is `2.1-preview.3`.
