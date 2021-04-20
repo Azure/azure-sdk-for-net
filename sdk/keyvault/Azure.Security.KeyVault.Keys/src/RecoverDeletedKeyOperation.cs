@@ -12,27 +12,28 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// A long-running operation for <see cref="KeyClient.StartRecoverDeletedKey(string, CancellationToken)"/> or <see cref="KeyClient.StartRecoverDeletedKeyAsync(string, CancellationToken)"/>.
     /// </summary>
-    public class RecoverDeletedKeyOperation : Operation<KeyVaultKey>
+    public class RecoverDeletedKeyOperation : Operation<KeyVaultKey>, IOperation<KeyVaultKey>
     {
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(2);
 
+        private readonly OperationInternal<KeyVaultKey> _operationInternal;
         private readonly KeyVaultPipeline _pipeline;
-        private readonly KeyVaultKey _value;
-        private Response _response;
-        private bool _completed;
 
         internal RecoverDeletedKeyOperation(KeyVaultPipeline pipeline, Response<KeyVaultKey> response)
         {
             _pipeline = pipeline;
-            _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _response = response.GetRawResponse();
+            _operationInternal = new(nameof(RecoverDeletedKeyOperation), pipeline.Diagnostics, this, s_defaultPollingInterval)
+            {
+                RawResponse = response.GetRawResponse(),
+                Value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.")
+            };
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoverDeletedKeyOperation" /> for mocking. </summary>
         protected RecoverDeletedKeyOperation() {}
 
         /// <inheritdoc/>
-        public override string Id => _value.Id.ToString();
+        public override string Id => Value.Id.ToString();
 
         /// <summary>
         /// Gets the <see cref="KeyVaultKey"/> of the key being recovered.
@@ -41,102 +42,62 @@ namespace Azure.Security.KeyVault.Keys
         /// <remarks>
         /// Azure Key Vault will return a <see cref="KeyVaultKey"/> immediately but may take time to actually recover the deleted key if soft-delete is enabled.
         /// </remarks>
-        public override KeyVaultKey Value => _value;
+        public override KeyVaultKey Value => _operationInternal.Value;
 
         /// <inheritdoc/>
-        public override bool HasCompleted => _completed;
+        public override bool HasCompleted => _operationInternal.HasCompleted;
 
         /// <inheritdoc/>
-        public override bool HasValue => true;
+        public override bool HasValue => _operationInternal.HasValue;
 
         /// <inheritdoc/>
-        public override Response GetRawResponse() => _response;
+        public override Response GetRawResponse() => _operationInternal.RawResponse;
 
         /// <inheritdoc/>
-        public override Response UpdateStatus(CancellationToken cancellationToken = default)
-        {
-            if (!_completed)
-            {
-                using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(RecoverDeletedKeyOperation)}.{nameof(UpdateStatus)}");
-                scope.AddAttribute("secret", _value.Name);
-                scope.Start();
-
-                try
-                {
-                    _response = _pipeline.GetResponse(RequestMethod.Get, cancellationToken, KeyClient.KeysPath, _value.Name, "/", _value.Properties.Version);
-                    _completed = CheckCompleted(_response);
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return GetRawResponse();
-        }
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
+            _operationInternal.UpdateStatus(cancellationToken);
 
         /// <inheritdoc/>
-        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
-        {
-            if (!_completed)
-            {
-                using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(RecoverDeletedKeyOperation)}.{nameof(UpdateStatus)}");
-                scope.AddAttribute("secret", _value.Name);
-                scope.Start();
-
-                try
-                {
-                    _response = await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, KeyClient.KeysPath, _value.Name, "/", _value.Properties.Version).ConfigureAwait(false);
-                    _completed = await CheckCompletedAsync(_response).ConfigureAwait(false);
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return GetRawResponse();
-        }
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
+            await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
-        public override ValueTask<Response<KeyVaultKey>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionAsync(s_defaultPollingInterval, cancellationToken);
+        public override async ValueTask<Response<KeyVaultKey>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+            await _operationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
-        public override ValueTask<Response<KeyVaultKey>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override async ValueTask<Response<KeyVaultKey>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+            await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
-        private async ValueTask<bool> CheckCompletedAsync(Response response)
+        async Task<Response> IOperation<KeyVaultKey>.GetResponseAsync(CancellationToken cancellationToken) =>
+            await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, KeyClient.KeysPath, Value.Name, "/", Value.Properties.Version).ConfigureAwait(false);
+
+        Response IOperation<KeyVaultKey>.GetResponse(CancellationToken cancellationToken) =>
+            _pipeline.GetResponse(RequestMethod.Get, cancellationToken, KeyClient.KeysPath, Value.Name, "/", Value.Properties.Version);
+
+        CompletionStatus IOperation<KeyVaultKey>.UpdateState(Response response)
         {
             switch (response.Status)
             {
                 case 200:
                 case 403: // Access denied but proof the key was recovered.
-                    return true;
+                    return CompletionStatus.Succeeded;
 
                 case 404:
-                    return false;
-
-                default:
-                    throw await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-            }
-        }
-        private bool CheckCompleted(Response response)
-        {
-            switch (response.Status)
-            {
-                case 200:
-                case 403: // Access denied but proof the key was recovered.
-                    return true;
-
-                case 404:
-                    return false;
+                    return CompletionStatus.Pending;
 
                 default:
                     throw _pipeline.Diagnostics.CreateRequestFailedException(response);
             }
+        }
+
+        KeyVaultKey IOperation<KeyVaultKey>.ParseResponse(Response response) => Value;
+
+        RequestFailedException IOperation<KeyVaultKey>.GetOperationFailedException(Response response) => null;
+
+        void IOperation<KeyVaultKey>.AddAttributes(DiagnosticScope scope)
+        {
+            scope.AddAttribute("secret", Value.Name);
         }
     }
 }
