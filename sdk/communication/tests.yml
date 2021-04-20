@@ -17,7 +17,7 @@ extends:
     ServiceDirectory: communication
     CloudConfig:
       Public:
-        SubscriptionConfiguration: $(sub-config-communication-services-cloud-test-resources)
+        SubscriptionConfiguration: $(sub-config-communication-services-cloud-test-resources-test)
       Int:
         SubscriptionConfiguration: $(sub-config-communication-int-test-resources)
     Clouds: Public,Int
