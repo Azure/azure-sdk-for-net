@@ -26,6 +26,35 @@
         /// <param name='galleryName'>
         /// The name of the Shared Image Gallery.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<Gallery>> GetWithHttpMessagesAsync(string resourceGroupName, string galleryName)
+        {
+            return await GetWithHttpMessagesAsync(resourceGroupName, galleryName, default(string), null, default(CancellationToken));
+        }
+
+        /// <summary>
+        /// Retrieves information about a Shared Image Gallery.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='galleryName'>
+        /// The name of the Shared Image Gallery.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
