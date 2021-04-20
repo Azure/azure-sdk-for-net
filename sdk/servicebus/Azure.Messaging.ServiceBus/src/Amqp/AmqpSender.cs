@@ -420,7 +420,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
                 }
 
-                List<AmqpMap> entries = new List<AmqpMap>();
+                List<AmqpMap> entries = new List<AmqpMap>(messages.Count);
                 foreach (ServiceBusMessage message in messages)
                 {
                     using AmqpMessage amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message);

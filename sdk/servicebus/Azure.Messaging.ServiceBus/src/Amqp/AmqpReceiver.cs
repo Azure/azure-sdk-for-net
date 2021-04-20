@@ -286,7 +286,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             var link = default(ReceivingAmqpLink);
-            var receivedMessages = new List<ServiceBusReceivedMessage>();
+            var receivedMessages = new List<ServiceBusReceivedMessage>(maxMessages);
 
             ThrowIfSessionLockLost();
 
@@ -956,7 +956,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
 
-            var messages = new List<ServiceBusReceivedMessage>();
+            var messages = new List<ServiceBusReceivedMessage>(messageCount);
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
             {
                 ServiceBusReceivedMessage message = null;
@@ -1237,7 +1237,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             long[] sequenceNumbers,
             TimeSpan timeout)
         {
-            var messages = new List<ServiceBusReceivedMessage>();
+            var messages = new List<ServiceBusReceivedMessage>(sequenceNumbers.Length);
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.ReceiveBySequenceNumberOperation, timeout, null);
