@@ -12,7 +12,8 @@ namespace Azure.Data.Tables
         protected TableClient() { }
         public TableClient(string connectionString, string tableName) { }
         public TableClient(string connectionString, string tableName, Azure.Data.Tables.TableClientOptions options = null) { }
-        public TableClient(System.Uri endpoint, string tableName, Azure.AzureSasCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, Azure.AzureSasCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential) { }
         public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
         public virtual string AccountName { get { throw null; } }
