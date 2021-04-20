@@ -436,7 +436,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var pageNumber = 389;
             var text = "Bhaskara";
             var words = new List<FormWord>() { formWord };
-            var appearance = new TextAppearance(new TextStyle(default, default));
+            var appearance = new TextAppearance();
 
             var formLine = FormRecognizerModelFactory.FormLine(boundingBox, pageNumber, text, words, appearance);
 

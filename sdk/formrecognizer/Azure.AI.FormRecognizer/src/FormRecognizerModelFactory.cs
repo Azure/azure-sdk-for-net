@@ -480,9 +480,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="style">An object representing the style of the text line.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.TextAppearance"/> instance for mocking.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="style"/> is null.</exception>
         public static TextAppearance TextAppearance(TextStyle style) =>
-            new TextAppearance(style);
+            style == null ? new TextAppearance() : new TextAppearance(style);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.TextStyle"/> class.
