@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -157,36 +158,45 @@ namespace Azure.Template.Tests
         public async Task CanQueryWithTimespan()
         {
             // Get the time of the second event and add a bit of buffer to it (events are 2d apart)
-            var timespan = Recording.Now - (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
+            var minOffset = (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
+            var timespan = Recording.UtcNow - minOffset;
             timespan = timespan.Add(TimeSpan.FromDays(1));
 
             var client = CreateClient();
-            var results = await client.QueryAsync<string>(TestEnvironment.WorkspaceId, _logsTestData.TableAName, timespan);
+            var results = await client.QueryAsync<string>(
+                TestEnvironment.WorkspaceId,
+                $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}",
+                timespan);
 
             // We should get the second and the third events
             Assert.AreEqual(2, results.Value.Count);
+            // TODO: Switch to querying DateTimeOffset
+            Assert.True(results.Value.All(r => DateTimeOffset.Parse(r, null, DateTimeStyles.AssumeUniversal) >= minOffset));
         }
 
         [RecordedTest]
         public async Task CanQueryBatchWithTimespan()
         {
             // Get the time of the second event and add a bit of buffer to it (events are 2d apart)
-            var timespan = Recording.Now - (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
+            var minOffset = (DateTimeOffset)_logsTestData.TableA[1][LogsTestData.TimeGeneratedColumnNameSent];
+            var timespan = Recording.UtcNow - minOffset;
             timespan = timespan.Add(TimeSpan.FromDays(1));
 
             var client = CreateClient();
             LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
-            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName);
-            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName, timespan);
+            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}");
+            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}", timespan);
             Response<LogsBatchQueryResult> response = await batch.SubmitAsync();
 
-            var result1 = response.Value.GetResult(id1);
-            var result2 = response.Value.GetResult(id2);
+            var result1 = response.Value.GetResult<string>(id1);
+            var result2 = response.Value.GetResult<string>(id2);
 
             // All rows
-            Assert.AreEqual(3, result1.PrimaryTable.Rows.Count);
+            Assert.AreEqual(3, result1.Count);
             // Filtered by the timestamp
-            Assert.AreEqual(2, result2.PrimaryTable.Rows.Count);
+            Assert.AreEqual(2, result2.Count);
+            // TODO: Switch to querying DateTimeOffset
+            Assert.True(result2.All(r => DateTimeOffset.Parse(r, null, DateTimeStyles.AssumeUniversal) >= minOffset));
         }
 
         private record TestModel

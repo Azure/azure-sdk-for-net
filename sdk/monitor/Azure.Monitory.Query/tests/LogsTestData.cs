@@ -14,7 +14,7 @@ namespace Azure.Template.Tests
     // Increment the DataVersion when changing the values to force a re-send
     public class LogsTestData
     {
-        private static readonly string DataVersion = "3";
+        private static readonly string DataVersion = "1";
         // The data retention time is 31 day by-default so we need to make sure the data we posted is still
         // being retained.
         // Make the windows start the monday of a previous week.
@@ -33,7 +33,7 @@ namespace Azure.Template.Tests
         public static string FloatColumnName = FloatColumnNameSent + "_d";
 
         public static string TimeGeneratedColumnNameSent = "EventTimeGenerated";
-        public static string TimeGeneratedColumnName = TimeGeneratedColumnNameSent + "_d";
+        public static string TimeGeneratedColumnName = "TimeGenerated";
 
         public readonly List<Dictionary<string, object>> TableA;
 
@@ -48,7 +48,8 @@ namespace Azure.Template.Tests
             _testEnvironment = test.TestEnvironment;
 
             // Make sure we don't need to re-record every week
-            RetentionWindowStart = test.Recording.Now.AddDays(DayOfWeek.Monday - DateTimeOffset.Now.DayOfWeek - 7);
+            var recordingUtcNow = DateTime.SpecifyKind(test.Recording.UtcNow.Date, DateTimeKind.Utc);
+            RetentionWindowStart = recordingUtcNow.AddDays(DayOfWeek.Monday - recordingUtcNow.DayOfWeek - 7);
 
             TableA = new()
             {
