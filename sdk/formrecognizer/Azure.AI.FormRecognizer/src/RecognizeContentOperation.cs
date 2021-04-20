@@ -183,5 +183,8 @@ namespace Azure.AI.FormRecognizer.Models
 
         RequestFailedException IOperation<FormPageCollection, AnalyzeOperationResult>.GetOperationFailedException(Response<AnalyzeOperationResult> response) =>
             ClientCommon.CreateExceptionForFailedOperationAsync(async: false, _diagnostics, response.GetRawResponse(), response.Value.AnalyzeResult.Errors).EnsureCompleted();
+
+        void IOperation<FormPageCollection, AnalyzeOperationResult>.AddAttributes(DiagnosticScope scope)
+        { }
     }
 }
