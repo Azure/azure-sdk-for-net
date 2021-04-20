@@ -18,12 +18,14 @@ namespace Azure.AI.Translation.Document.Samples
         [Ignore("Samples not working yet")]
         public void CreateDocumentTranslationClient()
         {
+            #region Snippet:CreateDocumentTranslationClient
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
-            #region Snippet:CreateDocumentTranslationClient
-            //@@ string endpoint = "<endpoint>";
-            //@@ string apiKey = "<apiKey>";
+#endif
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
         }
@@ -38,11 +40,12 @@ namespace Azure.AI.Translation.Document.Samples
             var credentials = new AzureKeyCredential(apiKey);
             var client = new DocumentTranslationClient(new Uri(endpoint), credentials);
 
-            var invalidInput = new DocumentTranslationInput(new TranslationSource(new Uri(endpoint)), new List<TranslationTarget>());
-
             #region Snippet:BadRequest
-
-            //@@ var invalidInput = new DocumentTranslationInput(new TranslationSource(sourceSasUri, new List<TranslationTarget>());
+#if SNIPPET
+            var invalidInput = new DocumentTranslationInput(new TranslationSource(sourceSasUri, new List<TranslationTarget>());
+#else
+            var invalidInput = new DocumentTranslationInput(new TranslationSource(new Uri(endpoint)), new List<TranslationTarget>());
+#endif
 
             try
             {
@@ -59,26 +62,30 @@ namespace Azure.AI.Translation.Document.Samples
         [Ignore("Samples not working yet")]
         public void DocumentTranslationInput()
         {
+            #region Snippet:DocumentTranslationSingleInput
+#if SNIPPET
+            Uri sourceSasUri = <source SAS URI>;
+            Uri frenchTargetSasUri = <french target SAS URI>;
+#else
             Uri sourceSasUri = new Uri("<source SAS URI>");
             Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
-            Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
-            Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
-
-            #region Snippet:DocumentTranslationSingleInput
-            //@@ Uri sourceSasUri = <source SAS URI>;
-            //@@ Uri frenchTargetSasUri = <french target SAS URI>;
+#endif
 
             var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr");
             #endregion
 
+            #region Snippet:DocumentTranslationMultipleInputs
+#if SNIPPET
+            Uri source1SasUri = <source1 SAS URI>;
+            Uri source2SasUri = <source2 SAS URI>;
+            Uri frenchTargetSasUri = <french target SAS URI>;
+            Uri spanishTargetSasUri = <spanish target SAS URI>;
+#else
+            Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
+            Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
             Uri source1SasUri = new Uri("<source1 SAS URI>");
             Uri source2SasUri = new Uri("<source2 SAS URI>");
-
-            #region Snippet:DocumentTranslationMultipleInputs
-            //@@ Uri source1SasUri = <source1 SAS URI>;
-            //@@ Uri source2SasUri = <source2 SAS URI>;
-            //@@ Uri frenchTargetSasUri = <french target SAS URI>;
-            //@@ Uri spanishTargetSasUri = <spanish target SAS URI>;
+#endif
 
             var inputs = new List<DocumentTranslationInput>
             {
