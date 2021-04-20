@@ -24,19 +24,26 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         /// <param name="type">The data type of the field value.</param>
         internal FieldValue(string value, FieldValueType type)
             : this()
         {
+            if (type != FieldValueType.String && type != FieldValueType.PhoneNumber && type != FieldValueType.Country)
+            {
+                throw new ArgumentException($"Specified {nameof(type)} does not support string value ({type}).");
+            }
+
             ValueString = value;
             ValueType = type;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(long value)
@@ -47,7 +54,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(float value)
@@ -58,7 +66,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(DateTime value)
@@ -69,7 +78,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(TimeSpan value)
@@ -80,7 +90,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(IReadOnlyList<FormField> value)
@@ -91,7 +102,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(IReadOnlyDictionary<string, FormField> value)
@@ -102,7 +114,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(SelectionMarkState value)
@@ -113,7 +126,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(FieldValueGender value)

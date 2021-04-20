@@ -44,14 +44,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="errors">A list of errors occurred during the training operation.</param>
         /// <returns>A new <see cref="Training.CustomFormModel"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CustomFormModel CustomFormModel(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, IReadOnlyList<CustomFormSubmodel> submodels, IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<FormRecognizerError> errors)
-        {
-            submodels = submodels?.ToList();
-            trainingDocuments = trainingDocuments?.ToList();
-            errors = errors?.ToList();
-
-            return new CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors, default, default);
-        }
+        public static CustomFormModel CustomFormModel(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, IReadOnlyList<CustomFormSubmodel> submodels, IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<FormRecognizerError> errors) =>
+            CustomFormModel(modelId, status, trainingStartedOn, trainingCompletedOn, submodels, trainingDocuments, errors, default, default);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.CustomFormModel"/> class.
@@ -104,7 +98,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <returns>A new <see cref="Training.CustomFormModelInfo"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CustomFormModelInfo CustomFormModelInfo(string modelId, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, CustomFormModelStatus status) =>
-            new CustomFormModelInfo(modelId, status, trainingStartedOn, trainingCompletedOn, default, default);
+            CustomFormModelInfo(modelId, trainingStartedOn, trainingCompletedOn, status, default, default);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.CustomFormModelInfo"/> class.
@@ -135,12 +129,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="fields">A dictionary of the fields that this submodel will recognize from the input document.</param>
         /// <returns>A new <see cref="Training.CustomFormSubmodel"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CustomFormSubmodel CustomFormSubmodel(string formType, float? accuracy, IReadOnlyDictionary<string, CustomFormModelField> fields)
-        {
-            fields = fields?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-
-            return new CustomFormSubmodel(formType, accuracy, fields, default);
-        }
+        public static CustomFormSubmodel CustomFormSubmodel(string formType, float? accuracy, IReadOnlyDictionary<string, CustomFormModelField> fields) =>
+            CustomFormSubmodel(formType, accuracy, fields, default);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.CustomFormSubmodel"/> class.
@@ -289,12 +279,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="words">A list of the words that make up the line.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormLine"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FormLine FormLine(FieldBoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormWord> words)
-        {
-            words = words?.ToList();
-
-            return new FormLine(boundingBox, pageNumber, text, words, default);
-        }
+        public static FormLine FormLine(FieldBoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormWord> words) =>
+            FormLine(boundingBox, pageNumber, text, words, default);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormLine"/> class.
@@ -324,13 +310,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="tables">A list of recognized tables contained in this page.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormPage"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FormPage FormPage(int pageNumber, float width, float height, float textAngle, LengthUnit unit, IReadOnlyList<FormLine> lines, IReadOnlyList<FormTable> tables)
-        {
-            lines = lines?.ToList();
-            tables = tables?.ToList();
-
-            return new FormPage(pageNumber, width, height, textAngle, unit, lines, tables, default);
-        }
+        public static FormPage FormPage(int pageNumber, float width, float height, float textAngle, LengthUnit unit, IReadOnlyList<FormLine> lines, IReadOnlyList<FormTable> tables) =>
+            FormPage(pageNumber, width, height, textAngle, unit, lines, tables, default);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormPage"/> class.
@@ -402,12 +383,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="cells">A list of cells contained in this table.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.FormTable"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FormTable FormTable(int pageNumber, int columnCount, int rowCount, IReadOnlyList<FormTableCell> cells)
-        {
-            cells = cells?.ToList();
-
-            return new FormTable(pageNumber, columnCount, rowCount, cells, default);
-        }
+        public static FormTable FormTable(int pageNumber, int columnCount, int rowCount, IReadOnlyList<FormTableCell> cells) =>
+            FormTable(pageNumber, columnCount, rowCount, cells, default);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.FormTable"/> class.
@@ -467,13 +444,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="pages">A list of pages describing the recognized form elements present in the input document.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.RecognizedForm"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RecognizedForm RecognizedForm(string formType, FormPageRange pageRange, IReadOnlyDictionary<string, FormField> fields, IReadOnlyList<FormPage> pages)
-        {
-            fields = fields?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            pages = pages?.ToList();
-
-            return new RecognizedForm(formType, pageRange, fields, pages, default, default);
-        }
+        public static RecognizedForm RecognizedForm(string formType, FormPageRange pageRange, IReadOnlyDictionary<string, FormField> fields, IReadOnlyList<FormPage> pages) =>
+            RecognizedForm(formType, pageRange, fields, pages, default, default);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.RecognizedForm"/> class.
@@ -530,10 +502,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="status">Status of the training operation.</param>
         /// <returns>A new <see cref="Training.TrainingDocumentInfo"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TrainingDocumentInfo TrainingDocumentInfo(string name, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status)
-        {
-            return new TrainingDocumentInfo(name, pageCount, errors?.ToList(), status, default);
-        }
+        public static TrainingDocumentInfo TrainingDocumentInfo(string name, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status) =>
+            TrainingDocumentInfo(name, pageCount, errors?.ToList(), status, default);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.TrainingDocumentInfo"/> class.
