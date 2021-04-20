@@ -74,14 +74,17 @@ namespace Azure.Security.Attestation.Tests
             // If we're not using live data, we want to disable expiration time checks.
             var options = testBase.InstrumentClientOptions(
                 new AttestationClientOptions(
-                    tokenOptions: tokenValidation?? new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
+                    tokenOptions: tokenValidation?? new TokenValidationOptions
+                    {
+                        ValidateExpirationTime = IsTalkingToLiveServer,
+                    }));
             return testBase.InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), GetClientSecretCredential(), options));
         }
 
         private AttestationClient GetAttestationClient(string endpoint, RecordedTestBase testBase, TokenValidationOptions tokenValidation)
         {
             // If we're not using live data, we want to disable expiration time checks.
-            var options = testBase.InstrumentClientOptions(new AttestationClientOptions(tokenOptions: tokenValidation?? new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
+            var options = testBase.InstrumentClientOptions(new AttestationClientOptions(tokenOptions: tokenValidation?? new TokenValidationOptions{ ValidateExpirationTime = IsTalkingToLiveServer, }));
             return testBase.InstrumentClient(new AttestationClient(new Uri(endpoint), GetClientSecretCredential(), options));
         }
 

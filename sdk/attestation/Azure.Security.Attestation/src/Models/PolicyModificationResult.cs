@@ -14,12 +14,12 @@ namespace Azure.Security.Attestation
     /// Represents a Policy Get or Set or Reset result.
     /// </summary>
     [CodeGenModel("PolicyResult")]
-    public partial class PolicyResult
+    public partial class PolicyModificationResult
     {
         /// <summary>
-        /// Creates a new instance of a <see cref="PolicyResult"/> object.
+        /// Creates a new instance of a <see cref="PolicyModificationResult"/> object.
         /// </summary>
-        public PolicyResult()
+        public PolicyModificationResult()
         {
         }
 
@@ -55,7 +55,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// JSON Web Token containing the policy retrieved.
         /// </summary>
-        internal AttestationToken PolicyToken { get => new AttestationToken(BasePolicy); }
+        internal AttestationToken PolicyToken { get => AttestationToken.Deserialize(BasePolicy); }
 
         [CodeGenMember("PolicyTokenHash")]
         internal string BasePolicyTokenHash { get; private set; }

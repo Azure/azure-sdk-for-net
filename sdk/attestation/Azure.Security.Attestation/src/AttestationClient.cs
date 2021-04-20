@@ -16,7 +16,9 @@ namespace Azure.Security.Attestation
     ///
     /// The Attestation client contains the implementation of the "Attest" family of MAA apis.
     /// </summary>
-    public class AttestationClient : IDisposable
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable
+    public class AttestationClient
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -24,8 +26,8 @@ namespace Azure.Security.Attestation
         private readonly SigningCertificatesRestClient _metadataClient;
         private readonly AttestationClientOptions _options;
         private IReadOnlyList<AttestationSigner> _signers;
+        // NOTE The SemaphoreSlim type does NOT need Disposable based on the current usage.
         private SemaphoreSlim _statelock = new SemaphoreSlim(1, 1);
-        private bool _disposedValue;
 
         // The default scope for our data plane operations.
         private readonly string DefaultScope = "https://attest.azure.net/.default";
@@ -82,64 +84,75 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Attest an Intel SGX enclave.
         /// </summary>
-        /// <param name="quote">An Intel SGX "quote".
-        /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html" for more information.</param>
-        /// <param name="initTimeData">Data provided when the enclave was created.</param>
-        /// <param name="initTimeDataIsObject">true if the initTimeData parameter should be treated as an object, false if it should be treated as binary.</param>
-        /// <param name="runTimeData">Data provided when the quote was generated.</param>
-        /// <param name="runTimeDataIsObject">true if the runTimeData parameter should be treated as an object, false if it should be treated as binary.</param>
+        /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="quote"/>, <paramref name="runTimeData"/>, and <paramref name="initTimeData"/></returns>
-            public virtual AttestationResponse<AttestationResult> AttestSgxEnclave(ReadOnlyMemory<byte> quote, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
-                => AttestSgxEnclaveInternal(quote, initTimeData, initTimeDataIsObject, runTimeData, runTimeDataIsObject, false, cancellationToken).EnsureCompleted();
+        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
+        /// <remarks>The <see cref="AttestRequest.Evidence"/> must be an Intel SGX Quote.
+        /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html" for more information.
+        ///</remarks>
+        public virtual AttestationResponse<AttestationResult> AttestSgxEnclave(AttestRequest request, CancellationToken cancellationToken = default)
+                => AttestSgxEnclaveInternal(request, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Attest an Intel SGX enclave.
         /// </summary>
-        /// <param name="quote">An Intel SGX "quote".
-        /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html for more information.</param>
-        /// <param name="initTimeData">Data provided when the enclave was created.</param>
-        /// <param name="initTimeDataIsObject">true if the initTimeData parameter should be treated as an object, false if it should be treated as binary.</param>
-        /// <param name="runTimeData">Data provided when the quote was generated.</param>
-        /// <param name="runTimeDataIsObject">true if the runTimeData parameter should be treated as an object, false if it should be treated as binary.</param>
+        /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="quote"/>, <paramref name="runTimeData"/>, and <paramref name="initTimeData"/></returns>
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveAsync(ReadOnlyMemory<byte> quote, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
-            => await AttestSgxEnclaveInternal(quote, initTimeData, initTimeDataIsObject, runTimeData, runTimeDataIsObject, true, cancellationToken).ConfigureAwait(false);
+        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
+        /// <remarks>The <see cref="AttestRequest.Evidence"/> must be an Intel SGX Quote.
+        /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html" for more information.
+        ///</remarks>
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveAsync(AttestRequest request, CancellationToken cancellationToken = default)
+            => await AttestSgxEnclaveInternal(request, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Attest an Intel SGX enclave.
         /// </summary>
-        /// <param name="quote">An Intel SGX "quote".
-        /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html for more information.</param>
-        /// <param name="initTimeData">Data provided when the enclave was created.</param>
-        /// <param name="initTimeDataIsObject">true if the initTimeData parameter should be treated as an object, false if it should be treated as binary.</param>
-        /// <param name="runTimeData">Data provided when the quote was generated.</param>
-        /// <param name="runTimeDataIsObject">true if the runTimeData parameter should be treated as an object, false if it should be treated as binary.</param>
+        /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
         /// <param name="async">true if the API call should be asynchronous, false otherwise.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="quote"/>, <paramref name="runTimeData"/>, and <paramref name="initTimeData"/></returns>
-        private async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveInternal(ReadOnlyMemory<byte> quote, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, bool async, CancellationToken cancellationToken = default)
+        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/></returns>
+        /// <remarks>The <see cref="AttestRequest.Evidence"/> must be an Intel SGX Quote.
+        /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html" for more information.
+        ///</remarks>
+        private async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveInternal(AttestRequest request, bool async, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(runTimeData, nameof(runTimeData));
+            Argument.AssertNotNull(request, nameof(request));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSgxEnclave)}");
             scope.Start();
             try
             {
                 var attestSgxEnclaveRequest = new AttestSgxEnclaveRequest
                 {
-                    Quote = quote.ToArray(),
-                    InitTimeData = initTimeData != null ? new InitTimeData
-                    {
-                        Data = initTimeData.ToArray(),
-                        DataType = initTimeDataIsObject ? DataType.Json : DataType.Binary,
-                    } : null,
-                    RuntimeData = runTimeData != null ? new RuntimeData
-                    {
-                        Data = runTimeData.ToArray(),
-                        DataType = runTimeDataIsObject ? DataType.Json : DataType.Binary,
-                    } : null,
+                    Quote = request.Evidence.ToArray(),
+                    DraftPolicyForAttestation = request.DraftPolicyForAttestation,
                 };
+
+                if (request.InittimeData != null)
+                {
+                    attestSgxEnclaveRequest.InitTimeData = new InitTimeData
+                    {
+                        Data = request.InittimeData.BinaryData.ToArray(),
+                        DataType = request.InittimeData.DataIsJson ? DataType.Json : DataType.Binary,
+                    };
+                }
+                else
+                {
+                    attestSgxEnclaveRequest.InitTimeData = null;
+                }
+
+                if (request.RuntimeData != null)
+                {
+                    attestSgxEnclaveRequest.RuntimeData = new RuntimeData
+                    {
+                        Data = request.RuntimeData.BinaryData.ToArray(),
+                        DataType = request.RuntimeData.DataIsJson ? DataType.Json : DataType.Binary,
+                    };
+                }
+                else
+                {
+                    attestSgxEnclaveRequest.RuntimeData = null;
+                }
 
                 Response<AttestationResponse> response;
                 if (async)
@@ -150,8 +163,7 @@ namespace Azure.Security.Attestation
                 {
                     response = _restClient.AttestSgxEnclave(attestSgxEnclaveRequest, cancellationToken);
                 }
-                var attestationToken = new AttestationToken(response.Value.Token);
-
+                var attestationToken = AttestationToken.Deserialize(response.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
                     await attestationToken.ValidateTokenInternalAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), async, cancellationToken).ConfigureAwait(false);
@@ -169,67 +181,70 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Attest an Open Enclave enclave.
         /// </summary>
-        /// <param name="report">An OpenEnclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData">Data provided when the enclave was created.</param>
-        /// <param name="initTimeDataIsObject"></param>
-        /// <param name="runTimeData">Data provided when the quote was generated.</param>
-        /// <param name="runTimeDataIsObject"></param>
+        /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="report"/>, <paramref name="runTimeData"/>, and <paramref name="initTimeData"/></returns>
-        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(ReadOnlyMemory<byte> report, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
-            => AttestOpenEnclaveInternalAsync(report, initTimeData, initTimeDataIsObject, runTimeData, runTimeDataIsObject, false, cancellationToken).EnsureCompleted();
+        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
+        /// <remarks>The <see cref="AttestRequest.Evidence"/> must be an OpenEnclave Report or OpenEnclave Evidence.</remarks>
+        /// See https://github.com/openenclave/openenclave for more information.
+        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(AttestRequest request, CancellationToken cancellationToken = default)
+            => AttestOpenEnclaveInternalAsync(request, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Attest an Open Enclave enclave.
         /// </summary>
-        /// <param name="report">An Open Enclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData"></param>
-        /// <param name="initTimeDataIsObject"></param>
-        /// <param name="runTimeData">Data provided when the quote was generated.</param>
-        /// <param name="runTimeDataIsObject"></param>
+        /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="report"/>, <paramref name="runTimeData"/>, and <paramref name="initTimeData"/></returns>
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(ReadOnlyMemory<byte> report, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
-            => await AttestOpenEnclaveInternalAsync(report, initTimeData, initTimeDataIsObject, runTimeData, runTimeDataIsObject, true, cancellationToken).ConfigureAwait(false);
+        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
+        /// <remarks>The <see cref="AttestRequest.Evidence"/> must be an OpenEnclave Report or OpenEnclave Evidence.</remarks>
+        /// See https://github.com/openenclave/openenclave for more information.
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(AttestRequest request, CancellationToken cancellationToken = default)
+            => await AttestOpenEnclaveInternalAsync(request, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Attest an Open Enclave enclave.
         /// </summary>
-        /// <param name="report">An Open Enclave "report".
-        /// See https://github.com/openenclave/openenclave for more information.</param>
-        /// <param name="initTimeData"></param>
-        /// <param name="initTimeDataIsObject"></param>
-        /// <param name="runTimeData">Data provided when the quote was generated.</param>
-        /// <param name="runTimeDataIsObject"></param>
+        /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
         /// <param name="async">true if the API call should be asynchronous, false otherwise.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
-        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="report"/>, <paramref name="runTimeData"/>, and <paramref name="initTimeData"/></returns>
-        private async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveInternalAsync(ReadOnlyMemory<byte> report, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, bool async, CancellationToken cancellationToken = default)
+        /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
+        /// <remarks>The <see cref="AttestRequest.Evidence"/> must be an OpenEnclave Report or OpenEnclave Evidence.</remarks>
+        /// See https://github.com/openenclave/openenclave for more information.
+        private async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveInternalAsync(AttestRequest request, bool async, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(runTimeData, nameof(runTimeData));
+            Argument.AssertNotNull(request, nameof(request));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
             scope.Start();
             try
             {
-                AttestOpenEnclaveRequest request = new AttestOpenEnclaveRequest
+                var attestOpenEnclaveRequest = new AttestOpenEnclaveRequest
                 {
-                    Report = report.ToArray(),
-                    InitTimeData = initTimeData != null ? new InitTimeData
+                    Report = request.Evidence.ToArray(),
+                    DraftPolicyForAttestation = request.DraftPolicyForAttestation,
+                    RuntimeData = null,
+                    InitTimeData = null,
+            };
+
+                if (request.InittimeData != null)
+                {
+                    attestOpenEnclaveRequest.InitTimeData = new InitTimeData
                     {
-                        Data = initTimeData.ToArray(),
-                        DataType = initTimeDataIsObject ? DataType.Json : DataType.Binary,
-                    } : null,
-                    RuntimeData = runTimeData != null ? new RuntimeData
+                        Data = request.InittimeData.BinaryData.ToArray(),
+                        DataType = request.InittimeData.DataIsJson ? DataType.Json : DataType.Binary,
+                    };
+                }
+
+                if (request.RuntimeData != null)
+                {
+                    attestOpenEnclaveRequest.RuntimeData = new RuntimeData
                     {
-                        Data = runTimeData.ToArray(),
-                        DataType = runTimeDataIsObject ? DataType.Json : DataType.Binary,
-                    } : null,
-                };
-                var response = async ? await _restClient.AttestOpenEnclaveAsync(request, cancellationToken).ConfigureAwait(false)
-                                    : _restClient.AttestOpenEnclave(request, cancellationToken);
-                var attestationToken = new AttestationToken(response.Value.Token);
+                        Data = request.RuntimeData.BinaryData.ToArray(),
+                        DataType = request.RuntimeData.DataIsJson ? DataType.Json : DataType.Binary,
+                    };
+                }
+
+                var response = async ? await _restClient.AttestOpenEnclaveAsync(attestOpenEnclaveRequest, cancellationToken).ConfigureAwait(false)
+                                    : _restClient.AttestOpenEnclave(attestOpenEnclaveRequest, cancellationToken);
+                var attestationToken = AttestationToken.Deserialize(response.Value.Token);
 
                 if (_options.TokenOptions.ValidateToken)
                 {
@@ -377,31 +392,6 @@ namespace Azure.Security.Attestation
                 _statelock.Release();
             }
         }
-
-        /// <summary>
-        /// Dispose this object.
-        /// </summary>
-        /// <param name="disposing">True if the caller wants us to dispose our underlying objects.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposedValue)
-            {
-                if (disposing)
-                {
-                    // Dispose managed state (managed objects)
-                    _statelock.Dispose();
-                }
-
-                _disposedValue = true;
-            }
-        }
-
-        /// <inheritdoc/>
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
     }
 }
+#pragma warning restore CS1001

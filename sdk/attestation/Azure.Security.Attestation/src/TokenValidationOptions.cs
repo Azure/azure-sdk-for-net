@@ -44,37 +44,37 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Callback provided by the customer to perform additional validations of the specified attestation token.
         /// </summary>
-        public Func<AttestationToken, AttestationSigner, bool> ValidationCallback { get; }
+        public Func<AttestationToken, AttestationSigner, bool> ValidationCallback { get; set; }
 
         /// <summary>
         /// Returns whether or not to validate the attestation token.
         /// </summary>
-        public bool ValidateToken { get; }
+        public bool ValidateToken { get; set; }
 
         /// <summary>
         /// Specifies whether or not the validation logic should validate token expiration times, if present.
         /// </summary>
-        public bool ValidateExpirationTime { get; }
+        public bool ValidateExpirationTime { get; set; }
 
         /// <summary>
         /// Specifies whether or not the validation logic should validate token NotBefore time, if present.
         /// </summary>
-        public bool ValidateNotBeforeTime { get; }
+        public bool ValidateNotBeforeTime { get; set; }
 
         /// <summary>
         /// Specifies whether or not the validation logic should validate the Issuer of the token, if present.
         /// </summary>
-        public bool ValidateIssuer { get; }
+        public bool ValidateIssuer { get; set; }
 
         /// <summary>
         /// Expected Issuer for the token, if present.
         /// </summary>
-        public string ExpectedIssuer { get; }
+        public string ExpectedIssuer { get; set; }
 
         /// <summary>
         /// Allowable slack in time validations - used to account for differences between the clock on the client
         /// and the clock on the server.
         /// </summary>
-        public long TimeValidationSlack { get; }
+        public long TimeValidationSlack { get; set; }
     }
 }

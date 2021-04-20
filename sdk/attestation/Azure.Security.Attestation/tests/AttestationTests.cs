@@ -99,7 +99,12 @@ namespace Azure.Security.Attestation.Tests
             {
                 // Collect quote and enclave held data from an SGX enclave.
 
-                var attestationResult = await client.AttestSgxEnclaveAsync(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false);
+                var attestationResult = await client.AttestSgxEnclaveAsync(
+                    new AttestRequest
+                    {
+                        Evidence = BinaryData.FromBytes(binaryQuote),
+                        RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
+                    });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
                 CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData);
@@ -122,9 +127,10 @@ namespace Azure.Security.Attestation.Tests
 
             bool callbackInvoked = false;
 
-            var client = TestEnvironment.GetSharedAttestationClient(this, new TokenValidationOptions(
-                validateExpirationTime: TestEnvironment.IsTalkingToLiveServer,
-                validationCallback: (attestationToken, signer) =>
+            var client = TestEnvironment.GetSharedAttestationClient(this, new TokenValidationOptions
+            {
+                ValidateExpirationTime = TestEnvironment.IsTalkingToLiveServer,
+                ValidationCallback = (attestationToken, signer) =>
                 {
                     // Verify that the callback can access the enclave held data field.
                     CollectionAssert.AreEqual(binaryRuntimeData, attestationToken.GetBody<AttestationResult>().EnclaveHeldData);
@@ -134,13 +140,19 @@ namespace Azure.Security.Attestation.Tests
                     Assert.AreEqual(TestEnvironment.SharedAttestationUrl, attestationToken.Issuer);
                     callbackInvoked = true;
                     return true;
-                }));
+                },
+            });
 
             IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
             {
                 // Collect quote and enclave held data from an SGX enclave.
 
-                var attestationResult = await client.AttestSgxEnclaveAsync(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false);
+                var attestationResult = await client.AttestSgxEnclaveAsync(
+                    new AttestRequest
+                    {
+                        Evidence = BinaryData.FromBytes(binaryQuote),
+                        RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
+                    });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
                 CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData);
@@ -163,7 +175,12 @@ namespace Azure.Security.Attestation.Tests
             {
                 // Collect quote and enclave held data from an SGX enclave.
 
-                var attestationResult = await client.AttestOpenEnclaveAsync(binaryReport, null, false, BinaryData.FromBytes(binaryRuntimeData), false);
+                var attestationResult = await client.AttestOpenEnclaveAsync(
+                    new AttestRequest
+                    {
+                        Evidence = BinaryData.FromBytes(binaryReport),
+                        RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
+                    });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData);
@@ -180,25 +197,31 @@ namespace Azure.Security.Attestation.Tests
             byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
             bool callbackInvoked = false;
 
-            var client = TestEnvironment.GetSharedAttestationClient(this, new TokenValidationOptions(
-                validateExpirationTime: TestEnvironment.IsTalkingToLiveServer,
-                validationCallback: (attestationToken, signer) =>
-            {
-                // Verify that the callback can access the enclave held data field.
-                CollectionAssert.AreEqual(binaryRuntimeData, attestationToken.GetBody<AttestationResult>().EnclaveHeldData);
+            var client = TestEnvironment.GetSharedAttestationClient(this, new TokenValidationOptions {
+                ValidateExpirationTime = TestEnvironment.IsTalkingToLiveServer,
+                ValidationCallback = (attestationToken, signer) =>
+                {
+                    // Verify that the callback can access the enclave held data field.
+                    CollectionAssert.AreEqual(binaryRuntimeData, attestationToken.GetBody<AttestationResult>().EnclaveHeldData);
 
-                // The MAA service always sends a Key ID for the signer.
-                Assert.IsNotNull(signer.CertificateKeyId);
-                Assert.AreEqual(TestEnvironment.SharedAttestationUrl, attestationToken.Issuer);
-                callbackInvoked = true;
-                return true;
-            }));
+                    // The MAA service always sends a Key ID for the signer.
+                    Assert.IsNotNull(signer.CertificateKeyId);
+                    Assert.AreEqual(TestEnvironment.SharedAttestationUrl, attestationToken.Issuer);
+                    callbackInvoked = true;
+                    return true;
+                },
+            });
 
             IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
             {
                 // Collect quote and enclave held data from an SGX enclave.
 
-                var attestationResult = await client.AttestOpenEnclaveAsync(binaryReport, null, false, BinaryData.FromBytes(binaryRuntimeData), false);
+                var attestationResult = await client.AttestOpenEnclaveAsync(
+                    new AttestRequest
+                    {
+                        Evidence = BinaryData.FromBytes(binaryReport),
+                        RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
+                    });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
                 CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData);

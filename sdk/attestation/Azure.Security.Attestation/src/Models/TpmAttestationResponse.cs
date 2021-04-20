@@ -10,7 +10,7 @@ namespace Azure.Security.Attestation
     /// Represents a response for a TPM attestation call. See https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol  for more information.
     /// </summary>
     [CodeGenModel("TpmAttestationResponse")]
-    public partial class TpmAttestationResponse
+    internal partial class TpmAttestationResponse
     {
         /// <summary>
         /// Attestation Response data. See  https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol for more details

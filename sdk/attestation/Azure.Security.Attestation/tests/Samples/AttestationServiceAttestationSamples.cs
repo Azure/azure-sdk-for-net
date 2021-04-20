@@ -120,16 +120,41 @@ namespace Azure.Security.Attestation.Tests.Samples
             #endregion
             {
                 #region Snippet:AttestSgxEnclave
-                // Collect quote and runtime data from OpenEnclave enclave.
+                // Collect quote and runtime data from an SGX enclave.
+                // For the "Secure Key Release" scenario, the runtime data is normally a serialized asymmetric key.
+                // When the 'quote' (attestation evidence) is created specify the SHA256 hash of the runtime data when
+                // creating the evidence.
+                //
+                // When the generated evidence is created, the hash of the runtime data is included in the
+                // secured portion of the evidence.
+                //
+                // The Attestation service will validate that the Evidence is valid and that the SHA256 of the RuntimeData
+                // parameter is included in the evidence.
+                AttestationResponse<AttestationResult> attestationResult = client.AttestSgxEnclave(new AttestRequest
+                {
+                    Evidence = BinaryData.FromBytes(binaryQuote),
+                    RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
+                });
 
-                var attestationResult = client.AttestSgxEnclave(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false).Value;
-                Assert.AreEqual(binaryRuntimeData, attestationResult.EnclaveHeldData);
-                // VERIFY ATTESTATIONRESULT.
-                // Encrypt Data using DeprecatedEnclaveHeldData
-                // Send to enclave.
+                // At this point, the EnclaveHeldData field in the attestationResult.Value property will hold the
+                // contain the input binaryRuntimeData.
+
+                // The token is now passed to the "relying party". The relying party will validate that the token was
+                // issued by the Attestation Service. It then extracts the asymmetric key from the EnclaveHeldData field.
+                // The relying party will then Encrypt it's "key" data using the asymmetric key and transmits it back
+                // to the enclave.
+                var encryptedData = SendTokenToRelyingParty(attestationResult.Token);
+
+                // Now the encrypted data can be passed into the enclave which can decrypt that data.
+
                 #endregion
             }
             return;
+        }
+
+        private BinaryData SendTokenToRelyingParty(AttestationToken token)
+        {
+            return null;
         }
 
         public async Task GetAttestationPolicy()
@@ -150,8 +175,8 @@ namespace Azure.Security.Attestation.Tests.Samples
 #region Snippet:GetPolicy
             var client = new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
 
-            var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
-            var result = policyResult.Value;
+            AttestationResponse<string> policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
+            string result = policyResult.Value;
             #endregion
 
 #region Snippet:SetPolicy
@@ -162,7 +187,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             /*@@*/var policyTokenCertificate = TestEnvironment.PolicyCertificate0;
             /*@@*/var policyTokenKey = TestEnvironment.PolicySigningKey0;
 
-            var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, new TokenSigningKey(policyTokenKey, policyTokenCertificate));
+            var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, new AttestationTokenSigningKey(policyTokenKey, policyTokenCertificate));
             #endregion
 
             #region Snippet:VerifySigningHash
@@ -172,13 +197,13 @@ namespace Azure.Security.Attestation.Tests.Samples
             // verify that the hash of the policy document returned from the Attestation Service matches the hash
             // of an attestation token created locally.
             //@@ TokenSigningKey signingKey = new TokenSigningKey(<Customer provided signing key>, <Customer provided certificate>)
-            /*@@*/TokenSigningKey signingKey =  new TokenSigningKey(policyTokenKey, policyTokenCertificate);
+            /*@@*/AttestationTokenSigningKey signingKey =  new AttestationTokenSigningKey(policyTokenKey, policyTokenCertificate);
             var policySetToken = new AttestationToken(
-                new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
+                BinaryData.FromObjectAsJson(new StoredAttestationPolicy { AttestationPolicy = attestationPolicy }),
                 signingKey);
 
             using var shaHasher = SHA256Managed.Create();
-            var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
+            byte[] attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.Serialize()));
 
             Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash));
 #endregion
@@ -187,7 +212,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             // When the attestation instance is in Isolated mode, the ResetPolicy API requires using a signing key/certificate to authorize the user.
             var resetResult2 = client.ResetPolicy(
                 AttestationType.SgxEnclave,
-                new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenCertificate));
+                new AttestationTokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenCertificate));
             return;
         }
         private AttestationClient GetAttestationClient()

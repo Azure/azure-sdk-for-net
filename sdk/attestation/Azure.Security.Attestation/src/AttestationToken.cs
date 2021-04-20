@@ -27,25 +27,7 @@ namespace Azure.Security.Attestation
         private object _deserializedBody;
         private object _statelock = new object();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AttestationToken"/> class based on a specified JSON Web Token.
-        /// </summary>
-        /// <param name="token">string JWT to initialize.</param>
-        /// <remarks>
-        /// For test purposes, it may be useful to instantiate an AttestationToken object whose payload is a developer
-        /// created JSON Web Token. To use this constructor, create a version of the class derived from the <see cref="AttestationToken"/> class and invoke
-        /// the constructor through this derived class:
-        /// <code snippet="Snippet:CreateTestTokenForMocking">
-        /// private class TestAttestationToken : AttestationToken
-        /// {
-        ///     public TestAttestationToken(string token) : base(token)
-        ///     {
-        ///     }
-        /// }
-        /// </code>
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        internal protected AttestationToken(string token)
+        private AttestationToken(string token)
         {
             _token = token;
             string[] decomposedToken = token.Split('.');
@@ -68,8 +50,8 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationToken"/> class as an unsecured JSON Web Token, with <paramref name="body"/> as the body of the token.
         /// </summary>
-        /// <param name="body">Object to be used as the body of the newly created attestation token.</param>
-        public AttestationToken(object body)
+        /// <param name="body">Body of the token to be generated, serialized as a byte array.</param>
+        public AttestationToken(BinaryData body)
         {
             _token = CreateUnsecuredJwt(body);
         }
@@ -77,18 +59,18 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Creates a new attestation token based on the supplied body signed with the specified signing key.
         /// </summary>
-        /// <param name="body">The body of the generated token.</param>
-        /// <param name="signingKey"><see cref="TokenSigningKey"/> which will be used to sign the generated token.</param>
-        public AttestationToken(object body, TokenSigningKey signingKey)
+        /// <param name="body">The body of the generated token, serialized as a byte array.</param>
+        /// <param name="signingKey"><see cref="AttestationTokenSigningKey"/> which will be used to sign the generated token.</param>
+        public AttestationToken(BinaryData body, AttestationTokenSigningKey signingKey)
         {
             _token = signingKey != null ? GenerateSecuredJsonWebToken(body, signingKey) : CreateUnsecuredJwt(body);
         }
 
         /// <summary>
-        /// Creates a new unsecured attestation token with an empty body. Used for the <see cref="AttestationAdministrationClient.ResetPolicy(AttestationType, TokenSigningKey, System.Threading.CancellationToken)"/> API.
+        /// Creates a new unsecured attestation token with an empty body. Used for the <see cref="AttestationAdministrationClient.ResetPolicy(AttestationType, AttestationTokenSigningKey, System.Threading.CancellationToken)"/> API.
         /// </summary>
-        /// <param name="signingKey"><see cref="TokenSigningKey"/> which will be used to sign the generated token.</param>
-        public AttestationToken(TokenSigningKey signingKey)
+        /// <param name="signingKey"><see cref="AttestationTokenSigningKey"/> which will be used to sign the generated token.</param>
+        public AttestationToken(AttestationTokenSigningKey signingKey)
         {
             _token = signingKey != null ? GenerateSecuredJsonWebToken(null, signingKey) : CreateUnsecuredJwt(null);
         }
@@ -98,29 +80,29 @@ namespace Azure.Security.Attestation
         ///
         /// Null until the <see cref="AttestationToken.ValidateToken(TokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/> method has been called.
         /// </summary>
-        public virtual string CertificateThumbprint { get; private set; }
+        public string CertificateThumbprint { get; private set; }
 
         /// <summary>
         /// Returns the X.509 certificate which was used to verify the attestation token.
         ///
         /// Null until the <see cref="AttestationToken.ValidateToken(TokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/> method has been called.
         /// </summary>
-        public virtual AttestationSigner SigningCertificate { get; private set; }
+        public AttestationSigner SigningCertificate { get; private set; }
 
         /// <summary>
         /// Decoded header for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public virtual ReadOnlyMemory<byte> TokenHeaderBytes { get; }
+        public ReadOnlyMemory<byte> TokenHeaderBytes { get; }
 
         /// <summary>
         /// Decoded body for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public virtual ReadOnlyMemory<byte> TokenBodyBytes { get; }
+        public ReadOnlyMemory<byte> TokenBodyBytes { get; }
 
         /// <summary>
         /// Decoded signature for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public virtual ReadOnlyMemory<byte> TokenSignatureBytes { get; }
+        public ReadOnlyMemory<byte> TokenSignatureBytes { get; }
 
         // Standard JSON Web Signature/Json Web Token header values.
 
@@ -128,42 +110,42 @@ namespace Azure.Security.Attestation
         /// Json Web Token Header "algorithm". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.1 for details.
         /// If the value of <see cref="Algorithm"/> is "none" it indicates that the token is unsecured.
         /// </summary>
-        public virtual string Algorithm { get => Header.Algorithm; }
+        public string Algorithm { get => Header.Algorithm; }
 
         /// <summary>
         /// Json Web Token Header "type". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.9 for details.
         ///
         /// If present, the value for this field is normally "JWT".
         /// </summary>
-        public virtual string Type { get => Header.Type; }
+        public string Type { get => Header.Type; }
 
         /// <summary>
         /// Json Web Token Header "content type". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.10 for details.
         /// </summary>
-        public virtual string ContentType { get => Header.ContentType; }
+        public string ContentType { get => Header.ContentType; }
         /// <summary>
         /// Json Web Token Header "Key URL". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.2 for details.
         /// </summary>
-        public virtual Uri KeyUrl { get => Header.JWKUri; }
+        public Uri KeyUrl { get => Header.JWKUri; }
         /// <summary>
         /// Json Web Token Header "Key ID". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.4 for details.
         /// </summary>
-        public virtual string KeyId { get => Header.KeyId; }
+        public string KeyId { get => Header.KeyId; }
 
         /// <summary>
         /// Json Web Token Header "X509 URL". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.5 for details.
         /// </summary>
-        public virtual Uri X509Url { get => Header.X509Uri; }
+        public Uri X509Url { get => Header.X509Uri; }
 
         /// <summary>
         /// Json Web Token Body Issuer. See https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.1 for details.
         /// </summary>
-        public virtual string Issuer { get => Payload.Issuer; }
+        public string Issuer { get => Payload.Issuer; }
 
         /// <summary>
         /// An array of X.509Certificates which represent a certificate chain used to sign the token. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6 for details.
         /// </summary>
-        public virtual X509Certificate2[] X509CertificateChain {
+        public X509Certificate2[] X509CertificateChain {
             get
             {
                 List<X509Certificate2> certificates = new List<X509Certificate2>();
@@ -178,17 +160,17 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// The "thumbprint" of the certificate used to sign the request. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.7 for details.
         /// </summary>
-        public virtual string X509CertificateThumbprint { get => Header.X509CertificateThumbprint; }
+        public string X509CertificateThumbprint { get => Header.X509CertificateThumbprint; }
 
         /// <summary>
         /// The "thumbprint" of the certificate used to sign the request generated using the SHA256 algorithm. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.8 for details.
         /// </summary>
-        public virtual string X509CertificateSha256Thumbprint { get => Header.X509CertificateSha256Thumbprint; }
+        public string X509CertificateSha256Thumbprint { get => Header.X509CertificateSha256Thumbprint; }
 
         /// <summary>
         /// Json Web Token Header "Critical". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.11 for details.
         /// </summary>
-        public virtual bool? Critical { get => Header.Critical; }
+        public bool? Critical { get => Header.Critical; }
 
         /// <summary>
         /// Returns the standard properties in the JSON Web Token header. See https://tools.ietf.org/html/rfc7515 for more details.
@@ -203,7 +185,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Expiration time for the token.
         /// </summary>
-        public virtual DateTimeOffset? ExpirationTime
+        public DateTimeOffset? ExpirationTime
         {
             get
             {
@@ -218,7 +200,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Time before which this token is not valid.
         /// </summary>
-        public virtual DateTimeOffset? NotBeforeTime
+        public DateTimeOffset? NotBeforeTime
         {
             get
             {
@@ -233,7 +215,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Time at which this token was issued.
         /// </summary>
-        public virtual DateTimeOffset? IssuedAtTime
+        public DateTimeOffset? IssuedAtTime
         {
             get
             {
@@ -248,12 +230,12 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Represents the body of the token encoded as a string.
         /// </summary>
-        public virtual string TokenBody  { get => Encoding.UTF8.GetString(TokenBodyBytes.ToArray()); }
+        public string TokenBody  { get => Encoding.UTF8.GetString(TokenBodyBytes.ToArray()); }
 
         /// <summary>
         /// Represents the body of the token encoded as a string.
         /// </summary>
-        public virtual string TokenHeader { get => Encoding.UTF8.GetString(TokenHeaderBytes.ToArray()); }
+        public string TokenHeader { get => Encoding.UTF8.GetString(TokenHeaderBytes.ToArray()); }
 
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.
@@ -577,12 +559,23 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
-        /// Returns the attestation token composed as JSON Web Token
+        /// Serializes the attestation token to a JSON Web Token
         /// </summary>
         /// <returns>The value of the AttestationToken as a JSON Web Token.</returns>
-        public override string ToString()
+        public string Serialize()
         {
             return _token ?? GetType().Name;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="AttestationToken"/> class based on a specified JSON Web Token.
+        /// </summary>
+        /// <param name="token">string JWT to Deserialize.</param>
+        /// <remarks>
+        /// </remarks>
+        public static AttestationToken Deserialize(string token)
+        {
+            return new AttestationToken(token);
         }
 
         /// <summary>
@@ -590,16 +583,23 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="body">Object to be embeeded as the body of the attestation token.</param>
         /// <returns>Returns an secured JWT whose body is the serialized value of the <paramref name="body"/> parameter.</returns>
-        private static string CreateUnsecuredJwt(object body)
+        private static string CreateUnsecuredJwt(BinaryData body)
         {
+            if (body != null)
+            {
+                JsonDocument parsedBody = JsonDocument.Parse(body);
+                if (parsedBody.RootElement.ValueKind != JsonValueKind.Object)
+                {
+                    throw new ArgumentException("AttestationToken body must be a serialized JSON Object.");
+                }
+            }
             // Base64Url encoded '{"alg":"none"}'. See https://www.rfc-editor.org/rfc/rfc7515.html#appendix-A.5 for more information.
             string returnValue = "eyJhbGciOiJub25lIn0.";
 
             string encodedDocument;
             if (body != null)
             {
-                string bodyString = JsonSerializer.Serialize(body);
-                encodedDocument = Base64Url.EncodeString(bodyString);
+                encodedDocument = Base64Url.Encode(body.ToArray());
             }
             else
             {
@@ -618,8 +618,17 @@ namespace Azure.Security.Attestation
         /// <param name="body">Object to be embeeded as the body of the attestation token.</param>
         /// <param name="signingKey">Key used to sign the attestation token.</param>
         /// <returns>Returns a secured JWT whose body is the serialized value of the <paramref name="body"/> parameter.</returns>
-        private static string GenerateSecuredJsonWebToken(object body, TokenSigningKey signingKey)
+        private static string GenerateSecuredJsonWebToken(BinaryData body, AttestationTokenSigningKey signingKey)
         {
+            if (body != null)
+            {
+                JsonDocument parsedBody = JsonDocument.Parse(body);
+                if (parsedBody.RootElement.ValueKind != JsonValueKind.Object)
+                {
+                    throw new ArgumentException("AttestationToken body must be a serialized JSON Object.");
+                }
+            }
+
             Argument.AssertNotNull(signingKey, nameof(signingKey));
 
             AsymmetricAlgorithm signer;
@@ -647,7 +656,7 @@ namespace Azure.Security.Attestation
             byte[] jwtBody = null;
             if (body != null)
             {
-                jwtBody = JsonSerializer.SerializeToUtf8Bytes(body, serializationOptions);
+                jwtBody = body.ToArray();
             }
 
             string encodedBody = jwtBody != null ? Base64Url.Encode(jwtBody) : string.Empty;
