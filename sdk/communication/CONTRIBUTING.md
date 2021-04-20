@@ -54,7 +54,7 @@ For a more in-depth look on how to authenticate using managed identity, refer to
 
 ## Submitting a Pull Request
 
-The easiest way for you to test without worrying about breaking changes you may cause is to create a fork from the [.Net Azure SDK repo](https://github.com/Azure/azure-sdk-for-net). After downloading your repo, make sure to add the original repo as an upstream. To do this, use the `git remote add upstream` command followed by the repo's URL. 
+The easiest way for you to test without worrying about breaking changes you may cause is to create a fork from the [.Net Azure SDK repo](https://github.com/Azure/azure-sdk-for-net). After downloading your repo, make sure to add the original repo as an upstream. To do this, use the `git remote add upstream https://github.com/Azure/azure-sdk-for-net.git`
 
 Create a branch for any new feature you may want to add and when your changes are ready, push your branch to the origin. Because the upstream was already set, if you go to the .Net Azure SDK repo you will see a message saying that you pushed changes to your fork and give you the option to create a PR from your fork to the original repo.
 
