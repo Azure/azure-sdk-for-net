@@ -177,25 +177,26 @@ namespace Azure.Search.Documents
         /// A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response.
         /// <para>The default is 1 and the maximum is 5.</para>
         /// </summary>
-        public uint QueryAnswerCount { get; set; }
+        public uint? QueryAnswerCount { get; set; }
 
         /// <summary>
-        /// Join OrderBy so it can be sent as a comma separated string.
+        /// Constructed from <see cref="QueryAnswer"/> and <see cref="QueryAnswerCount"/>
         /// </summary>
         [CodeGenMember("answers")]
         internal string QueryAnswerRaw
         {
             get
             {
-                if (!QueryAnswer.HasValue)
+                string queryAnswerStringValue = null;
+
+                if (QueryAnswer.HasValue)
                 {
-                    return null;
+                    queryAnswerStringValue = QueryAnswer.Value.ToString();
                 }
 
-                string queryAnswerStringValue = QueryAnswer.Value.ToString();
-                if (QueryAnswer.Value == Models.QueryAnswer.Extractive)
+                if (QueryAnswerCount.HasValue)
                 {
-                    queryAnswerStringValue = $"{Models.QueryAnswer.Extractive}|count-{Math.Min(5, QueryAnswerCount)}";
+                    queryAnswerStringValue = $"{queryAnswerStringValue}|count-{QueryAnswerCount.Value}";
                 }
 
                 return queryAnswerStringValue;
@@ -206,23 +207,16 @@ namespace Azure.Search.Documents
                 if (string.IsNullOrEmpty(value))
                 {
                     QueryAnswer = null;
+                    QueryAnswerCount = null;
                 }
                 else
                 {
                     string[] queryAnswerParts = value.Split('|');
                     QueryAnswer = new QueryAnswer(queryAnswerParts[0]);
 
-                    if (queryAnswerParts.Length == 1)
+                    if (queryAnswerParts.Length > 1)
                     {
-                        if (QueryAnswer.Value == Models.QueryAnswer.Extractive)
-                        {
-                            // Set answer count to the default value.
-                            QueryAnswerCount = 1;
-                        }
-                    }
-                    else
-                    {
-                        string countString = queryAnswerParts[1].Length > 6 ? queryAnswerParts[1].Substring(6) : "1";
+                        string countString = queryAnswerParts[1].Length > 6 ? queryAnswerParts[1].Substring(6) : null;
 
                         if (uint.TryParse(countString, out uint countValue))
                         {
