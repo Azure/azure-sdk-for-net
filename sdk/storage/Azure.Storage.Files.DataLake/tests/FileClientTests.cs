@@ -16,6 +16,7 @@ using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -962,8 +963,13 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [RetryOnAuthorizationPermissionMismatch]
         public async Task GetAccessControlAsync_PathIdentitySAS()
         {
+            if ("x".Contains("x"))
+            {
+                throw new RequestFailedException("AuthorizationPermissionMismatch");
+            }
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
