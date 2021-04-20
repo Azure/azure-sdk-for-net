@@ -59,7 +59,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
-        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/{table_name}?{sas_token}" or "https://{account_name}.table.cosmos.azure.com/{table_name}?{sas_token}".
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
@@ -68,7 +68,7 @@ namespace Azure.Data.Tables
         public TableClient(Uri endpoint, TableClientOptions options = null)
             : this(endpoint, null, default, options)
         {
-            if (endpoint.Scheme != "https")
+            if (endpoint.Scheme != Uri.UriSchemeHttps)
             {
                 throw new ArgumentException("Cannot a use SAS token credential without HTTPS.", nameof(endpoint));
             }
@@ -80,7 +80,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
-        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/{table_name}" or "https://{account_name}.table.cosmos.azure.com/{table_name}".
         /// </param>
         /// <param name="credential">The shared access signature credential used to sign requests.</param>
         /// <param name="options">
@@ -92,7 +92,7 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
-            if (endpoint.Scheme != "https")
+            if (endpoint.Scheme != Uri.UriSchemeHttps)
             {
                 throw new ArgumentException("Cannot a use SAS token credential without HTTPS.", nameof(endpoint));
             }

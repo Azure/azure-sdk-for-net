@@ -136,7 +136,6 @@ namespace Azure.Data.Tables.Tests
             Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.core.windows.net/?{SasToken}")), "The PrimaryUri should have matched.");
             Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/?{SasToken}")), "The SecondaryUri should have matched.");
-            // Assert.That(tcs.);
         }
 
         public static IEnumerable<object[]> ValidSaSCosmosConnStrings()
