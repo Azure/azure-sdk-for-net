@@ -46,10 +46,10 @@ namespace SnippetGenerator.Tests
 
             yield return new[]
             {
-                @"    /// Example A of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
+                @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
                 @"    /// <code snippet=""Snippet:C""></code>" + Environment.NewLine +
                 "     foo",
-                @"    /// Example A of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
+                @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
                 @"    /// <code snippet=""Snippet:C"">" + Environment.NewLine +
                 $"    /// {Processed} </code>" + Environment.NewLine +
                 "     foo"
@@ -57,43 +57,10 @@ namespace SnippetGenerator.Tests
 
             yield return new[]
             {
-                @"    /// Example B of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
+                @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
                 @"    /// <example snippet=""Snippet:Example""></example>" + Environment.NewLine +
                 "     foo",
-                @"    /// Example B of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
-                @"    /// <example snippet=""Snippet:Example"">" + Environment.NewLine +
-                @"    /// <code>" + Environment.NewLine +
-                $"    /// {Processed} </code>" + Environment.NewLine +
-                @"    /// </example>" + Environment.NewLine +
-                "     foo"
-            };
-
-            yield return new[]
-            {
-                @"    /// Example C of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
-                @"    /// <example snippet=""Snippet:Example"">" + Environment.NewLine +
-                @"    /// <para>" + Environment.NewLine +
-                @"    /// Some description." + Environment.NewLine +
-                @"    /// </para>" + Environment.NewLine +
-                @"    /// </example>" + Environment.NewLine +
-                "     foo",
-                @"    /// Example C of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
-                @"    /// <example snippet=""Snippet:Example"">" + Environment.NewLine +
-                @"    /// <para>" + Environment.NewLine +
-                @"    /// Some description." + Environment.NewLine +
-                @"    /// </para>" + Environment.NewLine +
-                @"    /// <code>" + Environment.NewLine +
-                $"    /// {Processed} </code>" + Environment.NewLine +
-                @"    /// </example>" + Environment.NewLine +
-                "     foo"
-            };
-
-            yield return new[]
-            {
-                @"    /// Example D of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
-                @"    /// <example snippet=""Snippet:Example""></example>" + Environment.NewLine +
-                "     foo",
-                @"    /// Example D of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
+                @"    /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:" + Environment.NewLine +
                 @"    /// <example snippet=""Snippet:Example"">" + Environment.NewLine +
                 @"    /// <code>" + Environment.NewLine +
                 $"    /// {Processed} </code>" + Environment.NewLine +
