@@ -124,6 +124,31 @@ public partial class ConfigurationSamples: SamplesBase<AppConfigurationTestEnvir
 }
 ```
 
+If resources require some time to become eventually consistent and there's a scenario that can be used to detect if asynchronous process completed
+then you can consider implementing `TestEnvironment.IsEnvironmentReadyAsync`. Test framework will probe the scenario couple of times before starting tests or
+fail test run if resources don't become available:
+
+``` C#
+public class AppConfigurationTestEnvironment : TestEnvironment
+{
+    // in addition to other members
+    protected override async ValueTask<bool> IsEnvironmentReadyAsync()
+    {
+        var connectionString = TestEnvironment.ConnectionString;
+        var client = new ConfigurationClient(connectionString);
+        try
+        {
+            await service.GetConfigurationSettingAsync("Setting");
+        } 
+        catch (RequestFailedException e) when (e.Status == 403)
+        {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
 ## TokenCredential
 
 If a test or sample uses `TokenCredential` to construct the client use `TestEnvironment.Credential` to retrieve it.

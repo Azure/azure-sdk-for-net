@@ -31,6 +31,10 @@ namespace Azure.Storage.Test
         public byte[] ContentMD5 { get; private set; }
         public SasConstants Sas { get; private set; }
 
+        private TestConstants()
+        {
+        }
+
         public class SasConstants
         {
             public string KeyObjectId { get; } = "KeyOid";
@@ -59,35 +63,39 @@ namespace Azure.Storage.Test
             public StorageSharedKeyCredential SharedKeyCredential { get; protected internal set; }
         }
 
-        public TestConstants(StorageTestBase test)
+        public static TestConstants Create<TStorageTestEnvironment>(StorageTestBase<TStorageTestEnvironment> test) where TStorageTestEnvironment : StorageTestEnvironment, new()
         {
-            CacheControl = test.GetNewString();
-            ContentDisposition = test.GetNewString();
-            ContentEncoding = test.GetNewString();
-            ContentLanguage = test.GetNewString();
-            ContentType = test.GetNewString();
-            ContentMD5 = MD5.Create().ComputeHash(test.GetRandomBuffer(16));
-
-            Sas = new SasConstants
+            var testConstants = new TestConstants()
             {
-                Version = test.GetNewString(),
-                Account = test.GetNewString(),
-                Identifier = test.GetNewString(),
                 CacheControl = test.GetNewString(),
                 ContentDisposition = test.GetNewString(),
                 ContentEncoding = test.GetNewString(),
                 ContentLanguage = test.GetNewString(),
                 ContentType = test.GetNewString(),
-                AccountKey = Convert.ToBase64String(Encoding.UTF8.GetBytes(test.GetNewString())),
-                StartTime = test.GetUtcNow().AddHours(-1),
-                ExpiryTime = test.GetUtcNow().AddHours(+1),
-                StartAddress = test.GetIPAddress(),
-                EndAddress = test.GetIPAddress(),
-                KeyStart = test.GetUtcNow().AddHours(-1),
-                KeyExpiry = test.GetUtcNow().AddHours(+1)
+                ContentMD5 = MD5.Create().ComputeHash(test.GetRandomBuffer(16)),
+
+                Sas = new SasConstants
+                {
+                    Version = test.GetNewString(),
+                    Account = test.GetNewString(),
+                    Identifier = test.GetNewString(),
+                    CacheControl = test.GetNewString(),
+                    ContentDisposition = test.GetNewString(),
+                    ContentEncoding = test.GetNewString(),
+                    ContentLanguage = test.GetNewString(),
+                    ContentType = test.GetNewString(),
+                    AccountKey = Convert.ToBase64String(Encoding.UTF8.GetBytes(test.GetNewString())),
+                    StartTime = test.GetUtcNow().AddHours(-1),
+                    ExpiryTime = test.GetUtcNow().AddHours(+1),
+                    StartAddress = test.GetIPAddress(),
+                    EndAddress = test.GetIPAddress(),
+                    KeyStart = test.GetUtcNow().AddHours(-1),
+                    KeyExpiry = test.GetUtcNow().AddHours(+1),
+                },
             };
-            Sas.IPRange = new SasIPRange(Sas.StartAddress, Sas.EndAddress);
-            Sas.SharedKeyCredential = new StorageSharedKeyCredential(Sas.Account, Sas.AccountKey);
+            testConstants.Sas.IPRange = new SasIPRange(testConstants.Sas.StartAddress, testConstants.Sas.EndAddress);
+            testConstants.Sas.SharedKeyCredential = new StorageSharedKeyCredential(testConstants.Sas.Account, testConstants.Sas.AccountKey);
+            return testConstants;
         }
     }
 }
