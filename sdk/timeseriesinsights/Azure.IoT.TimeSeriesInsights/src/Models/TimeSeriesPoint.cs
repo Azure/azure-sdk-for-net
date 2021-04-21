@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Azure.IoT.TimeSeriesInsights
@@ -12,41 +13,49 @@ namespace Azure.IoT.TimeSeriesInsights
     /// </summary>
     public struct TimeSeriesPoint
     {
+        private readonly IDictionary<string, PropertyValues> _propertyNameToPageValues;
+        private readonly int _index;
+
         /// <summary>
+        /// Timestamp of the point.
         /// </summary>
         public DateTimeOffset Timestamp { get; }
 
-        private readonly IDictionary<string, PropertyValues> _propertyNameToPageValues;
-        private readonly int _rowNumber;
-
         /// <summary>
+        /// Creates a new instance of TimeSeriesPoint.
         /// </summary>
-        /// <param name="propertyNameToPageValues"></param>
-        /// <param name="rowNumber"></param>
-        /// <param name="timestamp"></param>
-        public TimeSeriesPoint(IDictionary<string, PropertyValues> propertyNameToPageValues, int rowNumber, DateTimeOffset timestamp)
+        /// <param name="timestamp">The timestamp of the point.</param>
+        /// <param name="propertyNameToPageValues">A dictionary that maps from property names to the property values in a single response page.</param>
+        /// <param name="index">The index of the value specific to this point.</param>
+        public TimeSeriesPoint(DateTimeOffset timestamp, IDictionary<string, PropertyValues> propertyNameToPageValues, int index)
         {
             Timestamp = timestamp;
-
             _propertyNameToPageValues = propertyNameToPageValues;
-            _rowNumber = rowNumber;
+            _index = index;
         }
 
         /// <summary>
-        /// Get the value of the point for a specific property.
+        /// Get the <see cref="TimeSeriesValue"/> of the point for a specific property.
         /// </summary>
-        /// <param name="property"></param>
-        /// <returns></returns>
-        public TimeSeriesValue GetValue(string property)
+        /// <param name="propertyName">the name of the property to get the value for.</param>
+        /// <returns>A <see cref="TimeSeriesValue"/>.</returns>
+        public TimeSeriesValue GetValue(string propertyName)
         {
-            if (!_propertyNameToPageValues.TryGetValue(property, out PropertyValues propertyValues))
+            if (_propertyNameToPageValues.TryGetValue(propertyName, out PropertyValues propertyValues))
             {
-                return null;
+                return propertyValues.Values[_index];
             }
-            else
-            {
-                return propertyValues.Values[_rowNumber];
-            }
+
+            throw new KeyNotFoundException($"Unable to find key {propertyName}.");
+        }
+
+        /// <summary>
+        /// Get the unique property names associated with the Time Series point.
+        /// </summary>
+        /// <returns>List of unique property names.</returns>
+        public string[] GetUniquePropertyNames()
+        {
+            return _propertyNameToPageValues.Keys.ToArray();
         }
     }
 }

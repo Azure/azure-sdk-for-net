@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -11,39 +9,35 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
+    /// Time Series Insights query results.
     /// </summary>
     public class QueryResults
     {
         private CancellationToken _cancellationToken;
 
         private readonly QueryRequest _queryRequest;
-        private readonly string _storeType;
         private readonly QueryRestClient _queryClient;
-        private readonly HashSet<EventProperty> _eventProperties;
+        private readonly string _storeType;
 
         /// <summary>
         /// Initializes a new instance of the QueryResults class.
         /// </summary>
-        internal QueryResults() { }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="queryClient"></param>
-        /// <param name="queryRequest"></param>
-        /// <param name="storeType"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="queryClient">The query REST client that talks to TSI service.</param>
+        /// <param name="queryRequest">The query request payload.</param>
+        /// <param name="storeType">The store the query should be executed on.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         internal QueryResults(QueryRestClient queryClient, QueryRequest queryRequest, string storeType, CancellationToken cancellationToken)
         {
             _queryRequest = queryRequest;
             _storeType = storeType;
             _cancellationToken = cancellationToken;
             _queryClient = queryClient;
-            _eventProperties = new HashSet<EventProperty>();
         }
 
         /// <summary>
+        /// Get all of the <see cref="TimeSeriesPoint"/> asynchronously.
         /// </summary>
-        /// <returns>The search results.</returns>
+        /// <returns>The search results represented as <see cref="TimeSeriesPoint"/>.</returns>
         public AsyncPageable<TimeSeriesPoint> GetResultsAsync()
         {
             async Task<Page<TimeSeriesPoint>> FirstPageFunc(int? pageSizeHint)
@@ -86,8 +80,9 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
+        /// Get all of the <see cref="TimeSeriesPoint"/> synchronously.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The search results represented as <see cref="TimeSeriesPoint"/>.</returns>
         public Pageable<TimeSeriesPoint> GetResults()
         {
             Page<TimeSeriesPoint> FirstPageFunc(int? pageSizeHint)
@@ -125,22 +120,6 @@ namespace Azure.IoT.TimeSeriesInsights
             }
 
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <returns></returns>
-        public string[] GetUniquePropertyNames()
-        {
-            return _eventProperties.Select((eventProperty) => eventProperty.Name).Distinct().ToArray();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <returns></returns>
-        public EventProperty[] GetProperties()
-        {
-            return _eventProperties.ToArray();
         }
     }
 }

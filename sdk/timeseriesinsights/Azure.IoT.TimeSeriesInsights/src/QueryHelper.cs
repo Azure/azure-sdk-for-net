@@ -21,8 +21,7 @@ namespace Azure.IoT.TimeSeriesInsights
             for (int index = 0; index < value.Timestamps.Count; index++)
             {
                 DateTimeOffset timestamp = value.Timestamps[index];
-                var point = new TimeSeriesPoint(propertyNameToPageValues, index, timestamp);
-                result.Add(point);
+                result.Add(new TimeSeriesPoint(timestamp, propertyNameToPageValues, index));
             }
 
             return result.ToArray();

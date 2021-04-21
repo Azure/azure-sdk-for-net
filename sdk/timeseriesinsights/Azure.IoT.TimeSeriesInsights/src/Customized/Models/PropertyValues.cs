@@ -1,27 +1,30 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property. </summary>
+    /// <summary>
+    /// Values of a single property corresponding to the timestamps.
+    /// </summary>
     [CodeGenModel("PropertyValues")]
     public partial class PropertyValues : EventProperty
     {
-        private IList<TimeSeriesValue> _values;
+        private TimeSeriesValue[] _values;
 
-        /// <summary> Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property. </summary>
         [CodeGenMember("Values")]
         internal JsonElement ValuesInternal { get; }
 
         /// <summary>
+        /// Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property.
         /// </summary>
-        public IList<TimeSeriesValue> Values => _values ??= CreateValues();
+        public TimeSeriesValue[] Values => _values ??= CreateValues();
 
-        private IList<TimeSeriesValue> CreateValues()
+        private TimeSeriesValue[] CreateValues()
         {
             var values = new List<TimeSeriesValue>();
 
@@ -29,28 +32,31 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 if (Type == PropertyTypes.Bool)
                 {
-                    values.Add(new TimeSeriesValue(item.GetBoolean()));
+                    values.Add(new TimeSeriesValue((bool?)item.GetObject()));
                 }
                 else if (Type == PropertyTypes.DateTime)
                 {
-                    values.Add(new TimeSeriesValue(item.GetDateTimeOffset()));
+                    values.Add(new TimeSeriesValue((DateTimeOffset?)item.GetObject()));
                 }
                 else if (Type == PropertyTypes.Double)
                 {
-                    values.Add(new TimeSeriesValue(item.GetDouble()));
+                    values.Add(new TimeSeriesValue((double?)item.GetObject()));
                 }
                 else if (Type == PropertyTypes.Long)
                 {
-                    values.Add(new TimeSeriesValue(item.GetInt64()));
+                    values.Add(new TimeSeriesValue((double?)item.GetObject()));
                 }
                 else if (Type == PropertyTypes.String)
                 {
                     values.Add(new TimeSeriesValue(item.GetString()));
                 }
-                // todo check more
+                else if (Type == PropertyTypes.TimeSpan)
+                {
+                    values.Add(new TimeSeriesValue((TimeSpan?)item.GetObject()));
+                }
             }
 
-            return values;
+            return values.ToArray();
         }
     }
 }

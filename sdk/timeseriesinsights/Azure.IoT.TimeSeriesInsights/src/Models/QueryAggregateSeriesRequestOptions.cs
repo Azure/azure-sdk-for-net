@@ -6,9 +6,9 @@ using System.Collections.Generic;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// Optional parameters to use when querying for Time Series Insights series.
+    /// Optional parameters to use when querying for Time Series Insights aggregate series.
     /// </summary>
-    public class QuerySeriesRequestOptions : QueryRequestOptions
+    public class QueryAggregateSeriesRequestOptions : QueryRequestOptions
     {
         /// <summary>
         /// Selected variables that needs to be projected in the query result. When it is null or not set, all the
@@ -23,15 +23,9 @@ namespace Azure.IoT.TimeSeriesInsights
         public IDictionary<string, TimeSeriesVariable> InlineVariables { get; }
 
         /// <summary>
-        /// The maximum number of property values in the whole response set, not the maximum number of property values per page.
-        /// Defaults to 10,000 when not set. Maximum value of take can be 250,000.
+        /// Creates a new instance of QueryAggregateSeriesRequestOptions.
         /// </summary>
-        public int? MaximumNumberOfEvents { get; set; }
-
-        /// <summary>
-        /// Creates a new instance of QuerySeriesRequestOptions.
-        /// </summary>
-        public QuerySeriesRequestOptions()
+        public QueryAggregateSeriesRequestOptions()
         {
             ProjectedVariables = new List<string>();
             InlineVariables = new Dictionary<string, TimeSeriesVariable>();
