@@ -188,16 +188,16 @@ namespace Azure.Core.TestFramework
         /// Throw if you want to fail the run fast.
         /// </summary>
         /// <returns>Whether environment is ready to use.</returns>
-        protected virtual Task<bool> IsEnvironmentReadyAsync()
+        protected virtual ValueTask<bool> IsEnvironmentReadyAsync()
         {
-            return Task.FromResult(true);
+            return new ValueTask<bool>(true);
         }
 
         /// <summary>
         /// Waits until environment becomes ready to use. See <see cref="IsEnvironmentReadyAsync"/> to define sampling scenario.
         /// </summary>
         /// <returns>A task.</returns>
-        public async Task WaitForEnvironmentAsync()
+        public async ValueTask WaitForEnvironmentAsync()
         {
             if (Mode == RecordedTestMode.Live)
             {

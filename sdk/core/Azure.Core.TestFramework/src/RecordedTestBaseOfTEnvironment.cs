@@ -29,7 +29,7 @@ namespace Azure.Core.TestFramework
         public TEnvironment TestEnvironment { get; }
 
         [OneTimeSetUp]
-        public async Task WaitForEnvironment()
+        public async ValueTask WaitForEnvironment()
         {
             await TestEnvironment.WaitForEnvironmentAsync();
         }

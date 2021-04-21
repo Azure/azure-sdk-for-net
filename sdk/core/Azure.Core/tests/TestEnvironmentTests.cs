@@ -298,9 +298,9 @@ namespace Azure.Core.Tests
         {
             public static int InvocationCount { get; private set; }
 
-            protected override Task<bool> IsEnvironmentReadyAsync()
+            protected override ValueTask<bool> IsEnvironmentReadyAsync()
             {
-                return Task.FromResult(InvocationCount++ < 1 ? false : true);
+                return new ValueTask<bool>(InvocationCount++ < 1 ? false : true);
             }
         }
 
@@ -308,9 +308,9 @@ namespace Azure.Core.Tests
         {
             public static int InvocationCount { get; private set; }
 
-            protected override Task<bool> IsEnvironmentReadyAsync()
+            protected override ValueTask<bool> IsEnvironmentReadyAsync()
             {
-                return Task.FromResult(InvocationCount++ < 1 ? false : true);
+                return new ValueTask<bool>(InvocationCount++ < 1 ? false : true);
             }
         }
 
@@ -323,7 +323,7 @@ namespace Azure.Core.Tests
 
             public static int InvocationCount { get; private set; }
 
-            protected override Task<bool> IsEnvironmentReadyAsync()
+            protected override ValueTask<bool> IsEnvironmentReadyAsync()
             {
                 InvocationCount++;
                 throw new InvalidOperationException("kaboom");

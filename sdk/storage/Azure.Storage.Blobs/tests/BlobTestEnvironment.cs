@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 
@@ -11,9 +10,9 @@ namespace Azure.Storage.Blobs.Tests
 {
     public class BlobTestEnvironment : StorageTestEnvironment
     {
-        protected override Task<bool> IsEnvironmentReadyAsync()
+        protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
-            return DoesOAuthWorkAsync();
+            return await DoesOAuthWorkAsync();
         }
 
         private async Task<bool> DoesOAuthWorkAsync()
