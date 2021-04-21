@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             _inner = innerStream;
         }
 
-        public async Task<bool> TryPutToFunctionDataCacheAsync()
+        public async Task<bool> TryPutToFunctionDataCacheAsync(bool isDeleteOnFailure)
         {
             if (_sharedMemoryMeta == null)
             {
@@ -50,20 +50,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             }
 
             BlobProperties properties = await _blob.BlobClient.FetchPropertiesOrNullIfNotExistAsync().ConfigureAwait(false);
-            return TryPutToFunctionDataCacheCore(properties);
+            return TryPutToFunctionDataCacheCore(properties, isDeleteOnFailure);
         }
 
         /// <summary>
         /// Put the object into the cache by generating a key for the object based on the blob's properties.
         /// </summary>
         /// <param name="properties">Properties of the blob corresponding to the object being written.</param>
+        /// <param name="isDeleteOnFailure">If True, in the case where the cache is unable to insert this object, the local resources pointed to by the Stream (which were to be cached) will be deleted.</param>
         /// <returns>True if the object was written to the <see cref="IFunctionDataCache"/>, false otherwise.</returns>
-        private bool TryPutToFunctionDataCacheCore(BlobProperties properties)
+        private bool TryPutToFunctionDataCacheCore(BlobProperties properties, bool isDeleteOnFailure)
         {
             string eTag = properties.ETag.ToString();
             string id = _blob.BlobClient.Uri.ToString();
             FunctionDataCacheKey cacheKey = new FunctionDataCacheKey(id, eTag);
-            return _functionDataCache.TryPut(cacheKey, _sharedMemoryMeta, isIncrementActiveReference: false);
+            return _functionDataCache.TryPut(cacheKey, _sharedMemoryMeta, isIncrementActiveReference: false, isDeleteOnFailure);
         }
 
         public override bool CanRead
