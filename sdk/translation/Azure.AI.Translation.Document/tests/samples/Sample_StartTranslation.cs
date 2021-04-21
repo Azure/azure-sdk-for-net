@@ -22,13 +22,8 @@ namespace Azure.AI.Translation.Document.Samples
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:StartTranslation
-#if SNIPPET
-            Uri sourceUri = <source SAS URI>;
-            Uri targetUri = <target SAS URI>;
-#else
             Uri sourceUri = new Uri("<source SAS URI>");
             Uri targetUri = new Uri("<target SAS URI>");
-#endif
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
