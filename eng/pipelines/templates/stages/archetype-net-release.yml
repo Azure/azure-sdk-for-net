@@ -56,8 +56,8 @@ stages:
               runOnce:
                 deploy:
                   steps:
-                    - template: /eng/common/pipelines/templates/steps/retain-run.yml
                     - checkout: self
+                    - template: /eng/common/pipelines/templates/steps/retain-run.yml
                     - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
                       parameters:
                         PackageName: "Azure.Template"
