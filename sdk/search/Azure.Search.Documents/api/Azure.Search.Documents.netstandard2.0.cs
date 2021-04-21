@@ -129,7 +129,7 @@ namespace Azure.Search.Documents
         public double? MinimumCoverage { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
         public Azure.Search.Documents.Models.QueryAnswer? QueryAnswer { get { throw null; } set { } }
-        public uint? QueryAnswerCount { get { throw null; } set { } }
+        public int? QueryAnswerCount { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QueryLanguage? QueryLanguage { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QuerySpeller? QuerySpeller { get { throw null; } set { } }
         public Azure.Search.Documents.Models.SearchQueryType? QueryType { get { throw null; } set { } }

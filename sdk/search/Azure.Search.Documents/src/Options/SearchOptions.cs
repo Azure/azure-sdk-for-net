@@ -17,6 +17,8 @@ namespace Azure.Search.Documents
     [CodeGenModel("SearchRequest")]
     public partial class SearchOptions
     {
+        private const string QueryAnswerRawSplitter = "|count-";
+
         /// <summary>
         /// Initializes a new instance of SearchOptions from a continuation
         /// token to continue fetching results from a previous search.
@@ -175,9 +177,8 @@ namespace Azure.Search.Documents
 
         /// <summary>
         /// A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response.
-        /// <para>The default is 1 and the maximum is 5.</para>
         /// </summary>
-        public uint? QueryAnswerCount { get; set; }
+        public int? QueryAnswerCount { get; set; }
 
         /// <summary>
         /// Constructed from <see cref="QueryAnswer"/> and <see cref="QueryAnswerCount"/>
@@ -196,7 +197,7 @@ namespace Azure.Search.Documents
 
                 if (QueryAnswerCount.HasValue)
                 {
-                    queryAnswerStringValue = $"{queryAnswerStringValue}|count-{QueryAnswerCount.Value}";
+                    queryAnswerStringValue = $"{queryAnswerStringValue}{QueryAnswerRawSplitter}{QueryAnswerCount.Value}";
                 }
 
                 return queryAnswerStringValue;
@@ -211,17 +212,29 @@ namespace Azure.Search.Documents
                 }
                 else
                 {
-                    string[] queryAnswerParts = value.Split('|');
-                    QueryAnswer = new QueryAnswer(queryAnswerParts[0]);
-
-                    if (queryAnswerParts.Length > 1)
+                    if (value.Contains(QueryAnswerRawSplitter))
                     {
-                        string countString = queryAnswerParts[1].Length > 6 ? queryAnswerParts[1].Substring(6) : null;
+                        var queryAnswerPart = value.Substring(0, value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase));
+                        var countPart = value.Substring(value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase) + QueryAnswerRawSplitter.Length);
 
-                        if (uint.TryParse(countString, out uint countValue))
+                        if (string.IsNullOrEmpty(queryAnswerPart))
+                        {
+                            QueryAnswer = null;
+                        }
+                        else
+                        {
+                            QueryAnswer = new QueryAnswer(queryAnswerPart);
+                        }
+
+                        if (int.TryParse(countPart, out int countValue))
                         {
                             QueryAnswerCount = countValue;
                         }
+                    }
+                    else
+                    {
+                        QueryAnswer = new QueryAnswer(value);
+                        QueryAnswerCount = null;
                     }
                 }
             }
