@@ -46,7 +46,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 return propertyValues.Values[_index];
             }
 
-            throw new KeyNotFoundException($"Unable to find key {propertyName}.");
+            throw new Exception($"Unable to find property {propertyName} for the time series point.");
         }
 
         /// <summary>

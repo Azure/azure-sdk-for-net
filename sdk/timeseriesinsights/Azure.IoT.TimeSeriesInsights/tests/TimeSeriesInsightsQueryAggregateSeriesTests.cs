@@ -190,217 +190,135 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             }
         }
 
-        //[Test]
-        //public async Task TimeSeriesInsightsQuery_AggregateSeriesWithAggregateVariable()
-        //{
-        //    // Arrange
-        //    TimeSeriesInsightsClient tsiClient = GetClient();
-        //    DeviceClient deviceClient = await GetDeviceClient().ConfigureAwait(false);
+        [Test]
+        public async Task TimeSeriesInsightsQuery_AggregateSeriesWithAggregateVariable()
+        {
+            // Arrange
+            TimeSeriesInsightsClient tsiClient = GetClient();
+            DeviceClient deviceClient = await GetDeviceClient().ConfigureAwait(false);
 
-        //    // Figure out what the Time Series Id is composed of
-        //    TimeSeriesModelSettings modelSettings = await tsiClient.ModelSettings.GetAsync().ConfigureAwait(false);
+            // Figure out what the Time Series Id is composed of
+            TimeSeriesModelSettings modelSettings = await tsiClient.ModelSettings.GetAsync().ConfigureAwait(false);
 
-        //    // Create a Time Series Id where the number of keys that make up the Time Series Id is fetched from Model Settings
-        //    TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(tsiClient, modelSettings.TimeSeriesIdProperties.Count)
-        //        .ConfigureAwait(false);
+            // Create a Time Series Id where the number of keys that make up the Time Series Id is fetched from Model Settings
+            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(tsiClient, modelSettings.TimeSeriesIdProperties.Count)
+                .ConfigureAwait(false);
 
-        //    try
-        //    {
-        //        // Send some events to the IoT hub with with a second between each event
-        //        await QueryTestsHelper.SendEventsToHubAsync(
-        //                deviceClient,
-        //                tsiId,
-        //                modelSettings.TimeSeriesIdProperties.ToArray(),
-        //                30)
-        //              .ConfigureAwait(false);
+            try
+            {
+                // Send some events to the IoT hub with with a second between each event
+                await QueryTestsHelper.SendEventsToHubAsync(
+                        deviceClient,
+                        tsiId,
+                        modelSettings.TimeSeriesIdProperties.ToArray(),
+                        30)
+                      .ConfigureAwait(false);
 
-        //        // Query for temperature events with two calculateions. First with the temperature value as is, and the second
-        //        // with the temperature value multiplied by 2.
-        //        DateTimeOffset now = Recording.UtcNow;
-        //        DateTimeOffset endTime = now.AddMinutes(10);
-        //        DateTimeOffset startTime = now.AddMinutes(-10);
+                // Query for temperature events with two calculateions. First with the temperature value as is, and the second
+                // with the temperature value multiplied by 2.
+                DateTimeOffset now = Recording.UtcNow;
+                DateTimeOffset endTime = now.AddMinutes(10);
+                DateTimeOffset startTime = now.AddMinutes(-10);
 
-        //        var aggregateVariable = new AggregateVariable(
-        //            new TimeSeriesExpression("count()"));
+                var aggregateVariable = new AggregateVariable(
+                    new TimeSeriesExpression("count()"));
 
-        //        var queryAggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
-        //        queryAggregateSeriesRequestOptions.InlineVariables["Count"] = aggregateVariable;
-        //        queryAggregateSeriesRequestOptions.ProjectedVariables.Add("Count");
+                var queryAggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
+                queryAggregateSeriesRequestOptions.InlineVariables["Count"] = aggregateVariable;
+                queryAggregateSeriesRequestOptions.ProjectedVariables.Add("Count");
 
-        //        // This retry logic was added as the TSI instance are not immediately available after creation
-        //        await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
-        //        {
-        //            AsyncPageable<QueryResultPage> queryAggregateSeriesPages = tsiClient.Query.QueryAggregateSeriesAsync(
-        //                tsiId,
-        //                startTime,
-        //                endTime,
-        //                TimeSpan.FromSeconds(5),
-        //                queryAggregateSeriesRequestOptions);
+                // This retry logic was added as the TSI instance are not immediately available after creation
+                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                {
+                    QueryResults queryAggregateSeriesPages = tsiClient.Query.QueryAggregateSeriesAsync(
+                        tsiId,
+                        startTime,
+                        endTime,
+                        TimeSpan.FromSeconds(5),
+                        queryAggregateSeriesRequestOptions);
 
-        //            await foreach (QueryResultPage aggregateSeriesPage in queryAggregateSeriesPages)
-        //            {
-        //                aggregateSeriesPage.Timestamps.Should().NotBeNull();
-        //                aggregateSeriesPage.Properties.Count.Should().Be(1);
-        //                aggregateSeriesPage.Properties.Should().Contain((property) => property.Name == "Count");
-        //                aggregateSeriesPage.Properties.First().Values.Should().Contain(x => x != null);
-        //                IList<object> temperatureValues = aggregateSeriesPage
-        //                                            .Properties
-        //                                            .First((property) => property.Name == "Count")
-        //                                            .Values;
-        //                temperatureValues.Should().Contain(30);
-        //            }
+                    var countFound = false;
+                    await foreach (TimeSeriesPoint point in queryAggregateSeriesPages.GetResultsAsync())
+                    {
+                        if ((long?)point.GetValue("Count") == 30)
+                        {
+                            countFound = true;
+                        }
+                    }
 
-        //            return null;
-        //        }, MaxNumberOfRetries, s_retryDelay);
-        //    }
-        //    finally
-        //    {
-        //        deviceClient?.Dispose();
-        //    }
-        //}
+                    countFound.Should().BeTrue();
 
-        //[Test]
-        //public async Task TimeSeriesInsightsQuery_AggregateSeriesWithCategoricalVariable()
-        //{
-        //    // Arrange
-        //    TimeSeriesInsightsClient tsiClient = GetClient();
-        //    DeviceClient deviceClient = await GetDeviceClient().ConfigureAwait(false);
+                    return null;
+                }, MaxNumberOfRetries, s_retryDelay);
+            }
+            finally
+            {
+                deviceClient?.Dispose();
+            }
+        }
 
-        //    // Figure out what the Time Series Id is composed of
-        //    TimeSeriesModelSettings modelSettings = await tsiClient.ModelSettings.GetAsync().ConfigureAwait(false);
+        [Test]
+        public async Task TimeSeriesInsightsQuery_AggregateSeriesWithCategoricalVariable()
+        {
+            // Arrange
+            TimeSeriesInsightsClient tsiClient = GetClient();
+            DeviceClient deviceClient = await GetDeviceClient().ConfigureAwait(false);
 
-        //    // Create a Time Series Id where the number of keys that make up the Time Series Id is fetched from Model Settings
-        //    TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(tsiClient, modelSettings.TimeSeriesIdProperties.Count)
-        //        .ConfigureAwait(false);
+            // Figure out what the Time Series Id is composed of
+            TimeSeriesModelSettings modelSettings = await tsiClient.ModelSettings.GetAsync().ConfigureAwait(false);
 
-        //    try
-        //    {
-        //        // Send some events to the IoT hub with with a second between each event
-        //        await QueryTestsHelper.SendEventsToHubAsync(
-        //                deviceClient,
-        //                tsiId,
-        //                modelSettings.TimeSeriesIdProperties.ToArray(),
-        //                30)
-        //              .ConfigureAwait(false);
+            // Create a Time Series Id where the number of keys that make up the Time Series Id is fetched from Model Settings
+            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(tsiClient, modelSettings.TimeSeriesIdProperties.Count)
+                .ConfigureAwait(false);
 
-        //        // Query for temperature events with two calculateions. First with the temperature value as is, and the second
-        //        // with the temperature value multiplied by 2.
-        //        DateTimeOffset now = Recording.UtcNow;
-        //        DateTimeOffset endTime = now.AddMinutes(10);
-        //        DateTimeOffset startTime = now.AddMinutes(-10);
+            try
+            {
+                // Send some events to the IoT hub with with a second between each event
+                await QueryTestsHelper.SendEventsToHubAsync(
+                        deviceClient,
+                        tsiId,
+                        modelSettings.TimeSeriesIdProperties.ToArray(),
+                        30)
+                      .ConfigureAwait(false);
 
-        //        var temperatureNumericVariable = new NumericVariable(
-        //            new TimeSeriesExpression($"$event.{QueryTestsHelper.Temperature}"),
-        //            new TimeSeriesExpression("avg($value)"));
+                DateTimeOffset now = Recording.UtcNow;
+                DateTimeOffset endTime = now.AddMinutes(10);
+                DateTimeOffset startTime = now.AddMinutes(-10);
 
-        //        var queryAggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
-        //        queryAggregateSeriesRequestOptions.InlineVariables[QueryTestsHelper.Temperature] = temperatureNumericVariable;
-        //        queryAggregateSeriesRequestOptions.ProjectedVariables.Add(QueryTestsHelper.Temperature);
+                var queryAggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
 
-        //        // This retry logic was added as the TSI instance are not immediately available after creation
-        //        await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
-        //        {
-        //            AsyncPageable<QueryResultPage> queryAggregateSeriesPages = tsiClient.Query.QueryAggregateSeriesAsync(
-        //                tsiId,
-        //                startTime,
-        //                endTime,
-        //                TimeSpan.FromSeconds(5),
-        //                queryAggregateSeriesRequestOptions);
+                var categoricalVariable = new CategoricalVariable(
+                    new TimeSeriesExpression($"tolong($event.{QueryTestsHelper.Temperature}.Double)"),
+                    new TimeSeriesDefaultCategory("N/A"));
+                categoricalVariable.Categories.Add(new TimeSeriesAggregateCategory("good", new List<object> { 1 }));
 
-        //            await foreach (QueryResultPage aggregateSeriesPage in queryAggregateSeriesPages)
-        //            {
-        //                aggregateSeriesPage.Timestamps.Should().NotBeNull();
-        //                aggregateSeriesPage.Properties.Count.Should().Be(1);
-        //                aggregateSeriesPage.Properties.Should().Contain((property) => property.Name == QueryTestsHelper.Temperature);
-        //                aggregateSeriesPage.Properties.First().Values.Should().Contain(x => x != null);
-        //            }
+                queryAggregateSeriesRequestOptions.InlineVariables["categorical"] = categoricalVariable;
 
-        //            return null;
-        //        }, MaxNumberOfRetries, s_retryDelay);
+                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                {
+                    QueryResults queryAggregateSeriesPages = tsiClient.Query.QueryAggregateSeriesAsync(
+                        tsiId,
+                        startTime,
+                        endTime,
+                        TimeSpan.FromSeconds(5),
+                        queryAggregateSeriesRequestOptions);
 
-        //        // Send 2 events with a special condition that can be used later to query on
-        //        IDictionary<string, object> messageBase = QueryTestsHelper.BuildMessageBase(modelSettings.TimeSeriesIdProperties.ToArray(), tsiId);
-        //        messageBase[QueryTestsHelper.Temperature] = 1;
-        //        messageBase[QueryTestsHelper.Humidity] = 3;
-        //        string messageBody = JsonSerializer.Serialize(messageBase);
-        //        var message = new Message(Encoding.ASCII.GetBytes(messageBody))
-        //        {
-        //            ContentType = "application/json",
-        //            ContentEncoding = "utf-8",
-        //        };
+                    await foreach (TimeSeriesPoint point in queryAggregateSeriesPages.GetResultsAsync())
+                    {
+                        point.GetUniquePropertyNames().Should().HaveCount(3)
+                        .And
+                         .Contain((property) => property == "categorical[good]")
+                        .And
+                         .Contain((property) => property == "categorical[N/A]");
+                    }
 
-        //        Func<Task> sendEventAct = async () => await deviceClient.SendEventAsync(message).ConfigureAwait(false);
-        //        sendEventAct.Should().NotThrow();
-
-        //        // Send it again
-        //        sendEventAct.Should().NotThrow();
-
-        //        // Query for the two events with a filter
-        //        queryAggregateSeriesRequestOptions.Filter = "$event.Temperature.Long = 1";
-        //        await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
-        //        {
-        //            AsyncPageable<QueryResultPage> queryAggregateSeriesPages = tsiClient.Query.QueryAggregateSeriesAsync(
-        //                tsiId,
-        //                startTime,
-        //                endTime,
-        //                TimeSpan.FromSeconds(5),
-        //                queryAggregateSeriesRequestOptions);
-
-        //            await foreach (QueryResultPage aggregateSeriesPage in queryAggregateSeriesPages)
-        //            {
-        //                aggregateSeriesPage.Timestamps.Should().NotBeNullOrEmpty();
-        //                aggregateSeriesPage.Properties.Should().HaveCount(1)
-        //                .And
-        //                 .Contain((property) => property.Name == QueryTestsHelper.Temperature);
-
-        //                IList<object> temperatureValues = aggregateSeriesPage
-        //                                            .Properties
-        //                                            .First((property) => property.Name == QueryTestsHelper.Temperature)
-        //                                            .Values;
-        //                temperatureValues.Should().Contain(1);
-        //            }
-
-        //            return null;
-        //        }, MaxNumberOfRetries, s_retryDelay);
-
-        //        var categoricalVariable = new CategoricalVariable(
-        //            new TimeSeriesExpression($"tolong($event.{QueryTestsHelper.Temperature}.Double)"),
-        //            new TimeSeriesDefaultCategory("N/A"));
-        //        categoricalVariable.Categories.Add(new TimeSeriesAggregateCategory("good", new List<object> { 1 }));
-
-        //        queryAggregateSeriesRequestOptions.InlineVariables["categorical"] = categoricalVariable;
-        //        queryAggregateSeriesRequestOptions.ProjectedVariables.Add("categorical");
-
-        //        await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
-        //        {
-        //            AsyncPageable<QueryResultPage> queryAggregateSeriesPages = tsiClient.Query.QueryAggregateSeriesAsync(
-        //                tsiId,
-        //                startTime,
-        //                endTime,
-        //                TimeSpan.FromSeconds(5),
-        //                queryAggregateSeriesRequestOptions);
-
-        //            await foreach (QueryResultPage aggregateSeriesPage in queryAggregateSeriesPages)
-        //            {
-        //                aggregateSeriesPage.Timestamps.Should().NotBeNullOrEmpty();
-        //                aggregateSeriesPage.Properties.Should().HaveCount(2)
-        //                .And
-        //                 .Contain((property) => property.Name == QueryTestsHelper.Temperature);
-
-        //                IList<object> temperatureValues = aggregateSeriesPage
-        //                                            .Properties
-        //                                            .First((property) => property.Name == QueryTestsHelper.Temperature)
-        //                                            .Values;
-        //                temperatureValues.Should().Contain(1.2);
-        //            }
-
-        //            return null;
-        //        }, MaxNumberOfRetries, s_retryDelay);
-        //    }
-        //    finally
-        //    {
-        //        deviceClient?.Dispose();
-        //    }
-        //}
+                    return null;
+                }, MaxNumberOfRetries, s_retryDelay);
+            }
+            finally
+            {
+                deviceClient?.Dispose();
+            }
+        }
     }
 }

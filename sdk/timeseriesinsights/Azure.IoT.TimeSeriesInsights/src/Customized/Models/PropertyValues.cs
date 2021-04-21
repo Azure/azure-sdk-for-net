@@ -44,7 +44,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 else if (Type == PropertyTypes.Long)
                 {
-                    values.Add(new TimeSeriesValue((double?)item.GetObject()));
+                    values.Add(new TimeSeriesValue((int?)item.GetObject()));
                 }
                 else if (Type == PropertyTypes.String)
                 {
