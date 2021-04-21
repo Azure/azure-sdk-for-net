@@ -392,7 +392,14 @@ namespace Azure.AI.FormRecognizer.Models
 
             foreach (var kvp in _fieldValue.ValueObject)
             {
-                fieldDictionary[kvp.Key] = new FormField(kvp.Key, kvp.Value, _readResults);
+                if (kvp.Value == null)
+                {
+                    fieldDictionary[kvp.Key] = null;
+                }
+                else
+                {
+                    fieldDictionary[kvp.Key] = new FormField(kvp.Key, kvp.Value, _readResults);
+                }
             }
 
             return fieldDictionary;
