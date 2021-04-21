@@ -136,6 +136,15 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.IsNull(to);
         }
 
+        [TestCase]
+        public void NullImplicitTotring()
+        {
+            ResourceType from = null;
+            string to = from;
+
+            Assert.IsNull(to);
+        }
+
         [TestCase(false, null, "Microsoft.Network1/VirtualNetworks2/subnets1")]
         [TestCase(false, "Microsoft.Network1/VirtualNetworks2/subnets1", null)]
         [TestCase(true, null, null)]
@@ -229,6 +238,19 @@ namespace Azure.ResourceManager.Core.Tests
             ResourceType rt = left;
             object rightObject = right;
             Assert.AreEqual(expected, rt.Equals(rightObject));
+        }
+
+        [TestCase("Microsoft.classicStorage/storageAccounts")]
+        [TestCase("Microsoft.ClassicStorage/diffaccount")]
+        [TestCase("Microsoft.ClassicStorage/storageAccounts")]
+        [TestCase(null)]
+        [TestCase("Foo.Bar/puppies")]
+        public void ImplicitToString(string expected)
+        {
+            ResourceType type = expected;
+            string actual = type;
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }
