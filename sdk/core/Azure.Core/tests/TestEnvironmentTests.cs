@@ -171,6 +171,34 @@ namespace Azure.Core.Tests
             Assert.AreEqual("5", env.AzureEnvironment);
         }
 
+        [Test]
+        public async Task ShouldCacheExceptionIfWaitingForEnvironmentFailed()
+        {
+            var env = new WaitForEnvironmentTestEnvironmentFailureMode();
+
+            try
+            {
+                await env.WaitForEnvironment();
+                Assert.Fail();
+            }
+            catch (InvalidOperationException e)
+            {
+                StringAssert.Contains("kaboom", e.Message);
+            }
+
+            try
+            {
+                await env.WaitForEnvironment();
+                Assert.Fail();
+            }
+            catch (InvalidOperationException e)
+            {
+                StringAssert.Contains("kaboom", e.Message);
+            }
+
+            Assert.AreEqual(1, WaitForEnvironmentTestEnvironmentFailureMode.InvocationCount);
+        }
+
         private class RecordedVariableMisuse : RecordedTestBase<MockTestEnvironment>
         {
             // To make NUnit happy
@@ -228,7 +256,7 @@ namespace Azure.Core.Tests
 
         public class WaitForEnvironmentTestClassOne : RecordedTestBase<WaitForEnvironmentTestEnvironmentOne>
         {
-            public WaitForEnvironmentTestClassOne(bool isAsync) : base(isAsync)
+            public WaitForEnvironmentTestClassOne(bool isAsync) : base(isAsync, RecordedTestMode.Live)
             {
             }
 
@@ -241,7 +269,7 @@ namespace Azure.Core.Tests
 
         public class WaitForEnvironmentTestClassTwo : RecordedTestBase<WaitForEnvironmentTestEnvironmentTwo>
         {
-            public WaitForEnvironmentTestClassTwo(bool isAsync) : base(isAsync)
+            public WaitForEnvironmentTestClassTwo(bool isAsync) : base(isAsync, RecordedTestMode.Live)
             {
             }
 
@@ -255,7 +283,7 @@ namespace Azure.Core.Tests
         // This one uses same env as WaitForEnvironmentTestClassTwo to prove value is cached.
         public class WaitForEnvironmentTestClassThree : RecordedTestBase<WaitForEnvironmentTestEnvironmentTwo>
         {
-            public WaitForEnvironmentTestClassThree(bool isAsync) : base(isAsync)
+            public WaitForEnvironmentTestClassThree(bool isAsync) : base(isAsync, RecordedTestMode.Live)
             {
             }
 
@@ -270,7 +298,7 @@ namespace Azure.Core.Tests
         {
             public static int InvocationCount { get; private set; }
 
-            public override Task<bool> IsEnvironmentReady()
+            protected override Task<bool> IsEnvironmentReady()
             {
                 return Task.FromResult(InvocationCount++ < 1 ? false : true);
             }
@@ -280,9 +308,25 @@ namespace Azure.Core.Tests
         {
             public static int InvocationCount { get; private set; }
 
-            public override Task<bool> IsEnvironmentReady()
+            protected override Task<bool> IsEnvironmentReady()
             {
                 return Task.FromResult(InvocationCount++ < 1 ? false : true);
+            }
+        }
+
+        public class WaitForEnvironmentTestEnvironmentFailureMode : TestEnvironment
+        {
+            public WaitForEnvironmentTestEnvironmentFailureMode()
+            {
+                Mode = RecordedTestMode.Live;
+            }
+
+            public static int InvocationCount { get; private set; }
+
+            protected override Task<bool> IsEnvironmentReady()
+            {
+                InvocationCount++;
+                throw new InvalidOperationException("kaboom");
             }
         }
     }

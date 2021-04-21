@@ -26,7 +26,7 @@ namespace Azure.Core.TestFramework
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
 
-        private static readonly IDictionary<Type, EnvironmentReadyState> EnvironmentStateCache = new ConcurrentDictionary<Type, EnvironmentReadyState>();
+        private static readonly ConcurrentDictionary<Type, Task> EnvironmentStateCache = new ConcurrentDictionary<Type, Task>();
 
         private readonly string _prefix;
 
@@ -188,7 +188,7 @@ namespace Azure.Core.TestFramework
         /// Throw if you want to fail the run fast.
         /// </summary>
         /// <returns>Whether environment is ready to use.</returns>
-        public virtual Task<bool> IsEnvironmentReady()
+        protected virtual Task<bool> IsEnvironmentReady()
         {
             return Task.FromResult(true);
         }
@@ -199,45 +199,27 @@ namespace Azure.Core.TestFramework
         /// <returns>A task.</returns>
         public async Task WaitForEnvironment()
         {
-            if (EnvironmentStateCache.TryGetValue(GetType(), out var environmentState))
+            if (Mode == RecordedTestMode.Live)
             {
-                switch (environmentState)
-                {
-                    case EnvironmentReadyState.Ready:
-                        return;
-                    case EnvironmentReadyState.Failed:
-                        throw new InvalidOperationException("The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
-                }
+                await EnvironmentStateCache.GetOrAdd(GetType(), t => WaitForEnvironmentInternal());
             }
-
-            try
-            {
-                int numberOfTries = 60;
-                TimeSpan delay = TimeSpan.FromSeconds(10);
-                for (int i = 0; i < numberOfTries; i++)
-                {
-                    var isReady = await IsEnvironmentReady();
-                    if (isReady)
-                    {
-                        EnvironmentStateCache[GetType()] = EnvironmentReadyState.Ready;
-                        return;
-                    }
-                    await Task.Delay(delay);
-                }
-            }
-            catch (Exception e)
-            {
-                EnvironmentStateCache[GetType()] = EnvironmentReadyState.Failed;
-                throw new InvalidOperationException("TestEnvironment.IsEnvironmentReady threw, check your TestEnvironment.IsEnvironmentReady scenario.", e);
-            }
-
-            EnvironmentStateCache[GetType()] = EnvironmentReadyState.Failed;
-            throw new InvalidOperationException("The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
         }
 
-        private enum EnvironmentReadyState
+        private async Task WaitForEnvironmentInternal()
         {
-            Ready, Failed
+            int numberOfTries = 60;
+            TimeSpan delay = TimeSpan.FromSeconds(10);
+            for (int i = 0; i < numberOfTries; i++)
+            {
+                var isReady = await IsEnvironmentReady();
+                if (isReady)
+                {
+                    return;
+                }
+                await Task.Delay(delay);
+            }
+
+            throw new InvalidOperationException("The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
         }
 
         /// <summary>

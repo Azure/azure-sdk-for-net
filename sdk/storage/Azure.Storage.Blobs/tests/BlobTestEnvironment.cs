@@ -11,14 +11,9 @@ namespace Azure.Storage.Blobs.Tests
 {
     public class BlobTestEnvironment : StorageTestEnvironment
     {
-        public override async Task<bool> IsEnvironmentReady()
+        protected override Task<bool> IsEnvironmentReady()
         {
-            if (Mode != RecordedTestMode.Live)
-            {
-                return true;
-            }
-
-            return await DoesOAuthWork();
+            return DoesOAuthWork();
         }
 
         private async Task<bool> DoesOAuthWork()
