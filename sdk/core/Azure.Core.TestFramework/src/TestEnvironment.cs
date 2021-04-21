@@ -13,6 +13,7 @@ using Azure.Identity;
 using System.ComponentModel;
 using System.Linq;
 using NUnit.Framework;
+using System.Collections.Concurrent;
 
 namespace Azure.Core.TestFramework
 {
@@ -24,6 +25,8 @@ namespace Azure.Core.TestFramework
     {
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
+
+        private static readonly IDictionary<Type, EnvironmentReadyState> EnvironmentStateCache = new ConcurrentDictionary<Type, EnvironmentReadyState>();
 
         private readonly string _prefix;
 
@@ -188,6 +191,53 @@ namespace Azure.Core.TestFramework
         public virtual Task<bool> IsEnvironmentReady()
         {
             return Task.FromResult(true);
+        }
+
+        /// <summary>
+        /// Waits until environment becomes ready to use. See <see cref="IsEnvironmentReady"/> to define sampling scenario.
+        /// </summary>
+        /// <returns>A task.</returns>
+        public async Task WaitForEnvironment()
+        {
+            if (EnvironmentStateCache.TryGetValue(GetType(), out var environmentState))
+            {
+                switch (environmentState)
+                {
+                    case EnvironmentReadyState.Ready:
+                        return;
+                    case EnvironmentReadyState.Failed:
+                        throw new InvalidOperationException("The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
+                }
+            }
+
+            try
+            {
+                int numberOfTries = 60;
+                TimeSpan delay = TimeSpan.FromSeconds(10);
+                for (int i = 0; i < numberOfTries; i++)
+                {
+                    var isReady = await IsEnvironmentReady();
+                    if (isReady)
+                    {
+                        EnvironmentStateCache[GetType()] = EnvironmentReadyState.Ready;
+                        return;
+                    }
+                    await Task.Delay(delay);
+                }
+            }
+            catch (Exception e)
+            {
+                EnvironmentStateCache[GetType()] = EnvironmentReadyState.Failed;
+                throw new InvalidOperationException("TestEnvironment.IsEnvironmentReady threw, check your TestEnvironment.IsEnvironmentReady scenario.", e);
+            }
+
+            EnvironmentStateCache[GetType()] = EnvironmentReadyState.Failed;
+            throw new InvalidOperationException("The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
+        }
+
+        private enum EnvironmentReadyState
+        {
+            Ready, Failed
         }
 
         /// <summary>

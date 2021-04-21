@@ -8,8 +8,10 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -222,6 +224,66 @@ namespace Azure.Core.Tests
             public string CustomSecret => GetRecordedVariable("CustomSecret", option => option.IsSecret("Custom"));
             public string MissingOptionalSecret => GetRecordedOptionalVariable("MissingOptionalSecret", option => option.IsSecret("INVALID"));
             public string ConnectionStringWithSecret => GetRecordedVariable("ConnectionStringWithSecret", option => option.HasSecretConnectionStringParameter("key"));
+        }
+
+        public class WaitForEnvironmentTestClassOne : RecordedTestBase<WaitForEnvironmentTestEnvironmentOne>
+        {
+            public WaitForEnvironmentTestClassOne(bool isAsync) : base(isAsync)
+            {
+            }
+
+            [Test]
+            public void ShouldCacheStateCorrectly()
+            {
+                Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentOne.InvocationCount);
+            }
+        }
+
+        public class WaitForEnvironmentTestClassTwo : RecordedTestBase<WaitForEnvironmentTestEnvironmentTwo>
+        {
+            public WaitForEnvironmentTestClassTwo(bool isAsync) : base(isAsync)
+            {
+            }
+
+            [Test]
+            public void ShouldCacheStateCorrectly()
+            {
+                Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentTwo.InvocationCount);
+            }
+        }
+
+        // This one uses same env as WaitForEnvironmentTestClassTwo to prove value is cached.
+        public class WaitForEnvironmentTestClassThree : RecordedTestBase<WaitForEnvironmentTestEnvironmentTwo>
+        {
+            public WaitForEnvironmentTestClassThree(bool isAsync) : base(isAsync)
+            {
+            }
+
+            [Test]
+            public void ShouldCacheStateCorrectly()
+            {
+                Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentTwo.InvocationCount);
+            }
+        }
+
+        public class WaitForEnvironmentTestEnvironmentOne : TestEnvironment
+        {
+            public static int InvocationCount { get; private set; }
+
+            public override Task<bool> IsEnvironmentReady()
+            {
+                return Task.FromResult(InvocationCount++ < 1 ? false : true);
+            }
+        }
+
+        public class WaitForEnvironmentTestEnvironmentTwo : TestEnvironment
+        {
+            public static int InvocationCount { get; private set; }
+
+            public override Task<bool> IsEnvironmentReady()
+            {
+                return Task.FromResult(InvocationCount++ < 1 ? false : true);
+            }
         }
     }
 }
