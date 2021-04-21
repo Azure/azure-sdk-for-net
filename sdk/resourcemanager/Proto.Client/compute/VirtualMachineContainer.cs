@@ -116,7 +116,7 @@ namespace Proto.Compute
         /// <returns> Object used to create a <see cref="VirtualMachine"/>. </returns>
         public VirtualMachineModelBuilder Construct(string hostName, string adminUser, string adminPassword, ResourceIdentifier networkInterfaceId, ResourceIdentifier availabilitySetId, LocationData location = null)
         {
-            var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier,ResourceGroupOperations>();
+            var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier, ResourceGroupOperations>();
             var vm = new Azure.ResourceManager.Compute.Models.VirtualMachine(location ?? parent.Data.Location)
             {
                 NetworkProfile = new NetworkProfile(),
@@ -138,7 +138,7 @@ namespace Proto.Compute
                     },
                 },
                 HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
-                AvailabilitySet = new SubResource() { Id = availabilitySetId }
+                AvailabilitySet = new Azure.ResourceManager.Compute.Models.SubResource() { Id = availabilitySetId }
             };
             vm.NetworkProfile.NetworkInterfaces.Add(new NetworkInterfaceReference() { Id = networkInterfaceId });
 
@@ -230,7 +230,7 @@ namespace Proto.Compute
         /// <inheritdoc />
         public override ArmResponse<VirtualMachine> Get(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(Operations.Get(Id.ResourceGroupName, virtualMachineName, cancellationToken), 
+            return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(Operations.Get(Id.ResourceGroupName, virtualMachineName, cancellationToken),
                 v => new VirtualMachine(Parent, new VirtualMachineData(v)));
         }
 

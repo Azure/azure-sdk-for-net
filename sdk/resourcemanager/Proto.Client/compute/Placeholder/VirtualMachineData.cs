@@ -32,7 +32,7 @@ namespace Proto.Compute
         public string ProvisioningState => Model.ProvisioningState;
 
         /// <summary> Specifies information about the dedicated host that the virtual machine resides in. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-10-01. </summary>
-        public SubResource Host
+        public Azure.ResourceManager.Compute.Models.SubResource Host
         {
             get => Model.Host;
             set => Model.Host = value;
@@ -60,21 +60,21 @@ namespace Proto.Compute
         }
 
         /// <summary> Specifies information about the proximity placement group that the virtual machine should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </summary>
-        public SubResource ProximityPlacementGroup
+        public Azure.ResourceManager.Compute.Models.SubResource ProximityPlacementGroup
         {
             get => Model.ProximityPlacementGroup;
             set => Model.ProximityPlacementGroup = value;
         }
 
         /// <summary> Specifies information about the virtual machine scale set that the virtual machine should be assigned to. Virtual machines specified in the same virtual machine scale set are allocated to different nodes to maximize availability. Currently, a VM can only be added to virtual machine scale set at creation time. An existing VM cannot be added to a virtual machine scale set. &lt;br&gt;&lt;br&gt;This property cannot exist along with a non-null properties.availabilitySet reference. &lt;br&gt;&lt;br&gt;Minimum api‐version: 2019‐03‐01. </summary>
-        public SubResource VirtualMachineScaleSet
+        public Azure.ResourceManager.Compute.Models.SubResource VirtualMachineScaleSet
         {
             get => Model.VirtualMachineScaleSet;
             set => Model.VirtualMachineScaleSet = value;
         }
 
         /// <summary> Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability set are allocated to different nodes to maximize availability. For more information about availability sets, see [Manage the availability of virtual machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-manage-availability?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json). &lt;br&gt;&lt;br&gt; For more information on Azure planned maintenance, see [Planned maintenance for virtual machines in Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json) &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to availability set at creation time. The availability set to which the VM is being added should be under the same resource group as the availability set resource. An existing VM cannot be added to an availability set. &lt;br&gt;&lt;br&gt;This property cannot exist along with a non-null properties.virtualMachineScaleSet reference. </summary>
-        public SubResource AvailabilitySet
+        public Azure.ResourceManager.Compute.Models.SubResource AvailabilitySet
         {
             get => Model.AvailabilitySet;
             set => Model.AvailabilitySet = value;
