@@ -11,18 +11,18 @@ namespace Azure.Storage.Blobs.Tests
 {
     public class BlobTestEnvironment : StorageTestEnvironment
     {
-        public override Task<bool> IsEnvironmentReady()
-        {
-            return DoesOAuthWork();
-        }
-
-        private async Task<bool> DoesOAuthWork()
+        public override async Task<bool> IsEnvironmentReady()
         {
             if (Mode != RecordedTestMode.Live)
             {
                 return true;
             }
 
+            return await DoesOAuthWork();
+        }
+
+        private async Task<bool> DoesOAuthWork()
+        {
             BlobServiceClient blobServiceClient = new BlobServiceClient(new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint), OAuthCredential);
             try
             {
