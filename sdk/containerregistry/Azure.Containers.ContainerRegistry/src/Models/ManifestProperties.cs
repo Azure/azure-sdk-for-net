@@ -9,7 +9,6 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes details. </summary>
-    [CodeGenModel("RegistryArtifactProperties")]
     public partial class ManifestProperties
     {
         internal ManifestProperties(string digest, ArtifactArchitecture architecture, ArtifactOperatingSystem operatingSystem)
