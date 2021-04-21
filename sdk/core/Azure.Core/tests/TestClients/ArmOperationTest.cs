@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
@@ -13,47 +14,32 @@ namespace Azure.Core.Tests
     public class ArmOperationTest<T> : ArmOperation<T>
         where T : class
     {
-        private T _value;
+        private readonly ResourceOperationsBase _operations;
+
         protected ArmOperationTest()
         {
         }
 
-        public ArmOperationTest(T value)
+        internal ArmOperationTest(ResourceOperationsBase operations, Response<T> response)
+            : base(response)
         {
-            _value = value;
+            _operations = operations;
         }
 
-        public override string Id => "testId";
-
-        public override T Value => _value;
-
-        public override bool HasCompleted => true;
-
-        public override bool HasValue => true;
-
-        public override Response GetRawResponse()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateResourceGroupOperation"/> class.
+        /// </summary>
+        /// <param name="operations"> The arm operations object to copy from. </param>
+        /// <param name="request"> The original request. </param>
+        /// <param name="response"> The original response. </param>
+        internal ArmOperationTest(ResourceOperationsBase operations, Request request, Response response)
+            : base(operations,
+                  request,
+                  response,
+                  OperationFinalStateVia.Location,
+                  "UpdateResourceGroupOperation")
         {
-            return Response.FromValue(_value, null) as Response;
-        }
-
-        public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
-        {
-            return new ValueTask<Response<T>>(Response.FromValue(_value, null));
-        }
-
-        public override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
-        {
-            return new ValueTask<Response<T>>(Response.FromValue(_value, null));
-        }
-
-        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
-        {
-            return new ValueTask<Response>(Response.FromValue(_value, null) as Response);
-        }
-
-        public override Response UpdateStatus(CancellationToken cancellationToken = default)
-        {
-            return Response.FromValue(_value, null) as Response;
+            _operations = operations;
         }
 
         public override T CreateResult(Response response, CancellationToken cancellationToken)
