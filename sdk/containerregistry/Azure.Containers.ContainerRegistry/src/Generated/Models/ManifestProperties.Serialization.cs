@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class RegistryArtifactProperties
+    public partial class ManifestProperties
     {
-        internal static RegistryArtifactProperties DeserializeRegistryArtifactProperties(JsonElement element)
+        internal static ManifestProperties DeserializeManifestProperties(JsonElement element)
         {
             Optional<string> imageName = default;
             Optional<string> digest = default;
             Optional<long> imageSize = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
-            Optional<string> architecture = default;
-            Optional<string> os = default;
+            Optional<ArtifactArchitecture> architecture = default;
+            Optional<ArtifactOperatingSystem> os = default;
             Optional<IReadOnlyList<ManifestAttributesManifestReferences>> references = default;
             Optional<IReadOnlyList<string>> tags = default;
             Optional<ContentProperties> changeableAttributes = default;
@@ -79,12 +79,22 @@ namespace Azure.Containers.ContainerRegistry
                         }
                         if (property0.NameEquals("architecture"))
                         {
-                            architecture = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            architecture = new ArtifactArchitecture(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("os"))
                         {
-                            os = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            os = new ArtifactOperatingSystem(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("references"))
@@ -131,7 +141,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new RegistryArtifactProperties(imageName.Value, digest.Value, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture.Value, os.Value, Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
+            return new ManifestProperties(imageName.Value, digest.Value, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture, os, Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
         }
     }
 }

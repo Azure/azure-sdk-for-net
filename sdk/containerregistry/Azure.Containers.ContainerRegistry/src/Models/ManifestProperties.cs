@@ -9,24 +9,32 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes details. </summary>
-    public partial class RegistryArtifactProperties
+    public partial class ManifestProperties
     {
-        internal RegistryArtifactProperties(string digest, string architecture, string operatingSystem)
+        internal ManifestProperties(string digest, string architecture, string operatingSystem)
         {
             this.Digest = digest;
-            this.CpuArchitecture = architecture;
+            this.Architecture = architecture;
             this.OperatingSystem = operatingSystem;
         }
 
         /// <summary> List of manifest attributes details. </summary>
         internal IReadOnlyList<ManifestAttributesManifestReferences> References { get; }
 
+        /// <summary>
+        /// </summary>
+        public ArtifactArchitecture Architecture { get; }
+
+        /// <summary>
+        /// </summary>
+        public ArtifactOperatingSystem OperatingSystem { get; }
+
         /// <summary></summary>
-        public IReadOnlyList<RegistryArtifactProperties> RegistryArtifacts
+        public IReadOnlyList<ManifestProperties> Manifests
         {
             get
             {
-                List<RegistryArtifactProperties> artifacts = new List<RegistryArtifactProperties>();
+                List<ManifestProperties> artifacts = new List<ManifestProperties>();
 
                 foreach (var reference in this.References)
                 {
@@ -37,9 +45,9 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal static RegistryArtifactProperties FromManifestAttributesManifestReferences(ManifestAttributesManifestReferences reference)
+        internal static ManifestProperties FromManifestAttributesManifestReferences(ManifestAttributesManifestReferences reference)
         {
-            return new RegistryArtifactProperties(
+            return new ManifestProperties(
                 reference.Digest,
                 reference.CpuArchitecture,
                 reference.OperatingSystem);

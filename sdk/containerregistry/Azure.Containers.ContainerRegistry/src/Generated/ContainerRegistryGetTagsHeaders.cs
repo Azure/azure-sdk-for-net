@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ContainerRegistryRepositoryGetManifestsHeaders
+    internal partial class ContainerRegistryGetTagsHeaders
     {
         private readonly Response _response;
-        public ContainerRegistryRepositoryGetManifestsHeaders(Response response)
+        public ContainerRegistryGetTagsHeaders(Response response)
         {
             _response = response;
         }

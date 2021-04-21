@@ -12,7 +12,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> The registry service client. </summary>
     public partial class ContainerRegistryClient
     {
-        private readonly Uri _endpoint;
+        private readonly Uri _registryUri;
         private readonly HttpPipeline _pipeline;
         private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -35,14 +35,14 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _endpoint = endpoint;
+            _registryUri = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
             _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
             _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, AcrAadScope, _acrAuthClient));
-            _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+            _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _registryUri.AbsoluteUri);
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
@@ -53,7 +53,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Ge the service endpoint for this client.
         /// </summary>
-        public Uri Endpoint {  get { return _endpoint; } }
+        public Uri RegistryUri {  get { return _registryUri; } }
 
         /// <summary> List repositories. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,19 +186,33 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Create a new <see cref="ContainerRepositoryClient"/> object for the specified repository.
-        /// The new <see cref="ContainerRepositoryClient"/> uses the same request
-        /// pipeline as the <see cref="ContainerRegistryClient"/>.
+        /// Create a new <see cref="ContainerRepository"/> object for the specified repository.
         /// </summary>
         /// <param name="repository"> The repository to reference. </param>
-        /// <returns> A new <see cref="ContainerRepositoryClient"/> for the desired repository. </returns>
-        public virtual ContainerRepositoryClient GetRepositoryClient(string repository)
+        /// <returns> A new <see cref="ContainerRepository"/> for the desired repository. </returns>
+        public virtual ContainerRepository GetRepository(string repository)
         {
-            return new ContainerRepositoryClient(_endpoint,
+            return new ContainerRepository(
                 repository,
+                _registryUri,
                 _clientDiagnostics,
-                _pipeline,
-                _acrAuthPipeline);
+                _restClient);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="RegistryArtifact"/> object for the specified artifact.
+        /// </summary>
+        /// <param name="repository"> The repository to reference. </param>
+        /// <param name="tagOrDigest"> Either a tag or a digest that uniquely identifies the artifact. </param>
+        /// <returns> A new <see cref="RegistryArtifact"/> for the desired repository. </returns>
+        public virtual RegistryArtifact GetRegistryArtifact(string repository, string tagOrDigest)
+        {
+            return new RegistryArtifact(
+                repository,
+                tagOrDigest,
+                _registryUri,
+                _clientDiagnostics,
+                _restClient);
         }
     }
 }
