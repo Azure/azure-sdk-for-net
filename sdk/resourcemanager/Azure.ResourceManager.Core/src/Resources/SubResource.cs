@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core
     {
         /// <summary> Initializes a new instance of SubResource. </summary>
         /// <param name="id"> ARM resource Id. </param>
-        internal SubResource(string id)
+        protected internal SubResource(string id)
         {
             Id = id;
         }

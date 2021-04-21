@@ -4,29 +4,29 @@ using System.Collections.Generic;
 
 namespace Proto.Network
 {
-    /// <summary> 
+    /// <summary>
     /// A class representing the subnet data model.
     /// </summary>
     public class SubnetData : ProxyResource<ResourceGroupResourceIdentifier, Azure.ResourceManager.Network.Models.Subnet>
     {
-        /// <summary> 
-        /// Initializes a new instance of the <see cref="SubnetData"/> class. 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubnetData"/> class.
         /// </summary>
         public SubnetData(Azure.ResourceManager.Network.Models.Subnet sub) : base(sub.Id, sub)
         {
         }
 
         /// <summary>
-        /// Gets the subnet id. 
+        /// Gets the subnet id.
         ///</summary>
         public override string Name => Model.Name;
 
-        /// <summary> 
-        /// The provisioning state of the subnet resource. 
+        /// <summary>
+        /// The provisioning state of the subnet resource.
         /// </summary>
         public ProvisioningState? ProvisioningState => Model.ProvisioningState;
 
-        /// <summary> 
+        /// <summary>
         /// A read-only string identifying the intention use for this subnet based on delegations and other user-defined properties.
         /// </summary>
         public string Purpose => Model.Purpose;
@@ -44,7 +44,7 @@ namespace Proto.Network
         public IReadOnlyList<ResourceNavigationLink> ResourceNavigationLinks => Model.ResourceNavigationLinks;
 
         /// <summary> Array of IpAllocation which reference this subnet. </summary>
-        public IList<SubResource> IpAllocations
+        public IList<Azure.ResourceManager.Network.Models.SubResource> IpAllocations
         {
             get => Model.IpAllocations;
         }
@@ -70,9 +70,9 @@ namespace Proto.Network
         {
             get => Model.ServiceEndpoints;
         }
-        
+
         /// <summary> Nat gateway associated with this subnet. </summary>
-        public SubResource NatGateway
+        public Azure.ResourceManager.Network.Models.SubResource NatGateway
         {
             get => Model.NatGateway;
             set => Model.NatGateway = value;

@@ -93,7 +93,7 @@ namespace Proto.Network
         }
 
         /// <summary> The Public IP Prefix this Public IP Address should be allocated from. </summary>
-        public SubResource PublicIPPrefix
+        public Azure.ResourceManager.Network.Models.SubResource PublicIPPrefix
         {
             get => Model.PublicIPPrefix;
             set => Model.PublicIPPrefix = value;

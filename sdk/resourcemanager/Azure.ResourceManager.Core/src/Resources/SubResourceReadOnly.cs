@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core
     {
         /// <summary> Initializes a new instance of SubResourceReadOnly. </summary>
         /// <param name="id"> ARM resource Id. </param>
-        internal SubResourceReadOnly(string id)
+        protected internal SubResourceReadOnly(string id)
         {
             Id = id;
         }
