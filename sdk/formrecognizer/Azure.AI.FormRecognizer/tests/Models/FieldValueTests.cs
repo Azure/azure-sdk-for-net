@@ -62,6 +62,9 @@ namespace Azure.AI.FormRecognizer.Tests
             var fieldValue = new FieldValue(FieldValueType.Float);
 
             Assert.AreEqual(FieldValueType.Float, fieldValue.ValueType);
+            // The service will always return a text property which our
+            // AsFloat() method depends on in order to calculate the float.
+            // This was introduced in 3.0 so sadly we need to maintain it.
             Assert.Throws<NullReferenceException>(() => fieldValue.AsFloat());
         }
 
