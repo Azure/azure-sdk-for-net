@@ -99,7 +99,7 @@ namespace Azure.Security.Attestation.Tests
             Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody));
 
             // This check should succeed since the token slack is greater than the 5 second expiration time.
-            await ValidateSerializedToken(serializedToken, tokenBody, new TokenValidationOptions { TimeValidationSlack = 10 });
+            await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 10 });
         }
 
         [RecordedTest]
@@ -123,7 +123,7 @@ namespace Azure.Security.Attestation.Tests
             Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody));
 
             // This check should succeed since the token slack is greater than the 10 seconds before it becomes valid.
-            await ValidateSerializedToken(serializedToken, tokenBody, new TokenValidationOptions { TimeValidationSlack = 10 });
+            await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 10 });
         }
 
         [RecordedTest]
@@ -150,7 +150,7 @@ namespace Azure.Security.Attestation.Tests
             await ValidateSerializedToken(
                 serializedToken,
                 tokenBody,
-                new TokenValidationOptions{
+                new AttestationTokenValidationOptions{
                     TimeValidationSlack= 10,
                     ValidationCallback= (AttestationToken tokenToValidate, AttestationSigner tokenSigner) =>
                     {
@@ -167,11 +167,11 @@ namespace Azure.Security.Attestation.Tests
         /// Ensure that the serialized token validates correctly.
         /// </summary>
         /// <param name="serializedToken"></param>
-        public async Task ValidateSerializedToken(string serializedToken, object expectedBody, TokenValidationOptions tokenOptions = default)
+        public async Task ValidateSerializedToken(string serializedToken, object expectedBody, AttestationTokenValidationOptions tokenOptions = default)
         {
             var parsedToken = AttestationToken.Deserialize(serializedToken);
 
-            Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new TokenValidationOptions(validateExpirationTime:true), null));
+            Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new AttestationTokenValidationOptions(validateExpirationTime:true), null));
 
             // The body of the token should match the expected body.
             Assert.AreEqual(JsonSerializer.Serialize(expectedBody), parsedToken.TokenBody);

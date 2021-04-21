@@ -78,14 +78,14 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Returns the thumbprint of the X.509 certificate which was used to verify the attestation token.
         ///
-        /// Null until the <see cref="AttestationToken.ValidateToken(TokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/> method has been called.
+        /// Null until the <see cref="AttestationToken.ValidateToken(AttestationTokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/> method has been called.
         /// </summary>
         public string CertificateThumbprint { get; private set; }
 
         /// <summary>
         /// Returns the X.509 certificate which was used to verify the attestation token.
         ///
-        /// Null until the <see cref="AttestationToken.ValidateToken(TokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/> method has been called.
+        /// Null until the <see cref="AttestationToken.ValidateToken(AttestationTokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/> method has been called.
         /// </summary>
         public AttestationSigner SigningCertificate { get; private set; }
 
@@ -241,7 +241,7 @@ namespace Azure.Security.Attestation
         /// Validate a JSON Web Token returned by the MAA.
         /// <para/>
         /// If the caller provides a set of signers, than that set of signers will be used as the complete set of candidates for signing.
-        /// If the caller does not provide a set of signers, then the <see cref="ValidateTokenAsync(TokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/>
+        /// If the caller does not provide a set of signers, then the <see cref="ValidateTokenAsync(AttestationTokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/>
         /// API will a set of callers derived from the contents of the attestation token.
         /// </summary>
         /// <param name="options">Options used while validating the attestation token.</param>
@@ -250,14 +250,14 @@ namespace Azure.Security.Attestation
         /// <returns>true if the token was valid, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
-        public virtual async Task<bool> ValidateTokenAsync(TokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> ValidateTokenAsync(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
             => await ValidateTokenInternalAsync(options, attestationSigningCertificates, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.
         /// <para/>
         /// If the caller provides a set of signers, than that set of signers will be used as the complete set of candidates for signing.
-        /// If the caller does not provide a set of signers, then the <see cref="ValidateToken(TokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/>
+        /// If the caller does not provide a set of signers, then the <see cref="ValidateToken(AttestationTokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/>
         /// API will a set of callers derived from the contents of the attestation token.
         /// </summary>
         /// <param name="options">Options used while validating the attestation token.</param>
@@ -266,14 +266,14 @@ namespace Azure.Security.Attestation
         /// <returns>true if the token was valid, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
-        public virtual bool ValidateToken(TokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
+        public virtual bool ValidateToken(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
             => ValidateTokenInternalAsync(options, attestationSigningCertificates, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.
         /// <para/>
         /// If the caller provides a set of signers, than that set of signers will be used as the complete set of candidates for signing.
-        /// If the caller does not provide a set of signers, then the <see cref="ValidateTokenAsync(TokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/>
+        /// If the caller does not provide a set of signers, then the <see cref="ValidateTokenAsync(AttestationTokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/>
         /// API will a set of callers derived from the contents of the attestation token.
         /// </summary>
         /// <param name="options">Options used while validating the attestation token.</param>
@@ -283,7 +283,7 @@ namespace Azure.Security.Attestation
         /// <returns>true if the token was valid, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
-        internal async Task<bool> ValidateTokenInternalAsync(TokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, bool async, CancellationToken cancellationToken = default)
+        internal async Task<bool> ValidateTokenInternalAsync(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, bool async, CancellationToken cancellationToken = default)
         {
             // Early out if the caller doesn't want us to validate the token.
             if (!options.ValidateToken)
@@ -485,7 +485,7 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <returns>true if the common properties are valid.</returns>
         /// <exception cref="Exception">Thrown if the attestation token is not value.</exception>
-        private bool ValidateCommonProperties(TokenValidationOptions options)
+        private bool ValidateCommonProperties(AttestationTokenValidationOptions options)
         {
             if ((options?.ValidateIssuer).GetValueOrDefault())
             {

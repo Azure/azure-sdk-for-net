@@ -127,7 +127,7 @@ namespace Azure.Security.Attestation.Tests
 
             bool callbackInvoked = false;
 
-            var client = TestEnvironment.GetSharedAttestationClient(this, new TokenValidationOptions
+            var client = TestEnvironment.GetSharedAttestationClient(this, new AttestationTokenValidationOptions
             {
                 ValidateExpirationTime = TestEnvironment.IsTalkingToLiveServer,
                 ValidationCallback = (attestationToken, signer) =>
@@ -197,7 +197,7 @@ namespace Azure.Security.Attestation.Tests
             byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
             bool callbackInvoked = false;
 
-            var client = TestEnvironment.GetSharedAttestationClient(this, new TokenValidationOptions {
+            var client = TestEnvironment.GetSharedAttestationClient(this, new AttestationTokenValidationOptions {
                 ValidateExpirationTime = TestEnvironment.IsTalkingToLiveServer,
                 ValidationCallback = (attestationToken, signer) =>
                 {

@@ -54,6 +54,54 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
+        /// DEPRECATED: Private preview version of x-ms-sgx-ehd claim.
+        /// </summary>
+        [Obsolete("DeprecatedEnclaveHeldData is deprecated, use EnclaveHeldData instead"]
+        public byte[] DeprecatedEnclaveHeldData { get; }
+
+        /// <summary> DEPRECATED: Private Preview version of x-ms-ver claim. </summary>
+        [Obsolete("DeprecatedVersion is deprecated, use Version instead")]
+        public string DeprecatedVersion { get; }
+
+        /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-is-debuggable claim. </summary>
+        [Obsolete("DeprecatedIsDebuggable is deprecated, use IsDebuggable instead")]
+        public bool? DeprecatedIsDebuggable { get; }
+
+        /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-collateral claim. </summary>
+        [Obsolete("DeprecatedSgxCollateral is deprecated, use SgxCollateral instead")]
+        public object DeprecatedSgxCollateral { get; }
+
+        /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-ehd claim. </summary>
+        [Obsolete("DeprecatedEnclaveHeldData2 is deprecated, use EnclaveHeldData instead")]
+        public byte[] DeprecatedEnclaveHeldData2 { get; }
+
+        /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-product-id. </summary>
+        [Obsolete("DeprecatedProductId is deprecated, use ProductId instead")]
+        public float? DeprecatedProductId { get; }
+
+        /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-mrenclave. </summary>
+        [Obsolete("DeprecatedMrEnclave is deprecated, use MrEnclave instead")]
+        public string DeprecatedMrEnclave { get; }
+
+        /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-mrsigner. </summary>
+        [Obsolete("DeprecatedMrSigner is deprecated, use MrSigner instead")]
+        public string DeprecatedMrSigner { get; }
+
+        /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-svn. </summary>
+        [Obsolete("DeprecatedSvn is deprecated, use Svn instead")]
+        public float? DeprecatedSvn { get; }
+
+        /// <summary> DEPRECATED: Private Preview version of x-ms-tee. </summary>
+        [Obsolete("DeprecatedTee is deprecated, use Tee instead")]
+        public string DeprecatedTee { get; }
+
+        /// <summary> DEPRECATED: Private Preview version of x-ms-policy-hash. </summary>
+        [Obsolete("DeprecatedPolicyHash is deprecated, use PolicyHash instead")]
+        public BinaryData DeprecatedPolicyHash { get; }
+        /// <summary> DEPRECATED: Private Preview version of nonce. </summary>
+
+        public string DeprecatedRpData { get; }
+        /// <summary>
         /// Gets the RFC 7519 "jti" claim name (https://tools.ietf.org/html/rfc7519#section-4)
         /// </summary>
         public string UniqueIdentifier { get => InternalJti; }
