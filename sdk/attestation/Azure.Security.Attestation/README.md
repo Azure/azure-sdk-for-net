@@ -88,7 +88,7 @@ For more information about the Azure Identity APIs and how to use them, see [Azu
 There are four major families of functionality provided in this preview SDK:
 
 * [SGX and TPM enclave attestation.](#attestation)
-* [MAA Attestation Token signing certificate discovery and validation.]*#attestation-token-signing-certificate-discovery-and-validation)  
+* [MAA Attestation Token signing certificate discovery and validation.](#attestation-token-signing-certificate-discovery-and-validation)  
 * [Attestation Policy management.](#policy-management)
 * [Attestation policy management certificate management](#policy-management-certificate-management) (yes, policy management management).
 
