@@ -44,7 +44,7 @@ namespace Azure.Storage.Blobs.Test
         public void ToSasQueryParameters_ContainerTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: false, includeSnapshot: false, containerName, blobName, constants);
@@ -72,7 +72,7 @@ namespace Azure.Storage.Blobs.Test
         public void ToSasQueryParameters_ContainerIdentityTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: false, includeSnapshot: false, containerName, blobName, constants);
@@ -106,7 +106,7 @@ namespace Azure.Storage.Blobs.Test
         public void ToSasQueryParameters_BlobTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: false, containerName, blobName, constants);
@@ -134,7 +134,7 @@ namespace Azure.Storage.Blobs.Test
         public void ToSasQueryParameters_BlobIdentityTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: false, containerName, blobName, constants);
@@ -168,7 +168,7 @@ namespace Azure.Storage.Blobs.Test
         public void ToSasQueryParameters_SnapshotTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: true, containerName, blobName, constants);
@@ -196,7 +196,7 @@ namespace Azure.Storage.Blobs.Test
         public void ToSasQueryParameters_SnapshotIdentityTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: true, containerName, blobName, constants);
@@ -230,7 +230,7 @@ namespace Azure.Storage.Blobs.Test
         public void ToSasQueryParameters_NullSharedKeyCredentialTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
             BlobSasBuilder blobSasBuilder = BuildBlobSasBuilder(includeBlob: true, includeSnapshot: true, containerName, blobName, constants);
@@ -243,7 +243,7 @@ namespace Azure.Storage.Blobs.Test
         public void ToSasQueryParameters_IdentifierTest()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string containerName = GetNewContainerName();
             string resource = "c";
             BlobSasBuilder sasBuilder = new BlobSasBuilder()

@@ -176,6 +176,21 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
+        /// Returns whether environment is ready to use. Should be overriden to provide service specific sampling scenario.
+        /// The test framework will wait until this returns true before starting tests.
+        /// Use this place to hook up logic that polls if eventual consistency has happened.
+        ///
+        /// Return true if environment is ready to use.
+        /// Return false if environment is not ready to use and framework should wait.
+        /// Throw if you want to fail the run fast.
+        /// </summary>
+        /// <returns>Whether environment is ready to use.</returns>
+        public virtual Task<bool> IsEnvironmentReady()
+        {
+            return Task.FromResult(true);
+        }
+
+        /// <summary>
         /// Returns and records an environment variable value when running live or recorded value during playback.
         /// </summary>
         protected string GetRecordedOptionalVariable(string name)

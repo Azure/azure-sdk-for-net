@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         StorageVersionExtensions.MaxVersion,
     RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
     LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
-    public class ChangeFeedTestBase : StorageTestBase
+    public class ChangeFeedTestBase : StorageTestBase<StorageTestEnvironment>
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
 

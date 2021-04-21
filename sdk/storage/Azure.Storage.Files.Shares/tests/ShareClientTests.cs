@@ -2056,7 +2056,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -2093,7 +2093,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void CanGenerateSas_GetRootDirectoryClient()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -2134,7 +2134,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void CanGenerateSas_GetDirectoryClient()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -2175,7 +2175,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void CanGenerateSas_WithSnapshot_False()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var shareEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
 
             // Create blob
@@ -2196,7 +2196,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void CanGenerateSas_WithSnapshot_True()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -2237,7 +2237,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string shareName = GetNewShareName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
             ShareUriBuilder shareUriBuilder = new ShareUriBuilder(serviceUri)
@@ -2271,7 +2271,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public void GenerateSas_Builder()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string shareName = GetNewShareName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
             ShareUriBuilder shareUriBuilder = new ShareUriBuilder(serviceUri)
@@ -2310,7 +2310,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public void GenerateSas_BuilderNullName()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string shareName = GetNewShareName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
             ShareUriBuilder shareUriBuilder = new ShareUriBuilder(serviceUri)
@@ -2350,7 +2350,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void GenerateSas_BuilderWrongName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string shareName = GetNewShareName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
             ShareUriBuilder shareUriBuilder = new ShareUriBuilder(serviceUri)

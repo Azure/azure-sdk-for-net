@@ -15,7 +15,7 @@ using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Queues.Tests
 {
-    public class QueueTestBase : StorageTestBase
+    public class QueueTestBase : StorageTestBase<StorageTestEnvironment>
     {
         public string GetNewQueueName() => $"test-queue-{Recording.Random.NewGuid()}";
         public string GetNewMessageId() => $"test-message-{Recording.Random.NewGuid()}";
