@@ -31,7 +31,7 @@ namespace Azure.Core.TestFramework
         [OneTimeSetUp]
         public async Task WaitForEnvironment()
         {
-            await TestEnvironment.WaitForEnvironment();
+            await TestEnvironment.WaitForEnvironmentAsync();
         }
     }
 }

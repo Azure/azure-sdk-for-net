@@ -178,7 +178,7 @@ namespace Azure.Core.Tests
 
             try
             {
-                await env.WaitForEnvironment();
+                await env.WaitForEnvironmentAsync();
                 Assert.Fail();
             }
             catch (InvalidOperationException e)
@@ -188,7 +188,7 @@ namespace Azure.Core.Tests
 
             try
             {
-                await env.WaitForEnvironment();
+                await env.WaitForEnvironmentAsync();
                 Assert.Fail();
             }
             catch (InvalidOperationException e)
@@ -298,7 +298,7 @@ namespace Azure.Core.Tests
         {
             public static int InvocationCount { get; private set; }
 
-            protected override Task<bool> IsEnvironmentReady()
+            protected override Task<bool> IsEnvironmentReadyAsync()
             {
                 return Task.FromResult(InvocationCount++ < 1 ? false : true);
             }
@@ -308,7 +308,7 @@ namespace Azure.Core.Tests
         {
             public static int InvocationCount { get; private set; }
 
-            protected override Task<bool> IsEnvironmentReady()
+            protected override Task<bool> IsEnvironmentReadyAsync()
             {
                 return Task.FromResult(InvocationCount++ < 1 ? false : true);
             }
@@ -323,7 +323,7 @@ namespace Azure.Core.Tests
 
             public static int InvocationCount { get; private set; }
 
-            protected override Task<bool> IsEnvironmentReady()
+            protected override Task<bool> IsEnvironmentReadyAsync()
             {
                 InvocationCount++;
                 throw new InvalidOperationException("kaboom");

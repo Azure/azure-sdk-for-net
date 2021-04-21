@@ -188,30 +188,30 @@ namespace Azure.Core.TestFramework
         /// Throw if you want to fail the run fast.
         /// </summary>
         /// <returns>Whether environment is ready to use.</returns>
-        protected virtual Task<bool> IsEnvironmentReady()
+        protected virtual Task<bool> IsEnvironmentReadyAsync()
         {
             return Task.FromResult(true);
         }
 
         /// <summary>
-        /// Waits until environment becomes ready to use. See <see cref="IsEnvironmentReady"/> to define sampling scenario.
+        /// Waits until environment becomes ready to use. See <see cref="IsEnvironmentReadyAsync"/> to define sampling scenario.
         /// </summary>
         /// <returns>A task.</returns>
-        public async Task WaitForEnvironment()
+        public async Task WaitForEnvironmentAsync()
         {
             if (Mode == RecordedTestMode.Live)
             {
-                await s_environmentStateCache.GetOrAdd(GetType(), t => WaitForEnvironmentInternal());
+                await s_environmentStateCache.GetOrAdd(GetType(), t => WaitForEnvironmentInternalAsync());
             }
         }
 
-        private async Task WaitForEnvironmentInternal()
+        private async Task WaitForEnvironmentInternalAsync()
         {
             int numberOfTries = 60;
             TimeSpan delay = TimeSpan.FromSeconds(10);
             for (int i = 0; i < numberOfTries; i++)
             {
-                var isReady = await IsEnvironmentReady();
+                var isReady = await IsEnvironmentReadyAsync();
                 if (isReady)
                 {
                     return;

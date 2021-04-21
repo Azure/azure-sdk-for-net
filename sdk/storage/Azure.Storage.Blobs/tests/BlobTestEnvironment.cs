@@ -11,12 +11,12 @@ namespace Azure.Storage.Blobs.Tests
 {
     public class BlobTestEnvironment : StorageTestEnvironment
     {
-        protected override Task<bool> IsEnvironmentReady()
+        protected override Task<bool> IsEnvironmentReadyAsync()
         {
-            return DoesOAuthWork();
+            return DoesOAuthWorkAsync();
         }
 
-        private async Task<bool> DoesOAuthWork()
+        private async Task<bool> DoesOAuthWorkAsync()
         {
             BlobServiceClient blobServiceClient = new BlobServiceClient(new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint), OAuthCredential);
             try
