@@ -17,6 +17,8 @@ namespace Azure.Search.Documents
     [CodeGenModel("SearchRequest")]
     public partial class SearchOptions
     {
+        private const string QueryAnswerRawSplitter = "|count-";
+
         /// <summary>
         /// Initializes a new instance of SearchOptions from a continuation
         /// token to continue fetching results from a previous search.
@@ -175,27 +177,27 @@ namespace Azure.Search.Documents
 
         /// <summary>
         /// A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response.
-        /// <para>The default is 1 and the maximum is 5.</para>
         /// </summary>
-        public uint QueryAnswerCount { get; set; }
+        public int? QueryAnswerCount { get; set; }
 
         /// <summary>
-        /// Join OrderBy so it can be sent as a comma separated string.
+        /// Constructed from <see cref="QueryAnswer"/> and <see cref="QueryAnswerCount"/>
         /// </summary>
         [CodeGenMember("answers")]
         internal string QueryAnswerRaw
         {
             get
             {
-                if (!QueryAnswer.HasValue)
+                string queryAnswerStringValue = null;
+
+                if (QueryAnswer.HasValue)
                 {
-                    return null;
+                    queryAnswerStringValue = QueryAnswer.Value.ToString();
                 }
 
-                string queryAnswerStringValue = QueryAnswer.Value.ToString();
-                if (QueryAnswer.Value == Models.QueryAnswer.Extractive)
+                if (QueryAnswerCount.HasValue)
                 {
-                    queryAnswerStringValue = $"{Models.QueryAnswer.Extractive}|count-{Math.Min(5, QueryAnswerCount)}";
+                    queryAnswerStringValue = $"{queryAnswerStringValue}{QueryAnswerRawSplitter}{QueryAnswerCount.Value}";
                 }
 
                 return queryAnswerStringValue;
@@ -206,28 +208,33 @@ namespace Azure.Search.Documents
                 if (string.IsNullOrEmpty(value))
                 {
                     QueryAnswer = null;
+                    QueryAnswerCount = null;
                 }
                 else
                 {
-                    string[] queryAnswerParts = value.Split('|');
-                    QueryAnswer = new QueryAnswer(queryAnswerParts[0]);
-
-                    if (queryAnswerParts.Length == 1)
+                    if (value.Contains(QueryAnswerRawSplitter))
                     {
-                        if (QueryAnswer.Value == Models.QueryAnswer.Extractive)
+                        var queryAnswerPart = value.Substring(0, value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase));
+                        var countPart = value.Substring(value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase) + QueryAnswerRawSplitter.Length);
+
+                        if (string.IsNullOrEmpty(queryAnswerPart))
                         {
-                            // Set answer count to the default value.
-                            QueryAnswerCount = 1;
+                            QueryAnswer = null;
+                        }
+                        else
+                        {
+                            QueryAnswer = new QueryAnswer(queryAnswerPart);
+                        }
+
+                        if (int.TryParse(countPart, out int countValue))
+                        {
+                            QueryAnswerCount = countValue;
                         }
                     }
                     else
                     {
-                        string countString = queryAnswerParts[1].Length > 6 ? queryAnswerParts[1].Substring(6) : "1";
-
-                        if (uint.TryParse(countString, out uint countValue))
-                        {
-                            QueryAnswerCount = countValue;
-                        }
+                        QueryAnswer = new QueryAnswer(value);
+                        QueryAnswerCount = null;
                     }
                 }
             }
