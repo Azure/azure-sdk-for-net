@@ -25,6 +25,18 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for internal testing only.
+        /// </summary>
+        /// <param name="type">The field type.</param>
+        internal FieldValue(FieldValueType type)
+            : this()
+        {
+            ValueType = type;
+            _fieldValue = new FieldValue_internal(type);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
         /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
@@ -237,7 +249,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueInteger.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Int64)} type. Consider using 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Int64)} type. Consider using the 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueInteger.Value;
@@ -269,7 +281,7 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 else
                 {
-                    throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Float)} type. Consider using 'ValueData.Text' property.");
+                    throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Float)} type. Consider using the 'ValueData.Text' property.");
                 }
             }
 
@@ -295,7 +307,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueDate.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Date)} type. Consider using 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Date)} type. Consider using the 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueDate.Value.UtcDateTime;
@@ -320,7 +332,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueTime.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Time)} type. Consider using 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Time)} type. Consider using the 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueTime.Value;
@@ -418,7 +430,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueSelectionMark.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.SelectionMark)} type. Consider using 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.SelectionMark)} type. Consider using the 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueSelectionMark.Value;
@@ -463,7 +475,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueGender.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Gender)} type. Consider using 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Gender)} type. Consider using the 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueGender.Value;
