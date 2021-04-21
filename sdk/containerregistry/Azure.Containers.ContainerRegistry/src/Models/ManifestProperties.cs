@@ -12,15 +12,23 @@ namespace Azure.Containers.ContainerRegistry
     [CodeGenModel("RegistryArtifactProperties")]
     public partial class ManifestProperties
     {
-        internal ManifestProperties(string digest, string architecture, string operatingSystem)
+        internal ManifestProperties(string digest, ArtifactArchitecture architecture, ArtifactOperatingSystem operatingSystem)
         {
             this.Digest = digest;
-            this.CpuArchitecture = architecture;
+            this.Architecture = architecture;
             this.OperatingSystem = operatingSystem;
         }
 
         /// <summary> List of manifest attributes details. </summary>
         internal IReadOnlyList<ManifestAttributesManifestReferences> References { get; }
+
+        /// <summary>
+        /// </summary>
+        public ArtifactArchitecture Architecture { get; }
+
+        /// <summary>
+        /// </summary>
+        public ArtifactOperatingSystem OperatingSystem { get; }
 
         /// <summary></summary>
         public IReadOnlyList<ManifestProperties> Manifests

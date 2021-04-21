@@ -27,19 +27,19 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="size"> Image size. </param>
         /// <param name="createdOn"> Created time. </param>
         /// <param name="lastUpdatedOn"> Last update time. </param>
-        /// <param name="cpuArchitecture"> CPU architecture. </param>
+        /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
         /// <param name="references"> List of manifest attributes details. </param>
         /// <param name="tags"> List of tags. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
-        internal ManifestProperties(string repository, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
+        internal ManifestProperties(string repository, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ArtifactArchitecture architecture, ArtifactOperatingSystem operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
         {
             Repository = repository;
             Digest = digest;
             Size = size;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
-            CpuArchitecture = cpuArchitecture;
+            Architecture = architecture;
             OperatingSystem = operatingSystem;
             References = references;
             Tags = tags;
@@ -56,10 +56,6 @@ namespace Azure.Containers.ContainerRegistry
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Last update time. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
-        /// <summary> CPU architecture. </summary>
-        public string CpuArchitecture { get; }
-        /// <summary> Operating system. </summary>
-        public string OperatingSystem { get; }
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
         /// <summary> Writeable properties of the resource. </summary>

@@ -31,7 +31,7 @@ namespace Azure.Containers.ContainerRegistry
                 attributesBase.Size,
                 attributesBase.CreatedOn,
                 attributesBase.LastUpdatedOn,
-                attributesBase.CpuArchitecture,
+                attributesBase.Architecture,
                 attributesBase.OperatingSystem,
                 attributesBase.References,
                 attributesBase.Tags,
