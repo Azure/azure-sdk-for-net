@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Gets or sets key Vault resource identifier.
         /// </summary>
         /// <remarks>
-        /// Fully qualified resource indentifier of the Key Vault.
+        /// Fully qualified resource identifier of the Key Vault.
         /// </remarks>
         [JsonProperty(PropertyName = "sourceVault")]
         public ResourceId SourceVault { get; set; }

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public const string Caffe2 = "caffe2";
         public const string Chainer = "chainer";
         public const string Horovod = "horovod";
-        public const string Mpi = "mpi";
+        public const string Custommpi = "custommpi";
         public const string Custom = "custom";
     }
 }

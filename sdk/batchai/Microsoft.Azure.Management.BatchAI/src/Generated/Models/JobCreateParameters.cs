@@ -112,8 +112,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <remarks>
         /// Information on mount volumes to be used by the job. These volumes
-        /// will be mounted before the job execution and will be unmouted after
-        /// the job completion. The volumes will be mounted at location
+        /// will be mounted before the job execution and will be unmounted
+        /// after the job completion. The volumes will be mounted at location
         /// specified by $AZ_BATCHAI_JOB_MOUNT_ROOT environment variable.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.mountVolumes")]

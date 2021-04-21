@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Unmananged file system mounting configuration.
+    /// Unmanaged file system mounting configuration.
     /// </summary>
     public partial class UnmanagedFileSystemReference
     {

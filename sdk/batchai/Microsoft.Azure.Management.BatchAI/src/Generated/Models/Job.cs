@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <remarks>
         /// Collection of mount volumes available to the job during execution.
-        /// These volumes are mounted before the job execution and unmouted
+        /// These volumes are mounted before the job execution and unmounted
         /// after the job completion. The volumes are mounted at location
         /// specified by $AZ_BATCHAI_JOB_MOUNT_ROOT environment variable.
         /// </remarks>
@@ -181,9 +181,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <remarks>
         /// Possible values are: cntk, tensorflow, caffe, caffe2, chainer,
-        /// pytorch, custom, mpi, horovod. Possible values include: 'cntk',
-        /// 'tensorflow', 'caffe', 'caffe2', 'chainer', 'horovod', 'mpi',
-        /// 'custom'
+        /// pytorch, custom, custommpi, horovod. Possible values include:
+        /// 'cntk', 'tensorflow', 'caffe', 'caffe2', 'chainer', 'horovod',
+        /// 'custommpi', 'custom'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.toolType")]
         public string ToolType { get; set; }

@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <remarks>
         /// The ID of the output directory. The job can use
-        /// AZ_BATCHAI_OUTPUT_<id> environment variale to find the directory
+        /// AZ_BATCHAI_OUTPUT_<id> environment variable to find the directory
         /// path, where <id> is the value of id attribute.
         /// </remarks>
         [JsonProperty(PropertyName = "id")]
