@@ -26,7 +26,7 @@ namespace Azure.Core.TestFramework
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
 
-        private static readonly ConcurrentDictionary<Type, Task> EnvironmentStateCache = new ConcurrentDictionary<Type, Task>();
+        private static readonly ConcurrentDictionary<Type, Task> s_environmentStateCache = new ConcurrentDictionary<Type, Task>();
 
         private readonly string _prefix;
 
@@ -201,7 +201,7 @@ namespace Azure.Core.TestFramework
         {
             if (Mode == RecordedTestMode.Live)
             {
-                await EnvironmentStateCache.GetOrAdd(GetType(), t => WaitForEnvironmentInternal());
+                await s_environmentStateCache.GetOrAdd(GetType(), t => WaitForEnvironmentInternal());
             }
         }
 
