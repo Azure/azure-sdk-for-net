@@ -69,8 +69,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             var list = (List<object>)Map[key];
-
-            return list.Cast<TValue>();
+            List<TValue> values = null;
+            foreach (var item in list)
+            {
+                values ??= new List<TValue>(list.Count);
+                values.Add((TValue)item);
+            }
+            return values ?? Enumerable.Empty<TValue>();
         }
 
         public AmqpSymbol GetResponseErrorCondition()

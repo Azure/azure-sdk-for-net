@@ -286,7 +286,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             var link = default(ReceivingAmqpLink);
-            var receivedMessages = new List<ServiceBusReceivedMessage>();
 
             ThrowIfSessionLockLost();
 
@@ -350,10 +349,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var messagesReceived = await receiveMessagesCompletionSource.Task
                     .ConfigureAwait(false);
 
+                List<ServiceBusReceivedMessage> receivedMessages = null;
                 // If event messages were received, then package them for consumption and
                 // return them.
                 foreach (AmqpMessage message in messagesReceived)
                 {
+                    receivedMessages ??= messagesReceived is IReadOnlyCollection<AmqpMessage> readOnlyList
+                        ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
+                        : new List<ServiceBusReceivedMessage>();
+
                     if (_receiveMode == ServiceBusReceiveMode.ReceiveAndDelete)
                     {
                         link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
@@ -363,7 +367,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     message.Dispose();
                 }
 
-                return receivedMessages;
+                return receivedMessages ?? ReadOnlyList<ServiceBusReceivedMessage>.Empty;
             }
             catch (OperationCanceledException)
             {
@@ -956,13 +960,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
 
-            var messages = new List<ServiceBusReceivedMessage>();
+            List<ServiceBusReceivedMessage> messages = null;
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
             {
                 ServiceBusReceivedMessage message = null;
-                IEnumerable<AmqpMap> messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
+                var messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
                 foreach (AmqpMap entry in messageList)
                 {
+                    messages ??= messageList is IReadOnlyCollection<AmqpMap> readOnlyList
+                        ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
+                        : new List<ServiceBusReceivedMessage>();
+
                     var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                     var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
                     message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, true);
@@ -973,13 +981,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     LastPeekedSequenceNumber = message.SequenceNumber;
                 }
-                return messages;
+                return messages ?? ReadOnlyList<ServiceBusReceivedMessage>.Empty;
             }
 
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
                 (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
             {
-                return messages;
+                return ReadOnlyList<ServiceBusReceivedMessage>.Empty;
             }
 
             throw amqpResponseMessage.ToMessagingContractException();
@@ -1237,7 +1245,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             long[] sequenceNumbers,
             TimeSpan timeout)
         {
-            var messages = new List<ServiceBusReceivedMessage>();
+            List<ServiceBusReceivedMessage> messages = null;
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.ReceiveBySequenceNumberOperation, timeout, null);
@@ -1262,6 +1270,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     var amqpMapList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
                     foreach (var entry in amqpMapList)
                     {
+                        messages ??= amqpMapList is IReadOnlyCollection<AmqpMap> readOnlyList
+                            ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
+                            : new List<ServiceBusReceivedMessage>();
+
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
                         var message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
@@ -1287,7 +1299,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw; // will never be reached
             }
 
-            return messages;
+            return messages ?? ReadOnlyList<ServiceBusReceivedMessage>.Empty;
         }
 
         /// <summary>
