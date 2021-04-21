@@ -10,30 +10,35 @@ using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    internal partial class UpdateQnaDTOMetadata : IUtf8JsonSerializable
+    public partial class UpdateQuestionAnswerContext : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Delete))
+            if (Optional.IsCollectionDefined(PromptsToDelete))
             {
-                writer.WritePropertyName("delete");
+                writer.WritePropertyName("promptsToDelete");
                 writer.WriteStartArray();
-                foreach (var item in Delete)
+                foreach (var item in PromptsToDelete)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PromptsToAdd))
+            {
+                writer.WritePropertyName("promptsToAdd");
+                writer.WriteStartArray();
+                foreach (var item in PromptsToAdd)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Add))
+            if (Optional.IsDefined(IsContextOnly))
             {
-                writer.WritePropertyName("add");
-                writer.WriteStartArray();
-                foreach (var item in Add)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("isContextOnly");
+                writer.WriteBooleanValue(IsContextOnly.Value);
             }
             writer.WriteEndObject();
         }

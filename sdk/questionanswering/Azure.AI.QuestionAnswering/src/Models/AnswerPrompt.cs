@@ -3,7 +3,7 @@
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    public partial class EndpointKeys
+    public partial class AnswerPrompt
     {
     }
 }

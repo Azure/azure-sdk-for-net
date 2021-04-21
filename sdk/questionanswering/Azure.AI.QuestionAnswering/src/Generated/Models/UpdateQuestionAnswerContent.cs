@@ -8,10 +8,10 @@
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> PATCH Body schema for Update Qna List. </summary>
-    internal partial class UpdateQnaDTO
+    public partial class UpdateQuestionAnswerContent
     {
-        /// <summary> Initializes a new instance of UpdateQnaDTO. </summary>
-        public UpdateQnaDTO()
+        /// <summary> Initializes a new instance of UpdateQuestionAnswerContent. </summary>
+        public UpdateQuestionAnswerContent()
         {
         }
 
@@ -22,10 +22,10 @@ namespace Azure.AI.QuestionAnswering.Models
         /// <summary> Source from which Q-A was indexed. eg. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs. </summary>
         public string Source { get; set; }
         /// <summary> List of questions associated with the answer. </summary>
-        public UpdateQnaDTOQuestions Questions { get; set; }
+        public UpdateQuestionAnswerContentQuestions Questions { get; set; }
         /// <summary> List of metadata associated with the answer to be updated. </summary>
-        public UpdateQnaDTOMetadata Metadata { get; set; }
+        public UpdateQuestionAnswerContentMetadata Metadata { get; set; }
         /// <summary> Context associated with Qna to be updated. </summary>
-        public UpdateQnaDTOContext Context { get; set; }
+        public UpdateQuestionAnswerContentContext Context { get; set; }
     }
 }

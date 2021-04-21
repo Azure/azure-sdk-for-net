@@ -8,7 +8,7 @@
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> Prompt for an answer. </summary>
-    internal partial class AnswerPrompt
+    public partial class AnswerPrompt
     {
         /// <summary> Initializes a new instance of AnswerPrompt. </summary>
         public AnswerPrompt()

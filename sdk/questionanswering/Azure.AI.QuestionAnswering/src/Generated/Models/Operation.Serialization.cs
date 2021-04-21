@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,8 +16,8 @@ namespace Azure.AI.QuestionAnswering.Models
         internal static Operation DeserializeOperation(JsonElement element)
         {
             Optional<OperationStateType> operationState = default;
-            Optional<string> createdTimestamp = default;
-            Optional<string> lastActionTimestamp = default;
+            Optional<DateTimeOffset> createdTimestamp = default;
+            Optional<DateTimeOffset> lastActionTimestamp = default;
             Optional<string> resourceLocation = default;
             Optional<string> userId = default;
             Optional<string> operationId = default;
@@ -35,12 +36,22 @@ namespace Azure.AI.QuestionAnswering.Models
                 }
                 if (property.NameEquals("createdTimestamp"))
                 {
-                    createdTimestamp = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createdTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastActionTimestamp"))
                 {
-                    lastActionTimestamp = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastActionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("resourceLocation"))
@@ -69,7 +80,7 @@ namespace Azure.AI.QuestionAnswering.Models
                     continue;
                 }
             }
-            return new Operation(Optional.ToNullable(operationState), createdTimestamp.Value, lastActionTimestamp.Value, resourceLocation.Value, userId.Value, operationId.Value, errorResponse.Value);
+            return new Operation(Optional.ToNullable(operationState), Optional.ToNullable(createdTimestamp), Optional.ToNullable(lastActionTimestamp), resourceLocation.Value, userId.Value, operationId.Value, errorResponse.Value);
         }
     }
 }

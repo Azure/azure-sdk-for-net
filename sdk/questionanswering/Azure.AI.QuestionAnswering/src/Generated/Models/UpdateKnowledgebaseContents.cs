@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,16 +17,12 @@ namespace Azure.AI.QuestionAnswering.Models
         /// <summary> Initializes a new instance of UpdateKnowledgebaseContents. </summary>
         public UpdateKnowledgebaseContents()
         {
-            QnaList = new ChangeTrackingList<UpdateQnaDTO>();
-            Urls = new ChangeTrackingList<string>();
+            QuestionAnswers = new ChangeTrackingList<UpdateQuestionAnswerContent>();
+            Uris = new ChangeTrackingList<Uri>();
         }
 
         /// <summary> Friendly name for the knowledgebase. </summary>
         public string Name { get; set; }
-        /// <summary> List of Q-A (UpdateQnaDTO) to be added to the knowledgebase. </summary>
-        public IList<UpdateQnaDTO> QnaList { get; }
-        /// <summary> List of existing URLs to be refreshed. The content will be extracted again and re-indexed. </summary>
-        public IList<string> Urls { get; }
         /// <summary> Default answer sent to user if no good match is found in the KB. </summary>
         public string DefaultAnswer { get; set; }
     }

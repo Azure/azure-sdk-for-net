@@ -193,10 +193,8 @@ namespace Azure.AI.QuestionAnswering
 
             try
             {
-                Response<KnowledgebaseOperation> response = _knowledgebaseRestClient.Create(parameters, cancellationToken);
-
-                // TODO: Consider wrapping (originally named) Operation which makes it easier to pass in the response and not hide other members.
-                return response.Value;
+                Response<Models.Operation> response = _knowledgebaseRestClient.Create(parameters, cancellationToken);
+                return new KnowledgebaseOperation(this, response);
             }
             catch (Exception ex)
             {
@@ -222,10 +220,8 @@ namespace Azure.AI.QuestionAnswering
 
             try
             {
-                Response<KnowledgebaseOperation> response = await _knowledgebaseRestClient.CreateAsync(parameters, cancellationToken).ConfigureAwait(false);
-
-                // TODO: Consider wrapping (originally named) Operation which makes it easier to pass in the response and not hide other members.
-                return response.Value;
+                Response<Models.Operation> response = await _knowledgebaseRestClient.CreateAsync(parameters, cancellationToken).ConfigureAwait(false);
+                return new KnowledgebaseOperation(this, response);
             }
             catch (Exception ex)
             {

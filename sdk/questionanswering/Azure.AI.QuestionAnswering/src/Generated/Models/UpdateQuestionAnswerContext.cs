@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> Update Body schema to represent context to be updated. </summary>
-    internal partial class UpdateContextDTO
+    public partial class UpdateQuestionAnswerContext
     {
-        /// <summary> Initializes a new instance of UpdateContextDTO. </summary>
-        public UpdateContextDTO()
+        /// <summary> Initializes a new instance of UpdateQuestionAnswerContext. </summary>
+        public UpdateQuestionAnswerContext()
         {
             PromptsToDelete = new ChangeTrackingList<int>();
             PromptsToAdd = new ChangeTrackingList<AnswerPrompt>();

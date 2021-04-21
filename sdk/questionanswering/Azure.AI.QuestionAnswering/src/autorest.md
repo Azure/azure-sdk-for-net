@@ -10,6 +10,7 @@ See <https://aka.ms/autorest> for more information.
 require:
 - https://github.com/Azure/azure-rest-api-specs/blob/f80541db7532f4e71e6f64c1bb1bde86b8620c67/specification/cognitiveservices/data-plane/QnAMaker/readme.md
 tag: release_5_0_preview.2
+clear-output-folder: true
 ```
 
 ## General customizations
@@ -23,8 +24,8 @@ The renames should be done to the swagger directly, or at least contained within
 ``` yaml
 directive:
 - rename-model:
-    from: EndpointKeysDTO
-    to: EndpointKeys
+    from: ContextDTO
+    to: QuestionAnswerContext
 - rename-model:
     from: CreateKbDTO
     to: CreateKnowledgebaseParameters
@@ -35,14 +36,11 @@ directive:
     from: DeleteKbContentsDTO
     to: DeleteKnowledgebaseContents
 - rename-model:
-    from: UpdateKbContentsDTO
-    to: UpdateKnowledgebaseContents
+    from: EndpointKeysDTO
+    to: EndpointKeys
 - rename-model:
     from: FileDTO
     to: KnowledgebaseFileContent
-- rename-model:
-    from: QnADTO
-    to: QuestionAnswerContent
 - rename-model:
     from: PromptDTO
     to: AnswerPrompt
@@ -50,8 +48,23 @@ directive:
     from: PromptDTOQna
     to: AnswerPromptContent
 - rename-model:
-    from: ContextDTO
-    to: QuestionAnswerContext
+    from: QnADTO
+    to: QuestionAnswerContent
+- rename-model:
+    from: UpdateContextDTO
+    to: UpdateQuestionAnswerContext
+- rename-model:
+    from: UpdateKbContentsDTO
+    to: UpdateKnowledgebaseContents
+- rename-model:
+    from: UpdateMetadataDTO
+    to: UpdateMetadata
+- rename-model:
+    from: UpdateQuestionsDTO
+    to: UpdateQuestions
+- rename-model:
+    from: UpdateQnaDTO
+    to: UpdateQuestionAnswerContent
 ```
 
 ### Name StringIndexType parameter enum
@@ -78,8 +91,8 @@ directive:
   from: swagger-document
   where: $.definitions.Operation
   transform: |
-    $.properties.createdTimestamp["format"] = "datetime";
-    $.properties.lastActionTimestamp["format"] = "datetime";
+    $.properties.createdTimestamp.format = "date-time";
+    $.properties.lastActionTimestamp.format = "date-time";
 ```
 
 ## C# customizations

@@ -8,10 +8,10 @@
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> List of metadata associated with the answer to be updated. </summary>
-    internal partial class UpdateQnaDTOMetadata : UpdateMetadataDTO
+    public partial class UpdateQuestionAnswerContentMetadata : UpdateMetadata
     {
-        /// <summary> Initializes a new instance of UpdateQnaDTOMetadata. </summary>
-        public UpdateQnaDTOMetadata()
+        /// <summary> Initializes a new instance of UpdateQuestionAnswerContentMetadata. </summary>
+        public UpdateQuestionAnswerContentMetadata()
         {
         }
     }

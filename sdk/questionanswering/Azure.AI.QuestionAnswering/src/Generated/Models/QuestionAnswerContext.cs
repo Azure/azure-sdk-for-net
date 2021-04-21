@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> Context associated with Qna. </summary>
-    internal partial class QuestionAnswerContext
+    public partial class QuestionAnswerContext
     {
         /// <summary> Initializes a new instance of QuestionAnswerContext. </summary>
         public QuestionAnswerContext()

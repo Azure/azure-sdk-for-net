@@ -8,10 +8,10 @@
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> Context associated with Qna to be updated. </summary>
-    internal partial class UpdateQnaDTOContext : UpdateContextDTO
+    public partial class UpdateQuestionAnswerContentContext : UpdateQuestionAnswerContext
     {
-        /// <summary> Initializes a new instance of UpdateQnaDTOContext. </summary>
-        public UpdateQnaDTOContext()
+        /// <summary> Initializes a new instance of UpdateQuestionAnswerContentContext. </summary>
+        public UpdateQuestionAnswerContentContext()
         {
         }
     }

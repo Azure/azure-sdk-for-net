@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    internal partial class UpdateMetadataDTO : IUtf8JsonSerializable
+    public partial class UpdateQuestionAnswerContentMetadata : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Delete))
+            if (Optional.IsCollectionDefined(InternalDelete))
             {
                 writer.WritePropertyName("delete");
                 writer.WriteStartArray();
-                foreach (var item in Delete)
+                foreach (var item in InternalDelete)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Add))
+            if (Optional.IsCollectionDefined(InternalAdd))
             {
                 writer.WritePropertyName("add");
                 writer.WriteStartArray();
-                foreach (var item in Add)
+                foreach (var item in InternalAdd)
                 {
                     writer.WriteObjectValue(item);
                 }

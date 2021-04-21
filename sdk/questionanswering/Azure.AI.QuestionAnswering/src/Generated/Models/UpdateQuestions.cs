@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> PATCH Body schema for Update Kb which contains list of questions to be added and deleted. </summary>
-    internal partial class UpdateQuestionsDTO
+    public partial class UpdateQuestions
     {
-        /// <summary> Initializes a new instance of UpdateQuestionsDTO. </summary>
-        public UpdateQuestionsDTO()
+        /// <summary> Initializes a new instance of UpdateQuestions. </summary>
+        public UpdateQuestions()
         {
             Add = new ChangeTrackingList<string>();
             Delete = new ChangeTrackingList<string>();

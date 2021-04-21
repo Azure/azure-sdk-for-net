@@ -8,10 +8,10 @@
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> List of questions associated with the answer. </summary>
-    internal partial class UpdateQnaDTOQuestions : UpdateQuestionsDTO
+    public partial class UpdateQuestionAnswerContentQuestions : UpdateQuestions
     {
-        /// <summary> Initializes a new instance of UpdateQnaDTOQuestions. </summary>
-        public UpdateQnaDTOQuestions()
+        /// <summary> Initializes a new instance of UpdateQuestionAnswerContentQuestions. </summary>
+        public UpdateQuestionAnswerContentQuestions()
         {
         }
     }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.QuestionAnswering.Models
 {
     /// <summary> Record to track long running operation. </summary>
@@ -23,7 +25,7 @@ namespace Azure.AI.QuestionAnswering.Models
         /// <param name="userId"> User Id. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="errorResponse"> Error details in case of failures. </param>
-        internal Operation(OperationStateType? operationState, string createdTimestamp, string lastActionTimestamp, string resourceLocation, string userId, string operationId, ErrorResponse errorResponse)
+        internal Operation(OperationStateType? operationState, DateTimeOffset? createdTimestamp, DateTimeOffset? lastActionTimestamp, string resourceLocation, string userId, string operationId, ErrorResponse errorResponse)
         {
             OperationState = operationState;
             CreatedTimestamp = createdTimestamp;
@@ -37,9 +39,9 @@ namespace Azure.AI.QuestionAnswering.Models
         /// <summary> Operation state. </summary>
         public OperationStateType? OperationState { get; }
         /// <summary> Timestamp when the operation was created. </summary>
-        public string CreatedTimestamp { get; }
+        public DateTimeOffset? CreatedTimestamp { get; }
         /// <summary> Timestamp when the current state was entered. </summary>
-        public string LastActionTimestamp { get; }
+        public DateTimeOffset? LastActionTimestamp { get; }
         /// <summary> Relative URI to the target resource location for completed resources. </summary>
         public string ResourceLocation { get; }
         /// <summary> User Id. </summary>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    internal partial class UpdateContextDTO : IUtf8JsonSerializable
+    public partial class UpdateQuestionAnswerContentContext : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
