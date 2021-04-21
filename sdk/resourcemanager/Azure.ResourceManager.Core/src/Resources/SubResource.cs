@@ -7,8 +7,15 @@ namespace Azure.ResourceManager.Core
     /// A class representing a sub-resource that contains only the ID.
     /// </summary>
     [ReferenceType]
-    public abstract class SubResource
+    public partial class SubResource
     {
+        /// <summary> Initializes a new instance of SubResource. </summary>
+        /// <param name="id"> ARM resource Id. </param>
+        internal SubResource(string id)
+        {
+            Id = id;
+        }
+
         /// <summary>
         /// ARM resource identifier.
         /// </summary>
@@ -16,3 +23,6 @@ namespace Azure.ResourceManager.Core
         public virtual ResourceIdentifier Id { get; set; }
     }
 }
+
+// Todo: we want to make the default one (SubResource) to represent read-only data,
+// that is the pattern we used in Resource and TrackedResource

@@ -7,12 +7,19 @@ namespace Azure.ResourceManager.Core
     /// A class representing a sub-resource that contains only the read-only ID.
     /// </summary>
     [ReferenceType]
-    public abstract class SubResourceReadOnly
+    public partial class SubResourceReadOnly
     {
+        /// <summary> Initializes a new instance of SubResourceReadOnly. </summary>
+        /// <param name="id"> ARM resource Id. </param>
+        internal SubResourceReadOnly(string id)
+        {
+            Id = id;
+        }
+
         /// <summary>
         /// ARM resource identifier (read-only).
         /// </summary>
         /// <value></value>
-        public virtual ResourceIdentifier Id { get; }
+        public virtual ResourceIdentifier Id { get; protected set; }
     }
 }
