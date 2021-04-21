@@ -11,27 +11,29 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
 {
     /// <summary>
-    /// TODO
+    /// Class representing a Stream for an object that can be cached locally after being written (and before this Stream is being disposed).
+    /// This class can be used to identify if the object is eligible to be cached.
+    /// This is because the object being written is already present in shared memory.
+    /// It is used by azure-webjobs-sdk to write the object into the cache after the object is written to storage and has all the relevant
+    /// properties (e.g. Blob's eTag) populated by the azure-sdk-for-net storage extension.
     /// </summary>
     internal class CacheAfterWriteStream : Stream, ICacheAfterWriteStream
     {
+        // Metadata of where the object is present in shared memory.
+        // When inserting the object into the cache, this will be used.
         private readonly SharedMemoryMetadata _sharedMemoryMeta;
 
+        // The cache must not be disposed.
 #pragma warning disable CA2213 // Disposable fields should be disposed
         private readonly IFunctionDataCache _functionDataCache;
 #pragma warning restore CA2213 // Disposable fields should be disposed
 
+        // Blob representing the object that will be written into the cache.
         private readonly BlobWithContainer<BlobBaseClient> _blob;
 
+        // Inner Stream pointing to an object in remote storage (e.g. Blob).
         private readonly Stream _inner;
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name="sharedMemoryMeta"></param>
-        /// <param name="functionDataCache"></param>
-        /// <param name="blob"></param>
-        /// <param name="innerStream"></param>
         public CacheAfterWriteStream(SharedMemoryMetadata sharedMemoryMeta, IFunctionDataCache functionDataCache, BlobWithContainer<BlobBaseClient> blob, Stream innerStream)
         {
             _sharedMemoryMeta = sharedMemoryMeta;
@@ -51,6 +53,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             return TryPutToFunctionDataCacheCore(properties);
         }
 
+        /// <summary>
+        /// Put the object into the cache by generating a key for the object based on the blob's properties.
+        /// </summary>
+        /// <param name="properties">Properties of the blob corresponding to the object being written.</param>
+        /// <returns>True if the object was written to the <see cref="IFunctionDataCache"/>, false otherwise.</returns>
         private bool TryPutToFunctionDataCacheCore(BlobProperties properties)
         {
             string eTag = properties.ETag.ToString();

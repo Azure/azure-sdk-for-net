@@ -39,7 +39,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             IBlobCommitedAction committedAction = new BlobCommittedAction(blob, blobWrittenWatcher);
 
             Stream notifyingStream = new NotifyingBlobStream(rawStream, committedAction);
-
             return await Task.FromResult(new CacheAfterWriteStream(context.SharedMemoryMetadata, functionDataCache, blob, notifyingStream)).ConfigureAwait(false);
         }
     }
