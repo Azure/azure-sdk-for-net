@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var fieldValue = new FieldValue(FieldValueType.SelectionMark);
 
             Assert.AreEqual(FieldValueType.SelectionMark, fieldValue.ValueType);
-            Assert.AreEqual(SelectionMarkState.Selected, fieldValue.AsSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
         }
 
         [Test]
