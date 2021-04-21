@@ -44,59 +44,65 @@ namespace Azure.AI.FormRecognizer.Samples
 
             if (invoice.Fields.TryGetValue("VendorName", out FormField vendorNameField))
             {
-                if (vendorNameField.Value.TryParse(out string vendorName))
+                string vendorName = vendorNameField.Value.AsString();
+                if (!string.IsNullOrEmpty(vendorName))
                 {
                     Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
                 }
                 else
                 {
-                    Console.WriteLine($"Not able to parse Vendor Name. Consider using 'ValueData.Text' property which current value is '{vendorNameField.ValueData.Text}'");
+                    Console.WriteLine($"Not able to parse Vendor Name. Consider using the 'ValueData.Text' property which current value is '{vendorNameField.ValueData.Text}'");
                 }
             }
 
             if (invoice.Fields.TryGetValue("CustomerName", out FormField customerNameField))
             {
-                if (customerNameField.Value.TryParse(out string customerName))
+                string customerName = customerNameField.Value.AsString();
+                if (!string.IsNullOrEmpty(customerName))
                 {
                     Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
                 }
                 else
                 {
-                    Console.WriteLine($"Not able to parse Customer Name. Consider using 'ValueData.Text' property which current value is '{customerNameField.ValueData.Text}'");
+                    Console.WriteLine($"Not able to parse Customer Name. Consider using the 'ValueData.Text' property which current value is '{customerNameField.ValueData.Text}'");
                 }
             }
 
             if (invoice.Fields.TryGetValue("Items", out FormField itemsField))
             {
-                if (itemsField.Value.TryParse(out IReadOnlyList<FormField> itemFieldsList))
+                IReadOnlyList<FormField> itemFieldsList = itemsField.Value.AsList();
+                if (itemFieldsList != null)
                 {
                     foreach (FormField itemField in itemFieldsList)
                     {
                         Console.WriteLine("Item:");
 
-                        if (itemField.Value.TryParse(out IReadOnlyDictionary<string, FormField> itemFields))
+                        IReadOnlyDictionary<string, FormField> itemFields = itemField.Value.AsDictionaryOrNull();
+                        if (itemFields != null)
                         {
                             if (itemFields.TryGetValue("Description", out FormField itemDescriptionField))
                             {
-                                if (itemDescriptionField.Value.TryParse(out string itemDescription))
+                                string itemDescription = itemDescriptionField.Value.AsString();
+                                if (!string.IsNullOrEmpty(itemDescription))
                                 {
                                     Console.WriteLine($"Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"Not able to parse Description. Consider using 'ValueData.Text' property which current value is '{itemDescriptionField.ValueData.Text}'");
+                                    Console.WriteLine($"Not able to parse Description. Consider using the 'ValueData.Text' property which current value is '{itemDescriptionField.ValueData.Text}'");
                                 }
                             }
 
                             if (itemFields.TryGetValue("Unit", out FormField itemUnitField))
                             {
-                                if (itemUnitField.Value.TryParse(out float itemUnit))
+                                float? itemUnit = itemUnitField.Value.AsFloatOrNull();
+                                if (itemUnit.HasValue)
                                 {
                                     Console.WriteLine($"  Unit: '{itemUnit}', with confidence {itemUnitField.Confidence}");
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"  Not able to parse Unit. Consider using 'ValueData.Text' property which current value is '{itemUnitField.ValueData.Text}'");
+                                    Console.WriteLine($"  Not able to parse Unit. Consider using the 'ValueData.Text' property which current value is '{itemUnitField.ValueData.Text}'");
                                 }
                             }
 
@@ -112,37 +118,40 @@ namespace Azure.AI.FormRecognizer.Samples
 
                             if (itemFields.TryGetValue("UnitPrice", out FormField itemUnitPriceField))
                             {
-                                if (itemUnitPriceField.Value.TryParse(out float itemUnitPrice))
+                                float? itemUnitPrice = itemUnitPriceField.Value.AsFloatOrNull();
+                                if (itemUnitPrice.HasValue)
                                 {
                                     Console.WriteLine($"  UnitPrice: '{itemUnitPrice}', with confidence {itemUnitPriceField.Confidence}");
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"  Not able to parse UnitPrice. Consider using 'ValueData.Text' property which current value is '{itemUnitPriceField.ValueData.Text}'");
+                                    Console.WriteLine($"  Not able to parse UnitPrice. Consider using the 'ValueData.Text' property which current value is '{itemUnitPriceField.ValueData.Text}'");
                                 }
                             }
 
                             if (itemFields.TryGetValue("Tax", out FormField itemTaxPriceField))
                             {
-                                if (itemQuantityField.Value.TryParse(out float quantityAmount))
+                                float? quantityAmount = itemQuantityField.Value.AsFloatOrNull();
+                                if (quantityAmount.HasValue)
                                 {
                                     Console.WriteLine($"  Quantity: '{quantityAmount}', with confidence {itemQuantityField.Confidence}");
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"  Not able to parse Quantity. Consider using 'ValueData.Text' property which current value is '{itemQuantityField.ValueData.Text}'");
+                                    Console.WriteLine($"  Not able to parse Quantity. Consider using the 'ValueData.Text' property which current value is '{itemQuantityField.ValueData.Text}'");
                                 }
                             }
 
                             if (itemFields.TryGetValue("Amount", out FormField itemAmountField))
                             {
-                                if (itemAmountField.Value.TryParse(out float itemAmount))
+                                float? itemAmount = itemAmountField.Value.AsFloatOrNull();
+                                if (itemAmount.HasValue)
                                 {
                                     Console.WriteLine($"  Amount: '{itemAmount}', with confidence {itemAmountField.Confidence}");
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"  Not able to parse Amount. Consider using 'ValueData.Text' property which current value is '{itemAmountField.ValueData.Text}'");
+                                    Console.WriteLine($"  Not able to parse Amount. Consider using the 'ValueData.Text' property which current value is '{itemAmountField.ValueData.Text}'");
                                 }
                             }
                         }
@@ -160,37 +169,40 @@ namespace Azure.AI.FormRecognizer.Samples
 
             if (invoice.Fields.TryGetValue("SubTotal", out FormField subTotalField))
             {
-                if (subTotalField.Value.TryParse(out float subTotal))
+                float? subTotal = subTotalField.Value.AsFloatOrNull();
+                if (subTotal.HasValue)
                 {
-                    Console.WriteLine($"  Sub Total: '{subTotal}', with confidence {subTotalField.Confidence}");
+                    Console.WriteLine($"Sub Total: '{subTotal}', with confidence {subTotalField.Confidence}");
                 }
                 else
                 {
-                    Console.WriteLine($"  Not able to parse Sub Total. Consider using 'ValueData.Text' property which current value is '{subTotalField.ValueData.Text}'");
+                    Console.WriteLine($"Not able to parse Sub Total. Consider using 'ValueData.Text' property which current value is '{subTotalField.ValueData.Text}'");
                 }
             }
 
             if (invoice.Fields.TryGetValue("TotalTax", out FormField totalTaxField))
             {
-                if (totalTaxField.Value.TryParse(out float totalTax))
+                float? totalTax = totalTaxField.Value.AsFloatOrNull();
+                if (totalTax.HasValue)
                 {
-                    Console.WriteLine($"  Total Tax: '{totalTax}', with confidence {totalTaxField.Confidence}");
+                    Console.WriteLine($"Total Tax: '{totalTax}', with confidence {totalTaxField.Confidence}");
                 }
                 else
                 {
-                    Console.WriteLine($"  Not able to parse Total Tax. Consider using 'ValueData.Text' property which current value is '{totalTaxField.ValueData.Text}'");
+                    Console.WriteLine($"Not able to parse Total Tax. Consider using 'ValueData.Text' property which current value is '{totalTaxField.ValueData.Text}'");
                 }
             }
 
             if (invoice.Fields.TryGetValue("InvoiceTotal", out FormField invoiceTotalField))
             {
-                if (invoiceTotalField.Value.TryParse(out float invoiceTotal))
+                float? invoiceTotal = invoiceTotalField.Value.AsFloatOrNull();
+                if (invoiceTotal.HasValue)
                 {
-                    Console.WriteLine($" Invoice Total: '{invoiceTotal}', with confidence {invoiceTotalField.Confidence}");
+                    Console.WriteLine($"Invoice Total: '{invoiceTotal}', with confidence {invoiceTotalField.Confidence}");
                 }
                 else
                 {
-                    Console.WriteLine($"  Not able to parse Invoice Total. Consider using 'ValueData.Text' property which current value is '{invoiceTotalField.ValueData.Text}'");
+                    Console.WriteLine($"Not able to parse Invoice Total. Consider using 'ValueData.Text' property which current value is '{invoiceTotalField.ValueData.Text}'");
                 }
             }
 

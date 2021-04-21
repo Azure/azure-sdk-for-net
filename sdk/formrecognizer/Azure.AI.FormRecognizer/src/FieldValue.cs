@@ -256,6 +256,23 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Gets the value of the field as a <see cref="long"/>.
+        /// If the operation fails, null value will be returned.
+        /// </summary>
+        /// <returns>The value of the field converted to a <see cref="long"/>, or null in case of failure.</returns>
+        public long? AsInt64OrNull()
+        {
+            try
+            {
+                return AsInt64();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Gets the value of the field as a <see cref="float"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="float"/>.</returns>
@@ -289,6 +306,23 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Gets the value of the field as a <see cref="float"/>.
+        /// If the operation fails, null value will be returned.
+        /// </summary>
+        /// <returns>The value of the field converted to a <see cref="float"/>, or null in case of failure.</returns>
+        public float? AsFloatOrNull()
+        {
+            try
+            {
+                return AsFloat();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Gets the value of the field as a <see cref="DateTime"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="DateTime"/>.</returns>
@@ -314,6 +348,23 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Gets the value of the field as a <see cref="DateTime"/>.
+        /// If the operation fails, null value will be returned.
+        /// </summary>
+        /// <returns>The value of the field converted to a <see cref="DateTime"/>, or null in case of failure.</returns>
+        public DateTime? AsDateOrNull()
+        {
+            try
+            {
+                return AsDate();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Gets the value of the field as a <see cref="TimeSpan"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="TimeSpan"/>.</returns>
@@ -336,6 +387,23 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return _fieldValue.ValueTime.Value;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as a <see cref="TimeSpan"/>.
+        /// If the operation fails, null value will be returned.
+        /// </summary>
+        /// <returns>The value of the field converted to a <see cref="TimeSpan"/>, or null in case of failure.</returns>
+        public TimeSpan? AsTimeOrNull()
+        {
+            try
+            {
+                return AsTime();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -385,6 +453,23 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Gets the value of the field as a <see cref="IReadOnlyList{T}"/>.
+        /// If the operation fails, null value will be returned.
+        /// </summary>
+        /// <returns>The value of the field converted to a <see cref="IReadOnlyList{T}"/>, or null in case of failure.</returns>
+        public IReadOnlyList<FormField> AsListOrNull()
+        {
+            try
+            {
+                return AsList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Gets the value of the field as a <see cref="Dictionary{TKey, TValue}"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="Dictionary{TKey, TValue}"/>.</returns>
@@ -419,6 +504,23 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Gets the value of the field as a <see cref="Dictionary{TKey, TValue}"/>.
+        /// If the operation fails, null value will be returned.
+        /// </summary>
+        /// <returns>The value of the field converted to a <see cref="Dictionary{TKey, TValue}"/>, or null in case of failure.</returns>
+        public IReadOnlyDictionary<string, FormField> AsDictionaryOrNull()
+        {
+            try
+            {
+                return AsDictionary();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Gets the value of the field as a <see cref="SelectionMarkState"/>.
         /// </summary>
         /// <returns>The value of the field converted to <see cref="SelectionMarkState"/>.</returns>
@@ -441,6 +543,23 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return _fieldValue.ValueSelectionMark.Value;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as a <see cref="SelectionMarkState"/>.
+        /// If the operation fails, null value will be returned.
+        /// </summary>
+        /// <returns>The value of the field converted to a <see cref="SelectionMarkState"/>, or null in case of failure.</returns>
+        public SelectionMarkState? AsSelectionMarkStateOrNull()
+        {
+            try
+            {
+                return AsSelectionMarkState();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -486,6 +605,23 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return _fieldValue.ValueGender.Value;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as a <see cref="FieldValueGender"/>.
+        /// If the operation fails, null value will be returned.
+        /// </summary>
+        /// <returns>The value of the field converted to a <see cref="FieldValueGender"/>, or null in case of failure.</returns>
+        public FieldValueGender? AsGenderOrNull()
+        {
+            try
+            {
+                return AsGender();
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
