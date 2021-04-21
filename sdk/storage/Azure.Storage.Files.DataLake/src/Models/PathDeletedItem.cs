@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// The name of the path.
         /// </summary>
-        public string Name { get; internal set; }
+        public string Path { get; internal set; }
 
         /// <summary>
         /// The deletion ID associated with the deleted path.

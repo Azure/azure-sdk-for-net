@@ -1,6 +1,6 @@
-﻿using System.Threading;
+﻿using Azure.ResourceManager.Core;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Core;
 
 namespace Proto.Compute
 {
@@ -26,7 +26,7 @@ namespace Proto.Compute
         public AvailabilitySetData Data { get; private set; }
 
         /// <inheritdoc />
-        protected override AvailabilitySet GetResource()
+        protected override AvailabilitySet GetResource(CancellationToken cancellation = default)
         {
             return this;
         }

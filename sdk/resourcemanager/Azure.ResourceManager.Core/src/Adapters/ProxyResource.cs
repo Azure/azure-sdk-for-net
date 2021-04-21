@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Core
     /// <typeparam name="TModel"> The type of the underlying model this class wraps </typeparam>
     /// <typeparam name="TIdentifier"> The type of the underlying modelresource Id </typeparam>
     public abstract class ProxyResource<TIdentifier, TModel> : Resource<TIdentifier>
-        where TModel : class 
+        where TModel : class
         where TIdentifier : TenantResourceIdentifier
     {
         /// <summary>
@@ -18,34 +18,10 @@ namespace Azure.ResourceManager.Core
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="data"> The model to copy from. </param>
         protected ProxyResource(TIdentifier id, TModel data)
+            : base(id, id?.Name, id?.ResourceType)
         {
-            Id = id;
             Model = data;
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProxyResource{TModel, TIdentifier}"/> class.
-        /// </summary>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="data"> The model to copy from. </param>
-        protected ProxyResource(string id, TModel data)
-        {
-            if (ReferenceEquals(id, null))
-            {
-                Id = null;
-            }
-            else
-            {
-                Id = ResourceIdentifier.Create(id) as TIdentifier;
-            }
-
-            Model = data;
-        }
-
-        /// <summary>
-        /// Gets or sets the identifier for the resource.
-        /// </summary>
-        public override TIdentifier Id { get; protected set; }
 
         /// <summary>
         /// Gets or sets the Model this resource is based off.

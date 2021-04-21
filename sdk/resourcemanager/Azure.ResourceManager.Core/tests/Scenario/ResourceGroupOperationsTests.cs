@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -10,7 +12,7 @@ namespace Azure.ResourceManager.Core.Tests
     public class ResourceGroupOperationsTests : ResourceManagerTestBase
     {
         public ResourceGroupOperationsTests(bool isAsync)
-            : base(isAsync) //, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -30,6 +32,16 @@ namespace Azure.ResourceManager.Core.Tests
             ResourceGroup rg = await rgOp.WaitForCompletionAsync();
             var deleteOp = await rg.StartDeleteAsync();
             await deleteOp.WaitForCompletionAsync();
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public void StartDeleteNonExistantRg()
+        {
+            var rgOp = InstrumentClientExtension(Client.GetResourceGroupOperations($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/fake"));
+            var deleteOpTask = rgOp.StartDeleteAsync();
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await deleteOpTask);
+            Assert.AreEqual(404, exception.Status);
         }
 
         [TestCase]

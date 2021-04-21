@@ -873,7 +873,11 @@ namespace Azure.Storage.Files.Shares.Tests
                 GetOptions()));
 
             // Act
-            Response<ShareFileProperties> response = await sasFileClient.GetPropertiesAsync();
+            Response<ShareFileProperties> response = await RetryAsync(
+                operation: async () => await sasFileClient.GetPropertiesAsync(),
+                // The SetAccessPolicyAsync call may take up to 30 seconds to take effect
+                // per https://docs.microsoft.com/en-us/rest/api/storageservices/set-share-acl.
+                shouldRetry: e => e.Status == 403);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);

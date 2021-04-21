@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Azure.Monitory.Query.Models
 {
@@ -17,9 +18,9 @@ namespace Azure.Monitory.Query.Models
         /// <summary> Initializes a new instance of LogsQueryResultTable. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
-        /// <param name="rows"> The resulting rows from this query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="columns"/>, or <paramref name="rows"/> is null. </exception>
-        internal LogsQueryResultTable(string name, IEnumerable<LogsQueryResultColumn> columns, IEnumerable<IList<string>> rows)
+        /// <param name="internalRows"> The resulting rows from this query. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="columns"/> is null. </exception>
+        internal LogsQueryResultTable(string name, IEnumerable<LogsQueryResultColumn> columns, JsonElement internalRows)
         {
             if (name == null)
             {
@@ -29,32 +30,26 @@ namespace Azure.Monitory.Query.Models
             {
                 throw new ArgumentNullException(nameof(columns));
             }
-            if (rows == null)
-            {
-                throw new ArgumentNullException(nameof(rows));
-            }
 
             Name = name;
             Columns = columns.ToList();
-            Rows = rows.ToList();
+            InternalRows = internalRows;
         }
 
         /// <summary> Initializes a new instance of LogsQueryResultTable. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
-        /// <param name="rows"> The resulting rows from this query. </param>
-        internal LogsQueryResultTable(string name, IReadOnlyList<LogsQueryResultColumn> columns, IReadOnlyList<IList<string>> rows)
+        /// <param name="internalRows"> The resulting rows from this query. </param>
+        internal LogsQueryResultTable(string name, IReadOnlyList<LogsQueryResultColumn> columns, JsonElement internalRows)
         {
             Name = name;
             Columns = columns;
-            Rows = rows;
+            InternalRows = internalRows;
         }
 
         /// <summary> The name of the table. </summary>
         public string Name { get; }
         /// <summary> The list of columns in this table. </summary>
         public IReadOnlyList<LogsQueryResultColumn> Columns { get; }
-        /// <summary> The resulting rows from this query. </summary>
-        public IReadOnlyList<IList<string>> Rows { get; }
     }
 }

@@ -177,6 +177,8 @@ namespace Azure.Storage
             public const string InternalError = "InternalError";
             public const string OperationTimedOut = "OperationTimedOut";
             public const string ServerBusy = "ServerBusy";
+            public const string ContainerAlreadyExists = "ContainerAlreadyExists";
+            public const string BlobAlreadyExists = "BlobAlreadyExists";
         }
 
         /// <summary>
@@ -342,6 +344,8 @@ namespace Azure.Storage
             public const string FileSystemName = "FileSystem";
 
             public const string DeletionId = "deletionid";
+
+            public const string DirectoryResourceType = "directory";
         }
 
         /// <summary>

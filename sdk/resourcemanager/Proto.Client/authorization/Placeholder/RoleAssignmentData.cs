@@ -18,9 +18,9 @@ namespace Proto.Authorization
         /// </summary>
         /// <param name="assign"> The Track2 management plane assignment. </param>
         public RoleAssignmentData(Azure.ResourceManager.Authorization.Models.RoleAssignment assign)
+            : base(assign.Id, assign.Name, assign.Type)
         {
             _model = assign;
-            Id = new TenantResourceIdentifier(assign.Id);
             Scope = assign.Scope;
             RoleDefinitionId = assign.RoleDefinitionId;
             PrincipalId = assign.PrincipalId;
@@ -57,11 +57,6 @@ namespace Proto.Authorization
         /// Gets the value determining whether the principal can delegate its permissions.
         /// </summary>
         public bool? CanDelegate { get; }
-
-        /// <summary>
-        /// Gets or sets the identifier of the RoleAssignment.
-        /// </summary>
-        public override TenantResourceIdentifier Id { get; protected set; }
 
         /// <summary>
         /// Gets the Track2 Management model associated with the data object.

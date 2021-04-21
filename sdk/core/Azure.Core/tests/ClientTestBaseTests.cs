@@ -167,6 +167,15 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanGetUninstrumentedClient()
+        {
+            var testClient = new TestClient();
+            TestClient client = InstrumentClient(testClient);
+
+            Assert.AreSame(GetOriginal(client), testClient);
+        }
+
+        [Test]
         [NonParallelizable]
         public async Task TasksValidateOwnScopes()
         {

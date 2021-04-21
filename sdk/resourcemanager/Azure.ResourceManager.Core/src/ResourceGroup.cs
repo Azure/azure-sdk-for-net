@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Core
         public virtual ResourceGroupData Data { get; }
 
         /// <inheritdoc />
-        protected override ResourceGroup GetResource()
+        protected override ResourceGroup GetResource(CancellationToken cancellation = default)
         {
             return this;
         }

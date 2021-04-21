@@ -20,7 +20,7 @@ namespace Azure.DigitalTwins.Core
     /// <example>
     /// Here's an example of  how to use the BasicDigitalTwin helper class to serialize and create a digital twin.
     ///
-    /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicTwin">
+    /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicTwin" language="csharp">
     /// // Create digital twin with component payload using the BasicDigitalTwin serialization helper
     ///
     /// var basicTwin = new BasicDigitalTwin
@@ -55,7 +55,7 @@ namespace Azure.DigitalTwins.Core
     ///
     /// Here's an example of  how to use the BasicDigitalTwin helper class to get and deserialize a digital twin.
     ///
-    /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin">
+    /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin" language="csharp">
     /// Response&lt;BasicDigitalTwin&gt; getBasicDtResponse = await client.GetDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId);
     /// BasicDigitalTwin basicDt = getBasicDtResponse.Value;
     ///
@@ -101,7 +101,7 @@ namespace Azure.DigitalTwins.Core
         /// If the property is a component, use the <see cref="BasicDigitalTwinComponent"/> class to deserialize the payload.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin" language="csharp">
         /// Response&lt;BasicDigitalTwin&gt; getBasicDtResponse = await client.GetDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId);
         /// BasicDigitalTwin basicDt = getBasicDtResponse.Value;
         ///

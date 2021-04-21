@@ -29,7 +29,7 @@ namespace Proto.Billing
         public BillingAccountData Data { get; private set; }
 
         /// <inheritdoc />
-        protected override BillingAccount GetResource()
+        protected override BillingAccount GetResource(CancellationToken cancellation = default)
         {
             return this;
         }

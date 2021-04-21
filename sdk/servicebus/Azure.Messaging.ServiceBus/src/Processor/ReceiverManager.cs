@@ -116,8 +116,8 @@ namespace Azure.Messaging.ServiceBus
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticProperty.ConsumerKind);
-            scope.Start();
             scope.SetMessageData(new ServiceBusReceivedMessage[] { message });
+            scope.Start();
             try
             {
                 await ProcessOneMessage(

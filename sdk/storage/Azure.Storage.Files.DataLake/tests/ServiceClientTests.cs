@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (GetNewFileSystem(service: service))
+            await using (await GetNewFileSystem(service: service))
             {
                 // Act
                 IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
@@ -594,6 +594,42 @@ namespace Azure.Storage.Files.DataLake.Tests
             await service.SetPropertiesAsync(properties);
             properties = await service.GetPropertiesAsync();
             Assert.AreEqual(originalCors.Count(), properties.Cors.Count());
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task SetPropertiesAsync_StaticWebsite()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeServiceProperties properties = await service.GetPropertiesAsync();
+            DataLakeStaticWebsite originalStaticWebsite = properties.StaticWebsite;
+            string errorDocument404Path = "error/404.html";
+            string defaultIndexDocumentPath = "index2.html";
+            properties.StaticWebsite = new DataLakeStaticWebsite
+            {
+                Enabled = true,
+                ErrorDocument404Path = errorDocument404Path,
+                DefaultIndexDocumentPath = defaultIndexDocumentPath
+            };
+
+            // Act
+            await service.SetPropertiesAsync(properties);
+
+            // Assert
+            properties = await service.GetPropertiesAsync();
+            Assert.IsTrue(properties.StaticWebsite.Enabled);
+            Assert.AreEqual(errorDocument404Path, properties.StaticWebsite.ErrorDocument404Path);
+            Assert.AreEqual(defaultIndexDocumentPath, properties.StaticWebsite.DefaultIndexDocumentPath);
+
+            // Cleanup
+            properties.StaticWebsite = originalStaticWebsite;
+            await service.SetPropertiesAsync(properties);
+            properties = await service.GetPropertiesAsync();
+            Assert.AreEqual(originalStaticWebsite.Enabled, properties.StaticWebsite.Enabled);
+            Assert.AreEqual(originalStaticWebsite.IndexDocument, properties.StaticWebsite.IndexDocument);
+            Assert.AreEqual(originalStaticWebsite.ErrorDocument404Path, properties.StaticWebsite.ErrorDocument404Path);
+            Assert.AreEqual(originalStaticWebsite.DefaultIndexDocumentPath, properties.StaticWebsite.DefaultIndexDocumentPath);
         }
 
         [Test]

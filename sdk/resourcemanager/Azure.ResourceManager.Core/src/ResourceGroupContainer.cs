@@ -219,9 +219,6 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc />
         public override ArmResponse<ResourceGroup> Get(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(resourceGroupName))
-                throw new ArgumentException("resourceGroupName cannot be null or a whitespace.", nameof(resourceGroupName));
-
             using var scope = Diagnostics.CreateScope("ResourceGroupContainer.Get");
             scope.Start();
 
@@ -242,16 +239,14 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override async Task<ArmResponse<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(resourceGroupName))
-                throw new ArgumentException("resourceGroupName cannot be null or a whitespace.", nameof(resourceGroupName));
-
             using var scope = Diagnostics.CreateScope("ResourceGroupContainer.Get");
             scope.Start();
 
             try
             {
+                var result = await Operations.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
                 return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                await Operations.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false),
+                result,
                 g =>
                 {
                     return new ResourceGroup(Parent, new ResourceGroupData(g));

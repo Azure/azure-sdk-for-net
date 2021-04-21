@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"></param>
-        internal ResourceOperationsBase(ClientContext clientContext, string id)
+        internal ResourceOperationsBase(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
         }
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.Core
         /// Get details for this resource from the service or can be overriden to provide a cached instance.
         /// </summary>
         /// <returns> A <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
-        protected virtual TOperations GetResource()
+        protected virtual TOperations GetResource(CancellationToken cancellationToken = default)
         {
-            return Get().Value;
+            return Get(cancellationToken).Value;
         }
 
         /// <summary>

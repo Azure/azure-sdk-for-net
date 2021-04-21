@@ -28,6 +28,7 @@ namespace SnippetGenerator
             RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
 
         private UTF8Encoding _utf8EncodingWithoutBOM;
+        private static string[] _snippetPreprocessorSymbols = new [] {"SNIPPET"};
 
         public DirectoryProcessor(string directory)
         {
@@ -208,7 +209,7 @@ namespace SnippetGenerator
                 {
                     var syntaxTree = CSharpSyntaxTree.ParseText(
                         File.ReadAllText(file),
-                        new CSharpParseOptions(LanguageVersion.Preview),
+                        new CSharpParseOptions(LanguageVersion.Preview, preprocessorSymbols: _snippetPreprocessorSymbols),
                         path: file);
 
                     list.AddRange(GetAllSnippets(syntaxTree));
@@ -225,6 +226,9 @@ namespace SnippetGenerator
         private Snippet[] GetAllSnippets(SyntaxTree syntaxTree)
         {
             var snippets = new List<Snippet>();
+            var newRoot = PreprocessorDirectiveRemover.Instance.Visit(syntaxTree.GetRoot());
+            syntaxTree = syntaxTree.WithRootAndOptions(newRoot, syntaxTree.Options);
+
             var directiveWalker = new DirectiveWalker();
             directiveWalker.Visit(syntaxTree.GetRoot());
 
@@ -251,6 +255,41 @@ namespace SnippetGenerator
             return snippets.ToArray();
         }
 
+        class PreprocessorDirectiveRemover : CSharpSyntaxRewriter
+        {
+            public static PreprocessorDirectiveRemover Instance = new PreprocessorDirectiveRemover();
+            private PreprocessorDirectiveRemover() : base(visitIntoStructuredTrivia: true)
+            {
+            }
+
+            public override SyntaxTrivia VisitTrivia(SyntaxTrivia trivia)
+            {
+                if (trivia.Kind() == SyntaxKind.DisabledTextTrivia)
+                    return SyntaxFactory.Whitespace("");
+
+                return base.VisitTrivia(trivia);
+            }
+
+            public override SyntaxNode VisitIfDirectiveTrivia(IfDirectiveTriviaSyntax node)
+            {
+                return null;
+            }
+
+            public override SyntaxNode VisitElifDirectiveTrivia(ElifDirectiveTriviaSyntax node)
+            {
+                return null;
+            }
+
+            public override SyntaxNode VisitElseDirectiveTrivia(ElseDirectiveTriviaSyntax node)
+            {
+                return null;
+            }
+
+            public override SyntaxNode VisitEndIfDirectiveTrivia(EndIfDirectiveTriviaSyntax node)
+            {
+                return null;
+            }
+        }
         class DirectiveWalker : CSharpSyntaxWalker
         {
             private Stack<RegionDirectiveTriviaSyntax> _regions = new Stack<RegionDirectiveTriviaSyntax>();

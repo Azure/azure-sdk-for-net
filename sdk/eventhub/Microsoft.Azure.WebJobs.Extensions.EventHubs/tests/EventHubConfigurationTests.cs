@@ -148,6 +148,58 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(DateTimeOffset.Parse(enqueuedTime), options.InitialOffsetOptions.EnqueuedTimeUtc);
         }
 
+        [Test]
+        public void ParseInitialOffsetWithNoTime_ThrowsInvalidOperationException()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:EventHubs";
+            Assert.That(
+                () => TestHelpers.GetConfiguredOptions<EventHubOptions>(
+                b =>
+                {
+                    b.AddEventHubs();
+                },
+                new Dictionary<string, string>
+                {
+                    { $"{extensionPath}:InitialOffsetOptions:Type", "fromEnqueuedTime" },
+                }),
+                Throws.InvalidOperationException);
+        }
+
+        [Test]
+        public void ParseInitialOffsetWithInvalidType_ThrowsInvalidOperationException()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:EventHubs";
+            Assert.That(
+                () => TestHelpers.GetConfiguredOptions<EventHubOptions>(
+                    b =>
+                    {
+                        b.AddEventHubs();
+                    },
+                    new Dictionary<string, string>
+                    {
+                        { $"{extensionPath}:InitialOffsetOptions:Type", "fromSequence" },
+                    }),
+                Throws.InvalidOperationException);
+        }
+
+        [Test]
+        public void ParseInitialOffsetWithInvalidTime_ThrowsInvalidOperationException()
+        {
+            string extensionPath = "AzureWebJobs:Extensions:EventHubs";
+            Assert.That(
+                () => TestHelpers.GetConfiguredOptions<EventHubOptions>(
+                    b =>
+                    {
+                        b.AddEventHubs();
+                    },
+                    new Dictionary<string, string>
+                    {
+                        { $"{extensionPath}:InitialOffsetOptions:Type", "fromEnqueuedTime" },
+                        { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUtc", "not a valid time" },
+                    }),
+                Throws.InvalidOperationException);
+        }
+
         private EventHubOptions CreateOptionsFromConfig()
         {
             string extensionPath = "AzureWebJobs:Extensions:EventHubs";

@@ -24,10 +24,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="pageNumber">The 1-based number of the page in which this element is present.</param>
         /// <param name="text">The text of this form element.</param>
         /// <param name="words">A list of the words that make up the line.</param>
-        internal FormLine(FieldBoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormWord> words)
+        /// <param name="appearance">An object representing the appearance of the text line.</param>
+        internal FormLine(FieldBoundingBox boundingBox, int pageNumber, string text, IReadOnlyList<FormWord> words, TextAppearance appearance)
             : base(boundingBox, pageNumber, text)
         {
             Words = words;
+            Appearance = appearance;
         }
 
         /// <summary>

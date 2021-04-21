@@ -111,8 +111,6 @@
 
   <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
 
-  <Import Project="TestFramework.targets" Condition="'$(IsTestProject)' == 'true'"/>
-
   <Import Project="Azure.Management.Test.targets" Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" />
 
   <!-- CentralPackageVersions properties -->
