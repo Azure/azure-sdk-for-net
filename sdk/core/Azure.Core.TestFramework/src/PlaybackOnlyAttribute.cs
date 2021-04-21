@@ -30,11 +30,9 @@ namespace Azure.Core.TestFramework
         /// <param name="test">The <see cref="Test"/> to modify.</param>
         public void ApplyToTest(Test test)
         {
-            test.Properties.Add("Category", "Playback");
-
             if (test.RunState != RunState.NotRunnable)
             {
-                RecordedTestMode mode = RecordedTestUtilities.GetModeFromEnvironment();
+                RecordedTestMode mode = TestEnvironment.GlobalTestMode;
                 if (mode != RecordedTestMode.Playback)
                 {
                     test.RunState = RunState.Ignored;

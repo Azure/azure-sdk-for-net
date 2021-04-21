@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -80,21 +79,42 @@ namespace Azure.Core.Tests
             Assert.AreEqual(TimeSpan.FromSeconds(10), original.WaitForCompletionCalls[3]);
         }
 
+        [Test]
+        public async Task WaitForCompletionErrorsArePropagated()
+        {
+            var client = InstrumentClient(new RecordedClient());
+
+            var operation = await client.StartOperationAsync(true);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
+        }
+
         public class RecordedClient
         {
-            public virtual Task<CustomOperation> StartOperationAsync()
+            public virtual Task<CustomOperation> StartOperationAsync(bool throwOnWait = false)
             {
-                return Task.FromResult(new CustomOperation());
+                return Task.FromResult(new CustomOperation(throwOnWait));
             }
 
-            public virtual CustomOperation StartOperation()
+            public virtual CustomOperation StartOperation(bool throwOnWait = false)
             {
-                return new CustomOperation();
+                return new CustomOperation(throwOnWait);
             }
         }
 
         public class CustomOperation : Operation<int>
         {
+            private readonly bool _throwOnWait;
+
+            public CustomOperation(bool throwOnWait)
+            {
+                _throwOnWait = throwOnWait;
+            }
+
+            protected CustomOperation()
+            {
+            }
+
             public virtual List<TimeSpan?> WaitForCompletionCalls { get; } = new();
             public override string Id { get; }
             public override Response GetRawResponse()
@@ -123,6 +143,10 @@ namespace Azure.Core.Tests
             public override ValueTask<Response<int>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
             {
                 WaitForCompletionCalls.Add(pollingInterval);
+                if (_throwOnWait)
+                {
+                    throw new RequestFailedException(400, "Operation failed");
+                }
                 return new(Response.FromValue(0, new MockResponse(200)));
             }
         }

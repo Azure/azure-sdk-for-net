@@ -3,7 +3,7 @@
 
 namespace Azure.Monitory.Query.Models
 {
-    public partial class LocalizableString
+    internal partial class LocalizableString
     {
         public override string ToString() => LocalizedValue;
         public static implicit operator string(LocalizableString localizableString) => localizableString?.LocalizedValue;

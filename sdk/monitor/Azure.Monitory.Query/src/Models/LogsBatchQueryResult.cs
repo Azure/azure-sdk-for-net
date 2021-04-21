@@ -12,6 +12,7 @@ namespace Azure.Monitory.Query.Models
     {
         internal IReadOnlyList<LogQueryResponse> Responses { get; }
         internal BatchResponseError Error { get; }
+        internal RowBinder RowBinder { get; set; }
 
         public LogsQueryResult GetResult(string queryId)
         {

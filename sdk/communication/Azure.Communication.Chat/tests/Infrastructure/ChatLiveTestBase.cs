@@ -47,12 +47,19 @@ namespace Azure.Communication.Chat.Tests
 
             CommunicationTokenCredential communicationTokenCredential = new CommunicationTokenCredential(token);
             return InstrumentClient(new ChatClient(TestEnvironment.Endpoint, communicationTokenCredential,
-                InstrumentClientOptions(new ChatClientOptions())));
+                CreateChatClientOptionsWithCorrelationVectorLogs()));
         }
 
         protected ChatThreadClient GetInstrumentedChatThreadClient(ChatClient chatClient, string threadId)
         {
             return InstrumentClient(chatClient.GetChatThreadClient(threadId));
+        }
+
+        private ChatClientOptions CreateChatClientOptionsWithCorrelationVectorLogs()
+        {
+            ChatClientOptions chatClientOptions = new ChatClientOptions();
+            chatClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
+            return InstrumentClientOptions(chatClientOptions);
         }
     }
 }

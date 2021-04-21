@@ -43,7 +43,6 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
           AgentImage: $(OSVmImage)
-      - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
@@ -54,6 +53,7 @@ jobs:
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceToTest }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
+          /p:RunApiCompat=false /p:InheritDocEnabled=false
           /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
           /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{ parameters.ServiceDirectory }}
         displayName: "Build & Test ($(TestTargetFramework))"

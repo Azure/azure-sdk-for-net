@@ -4,7 +4,7 @@
 using System;
 using Azure.Core.TestFramework;
 
-namespace Azure.Template.Tests
+namespace Azure.Monitory.Query.Tests
 {
     public class MonitorQueryClientTestEnvironment : TestEnvironment
     {
