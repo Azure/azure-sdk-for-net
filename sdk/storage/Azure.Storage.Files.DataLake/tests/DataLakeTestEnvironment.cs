@@ -4,6 +4,8 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -20,32 +22,59 @@ namespace Azure.Storage.Files.DataLake.Tests
         private async Task<bool> DoesOAuthWorkAsync()
         {
             TestContext.Error.WriteLine("Datalake Probing OAuth");
-            DataLakeServiceClient serviceClient = new DataLakeServiceClient(
-                new Uri(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant.BlobServiceEndpoint),
-                GetOAuthCredential(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant));
+
             try
             {
-                await serviceClient.GetPropertiesAsync();
-                var fileSystemName = Guid.NewGuid().ToString();
-                var fileSystemClient = serviceClient.GetFileSystemClient(fileSystemName);
-                await fileSystemClient.CreateIfNotExistsAsync();
-                try
+                // Check flat account. For some reason we observe failures if that one doesn't work before we start datalake run.
                 {
-                    var directoryName = Guid.NewGuid().ToString();
-                    var directoryClient = fileSystemClient.GetDirectoryClient(directoryName);
-                    await directoryClient.CreateIfNotExistsAsync();
-                    await directoryClient.GetPropertiesAsync();
-                    var fileName = Guid.NewGuid().ToString();
-                    var fileClient = directoryClient.GetFileClient(fileName);
-                    await fileClient.CreateIfNotExistsAsync();
-                    await fileClient.GetPropertiesAsync();
-                    // call some APIs that talk to DFS endoint as well.
-                    await fileClient.AppendAsync(new MemoryStream(new byte[] { 1 }), 0);
-                    await fileClient.GetAccessControlAsync();
+                    BlobServiceClient serviceClient = new BlobServiceClient(
+                        new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint),
+                        GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant));
+                    await serviceClient.GetPropertiesAsync();
+                    var containerName = Guid.NewGuid().ToString();
+                    var containerClient = serviceClient.GetBlobContainerClient(containerName);
+                    await containerClient.CreateIfNotExistsAsync();
+                    try
+                    {
+                        await containerClient.GetPropertiesAsync();
+                        var blobName = Guid.NewGuid().ToString();
+                        var blobClient = containerClient.GetAppendBlobClient(blobName);
+                        await blobClient.CreateIfNotExistsAsync();
+                        await blobClient.GetPropertiesAsync();
+                    }
+                    finally
+                    {
+                        await containerClient.DeleteIfExistsAsync();
+                    }
                 }
-                finally
+
+                // Check hierarchical account.
                 {
-                    await fileSystemClient.DeleteIfExistsAsync();
+                    DataLakeServiceClient serviceClient = new DataLakeServiceClient(
+                      new Uri(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant.BlobServiceEndpoint),
+                      GetOAuthCredential(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant));
+                    await serviceClient.GetPropertiesAsync();
+                    var fileSystemName = Guid.NewGuid().ToString();
+                    var fileSystemClient = serviceClient.GetFileSystemClient(fileSystemName);
+                    await fileSystemClient.CreateIfNotExistsAsync();
+                    try
+                    {
+                        var directoryName = Guid.NewGuid().ToString();
+                        var directoryClient = fileSystemClient.GetDirectoryClient(directoryName);
+                        await directoryClient.CreateIfNotExistsAsync();
+                        await directoryClient.GetPropertiesAsync();
+                        var fileName = Guid.NewGuid().ToString();
+                        var fileClient = directoryClient.GetFileClient(fileName);
+                        await fileClient.CreateIfNotExistsAsync();
+                        await fileClient.GetPropertiesAsync();
+                        // call some APIs that talk to DFS endoint as well.
+                        await fileClient.AppendAsync(new MemoryStream(new byte[] { 1 }), 0);
+                        await fileClient.GetAccessControlAsync();
+                    }
+                    finally
+                    {
+                        await fileSystemClient.DeleteIfExistsAsync();
+                    }
                 }
             }
             catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")

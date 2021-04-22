@@ -20,11 +20,12 @@ namespace Azure.Storage.Blobs.Tests
         private async Task<bool> DoesOAuthWorkAsync()
         {
             TestContext.Error.WriteLine("Blob Probing OAuth");
-            BlobServiceClient serviceClient = new BlobServiceClient(
-                new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint),
-                GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant));
+
             try
             {
+                BlobServiceClient serviceClient = new BlobServiceClient(
+                    new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint),
+                    GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant));
                 await serviceClient.GetPropertiesAsync();
                 var containerName = Guid.NewGuid().ToString();
                 var containerClient = serviceClient.GetBlobContainerClient(containerName);
