@@ -171,5 +171,10 @@ namespace Azure.ResourceManager.TestFramework
             if (!(GlobalClient is null))
                 throw new InvalidOperationException("StopSessionRecording was never called please make sure you call that at the end of your OneTimeSetup");
         }
+
+        protected override object InstrumentOperation(Type operationType, object operation)
+        {
+            return InstrumentMgmtOperation(operationType, operation, new ManagementInterceptor(this));
+        }
     }
 }

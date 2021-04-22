@@ -70,6 +70,7 @@ namespace Azure.Storage.Blobs.Models
         private const string BlobNotFoundValue = "BlobNotFound";
         private const string BlobOverwrittenValue = "BlobOverwritten";
         private const string BlobTierInadequateForContentLengthValue = "BlobTierInadequateForContentLength";
+        private const string BlobUsesCustomerSpecifiedEncryptionValue = "BlobUsesCustomerSpecifiedEncryption";
         private const string BlockCountExceedsLimitValue = "BlockCountExceedsLimit";
         private const string BlockListTooLongValue = "BlockListTooLong";
         private const string CannotChangeToLowerTierValue = "CannotChangeToLowerTier";
@@ -231,6 +232,8 @@ namespace Azure.Storage.Blobs.Models
         public static BlobErrorCode BlobOverwritten { get; } = new BlobErrorCode(BlobOverwrittenValue);
         /// <summary> BlobTierInadequateForContentLength. </summary>
         public static BlobErrorCode BlobTierInadequateForContentLength { get; } = new BlobErrorCode(BlobTierInadequateForContentLengthValue);
+        /// <summary> BlobUsesCustomerSpecifiedEncryption. </summary>
+        public static BlobErrorCode BlobUsesCustomerSpecifiedEncryption { get; } = new BlobErrorCode(BlobUsesCustomerSpecifiedEncryptionValue);
         /// <summary> BlockCountExceedsLimit. </summary>
         public static BlobErrorCode BlockCountExceedsLimit { get; } = new BlobErrorCode(BlockCountExceedsLimitValue);
         /// <summary> BlockListTooLong. </summary>

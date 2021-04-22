@@ -28,7 +28,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                     });
 
             // Instantiate the client
-            TimeSeriesInsightsClient dtClient = GetTimeSeriesInsightsClient(
+            TimeSeriesInsightsClient tsiClient = GetTimeSeriesInsightsClient(
                 options.TenantId,
                 options.ClientId,
                 options.ClientSecret,
@@ -36,8 +36,11 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             // Run the samples
 
-            var tsiLifecycleSamples = new TimeSeriesInsightsLifecycleSamples(dtClient, options.TsiEnvironmentFqdn);
+            var tsiLifecycleSamples = new TimeSeriesInsightsLifecycleSamples(tsiClient, options.TsiEnvironmentFqdn);
             await tsiLifecycleSamples.RunSamplesAsync();
+
+            var tsiInstancesSamples = new InstancesSamples();
+            await tsiInstancesSamples.RunSamplesAsync(tsiClient);
         }
 
         /// <summary>

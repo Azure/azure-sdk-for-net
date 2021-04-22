@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -44,6 +44,16 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsGetAllInstances">
+        /// // Get all instances for the Time Series Insigths environment
+        /// AsyncPageable&lt;TimeSeriesInstance&gt; tsiInstances = client.Instances.GetAsync();
+        /// await foreach (TimeSeriesInstance tsiInstance in tsiInstances)
+        /// {
+        ///     Console.WriteLine($&quot;Retrieved Time Series Insights instance with Id &apos;{tsiInstance.TimeSeriesId}&apos; and name &apos;{tsiInstance.Name}&apos;.&quot;);
+        /// }
+        /// </code>
+        /// </example>
         public virtual AsyncPageable<TimeSeriesInstance> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
@@ -271,6 +281,29 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsGetnstancesById">
+        /// // Get Time Series Insights instances by Id
+        /// var timeSeriesIds = new List&lt;TimeSeriesId&gt;
+        /// {
+        ///     instanceId,
+        /// };
+        ///
+        /// Response&lt;InstancesOperationResult[]&gt; getInstancesByNameResult = await client.Instances.GetAsync(timeSeriesIds).ConfigureAwait(false);
+        ///
+        /// /// The response of calling the API contains a list of instance or error objects corresponding by position to the array in the request.
+        /// /// Instance object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// InstancesOperationResult getInstanceByIdResult = getInstancesByNameResult.Value[0];
+        /// if (getInstanceByIdResult.Instance != null)
+        /// {
+        ///     Console.WriteLine($&quot;Retrieved Time Series Insights instance with Id &apos;{getInstanceByIdResult.Instance.TimeSeriesId}&apos; and name &apos;{getInstanceByIdResult.Instance.Name}&apos;.&quot;);
+        /// }
+        /// else if (getInstanceByIdResult.Error != null)
+        /// {
+        ///     Console.WriteLine($&quot;Failed to retrieve a Time Series Insights instnace with Id &apos;{getInstanceByIdResult.Error.Message}&apos;.&quot;);
+        /// }
+        /// </code>
+        /// </example>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is <c>null</c>.
         /// </exception>
@@ -445,6 +478,37 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateInstance">
+        /// // Create a Time Series Instance object with the default Time Series Insights type Id.
+        /// // The default type Id can be obtained programmatically by using the ModelSettings client.
+        /// var instance = new TimeSeriesInstance(instanceId, &quot;1be09af9-f089-4d6b-9f0b-48018b5f7393&quot;)
+        /// {
+        ///     Name = &quot;instance1&quot;,
+        /// };
+        ///
+        /// var tsiInstancesToCreate = new List&lt;TimeSeriesInstance&gt;
+        /// {
+        ///     instance,
+        /// };
+        ///
+        /// Response&lt;TimeSeriesOperationError[]&gt; createInstanceErrors = await client
+        ///     .Instances
+        ///     .CreateOrReplaceAsync(tsiInstancesToCreate)
+        ///     .ConfigureAwait(false);
+        ///
+        /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter
+        /// // array in the request. If the error object is set to null, this means the operation was a success.
+        /// if (createInstanceErrors.Value[0] == null)
+        /// {
+        ///     Console.WriteLine($&quot;Created Time Series Insights instance with Id &apos;{instanceId}&apos;.&quot;);
+        /// }
+        /// else
+        /// {
+        ///     Console.WriteLine($&quot;Failed to create a Time Series Insights instance: {createInstanceErrors.Value[0].Message}.&quot;);
+        /// }
+        /// </code>
+        /// </example>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesInstances"/> is <c>null</c>.
         /// </exception>
@@ -552,6 +616,37 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsReplaceInstance">
+        /// // Get Time Series Insights instances by Id
+        /// var instanceIdsToGet = new List&lt;TimeSeriesId&gt;
+        /// {
+        ///     instanceId,
+        /// };
+        ///
+        /// Response&lt;InstancesOperationResult[]&gt; getInstancesByIdResult = await client.Instances.GetAsync(instanceIdsToGet).ConfigureAwait(false);
+        ///
+        /// TimeSeriesInstance instanceResult = getInstancesByIdResult.Value[0].Instance;
+        /// Console.WriteLine($&quot;Retrieved Time Series Insights instance with Id &apos;{instanceResult.TimeSeriesId}&apos; and name &apos;{instanceResult.Name}&apos;.&quot;);
+        ///
+        /// // Now let&apos;s replace the instance with an updated name
+        /// instanceResult.Name = &quot;newInstanceName&quot;;
+        ///
+        /// var instancesToReplace = new List&lt;TimeSeriesInstance&gt;
+        /// {
+        ///     instanceResult,
+        /// };
+        ///
+        /// Response&lt;InstancesOperationResult[]&gt; replaceInstancesResult = await client.Instances.ReplaceAsync(instancesToReplace).ConfigureAwait(false);
+        ///
+        /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter
+        /// // array in the request. If the error object is set to null, this means the operation was a success.
+        /// if (replaceInstancesResult.Value[0].Error != null)
+        /// {
+        ///     Console.WriteLine($&quot;Failed to retrieve a Time Series Insights instnace with Id &apos;{replaceInstancesResult.Value[0].Error.Message}&apos;.&quot;);
+        /// }
+        /// </code>
+        /// </example>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesInstances"/> is <c>null</c>.
         /// </exception>
@@ -650,6 +745,25 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteInstance">
+        /// Response&lt;TimeSeriesOperationError[]&gt; deleteInstanceErrors = await client
+        ///     .Instances
+        ///     .DeleteAsync(new List&lt;TimeSeriesId&gt; { instanceId })
+        ///     .ConfigureAwait(false);
+        ///
+        /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter
+        /// // array in the request. If the error object is set to null, this means the operation was a success.
+        /// if (deleteInstanceErrors.Value[0] == null)
+        /// {
+        ///     Console.WriteLine($&quot;Deleted Time Series Insights instance with Id &apos;{instanceId}&apos;.&quot;);
+        /// }
+        /// else
+        /// {
+        ///     Console.WriteLine($&quot;Failed to delete a Time Series Insights instance: {deleteInstanceErrors.Value[0].Message}.&quot;);
+        /// }
+        /// </code>
+        /// </example>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is <c>null</c>.
         /// </exception>

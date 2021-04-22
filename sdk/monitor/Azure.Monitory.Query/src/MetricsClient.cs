@@ -46,7 +46,7 @@ namespace Azure.Monitory.Query
             scope.Start();
             try
             {
-                return _metricsRestClient.List(resource, $"{startTime:O}/{endTime:O}", interval, cancellationToken: cancellationToken);
+                return _metricsRestClient.List(resource, GetTimespan(startTime, endTime), interval, cancellationToken: cancellationToken);
             }
             catch (Exception e)
             {
@@ -61,7 +61,7 @@ namespace Azure.Monitory.Query
             scope.Start();
             try
             {
-                return await _metricsRestClient.ListAsync(resource, $"{startTime:O}/{endTime:O}", interval, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await _metricsRestClient.ListAsync(resource, GetTimespan(startTime, endTime), interval, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -136,6 +136,11 @@ namespace Azure.Monitory.Query
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static string GetTimespan(DateTimeOffset startTime, DateTimeOffset endTime)
+        {
+            return $"{TypeFormatters.ToString(startTime, "o")}/{TypeFormatters.ToString(endTime, "o")}";
         }
     }
 }

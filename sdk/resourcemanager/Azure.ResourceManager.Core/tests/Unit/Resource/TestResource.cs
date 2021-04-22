@@ -6,11 +6,9 @@ namespace Azure.ResourceManager.Core.Tests
 {
     public class TestResource<TIdentifier> : Resource<TIdentifier> where TIdentifier : TenantResourceIdentifier
     {
-        public TestResource(string id)
+        public TestResource(TIdentifier id)
+            :base(id, id.Name, id.ResourceType)
         {
-            Id = ResourceIdentifier.Create(id) as TIdentifier;
         }
-
-        public override TIdentifier Id { get; protected set; }
     }
 }

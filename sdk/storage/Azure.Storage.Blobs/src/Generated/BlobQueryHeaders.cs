@@ -42,7 +42,7 @@ namespace Azure.Storage.Blobs
         /// <summary> The current sequence number for a page blob. This header is not returned for block blobs or append blobs. </summary>
         public long? BlobSequenceNumber => _response.Headers.TryGetValue("x-ms-blob-sequence-number", out long? value) ? value : null;
         /// <summary> The blob&apos;s type. </summary>
-        public BlobType? BlobType => _response.Headers.TryGetValue("x-ms-blob-type", out string value) ? value.ToBlobType() : (BlobType?)null;
+        public BlobType? BlobType => _response.Headers.TryGetValue("x-ms-blob-type", out string value) ? value.ToBlobType() : null;
         /// <summary> Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob. This value can specify the time of a completed, aborted, or failed copy attempt. This header does not appear if a copy is pending, if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List. </summary>
         public DateTimeOffset? CopyCompletionTime => _response.Headers.TryGetValue("x-ms-copy-completion-time", out DateTimeOffset? value) ? value : null;
         /// <summary> Only appears when x-ms-copy-status is failed or pending. Describes the cause of the last fatal or non-fatal copy operation failure. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List. </summary>
@@ -54,13 +54,13 @@ namespace Azure.Storage.Blobs
         /// <summary> URL up to 2 KB in length that specifies the source blob or file used in the last attempted Copy Blob operation where this blob was the destination blob. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List. </summary>
         public string CopySource => _response.Headers.TryGetValue("x-ms-copy-source", out string value) ? value : null;
         /// <summary> State of the copy operation identified by x-ms-copy-id. </summary>
-        public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatus() : (CopyStatus?)null;
+        public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatus() : null;
         /// <summary> When a blob is leased, specifies whether the lease is of infinite or fixed duration. </summary>
-        public LeaseDurationType? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToLeaseDurationType() : (LeaseDurationType?)null;
+        public LeaseDurationType? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToLeaseDurationType() : null;
         /// <summary> Lease state of the blob. </summary>
-        public LeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToLeaseState() : (LeaseState?)null;
+        public LeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToLeaseState() : null;
         /// <summary> The current lease status of the blob. </summary>
-        public LeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToLeaseStatus() : (LeaseStatus?)null;
+        public LeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToLeaseStatus() : null;
         /// <summary> Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
         /// <summary> Indicates that the service supports requests for partial blob content. </summary>

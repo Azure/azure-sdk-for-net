@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         private KeyVaultTestEventListener _listener;
 
         protected KeysTestBase(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment() /* RecordedTestMode.Record */)
+            : base(isAsync, mode /* RecordedTestMode.Record */)
         {
             _serviceVersion = serviceVersion;
         }
@@ -260,12 +260,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= PollingInterval;
+                delay ??= TimeSpan.FromSeconds(5);
                 return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: delay.Value);
             }
         }
 
-        protected Task WaitForPurgedKey(string name)
+        protected Task WaitForPurgedKey(string name, TimeSpan? delay = null)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -274,6 +274,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
+                delay ??= TimeSpan.FromSeconds(5);
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {
@@ -284,7 +285,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     {
                         return (Response)null;
                     }
-                }, delay: PollingInterval);
+                }, delay: delay.Value);
             }
         }
 

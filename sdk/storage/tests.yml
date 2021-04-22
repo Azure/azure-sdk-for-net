@@ -8,6 +8,9 @@ extends:
     TimeoutInMinutes: 180
     Location: canadacentral
     Clouds: Preview
+    MatrixReplace:
+      # Use dedicated storage pool in canadacentral with higher memory capacity
+      - Pool=(.*)-general/$1-storage
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
     EnvVars:

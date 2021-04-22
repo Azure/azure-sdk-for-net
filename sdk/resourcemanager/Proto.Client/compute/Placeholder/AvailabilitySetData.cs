@@ -1,5 +1,6 @@
 ﻿using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Core.Adapters;
 using System;
 using System.Collections.Generic;
 
@@ -52,13 +53,13 @@ namespace Proto.Compute
         }
 
         /// <summary> A list of references to all virtual machines in the availability set. </summary>
-        public IList<SubResource> VirtualMachines
+        public IList<Azure.ResourceManager.Compute.Models.SubResource> VirtualMachines
         {
             get => Model.VirtualMachines;
         }
 
         /// <summary> Specifies information about the proximity placement group that the availability set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </summary>
-        public SubResource ProximityPlacementGroup
+        public Azure.ResourceManager.Compute.Models.SubResource ProximityPlacementGroup
         {
             get => Model.ProximityPlacementGroup;
             set => Model.ProximityPlacementGroup = value;

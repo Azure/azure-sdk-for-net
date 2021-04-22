@@ -31,7 +31,7 @@ Console.WriteLine("The following are the names of the tables in the query result
 
 foreach (TableItem table in queryTableResults)
 {
-    Console.WriteLine(table.TableName);
+    Console.WriteLine(table.Name);
 }
 ```
 

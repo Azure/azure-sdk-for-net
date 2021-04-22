@@ -8,17 +8,13 @@ namespace Azure.ResourceManager.Core.Tests
 {
     public class TestTrackedResource<TIdentifier> : TrackedResource<TIdentifier> where TIdentifier : TenantResourceIdentifier
     {
-        public TestTrackedResource(string id) : this(id, LocationData.Default)
+        public TestTrackedResource(TIdentifier id) : this(id, LocationData.Default)
         {
-            Id = ResourceIdentifier.Create(id) as TIdentifier;
         }
 
-        public TestTrackedResource(string id, string location)
+        public TestTrackedResource(TIdentifier id, string location)
+            :base(id, id.Name, id.ResourceType, null, location)
         {
-            Id = ResourceIdentifier.Create(id) as TIdentifier;
-            Location = location;
         }
-
-        public override TIdentifier Id { get; protected set; }
     }
 }

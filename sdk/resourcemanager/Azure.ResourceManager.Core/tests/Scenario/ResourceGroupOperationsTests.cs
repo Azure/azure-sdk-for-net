@@ -36,18 +36,12 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task StartDeleteNonExistantRg()
+        public void StartDeleteNonExistantRg()
         {
             var rgOp = InstrumentClientExtension(Client.GetResourceGroupOperations($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/fake"));
-            var deleteOp = rgOp.StartDeleteAsync();
-            try
-            {
-                var response = await (await deleteOp).WaitForCompletionAsync();
-                Assert.Fail("RequestFailedException was not thrown");
-            }
-            catch (RequestFailedException e) when (e.Status == 404)
-            {
-            }
+            var deleteOpTask = rgOp.StartDeleteAsync();
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await deleteOpTask);
+            Assert.AreEqual(404, exception.Status);
         }
 
         [TestCase]

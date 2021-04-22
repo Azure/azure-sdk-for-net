@@ -24,7 +24,7 @@ namespace Azure.DigitalTwins.Core
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
-        /// <code snippet="Snippet:DigitalTwinsSampleQueryTwinsWithQueryCharge">
+        /// <code snippet="Snippet:DigitalTwinsSampleQueryTwinsWithQueryCharge" language="csharp">
         /// // This code snippet demonstrates how you could extract the query charges incurred when calling
         /// // the query API. It iterates over the response pages first to access to the query-charge header,
         /// // and then the digital twin results within each page.

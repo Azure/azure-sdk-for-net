@@ -7,6 +7,14 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 {
     internal static class SampleLogger
     {
+        internal static void PrintHeader(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine($"\n\n==={message.ToUpperInvariant()}===\n");
+            Console.ResetColor();
+        }
+
         internal static void FatalError(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
