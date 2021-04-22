@@ -2,6 +2,9 @@ parameters:
   - name: Repository
     type: string
     default: $(Build.Repository.Name)
+  - name: Branch
+    type: string
+    default: main
   - name: Prefix
     type: string
   - name: CIConventionOptions
@@ -30,7 +33,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention ci
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/${{parameters.Branch}}
         --patvar PATVAR
         --debug
         ${{parameters.CIConventionOptions}}
@@ -48,7 +51,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention up
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/${{parameters.Branch}}
         --patvar PATVAR
         --debug
         ${{parameters.UPConventionOptions}}
@@ -66,7 +69,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention tests
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/${{parameters.Branch}}
         --patvar PATVAR
         --debug
         ${{parameters.TestsConventionOptions}}
@@ -88,7 +91,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention ci
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/${{parameters.Branch}}
         --patvar PATVAR
         --debug
         --no-schedule
@@ -107,7 +110,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention up
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/${{parameters.Branch}}
         --patvar PATVAR
         --debug
         --no-schedule
@@ -126,7 +129,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention tests
         --agentpool Hosted
-        --branch refs/heads/master
+        --branch refs/heads/${{parameters.Branch}}
         --patvar PATVAR
         --debug
         --no-schedule
