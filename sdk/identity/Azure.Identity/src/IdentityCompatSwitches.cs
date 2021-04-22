@@ -10,13 +10,13 @@ namespace Azure.Identity
     {
         internal const string DisableInteractiveThreadpoolExecutionSwitchName = "Azure.Identity.DisableInteractiveBrowserThreadpoolExecution";
         internal const string DisableInteractiveThreadpoolExecutionEnvVar = "AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION";
-        internal const string DisableCP1ExecutionSwitchName = "AZURE.IDENTITY.DisableCP1";
+        internal const string DisableCP1ExecutionSwitchName = "AZURE.Identity.DisableCP1";
         internal const string DisableCP1ExecutionEnvVar = "AZURE_IDENTITY_DISABLE_CP1";
 
         public static bool DisableInteractiveBrowserThreadpoolExecution
-            => AppConfigHelper.GetConfigValue(DisableInteractiveThreadpoolExecutionSwitchName, DisableInteractiveThreadpoolExecutionEnvVar);
+            => AppContextSwitchHelper.GetConfigValue(DisableInteractiveThreadpoolExecutionSwitchName, DisableInteractiveThreadpoolExecutionEnvVar);
 
-        public static bool DisableCAE
-            => AppConfigHelper.GetConfigValue(DisableCP1ExecutionSwitchName, DisableCP1ExecutionEnvVar);
+        public static bool DisableCP1
+            => AppContextSwitchHelper.GetConfigValue(DisableCP1ExecutionSwitchName, DisableCP1ExecutionEnvVar);
     }
 }

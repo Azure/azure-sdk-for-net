@@ -50,15 +50,11 @@ namespace Azure.Core.TestFramework
                 info = type.GetField("s_switchMap", BindingFlags.NonPublic | BindingFlags.Static);
             }
             _switches = info.GetValue(null);
-            if (_switches == null)
-            {
-                // initialize the switches, which are null until the first switch is set.
-                var initSwitch = "azuresdktestinitswitch";
-                _originalValues[initSwitch] = null;
-                AppContext.SetSwitch(initSwitch, false);
-                _switches = info.GetValue(null);
-            }
-
+            // initialize the switches, which can be null until the first switch is set.
+            var initSwitch = "azuresdktestinitswitch";
+            _originalValues[initSwitch] = null;
+            AppContext.SetSwitch(initSwitch, false);
+            _switches = info.GetValue(null);
             removeMethod = _switches.GetType().GetMethod("Remove", new[] { typeof(string) });
         }
 

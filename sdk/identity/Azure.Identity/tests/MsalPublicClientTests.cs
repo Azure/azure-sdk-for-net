@@ -19,13 +19,13 @@ namespace Azure.Identity.Tests
             [Values(true, false, null)] bool? setDisableSwitch,
             [Values(true, false, null)] bool? setDisableEnvVar)
         {
-            TestAppContext ctx = null;
+            TestAppContextSwitch ctx = null;
             TestEnvVar env = null;
             try
             {
                 if (setDisableSwitch != null)
                 {
-                    ctx = new TestAppContext(IdentityCompatSwitches.DisableCP1ExecutionSwitchName, setDisableSwitch.Value.ToString());
+                    ctx = new TestAppContextSwitch(IdentityCompatSwitches.DisableCP1ExecutionSwitchName, setDisableSwitch.Value.ToString());
                 }
                 if (setDisableEnvVar != null)
                 {

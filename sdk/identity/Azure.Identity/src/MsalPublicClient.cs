@@ -27,7 +27,7 @@ namespace Azure.Identity
         protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
         {
             string[] clientCapabilities =
-                IdentityCompatSwitches.DisableCAE ? Array.Empty<string>() : new[] { "CP1" };
+                IdentityCompatSwitches.DisableCP1 ? Array.Empty<string>() : new[] { "CP1" };
 
             return CreateClientCoreAsync(clientCapabilities, async, cancellationToken);
         }
