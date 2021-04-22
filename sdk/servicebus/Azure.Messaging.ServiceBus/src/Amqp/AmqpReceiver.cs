@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
@@ -93,6 +94,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// A map of locked messages received using the management client.
         /// </summary>
         private readonly ConcurrentExpiringSet<Guid> _requestResponseLockedMessages;
+
+        private static IReadOnlyList<ServiceBusReceivedMessage> emptyList;
+
+        private static IReadOnlyList<ServiceBusReceivedMessage> NoMessagesReceived
+        {
+            get
+            {
+                emptyList ??= new ReadOnlyCollection<ServiceBusReceivedMessage>(new List<ServiceBusReceivedMessage>(0));
+                return emptyList;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AmqpReceiver"/> class.
@@ -367,7 +379,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     message.Dispose();
                 }
 
-                return receivedMessages ?? ReadOnlyList<ServiceBusReceivedMessage>.Empty;
+                return receivedMessages ?? NoMessagesReceived;
             }
             catch (OperationCanceledException)
             {
@@ -981,13 +993,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     LastPeekedSequenceNumber = message.SequenceNumber;
                 }
-                return messages ?? ReadOnlyList<ServiceBusReceivedMessage>.Empty;
+                return messages ?? NoMessagesReceived;
             }
 
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
                 (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
             {
-                return ReadOnlyList<ServiceBusReceivedMessage>.Empty;
+                return NoMessagesReceived;
             }
 
             throw amqpResponseMessage.ToMessagingContractException();
@@ -1299,7 +1311,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw; // will never be reached
             }
 
-            return messages ?? ReadOnlyList<ServiceBusReceivedMessage>.Empty;
+            return messages ?? NoMessagesReceived;
         }
 
         /// <summary>
