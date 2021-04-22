@@ -16,6 +16,7 @@ namespace Azure.Monitor.Query.Models
         internal static LogsQueryResult DeserializeLogsQueryResult(JsonElement element)
         {
             IReadOnlyList<LogsQueryResultTable> tables = default;
+            Optional<JsonElement> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"))
@@ -28,8 +29,13 @@ namespace Azure.Monitor.Query.Models
                     tables = array;
                     continue;
                 }
+                if (property.NameEquals("statistics"))
+                {
+                    statistics = property.Value.Clone();
+                    continue;
+                }
             }
-            return new LogsQueryResult(tables);
+            return new LogsQueryResult(tables, statistics);
         }
     }
 }

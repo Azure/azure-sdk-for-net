@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -38,27 +39,27 @@ namespace Azure.Monitor.Query
         {
         }
 
-        public virtual Response<IReadOnlyList<T>> Query<T>(string workspaceId, string query, TimeSpan? timeSpan = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<T>> Query<T>(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            Response<LogsQueryResult> response = Query(workspaceId, query, timeSpan, cancellationToken);
+            Response<LogsQueryResult> response = Query(workspaceId, query, timeSpan, options, cancellationToken);
 
             return Response.FromValue(_rowBinder.BindResults<T>(response), response.GetRawResponse());
         }
 
-        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, TimeSpan? timeSpan = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
-            Response<LogsQueryResult> response = await QueryAsync(workspaceId, query, timeSpan,  cancellationToken).ConfigureAwait(false);
+            Response<LogsQueryResult> response = await QueryAsync(workspaceId, query, timeSpan, options, cancellationToken).ConfigureAwait(false);
 
             return Response.FromValue(_rowBinder.BindResults<T>(response), response.GetRawResponse());
         }
 
-        public virtual Response<LogsQueryResult> Query(string workspaceId, string query, TimeSpan? timeSpan = null, CancellationToken cancellationToken = default)
+        public virtual Response<LogsQueryResult> Query(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return _queryClient.Execute(workspaceId, CreateQueryBody(query, timeSpan), null, cancellationToken);
+                return _queryClient.Execute(workspaceId, CreateQueryBody(query, timeSpan, options), null, cancellationToken);
             }
             catch (Exception e)
             {
@@ -67,13 +68,13 @@ namespace Azure.Monitor.Query
             }
         }
 
-        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, TimeSpan? timeSpan = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return await _queryClient.ExecuteAsync(workspaceId, CreateQueryBody(query, timeSpan), null, cancellationToken).ConfigureAwait(false);
+                return await _queryClient.ExecuteAsync(workspaceId, CreateQueryBody(query, timeSpan, options), null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -87,12 +88,31 @@ namespace Azure.Monitor.Query
             return new LogsBatchQuery(_clientDiagnostics, _queryClient, _rowBinder);
         }
 
-        internal static QueryBody CreateQueryBody(string query, TimeSpan? timeSpan)
+        internal static QueryBody CreateQueryBody(string query, TimeSpan? timeSpan, LogsQueryOptions options)
         {
             var queryBody = new QueryBody(query);
             if (timeSpan != null)
             {
                 queryBody.Timespan = TypeFormatters.ToString(timeSpan.Value, "P");
+            }
+
+            StringBuilder prefer = null;
+            if (options?.Timeout is TimeSpan timeout)
+            {
+                prefer ??= new();
+                prefer.Append("wait=");
+                prefer.Append((int) timeout.TotalSeconds);
+            }
+
+            if (options?.IncludeStatistics == true)
+            {
+                prefer ??= new();
+                prefer.Append(" include-statistics=true");
+            }
+
+            if (prefer != null)
+            {
+
             }
 
             return queryBody;

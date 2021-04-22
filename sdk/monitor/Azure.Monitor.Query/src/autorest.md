@@ -27,3 +27,14 @@ directive:
             delete $[path];
         }
     }
+```
+
+### Rename errors property
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.queryResults
+  transform: >
+    $.properties["statistics"] = { "type": "object" }
+```
