@@ -7,7 +7,7 @@ namespace Azure.Monitor.Query
 {
     public class LogsQueryOptions
     {
-        public TimeSpan? Timeout { get; }
-        public bool IncludeStatistics { get; }
+        public TimeSpan? Timeout { get; set; }
+        public bool IncludeStatistics { get; set; }
     }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -59,7 +60,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                return _queryClient.Execute(workspaceId, CreateQueryBody(query, timeSpan, options), null, cancellationToken);
+                return ExecuteAsync(workspaceId, query, timeSpan, options, false, cancellationToken).EnsureCompleted();
             }
             catch (Exception e)
             {
@@ -74,7 +75,7 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                return await _queryClient.ExecuteAsync(workspaceId, CreateQueryBody(query, timeSpan, options), null, cancellationToken).ConfigureAwait(false);
+                return await ExecuteAsync(workspaceId, query, timeSpan, options, true, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -88,7 +89,7 @@ namespace Azure.Monitor.Query
             return new LogsBatchQuery(_clientDiagnostics, _queryClient, _rowBinder);
         }
 
-        internal static QueryBody CreateQueryBody(string query, TimeSpan? timeSpan, LogsQueryOptions options)
+        internal static QueryBody CreateQueryBody(string query, TimeSpan? timeSpan, LogsQueryOptions options, out string prefer)
         {
             var queryBody = new QueryBody(query);
             if (timeSpan != null)
@@ -96,26 +97,72 @@ namespace Azure.Monitor.Query
                 queryBody.Timespan = TypeFormatters.ToString(timeSpan.Value, "P");
             }
 
-            StringBuilder prefer = null;
+            StringBuilder preferBuilder = null;
             if (options?.Timeout is TimeSpan timeout)
             {
-                prefer ??= new();
-                prefer.Append("wait=");
-                prefer.Append((int) timeout.TotalSeconds);
+                preferBuilder ??= new();
+                preferBuilder.Append("wait=");
+                preferBuilder.Append((int) timeout.TotalSeconds);
             }
 
             if (options?.IncludeStatistics == true)
             {
-                prefer ??= new();
-                prefer.Append(" include-statistics=true");
+                preferBuilder ??= new();
+                preferBuilder.Append(" include-statistics=true");
             }
 
-            if (prefer != null)
-            {
-
-            }
+            prefer = preferBuilder?.ToString();
 
             return queryBody;
+        }
+
+        private async Task<Response<LogsQueryResult>> ExecuteAsync(string workspaceId, string query, TimeSpan? timeSpan, LogsQueryOptions options, bool async, CancellationToken cancellationToken = default)
+        {
+            if (workspaceId == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceId));
+            }
+
+            QueryBody queryBody = CreateQueryBody(query, timeSpan, options, out string prefer);
+            using var message = _queryClient.CreateExecuteRequest(workspaceId, queryBody, prefer);
+
+            if (options.Timeout != null)
+            {
+                message.SetProperty("NetworkTimeoutOverride", options.Timeout);
+            }
+
+            if (async)
+            {
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                _pipeline.Send(message, cancellationToken);
+            }
+
+            switch (message.Response.Status)
+            {
+                case 200:
+                {
+                    using var document = async ?
+                        await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false) :
+                        JsonDocument.Parse(message.Response.ContentStream, default);
+
+                    LogsQueryResult value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
+                    return Response.FromValue(value, message.Response);
+                }
+                default:
+                {
+                    if (async)
+                    {
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+            }
         }
     }
 }
