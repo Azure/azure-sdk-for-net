@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -10,7 +9,7 @@ namespace Azure.Identity
     {
         internal const string DisableInteractiveThreadpoolExecutionSwitchName = "Azure.Identity.DisableInteractiveBrowserThreadpoolExecution";
         internal const string DisableInteractiveThreadpoolExecutionEnvVar = "AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION";
-        internal const string DisableCP1ExecutionSwitchName = "AZURE.Identity.DisableCP1";
+        internal const string DisableCP1ExecutionSwitchName = "Azure.Identity.DisableCP1";
         internal const string DisableCP1ExecutionEnvVar = "AZURE_IDENTITY_DISABLE_CP1";
 
         public static bool DisableInteractiveBrowserThreadpoolExecution
