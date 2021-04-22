@@ -272,7 +272,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         remainingMessages--;
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                        await receiver.CompleteMessageAsync(item.LockToken);
+                        await receiver.CompleteMessageAsync(item);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -308,7 +308,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     await foreach (var msg in receiver.ReceiveMessagesAsync(cts.Token))
                     {
                         Assert.AreEqual(messages[ct].MessageId, msg.MessageId);
-                        await receiver.CompleteMessageAsync(msg.LockToken);
+                        await receiver.CompleteMessageAsync(msg, CancellationToken.None);
                         ct++;
                     }
                 }
@@ -396,7 +396,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         Assert.AreEqual(messageEnum.Current.Body.ToArray(), item.Body.ToArray());
-                        await receiver.DeadLetterMessageAsync(item.LockToken);
+                        await receiver.DeadLetterMessageAsync(item);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -416,7 +416,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         remainingMessages--;
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                        await deadLetterReceiver.CompleteMessageAsync(item.LockToken);
+                        await deadLetterReceiver.CompleteMessageAsync(item);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -453,7 +453,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         sequenceNumbers.Add(item.SequenceNumber);
-                        await receiver.DeferMessageAsync(item.LockToken);
+                        await receiver.DeferMessageAsync(item);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -507,7 +507,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         sequenceNumbers[idx++] = item.SequenceNumber;
-                        await receiver.DeferMessageAsync(item.LockToken);
+                        await receiver.DeferMessageAsync(item);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -555,7 +555,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         sequenceNumbers[idx++] = item.SequenceNumber;
-                        await receiver.DeferMessageAsync(item.LockToken);
+                        await receiver.DeferMessageAsync(item);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -711,7 +711,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.Greater(receivedMessage.LockedUntil, firstLockedUntilUtcTime);
 
                 // Complete Messages
-                await receiver.CompleteMessageAsync(receivedMessage.LockToken);
+                await receiver.CompleteMessageAsync(receivedMessage);
 
                 Assert.AreEqual(messageCount, receivedMessages.Length);
                 Assert.AreEqual(message.MessageId, receivedMessage.MessageId);
