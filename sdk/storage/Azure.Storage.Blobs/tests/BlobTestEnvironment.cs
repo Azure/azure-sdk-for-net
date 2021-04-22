@@ -20,7 +20,6 @@ namespace Azure.Storage.Blobs.Tests
         private async Task<bool> DoesOAuthWorkAsync()
         {
             TestContext.Out.WriteLine("Blob Probing OAuth");
-            TestContext.Error.WriteLine("Blob Probing OAuth");
             BlobServiceClient serviceClient = new BlobServiceClient(
                 new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint),
                 GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant));
@@ -28,20 +27,26 @@ namespace Azure.Storage.Blobs.Tests
             {
                 await serviceClient.GetPropertiesAsync();
                 var containerName = Guid.NewGuid().ToString();
-                var blobName = Guid.NewGuid().ToString();
                 var containerClient = serviceClient.GetBlobContainerClient(containerName);
                 await containerClient.CreateIfNotExistsAsync();
-                var blobClient = containerClient.GetAppendBlobClient(blobName);
-                await blobClient.CreateIfNotExistsAsync();
-                await containerClient.DeleteIfExistsAsync();
+                try
+                {
+                    await containerClient.GetPropertiesAsync();
+                    var blobName = Guid.NewGuid().ToString();
+                    var blobClient = containerClient.GetAppendBlobClient(blobName);
+                    await blobClient.CreateIfNotExistsAsync();
+                    await blobClient.GetPropertiesAsync();
+                }
+                finally
+                {
+                    await containerClient.DeleteIfExistsAsync();
+                }
             } catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
             {
                 TestContext.Out.WriteLine("Blob Probing OAuth - not ready");
-                TestContext.Error.WriteLine("Blob Probing OAuth - not ready");
                 return false;
             }
             TestContext.Out.WriteLine("Blob Probing OAuth - ready");
-            TestContext.Error.WriteLine("Blob Probing OAuth - ready");
             return true;
         }
     }

@@ -19,7 +19,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         private async Task<bool> DoesOAuthWorkAsync()
         {
             TestContext.Out.WriteLine("Datalake Probing OAuth");
-            TestContext.Error.WriteLine("Datalake Probing OAuth");
             DataLakeServiceClient serviceClient = new DataLakeServiceClient(
                 new Uri(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant.BlobServiceEndpoint),
                 GetOAuthCredential(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant));
@@ -27,21 +26,31 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await serviceClient.GetPropertiesAsync();
                 var fileSystemName = Guid.NewGuid().ToString();
-                var directoryName = Guid.NewGuid().ToString();
                 var fileSystemClient = serviceClient.GetFileSystemClient(fileSystemName);
                 await fileSystemClient.CreateIfNotExistsAsync();
-                var directoryClient = fileSystemClient.GetDirectoryClient(directoryName);
-                await directoryClient.CreateIfNotExistsAsync();
-                await fileSystemClient.DeleteIfExistsAsync();
+                try
+                {
+
+                    var directoryName = Guid.NewGuid().ToString();
+                    var directoryClient = fileSystemClient.GetDirectoryClient(directoryName);
+                    await directoryClient.CreateIfNotExistsAsync();
+                    await directoryClient.GetPropertiesAsync();
+                    var fileName = Guid.NewGuid().ToString();
+                    var fileClient = directoryClient.GetFileClient(fileName);
+                    await fileClient.CreateIfNotExistsAsync();
+                    await fileClient.GetPropertiesAsync();
+                }
+                finally
+                {
+                    await fileSystemClient.DeleteIfExistsAsync();
+                }
             }
             catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
             {
                 TestContext.Out.WriteLine("Datalake Probing OAuth - not ready");
-                TestContext.Error.WriteLine("Datalake Probing OAuth - not ready");
                 return false;
             }
             TestContext.Out.WriteLine("Datalake Probing OAuth - ready");
-            TestContext.Error.WriteLine("Datalake Probing OAuth - ready");
             return true;
         }
     }
