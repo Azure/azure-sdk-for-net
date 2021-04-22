@@ -20,6 +20,17 @@ namespace Azure.Monitor.Query.Models
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsCollectionDefined(Headers))
+            {
+                writer.WritePropertyName("headers");
+                writer.WriteStartObject();
+                foreach (var item in Headers)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body");

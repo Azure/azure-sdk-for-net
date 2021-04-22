@@ -11,5 +11,7 @@ namespace Azure.Monitor.Query.Models
     {
         // TODO: Handle not found
         public LogsQueryResultTable PrimaryTable => Tables.Single(t => t.Name == "PrimaryResult");
+
+        internal ErrorDetails Error { get; }
     }
 }
