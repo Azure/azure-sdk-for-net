@@ -24,9 +24,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [EnumMember(Value = "Required")]
         Required,
         [EnumMember(Value = "Optional")]
-        Optional,
-        [EnumMember(Value = "OptionalInteractiveUser")]
-        OptionalInteractiveUser
+        Optional
     }
     internal static class ClientCertModeEnumExtension
     {
@@ -43,8 +41,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return "Required";
                 case ClientCertMode.Optional:
                     return "Optional";
-                case ClientCertMode.OptionalInteractiveUser:
-                    return "OptionalInteractiveUser";
             }
             return null;
         }
@@ -57,8 +53,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     return ClientCertMode.Required;
                 case "Optional":
                     return ClientCertMode.Optional;
-                case "OptionalInteractiveUser":
-                    return ClientCertMode.OptionalInteractiveUser;
             }
             return null;
         }

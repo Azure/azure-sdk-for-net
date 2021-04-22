@@ -32,13 +32,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="timeTaken">Time taken.</param>
         /// <param name="count">Request Count.</param>
         /// <param name="timeInterval">Time interval.</param>
-        /// <param name="path">Request Path.</param>
-        public SlowRequestsBasedTrigger(string timeTaken = default(string), int? count = default(int?), string timeInterval = default(string), string path = default(string))
+        public SlowRequestsBasedTrigger(string timeTaken = default(string), int? count = default(int?), string timeInterval = default(string))
         {
             TimeTaken = timeTaken;
             Count = count;
             TimeInterval = timeInterval;
-            Path = path;
             CustomInit();
         }
 
@@ -64,12 +62,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "timeInterval")]
         public string TimeInterval { get; set; }
-
-        /// <summary>
-        /// Gets or sets request Path.
-        /// </summary>
-        [JsonProperty(PropertyName = "path")]
-        public string Path { get; set; }
 
     }
 }

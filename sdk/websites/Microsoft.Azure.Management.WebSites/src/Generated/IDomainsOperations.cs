@@ -324,11 +324,11 @@ namespace Microsoft.Azure.Management.WebSites
         Task<AzureOperationResponse<DomainOwnershipIdentifier>> GetOwnershipIdentifierWithHttpMessagesAsync(string resourceGroupName, string domainName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates an ownership identifier for a domain or updates identifier
-        /// details for an existing identifier
+        /// details for an existing identifer
         /// </summary>
         /// <remarks>
         /// Description for Creates an ownership identifier for a domain or
-        /// updates identifier details for an existing identifier
+        /// updates identifier details for an existing identifer
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -388,11 +388,11 @@ namespace Microsoft.Azure.Management.WebSites
         Task<AzureOperationResponse> DeleteOwnershipIdentifierWithHttpMessagesAsync(string resourceGroupName, string domainName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates an ownership identifier for a domain or updates identifier
-        /// details for an existing identifier
+        /// details for an existing identifer
         /// </summary>
         /// <remarks>
         /// Description for Creates an ownership identifier for a domain or
-        /// updates identifier details for an existing identifier
+        /// updates identifier details for an existing identifer
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.

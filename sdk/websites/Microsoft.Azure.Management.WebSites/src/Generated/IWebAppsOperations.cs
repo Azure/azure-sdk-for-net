@@ -966,125 +966,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<BackupRequest>> GetBackupConfigurationWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the config reference app settings and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference app settings and status
-        /// of an app
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ApiKVReference>>> GetAppSettingsKeyVaultReferencesWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference and status of an app
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='appSettingKey'>
-        /// App Setting key name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ApiKVReference>> GetAppSettingKeyVaultReferenceWithHttpMessagesAsync(string resourceGroupName, string name, string appSettingKey, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference app settings and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference app settings and status
-        /// of an app
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ApiKVReference>>> GetSiteConnectionStringKeyVaultReferencesWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference and status of an app
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='connectionStringKey'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ApiKVReference>> GetSiteConnectionStringKeyVaultReferenceWithHttpMessagesAsync(string resourceGroupName, string name, string connectionStringKey, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Replaces the connection strings of an app.
         /// </summary>
         /// <remarks>
@@ -3777,6 +3658,47 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<SwiftVirtualNetwork>> GetSwiftVirtualNetworkConnectionWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Integrates this Web App with a Virtual Network. This requires that
+        /// 1) "swiftSupported" is true when doing a GET against this resource,
+        /// and 2) that the target Subnet has already been delegated, and is
+        /// not
+        /// in use by another App Service Plan other than the one this App is
+        /// in.
+        /// </summary>
+        /// <remarks>
+        /// Description for Integrates this Web App with a Virtual Network.
+        /// This requires that 1) "swiftSupported" is true when doing a GET
+        /// against this resource, and 2) that the target Subnet has already
+        /// been delegated, and is not
+        /// in use by another App Service Plan other than the one this App is
+        /// in.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// Properties of the Virtual Network connection. See example.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SwiftVirtualNetwork>> CreateOrUpdateSwiftVirtualNetworkConnectionWithHttpMessagesAsync(string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Deletes a Swift Virtual Network connection from an app (or
         /// deployment slot).
         /// </summary>
@@ -3804,6 +3726,47 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse> DeleteSwiftVirtualNetworkWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Integrates this Web App with a Virtual Network. This requires that
+        /// 1) "swiftSupported" is true when doing a GET against this resource,
+        /// and 2) that the target Subnet has already been delegated, and is
+        /// not
+        /// in use by another App Service Plan other than the one this App is
+        /// in.
+        /// </summary>
+        /// <remarks>
+        /// Description for Integrates this Web App with a Virtual Network.
+        /// This requires that 1) "swiftSupported" is true when doing a GET
+        /// against this resource, and 2) that the target Subnet has already
+        /// been delegated, and is not
+        /// in use by another App Service Plan other than the one this App is
+        /// in.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// Properties of the Virtual Network connection. See example.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SwiftVirtualNetwork>> UpdateSwiftVirtualNetworkConnectionWithHttpMessagesAsync(string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets all network features used by the app (or deployment slot, if
         /// specified).
         /// </summary>
@@ -3818,7 +3781,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Name of the app.
         /// </param>
         /// <param name='view'>
-        /// The type of view. Only "summary" is supported at this time.
+        /// The type of view. This can either be "summary" or "detailed".
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -4376,157 +4339,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<PrivateAccess>> PutPrivateAccessVnetWithHttpMessagesAsync(string resourceGroupName, string name, PrivateAccess access, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the list of private endpoint connections associated with a
-        /// site
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the list of private endpoint connections
-        /// associated with a site
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the site.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<RemotePrivateEndpointConnectionARMResource>>> GetPrivateEndpointConnectionListWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets a private endpoint connection
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets a private endpoint connection
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the site.
-        /// </param>
-        /// <param name='privateEndpointConnectionName'>
-        /// Name of the private endpoint connection.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Approves or rejects a private endpoint connection
-        /// </summary>
-        /// <remarks>
-        /// Description for Approves or rejects a private endpoint connection
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the site.
-        /// </param>
-        /// <param name='privateEndpointConnectionName'>
-        /// </param>
-        /// <param name='privateEndpointWrapper'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<RemotePrivateEndpointConnectionARMResource>> ApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes a private endpoint connection
-        /// </summary>
-        /// <remarks>
-        /// Description for Deletes a private endpoint connection
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the site.
-        /// </param>
-        /// <param name='privateEndpointConnectionName'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<object>> DeletePrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the private link resources
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the private link resources
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the site.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<PrivateLinkResourcesWrapper>> GetPrivateLinkResourcesWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get list of processes for a web site, or a deployment slot, or for
         /// a specific scaled-out instance in a web site.
@@ -5187,6 +4999,36 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse> DeleteSiteExtensionWithHttpMessagesAsync(string resourceGroupName, string name, string siteExtensionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Copies a deployment slot to another deployment slot of an app.
+        /// </summary>
+        /// <remarks>
+        /// Description for Copies a deployment slot to another deployment slot
+        /// of an app.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='copySlotEntity'>
+        /// JSON object that contains the target slot name and site config
+        /// properties to override the source slot config. See example.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> CopyProductionSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmCopySlotEntity copySlotEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets an app's deployment slots.
         /// </summary>
         /// <remarks>
@@ -5305,8 +5147,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// If true, web app metrics are also deleted.
         /// </param>
         /// <param name='deleteEmptyServerFarm'>
-        /// Specify false if you want to keep empty App Service plan. By
-        /// default, empty App Service plan is deleted.
+        /// Specify true if the App Service plan will be empty after app
+        /// deletion and you want to delete the empty App Service plan. By
+        /// default, the empty App Service plan is not deleted.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -5644,165 +5487,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> RestoreSlotWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, RestoreRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns whether Scm basic auth is allowed and whether Ftp is
-        /// allowed for a given site.
-        /// </summary>
-        /// <remarks>
-        /// Description for Returns whether Scm basic auth is allowed and
-        /// whether Ftp is allowed for a given site.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='slot'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<CsmPublishingCredentialsPoliciesCollection>> GetBasicPublishingCredentialsPoliciesSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns whether FTP is allowed on the site or not.
-        /// </summary>
-        /// <remarks>
-        /// Description for Returns whether FTP is allowed on the site or not.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='slot'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<CsmPublishingCredentialsPoliciesEntity>> GetFtpAllowedSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates whether FTP is allowed on the site or not.
-        /// </summary>
-        /// <remarks>
-        /// Description for Updates whether FTP is allowed on the site or not.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='csmPublishingAccessPoliciesEntity'>
-        /// </param>
-        /// <param name='slot'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<CsmPublishingCredentialsPoliciesEntity>> UpdateFtpAllowedSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns whether Scm basic auth is allowed on the site or not.
-        /// </summary>
-        /// <remarks>
-        /// Description for Returns whether Scm basic auth is allowed on the
-        /// site or not.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='slot'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<CsmPublishingCredentialsPoliciesEntity>> GetScmAllowedSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Updates whether user publishing credentials are allowed on the site
-        /// or not.
-        /// </summary>
-        /// <remarks>
-        /// Description for Updates whether user publishing credentials are
-        /// allowed on the site or not.
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='csmPublishingAccessPoliciesEntity'>
-        /// </param>
-        /// <param name='slot'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<CsmPublishingCredentialsPoliciesEntity>> UpdateScmAllowedSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntity csmPublishingAccessPoliciesEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List the configurations of an app
         /// </summary>
@@ -6210,133 +5894,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<BackupRequest>> GetBackupConfigurationSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference app settings and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference app settings and status
-        /// of an app
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='slot'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ApiKVReference>>> GetAppSettingsKeyVaultReferencesSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference and status of an app
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='appSettingKey'>
-        /// App Setting key name.
-        /// </param>
-        /// <param name='slot'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ApiKVReference>> GetAppSettingKeyVaultReferenceSlotWithHttpMessagesAsync(string resourceGroupName, string name, string appSettingKey, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference app settings and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference app settings and status
-        /// of an app
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='slot'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ApiKVReference>>> GetSiteConnectionStringKeyVaultReferencesSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference and status of an app
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the app.
-        /// </param>
-        /// <param name='connectionStringKey'>
-        /// </param>
-        /// <param name='slot'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ApiKVReference>> GetSiteConnectionStringKeyVaultReferenceSlotWithHttpMessagesAsync(string resourceGroupName, string name, string connectionStringKey, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Replaces the connection strings of an app.
         /// </summary>
@@ -9204,6 +8761,51 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<SwiftVirtualNetwork>> GetSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Integrates this Web App with a Virtual Network. This requires that
+        /// 1) "swiftSupported" is true when doing a GET against this resource,
+        /// and 2) that the target Subnet has already been delegated, and is
+        /// not
+        /// in use by another App Service Plan other than the one this App is
+        /// in.
+        /// </summary>
+        /// <remarks>
+        /// Description for Integrates this Web App with a Virtual Network.
+        /// This requires that 1) "swiftSupported" is true when doing a GET
+        /// against this resource, and 2) that the target Subnet has already
+        /// been delegated, and is not
+        /// in use by another App Service Plan other than the one this App is
+        /// in.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// Properties of the Virtual Network connection. See example.
+        /// </param>
+        /// <param name='slot'>
+        /// Name of the deployment slot. If a slot is not specified, the API
+        /// will add or update connections for the production slot.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SwiftVirtualNetwork>> CreateOrUpdateSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Deletes a Swift Virtual Network connection from an app (or
         /// deployment slot).
         /// </summary>
@@ -9235,6 +8837,51 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse> DeleteSwiftVirtualNetworkSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Integrates this Web App with a Virtual Network. This requires that
+        /// 1) "swiftSupported" is true when doing a GET against this resource,
+        /// and 2) that the target Subnet has already been delegated, and is
+        /// not
+        /// in use by another App Service Plan other than the one this App is
+        /// in.
+        /// </summary>
+        /// <remarks>
+        /// Description for Integrates this Web App with a Virtual Network.
+        /// This requires that 1) "swiftSupported" is true when doing a GET
+        /// against this resource, and 2) that the target Subnet has already
+        /// been delegated, and is not
+        /// in use by another App Service Plan other than the one this App is
+        /// in.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// Properties of the Virtual Network connection. See example.
+        /// </param>
+        /// <param name='slot'>
+        /// Name of the deployment slot. If a slot is not specified, the API
+        /// will add or update connections for the production slot.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SwiftVirtualNetwork>> UpdateSwiftVirtualNetworkConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, SwiftVirtualNetwork connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets all network features used by the app (or deployment slot, if
         /// specified).
         /// </summary>
@@ -9249,7 +8896,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Name of the app.
         /// </param>
         /// <param name='view'>
-        /// The type of view. Only "summary" is supported at this time.
+        /// The type of view. This can either be "summary" or "detailed".
         /// </param>
         /// <param name='slot'>
         /// Name of the deployment slot. If a slot is not specified, the API
@@ -9875,39 +9522,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<PrivateAccess>> PutPrivateAccessVnetSlotWithHttpMessagesAsync(string resourceGroupName, string name, PrivateAccess access, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the list of private endpoint connections associated with a
-        /// site
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the list of private endpoint connections
-        /// associated with a site
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the site.
-        /// </param>
-        /// <param name='slot'>
-        /// Name of the site deployment slot.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<RemotePrivateEndpointConnectionARMResource>>> GetPrivateEndpointConnectionListSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets a private endpoint connection
         /// </summary>
         /// <remarks>
@@ -9920,10 +9534,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// Name of the site.
         /// </param>
         /// <param name='privateEndpointConnectionName'>
-        /// Name of the private endpoint connection.
-        /// </param>
-        /// <param name='slot'>
-        /// Name of the site deployment slot.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -9940,7 +9550,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RemotePrivateEndpointConnectionARMResource>> GetPrivateEndpointConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Approves or rejects a private endpoint connection
         /// </summary>
@@ -9957,8 +9567,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         /// <param name='privateEndpointWrapper'>
         /// </param>
-        /// <param name='slot'>
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -9974,7 +9582,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RemotePrivateEndpointConnectionARMResource>> ApproveOrRejectPrivateEndpointConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnectionResource>> ApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a private endpoint connection
         /// </summary>
@@ -9989,8 +9597,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         /// <param name='privateEndpointConnectionName'>
         /// </param>
-        /// <param name='slot'>
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -10006,7 +9612,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<object>> DeletePrivateEndpointConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> DeletePrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the private link resources
         /// </summary>
@@ -10019,8 +9625,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of the site.
         /// </param>
-        /// <param name='slot'>
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -10036,7 +9640,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateLinkResourcesWrapper>> GetPrivateLinkResourcesSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateLinkResourcesWrapper>> GetPrivateLinkResourcesWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get list of processes for a web site, or a deployment slot, or for
         /// a specific scaled-out instance in a web site.
@@ -10781,6 +10385,40 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse> DeleteSiteExtensionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string siteExtensionId, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Copies a deployment slot to another deployment slot of an app.
+        /// </summary>
+        /// <remarks>
+        /// Description for Copies a deployment slot to another deployment slot
+        /// of an app.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='copySlotEntity'>
+        /// JSON object that contains the target slot name and site config
+        /// properties to override the source slot config. See example.
+        /// </param>
+        /// <param name='slot'>
+        /// Name of the source slot. If a slot is not specified, the production
+        /// slot is used as the source slot.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> CopySlotSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmCopySlotEntity copySlotEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get the difference in configuration settings between two web app
         /// slots.
         /// </summary>
@@ -10997,8 +10635,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// will delete the source control configuration for the production
         /// slot.
         /// </param>
-        /// <param name='additionalFlags'>
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -11011,7 +10647,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteSourceControlSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, string additionalFlags = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteSourceControlSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the source control configuration of an app.
         /// </summary>
@@ -12059,8 +11695,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of the app.
         /// </param>
-        /// <param name='additionalFlags'>
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -12073,7 +11707,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteSourceControlWithHttpMessagesAsync(string resourceGroupName, string name, string additionalFlags = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteSourceControlWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the source control configuration of an app.
         /// </summary>
@@ -13135,68 +12769,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IList<NetworkTrace>>> BeginStartWebSiteNetworkTraceOperationWithHttpMessagesAsync(string resourceGroupName, string name, int? durationInSeconds = default(int?), int? maxFrameLength = default(int?), string sasUrl = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Approves or rejects a private endpoint connection
-        /// </summary>
-        /// <remarks>
-        /// Description for Approves or rejects a private endpoint connection
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the site.
-        /// </param>
-        /// <param name='privateEndpointConnectionName'>
-        /// </param>
-        /// <param name='privateEndpointWrapper'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<RemotePrivateEndpointConnectionARMResource>> BeginApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes a private endpoint connection
-        /// </summary>
-        /// <remarks>
-        /// Description for Deletes a private endpoint connection
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='name'>
-        /// Name of the site.
-        /// </param>
-        /// <param name='privateEndpointConnectionName'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<object>> BeginDeletePrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Restores an app from a backup blob in Azure Storage.
         /// </summary>
         /// <remarks>
@@ -13314,6 +12886,36 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<SiteExtensionInfo>> BeginInstallSiteExtensionWithHttpMessagesAsync(string resourceGroupName, string name, string siteExtensionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Copies a deployment slot to another deployment slot of an app.
+        /// </summary>
+        /// <remarks>
+        /// Description for Copies a deployment slot to another deployment slot
+        /// of an app.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='copySlotEntity'>
+        /// JSON object that contains the target slot name and site config
+        /// properties to override the source slot config. See example.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginCopyProductionSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmCopySlotEntity copySlotEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new web, mobile, or API app in an existing resource
         /// group, or updates an existing app.
@@ -13587,8 +13189,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         /// <param name='privateEndpointWrapper'>
         /// </param>
-        /// <param name='slot'>
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -13604,7 +13204,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RemotePrivateEndpointConnectionARMResource>> BeginApproveOrRejectPrivateEndpointConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnectionResource>> BeginApproveOrRejectPrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a private endpoint connection
         /// </summary>
@@ -13619,8 +13219,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         /// <param name='privateEndpointConnectionName'>
         /// </param>
-        /// <param name='slot'>
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -13636,7 +13234,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<object>> BeginDeletePrivateEndpointConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> BeginDeletePrivateEndpointConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Restores an app from a backup blob in Azure Storage.
         /// </summary>
@@ -13771,6 +13369,40 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<SiteExtensionInfo>> BeginInstallSiteExtensionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string siteExtensionId, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Copies a deployment slot to another deployment slot of an app.
+        /// </summary>
+        /// <remarks>
+        /// Description for Copies a deployment slot to another deployment slot
+        /// of an app.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='copySlotEntity'>
+        /// JSON object that contains the target slot name and site config
+        /// properties to override the source slot config. See example.
+        /// </param>
+        /// <param name='slot'>
+        /// Name of the source slot. If a slot is not specified, the production
+        /// slot is used as the source slot.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginCopySlotSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmCopySlotEntity copySlotEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Swaps two deployment slots of an app.
         /// </summary>
@@ -14076,58 +13708,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<SiteConfigResource>>> ListConfigurationsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference app settings and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference app settings and status
-        /// of an app
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ApiKVReference>>> GetAppSettingsKeyVaultReferencesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference app settings and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference app settings and status
-        /// of an app
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ApiKVReference>>> GetSiteConnectionStringKeyVaultReferencesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of web app configuration snapshots identifiers. Each
         /// element of the list contains a timestamp and the ID of the
@@ -14444,33 +14024,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<PerfMonResponse>>> ListPerfMonCountersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the list of private endpoint connections associated with a
-        /// site
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the list of private endpoint connections
-        /// associated with a site
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<RemotePrivateEndpointConnectionARMResource>>> GetPrivateEndpointConnectionListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Get list of processes for a web site, or a deployment slot, or for
         /// a specific scaled-out instance in a web site.
         /// </summary>
@@ -14679,58 +14232,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<SiteConfigResource>>> ListConfigurationsSlotNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference app settings and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference app settings and status
-        /// of an app
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ApiKVReference>>> GetAppSettingsKeyVaultReferencesSlotNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the config reference app settings and status of an app
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the config reference app settings and status
-        /// of an app
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ApiKVReference>>> GetSiteConnectionStringKeyVaultReferencesSlotNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of web app configuration snapshots identifiers. Each
         /// element of the list contains a timestamp and the ID of the
@@ -15046,33 +14547,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<PerfMonResponse>>> ListPerfMonCountersSlotNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the list of private endpoint connections associated with a
-        /// site
-        /// </summary>
-        /// <remarks>
-        /// Description for Gets the list of private endpoint connections
-        /// associated with a site
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<RemotePrivateEndpointConnectionARMResource>>> GetPrivateEndpointConnectionListSlotNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get list of processes for a web site, or a deployment slot, or for
         /// a specific scaled-out instance in a web site.

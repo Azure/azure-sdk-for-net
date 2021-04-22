@@ -22,52 +22,6 @@ namespace Microsoft.Azure.Management.WebSites
     public static partial class WebSiteManagementClientExtensions
     {
             /// <summary>
-            /// Exchange code for GitHub access token for AppService CLI
-            /// </summary>
-            /// <remarks>
-            /// Description for Exchange code for GitHub access token for AppService CLI
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='code'>
-            /// Code string to exchange for Github Access token
-            /// </param>
-            /// <param name='state'>
-            /// State string used for verification.
-            /// </param>
-            public static AppserviceGithubToken GenerateGithubAccessTokenForAppserviceCLIAsync(this IWebSiteManagementClient operations, string code, string state)
-            {
-                return operations.GenerateGithubAccessTokenForAppserviceCLIAsyncAsync(code, state).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Exchange code for GitHub access token for AppService CLI
-            /// </summary>
-            /// <remarks>
-            /// Description for Exchange code for GitHub access token for AppService CLI
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='code'>
-            /// Code string to exchange for Github Access token
-            /// </param>
-            /// <param name='state'>
-            /// State string used for verification.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<AppserviceGithubToken> GenerateGithubAccessTokenForAppserviceCLIAsyncAsync(this IWebSiteManagementClient operations, string code, string state, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GenerateGithubAccessTokenForAppserviceCLIAsyncWithHttpMessagesAsync(code, state, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets publishing user
             /// </summary>
             /// <remarks>
@@ -411,8 +365,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='sku'>
             /// Name of SKU used to filter the regions. Possible values include: 'Free',
             /// 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic', 'Isolated',
-            /// 'IsolatedV2', 'PremiumV2', 'PremiumV3', 'PremiumContainer',
-            /// 'ElasticPremium', 'ElasticIsolated'
+            /// 'PremiumV2', 'ElasticPremium', 'ElasticIsolated'
             /// </param>
             /// <param name='linuxWorkersEnabled'>
             /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions
@@ -443,8 +396,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='sku'>
             /// Name of SKU used to filter the regions. Possible values include: 'Free',
             /// 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic', 'Isolated',
-            /// 'IsolatedV2', 'PremiumV2', 'PremiumV3', 'PremiumContainer',
-            /// 'ElasticPremium', 'ElasticIsolated'
+            /// 'PremiumV2', 'ElasticPremium', 'ElasticIsolated'
             /// </param>
             /// <param name='linuxWorkersEnabled'>
             /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions

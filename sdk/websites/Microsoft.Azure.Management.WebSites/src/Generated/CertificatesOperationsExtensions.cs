@@ -30,13 +30,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='filter'>
-            /// Return only information specified in the filter (using OData syntax). For
-            /// example: $filter=KeyVaultId eq 'KeyVaultId'
-            /// </param>
-            public static IPage<Certificate> List(this ICertificatesOperations operations, string filter = default(string))
+            public static IPage<Certificate> List(this ICertificatesOperations operations)
             {
-                return operations.ListAsync(filter).GetAwaiter().GetResult();
+                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -48,16 +44,12 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='filter'>
-            /// Return only information specified in the filter (using OData syntax). For
-            /// example: $filter=KeyVaultId eq 'KeyVaultId'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Certificate>> ListAsync(this ICertificatesOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Certificate>> ListAsync(this ICertificatesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken, filter).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

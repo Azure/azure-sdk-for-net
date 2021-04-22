@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the Certificate class.
         /// </summary>
         /// <param name="location">Resource Location.</param>
+        /// <param name="password">Certificate password.</param>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
@@ -51,7 +52,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="issuer">Certificate issuer.</param>
         /// <param name="issueDate">Certificate issue Date.</param>
         /// <param name="expirationDate">Certificate expiration date.</param>
-        /// <param name="password">Certificate password.</param>
         /// <param name="thumbprint">Certificate thumbprint.</param>
         /// <param name="valid">Is the certificate valid?.</param>
         /// <param name="cerBlob">Raw bytes of .cer file</param>
@@ -72,9 +72,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".</param>
         /// <param name="canonicalName">CNAME of the certificate to be issued
         /// via free certificate</param>
-        /// <param name="domainValidationMethod">Method of domain validation
-        /// for free cert</param>
-        public Certificate(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), byte[] pfxBlob = default(byte[]), string siteName = default(string), string selfLink = default(string), string issuer = default(string), System.DateTime? issueDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), string password = default(string), string thumbprint = default(string), bool? valid = default(bool?), byte[] cerBlob = default(byte[]), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string keyVaultId = default(string), string keyVaultSecretName = default(string), KeyVaultSecretStatus? keyVaultSecretStatus = default(KeyVaultSecretStatus?), string serverFarmId = default(string), string canonicalName = default(string), string domainValidationMethod = default(string))
+        public Certificate(string location, string password, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), byte[] pfxBlob = default(byte[]), string siteName = default(string), string selfLink = default(string), string issuer = default(string), System.DateTime? issueDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), string thumbprint = default(string), bool? valid = default(bool?), byte[] cerBlob = default(byte[]), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string keyVaultId = default(string), string keyVaultSecretName = default(string), KeyVaultSecretStatus? keyVaultSecretStatus = default(KeyVaultSecretStatus?), string serverFarmId = default(string), string canonicalName = default(string))
             : base(location, id, name, kind, type, tags)
         {
             FriendlyName = friendlyName;
@@ -97,7 +95,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             KeyVaultSecretStatus = keyVaultSecretStatus;
             ServerFarmId = serverFarmId;
             CanonicalName = canonicalName;
-            DomainValidationMethod = domainValidationMethod;
             CustomInit();
         }
 
@@ -236,12 +233,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string CanonicalName { get; set; }
 
         /// <summary>
-        /// Gets or sets method of domain validation for free cert
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.domainValidationMethod")]
-        public string DomainValidationMethod { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -250,6 +241,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public override void Validate()
         {
             base.Validate();
+            if (Password == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Password");
+            }
         }
     }
 }

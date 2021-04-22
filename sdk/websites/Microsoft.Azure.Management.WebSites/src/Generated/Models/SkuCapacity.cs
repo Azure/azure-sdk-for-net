@@ -32,20 +32,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="minimum">Minimum number of workers for this App
         /// Service plan SKU.</param>
         /// <param name="maximum">Maximum number of workers for this App
-        /// Service plan SKU.</param>        
+        /// Service plan SKU.</param>
         /// <param name="defaultProperty">Default number of workers for this
         /// App Service plan SKU.</param>
         /// <param name="scaleType">Available scale configurations for an App
         /// Service plan.</param>
-        /// <param name="elasticMaximum">Maximum number of Elastic workers for
-        /// this App Service plan SKU.</param>
-        public SkuCapacity(int? minimum = default(int?), int? maximum = default(int?), int? defaultProperty = default(int?), string scaleType = default(string), int? elasticMaximum = default(int?))
+        public SkuCapacity(int? minimum = default(int?), int? maximum = default(int?), int? defaultProperty = default(int?), string scaleType = default(string))
         {
             Minimum = minimum;
             Maximum = maximum;
             DefaultProperty = defaultProperty;
             ScaleType = scaleType;
-            ElasticMaximum = elasticMaximum;
             CustomInit();
         }
 
@@ -81,13 +78,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "scaleType")]
         public string ScaleType { get; set; }
-
-        /// <summary>
-        /// Gets or sets maximum number of Elastic workers for this App Service
-        /// plan SKU.
-        /// </summary>
-        [JsonProperty(PropertyName = "elasticMaximum")]
-        public int? ElasticMaximum { get; set; }
 
     }
 }

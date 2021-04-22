@@ -39,8 +39,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="mountPath">Path to mount the storage within the site's
         /// runtime environment.</param>
         /// <param name="state">State of the storage account. Possible values
-        /// include: 'Ok', 'InvalidCredentials', 'InvalidShare',
-        /// 'NotValidated'</param>
+        /// include: 'Ok', 'InvalidCredentials', 'InvalidShare'</param>
         public AzureStorageInfoValue(AzureStorageType? type = default(AzureStorageType?), string accountName = default(string), string shareName = default(string), string accessKey = default(string), string mountPath = default(string), AzureStorageState? state = default(AzureStorageState?))
         {
             Type = type;
@@ -92,7 +91,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Gets state of the storage account. Possible values include: 'Ok',
-        /// 'InvalidCredentials', 'InvalidShare', 'NotValidated'
+        /// 'InvalidCredentials', 'InvalidShare'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public AzureStorageState? State { get; private set; }
