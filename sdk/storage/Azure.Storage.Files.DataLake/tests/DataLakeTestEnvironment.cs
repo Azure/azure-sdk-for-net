@@ -30,7 +30,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await fileSystemClient.CreateIfNotExistsAsync();
                 try
                 {
-
                     var directoryName = Guid.NewGuid().ToString();
                     var directoryClient = fileSystemClient.GetDirectoryClient(directoryName);
                     await directoryClient.CreateIfNotExistsAsync();
