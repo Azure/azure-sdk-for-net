@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -38,6 +39,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                     var fileClient = directoryClient.GetFileClient(fileName);
                     await fileClient.CreateIfNotExistsAsync();
                     await fileClient.GetPropertiesAsync();
+                    // call some APIs that talk to DFS endoint as well.
+                    await fileClient.AppendAsync(new MemoryStream(new byte[] { 1 }), 0);
+                    await fileClient.GetAccessControlAsync();
                 }
                 finally
                 {
