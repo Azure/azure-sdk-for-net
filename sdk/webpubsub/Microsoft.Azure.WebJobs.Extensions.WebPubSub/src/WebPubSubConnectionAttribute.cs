@@ -21,15 +21,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         [AutoResolve]
         public string UserId { get; set; }
-
-        internal IEnumerable<Claim> GetClaims()
-        {
-            var claims = new List<Claim>();
-            if (!string.IsNullOrEmpty(UserId))
-            {
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, UserId));
-            }
-            return claims;
-        }
     }
 }

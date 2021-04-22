@@ -10,9 +10,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     public class WebPubSubOptions : IOptionsFormatter
     {
-        public string ConnectionString { get; set; }
-
         public string Hub { get; set; }
+
+        internal string ConnectionString { get; set; }
 
         internal HashSet<string> AllowedHosts { get; set; } = new HashSet<string>();
 

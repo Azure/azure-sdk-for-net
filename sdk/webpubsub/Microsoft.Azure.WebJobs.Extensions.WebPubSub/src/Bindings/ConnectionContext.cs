@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public string EventName { get; internal set; }
 
         /// <summary>
-        /// The hub which message belongs to.
+        /// The hub which the message belongs to.
         /// </summary>
         public string Hub { get; internal set; }
 

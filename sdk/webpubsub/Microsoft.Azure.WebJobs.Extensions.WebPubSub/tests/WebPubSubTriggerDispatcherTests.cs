@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
 
@@ -115,7 +116,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent)
         {
             var funcName = $"{hub}.{type}.{eventName}".ToLower();
-            var dispatcher = new WebPubSubTriggerDispatcher();
+            var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);
             var executor = new Mock<ITriggeredFunctionExecutor>();
             executor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new FunctionResult(true)));

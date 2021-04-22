@@ -6,7 +6,7 @@ This extension provides functionality for receiving Web PubSub webhook calls in 
 
 ### Install the package
 
-Install the Event Grid extension with [NuGet][nuget]:
+Install the Web PubSub extension with [NuGet][nuget]:
 
 ```Powershell
 dotnet add package Microsoft.Azure.WebJobs.Extensions.WebPubSub

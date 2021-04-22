@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             _logger = loggerFactory.CreateLogger(LogCategories.CreateTriggerCategory("WebPubSub"));
             _nameResolver = nameResolver;
             _configuration = configuration;
-            _dispatcher = new WebPubSubTriggerDispatcher();
+            _dispatcher = new WebPubSubTriggerDispatcher(_logger);
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -119,8 +119,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             var hub = Utilities.FirstOrDefault(attribute.Hub, _options.Hub);
             var service = new WebPubSubService(attribute.ConnectionStringSetting, hub);
-            var claims = attribute.GetClaims();
-            return service.GetClientConnection(claims);
+            return service.GetClientConnection(attribute.UserId);
         }
 
         private void ValidateConnectionString(string attributeConnectionString, string attributeConnectionStringName)
@@ -139,7 +138,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             if (!string.IsNullOrEmpty(connectionString))
             {
                 var item = new ServiceConfigParser(connectionString);
-                _options.AllowedHosts.Add(new Uri(item.Endpoint).Host);
+                _options.AllowedHosts.Add(item.Endpoint.Host);
                 _options.AccessKeys.Add(item.AccessKey);
             }
         }

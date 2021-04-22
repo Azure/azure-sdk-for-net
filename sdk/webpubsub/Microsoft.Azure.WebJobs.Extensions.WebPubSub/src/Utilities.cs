@@ -68,7 +68,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 Subprotocol = response.Subprotocol,
                 Roles = response.Roles
             };
-            result.Content = new StringContent(JsonConvert.SerializeObject(connectEvent));
+
+            return BuildResponse(JsonConvert.SerializeObject(connectEvent), MessageDataType.Json);
+        }
+
+        public static HttpResponseMessage BuildResponse(string response, MessageDataType dataType = MessageDataType.Text)
+        {
+            HttpResponseMessage result = new HttpResponseMessage();
+
+            result.Content = new StringContent(response);
+            result.Content.Headers.ContentType = GetMediaType(dataType);
 
             return result;
         }

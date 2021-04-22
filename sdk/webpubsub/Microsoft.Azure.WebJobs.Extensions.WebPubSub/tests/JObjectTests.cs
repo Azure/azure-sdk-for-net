@@ -3,10 +3,12 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Xunit;
-using static Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubTriggerBinding;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
@@ -73,34 +75,76 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         }
 
         [Fact]
-        public void ParseErrorResponse()
+        public async Task ParseErrorResponse()
         {
             var test = @"{""code"":""unauthorized"",""errorMessage"":""not valid user.""}";
-            var jObject = JObject.Parse(test);
 
-            var result = TriggerReturnValueProvider.ConvertToResponseIfPossible(jObject);
+            var result = BuildResponse(test, RequestType.Connect);
 
             Assert.NotNull(result);
-            Assert.Equal(typeof(ErrorResponse), result.GetType());
+            Assert.Equal(HttpStatusCode.Unauthorized, result.StatusCode);
 
-            var converted = (ErrorResponse)result;
-            Assert.Equal(WebPubSubErrorCode.Unauthorized, converted.Code);
-            Assert.Equal("not valid user.", converted.ErrorMessage);
+            var message = await result.Content.ReadAsStringAsync();
+            Assert.Equal("not valid user.", message);
         }
 
         [Fact]
-        public void ParseConnectResponse()
+        public async Task ParseConnectResponse()
         {
             var test = @"{""userId"":""aaa""}";
-            var jObject = JObject.Parse(test);
 
-            var result = TriggerReturnValueProvider.ConvertToResponseIfPossible(jObject);
+            var result = BuildResponse(test, RequestType.Connect);
 
             Assert.NotNull(result);
-            Assert.Equal(typeof(ConnectResponse), result.GetType());
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
 
-            var converted = (ConnectResponse)result;
-            Assert.Equal("aaa", converted.UserId);
+            var response = await result.Content.ReadAsStringAsync();
+            var message = (JObject.Parse(response)).ToObject<ConnectResponse>();
+            Assert.Equal("aaa", message.UserId);
+        }
+
+        [Fact]
+        public async Task ParseMessageResponse()
+        {
+            var test = @"{""message"":""test"", ""dataType"":""text""}";
+
+            var result = BuildResponse(test, RequestType.User);
+
+            Assert.NotNull(result);
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+
+            var message = await result.Content.ReadAsStringAsync();
+            Assert.Equal("test", message);
+            Assert.Equal(Constants.ContentTypes.PlainTextContentType, result.Content.Headers.ContentType.MediaType);
+        }
+
+        [Fact]
+        public void ParseMessageResponse_InvalidReturnNull()
+        {
+            var test = @"{""message"":""test"", ""dataType"":""hello""}";
+
+            var result = BuildResponse(test, RequestType.User);
+
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task ParseConnectResponse_ContentMatches()
+        {
+            var test = @"{""test"":""test"",""errorMessage"":""not valid user.""}";
+            var expected = JObject.Parse(test);
+
+            var result = BuildResponse(test, RequestType.Connect);
+            var content = await result.Content.ReadAsStringAsync();
+            var actual = JObject.Parse(content);
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, actual);
+        }
+
+        private static HttpResponseMessage BuildResponse(string input, RequestType requestType)
+        {
+            return WebPubSubTriggerDispatcher.BuildValidResponse(input, requestType);
         }
     }
 }

@@ -12,14 +12,22 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class WebPubSubTriggerDispatcher : IWebPubSubTriggerDispatcher
     {
         private Dictionary<string, WebPubSubListener> _listeners = new Dictionary<string, WebPubSubListener>(StringComparer.InvariantCultureIgnoreCase);
+        private readonly ILogger _logger;
+
+        public WebPubSubTriggerDispatcher(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         public void AddListener(string key, WebPubSubListener listener)
         {
@@ -111,7 +119,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     Claims = claims,
                     Query = query,
                     Subprotocols = subprotocols,
-                    ClientCertificaties = certificates,
+                    ClientCertificates = certificates,
                     Reason = reason,
                     TaskCompletionSource = tcs
                 };
@@ -128,18 +136,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                         using (token.Register(() => tcs.TrySetCanceled()))
                         {
                             var response = await tcs.Task.ConfigureAwait(false);
-                            if (response is ErrorResponse error)
+                            var validResponse = BuildValidResponse(response, requestType);
+
+                            if (validResponse != null)
                             {
-                                return Utilities.BuildErrorResponse(error);
+                                return validResponse;
                             }
-                            else if (requestType == RequestType.Connect && response is ConnectResponse connect)
-                            {
-                                return Utilities.BuildResponse(connect);
-                            }
-                            else if (requestType == RequestType.User && response is MessageResponse msgResponse)
-                            {
-                                return Utilities.BuildResponse(msgResponse);
-                            }
+                            _logger.LogWarning($"Invalid response type regarding current request: {requestType}");
                         }
                     }
                     catch (Exception ex)
@@ -256,6 +259,73 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 return true;
             }
             return false;
+        }
+
+        private static bool TryConvertResponse<T>(JObject item, out T response)
+        {
+            try
+            {
+                response = item.ToObject<T>();
+                return true;
+            }
+            catch (JsonSerializationException)
+            {
+                // ignore invalid response
+            }
+            response = default(T);
+            return false;
+        }
+
+        internal static HttpResponseMessage BuildValidResponse(object response, RequestType requestType)
+        {
+            JObject converted = null;
+            bool needConvert = false;
+            if (response is JObject jObject)
+            {
+                converted = jObject;
+                needConvert = true;
+            }
+            else if (response is string str)
+            {
+                converted = JObject.Parse(str);
+                needConvert = true;
+            }
+
+            // Check error
+            if (needConvert && TryConvertResponse(converted, out ErrorResponse error))
+            {
+                return Utilities.BuildErrorResponse(error);
+            }
+            else if (response is ErrorResponse)
+            {
+                return Utilities.BuildErrorResponse((ErrorResponse)response);
+            }
+
+            if (requestType == RequestType.Connect)
+            {
+                if (needConvert)
+                {
+                    return Utilities.BuildResponse(converted.ToString());
+                }
+                else if (response is ConnectResponse)
+                {
+                    return Utilities.BuildResponse((ConnectResponse)response);
+                }
+            }
+
+            if (requestType == RequestType.User)
+            {
+                if (needConvert && TryConvertResponse(converted, out MessageResponse msgResponse))
+                {
+                    return Utilities.BuildResponse(msgResponse);
+                }
+                else if (response is MessageResponse)
+                {
+                    return Utilities.BuildResponse((MessageResponse)response);
+                }
+            }
+
+            return null;
         }
     }
 }

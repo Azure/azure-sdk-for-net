@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [Theory]
         [InlineData(NormConnectionString, "ws://localhost:8080/client/hubs/testHub")]
         [InlineData(SecConnectionString, "wss://abc/client/hubs/testHub")]
-        public void TestWebPubSubConnection(string connectionString, string expectedBaseUrl)
+        public void TestWebPubSubConnection_Scheme(string connectionString, string expectedBaseUrl)
         {
             var service = new WebPubSubService(connectionString, "testHub");
 

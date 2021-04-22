@@ -3,33 +3,34 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class ServiceConfigParser
     {
-        public string Endpoint { get; }
+        public Uri Endpoint { get; }
 
         public string AccessKey { get; }
 
         public string Version { get; }
 
-        public string Port { get; }
+        public int Port { get; }
 
         public ServiceConfigParser(string connectionString)
         {
             var settings = ParseConnectionString(connectionString);
 
             Endpoint = settings.ContainsKey("endpoint") ?
-                settings["endpoint"] :
+                new Uri(settings["endpoint"]) :
                 throw new ArgumentException(nameof(Endpoint));
             AccessKey = settings.ContainsKey("accesskey") ?
                 settings["accesskey"] :
                 throw new ArgumentException(nameof(AccessKey));
 
             Version = settings.ContainsKey("version") ? settings["version"] : null;
-            Port = settings.ContainsKey("port") ? settings["port"] : null;
+            Port = settings.ContainsKey("port") ? int.Parse(settings["port"], CultureInfo.InvariantCulture) : 80;
         }
 
         private static Dictionary<string, string> ParseConnectionString(string connectionString)
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
             catch (Exception)
             {
-                throw new ArgumentException($"Invalid Web PubSub connection string: {connectionString}");
+                throw new ArgumentException($"Invalid Web PubSub connection string, please check");
             }
             return setting;
         }

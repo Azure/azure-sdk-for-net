@@ -2,9 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 using Azure;
@@ -21,16 +18,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public WebPubSubService(string connectionString, string hubName)
         {
             _serviceConfig = new ServiceConfigParser(connectionString);
-            var url = !string.IsNullOrEmpty(_serviceConfig.Port) ? $"{_serviceConfig.Endpoint}:{_serviceConfig.Port}" : _serviceConfig.Endpoint;
-            _client = new WebPubSubServiceClient(new Uri(url), hubName, new AzureKeyCredential(_serviceConfig.AccessKey));
+            UriBuilder endpoint = _serviceConfig.Port == 80 ?
+                new UriBuilder(_serviceConfig.Endpoint) :
+                new UriBuilder(_serviceConfig.Endpoint.Scheme, _serviceConfig.Endpoint.Host, _serviceConfig.Port);
+
+            _client = new WebPubSubServiceClient(endpoint.Uri, hubName, new AzureKeyCredential(_serviceConfig.AccessKey));
         }
 
-        internal WebPubSubConnection GetClientConnection(IEnumerable<Claim> claims = null)
+        internal WebPubSubConnection GetClientConnection(string userId = null, string[] roles = null)
         {
-            var url = _client.GetClientAccessUri(default, claims?.ToArray());
+            var url = _client.GetClientAccessUri(userId, roles);
 
-            #region TODO: Remove after SDK fix.
-            if (!_serviceConfig.Endpoint.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+            #region TODO: Remove after SDK fix. Work-around to support http.
+            if (!_serviceConfig.Endpoint.Scheme.StartsWith("https", StringComparison.OrdinalIgnoreCase))
             {
                 var replaced = url.AbsoluteUri.Replace("wss", "ws");
                 url = new Uri(replaced);
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public async Task SendToAll(WebPubSubEvent webPubSubEvent)
         {
-            var content = RequestContent.Create(webPubSubEvent.Message);
+            var content = RequestContent.Create(webPubSubEvent.Message.ToBinaryData());
             var contentType = Utilities.GetContentType(webPubSubEvent.DataType);
             await _client.SendToAllAsync(content, contentType, webPubSubEvent.Excluded).ConfigureAwait(false);
         }
