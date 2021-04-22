@@ -95,14 +95,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         private readonly ConcurrentExpiringSet<Guid> _requestResponseLockedMessages;
 
-        private static IReadOnlyList<ServiceBusReceivedMessage> emptyList;
+        private static IReadOnlyList<ServiceBusReceivedMessage> s_backingEmptyList;
 
-        private static IReadOnlyList<ServiceBusReceivedMessage> NoMessagesReceived
+        private static IReadOnlyList<ServiceBusReceivedMessage> EmptyList
         {
             get
             {
-                emptyList ??= new ReadOnlyCollection<ServiceBusReceivedMessage>(new List<ServiceBusReceivedMessage>(0));
-                return emptyList;
+                s_backingEmptyList ??= new ReadOnlyCollection<ServiceBusReceivedMessage>(new List<ServiceBusReceivedMessage>(0));
+                return s_backingEmptyList;
             }
         }
 
@@ -379,7 +379,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     message.Dispose();
                 }
 
-                return receivedMessages ?? NoMessagesReceived;
+                return receivedMessages ?? EmptyList;
             }
             catch (OperationCanceledException)
             {
@@ -993,13 +993,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     LastPeekedSequenceNumber = message.SequenceNumber;
                 }
-                return messages ?? NoMessagesReceived;
+                return messages ?? EmptyList;
             }
 
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
                 (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
             {
-                return NoMessagesReceived;
+                return EmptyList;
             }
 
             throw amqpResponseMessage.ToMessagingContractException();
@@ -1311,7 +1311,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw; // will never be reached
             }
 
-            return messages ?? NoMessagesReceived;
+            return messages ?? EmptyList;
         }
 
         /// <summary>
