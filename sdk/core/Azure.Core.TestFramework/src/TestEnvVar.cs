@@ -9,7 +9,7 @@ namespace Azure.Core.TestFramework
 {
     public class TestEnvVar : DisposableConfig
     {
-        private static SemaphoreSlim _lock { get; } = new(1, 1);
+        private static SemaphoreSlim _lock = new(1, 1);
         public TestEnvVar(string name, string value) : base(name, value, _lock) { }
         public TestEnvVar(Dictionary<string, string> values) : base(values, _lock) { }
 

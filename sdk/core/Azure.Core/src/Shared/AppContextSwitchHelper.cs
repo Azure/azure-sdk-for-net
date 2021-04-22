@@ -10,7 +10,7 @@ namespace Azure.Core
     /// <summary>
     /// Helper for interacting with AppConfig settings and their related Environment variable settings.
     /// </summary>
-    internal static class AppConfigHelper
+    internal static class AppContextSwitchHelper
     {
         /// <summary>
         /// Determines if either an AppContext switch or its corresponding Environment Variable is set

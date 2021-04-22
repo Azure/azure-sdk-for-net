@@ -8,11 +8,11 @@ using System.Threading;
 
 namespace Azure.Core.TestFramework
 {
-    public class TestAppContext : DisposableConfig
+    public class TestAppContextSwitch : DisposableConfig
     {
-        private static SemaphoreSlim _lock { get; } = new(1, 1);
-        public TestAppContext(string name, string value) : base(name, value, _lock) { }
-        public TestAppContext(Dictionary<string, string> values) : base(values, _lock) { }
+        private static SemaphoreSlim _lock = new(1, 1);
+        public TestAppContextSwitch(string name, string value) : base(name, value, _lock) { }
+        public TestAppContextSwitch(Dictionary<string, string> values) : base(values, _lock) { }
         private MethodInfo removeMethod;
         private object _switches;
 
@@ -53,7 +53,7 @@ namespace Azure.Core.TestFramework
             if (_switches == null)
             {
                 // initialize the switches, which are null until the first switch is set.
-                var initSwitch = Guid.NewGuid().ToString();
+                var initSwitch = "azuresdktestinitswitch";
                 _originalValues[initSwitch] = null;
                 AppContext.SetSwitch(initSwitch, false);
                 _switches = info.GetValue(null);

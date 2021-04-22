@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
             [Values("true", "false", null)] string enableSwitch,
             [Values("true", "false", null)] string enableEnvVar)
         {
-            TestAppContext ctx = null;
+            TestAppContextSwitch ctx = null;
             TestEnvVar env = null;
             try
             {
@@ -31,14 +31,14 @@ namespace Azure.Core.Tests
                 };
                 if (enableSwitch != null)
                 {
-                    ctx = new TestAppContext(switchName, enableSwitch);
+                    ctx = new TestAppContextSwitch(switchName, enableSwitch);
                 }
                 if (enableEnvVar != null)
                 {
                     env = new TestEnvVar(envVarName, enableEnvVar);
                 }
 
-                actual = AppConfigHelper.GetConfigValue(switchName, envVarName);
+                actual = AppContextSwitchHelper.GetConfigValue(switchName, envVarName);
 
                 Assert.AreEqual(expected, actual);
             }
