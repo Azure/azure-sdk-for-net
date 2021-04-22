@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.Core
         IComparable<Resource<TIdentifier>>, IComparable<string> where TIdentifier : TenantResourceIdentifier
     {
         /// <summary>
+        /// Initializes an empty instance of <see cref="Resource{TIdentifier}"/>.
+        /// </summary>
+        protected Resource() { }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="Resource{TIdentifier}"/> for deserialization.
         /// </summary>
         /// <param name="id"> The id of the resource. </param>
