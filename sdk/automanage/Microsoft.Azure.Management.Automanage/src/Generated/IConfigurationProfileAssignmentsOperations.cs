@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// assignment.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vmName'>
         /// The name of the virtual machine.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// Get information about a configuration profile assignment
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='configurationProfileAssignmentName'>
         /// The configuration profile assignment name.
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// Delete a configuration profile assignment
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='configurationProfileAssignmentName'>
         /// Name of the configuration profile assignment
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// Get list of configuration profile assignments
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Automanage
         /// assignment.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vmName'>
         /// The name of the virtual machine.

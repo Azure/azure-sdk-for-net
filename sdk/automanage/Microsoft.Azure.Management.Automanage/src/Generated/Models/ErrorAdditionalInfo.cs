@@ -14,30 +14,27 @@ namespace Microsoft.Azure.Management.Automanage.Models
     using System.Linq;
 
     /// <summary>
-    /// Error response
+    /// The resource management error additional info.
     /// </summary>
-    /// <remarks>
-    /// Common error response for all Azure Resource Manager APIs to return
-    /// error details for failed operations. (This also follows the OData error
-    /// response format.).
-    /// </remarks>
-    public partial class ErrorResponse
+    public partial class ErrorAdditionalInfo
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the ErrorAdditionalInfo class.
         /// </summary>
-        public ErrorResponse()
+        public ErrorAdditionalInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the ErrorAdditionalInfo class.
         /// </summary>
-        /// <param name="error">The error object.</param>
-        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
+        /// <param name="type">The additional info type.</param>
+        /// <param name="info">The additional info.</param>
+        public ErrorAdditionalInfo(string type = default(string), object info = default(object))
         {
-            Error = error;
+            Type = type;
+            Info = info;
             CustomInit();
         }
 
@@ -47,10 +44,16 @@ namespace Microsoft.Azure.Management.Automanage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error object.
+        /// Gets the additional info type.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorDetail Error { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets the additional info.
+        /// </summary>
+        [JsonProperty(PropertyName = "info")]
+        public object Info { get; private set; }
 
     }
 }
