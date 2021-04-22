@@ -1,4 +1,3 @@
-
 steps:
 - task: Cache@2
   inputs:
