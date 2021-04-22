@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// Name of the Automanage account.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to create or update Automanage account.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// Name of the Automanage account.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to create or update Automanage account.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The Automanage account name.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static Account Get(this IAccountsOperations operations, string accountName, string resourceGroupName)
             {
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The Automanage account name.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Name of the Automanage account
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Name of the Automanage account
@@ -156,12 +156,12 @@ namespace Microsoft.Azure.Management.Automanage
             /// Name of the Automanage account.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to update Automanage account.
             /// </param>
-            public static Account Update(this IAccountsOperations operations, string accountName, string resourceGroupName, Account parameters)
+            public static Account Update(this IAccountsOperations operations, string accountName, string resourceGroupName, AccountUpdate parameters)
             {
                 return operations.UpdateAsync(accountName, resourceGroupName, parameters).GetAwaiter().GetResult();
             }
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// Name of the Automanage account.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to update Automanage account.
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Account> UpdateAsync(this IAccountsOperations operations, string accountName, string resourceGroupName, Account parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Account> UpdateAsync(this IAccountsOperations operations, string accountName, string resourceGroupName, AccountUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(accountName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IEnumerable<Account> ListByResourceGroup(this IAccountsOperations operations, string resourceGroupName)
             {
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Management.Automanage
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

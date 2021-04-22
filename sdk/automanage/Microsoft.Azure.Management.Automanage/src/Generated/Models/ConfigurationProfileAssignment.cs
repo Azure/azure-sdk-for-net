@@ -32,15 +32,16 @@ namespace Microsoft.Azure.Management.Automanage.Models
         /// Initializes a new instance of the ConfigurationProfileAssignment
         /// class.
         /// </summary>
-        /// <param name="id">ARM resource id of the Automanage
-        /// assignment.</param>
-        /// <param name="name">Name of the Automanage assignment.</param>
-        /// <param name="location">Region where the VM is located.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="properties">Properties of the configuration profile
         /// assignment.</param>
-        public ConfigurationProfileAssignment(string id = default(string), string name = default(string), string location = default(string), string type = default(string), ConfigurationProfileAssignmentProperties properties = default(ConfigurationProfileAssignmentProperties))
-            : base(id, name, location, type)
+        public ConfigurationProfileAssignment(string id = default(string), string name = default(string), string type = default(string), ConfigurationProfileAssignmentProperties properties = default(ConfigurationProfileAssignmentProperties))
+            : base(id, name, type)
         {
             Properties = properties;
             CustomInit();
