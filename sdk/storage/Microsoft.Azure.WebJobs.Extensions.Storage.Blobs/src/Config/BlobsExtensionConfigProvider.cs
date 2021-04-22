@@ -69,6 +69,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             _logger = loggerFactory.CreateLogger<BlobsExtensionConfigProvider>();
         }
 
+        public BlobsExtensionConfigProvider(
+            BlobServiceClientProvider blobServiceClientProvider,
+            BlobTriggerAttributeBindingProvider triggerBinder,
+            IContextGetter<IBlobWrittenWatcher> contextAccessor,
+            INameResolver nameResolver,
+            IConverterManager converterManager,
+            BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
+            HttpRequestProcessor httpRequestProcessor,
+            ILoggerFactory loggerFactory)
+        {
+            _blobServiceClientProvider = blobServiceClientProvider;
+            _triggerBinder = triggerBinder;
+            _blobWrittenWatcherGetter = contextAccessor;
+            _nameResolver = nameResolver;
+            _converterManager = converterManager;
+            _blobTriggerQueueWriterFactory = blobTriggerQueueWriterFactory;
+            _httpRequestProcessor = httpRequestProcessor;
+            _functionDataCache = null;
+            _logger = loggerFactory.CreateLogger<BlobsExtensionConfigProvider>();
+        }
+
         public void Initialize(ExtensionConfigContext context)
         {
             InitilizeBlobBindings(context);
@@ -342,6 +363,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             }
         }
 
+        private Task<Stream> CreateStreamAsync(
+            BlobAttribute blobAttribute,
+            ValueBindingContext context)
+        {
+            if (_functionDataCache != null)
+            {
+                return CreateCacheAwareStreamAsync(blobAttribute, context);
+            }
+            else
+            {
+                return CreateStreamCoreAsync(blobAttribute, context);
+            }
+        }
+
         private async Task<Stream> CreateCacheAwareStreamAsync(
             BlobAttribute blobAttribute,
             ValueBindingContext context)
@@ -365,30 +400,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             }
         }
 
-        private async Task<Stream> CreateStreamAsync(
+        private async Task<Stream> CreateStreamCoreAsync(
             BlobAttribute blobAttribute,
             ValueBindingContext context)
         {
-            return await CreateCacheAwareStreamAsync(blobAttribute, context).ConfigureAwait(false);
+            var cancellationToken = context.CancellationToken;
+            var blob = await GetBlobAsync(blobAttribute, cancellationToken).ConfigureAwait(false);
 
-            // TODO clean up
-            //var cancellationToken = context.CancellationToken;
-            //var blob = await GetBlobAsync(blobAttribute, cancellationToken).ConfigureAwait(false);
+            switch (blobAttribute.Access)
+            {
+                case FileAccess.Read:
+                    var readStream = await ReadBlobArgumentBinding.TryBindStreamAsync(blob.BlobClient, context).ConfigureAwait(false);
+                    return readStream;
 
-            //switch (blobAttribute.Access)
-            //{
-            //    case FileAccess.Read:
-            //        var readStream = await ReadBlobArgumentBinding.TryBindStreamAsync(blob.BlobClient, context).ConfigureAwait(false);
-            //        return readStream;
+                case FileAccess.Write:
+                    var writeStream = await WriteBlobArgumentBinding.BindStreamAsync(blob,
+                        context, _blobWrittenWatcherGetter.Value).ConfigureAwait(false);
+                    return writeStream;
 
-            //    case FileAccess.Write:
-            //        var writeStream = await WriteBlobArgumentBinding.BindStreamAsync(blob,
-            //            context, _blobWrittenWatcherGetter.Value).ConfigureAwait(false);
-            //        return writeStream;
-
-            //    default:
-            //        throw new InvalidOperationException("Cannot bind blob to Stream using FileAccess ReadWrite.");
-            //}
+                default:
+                    throw new InvalidOperationException("Cannot bind blob to Stream using FileAccess ReadWrite.");
+            }
         }
 
         private BlobServiceClient GetClient(
