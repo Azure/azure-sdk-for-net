@@ -118,6 +118,7 @@ namespace Azure.Security.Attestation
         private async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveInternal(AttestRequest request, bool async, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(request.Evidence, nameof(request.Evidence));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSgxEnclave)}");
             scope.Start();
             try
@@ -163,10 +164,13 @@ namespace Azure.Security.Attestation
                 {
                     response = _restClient.AttestSgxEnclave(attestSgxEnclaveRequest, cancellationToken);
                 }
-                var attestationToken = AttestationToken.Deserialize(response.Value.Token);
+                var attestationToken = AttestationToken.Deserialize(response.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await attestationToken.ValidateTokenInternalAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), async, cancellationToken).ConfigureAwait(false);
+                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), async, cancellationToken).ConfigureAwait(false))
+                    {
+                        throw new Azure.RequestFailedException("Attestation Token was rejected.");
+                    }
                 }
 
                 return new AttestationResponse<AttestationResult>(response.GetRawResponse(), attestationToken);
@@ -212,6 +216,8 @@ namespace Azure.Security.Attestation
         private async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveInternalAsync(AttestRequest request, bool async, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(request.Evidence, nameof(request.Evidence));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
             scope.Start();
             try
@@ -244,11 +250,14 @@ namespace Azure.Security.Attestation
 
                 var response = async ? await _restClient.AttestOpenEnclaveAsync(attestOpenEnclaveRequest, cancellationToken).ConfigureAwait(false)
                                     : _restClient.AttestOpenEnclave(attestOpenEnclaveRequest, cancellationToken);
-                var attestationToken = AttestationToken.Deserialize(response.Value.Token);
+                var attestationToken = AttestationToken.Deserialize(response.Value.Token, _clientDiagnostics);
 
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await attestationToken.ValidateTokenInternalAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), async, cancellationToken).ConfigureAwait(false);
+                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), async, cancellationToken).ConfigureAwait(false))
+                    {
+                        throw new Azure.RequestFailedException("Attestation Token was rejected.");
+                    }
                 }
 
                 return new AttestationResponse<AttestationResult>(response.GetRawResponse(), attestationToken);

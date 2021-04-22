@@ -27,7 +27,7 @@ namespace Azure.Security.Attestation
         private object _deserializedBody;
         private object _statelock = new object();
 
-        private AttestationToken(string token)
+        private AttestationToken(string token, ClientDiagnostics diagnostics)
         {
             _token = token;
             string[] decomposedToken = token.Split('.');
@@ -38,6 +38,7 @@ namespace Azure.Security.Attestation
             TokenHeaderBytes = Base64Url.Decode(decomposedToken[0]);
             TokenBodyBytes = Base64Url.Decode(decomposedToken[1]);
             TokenSignatureBytes = Base64Url.Decode(decomposedToken[2]);
+            ClientDiagnostics = diagnostics;
         }
 
         /// <summary>
@@ -74,6 +75,8 @@ namespace Azure.Security.Attestation
         {
             _token = signingKey != null ? GenerateSecuredJsonWebToken(null, signingKey) : CreateUnsecuredJwt(null);
         }
+
+        internal ClientDiagnostics ClientDiagnostics { get; set; }
 
         /// <summary>
         /// Returns the thumbprint of the X.509 certificate which was used to verify the attestation token.
@@ -251,7 +254,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         public virtual async Task<bool> ValidateTokenAsync(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
-            => await ValidateTokenInternalAsync(options, attestationSigningCertificates, true, cancellationToken).ConfigureAwait(false);
+            => await ValidateTokenInternal(options, attestationSigningCertificates, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.
@@ -267,7 +270,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         public virtual bool ValidateToken(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
-            => ValidateTokenInternalAsync(options, attestationSigningCertificates, false, cancellationToken).EnsureCompleted();
+            => ValidateTokenInternal(options, attestationSigningCertificates, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.
@@ -283,7 +286,7 @@ namespace Azure.Security.Attestation
         /// <returns>true if the token was valid, false otherwise.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
-        internal async Task<bool> ValidateTokenInternalAsync(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, bool async, CancellationToken cancellationToken = default)
+        internal async Task<bool> ValidateTokenInternal(AttestationTokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, bool async, CancellationToken cancellationToken = default)
         {
             // Early out if the caller doesn't want us to validate the token.
             if (!options.ValidateToken)
@@ -298,11 +301,10 @@ namespace Azure.Security.Attestation
                 {
                     return false;
                 }
-                if (options.ValidationCallback != null)
-                {
-                    return options.ValidationCallback(this, null);
-                }
-                return true;
+
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                return await CallValidationCallbackAsync(options, this, SigningCertificate, ClientDiagnostics, !async, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
             }
 
             // This token is a secured attestation token. If the caller provided signing certificates, then
@@ -327,11 +329,15 @@ namespace Azure.Security.Attestation
             {
                 return false;
             }
-            if (options.ValidationCallback != null)
-            {
-                return options.ValidationCallback(this, SigningCertificate);
-            }
-            return true;
+
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+            return await CallValidationCallbackAsync(options, this, SigningCertificate, ClientDiagnostics, !async, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+        }
+
+        private static async Task<bool> CallValidationCallbackAsync(AttestationTokenValidationOptions options, AttestationToken token, AttestationSigner signer, ClientDiagnostics diagnostics, bool isRunningSynchronously, CancellationToken cancellationToken)
+        {
+            return await options.RaiseValidationCallbackAsync(token, signer, diagnostics, isRunningSynchronously, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -575,7 +581,19 @@ namespace Azure.Security.Attestation
         /// </remarks>
         public static AttestationToken Deserialize(string token)
         {
-            return new AttestationToken(token);
+            return new AttestationToken(token, null);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="AttestationToken"/> class based on a specified JSON Web Token.
+        /// </summary>
+        /// <param name="token">string JWT to Deserialize.</param>
+        /// <param name="diagnostics">Client Diagnostics object, used when raising Validation events.</param>
+        /// <remarks>
+        /// </remarks>
+        internal static AttestationToken Deserialize(string token, ClientDiagnostics diagnostics)
+        {
+            return new AttestationToken(token, diagnostics);
         }
 
         /// <summary>

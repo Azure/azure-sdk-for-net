@@ -19,9 +19,9 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="signingCertificates"></param>
         /// <param name="certificateKeyId"></param>
-        public AttestationSigner(X509Certificate2[] signingCertificates, string certificateKeyId)
+        public AttestationSigner(IEnumerable<X509Certificate2> signingCertificates, string certificateKeyId)
         {
-            SigningCertificates = signingCertificates;
+            SigningCertificates = (IReadOnlyList<X509Certificate2>)signingCertificates;
             CertificateKeyId = certificateKeyId;
         }
 

@@ -18,7 +18,7 @@ namespace Azure.Security.Attestation
         internal static PolicyCertificatesModificationResult DeserializePolicyCertificatesModificationResult(JsonElement element)
         {
             Optional<string> xMsCertificateThumbprint = default;
-            Optional<CertificateModification> xMsPolicycertificatesResult = default;
+            Optional<PolicyCertificateResolution> xMsPolicycertificatesResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-certificate-thumbprint"))
@@ -33,7 +33,7 @@ namespace Azure.Security.Attestation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    xMsPolicycertificatesResult = new CertificateModification(property.Value.GetString());
+                    xMsPolicycertificatesResult = new PolicyCertificateResolution(property.Value.GetString());
                     continue;
                 }
             }

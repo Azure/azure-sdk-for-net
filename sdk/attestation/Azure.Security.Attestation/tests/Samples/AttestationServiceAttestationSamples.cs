@@ -159,9 +159,11 @@ namespace Azure.Security.Attestation.Tests.Samples
 
         public async Task GetAttestationPolicy()
         {
+            var tokenOptions = new AttestationTokenValidationOptions();
+            tokenOptions.TokenValidated += (AttestationTokenValidationEventArgs args) => { args.IsValid = true; return Task.CompletedTask; };
             var client = new AttestationAdministrationClient(new Uri(TestEnvironment.AadAttestationUrl), new DefaultAzureCredential());
             var attestClient = new AttestationClient(new Uri(TestEnvironment.AadAttestationUrl), new DefaultAzureCredential(),
-                new AttestationClientOptions(tokenOptions: new AttestationTokenValidationOptions(validationCallback: (attestationToken, signer) => true)));
+                new AttestationClientOptions { TokenOptions = tokenOptions});
             ;
             IReadOnlyList<AttestationSigner> signingCertificates = attestClient.GetSigningCertificates().Value;
             var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);

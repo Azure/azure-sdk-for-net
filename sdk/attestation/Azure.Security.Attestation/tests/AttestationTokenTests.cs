@@ -127,7 +127,7 @@ namespace Azure.Security.Attestation.Tests
         }
 
         [RecordedTest]
-        public async Task ValidateTokenCallback()
+        public void ValidateTokenCallback()
         {
             // Create a JWT whose body will become valid 5 seconds from now.
             object tokenBody = new JwtTestBody
@@ -143,24 +143,23 @@ namespace Azure.Security.Attestation.Tests
             var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody), new AttestationTokenSigningKey(privateKey, fullCertificate));
             string serializedToken = token.Serialize();
 
-            // This check should fail since the token won't be valid for another 5 seconds.
-            Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody));
+            var validationOptions = new AttestationTokenValidationOptions();
 
-            // This check should succeed since the token slack is greater than the 10 seconds before it becomes valid.
-            await ValidateSerializedToken(
+            validationOptions.TokenValidated += (args) =>
+            {
+                Assert.AreEqual(1, args.Signer.SigningCertificates.Count);
+                Assert.IsNotNull(args.Signer.SigningCertificates[0]);
+                CollectionAssert.AreEqual(fullCertificate.Export(X509ContentType.Cert), args.Signer.SigningCertificates[0].Export(X509ContentType.Cert));
+                Assert.AreEqual(fullCertificate, args.Signer.SigningCertificates[0]);
+                return Task.CompletedTask;
+            };
+
+            // ValidateTokenAsync will throw an exception if a callback is specified outside of an attestation client.
+            // Note that validation callbacks are tested elsewhere in the AttestationClient codebase.
+            Assert.ThrowsAsync(typeof(Exception), async() => await ValidateSerializedToken(
                 serializedToken,
                 tokenBody,
-                new AttestationTokenValidationOptions{
-                    TimeValidationSlack= 10,
-                    ValidationCallback= (AttestationToken tokenToValidate, AttestationSigner tokenSigner) =>
-                    {
-                        Assert.AreEqual(1, tokenSigner.SigningCertificates.Count);
-                        Assert.IsNotNull(tokenSigner.SigningCertificates[0]);
-                        CollectionAssert.AreEqual(fullCertificate.Export(X509ContentType.Cert), tokenSigner.SigningCertificates[0].Export(X509ContentType.Cert));
-                        Assert.AreEqual(fullCertificate, tokenSigner.SigningCertificates[0]);
-                        return true;
-                    },
-                });
+                validationOptions));
         }
 
         /// <summary>
@@ -170,8 +169,8 @@ namespace Azure.Security.Attestation.Tests
         public async Task ValidateSerializedToken(string serializedToken, object expectedBody, AttestationTokenValidationOptions tokenOptions = default)
         {
             var parsedToken = AttestationToken.Deserialize(serializedToken);
-
-            Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new AttestationTokenValidationOptions(validateExpirationTime:true), null));
+            await Task.Yield();
+            Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new AttestationTokenValidationOptions { ValidateExpirationTime = true }, null));
 
             // The body of the token should match the expected body.
             Assert.AreEqual(JsonSerializer.Serialize(expectedBody), parsedToken.TokenBody);

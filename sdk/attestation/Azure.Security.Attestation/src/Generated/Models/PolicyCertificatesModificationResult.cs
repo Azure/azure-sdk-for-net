@@ -18,7 +18,7 @@ namespace Azure.Security.Attestation
         /// <summary> Initializes a new instance of PolicyCertificatesModificationResult. </summary>
         /// <param name="certificateThumbprint"> Hex encoded SHA1 Hash of the binary representation certificate which was added or removed. </param>
         /// <param name="certificateResolution"> The result of the operation. </param>
-        internal PolicyCertificatesModificationResult(string certificateThumbprint, CertificateModification? certificateResolution)
+        internal PolicyCertificatesModificationResult(string certificateThumbprint, PolicyCertificateResolution? certificateResolution)
         {
             CertificateThumbprint = certificateThumbprint;
             CertificateResolution = certificateResolution;
@@ -27,6 +27,6 @@ namespace Azure.Security.Attestation
         /// <summary> Hex encoded SHA1 Hash of the binary representation certificate which was added or removed. </summary>
         public string CertificateThumbprint { get; }
         /// <summary> The result of the operation. </summary>
-        public CertificateModification? CertificateResolution { get; }
+        public PolicyCertificateResolution? CertificateResolution { get; }
     }
 }

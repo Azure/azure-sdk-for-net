@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Security.Attestation
 {
     /// <summary> The result of the operation. </summary>
-    public readonly partial struct CertificateModification : IEquatable<CertificateModification>
+    public readonly partial struct PolicyCertificateResolution : IEquatable<PolicyCertificateResolution>
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="CertificateModification"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PolicyCertificateResolution"/> values are the same. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CertificateModification(string value)
+        public PolicyCertificateResolution(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.Security.Attestation
         private const string IsAbsentValue = "IsAbsent";
 
         /// <summary> After the operation was performed, the certificate is in the set of certificates. </summary>
-        public static CertificateModification IsPresent { get; } = new CertificateModification(IsPresentValue);
+        public static PolicyCertificateResolution IsPresent { get; } = new PolicyCertificateResolution(IsPresentValue);
         /// <summary> After the operation was performed, the certificate is no longer present in the set of certificates. </summary>
-        public static CertificateModification IsAbsent { get; } = new CertificateModification(IsAbsentValue);
-        /// <summary> Determines if two <see cref="CertificateModification"/> values are the same. </summary>
-        public static bool operator ==(CertificateModification left, CertificateModification right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="CertificateModification"/> values are not the same. </summary>
-        public static bool operator !=(CertificateModification left, CertificateModification right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CertificateModification"/>. </summary>
-        public static implicit operator CertificateModification(string value) => new CertificateModification(value);
+        public static PolicyCertificateResolution IsAbsent { get; } = new PolicyCertificateResolution(IsAbsentValue);
+        /// <summary> Determines if two <see cref="PolicyCertificateResolution"/> values are the same. </summary>
+        public static bool operator ==(PolicyCertificateResolution left, PolicyCertificateResolution right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="PolicyCertificateResolution"/> values are not the same. </summary>
+        public static bool operator !=(PolicyCertificateResolution left, PolicyCertificateResolution right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="PolicyCertificateResolution"/>. </summary>
+        public static implicit operator PolicyCertificateResolution(string value) => new PolicyCertificateResolution(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CertificateModification other && Equals(other);
+        public override bool Equals(object obj) => obj is PolicyCertificateResolution other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(CertificateModification other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PolicyCertificateResolution other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

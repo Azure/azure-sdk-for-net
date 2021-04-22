@@ -10,7 +10,7 @@ namespace Azure.Security.Attestation
     /// <summary>
     /// Represents the data sent to the Attestation Service for a call to the <see cref="AttestationClient.AttestOpenEnclave(AttestRequest, System.Threading.CancellationToken)"/> or <see cref="AttestationClient.AttestSgxEnclave(AttestRequest, System.Threading.CancellationToken)"/> APIs.
     ///
-    /// An Attestation Request has three pieces:
+    /// An Attestation Request has three elements:
     /// <list type="bullet">
     /// <item>
     ///     <term>Evidence</term>
@@ -26,22 +26,16 @@ namespace Azure.Security.Attestation
     ///     <description>Data presented at the time that the Evidence was created.</description>
     /// </item>
     /// </list>
+    ///
+    /// The "Evidence" MUST be provided in an Attest call, however both Runtime Data and InitTime data are optional.
     /// </summary>
     public class AttestRequest
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestRequest"/> class.
         /// </summary>
-        /// <param name="evidence">Evidence generated from the target environment.</param>
-        /// <param name="initTimeData">Data provided when the environment was created.</param>
-        /// <param name="runTimeData">Data created when the evidence was created.</param>
-        /// <param name="draftPolicyForAttestation">Optional 'draft' policy to be used in this attestation request. This can be used to test policy documents without affecting the service instance.</param>
-        public AttestRequest(BinaryData evidence = null, AttestationData initTimeData = null, AttestationData runTimeData = null, string draftPolicyForAttestation = null)
+        public AttestRequest()
         {
-            Evidence = evidence;
-            InittimeData = initTimeData;
-            RuntimeData = runTimeData;
-            DraftPolicyForAttestation = draftPolicyForAttestation;
         }
 
         /// <summary>

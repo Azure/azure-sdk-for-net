@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.Security.Attestation
@@ -53,54 +54,71 @@ namespace Azure.Security.Attestation
             get => InternalCnf;
         }
 
+#if false
+
         /// <summary>
         /// DEPRECATED: Private preview version of x-ms-sgx-ehd claim.
         /// </summary>
-        [Obsolete("DeprecatedEnclaveHeldData is deprecated, use EnclaveHeldData instead"]
+        [Obsolete("DeprecatedEnclaveHeldData is deprecated, use EnclaveHeldData instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public byte[] DeprecatedEnclaveHeldData { get; }
 
         /// <summary> DEPRECATED: Private Preview version of x-ms-ver claim. </summary>
         [Obsolete("DeprecatedVersion is deprecated, use Version instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string DeprecatedVersion { get; }
 
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-is-debuggable claim. </summary>
         [Obsolete("DeprecatedIsDebuggable is deprecated, use IsDebuggable instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? DeprecatedIsDebuggable { get; }
 
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-collateral claim. </summary>
         [Obsolete("DeprecatedSgxCollateral is deprecated, use SgxCollateral instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public object DeprecatedSgxCollateral { get; }
 
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-ehd claim. </summary>
         [Obsolete("DeprecatedEnclaveHeldData2 is deprecated, use EnclaveHeldData instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public byte[] DeprecatedEnclaveHeldData2 { get; }
 
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-product-id. </summary>
         [Obsolete("DeprecatedProductId is deprecated, use ProductId instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public float? DeprecatedProductId { get; }
 
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-mrenclave. </summary>
         [Obsolete("DeprecatedMrEnclave is deprecated, use MrEnclave instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string DeprecatedMrEnclave { get; }
 
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-mrsigner. </summary>
         [Obsolete("DeprecatedMrSigner is deprecated, use MrSigner instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string DeprecatedMrSigner { get; }
 
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-svn. </summary>
         [Obsolete("DeprecatedSvn is deprecated, use Svn instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public float? DeprecatedSvn { get; }
 
         /// <summary> DEPRECATED: Private Preview version of x-ms-tee. </summary>
         [Obsolete("DeprecatedTee is deprecated, use Tee instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string DeprecatedTee { get; }
 
         /// <summary> DEPRECATED: Private Preview version of x-ms-policy-hash. </summary>
         [Obsolete("DeprecatedPolicyHash is deprecated, use PolicyHash instead")]
-        public BinaryData DeprecatedPolicyHash { get; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public byte[] DeprecatedPolicyHash { get; }
         /// <summary> DEPRECATED: Private Preview version of nonce. </summary>
 
+        [Obsolete("DeprecatedRpData is deprecated, use RpData instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string DeprecatedRpData { get; }
+#endif
+
         /// <summary>
         /// Gets the RFC 7519 "jti" claim name (https://tools.ietf.org/html/rfc7519#section-4)
         /// </summary>

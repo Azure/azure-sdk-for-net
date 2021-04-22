@@ -266,7 +266,7 @@ namespace Azure.Security.Attestation.Tests
                 var modificationResult = await adminClient.AddPolicyManagementCertificateAsync(
                     TestEnvironment.PolicyCertificate2,
                     new AttestationTokenSigningKey(rsaKey, x509Certificate));
-                Assert.AreEqual(CertificateModification.IsPresent, modificationResult.Value.CertificateResolution);
+                Assert.AreEqual(PolicyCertificateResolution.IsPresent, modificationResult.Value.CertificateResolution);
                 Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, modificationResult.Value.CertificateThumbprint);
 
                 // Verify that the certificate we got back was in fact added.
@@ -288,7 +288,7 @@ namespace Azure.Security.Attestation.Tests
                 var modificationResult = await adminClient.AddPolicyManagementCertificateAsync(
                     TestEnvironment.PolicyCertificate2,
                     new AttestationTokenSigningKey(rsaKey, x509Certificate));
-                Assert.AreEqual(CertificateModification.IsPresent, modificationResult.Value.CertificateResolution);
+                Assert.AreEqual(PolicyCertificateResolution.IsPresent, modificationResult.Value.CertificateResolution);
                 Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, modificationResult.Value.CertificateThumbprint);
 
                 // Verify that the certificate we got back was in fact added.
@@ -309,7 +309,7 @@ namespace Azure.Security.Attestation.Tests
                 var modificationResult = await adminClient.RemovePolicyManagementCertificateAsync(
                     TestEnvironment.PolicyCertificate2,
                     new AttestationTokenSigningKey(rsaKey, x509Certificate));
-                Assert.AreEqual(CertificateModification.IsAbsent, modificationResult.Value.CertificateResolution);
+                Assert.AreEqual(PolicyCertificateResolution.IsAbsent, modificationResult.Value.CertificateResolution);
                 Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, modificationResult.Value.CertificateThumbprint);
 
                 // Verify that the certificate we got back was in fact added.
