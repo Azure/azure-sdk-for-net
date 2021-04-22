@@ -126,7 +126,7 @@ namespace Azure.Monitor.Query
             QueryBody queryBody = CreateQueryBody(query, timeSpan, options, out string prefer);
             using var message = _queryClient.CreateExecuteRequest(workspaceId, queryBody, prefer);
 
-            if (options.Timeout != null)
+            if (options?.Timeout != null)
             {
                 message.SetProperty("NetworkTimeoutOverride", options.Timeout);
             }
