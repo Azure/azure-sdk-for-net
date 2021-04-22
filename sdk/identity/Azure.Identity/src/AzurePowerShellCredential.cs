@@ -145,7 +145,7 @@ namespace Azure.Identity
                 throw new CredentialUnavailableException(AzurePowerShellModuleNotInstalledError);
             }
 
-            if (output.IndexOf("Microsoft.Azure.Commands.Profile.Models.PSAccessToken", StringComparison.OrdinalIgnoreCase) <= 0)
+            if (output.IndexOf("Microsoft.Azure.Commands.Profile.Models.PSAccessToken", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 throw new CredentialUnavailableException("PowerShell did not return a valid response.");
             }
