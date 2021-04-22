@@ -466,7 +466,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
-        /// <returns>The HTTP response <see cref="Response{T}"/>. This response object includes an HTTP header that gives you the new ETag for this resource.</returns>
+        /// <returns>The HTTP response <see cref="Response{T}"/>. This response object includes an HTTP header that gives you the updated ETag for this resource.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -506,7 +506,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
-        /// <returns>The HTTP response <see cref="Response{T}"/>. This response object includes an HTTP header that gives you the new ETag for this resource.</returns>
+        /// <returns>The HTTP response <see cref="Response{T}"/>. This response object includes an HTTP header that gives you the updated ETag for this resource.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -642,7 +642,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The HTTP response <see cref="Response{T}"/>. This response object includes an HTTP header that gives you the new ETag for this resource.</returns>
+        /// <returns>The HTTP response <see cref="Response{T}"/>. This response object includes an HTTP header that gives you the updated ETag for this resource.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -705,7 +705,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The HTTP response <see cref="Response{T}"/>. This response object includes an HTTP header that gives you the new ETag for this resource.</returns>
+        /// <returns>The HTTP response <see cref="Response{T}"/>. This response object includes an HTTP header that gives you the updated ETag for this resource.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1424,7 +1424,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The HTTP response <see cref="Response"/>. This response object includes an HTTP header that gives you the new ETag for this resource.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>. This response object includes an HTTP header that gives you the updated ETag for this resource.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1476,7 +1476,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The HTTP response <see cref="Response"/>. This response object includes an HTTP header that gives you the new ETag for this resource.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>. This response object includes an HTTP header that gives you the updated ETag for this resource.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
