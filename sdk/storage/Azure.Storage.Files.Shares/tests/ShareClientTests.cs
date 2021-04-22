@@ -1661,6 +1661,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Assert.AreEqual(id, response.Value.LeaseId);
+            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
 
             // Cleanup
             ShareDeleteOptions options = new ShareDeleteOptions
@@ -1835,6 +1836,10 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             Response<ShareFileLease> changeResponse = await leaseClient.ChangeAsync(newId);
 
+            // Assert
+            Assert.AreEqual(changeResponse.Value.LeaseId, newId);
+            Assert.AreEqual(changeResponse.Value.LeaseId, leaseClient.LeaseId);
+
             // Cleanup
             leaseClient = InstrumentClient(test.Share.GetShareLeaseClient(newId));
             await leaseClient.ReleaseAsync();
@@ -1984,6 +1989,9 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             Response<ShareFileLease> renewResponse = await leaseClient.RenewAsync();
+
+            // Assert
+            Assert.AreEqual(renewResponse.Value.LeaseId, leaseClient.LeaseId);
 
             // Cleanup
             ShareDeleteOptions options = new ShareDeleteOptions
