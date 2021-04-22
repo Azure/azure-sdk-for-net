@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -366,32 +367,44 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task BearerTokenChallengeAuthenticationPolicy_GatedConcurrentCallsFailed()
+        public void BearerTokenChallengeAuthenticationPolicy_GatedConcurrentCallsFailed()
         {
             var requestMre = new ManualResetEventSlim(false);
             var responseMre = new ManualResetEventSlim(false);
+            var getTokenCallCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
             {
-                requestMre.Set();
-                responseMre.Wait(c);
-                throw new InvalidOperationException("Error");
+                if (Interlocked.Increment(ref getTokenCallCount) == 1)
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                }
+
+                throw new InvalidOperationException($"Error");
             }, IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
 
             var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
-            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
 
             requestMre.Wait();
-            await Task.Delay(1_000);
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"));
             responseMre.Set();
 
             Assert.CatchAsync(async () => await Task.WhenAll(firstRequestTask, secondRequestTask));
 
             Assert.IsTrue(firstRequestTask.IsFaulted);
             Assert.IsTrue(secondRequestTask.IsFaulted);
-            Assert.AreEqual(firstRequestTask.Exception.InnerException, secondRequestTask.Exception.InnerException);
+
+            if (getTokenCallCount == 1)
+            {
+                Assert.AreEqual(firstRequestTask.Exception.InnerException, secondRequestTask.Exception.InnerException);
+            }
+            else
+            {
+                Assert.AreEqual(getTokenCallCount, 2);
+            }
         }
 
         [Test]
@@ -439,22 +452,21 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/14612")]
         public async Task BearerTokenChallengeAuthenticationPolicy_TokenAlmostExpiredThenFailed()
         {
             var requestMre = new ManualResetEventSlim(true);
             var responseMre = new ManualResetEventSlim(true);
             var credentialMre = new ManualResetEventSlim(false);
 
-            var getTokenRequestTimes = new List<DateTimeOffset>();
+            var getTokenRequestTimes = new ConcurrentQueue<DateTimeOffset>();
             var transportCallCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
             {
                 if (transportCallCount > 0)
                 {
                     credentialMre.Set();
-                    getTokenRequestTimes.Add(DateTimeOffset.UtcNow);
-                    throw new InvalidOperationException("Error");
+                    getTokenRequestTimes.Enqueue(DateTimeOffset.UtcNow);
+                    throw new InvalidOperationException("Credential Error");
                 }
 
                 return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(1.5));
@@ -506,7 +518,8 @@ namespace Azure.Core.Tests
             Assert.AreEqual(auth4Value, auth5Value);
 
             Assert.AreEqual(2, getTokenRequestTimes.Count);
-            Assert.True(getTokenRequestTimes[1] - getTokenRequestTimes[0] > tokenRefreshRetryDelay);
+            var getTokenRequestTimesList = getTokenRequestTimes.ToList();
+            Assert.True(getTokenRequestTimesList[1] - getTokenRequestTimesList[0] > tokenRefreshRetryDelay);
         }
 
         [Test]
