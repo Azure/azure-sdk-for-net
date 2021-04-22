@@ -977,8 +977,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 ServiceBusReceivedMessage message = null;
                 var messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
-                foreach (AmqpMap entry in messageList)
+                // not using foreach for better performance
+                for (var index = 0; index < messageList.Count; index++)
                 {
+                    AmqpMap entry = messageList[index];
                     messages ??= messageList is IReadOnlyCollection<AmqpMap> readOnlyList
                         ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
                         : new List<ServiceBusReceivedMessage>();
@@ -1280,14 +1282,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 if (response.StatusCode == AmqpResponseStatusCode.OK)
                 {
                     var amqpMapList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
-                    foreach (var entry in amqpMapList)
+                    // not using foreach for better performance
+                    for (var index = 0; index < amqpMapList.Count; index++)
                     {
+                        var entry = amqpMapList[index];
                         messages ??= amqpMapList is IReadOnlyCollection<AmqpMap> readOnlyList
                             ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
                             : new List<ServiceBusReceivedMessage>();
 
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
-                        var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
+                        var amqpMessage =
+                            AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
                         var message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
