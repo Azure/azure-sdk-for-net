@@ -5,9 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,26 +14,22 @@ namespace Azure.Monitor.Query.Models
     public partial class LogsQueryResult
     {
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
-        /// <param name="tables"> The list of tables, columns and rows. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tables"/> is null. </exception>
-        internal LogsQueryResult(IEnumerable<LogsQueryResultTable> tables)
+        internal LogsQueryResult()
         {
-            if (tables == null)
-            {
-                throw new ArgumentNullException(nameof(tables));
-            }
-
-            Tables = tables.ToList();
+            Tables = new ChangeTrackingList<LogsQueryResultTable>();
         }
 
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
         /// <param name="tables"> The list of tables, columns and rows. </param>
-        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables)
+        /// <param name="errors"> . </param>
+        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables, ErrorDetails errors)
         {
             Tables = tables;
+            Errors = errors;
         }
 
         /// <summary> The list of tables, columns and rows. </summary>
         public IReadOnlyList<LogsQueryResultTable> Tables { get; }
+        public ErrorDetails Errors { get; }
     }
 }
