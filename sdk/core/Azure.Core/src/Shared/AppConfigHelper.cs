@@ -24,12 +24,7 @@ namespace Azure.Core
         public static bool GetConfigValue(string appContexSwitchName, string environmentVariableName)
         {
             // First check for the AppContext switch, giving it priority over the environment variable.
-// #if NETFRAMEWORK || NETCOREAPP
-            // var data = AppDomain.CurrentDomain.GetData(appContexSwitchName);
-            // if (data != null && bool.TryParse(data.ToString(), out bool value))
-// #else
             if (AppContext.TryGetSwitch(appContexSwitchName, out bool value))
-// #endif
             {
                 return value;
             }
