@@ -23,6 +23,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             try
             {
                 await serviceClient.GetPropertiesAsync();
+                var fileSystemName = Guid.NewGuid().ToString();
+                var directoryName = Guid.NewGuid().ToString();
+                var fileSystemClient = serviceClient.GetFileSystemClient(fileSystemName);
+                await fileSystemClient.CreateIfNotExistsAsync();
+                var directoryClient = fileSystemClient.GetDirectoryClient(directoryName);
+                await directoryClient.CreateIfNotExistsAsync();
+                await fileSystemClient.DeleteIfExistsAsync();
             }
             catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
             {

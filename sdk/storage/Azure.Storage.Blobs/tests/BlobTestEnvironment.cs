@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 
@@ -23,6 +24,13 @@ namespace Azure.Storage.Blobs.Tests
             try
             {
                 await serviceClient.GetPropertiesAsync();
+                var containerName = Guid.NewGuid().ToString();
+                var blobName = Guid.NewGuid().ToString();
+                var containerClient = serviceClient.GetBlobContainerClient(containerName);
+                await containerClient.CreateIfNotExistsAsync();
+                var blobClient = containerClient.GetAppendBlobClient(blobName);
+                await blobClient.CreateIfNotExistsAsync();
+                await containerClient.DeleteIfExistsAsync();
             } catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
             {
                 return false;
