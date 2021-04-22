@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Files.DataLake.Tests
 {
-    public class BlobTestEnvironment : StorageTestEnvironment
+    public class DataLakeTestEnvironment : StorageTestEnvironment
     {
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
@@ -17,13 +17,14 @@ namespace Azure.Storage.Blobs.Tests
 
         private async Task<bool> DoesOAuthWorkAsync()
         {
-            BlobServiceClient serviceClient = new BlobServiceClient(
-                new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint),
-                GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant));
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(
+                new Uri(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant.BlobServiceEndpoint),
+                GetOAuthCredential(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant));
             try
             {
                 await serviceClient.GetPropertiesAsync();
-            } catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
+            }
+            catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
             {
                 return false;
             }
