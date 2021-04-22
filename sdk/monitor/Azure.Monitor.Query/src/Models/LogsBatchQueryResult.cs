@@ -17,7 +17,6 @@ namespace Azure.Monitor.Query.Models
 
         public LogsQueryResult GetResult(string queryId)
         {
-            // TODO check status, add error message
             LogQueryResponse result = Responses.SingleOrDefault(r => r.Id == queryId);
 
             if (result == null)
