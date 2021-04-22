@@ -67,6 +67,7 @@ jobs:
         inputs:
           versionSpec: '3.6'
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - template: /eng/pipelines/templates/steps/nuget-cache.yml
       - script: >-
           dotnet pack eng/service.proj -warnaserror
           /p:SDKType=${{ parameters.SDKType }}
@@ -131,6 +132,7 @@ jobs:
           versionSpec: '14.x'
         displayName: 'Install NodeJS'
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - template: /eng/pipelines/templates/steps/nuget-cache.yml
       - task: PowerShell@2
         displayName: "Verify generated code"
         env:
