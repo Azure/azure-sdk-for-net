@@ -25,6 +25,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_Min()
         {
             // Arrange
@@ -45,8 +46,8 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_Snapshot()
         {
             // Arrange
@@ -70,6 +71,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_Error()
         {
             // Arrange
@@ -87,6 +89,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [Ignore("Don't want to record 16 MB of data.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_MultipleDataRecords()
         {
             // Arrange
@@ -129,6 +132,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [Ignore("Don't want to record 250 MB of data.")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_Large()
         {
             // Arrange
@@ -162,6 +166,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_Progress()
         {
             // Arrange
@@ -193,6 +198,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_QueryTextConfigurations()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -237,6 +243,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_NonFatalError()
         {
             // Arrange
@@ -277,6 +284,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/12063")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_FatalError()
         {
             // Arrange
@@ -327,6 +335,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -362,6 +371,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_AccessConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -393,6 +403,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_IfTags()
         {
             // Arrange
@@ -430,6 +441,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_IfTags_Failed()
         {
             // Arrange
@@ -458,6 +470,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_ArrowConfiguration()
         {
             // Arrange
@@ -498,6 +511,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_08_04)]
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_ParquetConfiguration()
         {
             // Arrange
@@ -528,6 +542,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_08_04)]
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_ParquetOutputError()
         {
             // Arrange
@@ -549,6 +564,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
+        [Retry(TestConstants.QuickQueryRetryCount)]
         public async Task QueryAsync_ArrowConfigurationInput()
         {
             // Arrange
