@@ -69,11 +69,12 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Create an invalid ContainerRepositoryClient
             string fakeRepositoryName = "doesnotexist";
-            ContainerRepositoryClient client = new ContainerRepositoryClient(endpoint, fakeRepositoryName, new DefaultAzureCredential());
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+            ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
             try
             {
-                client.GetProperties();
+                repository.GetProperties();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -93,11 +94,12 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Create an invalid ContainerRepositoryClient
             string fakeRepositoryName = "doesnotexist";
-            ContainerRepositoryClient client = new ContainerRepositoryClient(endpoint, fakeRepositoryName, new DefaultAzureCredential());
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+            ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
             try
             {
-                await client.GetPropertiesAsync();
+                await repository.GetPropertiesAsync();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {

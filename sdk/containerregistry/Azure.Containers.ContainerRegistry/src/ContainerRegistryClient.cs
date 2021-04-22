@@ -13,11 +13,11 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ContainerRegistryClient
     {
         private readonly Uri _registryUri;
+        private readonly string _registryName;
         private readonly HttpPipeline _pipeline;
         private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
-
         private readonly AuthenticationRestClient _acrAuthClient;
         private readonly string AcrAadScope = "https://management.core.windows.net/.default";
 
@@ -36,6 +36,7 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(options, nameof(options));
 
             _registryUri = endpoint;
+            _registryName = endpoint.Host.Split('.')[0];
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
@@ -51,9 +52,17 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary>
-        /// Ge the service endpoint for this client.
+        /// Gets the service endpoint for this client.
         /// </summary>
-        public Uri RegistryUri {  get { return _registryUri; } }
+        public Uri RegistryUri => _registryUri;
+
+        /// <summary>
+        /// </summary>
+        public string Name => _registryName;
+
+        /// <summary>
+        /// </summary>
+        public virtual string LoginServer => _registryUri.Host;
 
         /// <summary> List repositories. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -192,6 +201,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <returns> A new <see cref="ContainerRepository"/> for the desired repository. </returns>
         public virtual ContainerRepository GetRepository(string repository)
         {
+            Argument.AssertNotNull(repository, nameof(repository));
+
             return new ContainerRepository(
                 repository,
                 _registryUri,
@@ -205,8 +216,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="repository"> The repository to reference. </param>
         /// <param name="tagOrDigest"> Either a tag or a digest that uniquely identifies the artifact. </param>
         /// <returns> A new <see cref="RegistryArtifact"/> for the desired repository. </returns>
-        public virtual RegistryArtifact GetRegistryArtifact(string repository, string tagOrDigest)
+        public virtual RegistryArtifact GetArtifact(string repository, string tagOrDigest)
         {
+            Argument.AssertNotNull(repository, nameof(repository));
+            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
+
             return new RegistryArtifact(
                 repository,
                 tagOrDigest,
