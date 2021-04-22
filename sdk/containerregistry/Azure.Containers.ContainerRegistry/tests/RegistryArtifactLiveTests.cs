@@ -69,18 +69,19 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var artifact = client.GetArtifact(_repositoryName, tag);
 
             // Act
-            ManifestProperties listProperties = await artifact.GetManifestPropertiesAsync();
-            var arm64LinuxImage = listProperties.Manifests.First(
+            ManifestProperties manifestListProperties = await artifact.GetManifestPropertiesAsync();
+            var arm64LinuxImage = manifestListProperties.Manifests.First(
                 artifact =>
                     artifact.Architecture == "arm64" &&
                     artifact.OperatingSystem == "linux");
-            ManifestProperties properties = await artifact.GetManifestPropertiesAsync();
+            var childArtifact = client.GetArtifact(_repositoryName, arm64LinuxImage.Digest);
+            ManifestProperties properties = await childArtifact.GetManifestPropertiesAsync();
 
             // Assert
             Assert.AreEqual(_repositoryName, properties.Repository);
             Assert.IsNotNull(properties.Digest);
-            Assert.AreEqual("arm64", properties.Architecture);
-            Assert.AreEqual("linux", properties.OperatingSystem);
+            Assert.AreEqual(ArtifactArchitecture.Arm64, properties.Architecture);
+            Assert.AreEqual(ArtifactOperatingSystem.Linux, properties.OperatingSystem);
         }
 
         [RecordedTest, NonParallelizable]

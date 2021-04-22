@@ -51,8 +51,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             Assert.That(async () => await artifact.SetManifestPropertiesAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `value` is not null.");
 
-            Assert.That(() => artifact.GetTagsAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `options` is not null.");
-
             Assert.That(async () => await artifact.GetTagPropertiesAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `tag` is not null.");
 
             Assert.That(async () => await artifact.SetTagPropertiesAsync(null, new ContentProperties()), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `tag` is not null.");

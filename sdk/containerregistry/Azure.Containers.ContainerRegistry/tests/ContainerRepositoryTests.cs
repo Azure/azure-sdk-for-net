@@ -48,7 +48,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public void ServiceMethodsValidateArguments()
         {
             Assert.That(async () => await repository.SetPropertiesAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that `value` is not null.");
-            Assert.That(() => repository.GetManifestsAsync(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate that manifest options is not null.");
         }
     }
 }

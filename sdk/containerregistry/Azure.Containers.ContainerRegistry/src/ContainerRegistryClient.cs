@@ -54,11 +54,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Gets the service endpoint for this client.
         /// </summary>
-        public Uri RegistryUri => _registryUri;
+        public virtual Uri RegistryUri => _registryUri;
 
         /// <summary>
         /// </summary>
-        public string Name => _registryName;
+        public virtual string Name => _registryName;
 
         /// <summary>
         /// </summary>
