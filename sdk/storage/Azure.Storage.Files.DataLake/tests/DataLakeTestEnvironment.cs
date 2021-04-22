@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
@@ -17,6 +18,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         private async Task<bool> DoesOAuthWorkAsync()
         {
+            TestContext.Out.WriteLine("Datalake Probing OAuth");
+            TestContext.Error.WriteLine("Datalake Probing OAuth");
             DataLakeServiceClient serviceClient = new DataLakeServiceClient(
                 new Uri(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant.BlobServiceEndpoint),
                 GetOAuthCredential(TestConfigurations.DefaultTargetHierarchicalNamespaceTenant));
@@ -33,8 +36,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
             catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
             {
+                TestContext.Out.WriteLine("Datalake Probing OAuth - not ready");
+                TestContext.Error.WriteLine("Datalake Probing OAuth - not ready");
                 return false;
             }
+            TestContext.Out.WriteLine("Datalake Probing OAuth - ready");
+            TestContext.Error.WriteLine("Datalake Probing OAuth - ready");
             return true;
         }
     }

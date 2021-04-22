@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests
 {
@@ -18,6 +19,8 @@ namespace Azure.Storage.Blobs.Tests
 
         private async Task<bool> DoesOAuthWorkAsync()
         {
+            TestContext.Out.WriteLine("Blob Probing OAuth");
+            TestContext.Error.WriteLine("Blob Probing OAuth");
             BlobServiceClient serviceClient = new BlobServiceClient(
                 new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint),
                 GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant));
@@ -33,8 +36,12 @@ namespace Azure.Storage.Blobs.Tests
                 await containerClient.DeleteIfExistsAsync();
             } catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
             {
+                TestContext.Out.WriteLine("Blob Probing OAuth - not ready");
+                TestContext.Error.WriteLine("Blob Probing OAuth - not ready");
                 return false;
             }
+            TestContext.Out.WriteLine("Blob Probing OAuth - ready");
+            TestContext.Error.WriteLine("Blob Probing OAuth - ready");
             return true;
         }
     }
