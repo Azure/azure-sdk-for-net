@@ -1,4 +1,4 @@
-# Detect Change Point
+# Detect Multivariate anomaly
 This sample shows how to detect the anomalies in multivariate time series.
 
 To get started, make sure you have satisfied all the prerequisites and got all the resources required by [README][README].
