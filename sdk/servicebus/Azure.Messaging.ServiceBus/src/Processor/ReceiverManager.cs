@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 // loop within the context of this thread
-                while (!cancellationToken.IsCancellationRequested)
+                while (!cancellationToken.IsCancellationRequested && !Processor.Connection.IsClosed)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
                     ServiceBusReceivedMessage message = await Receiver.ReceiveMessageAsync(

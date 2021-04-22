@@ -3,9 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Plugins;
@@ -1239,10 +1240,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         public void StartProcessingExceptionLogsEvents()
         {
             var mockLogger = new Mock<ServiceBusEventSource>();
-            var mockConnection = new Mock<ServiceBusConnection>();
-            mockConnection.Setup(
-                connection => connection.RetryOptions)
-                .Returns(new ServiceBusRetryOptions());
+            var mockConnection = CreateMockConnection();
             var processor = new ServiceBusProcessor(mockConnection.Object, "queueName", false, new ServiceBusPlugin[] { }, new ServiceBusProcessorOptions
             {
                 AutoCompleteMessages = false,
@@ -1271,10 +1269,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
         private Mock<ServiceBusConnection> GetMockConnection(Mock<TransportReceiver> mockTransportReceiver)
         {
-            var mockConnection = new Mock<ServiceBusConnection>();
-            mockConnection.Setup(
-                connection => connection.RetryOptions)
-                .Returns(new ServiceBusRetryOptions());
+            var mockConnection = GetMockConnection();
+
             mockConnection.Setup(
                 connection => connection.CreateTransportReceiver(
                     It.IsAny<string>(),
@@ -1286,21 +1282,37 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     It.IsAny<bool>(),
                     CancellationToken.None))
                 .Returns(mockTransportReceiver.Object);
+
             return mockConnection;
         }
 
         private Mock<ServiceBusConnection> GetMockConnection(Mock<TransportSender> mockTransportSender)
         {
-            var mockConnection = new Mock<ServiceBusConnection>();
-            mockConnection.Setup(
-                connection => connection.RetryOptions)
-                .Returns(new ServiceBusRetryOptions());
+            var mockConnection = GetMockConnection();
+
             mockConnection.Setup(
                 connection => connection.CreateTransportSender(
                     It.IsAny<string>(),
                     It.IsAny<ServiceBusRetryPolicy>(),
                     It.IsAny<string>()))
                 .Returns(mockTransportSender.Object);
+
+            return mockConnection;
+        }
+
+        private Mock<ServiceBusConnection> GetMockConnection()
+        {
+            var mockConnection = new Mock<ServiceBusConnection>("not.real.com", Mock.Of<TokenCredential>(), new ServiceBusClientOptions())
+            {
+                CallBase = true
+            };
+
+            mockConnection.Setup(
+                connection => connection.CreateTransportClient(
+                    It.IsAny<ServiceBusTokenCredential>(),
+                    It.IsAny<ServiceBusClientOptions>()))
+                .Returns(Mock.Of<TransportClient>());
+
             return mockConnection;
         }
     }
