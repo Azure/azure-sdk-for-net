@@ -4,7 +4,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
-using System;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
 {

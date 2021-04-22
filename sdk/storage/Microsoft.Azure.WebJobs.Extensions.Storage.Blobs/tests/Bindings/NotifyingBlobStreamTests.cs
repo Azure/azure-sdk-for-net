@@ -1420,15 +1420,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             public void Execute()
             {
             }
-
-            public void Execute(bool isClosing)
-            {
-            }
-
-            public Task ExecuteAsync(bool isClosing, CancellationToken cancellationToken)
-            {
-                return Task.FromResult(0);
-            }
         }
     }
 }

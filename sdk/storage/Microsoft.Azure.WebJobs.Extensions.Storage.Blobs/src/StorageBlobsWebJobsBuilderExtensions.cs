@@ -29,8 +29,6 @@ namespace Microsoft.Extensions.Hosting
         /// <param name="configureBlobs">Optional. An action to configure <see cref="BlobsOptions"/>.</param>
         public static IWebJobsBuilder AddAzureStorageBlobs(this IWebJobsBuilder builder, Action<BlobsOptions> configureBlobs = null)
         {
-            Console.WriteLine();
-
             builder.Services.AddAzureClientsCore();
             // $$$ Move to Host.Storage?
 #pragma warning disable CS0618 // Type or member is obsolete
