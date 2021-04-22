@@ -16,7 +16,7 @@ namespace Azure.Monitor.Query.Models
         internal static LogsQueryResult DeserializeLogsQueryResult(JsonElement element)
         {
             Optional<IReadOnlyList<LogsQueryResultTable>> tables = default;
-            Optional<ErrorDetails> errors = default;
+            Optional<ErrorDetails> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"))
@@ -34,18 +34,18 @@ namespace Azure.Monitor.Query.Models
                     tables = array;
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("error"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    errors = ErrorDetails.DeserializeErrorDetails(property.Value);
+                    error = ErrorDetails.DeserializeErrorDetails(property.Value);
                     continue;
                 }
             }
-            return new LogsQueryResult(Optional.ToList(tables), errors.Value);
+            return new LogsQueryResult(Optional.ToList(tables), error.Value);
         }
     }
 }

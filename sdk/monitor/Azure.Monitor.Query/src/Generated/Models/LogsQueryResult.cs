@@ -21,15 +21,14 @@ namespace Azure.Monitor.Query.Models
 
         /// <summary> Initializes a new instance of LogsQueryResult. </summary>
         /// <param name="tables"> The list of tables, columns and rows. </param>
-        /// <param name="errors"> . </param>
-        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables, ErrorDetails errors)
+        /// <param name="error"> . </param>
+        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables, ErrorDetails error)
         {
             Tables = tables;
-            Errors = errors;
+            Error = error;
         }
 
         /// <summary> The list of tables, columns and rows. </summary>
         public IReadOnlyList<LogsQueryResultTable> Tables { get; }
-        public ErrorDetails Errors { get; }
     }
 }
