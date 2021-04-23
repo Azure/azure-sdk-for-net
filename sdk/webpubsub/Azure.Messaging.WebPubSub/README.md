@@ -68,7 +68,7 @@ Using this library, you can send messages to the client connections. A message c
 
 ```csharp
 var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new Azure.AzureKeyCredential("<access-key>"));
-await serviceClient.sendToAll("Hello world!");
+await serviceClient.SendToAll("Hello world!");
 ```
 
 ### Broadcast a JSON message to all clients
