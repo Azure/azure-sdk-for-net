@@ -24,10 +24,10 @@ namespace Azure.Containers.ContainerRegistry
 
         private const string DarwinValue = "darwin";
         private const string DragonflyValue = "dragonfly";
-        private const string FreebsdValue = "freebsd";
+        private const string FreeBsdValue = "freebsd";
         private const string LinuxValue = "linux";
-        private const string NetbsdValue = "netbsd";
-        private const string OpenbsdValue = "openbsd";
+        private const string NetBsdValue = "netbsd";
+        private const string OpenBsdValue = "openbsd";
         private const string Plan9Value = "plan9";
         private const string SolarisValue = "solaris";
         private const string WindowsValue = "windows";
@@ -37,13 +37,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> dragonfly. </summary>
         public static ArtifactOperatingSystem Dragonfly { get; } = new ArtifactOperatingSystem(DragonflyValue);
         /// <summary> freebsd. </summary>
-        public static ArtifactOperatingSystem Freebsd { get; } = new ArtifactOperatingSystem(FreebsdValue);
+        public static ArtifactOperatingSystem FreeBsd { get; } = new ArtifactOperatingSystem(FreeBsdValue);
         /// <summary> linux. </summary>
         public static ArtifactOperatingSystem Linux { get; } = new ArtifactOperatingSystem(LinuxValue);
         /// <summary> netbsd. </summary>
-        public static ArtifactOperatingSystem Netbsd { get; } = new ArtifactOperatingSystem(NetbsdValue);
+        public static ArtifactOperatingSystem NetBsd { get; } = new ArtifactOperatingSystem(NetBsdValue);
         /// <summary> openbsd. </summary>
-        public static ArtifactOperatingSystem Openbsd { get; } = new ArtifactOperatingSystem(OpenbsdValue);
+        public static ArtifactOperatingSystem OpenBsd { get; } = new ArtifactOperatingSystem(OpenBsdValue);
         /// <summary> plan9. </summary>
         public static ArtifactOperatingSystem Plan9 { get; } = new ArtifactOperatingSystem(Plan9Value);
         /// <summary> solaris. </summary>
