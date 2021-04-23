@@ -26,7 +26,7 @@ namespace Azure.Security.Attestation
         private readonly SigningCertificatesRestClient _metadataClient;
         private readonly AttestationClientOptions _options;
         private IReadOnlyList<AttestationSigner> _signers;
-        // NOTE The SemaphoreSlim type does NOT need Disposable based on the current usage.
+        // NOTE The SemaphoreSlim type does NOT need Disposable based on the current usage because AvailableWaitHandle is not referenced.
         private SemaphoreSlim _statelock = new SemaphoreSlim(1, 1);
 
         // The default scope for our data plane operations.
@@ -88,7 +88,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
         /// <remarks>The <see cref="AttestationRequest.Evidence"/> must be an Intel SGX Quote.
-        /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html" for more information.
+        /// <seealso href="https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html"/>  for more information.
         ///</remarks>
         public virtual AttestationResponse<AttestationResult> AttestSgxEnclave(AttestationRequest request, CancellationToken cancellationToken = default)
                 => AttestSgxEnclaveInternal(request, false, cancellationToken).EnsureCompleted();
@@ -100,7 +100,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
         /// <remarks>The <see cref="AttestationRequest.Evidence"/> must be an Intel SGX Quote.
-        /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html" for more information.
+        /// <seealso href="https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html"/>  for more information.
         ///</remarks>
         public virtual async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveAsync(AttestationRequest request, CancellationToken cancellationToken = default)
             => await AttestSgxEnclaveInternal(request, true, cancellationToken).ConfigureAwait(false);
@@ -113,7 +113,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/></returns>
         /// <remarks>The <see cref="AttestationRequest.Evidence"/> must be an Intel SGX Quote.
-        /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html" for more information.
+        /// <seealso href="https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html"/>  for more information.
         ///</remarks>
         private async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveInternal(AttestationRequest request, bool async, CancellationToken cancellationToken = default)
         {
@@ -167,7 +167,8 @@ namespace Azure.Security.Attestation
                 var attestationToken = AttestationToken.Deserialize(response.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), async, cancellationToken).ConfigureAwait(false))
+                    var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
+                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
                     {
                         throw new Azure.RequestFailedException("Attestation Token was rejected.");
                     }
@@ -189,7 +190,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
         /// <remarks>The <see cref="AttestationRequest.Evidence"/> must be an OpenEnclave Report or OpenEnclave Evidence.</remarks>
-        /// See https://github.com/openenclave/openenclave for more information.
+        /// <seealso href="https://github.com/openenclave/openenclave"/>  for more information.
         public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(AttestationRequest request, CancellationToken cancellationToken = default)
             => AttestOpenEnclaveInternalAsync(request, false, cancellationToken).EnsureCompleted();
 
@@ -200,7 +201,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
         /// <remarks>The <see cref="AttestationRequest.Evidence"/> must be an OpenEnclave Report or OpenEnclave Evidence.</remarks>
-        /// See https://github.com/openenclave/openenclave for more information.
+        /// <seealso href="https://github.com/openenclave/openenclave"/>  for more information.
         public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(AttestationRequest request, CancellationToken cancellationToken = default)
             => await AttestOpenEnclaveInternalAsync(request, true, cancellationToken).ConfigureAwait(false);
 
@@ -212,7 +213,7 @@ namespace Azure.Security.Attestation
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
         /// <remarks>The <see cref="AttestationRequest.Evidence"/> must be an OpenEnclave Report or OpenEnclave Evidence.</remarks>
-        /// See https://github.com/openenclave/openenclave for more information.
+        /// <seealso href="https://github.com/openenclave/openenclave"/>  for more information.
         private async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveInternalAsync(AttestationRequest request, bool async, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
@@ -254,7 +255,8 @@ namespace Azure.Security.Attestation
 
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), async, cancellationToken).ConfigureAwait(false))
+                    var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
+                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
                     {
                         throw new Azure.RequestFailedException("Attestation Token was rejected.");
                     }
@@ -366,39 +368,41 @@ namespace Azure.Security.Attestation
             }
         }
 
-        private async Task<IReadOnlyList<AttestationSigner>> GetSignersAsync(CancellationToken cancellationToken)
+        private async Task<IReadOnlyList<AttestationSigner>> GetSignersAsync(bool async, CancellationToken cancellationToken)
         {
-            await _statelock.WaitAsync(cancellationToken).ConfigureAwait(false);
-            try
+            if (async)
             {
-                if (_signers == null)
+                await _statelock.WaitAsync(cancellationToken).ConfigureAwait(false);
+                try
                 {
-                    _signers = (await GetSigningCertificatesAsync(cancellationToken).ConfigureAwait(false)).Value;
+                    if (_signers == null)
+                    {
+                        _signers = (await GetSigningCertificatesAsync(cancellationToken).ConfigureAwait(false)).Value;
+                    }
+
+                    return _signers;
                 }
-
-                return _signers;
-            }
-            finally
-            {
-                _statelock.Release();
-            }
-        }
-
-        private IReadOnlyList<AttestationSigner> GetSigners(CancellationToken cancellationToken)
-        {
-            _statelock.Wait(cancellationToken);
-            try
-            {
-                if (_signers == null)
+                finally
                 {
-                    _signers = GetSigningCertificates(cancellationToken).Value;
+                    _statelock.Release();
                 }
-
-                return _signers;
             }
-            finally
+            else
             {
-                _statelock.Release();
+                _statelock.Wait(cancellationToken);
+                try
+                {
+                    if (_signers == null)
+                    {
+                        _signers = GetSigningCertificates(cancellationToken).Value;
+                    }
+
+                    return _signers;
+                }
+                finally
+                {
+                    _statelock.Release();
+                }
             }
         }
     }

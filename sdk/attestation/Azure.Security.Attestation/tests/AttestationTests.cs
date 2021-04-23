@@ -267,6 +267,7 @@ namespace Azure.Security.Attestation.Tests
                     1 == args.Signer.SigningCertificates.Count &&
                     null != args.Signer.SigningCertificates[0] &&
                     TestEnvironment.SharedAttestationUrl == args.Token.Issuer;
+                callbackInvoked = true;
                 return Task.CompletedTask;
             };
 

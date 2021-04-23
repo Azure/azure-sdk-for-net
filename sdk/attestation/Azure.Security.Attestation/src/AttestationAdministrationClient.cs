@@ -30,6 +30,7 @@ namespace Azure.Security.Attestation
         private readonly AttestationClient _attestationClient;
 
         private IReadOnlyList<AttestationSigner> _signers;
+        // NOTE The SemaphoreSlim type does NOT need Disposable based on the current usage because AvailableWaitHandle is not referenced.
         private SemaphoreSlim _statelock = new SemaphoreSlim(1, 1);
 
         // Default scope for data plane APIs.
@@ -98,7 +99,7 @@ namespace Azure.Security.Attestation
         /// <remarks>
         /// This API returns the underlying attestation policy object stored in the attestation service for this <paramref name="attestationType"/>.
         ///
-        /// The actual service response to the API is an RFC 7519 JSON Web Token. This token can be retrieved from <see cref="AttestationResponse{T}.Token"/>.
+        /// The actual service response to the API is an RFC 7519 JSON Web Token(see https://tools.ietf.org/html/rfc719"). This token can be retrieved from <see cref="AttestationResponse{T}.Token"/>.
         /// For the GetPolicy API, the body of the <see cref="AttestationResponse{T}.Token"/> is a <see cref="StoredAttestationPolicy"/> object, NOT a string.
         /// </remarks>
         public virtual AttestationResponse<string> GetPolicy(AttestationType attestationType, CancellationToken cancellationToken = default)
@@ -113,7 +114,7 @@ namespace Azure.Security.Attestation
         /// <remarks>
         /// This API returns the underlying attestation policy object stored in the attestation service for this <paramref name="attestationType"/>.
         ///
-        /// The actual service response to the API is an RFC 7519 JSON Web Token. This token can be retrieved from <see cref="AttestationResponse{T}.Token"/>.
+        /// The actual service response to the API is an RFC 7519 JSON Web Token(see https://tools.ietf.org/html/rfc719"). This token can be retrieved from <see cref="AttestationResponse{T}.Token"/>.
         /// For the GetPolicyAsync API, the body of the <see cref="AttestationResponse{T}.Token"/> is a <see cref="StoredAttestationPolicy"/> object, NOT a string.
         /// </remarks>
         public virtual async Task<AttestationResponse<string>> GetPolicyAsync(AttestationType attestationType, CancellationToken cancellationToken = default)
@@ -151,7 +152,9 @@ namespace Azure.Security.Attestation
                 var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    if (!await token.ValidateTokenInternal(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), async, cancellationToken).ConfigureAwait(false))
+                    var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
+
+                    if (!await token.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
                     {
                         throw new Azure.RequestFailedException("Attestation Token was rejected.");
                     }
@@ -239,7 +242,7 @@ namespace Azure.Security.Attestation
                 var token = AttestationToken.Deserialize(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(cancellationToken), cancellationToken);
+                    token.ValidateToken(_options.TokenOptions,GetSignersAsync(false, cancellationToken).EnsureCompleted(), cancellationToken);
                 }
                 return new AttestationResponse<PolicyModificationResult>(result.GetRawResponse(), token);
             }
@@ -321,7 +324,11 @@ namespace Azure.Security.Attestation
                 var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateTokenAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
+                    var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
+                    if (!await token.ValidateTokenAsync(_options.TokenOptions, signers, cancellationToken).ConfigureAwait(false))
+                    {
+                        throw new Exception("Token Validation Failed.");
+                    }
                 }
                 return new AttestationResponse<PolicyModificationResult>(result.GetRawResponse(), token);
             }
@@ -362,7 +369,8 @@ namespace Azure.Security.Attestation
                 var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(cancellationToken), cancellationToken);
+                    var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
+                    token.ValidateTokenInternal(_options.TokenOptions, signers, false, cancellationToken).EnsureCompleted();
                 }
                 return new AttestationResponse<PolicyModificationResult>(result.GetRawResponse(), token);
             }
@@ -402,7 +410,8 @@ namespace Azure.Security.Attestation
                 var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateTokenAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
+                    var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, signers, cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyModificationResult>(result.GetRawResponse(), token);
             }
@@ -459,7 +468,8 @@ namespace Azure.Security.Attestation
                 var token = AttestationToken.Deserialize(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    if (!await token.ValidateTokenInternal(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), async, cancellationToken).ConfigureAwait(false))
+                    var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
+                    if (!await token.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
                     {
                         throw new Azure.RequestFailedException("Attestation Token was rejected.");
                     }
@@ -506,7 +516,7 @@ namespace Azure.Security.Attestation
                 var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(cancellationToken), cancellationToken);
+                    token.ValidateTokenInternal(_options.TokenOptions, GetSignersAsync(false, cancellationToken).EnsureCompleted(), false, cancellationToken).EnsureCompleted();
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
             }
@@ -543,7 +553,7 @@ namespace Azure.Security.Attestation
                 var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateTokenAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenInternal(_options.TokenOptions, await GetSignersAsync(true, cancellationToken).ConfigureAwait(false), true, cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
             }
@@ -578,7 +588,8 @@ namespace Azure.Security.Attestation
                 var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(cancellationToken), cancellationToken);
+                    var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
+                    token.ValidateTokenInternal(_options.TokenOptions, signers, false, cancellationToken).EnsureCompleted();
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
             }
@@ -613,7 +624,8 @@ namespace Azure.Security.Attestation
                 var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateTokenAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
+                    var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, signers, cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
             }
@@ -624,39 +636,41 @@ namespace Azure.Security.Attestation
             }
         }
 
-        private async Task<IReadOnlyList<AttestationSigner>> GetSignersAsync(CancellationToken cancellationToken)
+        private async Task<IReadOnlyList<AttestationSigner>> GetSignersAsync(bool async, CancellationToken cancellationToken)
         {
-            await _statelock.WaitAsync(cancellationToken).ConfigureAwait(false);
-            try
+            if (async)
             {
-                if (_signers == null)
+                await _statelock.WaitAsync(cancellationToken).ConfigureAwait(false);
+                try
                 {
-                    _signers = (await _attestationClient.GetSigningCertificatesAsync(cancellationToken).ConfigureAwait(false)).Value;
+                    if (_signers == null)
+                    {
+                        _signers = (await _attestationClient.GetSigningCertificatesAsync(cancellationToken).ConfigureAwait(false)).Value;
+                    }
+
+                    return _signers;
                 }
-
-                return _signers;
-            }
-            finally
-            {
-                _statelock.Release();
-            }
-        }
-
-        private IReadOnlyList<AttestationSigner> GetSigners(CancellationToken cancellationToken)
-        {
-            _statelock.Wait(cancellationToken);
-            try
-            {
-                if (_signers == null)
+                finally
                 {
-                    _signers = _attestationClient.GetSigningCertificates(cancellationToken).Value;
+                    _statelock.Release();
                 }
-
-                return _signers;
             }
-            finally
+            else
             {
-                _statelock.Release();
+                _statelock.Wait(cancellationToken);
+                try
+                {
+                    if (_signers == null)
+                    {
+                        _signers = _attestationClient.GetSigningCertificates(cancellationToken).Value;
+                    }
+
+                    return _signers;
+                }
+                finally
+                {
+                    _statelock.Release();
+                }
             }
         }
     }
