@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
@@ -20,7 +21,7 @@ namespace Azure.Storage.Blobs.Tests
 
         private async Task<bool> DoesOAuthWorkAsync()
         {
-            TestContext.Error.WriteLine("Blob Probing OAuth");
+            TestContext.Error.WriteLine($"Blob Probing OAuth {Process.GetCurrentProcess().Id}");
 
             try
             {
@@ -57,10 +58,10 @@ namespace Azure.Storage.Blobs.Tests
                 }
             } catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
             {
-                TestContext.Error.WriteLine("Blob Probing OAuth - not ready");
+                TestContext.Error.WriteLine($"Blob Probing OAuth - not ready {Process.GetCurrentProcess().Id}");
                 return false;
             }
-            TestContext.Error.WriteLine("Blob Probing OAuth - ready");
+            TestContext.Error.WriteLine($"Blob Probing OAuth - ready {Process.GetCurrentProcess().Id}");
             return true;
         }
     }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
@@ -22,7 +23,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         private async Task<bool> DoesOAuthWorkAsync()
         {
-            TestContext.Error.WriteLine("Datalake Probing OAuth");
+            TestContext.Error.WriteLine($"Datalake Probing OAuth {Process.GetCurrentProcess().Id}");
 
             try
             {
@@ -101,10 +102,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
             catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
             {
-                TestContext.Error.WriteLine("Datalake Probing OAuth - not ready");
+                TestContext.Error.WriteLine($"Datalake Probing OAuth - not ready {Process.GetCurrentProcess().Id}");
                 return false;
             }
-            TestContext.Error.WriteLine("Datalake Probing OAuth - ready");
+            TestContext.Error.WriteLine($"Datalake Probing OAuth - ready {Process.GetCurrentProcess().Id}");
             return true;
         }
     }
