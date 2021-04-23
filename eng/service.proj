@@ -10,11 +10,6 @@
     <IncludeStress Condition="'$(IncludeStress)' == ''">true</IncludeStress>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
-
-    <CodeCoverageDirectory>$([System.IO.Path]::GetFullPath("$(CodeCoverageDirectory)", "$(MSBuildThisFileDirectory)..\sdk"))</CodeCoverageDirectory>
-    <TraversalGlobalProperties>
-      CodeCoverageDirectory=$(CodeCoverageDirectory);
-    </TraversalGlobalProperties>
   </PropertyGroup>
 
   <ItemGroup>
