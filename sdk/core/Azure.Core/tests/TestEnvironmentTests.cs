@@ -174,29 +174,32 @@ namespace Azure.Core.Tests
         [Test]
         public async Task ShouldCacheExceptionIfWaitingForEnvironmentFailed()
         {
-            var env = new WaitForEnvironmentTestEnvironmentFailureMode();
+            if (TestEnvironment.GlobalIsRunningInCI)
+            {
+                var env = new WaitForEnvironmentTestEnvironmentFailureMode();
 
-            try
-            {
-                await env.WaitForEnvironmentAsync();
-                Assert.Fail();
-            }
-            catch (InvalidOperationException e)
-            {
-                StringAssert.Contains("kaboom", e.Message);
-            }
+                try
+                {
+                    await env.WaitForEnvironmentAsync();
+                    Assert.Fail();
+                }
+                catch (InvalidOperationException e)
+                {
+                    StringAssert.Contains("kaboom", e.Message);
+                }
 
-            try
-            {
-                await env.WaitForEnvironmentAsync();
-                Assert.Fail();
-            }
-            catch (InvalidOperationException e)
-            {
-                StringAssert.Contains("kaboom", e.Message);
-            }
+                try
+                {
+                    await env.WaitForEnvironmentAsync();
+                    Assert.Fail();
+                }
+                catch (InvalidOperationException e)
+                {
+                    StringAssert.Contains("kaboom", e.Message);
+                }
 
-            Assert.AreEqual(1, WaitForEnvironmentTestEnvironmentFailureMode.InvocationCount);
+                Assert.AreEqual(1, WaitForEnvironmentTestEnvironmentFailureMode.InvocationCount);
+            }
         }
 
         private class RecordedVariableMisuse : RecordedTestBase<MockTestEnvironment>
@@ -263,7 +266,10 @@ namespace Azure.Core.Tests
             [Test]
             public void ShouldCacheStateCorrectly()
             {
-                Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentOne.InvocationCount);
+                if (Core.TestFramework.TestEnvironment.GlobalIsRunningInCI)
+                {
+                    Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentOne.InvocationCount);
+                }
             }
         }
 
@@ -276,7 +282,10 @@ namespace Azure.Core.Tests
             [Test]
             public void ShouldCacheStateCorrectly()
             {
-                Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentTwo.InvocationCount);
+                if (Core.TestFramework.TestEnvironment.GlobalIsRunningInCI)
+                {
+                    Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentTwo.InvocationCount);
+                }
             }
         }
 
@@ -290,7 +299,10 @@ namespace Azure.Core.Tests
             [Test]
             public void ShouldCacheStateCorrectly()
             {
-                Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentTwo.InvocationCount);
+                if (Core.TestFramework.TestEnvironment.GlobalIsRunningInCI)
+                {
+                    Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentTwo.InvocationCount);
+                }
             }
         }
 
