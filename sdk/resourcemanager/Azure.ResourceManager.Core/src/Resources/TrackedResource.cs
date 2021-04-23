@@ -10,13 +10,14 @@ namespace Azure.ResourceManager.Core
     /// Generic representation of a tracked resource.  All tracked resources should extend this class
     /// </summary>
     [ReferenceType(typeof(TenantResourceIdentifier))]
-    public partial class TrackedResource<TIdentifier> : Resource<TIdentifier>
+    public abstract partial class TrackedResource<TIdentifier> : Resource<TIdentifier>
         where TIdentifier : TenantResourceIdentifier
     {
         /// <summary>
         /// Initializes an empty instance of <see cref="TrackedResource{TIdentifier}"/>.
         /// </summary>
-        public TrackedResource(LocationData location)
+        [InitializationConstructor]
+        protected TrackedResource(LocationData location)
         {
             Location = location;
         }
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="type"> The <see cref="ResourceType"/> of the resource. </param>
         /// <param name="tags"> The tags for the resource. </param>
         /// <param name="location"> The location of the resource. </param>
+        [SerializationConstructor]
         protected TrackedResource(TIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, LocationData location)
             : base(id, name, type)
         {
