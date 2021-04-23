@@ -31,8 +31,9 @@ namespace Azure.ResourceManager.Core
             Id = id;
             Credential = clientContext.Credential;
             BaseUri = clientContext.BaseUri;
+            Pipeline = clientContext.Pipeline;
             Diagnostics = new ClientDiagnostics(ClientOptions);
-            
+
             Validate(id);
         }
 
@@ -57,6 +58,11 @@ namespace Azure.ResourceManager.Core
         /// Gets the base URI of the service.
         /// </summary>
         protected internal virtual Uri BaseUri { get; private set; }
+
+        /// <summary>
+        /// Gets the HTTP pipeline.
+        /// </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary>
         /// Gets the valid Azure resource type for the current operations.
