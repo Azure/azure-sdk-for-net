@@ -75,7 +75,7 @@ await serviceClient.SendToAll("Hello world!");
 
 ```csharp
 var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new Azure.AzureKeyCredential("<access-key>"));
-await serviceClient.sendToAll(
+await serviceClient.SendToAll(
     RequestContent.Create(
         new {
             Foo = "Hello World!",
