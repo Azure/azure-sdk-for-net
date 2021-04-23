@@ -25,7 +25,7 @@ This library can be used to do the following actions. Details about the terms us
 Install the client library from [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-dotnet add package Azure.Messaging.WebPubSub
+dotnet add package Azure.Messaging.WebPubSub --prerelease
 ```
 
 ### Prerequisites
@@ -120,4 +120,3 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 
 [azure_sub]: https://azure.microsoft.com/free/
 [samples_ref]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/webpubsub/Azure.Messaging.WebPubSub/tests/Samples/
-
