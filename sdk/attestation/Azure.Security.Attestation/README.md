@@ -249,7 +249,7 @@ The enclave code then calculates the SHA256 value of the public key and passes i
 
 The client then sends the SGX quote and the serialized key to the attestation service. The attestation service will validate the quote and ensure that the hash of the key is present in the quote and will issue an "Attestation Token".
 
-The client can then send that Attestation Token (which contains the serialized key) to a 3rd party "relying party". The relying party then validates that the attestation token was created by the attestation service, and thus it can use the serialized key to encrypt some data held by the "relying party" to send to the service.
+The client can then send that Attestation Token (which contains the serialized key) to a 3rd party "relying party". The relying party then validates that the attestation token was created by the attestation service, and thus the serialized key can be used to encrypt some data held by the "relying party" to send to the service.
 
 This example shows one common pattern of calling into the attestation service to retrieve an attestation token associated with a request.
 
