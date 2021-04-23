@@ -104,7 +104,7 @@ namespace Azure.Messaging.WebPubSub
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public virtual async Task<Response> SendToAllAsync(string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.BroadcastAsync");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(WebPubSubServiceClient)}.{nameof(SendToAll)}");
             scope.Start();
             try
             {
