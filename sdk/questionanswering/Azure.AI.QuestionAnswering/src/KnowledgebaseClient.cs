@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.AI.QuestionAnswering.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -85,5 +88,49 @@ namespace Azure.AI.QuestionAnswering
         /// Gets the knowledgebase identifier for this client.
         /// </summary>
         public virtual string KnowledgebaseId { get; }
+
+        /// <summary>
+        /// Gets details about the knowledgebase with identifier <see cref="KnowledgebaseId"/>.
+        /// </summary>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>A response containing a <see cref="Knowledgebase"/> with identifier <see cref="KnowledgebaseId"/>.</returns>
+        /// <exception cref="RequestFailedException">The request failed. Check the <see cref="RequestFailedException.ErrorCode"/> for details.</exception>
+        public virtual Response<Knowledgebase> GetDetails(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KnowledgebaseClient)}.{nameof(GetDetails)}");
+            scope.Start();
+
+            try
+            {
+                return _knowledgebaseRestClient.GetDetails(KnowledgebaseId, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets details about the knowledgebase with identifier <see cref="KnowledgebaseId"/>.
+        /// </summary>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>A response containing a <see cref="Knowledgebase"/> with identifier <see cref="KnowledgebaseId"/>.</returns>
+        /// <exception cref="RequestFailedException">The request failed. Check the <see cref="RequestFailedException.ErrorCode"/> for details.</exception>
+        public virtual async Task<Response<Knowledgebase>> GetDetailsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KnowledgebaseClient)}.{nameof(GetDetails)}");
+            scope.Start();
+
+            try
+            {
+                return await _knowledgebaseRestClient.GetDetailsAsync(KnowledgebaseId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

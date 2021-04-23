@@ -5,24 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.QuestionAnswering.Models
 {
-    internal partial class KnowledgebaseDTO
+    public partial class Knowledgebase
     {
-        internal static KnowledgebaseDTO DeserializeKnowledgebaseDTO(JsonElement element)
+        internal static Knowledgebase DeserializeKnowledgebase(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<string> hostName = default;
-            Optional<string> lastAccessedTimestamp = default;
-            Optional<string> lastChangedTimestamp = default;
-            Optional<string> lastPublishedTimestamp = default;
+            Optional<Uri> hostName = default;
+            Optional<DateTimeOffset> lastAccessedTimestamp = default;
+            Optional<DateTimeOffset> lastChangedTimestamp = default;
+            Optional<DateTimeOffset> lastPublishedTimestamp = default;
             Optional<string> name = default;
             Optional<string> userId = default;
-            Optional<IReadOnlyList<string>> urls = default;
+            Optional<IReadOnlyList<Uri>> urls = default;
             Optional<IReadOnlyList<string>> sources = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,22 +34,42 @@ namespace Azure.AI.QuestionAnswering.Models
                 }
                 if (property.NameEquals("hostName"))
                 {
-                    hostName = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    hostName = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastAccessedTimestamp"))
                 {
-                    lastAccessedTimestamp = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastAccessedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastChangedTimestamp"))
                 {
-                    lastChangedTimestamp = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastChangedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastPublishedTimestamp"))
                 {
-                    lastPublishedTimestamp = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastPublishedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -68,10 +89,10 @@ namespace Azure.AI.QuestionAnswering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new Uri(item.GetString()));
                     }
                     urls = array;
                     continue;
@@ -92,7 +113,7 @@ namespace Azure.AI.QuestionAnswering.Models
                     continue;
                 }
             }
-            return new KnowledgebaseDTO(id.Value, hostName.Value, lastAccessedTimestamp.Value, lastChangedTimestamp.Value, lastPublishedTimestamp.Value, name.Value, userId.Value, Optional.ToList(urls), Optional.ToList(sources));
+            return new Knowledgebase(id.Value, hostName.Value, Optional.ToNullable(lastAccessedTimestamp), Optional.ToNullable(lastChangedTimestamp), Optional.ToNullable(lastPublishedTimestamp), name.Value, userId.Value, Optional.ToList(urls), Optional.ToList(sources));
         }
     }
 }

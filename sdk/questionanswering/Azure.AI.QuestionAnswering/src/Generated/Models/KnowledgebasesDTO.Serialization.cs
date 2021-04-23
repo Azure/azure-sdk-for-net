@@ -15,7 +15,7 @@ namespace Azure.AI.QuestionAnswering.Models
     {
         internal static KnowledgebasesDTO DeserializeKnowledgebasesDTO(JsonElement element)
         {
-            Optional<IReadOnlyList<KnowledgebaseDTO>> knowledgebases = default;
+            Optional<IReadOnlyList<Knowledgebase>> knowledgebases = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("knowledgebases"))
@@ -25,10 +25,10 @@ namespace Azure.AI.QuestionAnswering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnowledgebaseDTO> array = new List<KnowledgebaseDTO>();
+                    List<Knowledgebase> array = new List<Knowledgebase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgebaseDTO.DeserializeKnowledgebaseDTO(item));
+                        array.Add(Knowledgebase.DeserializeKnowledgebase(item));
                     }
                     knowledgebases = array;
                     continue;

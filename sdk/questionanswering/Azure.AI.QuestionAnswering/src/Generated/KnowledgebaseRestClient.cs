@@ -112,7 +112,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="kbId"> Knowledgebase id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kbId"/> is null. </exception>
-        public async Task<Response<KnowledgebaseDTO>> GetDetailsAsync(string kbId, CancellationToken cancellationToken = default)
+        public async Task<Response<Knowledgebase>> GetDetailsAsync(string kbId, CancellationToken cancellationToken = default)
         {
             if (kbId == null)
             {
@@ -125,9 +125,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 200:
                     {
-                        KnowledgebaseDTO value = default;
+                        Knowledgebase value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KnowledgebaseDTO.DeserializeKnowledgebaseDTO(document.RootElement);
+                        value = Knowledgebase.DeserializeKnowledgebase(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -139,7 +139,7 @@ namespace Azure.AI.QuestionAnswering
         /// <param name="kbId"> Knowledgebase id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kbId"/> is null. </exception>
-        public Response<KnowledgebaseDTO> GetDetails(string kbId, CancellationToken cancellationToken = default)
+        public Response<Knowledgebase> GetDetails(string kbId, CancellationToken cancellationToken = default)
         {
             if (kbId == null)
             {
@@ -152,9 +152,9 @@ namespace Azure.AI.QuestionAnswering
             {
                 case 200:
                     {
-                        KnowledgebaseDTO value = default;
+                        Knowledgebase value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KnowledgebaseDTO.DeserializeKnowledgebaseDTO(document.RootElement);
+                        value = Knowledgebase.DeserializeKnowledgebase(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

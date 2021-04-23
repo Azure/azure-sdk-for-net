@@ -16,17 +16,17 @@ namespace Azure.AI.QuestionAnswering.Models
         /// <summary> Initializes a new instance of KnowledgebasesDTO. </summary>
         internal KnowledgebasesDTO()
         {
-            Knowledgebases = new ChangeTrackingList<KnowledgebaseDTO>();
+            Knowledgebases = new ChangeTrackingList<Knowledgebase>();
         }
 
         /// <summary> Initializes a new instance of KnowledgebasesDTO. </summary>
         /// <param name="knowledgebases"> Collection of knowledgebase records. </param>
-        internal KnowledgebasesDTO(IReadOnlyList<KnowledgebaseDTO> knowledgebases)
+        internal KnowledgebasesDTO(IReadOnlyList<Knowledgebase> knowledgebases)
         {
             Knowledgebases = knowledgebases;
         }
 
         /// <summary> Collection of knowledgebase records. </summary>
-        public IReadOnlyList<KnowledgebaseDTO> Knowledgebases { get; }
+        public IReadOnlyList<Knowledgebase> Knowledgebases { get; }
     }
 }

@@ -42,6 +42,9 @@ directive:
     from: FileDTO
     to: KnowledgebaseFileContent
 - rename-model:
+    from: KnowledgebaseDTO
+    to: Knowledgebase
+- rename-model:
     from: PromptDTO
     to: AnswerPrompt
 - rename-model:
@@ -67,6 +70,20 @@ directive:
     to: UpdateQuestionAnswerContent
 ```
 
+### Rename public model properties
+
+We cannot use the [`rename-model`](https://github.com/Azure/autorest/blob/master/docs/generate/built-in-directives.md#rename-property) directive because it actually changes the de/serialization to to read or write that property name. Until [this issue](https://github.com/Azure/autorest/issues/4095) is fixed, use transforms to set the `x-ms-client-name` instead.
+
+``` yaml
+directive:
+- where-model: Knowledgebase
+  transform: |
+    $.properties.hostName["x-ms-client-name"] = "endpoint";
+    $.properties.lastAccessedTimestamp["x-ms-client-name"] = "lastAccessed";
+    $.properties.lastChangedTimestamp["x-ms-client-name"] = "lastChanged";
+    $.properties.lastPublishedTimestamp["x-ms-client-name"] = "lastPublished";
+```
+
 ### Name StringIndexType parameter enum
 
 The `StringIndexType` parameter declares an enum but the AutoRest.CSharp add-in, at least, uses the ordinal to call it simply `Enum4`, which could change if enums are added later.
@@ -82,17 +99,25 @@ directive:
     }
 ```
 
-### Use datetime format for Operation
+### Use date-time format for Operation
 
-The two timestamps in Operation should use the `datetime` format.
+Timestamps should use the `date-time` format.
 
 ``` yaml
 directive:
-  from: swagger-document
+- from: swagger-document
   where: $.definitions.Operation
   transform: |
     $.properties.createdTimestamp.format = "date-time";
     $.properties.lastActionTimestamp.format = "date-time";
+
+# Use the renamed property names above.
+- from: swagger-document
+  where: $.definitions.Knowledgebase
+  transform: |
+    $.properties.lastAccessedTimestamp.format = "date-time";
+    $.properties.lastChangedTimestamp.format = "date-time";
+    $.properties.lastPublishedTimestamp.format = "date-time";
 ```
 
 ## C# customizations
