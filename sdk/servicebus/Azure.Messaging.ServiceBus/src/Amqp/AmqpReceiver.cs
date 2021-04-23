@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
@@ -93,6 +94,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// A map of locked messages received using the management client.
         /// </summary>
         private readonly ConcurrentExpiringSet<Guid> _requestResponseLockedMessages;
+
+        private static IReadOnlyList<ServiceBusReceivedMessage> s_backingEmptyList;
+
+        private static IReadOnlyList<ServiceBusReceivedMessage> EmptyList
+        {
+            get
+            {
+                s_backingEmptyList ??= new ReadOnlyCollection<ServiceBusReceivedMessage>(new List<ServiceBusReceivedMessage>(0));
+                return s_backingEmptyList;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AmqpReceiver"/> class.
@@ -286,7 +298,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             var link = default(ReceivingAmqpLink);
-            var receivedMessages = new List<ServiceBusReceivedMessage>();
 
             ThrowIfSessionLockLost();
 
@@ -350,10 +361,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var messagesReceived = await receiveMessagesCompletionSource.Task
                     .ConfigureAwait(false);
 
+                List<ServiceBusReceivedMessage> receivedMessages = null;
                 // If event messages were received, then package them for consumption and
                 // return them.
                 foreach (AmqpMessage message in messagesReceived)
                 {
+                    // Getting the count of the underlying collection is good for performance/allocations to prevent the list from growing
+                    receivedMessages ??= messagesReceived is IReadOnlyCollection<AmqpMessage> readOnlyList
+                        ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
+                        : new List<ServiceBusReceivedMessage>();
+
                     if (_receiveMode == ServiceBusReceiveMode.ReceiveAndDelete)
                     {
                         link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
@@ -363,7 +380,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     message.Dispose();
                 }
 
-                return receivedMessages;
+                return receivedMessages ?? EmptyList;
             }
             catch (OperationCanceledException)
             {
@@ -952,13 +969,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
 
-            var messages = new List<ServiceBusReceivedMessage>();
+            List<ServiceBusReceivedMessage> messages = null;
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
             {
                 ServiceBusReceivedMessage message = null;
-                IEnumerable<AmqpMap> messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
-                foreach (AmqpMap entry in messageList)
+                var messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
+                // not using foreach for better performance
+                for (var index = 0; index < messageList.Count; index++)
                 {
+                    AmqpMap entry = messageList[index];
+                    // Getting the count of the underlying collection is good for performance/allocations to prevent the list from growing
+                    messages ??= messageList is IReadOnlyCollection<AmqpMap> readOnlyList
+                        ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
+                        : new List<ServiceBusReceivedMessage>();
+
                     var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                     var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
                     message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, true);
@@ -969,13 +993,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     LastPeekedSequenceNumber = message.SequenceNumber;
                 }
-                return messages;
+                return messages ?? EmptyList;
             }
 
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
                 (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
             {
-                return messages;
+                return EmptyList;
             }
 
             throw amqpResponseMessage.ToMessagingContractException();
@@ -1233,7 +1257,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             long[] sequenceNumbers,
             TimeSpan timeout)
         {
-            var messages = new List<ServiceBusReceivedMessage>();
+            List<ServiceBusReceivedMessage> messages = null;
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.ReceiveBySequenceNumberOperation, timeout, null);
@@ -1256,10 +1280,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 if (response.StatusCode == AmqpResponseStatusCode.OK)
                 {
                     var amqpMapList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
-                    foreach (var entry in amqpMapList)
+                    // not using foreach for better performance
+                    for (var index = 0; index < amqpMapList.Count; index++)
                     {
+                        var entry = amqpMapList[index];
+                        // Getting the count of the underlying collection is good for performance/allocations to prevent the list from growing
+                        messages ??= amqpMapList is IReadOnlyCollection<AmqpMap> readOnlyList
+                            ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
+                            : new List<ServiceBusReceivedMessage>();
+
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
-                        var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
+                        var amqpMessage =
+                            AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
                         var message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
@@ -1283,7 +1315,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw; // will never be reached
             }
 
-            return messages;
+            return messages ?? EmptyList;
         }
 
         /// <summary>
