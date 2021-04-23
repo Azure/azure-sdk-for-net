@@ -9,13 +9,14 @@ namespace Azure.ResourceManager.Core
     /// A class representing the base resource used by all azure resources.
     /// </summary>
     [ReferenceType(typeof(TenantResourceIdentifier))]
-    public class Resource<TIdentifier> : IEquatable<Resource<TIdentifier>>, IEquatable<string>,
+    public abstract class Resource<TIdentifier> : IEquatable<Resource<TIdentifier>>, IEquatable<string>,
         IComparable<Resource<TIdentifier>>, IComparable<string> where TIdentifier : TenantResourceIdentifier
     {
         /// <summary>
         /// Initializes an empty instance of <see cref="Resource{TIdentifier}"/>.
         /// </summary>
-        public Resource() { }
+        [InitializationConstructor]
+        protected Resource() { }
 
         /// <summary>
         /// Initializes a new instance of <see cref="Resource{TIdentifier}"/> for deserialization.
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="id"> The id of the resource. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The <see cref="ResourceType"/> of the resource. </param>
+        [SerializationConstructor]
         protected Resource(TIdentifier id, string name, ResourceType type)
         {
             Id = id;
