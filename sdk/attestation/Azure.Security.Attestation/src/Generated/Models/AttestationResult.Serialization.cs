@@ -41,15 +41,15 @@ namespace Azure.Security.Attestation
             Optional<string> ver = default;
             Optional<bool> isDebuggable = default;
             Optional<object> maaAttestationcollateral = default;
-            Optional<byte[]> aasEhd = default;
-            Optional<byte[]> maaEhd = default;
+            Optional<string> aasEhd = default;
+            Optional<string> maaEhd = default;
             Optional<float> productId = default;
             Optional<string> sgxMrenclave = default;
             Optional<string> sgxMrsigner = default;
             Optional<float> svn = default;
             Optional<string> tee = default;
             Optional<JsonWebKey> policySigner = default;
-            Optional<byte[]> policyHash = default;
+            Optional<string> policyHash = default;
             Optional<string> rpData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -255,22 +255,12 @@ namespace Azure.Security.Attestation
                 }
                 if (property.NameEquals("aas-ehd"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    aasEhd = property.Value.GetBytesFromBase64("U");
+                    aasEhd = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("maa-ehd"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    maaEhd = property.Value.GetBytesFromBase64("U");
+                    maaEhd = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("product-id"))
@@ -320,12 +310,7 @@ namespace Azure.Security.Attestation
                 }
                 if (property.NameEquals("policy_hash"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    policyHash = property.Value.GetBytesFromBase64("U");
+                    policyHash = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("rp_data"))

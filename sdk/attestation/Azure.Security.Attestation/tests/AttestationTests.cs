@@ -262,10 +262,11 @@ namespace Azure.Security.Attestation.Tests
                 CollectionAssert.AreEqual(binaryRuntimeData, args.Token.GetBody<AttestationResult>().EnclaveHeldData);
 
                 // The MAA service always sends a Key ID for the signer.
-                Assert.IsNotNull(args.Signer.CertificateKeyId);
-                Assert.AreEqual(TestEnvironment.SharedAttestationUrl, args.Token.Issuer);
-                callbackInvoked = true;
-                args.IsValid = true;
+                args.IsValid =
+                    null != args.Signer.CertificateKeyId &&
+                    1 == args.Signer.SigningCertificates.Count &&
+                    null != args.Signer.SigningCertificates[0] &&
+                    TestEnvironment.SharedAttestationUrl == args.Token.Issuer;
                 return Task.CompletedTask;
             };
 
@@ -281,9 +282,15 @@ namespace Azure.Security.Attestation.Tests
                         Evidence = BinaryData.FromBytes(binaryReport),
                         RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
                     });
-
                 // Confirm that the attestation token contains the enclave held data we specified.
                 CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData);
+
+#pragma warning disable CS0618 // Type or member is obsolete
+                Assert.IsNotNull(attestationResult.Value.DeprecatedEnclaveHeldData);
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData.ToArray());
+                Assert.IsNotNull(attestationResult.Value.DeprecatedEnclaveHeldData2);
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData2.ToArray());
+#pragma warning restore CS0618 // Type or member is obsolete
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
