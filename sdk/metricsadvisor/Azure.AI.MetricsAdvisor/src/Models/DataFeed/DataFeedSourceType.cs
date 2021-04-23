@@ -38,6 +38,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataFeedSourceType AzureDataLakeStorageGen2 { get; } = new DataFeedSourceType(AzureDataLakeStorageGen2Value);
 
         /// <summary>
+        /// Azure Event Hubs.
+        /// </summary>
+        public static DataFeedSourceType AzureEventHubs { get; } = new DataFeedSourceType(AzureEventHubsValue);
+
+        /// <summary>
         /// Azure Table.
         /// </summary>
         public static DataFeedSourceType AzureTable { get; } = new DataFeedSourceType(AzureTableValue);
