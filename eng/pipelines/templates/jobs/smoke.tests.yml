@@ -16,7 +16,8 @@ jobs:
   - ${{ if eq(parameters.Daily, false) }}:
     - job: smoke_test_eligibility
       pool:
-        vmImage: ubuntu-18.04
+        name: "azsdk-pool-mms-ubuntu-1804-general"
+        vmImage: "MMSUbuntu18.04"
       displayName: Check Smoke Test Eligibility
       steps:
         # pipelines only supports template each when it generates the entire script block.
@@ -47,29 +48,29 @@ jobs:
     strategy:
       matrix:
         Linux (AzureCloud):
-          Pool: Azure Pipelines
-          OSVmImage: "ubuntu-18.04"
+          Pool: "azsdk-pool-mms-ubuntu-1804-general"
+          OSVmImage: "MMSUbuntu18.04"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
           Location: "westus"
         Linux (AzureCloud Canary):
-          Pool: Azure Pipelines
-          OSVmImage: "ubuntu-18.04"
+          Pool: "azsdk-pool-mms-ubuntu-1804-general"
+          OSVmImage: "MMSUbuntu18.04"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
           ArmTemplateParameters: $(azureCloudArmParameters)
           Location: "eastus2euap"
         Windows_NetCoreApp (AzureCloud):
-          Pool: Azure Pipelines
-          OSVmImage: "windows-2019"
+          Pool: "azsdk-pool-mms-win-2019-general"
+          OSVmImage: "MMS2019"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
           Location: "westus"
         Windows_NetFramework (AzureCloud):
-          Pool: Azure Pipelines
-          OSVmImage: "windows-2019"
+          Pool: "azsdk-pool-mms-win-2019-general"
+          OSVmImage: "MMS2019"
           TestTargetFramework: net461
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
@@ -82,36 +83,36 @@ jobs:
           ArmTemplateParameters: $(azureCloudArmParameters)
           Location: "westus"
         Windows_Net50 (AzureCloud):
-          Pool: Azure Pipelines
-          OSVmImage: "windows-2019"
+          Pool: "azsdk-pool-mms-win-2019-general"
+          OSVmImage: "MMS2019"
           TestTargetFramework: net5.0
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)
           Location: "westus"
         Windows_NetCoreApp (AzureUSGovernment):
-          Pool: Azure Pipelines
-          OSVmImage: "windows-2019"
+          Pool: "azsdk-pool-mms-win-2019-general"
+          OSVmImage: "MMS2019"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-gov-test-resources)
           ArmTemplateParameters: $(azureUSGovernmentArmParameters)
           Location: "usgovarizona"
         Windows_NetFramework (AzureUSGovernment):
-          Pool: Azure Pipelines
-          OSVmImage: "windows-2019"
+          Pool: "azsdk-pool-mms-win-2019-general"
+          OSVmImage: "MMS2019"
           TestTargetFramework: net461
           SubscriptionConfiguration: $(sub-config-gov-test-resources)
           ArmTemplateParameters: $(azureUSGovernmentArmParameters)
           Location: "usgovarizona"
         Windows_NetCoreApp (AzureChinaCloud):
-          Pool: Azure Pipelines
-          OSVmImage: "windows-2019"
+          Pool: "azsdk-pool-mms-win-2019-general"
+          OSVmImage: "MMS2019"
           TestTargetFramework: netcoreapp2.1
           SubscriptionConfiguration: $(sub-config-cn-test-resources)
           ArmTemplateParameters: $(azureChinaCloudArmParameters)
           Location: "chinaeast2"
         Windows_NetFramework (AzureChinaCloud):
-          Pool: Azure Pipelines
-          OSVmImage: "windows-2019"
+          Pool: "azsdk-pool-mms-win-2019-general"
+          OSVmImage: "MMS2019"
           TestTargetFramework: net461
           SubscriptionConfiguration: $(sub-config-cn-test-resources)
           ArmTemplateParameters: $(azureChinaCloudArmParameters)
