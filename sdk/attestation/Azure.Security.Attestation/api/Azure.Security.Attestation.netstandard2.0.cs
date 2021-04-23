@@ -25,10 +25,10 @@ namespace Azure.Security.Attestation
         public AttestationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public AttestationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Security.Attestation.AttestationClientOptions options) { }
         public System.Uri Endpoint { get { throw null; } }
-        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestOpenEnclave(Azure.Security.Attestation.AttestRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestOpenEnclaveAsync(Azure.Security.Attestation.AttestRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestSgxEnclave(Azure.Security.Attestation.AttestRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestSgxEnclaveAsync(Azure.Security.Attestation.AttestRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestOpenEnclave(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestOpenEnclaveAsync(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestSgxEnclave(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestSgxEnclaveAsync(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.BinaryData> AttestTpm(System.BinaryData request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> AttestTpmAsync(System.BinaryData request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner>> GetSigningCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -49,6 +49,14 @@ namespace Azure.Security.Attestation
         public System.BinaryData BinaryData { get { throw null; } }
         public bool DataIsJson { get { throw null; } }
     }
+    public partial class AttestationRequest
+    {
+        public AttestationRequest() { }
+        public string DraftPolicyForAttestation { get { throw null; } set { } }
+        public System.BinaryData Evidence { get { throw null; } set { } }
+        public Azure.Security.Attestation.AttestationData InittimeData { get { throw null; } set { } }
+        public Azure.Security.Attestation.AttestationData RuntimeData { get { throw null; } set { } }
+    }
     public partial class AttestationResponse<T> : Azure.Response<T> where T : class
     {
         internal AttestationResponse() { }
@@ -60,17 +68,41 @@ namespace Azure.Security.Attestation
     {
         internal AttestationResult() { }
         public object Confirmation { get { throw null; } }
-        public byte[] DeprecatedEnclaveHeldData { get { throw null; } }
-        public byte[] DeprecatedEnclaveHeldData2 { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedEnclaveHeldData is deprecated, use EnclaveHeldData instead")]
+        public System.BinaryData DeprecatedEnclaveHeldData { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedEnclaveHeldData2 is deprecated, use EnclaveHeldData instead")]
+        public System.BinaryData DeprecatedEnclaveHeldData2 { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedIsDebuggable is deprecated, use IsDebuggable instead")]
         public bool? DeprecatedIsDebuggable { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedMrEnclave is deprecated, use MrEnclave instead")]
         public string DeprecatedMrEnclave { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedMrSigner is deprecated, use MrSigner instead")]
         public string DeprecatedMrSigner { get { throw null; } }
-        public byte[] DeprecatedPolicyHash { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedPolicyHash is deprecated, use PolicyHash instead")]
+        public System.BinaryData DeprecatedPolicyHash { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedProductId is deprecated, use ProductId instead")]
         public float? DeprecatedProductId { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedRpData is deprecated, use Nonce instead")]
         public string DeprecatedRpData { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedSgxCollateral is deprecated, use SgxCollateral instead")]
         public object DeprecatedSgxCollateral { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedSvn is deprecated, use Svn instead")]
         public float? DeprecatedSvn { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedTee is deprecated, use Tee instead")]
         public string DeprecatedTee { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedVersion is deprecated, use Version instead")]
         public string DeprecatedVersion { get { throw null; } }
         public byte[] EnclaveHeldData { get { throw null; } }
         public System.DateTimeOffset Expiration { get { throw null; } }
@@ -174,14 +206,6 @@ namespace Azure.Security.Attestation
         public static implicit operator Azure.Security.Attestation.AttestationType (string value) { throw null; }
         public static bool operator !=(Azure.Security.Attestation.AttestationType left, Azure.Security.Attestation.AttestationType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class AttestRequest
-    {
-        public AttestRequest() { }
-        public string DraftPolicyForAttestation { get { throw null; } set { } }
-        public System.BinaryData Evidence { get { throw null; } set { } }
-        public Azure.Security.Attestation.AttestationData InittimeData { get { throw null; } set { } }
-        public Azure.Security.Attestation.AttestationData RuntimeData { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyCertificateResolution : System.IEquatable<Azure.Security.Attestation.PolicyCertificateResolution>
