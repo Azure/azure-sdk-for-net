@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests.Scenario
 {
+    [Parallelizable]
     public class HttpPipelineTests : ResourceManagerTestBase
     {
         private ArmClient _client;
@@ -25,12 +26,15 @@ namespace Azure.ResourceManager.Core.Tests.Scenario
         }
 
         [Test]
-        public void ValidateHttpPipelines()
+        public async Task ValidateHttpPipelines()
         {
-            ResourceGroup resourceGroup = _client.DefaultSubscription
+            ResourceGroup resourceGroup = await _client.DefaultSubscription
                 .GetResourceGroups().Construct("westus")
-                .CreateOrUpdateAsync("test-CacheHttpPipeline").ConfigureAwait(false).GetAwaiter().GetResult();
-            Assert.AreEqual(resourceGroup.Pipeline.GetHashCode(), _client.DefaultSubscription.Pipeline.GetHashCode());
+                .CreateOrUpdateAsync("test-CacheHttpPipeline");
+            await foreach (var rg in _client.DefaultSubscription.GetResourceGroups().ListAsync())
+            {
+                Assert.AreEqual(rg.Pipeline.GetHashCode(), _client.DefaultSubscription.Pipeline.GetHashCode());
+            }
         }
     }
 }
