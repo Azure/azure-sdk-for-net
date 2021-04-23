@@ -18,8 +18,8 @@ var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCreden
 To poll the status of documents in an operation you use the `DocumentTranslationOperation` class which contains two functions `GetAllDocumentsStatusAsync` which returns the status of all documents in the operation and `GetDocumentStatusAsync` which returns the status of a specific document given its ID.
 
 ```C# Snippet:PollIndividualDocumentsAsync
-Uri sourceUri = <source SAS URI>;
-Uri targetUri = <target SAS URI>;
+Uri sourceUri = new Uri("<source SAS URI>");
+Uri targetUri = new Uri("<target SAS URI>");
 
 var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 

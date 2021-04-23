@@ -37,6 +37,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The URI scheme to apply when using web sockets for service communication.</summary>
         private const string WebSocketsUriScheme = "wss";
 
+        /// <summary>Indicates whether or not this instance has been disposed.</summary>
+        private volatile bool _disposed;
+
         /// <summary>
         ///   The version of AMQP to use within the scope.
         /// </summary>
@@ -83,7 +86,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <value><c>true</c> if disposed; otherwise, <c>false</c>.</value>
-        public override bool IsDisposed { get; protected set; }
+        ///
+        public override bool IsDisposed
+        {
+            get => _disposed;
+            protected set => _disposed = value;
+        }
 
         /// <summary>
         ///   The cancellation token to use with operations initiated by the scope.
@@ -254,6 +262,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusEventSource.Log.CreateManagementLinkStart(identifier);
             try
             {
+                Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var stopWatch = ValueStopwatch.StartNew();
@@ -303,6 +312,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             bool isSessionReceiver,
             CancellationToken cancellationToken)
         {
+            Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = ValueStopwatch.StartNew();
@@ -347,6 +357,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
+            Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             var stopWatch = ValueStopwatch.StartNew();
 

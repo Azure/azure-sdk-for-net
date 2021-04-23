@@ -1,0 +1,50 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/9a15b791-8d2f-436f-a734-25d128c72254/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "32",
+        "Content-Type": "application/json",
+        "traceparent": "00-841b384131b1eb4aa010c08f4f4898b2-d69c35b5f668c24d-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210422.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "69272719ec966dc0d767e2a490f3aed5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "this won\u0027t work"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Connection": "keep-alive",
+        "Content-Length": "423",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Apr 2021 16:56:00 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-778c644d5b-brthf",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "error": {
+          "message": "The request had some invalid properties",
+          "code": "BadArgumentError",
+          "correlationId": "74310ce9-9a8a-4bbd-9eb7-171c59a83ee9",
+          "innererror": {
+            "code": "SyntaxError",
+            "message": "Request is invalid and cannot be processed: Syntax error: SYN0001: I could not parse that, sorry. [line:position=0:0]. Query: \u0027let [\u0027emptyTable\u0027] = view () { datatable(column:string)[] };restrict access to (*);\r\nthis won\u0027t work\u0027"
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-04-22T09:55:58.3723633-07:00",
+    "RandomSeed": "977279808",
+    "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254"
+  }
+}

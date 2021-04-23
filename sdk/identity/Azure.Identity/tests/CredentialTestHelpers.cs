@@ -39,13 +39,11 @@ namespace Azure.Identity.Tests
 
         public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzurePowerShell(TimeSpan expiresOffset)
         {
-            const string expiresOnStringFormat = "yyyy-MM-ddTHH:mm:sszzz";
-
-            var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString(expiresOnStringFormat);
-            var expiresOn = DateTimeOffset.ParseExact(expiresOnString, expiresOnStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+            var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString();
+            var expiresOn = DateTimeOffset.Parse(expiresOnString,  CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
             var token = Guid.NewGuid().ToString();
-            var json = $"{{ \"Token\": \"{token}\", \"ExpiresOn\": \"{expiresOnString}\" }}";
-            return (token, expiresOn, json);
+            var xml = @$"<Object Type=""Microsoft.Azure.Commands.Profile.Models.PSAccessToken""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.DateTimeOffset"">{expiresOnString}</Property><Property Name=""TenantId"" Type=""System.String"">{Guid.NewGuid().ToString()}</Property><Property Name=""UserId"" Type=""System.String"">foo@contoso.com</Property><Property Name=""Type"" Type=""System.String"">Bearer</Property></Object>";
+            return (token, expiresOn, xml);
         }
 
         public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForVisualStudio() => CreateTokenForVisualStudio(TimeSpan.FromSeconds(30));
@@ -77,11 +75,7 @@ namespace Azure.Identity.Tests
             }
 
             var json = $"{{ \"TokenProviders\": [{sb}] }}";
-            return new TestFileSystemService
-            {
-                FileExistsHandler = p => paths.Contains(p),
-                ReadAllHandler = p => json
-            };
+            return new TestFileSystemService { FileExistsHandler = p => paths.Contains(p), ReadAllHandler = p => json };
         }
 
         public static TestFileSystemService CreateFileSystemForVisualStudioCode(IdentityTestEnvironment testEnvironment, string cloudName = default)
@@ -105,11 +99,7 @@ namespace Azure.Identity.Tests
 
             sb.Append('}');
 
-            return new TestFileSystemService
-            {
-                FileExistsHandler = p => Path.HasExtension("json"),
-                ReadAllHandler = s => sb.ToString()
-            };
+            return new TestFileSystemService { FileExistsHandler = p => Path.HasExtension("json"), ReadAllHandler = s => sb.ToString() };
         }
 
         public static async ValueTask<AuthenticationRecord> GetAuthenticationRecordAsync(IdentityTestEnvironment testEnvironment, RecordedTestMode mode)
@@ -129,8 +119,10 @@ namespace Azure.Identity.Tests
             var password = testEnvironment.Password;
             var tenantId = testEnvironment.TestTenantId;
 
-            var result = await PublicClientApplicationBuilder.Create(clientId).WithTenantId(tenantId).Build()
-                .AcquireTokenByUsernamePassword(new[] {".default"}, username, password.ToSecureString())
+            var result = await PublicClientApplicationBuilder.Create(clientId)
+                .WithTenantId(tenantId)
+                .Build()
+                .AcquireTokenByUsernamePassword(new[] { ".default" }, username, password.ToSecureString())
                 .ExecuteAsync();
 
             return new AuthenticationRecord(result, clientId);
@@ -152,7 +144,7 @@ namespace Azure.Identity.Tests
                 .Build();
 
             var retriever = new RefreshTokenRetriever(client.UserTokenCache);
-            await client.AcquireTokenByUsernamePassword(new[] {".default"}, username, password.ToSecureString()).ExecuteAsync();
+            await client.AcquireTokenByUsernamePassword(new[] { ".default" }, username, password.ToSecureString()).ExecuteAsync();
 
             StaticCachesUtilities.ClearStaticMetadataProviderCache();
             StaticCachesUtilities.ClearAuthorityEndpointResolutionManagerCache();

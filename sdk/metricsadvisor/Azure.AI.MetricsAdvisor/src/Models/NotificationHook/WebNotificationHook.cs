@@ -11,7 +11,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// All alerts can be sent through a web hook.
     /// </summary>
     [CodeGenModel("WebhookHookInfo")]
-    [CodeGenSuppress(nameof(WebNotificationHook), typeof(string))]
+    [CodeGenSuppress(nameof(WebNotificationHook), typeof(string), typeof(WebhookHookParameter))]
     public partial class WebNotificationHook : NotificationHook
     {
         /// <summary>

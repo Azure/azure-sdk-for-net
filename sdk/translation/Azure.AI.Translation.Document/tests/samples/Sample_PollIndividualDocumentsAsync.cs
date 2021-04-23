@@ -21,13 +21,9 @@ namespace Azure.AI.Translation.Document.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            #region Snippet:PollIndividualDocumentsAsync
             Uri sourceUri = new Uri("<source SAS URI>");
             Uri targetUri = new Uri("<target SAS URI>");
-
-            #region Snippet:PollIndividualDocumentsAsync
-
-            //@@ Uri sourceUri = <source SAS URI>;
-            //@@ Uri targetUri = <target SAS URI>;
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 

@@ -237,6 +237,26 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IGalleryApplicationVersionsOperations GalleryApplicationVersions { get; private set; }
 
         /// <summary>
+        /// Gets the IGallerySharingProfileOperations.
+        /// </summary>
+        public virtual IGallerySharingProfileOperations GallerySharingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedGalleriesOperations.
+        /// </summary>
+        public virtual ISharedGalleriesOperations SharedGalleries { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImagesOperations.
+        /// </summary>
+        public virtual ISharedGalleryImagesOperations SharedGalleryImages { get; private set; }
+
+        /// <summary>
+        /// Gets the ISharedGalleryImageVersionsOperations.
+        /// </summary>
+        public virtual ISharedGalleryImageVersionsOperations SharedGalleryImageVersions { get; private set; }
+
+        /// <summary>
         /// Gets the ICloudServiceRoleInstancesOperations.
         /// </summary>
         public virtual ICloudServiceRoleInstancesOperations CloudServiceRoleInstances { get; private set; }
@@ -535,6 +555,10 @@ namespace Microsoft.Azure.Management.Compute
             GalleryImageVersions = new GalleryImageVersionsOperations(this);
             GalleryApplications = new GalleryApplicationsOperations(this);
             GalleryApplicationVersions = new GalleryApplicationVersionsOperations(this);
+            GallerySharingProfile = new GallerySharingProfileOperations(this);
+            SharedGalleries = new SharedGalleriesOperations(this);
+            SharedGalleryImages = new SharedGalleryImagesOperations(this);
+            SharedGalleryImageVersions = new SharedGalleryImageVersionsOperations(this);
             CloudServiceRoleInstances = new CloudServiceRoleInstancesOperations(this);
             CloudServiceRoles = new CloudServiceRolesOperations(this);
             CloudServices = new CloudServicesOperations(this);
