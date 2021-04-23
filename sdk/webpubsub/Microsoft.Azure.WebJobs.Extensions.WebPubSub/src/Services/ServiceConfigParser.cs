@@ -10,6 +10,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class ServiceConfigParser
     {
+        private static char[] _valueSeparator = new char[] { '=' };
+
         public Uri Endpoint { get; }
 
         public string AccessKey { get; }
@@ -45,11 +47,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             try
             {
-                setting = items.Where(x => x.Length > 0).ToDictionary(x => x.Split('=')[0], y => y.Split('=')[1], StringComparer.CurrentCultureIgnoreCase);
+                setting = items.Where(x => x.Length > 0).ToDictionary(x => x.Split(_valueSeparator, 2)[0], y => y.Split(_valueSeparator, 2)[1], StringComparer.InvariantCultureIgnoreCase);
             }
             catch (Exception)
             {
-                throw new ArgumentException($"Invalid Web PubSub connection string, please check");
+                throw new ArgumentException($"Invalid Web PubSub connection string, please check.");
             }
             return setting;
         }

@@ -136,13 +136,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                         using (token.Register(() => tcs.TrySetCanceled()))
                         {
                             var response = await tcs.Task.ConfigureAwait(false);
-                            var validResponse = BuildValidResponse(response, requestType);
 
-                            if (validResponse != null)
+                            // Skip no returns
+                            if (response != null)
                             {
-                                return validResponse;
+                                var validResponse = BuildValidResponse(response, requestType);
+
+                                if (validResponse != null)
+                                {
+                                    return validResponse;
+                                }
+                                _logger.LogWarning($"Invalid response type {response.GetType()} regarding current request: {requestType}");
                             }
-                            _logger.LogWarning($"Invalid response type regarding current request: {requestType}");
                         }
                     }
                     catch (Exception ex)

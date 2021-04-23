@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 new UriBuilder(_serviceConfig.Endpoint) :
                 new UriBuilder(_serviceConfig.Endpoint.Scheme, _serviceConfig.Endpoint.Host, _serviceConfig.Port);
 
-            _client = new WebPubSubServiceClient(endpoint.Uri, hubName, new AzureKeyCredential(_serviceConfig.AccessKey));
+            _client = new WebPubSubServiceClient(connectionString, hubName);
         }
 
         internal WebPubSubConnection GetClientConnection(string userId = null, string[] roles = null)
