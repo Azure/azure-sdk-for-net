@@ -26,7 +26,6 @@ namespace Azure.Data.Tables
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableItem>> CreateIfNotExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static string CreateQueryFilter(System.FormattableString filter) { throw null; }
         public static string CreateQueryFilter<T>(System.Linq.Expressions.Expression<System.Func<T, bool>> filter) { throw null; }
-        public virtual Azure.Data.Tables.TableTransactionalBatch CreateTransactionalBatch(string partitionKey) { throw null; }
         public virtual Azure.Response Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteEntity(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -43,6 +42,8 @@ namespace Azure.Data.Tables
         public virtual Azure.Pageable<T> Query<T>(string filter = null, int? maxPerPage = default(int?), System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Response SetAccessPolicy(System.Collections.Generic.IEnumerable<Azure.Data.Tables.Models.SignedIdentifier> tableAcl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetAccessPolicyAsync(System.Collections.Generic.IEnumerable<Azure.Data.Tables.Models.SignedIdentifier> tableAcl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.Tables.Models.TableBatchResponse> SubmitTransaction(Azure.Data.Tables.TableTransactionalBatch transactionalBatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableBatchResponse>> SubmitTransactionAsync(Azure.Data.Tables.TableTransactionalBatch transactionalBatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateEntityAsync<T>(T entity, Azure.ETag ifMatch, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual Azure.Response UpdateEntity<T>(T entity, Azure.ETag ifMatch, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpsertEntityAsync<T>(T entity, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
@@ -137,14 +138,18 @@ namespace Azure.Data.Tables
     public partial class TableTransactionalBatch
     {
         protected TableTransactionalBatch() { }
+        public TableTransactionalBatch(string partitionKey) { }
+        public int OperationCount { get { throw null; } }
         public virtual void AddEntities<T>(System.Collections.Generic.IEnumerable<T> entities) where T : class, Azure.Data.Tables.ITableEntity, new() { }
-        public virtual void AddEntity<T>(T entity) where T : class, Azure.Data.Tables.ITableEntity, new() { }
+        public virtual void AddEntity(Azure.Data.Tables.ITableEntity entity) { }
+        public void ClearOperations() { }
         public virtual void DeleteEntity(string rowKey, Azure.ETag ifMatch = default(Azure.ETag)) { }
-        public virtual Azure.Response<Azure.Data.Tables.Models.TableBatchResponse> SubmitBatch(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableBatchResponse>> SubmitBatchAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.ITableEntity> GetEntities() { throw null; }
+        public bool RemoveEntities(System.Collections.Generic.IEnumerable<Azure.Data.Tables.ITableEntity> entities) { throw null; }
+        public bool RemoveEntity(Azure.Data.Tables.ITableEntity entity) { throw null; }
         public virtual bool TryGetFailedEntityFromException(Azure.RequestFailedException exception, out Azure.Data.Tables.ITableEntity failedEntity) { throw null; }
-        public virtual void UpdateEntity<T>(T entity, Azure.ETag ifMatch, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge) where T : class, Azure.Data.Tables.ITableEntity, new() { }
-        public virtual void UpsertEntity<T>(T entity, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge) where T : class, Azure.Data.Tables.ITableEntity, new() { }
+        public virtual void UpdateEntity(Azure.Data.Tables.ITableEntity entity, Azure.ETag ifMatch, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge) { }
+        public virtual void UpsertEntity(Azure.Data.Tables.ITableEntity entity, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge) { }
     }
     public enum TableUpdateMode
     {

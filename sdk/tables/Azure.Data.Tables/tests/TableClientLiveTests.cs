@@ -1016,13 +1016,13 @@ namespace Azure.Data.Tables.Tests
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 5);
 
             // Create the batch.
-            var batch = InstrumentClient(client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey));
+            var batch = new TableTransactionalBatch(entitiesToCreate[0].PartitionKey);
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
             // Add the entities to the batch.
             batch.AddEntities(entitiesToCreate);
-            TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
+            TableBatchResponse response = await client.SubmitTransactionAsync(batch).ConfigureAwait(false);
 
             foreach (var entity in entitiesToCreate)
             {
@@ -1054,7 +1054,7 @@ namespace Azure.Data.Tables.Tests
             await client.AddEntityAsync(entitiesToCreate[2]).ConfigureAwait(false);
 
             // Create the batch.
-            TableTransactionalBatch batch = InstrumentClient(client.CreateTransactionalBatch(PartitionKeyValue));
+            TableTransactionalBatch batch = new TableTransactionalBatch(PartitionKeyValue);
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
@@ -1078,14 +1078,10 @@ namespace Azure.Data.Tables.Tests
             batch.AddEntity(entitiesToCreate.Last());
 
             // Submit the batch.
-            TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
+            TableBatchResponse response = await client.SubmitTransactionAsync(batch).ConfigureAwait(false);
 
             // Validate that the batch throws if we try to send it again.
-            Assert.ThrowsAsync<InvalidOperationException>(() => batch.SubmitBatchAsync());
-
-            // Validate that adding more operations to the batch throws.
-            var exception = Assert.Throws<InvalidOperationException>(() => batch.AddEntity(new TableEntity()));
-            Assert.That(exception.Message, Is.EqualTo(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce));
+            Assert.ThrowsAsync<InvalidOperationException>(() => client.SubmitTransactionAsync(batch));
 
             foreach (var entity in entitiesToCreate)
             {
@@ -1113,12 +1109,12 @@ namespace Azure.Data.Tables.Tests
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 4);
 
             // Create the batch.
-            var batch = InstrumentClient(client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey));
+            var batch = new TableTransactionalBatch(entitiesToCreate[0].PartitionKey);
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
             // Sending an empty batch throws.
-            var exception = Assert.ThrowsAsync<InvalidOperationException>(() => batch.SubmitBatchAsync());
+            var exception = Assert.ThrowsAsync<InvalidOperationException>(() => client.SubmitTransactionAsync(batch));
             Assert.That(exception.Message, Is.EqualTo(TableConstants.ExceptionMessages.BatchIsEmpty));
 
             // Add the last entity to the table prior to adding it as part of the batch to cause a batch failure.
@@ -1127,7 +1123,7 @@ namespace Azure.Data.Tables.Tests
             // Add the entities to the batch
             batch.AddEntities(entitiesToCreate);
 
-            var ex = Assert.ThrowsAsync<RequestFailedException>(() => batch.SubmitBatchAsync());
+            var ex = Assert.ThrowsAsync<RequestFailedException>(() => client.SubmitTransactionAsync(batch));
 
             Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.EntityAlreadyExists.ToString()));
             Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");

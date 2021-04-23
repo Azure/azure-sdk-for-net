@@ -6,8 +6,10 @@ namespace Azure.Data.Tables
     internal enum RequestType
     {
         Create,
-        Update,
+        UpdateMerge,
+        UpdateReplace,
         Delete,
-        Upsert
+        UpsertMerge,
+        UpsertReplace
     }
 }

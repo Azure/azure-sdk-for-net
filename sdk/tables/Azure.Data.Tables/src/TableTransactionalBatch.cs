@@ -6,10 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables
 {
@@ -18,42 +15,28 @@ namespace Azure.Data.Tables
     /// </summary>
     public class TableTransactionalBatch
     {
-        private readonly TableRestClient _tableOperations;
-        private readonly TableRestClient _batchOperations;
-        private readonly string _table;
-        private readonly ClientDiagnostics _diagnostics;
-        private MultipartContent _changeset;
-        private readonly OdataMetadataFormat _format;
-        private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
+        private readonly SemaphoreSlim _batchLock = new(1, 1);
+        internal MultipartContent _changeset;
         internal MultipartContent _batch;
-        internal Guid _batchGuid;
-        internal Guid _changesetGuid;
-        internal ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)> _requestLookup = new ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)>();
-        internal ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)> _requestMessages = new ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)>();
-        private List<(ITableEntity Entity, HttpMessage HttpMessage)> _submittedMessageList;
-        private bool _submitted;
+        private Guid _batchGuid;
+        private Guid _changesetGuid;
+        internal readonly ConcurrentDictionary<string, BatchItem> _requestLookup = new();
+        internal ConcurrentQueue<string> _requestMessages = new();
+        internal List<BatchItem> _submittedMessageList;
+        internal bool _submitted;
         private readonly string _partitionKey;
-        private readonly bool _isCosmosEndpoint;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableTransactionalBatch"/> class.
         /// </summary>
-        /// <param name="table">The name of the table.</param>
         /// <param name="partitionKey">The partitionKEy value for this transactional batch.</param>
-        /// <param name="tableOperations">The <see cref="TableRestClient"/>.</param>
-        /// <param name="format">The format for the service requests.</param>
-        /// <param name="isCosmosEndpoint">Indicates whether or not the current service endpoint is Cosmos.</param>
-        internal TableTransactionalBatch(string table, string partitionKey, TableRestClient tableOperations, OdataMetadataFormat format, bool isCosmosEndpoint)
+        public TableTransactionalBatch(string partitionKey)
         {
-            _table = table;
-            _tableOperations = tableOperations;
-            _diagnostics = _tableOperations.clientDiagnostics;
-            _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
-            _format = format;
+            Argument.AssertNotNullOrEmpty(partitionKey, nameof(partitionKey));
+
             _batch = TableRestClient.CreateBatchContent(_batchGuid);
             _changeset = _batch.AddChangeset(_changesetGuid);
             _partitionKey = partitionKey;
-            _isCosmosEndpoint = isCosmosEndpoint;
         }
 
         /// <summary>
@@ -61,19 +44,6 @@ namespace Azure.Data.Tables
         /// </summary>
         protected TableTransactionalBatch()
         { }
-
-        /// <summary>
-        /// Re-initializes the batch with the specified Guids for testing purposes.
-        /// </summary>
-        /// <param name="batchGuid">The batch boundary Guid.</param>
-        /// <param name="changesetGuid">The changeset boundary Guid.</param>
-        internal virtual void SetBatchGuids(Guid batchGuid, Guid changesetGuid)
-        {
-            _batchGuid = batchGuid;
-            _changesetGuid = changesetGuid;
-            _batch = TableRestClient.CreateBatchContent(_batchGuid);
-            _changeset = _batch.AddChangeset(_changesetGuid);
-        }
 
         /// <summary>
         /// Add a collection of AddEntity requests to the batch.
@@ -89,87 +59,45 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Adds a Table Entity of type <typeparamref name="T"/> to the batch.
+        /// Adds a Table Entity to the batch.
         /// </summary>
-        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="entity">The entity to add.</param>
-        public virtual void AddEntity<T>(T entity) where T : class, ITableEntity, new()
+        public virtual void AddEntity(ITableEntity entity)
         {
-            var message = _batchOperations.CreateInsertEntityRequest(
-                _table,
-                null,
-                _returnNoContent,
-                tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                queryOptions: new QueryOptions() { Format = _format });
-
-            AddMessage(entity, message, RequestType.Create);
+            AddRequest(entity, RequestType.Create);
         }
 
         /// <summary>
-        /// Adds an UpdateEntity request to the batch which
-        /// updates the specified table entity of type <typeparamref name="T"/>, if it exists.
+        /// Adds an UpdateEntity request to the batch which updates the specified table entity, if it exists.
         /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Replace"/>, the entity will be replaced.
-        /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Merge"/>, the property values present in the <paramref name="entity"/> will be merged with the existing entity.
+        /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Merge"/>, the property values present in the
+        /// <paramref name="entity"/> will be merged with the existing entity.
         /// </summary>
         /// <remarks>
         /// See <see cref="TableUpdateMode"/> for more information about the behavior of the <paramref name="mode"/>.
         /// </remarks>
-        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="entity">The entity to update.</param>
         /// <param name="ifMatch">
         /// The If-Match value to be used for optimistic concurrency.
         /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
-        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed) if the <see cref="ETag"/> value of the entity in the table does not match.
+        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed)
+        /// if the <see cref="ETag"/> value of the entity in the table does not match.
         /// </param>
         /// <param name="mode">Determines the behavior of the Update operation.</param>
-        public virtual void UpdateEntity<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge) where T : class, ITableEntity, new()
+        public virtual void UpdateEntity(ITableEntity entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge)
         {
-            HttpMessage message = CreateUpdateOrMergeRequest<T>(entity, mode, ifMatch);
-            AddMessage(entity, message, RequestType.Update);
+            entity.ETag = ifMatch;
+            AddRequest(entity, mode == TableUpdateMode.Merge ? RequestType.UpdateMerge : RequestType.UpdateReplace);
         }
 
         /// <summary>
-        /// Replaces the specified table entity of type <typeparamref name="T"/>, if it exists. Creates the entity if it does not exist.
+        /// Replaces the specified table entity, if it exists. Creates the entity if it does not exist.
         /// </summary>
-        /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="entity">The entity to upsert.</param>
-        /// <param name="mode">Determines the behavior of the update operation when the entity already exists in the table. See <see cref="TableUpdateMode"/> for more details.</param>
-        public virtual void UpsertEntity<T>(T entity, TableUpdateMode mode = TableUpdateMode.Merge) where T : class, ITableEntity, new()
-        {
-            HttpMessage message = CreateUpdateOrMergeRequest<T>(entity, mode, default);
-            AddMessage(entity, message, RequestType.Upsert);
-        }
-
-        private HttpMessage CreateUpdateOrMergeRequest<T>(T entity, TableUpdateMode mode, ETag ifMatch = default) where T : class, ITableEntity, new()
-        {
-            HttpMessage msg = mode switch
-            {
-                TableUpdateMode.Replace => _batchOperations.CreateUpdateEntityRequest(
-                    _table,
-                    entity.PartitionKey,
-                    entity.RowKey,
-                    null,
-                    ifMatch: ifMatch == default ? null : ifMatch.ToString(),
-                    tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                    queryOptions: new QueryOptions() { Format = _format }),
-                TableUpdateMode.Merge => _batchOperations.CreateMergeEntityRequest(
-                    _table,
-                    entity.PartitionKey,
-                    entity.RowKey,
-                    null,
-                    ifMatch: ifMatch == default ? null : ifMatch.ToString(),
-                    entity.ToOdataAnnotatedDictionary(),
-                    new QueryOptions() { Format = _format }),
-                _ => throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}")
-            };
-
-            if (_isCosmosEndpoint && mode == TableUpdateMode.Merge)
-            {
-                CosmosPatchTransformPolicy.TransformPatchToCosmosPost(msg);
-            }
-
-            return msg;
-        }
+        /// <param name="mode">Determines the behavior of the update operation when the entity already exists in the table.
+        /// See <see cref="TableUpdateMode"/> for more details.</param>
+        public virtual void UpsertEntity(ITableEntity entity, TableUpdateMode mode = TableUpdateMode.Merge)
+            => AddRequest(entity, mode == TableUpdateMode.Merge ? RequestType.UpsertMerge : RequestType.UpsertReplace);
 
         /// <summary>
         /// Add a DeleteEntity request to the batch.
@@ -178,94 +106,17 @@ namespace Azure.Data.Tables
         /// <param name="ifMatch">
         /// The If-Match value to be used for optimistic concurrency.
         /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
-        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed) if the <see cref="ETag"/> value of the entity in the table does not match.
+        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed)
+        /// if the <see cref="ETag"/> value of the entity in the table does not match.
         /// The default is to delete unconditionally.
         /// </param>
         public virtual void DeleteEntity(string rowKey, ETag ifMatch = default)
-        {
-            var message = _batchOperations.CreateDeleteEntityRequest(
-                _table,
-                _partitionKey,
-                rowKey,
-                ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
-                null,
-                queryOptions: new QueryOptions() { Format = _format });
-
-            AddMessage(new TableEntity(_partitionKey, rowKey) { ETag = ifMatch }, message, RequestType.Delete);
-        }
-
-        /// <summary>
-        /// Submits the batch transaction to the service for execution.
-        /// The sub-operations contained in the batch will either succeed or fail together as a transaction.
-        /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns><see cref="Response{T}"/> containing a <see cref="TableBatchResponse"/>.</returns>
-        /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
-        /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
-        public virtual async Task<Response<TableBatchResponse>> SubmitBatchAsync(CancellationToken cancellationToken = default) =>
-            await SubmitBatchAsyncInternal(true, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Submits the batch transaction to the service for execution.
-        /// The sub-operations contained in the batch will either succeed or fail together as a transaction.
-        /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns><see cref="Response{T}"/> containing a <see cref="TableBatchResponse"/>.</returns>
-        /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
-        /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
-        public virtual Response<TableBatchResponse> SubmitBatch(CancellationToken cancellationToken = default) =>
-            SubmitBatchAsyncInternal(false, cancellationToken).EnsureCompleted();
-
-        internal async Task<Response<TableBatchResponse>> SubmitBatchAsyncInternal(bool async, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableTransactionalBatch)}.{nameof(SubmitBatch)}");
-            scope.Start();
-            try
-            {
-                if (!_requestMessages.TryPeek(out var _))
-                {
-                    throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchIsEmpty);
-                }
-                if (_submitted)
-                {
-                    throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce);
-                }
-                else
-                {
-                    _submitted = true;
-                }
-
-                _submittedMessageList = BuildOrderedBatchRequests();
-
-                var request = _tableOperations.CreateBatchRequest(_batch, null, null);
-                Response<List<Response>> response = null;
-                if (async)
-                {
-                    response = await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    response = _tableOperations.SendBatchRequest(request, cancellationToken);
-                }
-
-                for (int i = 0; i < response.Value.Count; i++)
-                {
-                    _submittedMessageList[i].HttpMessage.Response = response.Value[i];
-                }
-
-                return Response.FromValue(new TableBatchResponse(_requestLookup), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+            => AddRequest(new TableEntity(_partitionKey, rowKey) { ETag = ifMatch }, RequestType.Delete);
 
         /// <summary>
         /// Tries to get the entity that caused the batch operation failure from the <see cref="RequestFailedException"/>.
         /// </summary>
-        /// <param name="exception">The exception thrown from <see cref="TableTransactionalBatch.SubmitBatch(CancellationToken)"/> or <see cref="TableTransactionalBatch.SubmitBatchAsync(CancellationToken)"/>.</param>
+        /// <param name="exception">The exception thrown from <see cref="TableClient.SubmitTransaction"/> or <see cref="TableClient.SubmitTransactionAsync"/>.</param>
         /// <param name="failedEntity">If the return value is <c>true</c>, contains the <see cref="ITableEntity"/> that caused the batch operation to fail.</param>
         /// <returns><c>true</c> if the failed entity was retrieved from the exception, else <c>false</c>.</returns>
         public virtual bool TryGetFailedEntityFromException(RequestFailedException exception, out ITableEntity failedEntity)
@@ -291,56 +142,103 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
+        /// Re-initializes the batch with the specified Guids for testing purposes.
+        /// </summary>
+        /// <param name="batchGuid">The batch boundary Guid.</param>
+        /// <param name="changesetGuid">The changeset boundary Guid.</param>
+        internal virtual void SetBatchGuids(Guid batchGuid, Guid changesetGuid)
+        {
+            _batchGuid = batchGuid;
+            _changesetGuid = changesetGuid;
+            _batch = TableRestClient.CreateBatchContent(_batchGuid);
+            _changeset = _batch.AddChangeset(_changesetGuid);
+        }
+
+        /// <summary>
         /// Adds a message to the batch to preserve sub-request ordering.
         /// </summary>
-        /// <returns><c>true</c>if the add succeeded, else <c>false</c>.</returns>
-        private bool AddMessage(ITableEntity entity, HttpMessage message, RequestType requestType)
+        private void AddRequest(ITableEntity entity, RequestType requestType)
         {
-            if (_submitted)
-            {
-                throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce);
-            }
-            if (_requestLookup.TryAdd(entity.RowKey, (message, requestType)))
-            {
-                _requestMessages.Enqueue((entity, message));
-                return true;
-            }
-            throw new InvalidOperationException("Each entity can only be represented once per batch.");
+            _requestMessages.Enqueue(entity.RowKey);
+            _requestLookup[entity.RowKey] = new BatchItem(requestType, entity, null);
         }
 
         /// <summary>
-        /// Builds an ordered list of <see cref="HttpMessage"/>s containing the batch sub-requests.
+        /// Gets the collection of entities represented in the batch.
         /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        public IReadOnlyList<ITableEntity> GetEntities()
+        {
+            return _requestMessages
+                .ToList()
+                .Select(rk => _requestLookup[rk].Entity)
+                .ToList()
+                .AsReadOnly();
+        }
+
+        /// <summary>
+        /// Clears the contents of the batch operation.
+        /// </summary>
+        public void ClearOperations()
+        {
+            _requestLookup.Clear();
+            _requestMessages = new ConcurrentQueue<string>();
+        }
+
+        /// <summary>
+        /// Removes the specified entity from the batch
+        /// </summary>
+        /// <param name="entity"></param>
         /// <returns></returns>
-        private List<(ITableEntity Entity, HttpMessage HttpMessage)> BuildOrderedBatchRequests()
+        /// <exception cref="NotImplementedException"></exception>
+        public bool RemoveEntity(ITableEntity entity)
+            => RemoveEntities(new[] { entity });
+
+        /// <summary>
+        /// Removes the specified entity from the batch
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public bool RemoveEntities(IEnumerable<ITableEntity> entities)
         {
-            var orderedList = _requestMessages.ToList();
-            foreach (var item in orderedList)
+            try
             {
-                _changeset.AddContent(new RequestRequestContent(item.HttpMessage.Request));
+                bool acquired = _batchLock.Wait(TimeSpan.FromSeconds(2));
+                if (!acquired)
+                {
+                    throw new Exception($"Unexpected error. Unable to {nameof(RemoveEntity)}");
+                }
+                var itemsToRemove = new HashSet<string>(entities.Select(e => e.RowKey));
+                var newQueue = new ConcurrentQueue<string>();
+                while (_requestMessages.TryDequeue(out string item))
+                {
+                    if (!itemsToRemove.Contains(item))
+                    {
+                        newQueue.Enqueue(item);
+                    }
+                    else
+                    {
+                        var isRemoved = _requestLookup.TryRemove(item, out _);
+                        if (!isRemoved)
+                        {
+                            // There was some error removing the entities
+                            return false;
+                        }
+                    }
+                }
+                _requestMessages = newQueue;
             }
-            return orderedList;
+            finally
+            {
+                _batchLock.Release();
+            }
+            return true;
         }
 
         /// <summary>
-        /// Creates a pipeline to use for processing sub-operations before they
-        /// are combined into a single multipart request.
+        /// Returns the count of entity operations contained in the batch.
         /// </summary>
-        /// <returns>A pipeline to use for processing sub-operations.</returns>
-        private static HttpPipeline CreateBatchPipeline()
-        {
-            // Configure the options to use minimal policies
-            var options = new TableClientOptions();
-            options.Diagnostics.IsLoggingEnabled = false;
-            options.Diagnostics.IsTelemetryEnabled = false;
-            options.Diagnostics.IsDistributedTracingEnabled = false;
-            options.Retry.MaxRetries = 0;
-
-            // Use an empty transport so requests aren't sent
-            options.Transport = new MemoryTransport();
-
-            // Use the same authentication mechanism
-            return HttpPipelineBuilder.Build(options);
-        }
+        public int OperationCount => _requestMessages.Count;
     }
 }

@@ -63,13 +63,13 @@ namespace Azure.Data.Tables.Samples
             };
 
             // Create the batch.
-            TableTransactionalBatch addEntitiesBatch = client.CreateTransactionalBatch(partitionKey);
+            TableTransactionalBatch addEntitiesBatch = new TableTransactionalBatch(partitionKey);
 
             // Add the entities to be added to the batch.
             addEntitiesBatch.AddEntities(entityList);
 
             // Submit the batch.
-            TableBatchResponse response = await addEntitiesBatch.SubmitBatchAsync().ConfigureAwait(false);
+            TableBatchResponse response = await client.SubmitTransactionAsync(addEntitiesBatch).ConfigureAwait(false);
 
             foreach (TableEntity entity in entityList)
             {
@@ -79,7 +79,7 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:BatchMixed
             // Create a new batch.
-            TableTransactionalBatch mixedBatch = client.CreateTransactionalBatch(partitionKey);
+            TableTransactionalBatch mixedBatch = new TableTransactionalBatch(partitionKey);
 
             // Add an entity for deletion to the batch.
             mixedBatch.DeleteEntity(entityList[0].RowKey);
@@ -106,12 +106,12 @@ namespace Azure.Data.Tables.Samples
             mixedBatch.UpsertEntity(updateEntity, TableUpdateMode.Replace);
 
              // Submit the batch.
-            await mixedBatch.SubmitBatchAsync().ConfigureAwait(false);
+            await client.SubmitTransactionAsync(mixedBatch).ConfigureAwait(false);
             #endregion
 
             #region Snippet:BatchDelete
             // Create a new batch.
-            TableTransactionalBatch deleteEntitiesBatch = client.CreateTransactionalBatch(partitionKey);
+            TableTransactionalBatch deleteEntitiesBatch = new TableTransactionalBatch(partitionKey);
 
             // Add the entities for deletion to the batch.
             foreach (TableEntity entity in entityList)
@@ -120,7 +120,7 @@ namespace Azure.Data.Tables.Samples
             }
 
             // Submit the batch.
-            await deleteEntitiesBatch.SubmitBatchAsync().ConfigureAwait(false);
+            await client.SubmitTransactionAsync(deleteEntitiesBatch).ConfigureAwait(false);
             #endregion
 
             // Delete the table.

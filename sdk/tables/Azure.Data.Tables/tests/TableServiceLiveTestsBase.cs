@@ -127,7 +127,7 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
+        internal static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
@@ -155,7 +155,7 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
+        internal static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
@@ -183,7 +183,7 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
+        internal static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
@@ -211,7 +211,7 @@ namespace Azure.Data.Tables.Tests
         /// <param name="partitionKeyValue">The partition key to create for the entity.</param>
         /// <param name="count">The number of entities to create</param>
         /// <returns></returns>
-        protected static List<ComplexEntity> CreateComplexTableEntities(string partitionKeyValue, int count)
+        internal static List<ComplexEntity> CreateComplexTableEntities(string partitionKeyValue, int count)
         {
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>

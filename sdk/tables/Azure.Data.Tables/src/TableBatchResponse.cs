@@ -9,13 +9,13 @@ using Azure.Core;
 namespace Azure.Data.Tables.Models
 {
     /// <summary>
-    /// The response from <see cref="TableTransactionalBatch.SubmitBatch(System.Threading.CancellationToken)"/> or <see cref="TableTransactionalBatch.SubmitBatchAsync(System.Threading.CancellationToken)"/>.
+    /// The response from <see cref="TableClient.SubmitTransaction"/> or <see cref="TableClient.SubmitTransactionAsync"/>.
     /// </summary>
     public class TableBatchResponse
     {
-        internal IDictionary<string, (HttpMessage Message, RequestType RequestType)> _requestLookup;
+        private readonly IDictionary<string, BatchItem> _requestLookup;
 
-        internal TableBatchResponse(ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)> requestLookup)
+        internal TableBatchResponse(ConcurrentDictionary<string, BatchItem> requestLookup)
         {
             _requestLookup = requestLookup;
         }
@@ -32,12 +32,12 @@ namespace Azure.Data.Tables.Models
         /// <returns></returns>
         public Response GetResponseForEntity(string rowKey)
         {
-            if (!_requestLookup.TryGetValue(rowKey, out (HttpMessage Message, RequestType RequestType) tuple))
+            if (!_requestLookup.TryGetValue(rowKey, out BatchItem item))
             {
                 throw new InvalidOperationException("The batch operation did not contain an entity with the specified rowKey");
             }
 
-            return tuple.Message.Response;
+            return item.Message.Response;
         }
     }
 }
