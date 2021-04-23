@@ -41,10 +41,10 @@ namespace Azure.AI.MetricsAdvisor
     {
         public GetAlertsOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.AI.MetricsAdvisor.AlertQueryTimeMode timeMode) { }
         public System.DateTimeOffset EndTime { get { throw null; } }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
         public Azure.AI.MetricsAdvisor.AlertQueryTimeMode TimeMode { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetAllFeedbackOptions
     {
@@ -52,16 +52,16 @@ namespace Azure.AI.MetricsAdvisor
         public System.DateTimeOffset? EndTime { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.FeedbackType? FeedbackType { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey Filter { get { throw null; } }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
         public Azure.AI.MetricsAdvisor.FeedbackQueryTimeMode? TimeMode { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetAnomaliesForAlertOptions
     {
         public GetAnomaliesForAlertOptions() { }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetAnomaliesForDetectionConfigurationFilter
     {
@@ -76,17 +76,17 @@ namespace Azure.AI.MetricsAdvisor
         public GetAnomaliesForDetectionConfigurationOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
         public System.DateTimeOffset EndTime { get { throw null; } }
         public Azure.AI.MetricsAdvisor.GetAnomaliesForDetectionConfigurationFilter Filter { get { throw null; } set { } }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetDataFeedIngestionStatusesOptions
     {
         public GetDataFeedIngestionStatusesOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
         public System.DateTimeOffset EndTime { get { throw null; } }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetDataFeedsFilter
     {
@@ -101,44 +101,44 @@ namespace Azure.AI.MetricsAdvisor
     {
         public GetDataFeedsOptions() { }
         public Azure.AI.MetricsAdvisor.GetDataFeedsFilter GetDataFeedsFilter { get { throw null; } set { } }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetDimensionValuesOptions
     {
         public GetDimensionValuesOptions() { }
         public string DimensionValueToFilter { get { throw null; } set { } }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetHooksOptions
     {
         public GetHooksOptions() { }
         public string HookNameFilter { get { throw null; } set { } }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetIncidentsForAlertOptions
     {
         public GetIncidentsForAlertOptions() { }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetIncidentsForDetectionConfigurationOptions
     {
         public GetIncidentsForDetectionConfigurationOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
         public System.Collections.Generic.IList<Azure.AI.MetricsAdvisor.Models.DimensionKey> DimensionsToFilter { get { throw null; } set { } }
         public System.DateTimeOffset EndTime { get { throw null; } }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetMetricEnrichmentStatusesOptions
     {
         public GetMetricEnrichmentStatusesOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
         public System.DateTimeOffset EndTime { get { throw null; } }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetMetricSeriesDataOptions
     {
@@ -152,17 +152,17 @@ namespace Azure.AI.MetricsAdvisor
         public GetMetricSeriesDefinitionsOptions(System.DateTimeOffset activeSince) { }
         public System.DateTimeOffset ActiveSince { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> DimensionCombinationsToFilter { get { throw null; } }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class GetValuesOfDimensionWithAnomaliesOptions
     {
         public GetValuesOfDimensionWithAnomaliesOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
         public Azure.AI.MetricsAdvisor.Models.DimensionKey DimensionToFilter { get { throw null; } }
         public System.DateTimeOffset EndTime { get { throw null; } }
+        public int? MaximumPageSize { get { throw null; } set { } }
         public int? SkipCount { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
-        public int? TopCount { get { throw null; } set { } }
     }
     public partial class MetricsAdvisorClient
     {
