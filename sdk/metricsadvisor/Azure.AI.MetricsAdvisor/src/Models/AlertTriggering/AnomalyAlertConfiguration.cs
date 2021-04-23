@@ -22,6 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             IdsOfHooksToAlert = new ChangeTrackingList<string>();
             MetricAlertConfigurations = new ChangeTrackingList<MetricAnomalyAlertConfiguration>();
+            SplitAlertByDimensions = new ChangeTrackingList<string>();
         }
 
         /// <summary>
