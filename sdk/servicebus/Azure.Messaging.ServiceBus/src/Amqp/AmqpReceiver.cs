@@ -366,6 +366,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // return them.
                 foreach (AmqpMessage message in messagesReceived)
                 {
+                    // Getting the count of the underlying collection is good for performance/allocations to prevent the list from growing
                     receivedMessages ??= messagesReceived is IReadOnlyCollection<AmqpMessage> readOnlyList
                         ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
                         : new List<ServiceBusReceivedMessage>();
@@ -981,6 +982,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 for (var index = 0; index < messageList.Count; index++)
                 {
                     AmqpMap entry = messageList[index];
+                    // Getting the count of the underlying collection is good for performance/allocations to prevent the list from growing
                     messages ??= messageList is IReadOnlyCollection<AmqpMap> readOnlyList
                         ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
                         : new List<ServiceBusReceivedMessage>();
@@ -1286,6 +1288,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     for (var index = 0; index < amqpMapList.Count; index++)
                     {
                         var entry = amqpMapList[index];
+                        // Getting the count of the underlying collection is good for performance/allocations to prevent the list from growing
                         messages ??= amqpMapList is IReadOnlyCollection<AmqpMap> readOnlyList
                             ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
                             : new List<ServiceBusReceivedMessage>();
