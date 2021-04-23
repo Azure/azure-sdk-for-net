@@ -186,5 +186,7 @@ namespace Azure.Core.TestFramework
                 new GetOriginalInterceptor(operation),
                 new OperationInterceptor(Mode == RecordedTestMode.Playback));
         }
+
+        protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);
     }
 }

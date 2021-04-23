@@ -25,12 +25,13 @@ To call `StartTranslationAsync` you need to initialize a list of `DocumentTransl
 More on generating SAS Tokens [here](https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#create-sas-access-tokens-for-document-translation)
 
 ```C# Snippet:MultipleInputsAsync
-Uri source1SasUriUri = <source1 SAS URI>;
-Uri source2SasUri = <source2 SAS URI>;
-Uri frenchTargetSasUri = <french target SAS URI>;
-Uri arabicTargetSasUri = <arabic target SAS URI>;
-Uri spanishTargetSasUri = <spanish target SAS URI>;
-Uri frenchGlossarySasUri = <french glossary SAS URI>;
+Uri source1SasUriUri = new Uri("<source1 SAS URI>");
+Uri source2SasUri = new Uri("<source2 SAS URI>");
+Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
+Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
+Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
+Uri frenchGlossarySasUri = new Uri("<french glossary SAS URI>");
+
 var glossaryFormat = "TSV";
 
 var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));

@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// authentication type.</param>
         /// <param name="replicaDeletionOption">A value indicating whether the
         /// VM has to be auto deleted. Supported Values: String.Empty, None,
-        /// OnRecoveryCloud</param>
+        /// OnRecoveryCloud.</param>
         public HyperVReplicaBasePolicyDetails(int? recoveryPoints = default(int?), int? applicationConsistentSnapshotFrequencyInHours = default(int?), string compression = default(string), string initialReplicationMethod = default(string), string onlineReplicationStartTime = default(string), string offlineReplicationImportPath = default(string), string offlineReplicationExportPath = default(string), int? replicationPort = default(int?), int? allowedAuthenticationType = default(int?), string replicaDeletionOption = default(string))
         {
             RecoveryPoints = recoveryPoints;
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether the VM has to be auto
-        /// deleted. Supported Values: String.Empty, None, OnRecoveryCloud
+        /// deleted. Supported Values: String.Empty, None, OnRecoveryCloud.
         /// </summary>
         [JsonProperty(PropertyName = "replicaDeletionOption")]
         public string ReplicaDeletionOption { get; set; }

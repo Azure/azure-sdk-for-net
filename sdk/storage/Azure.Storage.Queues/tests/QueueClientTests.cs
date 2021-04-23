@@ -1594,7 +1594,7 @@ namespace Azure.Storage.Queues.Test
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, queueStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -1648,7 +1648,7 @@ namespace Azure.Storage.Queues.Test
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.queue.core.windows.net");
             string queueName = GetNewQueueName();
             QueueUriBuilder queueUriBuilder = new QueueUriBuilder(serviceUri)
@@ -1684,7 +1684,7 @@ namespace Azure.Storage.Queues.Test
         public void GenerateSas_Builder()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.queue.core.windows.net");
             string queueName = GetNewQueueName();
             QueueUriBuilder queueUriBuilder = new QueueUriBuilder(serviceUri)
@@ -1724,7 +1724,7 @@ namespace Azure.Storage.Queues.Test
         public void GenerateSas_BuilderNullName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.queue.core.windows.net");
             string queueName = GetNewQueueName();
             QueueUriBuilder queueUriBuilder = new QueueUriBuilder(serviceUri)
@@ -1764,7 +1764,7 @@ namespace Azure.Storage.Queues.Test
         public void GenerateSas_BuilderWrongName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.queue.core.windows.net");
             string queueName = GetNewQueueName();
             QueueUriBuilder queueUriBuilder = new QueueUriBuilder(serviceUri)
