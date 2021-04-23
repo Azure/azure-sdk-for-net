@@ -80,7 +80,7 @@ namespace Proto.Network
         }
 
         /// <summary> The DDoS protection plan associated with the virtual network. </summary>
-        public SubResource DdosProtectionPlan
+        public Azure.ResourceManager.Network.Models.SubResource DdosProtectionPlan
 
         {
             get => Model.DdosProtectionPlan;
@@ -95,7 +95,7 @@ namespace Proto.Network
         }
 
         /// <summary> Array of IpAllocation which reference this VNET. </summary>
-        public IList<SubResource> IpAllocations
+        public IList<Azure.ResourceManager.Network.Models.SubResource> IpAllocations
         {
             get => Model.IpAllocations;
         }
