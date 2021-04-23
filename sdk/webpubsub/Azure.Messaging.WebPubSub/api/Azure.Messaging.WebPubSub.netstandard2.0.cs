@@ -2,8 +2,8 @@ namespace Azure.Messaging.WebPubSub
 {
     public enum WebPubSubPermission
     {
-        SendToGroup = 0,
-        JoinLeaveGroup = 1,
+        SendToGroup = 1,
+        JoinLeaveGroup = 2,
     }
     public partial class WebPubSubServiceClient
     {
@@ -56,10 +56,10 @@ namespace Azure.Messaging.WebPubSub
     }
     public partial class WebPubSubServiceClientOptions : Azure.Core.ClientOptions
     {
-        public WebPubSubServiceClientOptions(Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.V2020_10_01_beta) { }
+        public WebPubSubServiceClientOptions(Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.WebPubSubServiceClientOptions.ServiceVersion.V2021_05_01) { }
         public enum ServiceVersion
         {
-            V2020_10_01_beta = 1,
+            V2021_05_01 = 1,
         }
     }
 }
