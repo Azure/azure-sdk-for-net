@@ -2,7 +2,7 @@
 #steps: []
 # Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
 parameters:
-  NuGetCacheKey: 'Build' # ArtifactName (aka "packages")
+  NuGetCacheKey: 'Build'
 
 steps:
   - task: UseDotNet@2
