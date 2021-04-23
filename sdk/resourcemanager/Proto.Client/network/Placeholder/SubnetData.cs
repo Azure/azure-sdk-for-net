@@ -7,17 +7,24 @@ namespace Proto.Network
     /// <summary>
     /// A class representing the subnet data model.
     /// </summary>
-    public class SubnetData : ProxyResource<ResourceGroupResourceIdentifier, Azure.ResourceManager.Network.Models.Subnet>
+    public class SubnetData : Resource<ResourceGroupResourceIdentifier>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubnetData"/> class.
         /// </summary>
-        public SubnetData(Azure.ResourceManager.Network.Models.Subnet sub) : base(sub.Id, sub)
+        public SubnetData(Azure.ResourceManager.Network.Models.Subnet sub) 
+            : base(sub.Id, sub.Name, SubnetOperations.ResourceType)
         {
+            Model = sub;
         }
 
         /// <summary>
-        /// Gets the subnet id.
+        /// Gets or sets the Model this resource is based of. 
+        ///</summary>
+        public virtual Azure.ResourceManager.Network.Models.Subnet Model { get; set; }
+
+        /// <summary>
+        /// Gets the subnet id. 
         ///</summary>
         public override string Name => Model.Name;
 
