@@ -1,4 +1,9 @@
+# Release History
+
 ## 3.0.0-preview.2 (Unreleased)
+
+
+## 2.0.0-preview.1 (Unreleased)
 
 
 ## 3.0.0-preview.1 (2020-10-20)
@@ -9,6 +14,3 @@
   For Minor Version release
 ## 2.0.0 (2020-07-16)
   Remove preview tag from the release version
-## 2.0.0-preview.1 (Unreleased)
-
-

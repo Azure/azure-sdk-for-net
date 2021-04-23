@@ -2,17 +2,17 @@
 
 ## 3.2.0-preview.5 (Unreleased)
 
-## 3.2.0-preview.4 (2021-02-25)
-### Fixed
-- ExampleId attribute in label APIs could not hold int values
-- ArmTokenParameter parameter name had a typo
-
 ## 3.2.0-preview.3 (Unreleased)
 ### Added
 - Enable nesting of children in luis models
 - Flag to indicate if a feature is required
 ### Removed
 - Deprecated permissions API
+
+## 3.2.0-preview.4 (2021-02-25)
+### Fixed
+- ExampleId attribute in label APIs could not hold int values
+- ArmTokenParameter parameter name had a typo
 
 ## 3.2.0-preview.2 (2020-04-29)
 ### Added
