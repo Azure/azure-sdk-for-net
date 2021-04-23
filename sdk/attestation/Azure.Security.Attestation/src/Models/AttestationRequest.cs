@@ -8,7 +8,7 @@ using System.Text;
 namespace Azure.Security.Attestation
 {
     /// <summary>
-    /// Represents the data sent to the Attestation Service for a call to the <see cref="AttestationClient.AttestOpenEnclave(AttestRequest, System.Threading.CancellationToken)"/> or <see cref="AttestationClient.AttestSgxEnclave(AttestRequest, System.Threading.CancellationToken)"/> APIs.
+    /// Represents the data sent to the Attestation Service for a call to the <see cref="AttestationClient.AttestOpenEnclave(AttestationRequest, System.Threading.CancellationToken)"/> or <see cref="AttestationClient.AttestSgxEnclave(AttestationRequest, System.Threading.CancellationToken)"/> APIs.
     ///
     /// An Attestation Request has three elements:
     /// <list type="bullet">
@@ -29,12 +29,12 @@ namespace Azure.Security.Attestation
     ///
     /// The "Evidence" MUST be provided in an Attest call, however both Runtime Data and InitTime data are optional.
     /// </summary>
-    public class AttestRequest
+    public class AttestationRequest
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttestRequest"/> class.
+        /// Initializes a new instance of the <see cref="AttestationRequest"/> class.
         /// </summary>
-        public AttestRequest()
+        public AttestationRequest()
         {
         }
 

@@ -137,7 +137,7 @@ namespace Azure.Security.Attestation.Tests
                 // Collect quote and enclave held data from an SGX enclave.
 
                 var attestationResult = await client.AttestSgxEnclaveAsync(
-                    new AttestRequest
+                    new AttestationRequest
                     {
                         Evidence = BinaryData.FromBytes(binaryQuote),
                         RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
@@ -153,7 +153,7 @@ namespace Azure.Security.Attestation.Tests
                 // Collect quote and enclave held data from an SGX enclave.
 
                 var attestationResult = await client.AttestSgxEnclaveAsync(
-                    new AttestRequest
+                    new AttestationRequest
                     {
                         Evidence = BinaryData.FromBytes(binaryQuote),
                         RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), true),
@@ -202,7 +202,7 @@ namespace Azure.Security.Attestation.Tests
                 // Collect quote and enclave held data from an SGX enclave.
 
                 var attestationResult = await client.AttestSgxEnclaveAsync(
-                    new AttestRequest
+                    new AttestationRequest
                     {
                         Evidence = BinaryData.FromBytes(binaryQuote),
                         RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
@@ -230,7 +230,7 @@ namespace Azure.Security.Attestation.Tests
                 // Collect quote and enclave held data from an SGX enclave.
 
                 var attestationResult = await client.AttestOpenEnclaveAsync(
-                    new AttestRequest
+                    new AttestationRequest
                     {
                         Evidence = BinaryData.FromBytes(binaryReport),
                         RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
@@ -277,7 +277,7 @@ namespace Azure.Security.Attestation.Tests
                 // Collect quote and enclave held data from an SGX enclave.
 
                 var attestationResult = await client.AttestOpenEnclaveAsync(
-                    new AttestRequest
+                    new AttestationRequest
                     {
                         Evidence = BinaryData.FromBytes(binaryReport),
                         RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
@@ -324,7 +324,7 @@ namespace Azure.Security.Attestation.Tests
                 // Collect quote and enclave held data from an SGX enclave.
 
                 Assert.ThrowsAsync(typeof(RequestFailedException), async () => await client.AttestOpenEnclaveAsync(
-                    new AttestRequest
+                    new AttestationRequest
                     {
                         Evidence = BinaryData.FromBytes(binaryReport),
                         RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),

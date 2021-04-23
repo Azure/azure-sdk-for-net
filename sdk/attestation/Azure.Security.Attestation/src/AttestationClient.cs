@@ -87,10 +87,10 @@ namespace Azure.Security.Attestation
         /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
-        /// <remarks>The <see cref="AttestRequest.Evidence"/> must be an Intel SGX Quote.
+        /// <remarks>The <see cref="AttestationRequest.Evidence"/> must be an Intel SGX Quote.
         /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html" for more information.
         ///</remarks>
-        public virtual AttestationResponse<AttestationResult> AttestSgxEnclave(AttestRequest request, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestSgxEnclave(AttestationRequest request, CancellationToken cancellationToken = default)
                 => AttestSgxEnclaveInternal(request, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
@@ -99,10 +99,10 @@ namespace Azure.Security.Attestation
         /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
-        /// <remarks>The <see cref="AttestRequest.Evidence"/> must be an Intel SGX Quote.
+        /// <remarks>The <see cref="AttestationRequest.Evidence"/> must be an Intel SGX Quote.
         /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html" for more information.
         ///</remarks>
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveAsync(AttestRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveAsync(AttestationRequest request, CancellationToken cancellationToken = default)
             => await AttestSgxEnclaveInternal(request, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -112,10 +112,10 @@ namespace Azure.Security.Attestation
         /// <param name="async">true if the API call should be asynchronous, false otherwise.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/></returns>
-        /// <remarks>The <see cref="AttestRequest.Evidence"/> must be an Intel SGX Quote.
+        /// <remarks>The <see cref="AttestationRequest.Evidence"/> must be an Intel SGX Quote.
         /// See https://software.intel.com/content/www/us/en/develop/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example.html" for more information.
         ///</remarks>
-        private async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveInternal(AttestRequest request, bool async, CancellationToken cancellationToken = default)
+        private async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveInternal(AttestationRequest request, bool async, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
             Argument.AssertNotNull(request.Evidence, nameof(request.Evidence));
@@ -188,9 +188,9 @@ namespace Azure.Security.Attestation
         /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
-        /// <remarks>The <see cref="AttestRequest.Evidence"/> must be an OpenEnclave Report or OpenEnclave Evidence.</remarks>
+        /// <remarks>The <see cref="AttestationRequest.Evidence"/> must be an OpenEnclave Report or OpenEnclave Evidence.</remarks>
         /// See https://github.com/openenclave/openenclave for more information.
-        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(AttestRequest request, CancellationToken cancellationToken = default)
+        public virtual AttestationResponse<AttestationResult> AttestOpenEnclave(AttestationRequest request, CancellationToken cancellationToken = default)
             => AttestOpenEnclaveInternalAsync(request, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
@@ -199,9 +199,9 @@ namespace Azure.Security.Attestation
         /// <param name="request">Aggregate type containing the information needed to perform an attestation operation.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
-        /// <remarks>The <see cref="AttestRequest.Evidence"/> must be an OpenEnclave Report or OpenEnclave Evidence.</remarks>
+        /// <remarks>The <see cref="AttestationRequest.Evidence"/> must be an OpenEnclave Report or OpenEnclave Evidence.</remarks>
         /// See https://github.com/openenclave/openenclave for more information.
-        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(AttestRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveAsync(AttestationRequest request, CancellationToken cancellationToken = default)
             => await AttestOpenEnclaveInternalAsync(request, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -211,9 +211,9 @@ namespace Azure.Security.Attestation
         /// <param name="async">true if the API call should be asynchronous, false otherwise.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="request"/>.</returns>
-        /// <remarks>The <see cref="AttestRequest.Evidence"/> must be an OpenEnclave Report or OpenEnclave Evidence.</remarks>
+        /// <remarks>The <see cref="AttestationRequest.Evidence"/> must be an OpenEnclave Report or OpenEnclave Evidence.</remarks>
         /// See https://github.com/openenclave/openenclave for more information.
-        private async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveInternalAsync(AttestRequest request, bool async, CancellationToken cancellationToken = default)
+        private async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveInternalAsync(AttestationRequest request, bool async, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
             Argument.AssertNotNull(request.Evidence, nameof(request.Evidence));
