@@ -1,4 +1,4 @@
-# Azure Web PubSub service library for .NET
+# Azure Web PubSub service client library for .NET
 
 [Azure Web PubSub Service](https://aka.ms/awps/doc) is a service that enables you to build real-time messaging web applications using WebSockets and the publish-subscribe pattern. Any platform supporting WebSocket APIs can connect to the service easily, e.g. web pages, mobile applications, edge devices, etc. The service manages the WebSocket connections for you and allows up to 100K **concurrent** connections. It provides powerful APIs for you to manage these clients and deliver real-time messages.
 
@@ -33,12 +33,15 @@ dotnet add package Azure.Messaging.WebPubSub --prerelease
 - An [Azure subscription][azure_sub].
 - An existing Azure Web PubSub service instance.
 
+### Authenticate the client
+
+In order to interact with the service, you'll need to create an instance of the WebPubSubServiceClient class. To make this possible, you'll need the connection string or a key, which you can access in the Azure portal.
+
 ### Create a `WebPubSubServiceClient`
 
 ```csharp
 var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new AzureKeyCredential("<access-key>"));
 ```
-
 
 ## Key concepts
 
