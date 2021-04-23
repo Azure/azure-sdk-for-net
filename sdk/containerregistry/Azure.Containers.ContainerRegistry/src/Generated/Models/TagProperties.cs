@@ -14,30 +14,31 @@ namespace Azure.Containers.ContainerRegistry
     {
         /// <summary> Initializes a new instance of TagProperties. </summary>
         /// <param name="repository"> Image name. </param>
-        /// <param name="createdOn"> Tag created time. </param>
-        /// <param name="lastUpdatedOn"> Tag last update time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="repository"/> is null. </exception>
-        internal TagProperties(string repository, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
-        {
-            if (repository == null)
-            {
-                throw new ArgumentNullException(nameof(repository));
-            }
-
-            Repository = repository;
-            CreatedOn = createdOn;
-            LastUpdatedOn = lastUpdatedOn;
-        }
-
-        /// <summary> Initializes a new instance of TagProperties. </summary>
-        /// <param name="repository"> Image name. </param>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="repository"/>, <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="writeableProperties"/> is null. </exception>
         internal TagProperties(string repository, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ContentProperties writeableProperties)
         {
+            if (repository == null)
+            {
+                throw new ArgumentNullException(nameof(repository));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+            if (writeableProperties == null)
+            {
+                throw new ArgumentNullException(nameof(writeableProperties));
+            }
+
             Repository = repository;
             Name = name;
             Digest = digest;

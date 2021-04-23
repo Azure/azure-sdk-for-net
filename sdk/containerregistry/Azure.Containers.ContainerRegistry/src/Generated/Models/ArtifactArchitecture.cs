@@ -26,11 +26,15 @@ namespace Azure.Containers.ContainerRegistry
         private const string Amd64Value = "amd64";
         private const string ArmValue = "arm";
         private const string Arm64Value = "arm64";
+        private const string Mips64Value = "mips";
+        private const string Mips64Value = "mipsle";
         private const string Mips64Value = "mips64";
         private const string Mips64LeValue = "mips64le";
+        private const string Ppc64Value = "ppc64";
         private const string Ppc641EValue = "ppc641e";
         private const string Riscv64Value = "riscv64";
         private const string S390XValue = "s390x";
+        private const string WasmValue = "wasm";
 
         /// <summary> 386. </summary>
         public static ArtifactArchitecture I386 { get; } = new ArtifactArchitecture(I386Value);
@@ -40,16 +44,24 @@ namespace Azure.Containers.ContainerRegistry
         public static ArtifactArchitecture Arm { get; } = new ArtifactArchitecture(ArmValue);
         /// <summary> arm64. </summary>
         public static ArtifactArchitecture Arm64 { get; } = new ArtifactArchitecture(Arm64Value);
+        /// <summary> mips. </summary>
+        public static ArtifactArchitecture Mips64 { get; } = new ArtifactArchitecture(Mips64Value);
+        /// <summary> mipsle. </summary>
+        public static ArtifactArchitecture Mips64 { get; } = new ArtifactArchitecture(Mips64Value);
         /// <summary> mips64. </summary>
         public static ArtifactArchitecture Mips64 { get; } = new ArtifactArchitecture(Mips64Value);
         /// <summary> mips64le. </summary>
         public static ArtifactArchitecture Mips64Le { get; } = new ArtifactArchitecture(Mips64LeValue);
+        /// <summary> ppc64. </summary>
+        public static ArtifactArchitecture Ppc64 { get; } = new ArtifactArchitecture(Ppc64Value);
         /// <summary> ppc641e. </summary>
         public static ArtifactArchitecture Ppc641E { get; } = new ArtifactArchitecture(Ppc641EValue);
         /// <summary> riscv64. </summary>
         public static ArtifactArchitecture Riscv64 { get; } = new ArtifactArchitecture(Riscv64Value);
         /// <summary> s390x. </summary>
         public static ArtifactArchitecture S390X { get; } = new ArtifactArchitecture(S390XValue);
+        /// <summary> wasm. </summary>
+        public static ArtifactArchitecture Wasm { get; } = new ArtifactArchitecture(WasmValue);
         /// <summary> Determines if two <see cref="ArtifactArchitecture"/> values are the same. </summary>
         public static bool operator ==(ArtifactArchitecture left, ArtifactArchitecture right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArtifactArchitecture"/> values are not the same. </summary>

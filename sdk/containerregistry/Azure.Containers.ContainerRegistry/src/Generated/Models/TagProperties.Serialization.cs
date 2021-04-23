@@ -16,11 +16,11 @@ namespace Azure.Containers.ContainerRegistry
         internal static TagProperties DeserializeTagProperties(JsonElement element)
         {
             string imageName = default;
-            Optional<string> name = default;
-            Optional<string> digest = default;
+            string name = default;
+            string digest = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdateTime = default;
-            Optional<ContentProperties> changeableAttributes = default;
+            ContentProperties changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageName"))
@@ -59,11 +59,6 @@ namespace Azure.Containers.ContainerRegistry
                         }
                         if (property0.NameEquals("changeableAttributes"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
                             changeableAttributes = ContentProperties.DeserializeContentProperties(property0.Value);
                             continue;
                         }
@@ -71,7 +66,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new TagProperties(imageName, name.Value, digest.Value, createdTime, lastUpdateTime, changeableAttributes.Value);
+            return new TagProperties(imageName, name, digest, createdTime, lastUpdateTime, changeableAttributes);
         }
     }
 }

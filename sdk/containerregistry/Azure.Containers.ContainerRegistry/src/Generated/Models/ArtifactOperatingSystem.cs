@@ -22,9 +22,14 @@ namespace Azure.Containers.ContainerRegistry
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string AixValue = "aix";
+        private const string AndroidValue = "android";
         private const string DarwinValue = "darwin";
         private const string DragonflyValue = "dragonfly";
         private const string FreeBsdValue = "freebsd";
+        private const string IllumosValue = "illumos";
+        private const string IOsValue = "ios";
+        private const string JsValue = "js";
         private const string LinuxValue = "linux";
         private const string NetBsdValue = "netbsd";
         private const string OpenBsdValue = "openbsd";
@@ -32,12 +37,22 @@ namespace Azure.Containers.ContainerRegistry
         private const string SolarisValue = "solaris";
         private const string WindowsValue = "windows";
 
+        /// <summary> aix. </summary>
+        public static ArtifactOperatingSystem Aix { get; } = new ArtifactOperatingSystem(AixValue);
+        /// <summary> android. </summary>
+        public static ArtifactOperatingSystem Android { get; } = new ArtifactOperatingSystem(AndroidValue);
         /// <summary> darwin. </summary>
         public static ArtifactOperatingSystem Darwin { get; } = new ArtifactOperatingSystem(DarwinValue);
         /// <summary> dragonfly. </summary>
         public static ArtifactOperatingSystem Dragonfly { get; } = new ArtifactOperatingSystem(DragonflyValue);
         /// <summary> freebsd. </summary>
         public static ArtifactOperatingSystem FreeBsd { get; } = new ArtifactOperatingSystem(FreeBsdValue);
+        /// <summary> illumos. </summary>
+        public static ArtifactOperatingSystem Illumos { get; } = new ArtifactOperatingSystem(IllumosValue);
+        /// <summary> ios. </summary>
+        public static ArtifactOperatingSystem IOs { get; } = new ArtifactOperatingSystem(IOsValue);
+        /// <summary> js. </summary>
+        public static ArtifactOperatingSystem Js { get; } = new ArtifactOperatingSystem(JsValue);
         /// <summary> linux. </summary>
         public static ArtifactOperatingSystem Linux { get; } = new ArtifactOperatingSystem(LinuxValue);
         /// <summary> netbsd. </summary>
