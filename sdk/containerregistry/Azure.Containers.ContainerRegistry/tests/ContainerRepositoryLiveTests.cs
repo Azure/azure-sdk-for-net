@@ -137,10 +137,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var repository = client.GetRepository(_repositoryName);
 
             // Act
-            AsyncPageable<ManifestProperties> manifests = repository.GetManifestsAsync();
+            AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestsAsync();
 
-            ManifestProperties latest = null;
-            await foreach (ManifestProperties manifest in manifests)
+            ArtifactManifestProperties latest = null;
+            await foreach (ArtifactManifestProperties manifest in manifests)
             {
                 if (manifest.Tags.Count > 0 && manifest.Tags.Contains("latest"))
                 {
@@ -164,7 +164,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<ManifestProperties> artifacts = repository.GetManifestsAsync();
+            AsyncPageable<ArtifactManifestProperties> artifacts = repository.GetManifestsAsync();
             var pages = artifacts.AsPages(pageSizeHint: pageSize);
 
             int pageCount = 0;
@@ -187,7 +187,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int pageSize = 1;
             int minExpectedPages = 2;
 
-            AsyncPageable<ManifestProperties> manifests = repository.GetManifestsAsync();
+            AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestsAsync();
             string firstDigest = null;
             string secondDigest = null;
             int artifactCount = 0;
@@ -212,7 +212,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var pages = manifests.AsPages($"</acr/v1/{_repositoryName}/_manifests?last={firstDigest}&n={pageSize}>");
 
             int pageCount = 0;
-            Page<ManifestProperties> firstPage = null;
+            Page<ArtifactManifestProperties> firstPage = null;
             await foreach (var page in pages)
             {
                 if (pageCount == 0)
@@ -248,11 +248,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
 
                 // Act
-                AsyncPageable<ManifestProperties> manifests = repository.GetManifestsAsync(new GetManifestsOptions(ManifestOrderBy.LastUpdatedOnDescending));
+                AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestsAsync(new GetManifestsOptions(ManifestOrderBy.LastUpdatedOnDescending));
 
                 // Assert
                 string digest = null;
-                await foreach (ManifestProperties manifest in manifests)
+                await foreach (ArtifactManifestProperties manifest in manifests)
                 {
                     // Make sure we're looking at a manifest list, which has the tag
                     if (manifest.References != null && manifest.References.Count > 0)

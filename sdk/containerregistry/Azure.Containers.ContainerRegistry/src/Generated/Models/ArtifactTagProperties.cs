@@ -10,9 +10,9 @@ using System;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Tag attributes. </summary>
-    public partial class TagProperties
+    public partial class ArtifactTagProperties
     {
-        /// <summary> Initializes a new instance of TagProperties. </summary>
+        /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
         /// <param name="repository"> Image name. </param>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
@@ -20,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repository"/>, <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="writeableProperties"/> is null. </exception>
-        internal TagProperties(string repository, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ContentProperties writeableProperties)
+        internal ArtifactTagProperties(string repository, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ContentProperties writeableProperties)
         {
             if (repository == null)
             {

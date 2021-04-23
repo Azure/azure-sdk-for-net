@@ -64,13 +64,13 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         public virtual string LoginServer => _registryUri.Host;
 
-        /// <summary> List repositories. </summary>
+        /// <summary> List repositories in this registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<string> GetRepositoriesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<string> GetRepositoryNamesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositoryNames)}");
                 scope.Start();
                 try
                 {
@@ -86,7 +86,7 @@ namespace Azure.Containers.ContainerRegistry
 
             async Task<Page<string>> NextPageFunc(string continuationToken, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositoryNames)}");
                 scope.Start();
                 try
                 {
@@ -104,13 +104,13 @@ namespace Azure.Containers.ContainerRegistry
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> List repositories. </summary>
+        /// <summary> List repositories in this registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<string> GetRepositories(CancellationToken cancellationToken = default)
+        public virtual Pageable<string> GetRepositoryNames(CancellationToken cancellationToken = default)
         {
             Page<string> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositoryNames)}");
                 scope.Start();
                 try
                 {
@@ -126,7 +126,7 @@ namespace Azure.Containers.ContainerRegistry
 
             Page<string> NextPageFunc(string continuationToken, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositoryNames)}");
                 scope.Start();
                 try
                 {
@@ -197,15 +197,15 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Create a new <see cref="ContainerRepository"/> object for the specified repository.
         /// </summary>
-        /// <param name="repository"> The repository to reference. </param>
+        /// <param name="name"> The name of the repository to reference. </param>
         /// <returns> A new <see cref="ContainerRepository"/> for the desired repository. </returns>
-        public virtual ContainerRepository GetRepository(string repository)
+        public virtual ContainerRepository GetRepository(string name)
         {
-            Argument.AssertNotNull(repository, nameof(repository));
+            Argument.AssertNotNull(name, nameof(name));
 
             return new ContainerRepository(
-                repository,
                 _registryUri,
+                name,
                 _clientDiagnostics,
                 _restClient);
         }
@@ -213,18 +213,18 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Create a new <see cref="RegistryArtifact"/> object for the specified artifact.
         /// </summary>
-        /// <param name="repository"> The repository to reference. </param>
+        /// <param name="repositoryName"> The name of the repository to reference. </param>
         /// <param name="tagOrDigest"> Either a tag or a digest that uniquely identifies the artifact. </param>
         /// <returns> A new <see cref="RegistryArtifact"/> for the desired repository. </returns>
-        public virtual RegistryArtifact GetArtifact(string repository, string tagOrDigest)
+        public virtual RegistryArtifact GetArtifact(string repositoryName, string tagOrDigest)
         {
-            Argument.AssertNotNull(repository, nameof(repository));
+            Argument.AssertNotNull(repositoryName, nameof(repositoryName));
             Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
 
             return new RegistryArtifact(
-                repository,
-                tagOrDigest,
                 _registryUri,
+                repositoryName,
+                tagOrDigest,
                 _clientDiagnostics,
                 _restClient);
         }

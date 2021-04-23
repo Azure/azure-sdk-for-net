@@ -42,7 +42,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int helloWorldManifestReferences = 9;
 
             // Act
-            ManifestProperties properties = await artifact.GetManifestPropertiesAsync();
+            ArtifactManifestProperties properties = await artifact.GetManifestPropertiesAsync();
 
             // Assert
             Assert.Contains(tag, properties.Tags.ToList());
@@ -69,13 +69,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var artifact = client.GetArtifact(_repositoryName, tag);
 
             // Act
-            ManifestProperties manifestListProperties = await artifact.GetManifestPropertiesAsync();
+            ArtifactManifestProperties manifestListProperties = await artifact.GetManifestPropertiesAsync();
             var arm64LinuxImage = manifestListProperties.Manifests.First(
                 artifact =>
                     artifact.Architecture == "arm64" &&
                     artifact.OperatingSystem == "linux");
             var childArtifact = client.GetArtifact(_repositoryName, arm64LinuxImage.Digest);
-            ManifestProperties properties = await childArtifact.GetManifestPropertiesAsync();
+            ArtifactManifestProperties properties = await childArtifact.GetManifestPropertiesAsync();
 
             // Assert
             Assert.AreEqual(_repositoryName, properties.Repository);
@@ -92,11 +92,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string tag = "latest";
             var artifact = client.GetArtifact(_repositoryName, tag);
 
-            ManifestProperties artifactProperties = await artifact.GetManifestPropertiesAsync();
+            ArtifactManifestProperties artifactProperties = await artifact.GetManifestPropertiesAsync();
             ContentProperties originalContentProperties = artifactProperties.WriteableProperties;
 
             // Act
-            ManifestProperties properties = await artifact.SetManifestPropertiesAsync(
+            ArtifactManifestProperties properties = await artifact.SetManifestPropertiesAsync(
                 new ContentProperties()
                 {
                     CanList = false,
@@ -111,7 +111,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.IsFalse(properties.WriteableProperties.CanWrite);
             Assert.IsFalse(properties.WriteableProperties.CanDelete);
 
-            ManifestProperties updatedProperties = await artifact.GetManifestPropertiesAsync();
+            ArtifactManifestProperties updatedProperties = await artifact.GetManifestPropertiesAsync();
 
             Assert.IsFalse(updatedProperties.WriteableProperties.CanList);
             Assert.IsFalse(updatedProperties.WriteableProperties.CanRead);

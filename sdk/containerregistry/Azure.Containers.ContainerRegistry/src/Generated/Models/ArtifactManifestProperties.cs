@@ -12,17 +12,17 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes details. </summary>
-    public partial class ManifestProperties
+    public partial class ArtifactManifestProperties
     {
-        /// <summary> Initializes a new instance of ManifestProperties. </summary>
-        internal ManifestProperties()
+        /// <summary> Initializes a new instance of ArtifactManifestProperties. </summary>
+        internal ArtifactManifestProperties()
         {
             References = new ChangeTrackingList<ManifestAttributesManifestReferences>();
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManifestProperties. </summary>
-        /// <param name="repository"> Image name. </param>
+        /// <summary> Initializes a new instance of ArtifactManifestProperties. </summary>
+        /// <param name="repositoryName"> Repository name. </param>
         /// <param name="digest"> Manifest. </param>
         /// <param name="size"> Image size. </param>
         /// <param name="createdOn"> Created time. </param>
@@ -32,9 +32,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="references"> List of manifest attributes details. </param>
         /// <param name="tags"> List of tags. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
-        internal ManifestProperties(string repository, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ArtifactArchitecture architecture, ArtifactOperatingSystem operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
+        internal ArtifactManifestProperties(string repositoryName, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ArtifactArchitecture architecture, ArtifactOperatingSystem operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
         {
-            Repository = repository;
+            RepositoryName = repositoryName;
             Digest = digest;
             Size = size;
             CreatedOn = createdOn;
@@ -46,8 +46,8 @@ namespace Azure.Containers.ContainerRegistry
             WriteableProperties = writeableProperties;
         }
 
-        /// <summary> Image name. </summary>
-        public string Repository { get; }
+        /// <summary> Repository name. </summary>
+        public string RepositoryName { get; }
         /// <summary> Manifest. </summary>
         public string Digest { get; }
         /// <summary> Image size. </summary>

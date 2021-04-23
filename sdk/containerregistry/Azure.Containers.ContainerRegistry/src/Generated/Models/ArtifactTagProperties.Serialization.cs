@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class TagProperties
+    public partial class ArtifactTagProperties
     {
-        internal static TagProperties DeserializeTagProperties(JsonElement element)
+        internal static ArtifactTagProperties DeserializeArtifactTagProperties(JsonElement element)
         {
             string imageName = default;
             string name = default;
@@ -66,7 +66,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new TagProperties(imageName, name, digest, createdTime, lastUpdateTime, changeableAttributes);
+            return new ArtifactTagProperties(imageName, name, digest, createdTime, lastUpdateTime, changeableAttributes);
         }
     }
 }

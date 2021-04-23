@@ -15,13 +15,19 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
 
-        private readonly string _repository;
+        private readonly Uri _registryUri;
+        private readonly string _name;
         private readonly string _fullyQualifiedName;
+
+        /// <summary>
+        /// Gets the Registry Uri.
+        /// </summary>
+        public virtual Uri RegistryUri => _registryUri;
 
         /// <summary>
         /// Gets the name of the repository.
         /// </summary>
-        public virtual string Name { get; }
+        public virtual string Name => _name;
 
         /// <summary>
         /// Gets the fully qualified name of this repository.
@@ -30,10 +36,11 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// </summary>
-        internal ContainerRepository(string repository, Uri registryUri, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
+        internal ContainerRepository(Uri registryUri, string name,  ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
         {
-            _repository = repository;
-            _fullyQualifiedName = $"{registryUri.Host}/{repository}";
+            _name = name;
+            _registryUri = registryUri;
+            _fullyQualifiedName = $"{registryUri.Host}/{name}";
 
             _clientDiagnostics = clientDiagnostics;
             _restClient = restClient;
@@ -158,9 +165,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get the collection of registry artifacts for a repository. </summary>
         /// <param name="orderBy"> Requested order of manifests in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ManifestProperties> GetManifestsAsync(ManifestOrderBy orderBy = ManifestOrderBy.None, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ArtifactManifestProperties> GetManifestsAsync(ManifestOrderBy orderBy = ManifestOrderBy.None, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManifestProperties>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ArtifactManifestProperties>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifests)}");
                 scope.Start();
@@ -177,7 +184,7 @@ namespace Azure.Containers.ContainerRegistry
                 }
             }
 
-            async Task<Page<ManifestProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ArtifactManifestProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifests)}");
                 scope.Start();
@@ -201,9 +208,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get the collection of tags for a repository. </summary>
         /// <param name="orderBy"> Requested order of manifests in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ManifestProperties> GetManifests(ManifestOrderBy orderBy = ManifestOrderBy.None, CancellationToken cancellationToken = default)
+        public virtual Pageable<ArtifactManifestProperties> GetManifests(ManifestOrderBy orderBy = ManifestOrderBy.None, CancellationToken cancellationToken = default)
         {
-            Page<ManifestProperties> FirstPageFunc(int? pageSizeHint)
+            Page<ArtifactManifestProperties> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifests)}");
                 scope.Start();
@@ -220,7 +227,7 @@ namespace Azure.Containers.ContainerRegistry
                 }
             }
 
-            Page<ManifestProperties> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ArtifactManifestProperties> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepository)}.{nameof(GetManifests)}");
                 scope.Start();

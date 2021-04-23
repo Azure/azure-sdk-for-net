@@ -15,16 +15,27 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
 
-        private readonly string _repository;
+        private readonly Uri _registryUri;
+        private readonly string _repositoryName;
         private readonly string _tagOrDigest;
         private readonly string _fullyQualifiedName;
 
         private string _digest;
 
         /// <summary>
+        /// Gets the Registry Uri.
+        /// </summary>
+        public virtual Uri RegistryUri => _registryUri;
+
+        /// <summary>
         /// Gets the name of the repository for this artifact.
         /// </summary>
-        public virtual string Repository => _repository;
+        public virtual string RepositoryName => _repositoryName;
+
+        /// <summary>
+        /// Gets the tag or digest reference used to create this RegistryArtifact instance.
+        /// </summary>
+        public virtual string TagOrDigest => _tagOrDigest;
 
         /// <summary>
         /// Gets the fully qualified name of this artifact.
@@ -33,11 +44,12 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// </summary>
-        internal RegistryArtifact(string repository, string tagOrDigest, Uri registryUri, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
+        internal RegistryArtifact(Uri registryUri, string repositoryName, string tagOrDigest, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
         {
-            _repository = repository;
+            _repositoryName = repositoryName;
             _tagOrDigest = tagOrDigest;
-            _fullyQualifiedName = $"{registryUri.Host}/{repository}{(IsDigest(tagOrDigest) ? '@' : ':')}{tagOrDigest}";
+            _registryUri = registryUri;
+            _fullyQualifiedName = $"{registryUri.Host}/{repositoryName}{(IsDigest(tagOrDigest) ? '@' : ':')}{tagOrDigest}";
 
             _clientDiagnostics = clientDiagnostics;
             _restClient = restClient;
@@ -52,7 +64,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Get registry artifact properties by tag or digest. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManifestProperties>> GetManifestPropertiesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArtifactManifestProperties>> GetManifestPropertiesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetManifestProperties)}");
             scope.Start();
@@ -60,7 +72,7 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = await GetDigestAsync(cancellationToken).ConfigureAwait(false);
-                return await _restClient.GetManifestPropertiesAsync(_repository, digest, cancellationToken).ConfigureAwait(false);
+                return await _restClient.GetManifestPropertiesAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -71,7 +83,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Get registry artifact properties by tag or digest. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManifestProperties> GetManifestProperties(CancellationToken cancellationToken = default)
+        public virtual Response<ArtifactManifestProperties> GetManifestProperties(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetManifestProperties)}");
             scope.Start();
@@ -79,7 +91,7 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = GetDigest(cancellationToken);
-                return _restClient.GetManifestProperties(_repository, digest, cancellationToken);
+                return _restClient.GetManifestProperties(_repositoryName, digest, cancellationToken);
             }
             catch (Exception e)
             {
@@ -93,7 +105,7 @@ namespace Azure.Containers.ContainerRegistry
             if (_digest == null)
             {
                 _digest = IsDigest(_tagOrDigest) ? _tagOrDigest :
-                    (await _restClient.GetTagPropertiesAsync(_repository, _tagOrDigest, cancellationToken).ConfigureAwait(false)).Value.Digest;
+                    (await _restClient.GetTagPropertiesAsync(_repositoryName, _tagOrDigest, cancellationToken).ConfigureAwait(false)).Value.Digest;
             }
 
             return _digest;
@@ -103,7 +115,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             if (_digest == null)
             {
-                _digest = IsDigest(_tagOrDigest) ? _tagOrDigest : _restClient.GetTagProperties(_repository, _tagOrDigest, cancellationToken).Value.Digest;
+                _digest = IsDigest(_tagOrDigest) ? _tagOrDigest : _restClient.GetTagProperties(_repositoryName, _tagOrDigest, cancellationToken).Value.Digest;
             }
 
             return _digest;
@@ -117,7 +129,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Update manifest attributes. </summary>
         /// <param name="value"> Manifest properties value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManifestProperties>> SetManifestPropertiesAsync(ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArtifactManifestProperties>> SetManifestPropertiesAsync(ContentProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -126,7 +138,7 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = await GetDigestAsync(cancellationToken).ConfigureAwait(false);
-                return await _restClient.UpdateManifestPropertiesAsync(_repository, digest, value, cancellationToken).ConfigureAwait(false);
+                return await _restClient.UpdateManifestPropertiesAsync(_repositoryName, digest, value, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -138,7 +150,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Update manifest attributes. </summary>
         /// <param name="value"> Manifest properties value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManifestProperties> SetManifestProperties(ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<ArtifactManifestProperties> SetManifestProperties(ContentProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -147,7 +159,7 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = GetDigest(cancellationToken);
-                return _restClient.UpdateManifestProperties(_repository, digest, value, cancellationToken);
+                return _restClient.UpdateManifestProperties(_repositoryName, digest, value, cancellationToken);
             }
             catch (Exception e)
             {
@@ -165,7 +177,7 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = await GetDigestAsync(cancellationToken).ConfigureAwait(false);
-                return await _restClient.DeleteManifestAsync(_repository, digest, cancellationToken).ConfigureAwait(false);
+                return await _restClient.DeleteManifestAsync(_repositoryName, digest, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -183,7 +195,7 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = GetDigest(cancellationToken);
-                return _restClient.DeleteManifest(_repository, digest, cancellationToken);
+                return _restClient.DeleteManifest(_repositoryName, digest, cancellationToken);
             }
             catch (Exception e)
             {
@@ -198,9 +210,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get the collection of tags for a repository. </summary>
         /// <param name="orderBy"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<TagProperties> GetTagsAsync(TagOrderBy orderBy = TagOrderBy.None, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ArtifactTagProperties> GetTagsAsync(TagOrderBy orderBy = TagOrderBy.None, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TagProperties>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ArtifactTagProperties>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTags)}");
                 scope.Start();
@@ -208,7 +220,7 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     string digest = await GetDigestAsync(cancellationToken).ConfigureAwait(false);
                     string order = orderBy == TagOrderBy.None ? null : orderBy.ToSerialString();
-                    var response = await _restClient.GetTagsAsync(_repository, last: null, n: pageSizeHint, orderby: order, digest: digest, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetTagsAsync(_repositoryName, last: null, n: pageSizeHint, orderby: order, digest: digest, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -218,7 +230,7 @@ namespace Azure.Containers.ContainerRegistry
                 }
             }
 
-            async Task<Page<TagProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ArtifactTagProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTags)}");
                 scope.Start();
@@ -227,7 +239,7 @@ namespace Azure.Containers.ContainerRegistry
                     string digest = await GetDigestAsync(cancellationToken).ConfigureAwait(false);
                     string order = orderBy == TagOrderBy.None ? null : orderBy.ToSerialString();
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
-                    var response = await _restClient.GetTagsNextPageAsync(uriReference, _repository, last: null, n: null, orderby: order, digest: digest, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetTagsNextPageAsync(uriReference, _repositoryName, last: null, n: null, orderby: order, digest: digest, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -243,9 +255,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get the collection of tags for a repository. </summary>
         /// <param name="orderBy"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<TagProperties> GetTags(TagOrderBy orderBy = TagOrderBy.None, CancellationToken cancellationToken = default)
+        public virtual Pageable<ArtifactTagProperties> GetTags(TagOrderBy orderBy = TagOrderBy.None, CancellationToken cancellationToken = default)
         {
-            Page<TagProperties> FirstPageFunc(int? pageSizeHint)
+            Page<ArtifactTagProperties> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTags)}");
                 scope.Start();
@@ -253,7 +265,7 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     string digest = GetDigest(cancellationToken);
                     string order = orderBy == TagOrderBy.None ? null : orderBy.ToSerialString();
-                    var response = _restClient.GetTags(_repository, last: null, n: pageSizeHint, orderby: order, digest: digest, cancellationToken: cancellationToken);
+                    var response = _restClient.GetTags(_repositoryName, last: null, n: pageSizeHint, orderby: order, digest: digest, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -263,7 +275,7 @@ namespace Azure.Containers.ContainerRegistry
                 }
             }
 
-            Page<TagProperties> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ArtifactTagProperties> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTags)}");
                 scope.Start();
@@ -272,7 +284,7 @@ namespace Azure.Containers.ContainerRegistry
                     string digest = GetDigest(cancellationToken);
                     string order = orderBy == TagOrderBy.None ? null : orderBy.ToSerialString();
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
-                    var response = _restClient.GetTagsNextPage(uriReference, _repository, last: null, n: null, orderby: order, digest: digest, cancellationToken);
+                    var response = _restClient.GetTagsNextPage(uriReference, _repositoryName, last: null, n: null, orderby: order, digest: digest, cancellationToken);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -288,13 +300,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get tag properties by tag. </summary>
         /// <param name="tag"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TagProperties>> GetTagPropertiesAsync(string tag, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArtifactTagProperties>> GetTagPropertiesAsync(string tag, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagProperties)}");
             scope.Start();
             try
             {
-                return await _restClient.GetTagPropertiesAsync(_repository, tag, cancellationToken).ConfigureAwait(false);
+                return await _restClient.GetTagPropertiesAsync(_repositoryName, tag, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -306,7 +318,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get tag attributes by tag. </summary>
         /// <param name="tag"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TagProperties> GetTagProperties(string tag, CancellationToken cancellationToken = default)
+        public virtual Response<ArtifactTagProperties> GetTagProperties(string tag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tag, nameof(tag));
 
@@ -314,7 +326,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.GetTagProperties(_repository, tag, cancellationToken);
+                return _restClient.GetTagProperties(_repositoryName, tag, cancellationToken);
             }
             catch (Exception e)
             {
@@ -327,7 +339,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tag"> Tag name. </param>
         /// <param name="value"> Tag property value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TagProperties>> SetTagPropertiesAsync(string tag, ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArtifactTagProperties>> SetTagPropertiesAsync(string tag, ContentProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tag, nameof(tag));
             Argument.AssertNotNull(value, nameof(value));
@@ -336,7 +348,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _restClient.UpdateTagAttributesAsync(_repository, tag, value, cancellationToken).ConfigureAwait(false);
+                return await _restClient.UpdateTagAttributesAsync(_repositoryName, tag, value, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -349,7 +361,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tag"> Tag name. </param>
         /// <param name="value"> Tag property value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TagProperties> SetTagProperties(string tag, ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<ArtifactTagProperties> SetTagProperties(string tag, ContentProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tag, nameof(tag));
             Argument.AssertNotNull(value, nameof(value));
@@ -358,7 +370,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.UpdateTagAttributes(_repository, tag, value, cancellationToken);
+                return _restClient.UpdateTagAttributes(_repositoryName, tag, value, cancellationToken);
             }
             catch (Exception e)
             {
@@ -367,18 +379,18 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Untag the artifact.  The artifact's tag will be deleted. </summary>
+        /// <summary> Delete the tag.  This removes the tag from the artifact and its manifest. </summary>
         /// <param name="tag"> Name of tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UntagAsync(string tag, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteTagAsync(string tag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tag, nameof(tag));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(Untag)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(DeleteTag)}");
             scope.Start();
             try
             {
-                return await _restClient.DeleteTagAsync(_repository, tag, cancellationToken).ConfigureAwait(false);
+                return await _restClient.DeleteTagAsync(_repositoryName, tag, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -387,18 +399,18 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Untag the artifact.  The artifact's tag will be deleted. </summary>
+        /// <summary> Delete the tag.  This removes the tag from the artifact and its manifest. </summary>
         /// <param name="tag"> Name of tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Untag(string tag, CancellationToken cancellationToken = default)
+        public virtual Response DeleteTag(string tag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tag, nameof(tag));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(Untag)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(DeleteTag)}");
             scope.Start();
             try
             {
-                return _restClient.DeleteTag(_repository, tag, cancellationToken);
+                return _restClient.DeleteTag(_repositoryName, tag, cancellationToken);
             }
             catch (Exception e)
             {
