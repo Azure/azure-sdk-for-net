@@ -13,7 +13,7 @@ This library can be used to do the following actions. Details about the terms us
 - Grant, revoke, and check permissions for an existing connection
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/webpubsub/Azure.Messaging.WebPubSub/src) |
-[Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.WebPubSub/) |
+Package TBD |
 [API reference documentation](https://aka.ms/awps/sdk/csharp) |
 [Product documentation](https://aka.ms/awps/doc) |
 [Samples][samples_ref]
