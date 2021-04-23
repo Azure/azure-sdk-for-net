@@ -1948,7 +1948,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new Mock<TokenCredential>();
             var mockEventHubsCredential = new Mock<EventHubTokenCredential>(mockCredential.Object);
             var mockTokenProvider = new CbsTokenProvider(mockEventHubsCredential.Object, CancellationToken.None);
-            var mockScope = new MockConnectionMockScope(endpoint, endpoint, eventHub, mockEventHubsCredential.Object, transport, null);
+            var mockScope = new MockConnectionScope(endpoint, endpoint, eventHub, mockEventHubsCredential.Object, transport, null);
 
             // This is brittle, but the AMQP library does not support mocking nor setting this directly.
 
@@ -1992,7 +1992,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var endPoint = new Uri("sb://mine.hubs.com");
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
-            var mockScope = new MockConnectionMockScope(endPoint, endPoint, "test", credential.Object, EventHubsTransportType.AmqpTcp, null);
+            var mockScope = new MockConnectionScope(endPoint, endPoint, "test", credential.Object, EventHubsTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var expireTime = currentTime.AddHours(1);
             var buffer = GetAuthorizationRefreshBuffer();
@@ -2013,7 +2013,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var endPoint = new Uri("sb://mine.hubs.com");
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
-            var mockScope = new MockConnectionMockScope(endPoint, endPoint, "test", credential.Object, EventHubsTransportType.AmqpTcp, null);
+            var mockScope = new MockConnectionScope(endPoint, endPoint, "test", credential.Object, EventHubsTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var minimumRefresh = GetMinimumAuthorizationRefresh();
             var expireTime = currentTime.Add(minimumRefresh.Subtract(TimeSpan.FromMilliseconds(500)));
@@ -2032,7 +2032,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var endPoint = new Uri("sb://mine.hubs.com");
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
-            var mockScope = new MockConnectionMockScope(endPoint, endPoint, "test", credential.Object, EventHubsTransportType.AmqpTcp, null);
+            var mockScope = new MockConnectionScope(endPoint, endPoint, "test", credential.Object, EventHubsTransportType.AmqpTcp, null);
             var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
             var refreshBuffer = GetAuthorizationRefreshBuffer();
             var maximumRefresh = GetMaximumAuthorizationRefresh();
@@ -2040,6 +2040,47 @@ namespace Azure.Messaging.EventHubs.Tests
             var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
 
             Assert.That(calculatedRefresh, Is.EqualTo(maximumRefresh), "The maximum refresh duration should have been used.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.OpenAmqpObjectAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(typeof(InvalidOperationException))]
+        [TestCase(typeof(ObjectDisposedException))]
+        public async Task OpenAmqpObjectAsyncTranslatesInvalidStateExceptions(Type exceptionType)
+        {
+            var observedException = default(Exception);
+            var openException = (Exception)Activator.CreateInstance(exceptionType, "stringArg");
+            var endpoint = new Uri("amqp://test.service.gov");
+            var eventHub = "myHub";
+            var transport = EventHubsTransportType.AmqpTcp;
+            var mockCredential = new Mock<TokenCredential>();
+            var mockEventHubsCredential = new Mock<EventHubTokenCredential>(mockCredential.Object);
+            var mockScope = new MockConnectionScope(endpoint, endpoint, eventHub, mockEventHubsCredential.Object, transport, null);
+
+            mockScope.MockConnection
+                .Protected()
+                .Setup("OpenInternal")
+                .Throws(openException)
+                .Verifiable();
+
+            try
+            {
+                await mockScope.InvokeBaseOpenAmqpObjectAsync(mockScope.MockConnection.Object, EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            }
+            catch (Exception ex)
+            {
+                observedException = ex;
+            }
+
+            Assert.That(observedException, Is.Not.Null, "An exception should have been observed.");
+            Assert.That(observedException, Is.TypeOf<EventHubsException>(), "The exception should have been translated.");
+            Assert.That(((EventHubsException)observedException).IsTransient, Is.True, "The exception should be transient.");
+
+            mockScope.MockConnection.VerifyAll();
         }
 
         /// <summary>
@@ -2200,11 +2241,11 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Provides a mock to use with a mocked connection.
         /// </summary>
         ///
-        private class MockConnectionMockScope : AmqpConnectionScope
+        private class MockConnectionScope : AmqpConnectionScope
         {
             public readonly Mock<AmqpConnection> MockConnection;
 
-            public MockConnectionMockScope(Uri serviceEndpoint,
+            public MockConnectionScope(Uri serviceEndpoint,
                                            Uri connectionEndpoint,
                                            string eventHubName,
                                            EventHubTokenCredential credential,
@@ -2213,6 +2254,8 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 MockConnection = new Mock<AmqpConnection>(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             }
+
+            public Task InvokeBaseOpenAmqpObjectAsync(AmqpObject target, TimeSpan timeout) => base.OpenAmqpObjectAsync(target, timeout);
 
             public TimeSpan InvokeCalculateLinkAuthorizationRefreshInterval(DateTime expirationTimeUtc,
                                                                             DateTime currentTimeUtc) => base.CalculateLinkAuthorizationRefreshInterval(expirationTimeUtc, currentTimeUtc);

@@ -24,19 +24,38 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for internal testing only.
         /// </summary>
-        /// <param name="value">The actual field value.</param>
-        /// <param name="isPhoneNumber">Whether or not this value represents a phone number.</param>
-        internal FieldValue(string value, bool isPhoneNumber = false)
+        /// <param name="type">The field type.</param>
+        internal FieldValue(FieldValueType type)
             : this()
         {
-            ValueType = isPhoneNumber ? FieldValueType.PhoneNumber : FieldValueType.String;
-            ValueString = value;
+            ValueType = type;
+            _fieldValue = new FieldValue_internal(type);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        /// <param name="type">The data type of the field value.</param>
+        internal FieldValue(string value, FieldValueType type)
+            : this()
+        {
+            if (type != FieldValueType.String && type != FieldValueType.PhoneNumber && type != FieldValueType.Country)
+            {
+                throw new ArgumentException($"Specified {nameof(type)} does not support string value ({type}).");
+            }
+
+            ValueString = value;
+            ValueType = type;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(long value)
@@ -47,7 +66,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(float value)
@@ -58,7 +78,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(DateTime value)
@@ -69,7 +90,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(TimeSpan value)
@@ -80,7 +102,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(IReadOnlyList<FormField> value)
@@ -91,7 +114,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(IReadOnlyDictionary<string, FormField> value)
@@ -102,7 +126,8 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
         /// </summary>
         /// <param name="value">The actual field value.</param>
         internal FieldValue(SelectionMarkState value)
@@ -110,6 +135,18 @@ namespace Azure.AI.FormRecognizer.Models
         {
             ValueType = FieldValueType.SelectionMark;
             ValueSelectionMark = value;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        internal FieldValue(FieldValueGender value)
+            : this()
+        {
+            ValueType = FieldValueType.Gender;
+            ValueGender = value;
         }
 
         /// <summary>
@@ -212,7 +249,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueInteger.HasValue)
             {
-                throw new InvalidOperationException($"Field value is null.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Int64)} type. Consider using the 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueInteger.Value;
@@ -237,13 +274,14 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueNumber.HasValue)
             {
-                // TODO: Sometimes ValueNumber isn't populated in ReceiptItems.  The following is a
-                // workaround to get the value from Text if ValueNumber isn't there.
-                // https://github.com/Azure/azure-sdk-for-net/issues/10333
-                float parsedFloat;
-                if (float.TryParse(_fieldValue.Text.TrimStart('$'), out parsedFloat))
+                // Workaround for receipts that was never deleted and got shipped in 3.0.0 GA so we need to maintain
+                if (float.TryParse(_fieldValue.Text.TrimStart('$'), out float parsedFloat))
                 {
                     return parsedFloat;
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Float)} type. Consider using the 'ValueData.Text' property.");
                 }
             }
 
@@ -269,7 +307,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueDate.HasValue)
             {
-                throw new InvalidOperationException($"Field value is null.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Date)} type. Consider using the 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueDate.Value.UtcDateTime;
@@ -294,7 +332,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueTime.HasValue)
             {
-                throw new InvalidOperationException($"Field value is null.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Time)} type. Consider using the 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueTime.Value;
@@ -367,7 +405,14 @@ namespace Azure.AI.FormRecognizer.Models
 
             foreach (var kvp in _fieldValue.ValueObject)
             {
-                fieldDictionary[kvp.Key] = new FormField(kvp.Key, kvp.Value, _readResults);
+                if (kvp.Value == null)
+                {
+                    fieldDictionary[kvp.Key] = null;
+                }
+                else
+                {
+                    fieldDictionary[kvp.Key] = new FormField(kvp.Key, kvp.Value, _readResults);
+                }
             }
 
             return fieldDictionary;
@@ -392,7 +437,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueSelectionMark.HasValue)
             {
-                throw new InvalidOperationException($"Field value is null.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.SelectionMark)} type. Consider using the 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueSelectionMark.Value;
@@ -437,7 +482,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueGender.HasValue)
             {
-                throw new InvalidOperationException($"Field value is null.");
+                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Gender)} type. Consider using the 'ValueData.Text' property.");
             }
 
             return _fieldValue.ValueGender.Value;

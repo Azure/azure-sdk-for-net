@@ -27,6 +27,7 @@
         "contributorRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c')]",
         "blobDataOwnerRoleId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/b7e6dc6d-f1e8-4753-8033-0f276bb0955b')]",
         "primaryAccountName": "[concat(parameters('baseName'), 'prim')]",
+        "primaryEncryptionScopeName": "[concat(parameters('baseName'), 'prim', '/encryptionScope')]",
         "secondaryAccountName": "[concat(parameters('baseName'), 'sec')]",
         "premiumAccountName": "[concat(parameters('baseName'), 'prem')]",
         "dataLakeAccountName": "[concat(parameters('baseName'), 'dtlk')]",
@@ -59,10 +60,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "[variables('authorizationApiVersion')]",
-            "name": "[guid(concat('dataContributorRoleId', variables('primaryAccountName')))]",
-            "dependsOn": [
-                "[variables('primaryAccountName')]"
-            ],
+            "name": "[guid(concat('dataContributorRoleId', resourceGroup().id))]",
             "properties": {
                 "roleDefinitionId": "[variables('blobDataContributorRoleId')]",
                 "principalId": "[parameters('testApplicationOid')]"
@@ -71,10 +69,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "[variables('authorizationApiVersion')]",
-            "name": "[guid(concat('contributorRoleId', variables('primaryAccountName')))]",
-            "dependsOn": [
-                "[variables('primaryAccountName')]"
-            ],
+            "name": "[guid(concat('contributorRoleId', resourceGroup().id))]",
             "properties": {
                 "roleDefinitionId": "[variables('contributorRoleId')]",
                 "principalId": "[parameters('testApplicationOid')]"
@@ -83,10 +78,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "[variables('authorizationApiVersion')]",
-            "name": "[guid(concat('blobDataOwnerRoleId', variables('primaryAccountName')))]",
-            "dependsOn": [
-                "[variables('primaryAccountName')]"
-            ],
+            "name": "[guid(concat('blobDataOwnerRoleId', resourceGroup().id))]",
             "properties": {
                 "roleDefinitionId": "[variables('blobDataOwnerRoleId')]",
                 "principalId": "[parameters('testApplicationOid')]"
@@ -123,6 +115,18 @@
                         "blockBlob"
                     ]
                 }
+            },
+            "dependsOn": [
+                "[variables('primaryAccountName')]"
+            ]
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/encryptionScopes",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[variables('primaryEncryptionScopeName')]",
+            "properties": {
+                "source": "Microsoft.Storage",
+                "state": "Enabled"
             },
             "dependsOn": [
                 "[variables('primaryAccountName')]"

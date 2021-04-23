@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -34,10 +33,7 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(OdataErrorTestInputs))]
         public void TryParseOdataError(string content, string expectedMessage, TableErrorCode expectedErrorCode, Dictionary<string, object> expectedData)
         {
-            var response = new MockResponse(400)
-            {
-                ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(content.Replace("\n", "\\n")))
-            };
+            var response = new MockResponse(400) { ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(content.Replace("\n", "\\n"))) };
             response.AddHeader(HttpHeader.Common.JsonContentType);
 
             var actualException = diagnostic.CreateRequestFailedException(response);

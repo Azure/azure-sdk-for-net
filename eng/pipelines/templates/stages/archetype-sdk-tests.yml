@@ -74,8 +74,7 @@ parameters:
   default: []
 - name: PlatformPreSteps
   type: object
-  default:
-    - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
+  default: []
 - name: PlatformPostSteps
   type: object
   default:
@@ -142,5 +141,6 @@ stages:
               - ${{ parameters.MatrixReplace }}
             CloudConfig:
               SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
+              SubscriptionConfigurations: ${{ cloud.value.SubscriptionConfigurations }}
               Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}
               Cloud: ${{ cloud.key }}

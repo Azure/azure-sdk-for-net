@@ -114,6 +114,64 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string MongoDbV2SinkCopyActivity = @"
+{
+  ""name"": ""ExampleCopyActivity"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""MongoDbAtlasSource"",
+            ""filter"": {
+                ""value"": ""@dataset().MyFilter""
+             },
+            ""cursorMethods"": {
+                ""project"": {
+                  ""value"": ""@dataset().MyProject"",
+                  ""type"": ""Expression""
+                },
+                ""sort"": ""{ age : 1 }"",
+                ""skip"": ""3"",
+                ""limit"": ""3""
+              },
+             ""batchSize"": ""5""
+          },
+          ""sink"": {
+            ""type"": ""MongoDbV2Sink"",
+            ""writeBehavior"": ""upsert"",
+            ""writeBatchSize"": ""5000""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+       }
+    ],
+    ""parameters"": {
+        ""MyFilter"": {
+          ""type"": ""String""
+        },
+        ""MyProject"": {
+          ""type"": ""String""
+        }
+      }
+}
+}
+";
+
+        [JsonSample]
         public const string CopyActivity = @"
 {
   ""name"": ""MyPipeline"",

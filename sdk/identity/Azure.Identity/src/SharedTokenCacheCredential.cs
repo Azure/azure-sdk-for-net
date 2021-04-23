@@ -23,7 +23,6 @@ namespace Azure.Identity
         internal const string MultipleAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts were found in the cache. Use username and tenant id to disambiguate.";
         internal const string NoMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. No account matching the specified{0}{1} was found in the cache.";
         internal const string MultipleMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified{0}{1} were found in the cache.";
-
         private static readonly ITokenCacheOptions s_DefaultCacheOptions = new SharedTokenCacheCredentialOptions();
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
@@ -116,9 +115,12 @@ namespace Azure.Identity
                 AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
-            catch (MsalUiRequiredException)
+            catch (MsalUiRequiredException ex)
             {
-                throw scope.FailWrapAndThrow(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on."));
+                throw scope.FailWrapAndThrow(
+                    new CredentialUnavailableException(
+                        $"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on.",
+                        ex));
             }
             catch (Exception e)
             {
@@ -151,16 +153,19 @@ namespace Azure.Identity
 
             // filter the accounts to those matching the specified user and tenant
             List<IAccount> filteredAccounts = accounts.Where(a =>
-                // if _username is specified it must match the account
-                (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
-                &&
-                // if _skipTenantValidation is false and _tenantId is specified it must match the account
-                (_skipTenantValidation || string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
-            ).ToList();
+                    // if _username is specified it must match the account
+                    (string.IsNullOrEmpty(_username) || string.Compare(a.Username, _username, StringComparison.OrdinalIgnoreCase) == 0)
+                    &&
+                    // if _skipTenantValidation is false and _tenantId is specified it must match the account
+                    (_skipTenantValidation || string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+                )
+                .ToList();
 
             if (_skipTenantValidation && filteredAccounts.Count > 1)
             {
-                filteredAccounts = filteredAccounts.Where(a => string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0).ToList();
+                filteredAccounts = filteredAccounts
+                    .Where(a => string.IsNullOrEmpty(_tenantId) || string.Compare(a.HomeAccountId?.TenantId, _tenantId, StringComparison.OrdinalIgnoreCase) == 0)
+                    .ToList();
             }
 
             if (filteredAccounts.Count != 1)

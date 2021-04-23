@@ -132,6 +132,16 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("actionLinkTemplate");
                 writer.WriteStringValue(ActionLinkTemplate);
             }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType");
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
+            if (Optional.IsDefined(CredentialId))
+            {
+                writer.WritePropertyName("credentialId");
+                writer.WriteStringValue(CredentialId);
+            }
             writer.WriteEndObject();
         }
     }
