@@ -103,6 +103,18 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
+        /// Implicit operator for initializing a string from a <see cref="ResourceType"/>.
+        /// </summary>
+        /// <param name="other"> <see cref="ResourceType"/> to be converted into a string. </param>
+        public static implicit operator string(ResourceType other)
+        {
+            if (other is null)
+                return null;
+
+            return other.ToString();
+        }
+
+        /// <summary>
         /// Compares two <see cref="ResourceType"/> objects.
         /// </summary>
         /// <param name="source"> First <see cref="ResourceType"/> object. </param>

@@ -42,7 +42,7 @@ namespace Proto.Network
         /// <summary>
         /// Gets the reference to a linked virtual machine.
         /// </summary>
-        public SubResource VirtualMachine => Model.VirtualMachine;
+        public Azure.ResourceManager.Network.Models.SubResource VirtualMachine => Model.VirtualMachine;
 
         /// <summary>
         ///  Gets the reference to the linked NetworkSecurityGroup resource.
@@ -69,7 +69,7 @@ namespace Proto.Network
         /// <summary>
         /// Gets a list of TapConfigurations of the newtork interface.
         /// </summary>
-        public IReadOnlyList<NetworkInterfaceTapConfiguration> TapConfigurations=> Model.TapConfigurations;
+        public IReadOnlyList<NetworkInterfaceTapConfiguration> TapConfigurations => Model.TapConfigurations;
 
         /// <summary>
         /// Gets or sets the DNS settings in network interface.
