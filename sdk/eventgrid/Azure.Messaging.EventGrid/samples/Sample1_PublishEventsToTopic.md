@@ -67,9 +67,6 @@ List<EventGridEvent> eventsList = new List<EventGridEvent>
 await client.SendEventsAsync(eventsList);
 ```
 
-It's also possible to use custom JSON serialization for an `EventGridEvent` by using the constructor that takes a `BinaryData` instance:
-
-
 ### Using `CloudEvent`
 The process for publishing events of the CloudEvent schema is very similar to that of Event Grid events. Once again, after creating the `EventGridPublisherClient` such that the custom topic is configured to accept events of the CloudEvent 1.0 schema, we can create events of the `CloudEvent` type.
 
