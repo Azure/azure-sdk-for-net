@@ -10,8 +10,18 @@ namespace Azure.ResourceManager.Core
     /// Generic representation of a tracked resource.  All tracked resources should extend this class
     /// </summary>
     [ReferenceType(typeof(TenantResourceIdentifier))]
-    public abstract partial class TrackedResource<TIdentifier> : Resource<TIdentifier> where TIdentifier : TenantResourceIdentifier
+    public abstract partial class TrackedResource<TIdentifier> : Resource<TIdentifier>
+        where TIdentifier : TenantResourceIdentifier
     {
+        /// <summary>
+        /// Initializes an empty instance of <see cref="TrackedResource{TIdentifier}"/>.
+        /// </summary>
+        [InitializationConstructor]
+        protected TrackedResource(LocationData location)
+        {
+            Location = location;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackedResource{TIdentifier}"/> class for deserialization.
         /// </summary>
@@ -20,8 +30,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="type"> The <see cref="ResourceType"/> of the resource. </param>
         /// <param name="tags"> The tags for the resource. </param>
         /// <param name="location"> The location of the resource. </param>
+        [SerializationConstructor]
         protected TrackedResource(TIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, LocationData location)
-            :base(id, name, type)
+            : base(id, name, type)
         {
             Tags = tags ?? new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             Location = location;
