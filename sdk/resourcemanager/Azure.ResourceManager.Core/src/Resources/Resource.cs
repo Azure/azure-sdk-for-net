@@ -9,13 +9,13 @@ namespace Azure.ResourceManager.Core
     /// A class representing the base resource used by all azure resources.
     /// </summary>
     [ReferenceType(typeof(TenantResourceIdentifier))]
-    public abstract class Resource<TIdentifier> : IEquatable<Resource<TIdentifier>>, IEquatable<string>,
+    public class Resource<TIdentifier> : IEquatable<Resource<TIdentifier>>, IEquatable<string>,
         IComparable<Resource<TIdentifier>>, IComparable<string> where TIdentifier : TenantResourceIdentifier
     {
         /// <summary>
         /// Initializes an empty instance of <see cref="Resource{TIdentifier}"/>.
         /// </summary>
-        protected Resource() { }
+        public Resource() { }
 
         /// <summary>
         /// Initializes a new instance of <see cref="Resource{TIdentifier}"/> for deserialization.

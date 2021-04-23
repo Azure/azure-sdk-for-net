@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes an empty instance of <see cref="SubResource"/>.
         /// </summary>
-        protected internal SubResource() { }
+        public SubResource() { }
 
         /// <summary> Initializes a new instance of SubResource. </summary>
         /// <param name="id"> ARM resource Id. </param>
