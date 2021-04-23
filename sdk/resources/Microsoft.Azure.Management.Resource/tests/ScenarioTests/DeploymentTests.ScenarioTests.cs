@@ -20,7 +20,7 @@ namespace ResourceGroups.Tests
         const string DummyTemplateUri = "https://testtemplates.blob.core.windows.net/templates/dummytemplate.js";
         const string GoodWebsiteTemplateUri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-web-app-github-deploy/azuredeploy.json";
         const string BadTemplateUri = "https://testtemplates.blob.core.windows.net/templates/bad-website-1.js";
-        const string GoodResourceId = "/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/TemplateSpecSDK/providers/Microsoft.Resources/TemplateSpecs/SdkTestTemplate/versions/1.0.0";
+        const string GoodResourceId = "/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/net-sdk-scenario-test-rg/providers/Microsoft.Resources/TemplateSpecs/storage-account-spec/versions/v1";
 
         const string LocationWestEurope = "West Europe";
         const string LocationSouthCentralUS = "South Central US";
@@ -177,9 +177,6 @@ namespace ResourceGroups.Tests
                         {
                             Id = GoodResourceId
                         },
-                        Parameters =
-                        JObject.Parse(
-                            @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     },
                     Tags = new Dictionary<string, string> { { "tagKey1", "tagValue1" } }
@@ -271,8 +268,6 @@ namespace ResourceGroups.Tests
                         {
                             Id = GoodResourceId,
                         },
-                        Parameters =
-                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -287,7 +282,6 @@ namespace ResourceGroups.Tests
                 Assert.NotNull(validationResult.Properties);
                 Assert.NotNull(validationResult.Properties.Providers);
                 Assert.Equal(1, validationResult.Properties.Providers.Count);
-                Assert.Equal("Microsoft.Web", validationResult.Properties.Providers[0].NamespaceProperty);
             }
         }
 
@@ -381,8 +375,6 @@ namespace ResourceGroups.Tests
                         {
                             Id = GoodResourceId,
                         },
-                        Parameters =
-                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'location': {'value': 'westus'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
