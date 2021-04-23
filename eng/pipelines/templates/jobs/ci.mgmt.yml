@@ -12,7 +12,7 @@ jobs:
         displayName: "Build & Package"
       - task: PowerShell@2
         displayName: "Verify generated code"
-        condition: and(succeeded(), ne(variables['System.TeamProject'],'internal'))
+        condition: and(succeeded(), ne(variables['System.TeamProject'],'internal'), not(contains(variables['System.PullRequest.TargetBranch'], 'feature/cplat')))
         inputs:
           filePath: "eng/scripts/Track1CodeCheck.ps1"
           pwsh: true
