@@ -15,13 +15,13 @@ using NUnit.Framework;
 namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     [LiveOnly]
-    public class TimeSeriesInsightsQuerySeriesTests : E2eTestBase
+    public class QuerySeriesTests : E2eTestBase
     {
         private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(30);
 
         private const int MaxNumberOfRetries = 10;
 
-        public TimeSeriesInsightsQuerySeriesTests(bool isAsync)
+        public QuerySeriesTests(bool isAsync)
             : base(isAsync)
         {
         }

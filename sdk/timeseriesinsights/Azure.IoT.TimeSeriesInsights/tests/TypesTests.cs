@@ -12,12 +12,12 @@ using NUnit.Framework;
 namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     [Parallelizable(ParallelScope.None)]
-    public class TimeSeriesInsightsTypesTests : E2eTestBase
+    public class TypesTests : E2eTestBase
     {
         private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(10);
         private const int MaxNumberOfRetries = 10;
 
-        public TimeSeriesInsightsTypesTests(bool isAsync)
+        public TypesTests(bool isAsync)
             : base(isAsync)
         {
         }
