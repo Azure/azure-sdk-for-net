@@ -1036,7 +1036,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateGetRegistryArtifactPropertiesRequest(string name, string digest)
+        internal HttpMessage CreateGetManifestPropertiesRequest(string name, string digest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1057,7 +1057,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public async Task<Response<ManifestProperties>> GetRegistryArtifactPropertiesAsync(string name, string digest, CancellationToken cancellationToken = default)
+        public async Task<Response<ManifestProperties>> GetManifestPropertiesAsync(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -1068,7 +1068,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(digest));
             }
 
-            using var message = CreateGetRegistryArtifactPropertiesRequest(name, digest);
+            using var message = CreateGetManifestPropertiesRequest(name, digest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1089,7 +1089,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public Response<ManifestProperties> GetRegistryArtifactProperties(string name, string digest, CancellationToken cancellationToken = default)
+        public Response<ManifestProperties> GetManifestProperties(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -1100,7 +1100,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(digest));
             }
 
-            using var message = CreateGetRegistryArtifactPropertiesRequest(name, digest);
+            using var message = CreateGetManifestPropertiesRequest(name, digest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1116,7 +1116,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateUpdateManifestAttributesRequest(string name, string digest, ContentProperties value)
+        internal HttpMessage CreateUpdateManifestPropertiesRequest(string name, string digest, ContentProperties value)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1139,13 +1139,13 @@ namespace Azure.Containers.ContainerRegistry
             return message;
         }
 
-        /// <summary> Update attributes of a manifest. </summary>
+        /// <summary> Update properties of a manifest. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public async Task<Response<ManifestProperties>> UpdateManifestAttributesAsync(string name, string digest, ContentProperties value = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManifestProperties>> UpdateManifestPropertiesAsync(string name, string digest, ContentProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -1156,7 +1156,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(digest));
             }
 
-            using var message = CreateUpdateManifestAttributesRequest(name, digest, value);
+            using var message = CreateUpdateManifestPropertiesRequest(name, digest, value);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1172,13 +1172,13 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Update attributes of a manifest. </summary>
+        /// <summary> Update properties of a manifest. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public Response<ManifestProperties> UpdateManifestAttributes(string name, string digest, ContentProperties value = null, CancellationToken cancellationToken = default)
+        public Response<ManifestProperties> UpdateManifestProperties(string name, string digest, ContentProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -1189,7 +1189,7 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(digest));
             }
 
-            using var message = CreateUpdateManifestAttributesRequest(name, digest, value);
+            using var message = CreateUpdateManifestPropertiesRequest(name, digest, value);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

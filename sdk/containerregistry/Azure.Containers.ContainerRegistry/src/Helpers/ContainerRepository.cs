@@ -30,10 +30,10 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// </summary>
-        internal ContainerRepository(string repository, Uri endpoint, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
+        internal ContainerRepository(string repository, Uri registryUri, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
         {
             _repository = repository;
-            _fullyQualifiedName = $"{endpoint.Host}/{repository}";
+            _fullyQualifiedName = $"{registryUri.Host}/{repository}";
 
             _clientDiagnostics = clientDiagnostics;
             _restClient = restClient;
@@ -156,9 +156,9 @@ namespace Azure.Containers.ContainerRegistry
 
         #region Registry Artifact/Manifest methods
         /// <summary> Get the collection of registry artifacts for a repository. </summary>
-        /// <param name="options"> Options to override default collection getting behavior. </param>
+        /// <param name="orderBy"> Requested order of manifests in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ManifestProperties> GetManifestsAsync(GetManifestsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManifestProperties> GetManifestsAsync(ManifestOrderBy orderBy = ManifestOrderBy.None, CancellationToken cancellationToken = default)
         {
             async Task<Page<ManifestProperties>> FirstPageFunc(int? pageSizeHint)
             {
@@ -166,7 +166,8 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetManifestsAsync(Name, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    string order = orderBy == ManifestOrderBy.None ? null : orderBy.ToSerialString();
+                    var response = await _restClient.GetManifestsAsync(Name, last: null, n: pageSizeHint, orderby: order, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -182,8 +183,9 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
+                    string order = orderBy == ManifestOrderBy.None ? null : orderBy.ToSerialString();
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
-                    var response = await _restClient.GetManifestsNextPageAsync(uriReference, Name, last: null, n: null, orderby: options?.OrderBy.ToString(), cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetManifestsNextPageAsync(uriReference, Name, last: null, n: null, orderby: order, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -197,9 +199,9 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Get the collection of tags for a repository. </summary>
-        /// <param name="options"> Options to override default collection getting behavior. </param>
+        /// <param name="orderBy"> Requested order of manifests in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ManifestProperties> GetManifests(GetManifestsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManifestProperties> GetManifests(ManifestOrderBy orderBy = ManifestOrderBy.None, CancellationToken cancellationToken = default)
         {
             Page<ManifestProperties> FirstPageFunc(int? pageSizeHint)
             {
@@ -207,7 +209,8 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetManifests(Name, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), cancellationToken: cancellationToken);
+                    string order = orderBy == ManifestOrderBy.None ? null : orderBy.ToSerialString();
+                    var response = _restClient.GetManifests(Name, last: null, n: pageSizeHint, orderby: order, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -223,8 +226,9 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
+                    string order = orderBy == ManifestOrderBy.None ? null : orderBy.ToSerialString();
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
-                    var response = _restClient.GetManifestsNextPage(uriReference, Name, last: null, n: null, orderby: options?.OrderBy.ToString(), cancellationToken);
+                    var response = _restClient.GetManifestsNextPage(uriReference, Name, last: null, n: null, orderby: order, cancellationToken);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)

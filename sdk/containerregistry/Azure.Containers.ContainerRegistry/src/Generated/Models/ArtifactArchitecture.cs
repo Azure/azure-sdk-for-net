@@ -26,13 +26,13 @@ namespace Azure.Containers.ContainerRegistry
         private const string Amd64Value = "amd64";
         private const string ArmValue = "arm";
         private const string Arm64Value = "arm64";
-        private const string Mips64Value = "mips";
-        private const string Mips64Value = "mipsle";
+        private const string MipsValue = "mips";
+        private const string MipsLeValue = "mipsle";
         private const string Mips64Value = "mips64";
         private const string Mips64LeValue = "mips64le";
         private const string Ppc64Value = "ppc64";
-        private const string Ppc641EValue = "ppc641e";
-        private const string Riscv64Value = "riscv64";
+        private const string Ppc64LeValue = "ppc64le";
+        private const string RiscV64Value = "riscv64";
         private const string S390XValue = "s390x";
         private const string WasmValue = "wasm";
 
@@ -45,19 +45,19 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> arm64. </summary>
         public static ArtifactArchitecture Arm64 { get; } = new ArtifactArchitecture(Arm64Value);
         /// <summary> mips. </summary>
-        public static ArtifactArchitecture Mips64 { get; } = new ArtifactArchitecture(Mips64Value);
+        public static ArtifactArchitecture Mips { get; } = new ArtifactArchitecture(MipsValue);
         /// <summary> mipsle. </summary>
-        public static ArtifactArchitecture Mips64 { get; } = new ArtifactArchitecture(Mips64Value);
+        public static ArtifactArchitecture MipsLe { get; } = new ArtifactArchitecture(MipsLeValue);
         /// <summary> mips64. </summary>
         public static ArtifactArchitecture Mips64 { get; } = new ArtifactArchitecture(Mips64Value);
         /// <summary> mips64le. </summary>
         public static ArtifactArchitecture Mips64Le { get; } = new ArtifactArchitecture(Mips64LeValue);
         /// <summary> ppc64. </summary>
         public static ArtifactArchitecture Ppc64 { get; } = new ArtifactArchitecture(Ppc64Value);
-        /// <summary> ppc641e. </summary>
-        public static ArtifactArchitecture Ppc641E { get; } = new ArtifactArchitecture(Ppc641EValue);
+        /// <summary> ppc64le. </summary>
+        public static ArtifactArchitecture Ppc64Le { get; } = new ArtifactArchitecture(Ppc64LeValue);
         /// <summary> riscv64. </summary>
-        public static ArtifactArchitecture Riscv64 { get; } = new ArtifactArchitecture(Riscv64Value);
+        public static ArtifactArchitecture RiscV64 { get; } = new ArtifactArchitecture(RiscV64Value);
         /// <summary> s390x. </summary>
         public static ArtifactArchitecture S390X { get; } = new ArtifactArchitecture(S390XValue);
         /// <summary> wasm. </summary>

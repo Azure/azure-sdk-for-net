@@ -5,47 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Sort options for ordering registry artifacts in a collection. </summary>
-    public readonly partial struct ManifestOrderBy : IEquatable<ManifestOrderBy>
+    /// <summary> Sort options for ordering manifests in a collection. </summary>
+    public enum ManifestOrderBy
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="ManifestOrderBy"/> values are the same. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ManifestOrderBy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string LastUpdatedOnDescendingValue = "timedesc";
-        private const string LastUpdatedOnAscendingValue = "timeasc";
-
-        /// <summary> Order registry artifacts by LastUpdatedOn field, from most recently updated to least recently updated. </summary>
-        public static ManifestOrderBy LastUpdatedOnDescending { get; } = new ManifestOrderBy(LastUpdatedOnDescendingValue);
-        /// <summary> Order  registry artifacts by LastUpdatedOn field, from least recently updated to most recently updated. </summary>
-        public static ManifestOrderBy LastUpdatedOnAscending { get; } = new ManifestOrderBy(LastUpdatedOnAscendingValue);
-        /// <summary> Determines if two <see cref="ManifestOrderBy"/> values are the same. </summary>
-        public static bool operator ==(ManifestOrderBy left, ManifestOrderBy right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ManifestOrderBy"/> values are not the same. </summary>
-        public static bool operator !=(ManifestOrderBy left, ManifestOrderBy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManifestOrderBy"/>. </summary>
-        public static implicit operator ManifestOrderBy(string value) => new ManifestOrderBy(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ManifestOrderBy other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ManifestOrderBy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> Do not provide an orderby value in the request. </summary>
+        None,
+        /// <summary> Order manifests by LastUpdatedOn field, from most recently updated to least recently updated. </summary>
+        LastUpdatedOnDescending,
+        /// <summary> Order manifest by LastUpdatedOn field, from least recently updated to most recently updated. </summary>
+        LastUpdatedOnAscending
     }
 }

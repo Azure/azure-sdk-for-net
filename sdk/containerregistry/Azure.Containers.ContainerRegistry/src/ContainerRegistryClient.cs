@@ -23,24 +23,24 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// </summary>
-        public ContainerRegistryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContainerRegistryClientOptions())
+        public ContainerRegistryClient(Uri registryUri, TokenCredential credential) : this(registryUri, credential, new ContainerRegistryClientOptions())
         {
         }
 
         /// <summary>
         /// </summary>
-        public ContainerRegistryClient(Uri endpoint, TokenCredential credential, ContainerRegistryClientOptions options)
+        public ContainerRegistryClient(Uri registryUri, TokenCredential credential, ContainerRegistryClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(registryUri, nameof(registryUri));
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _registryUri = endpoint;
-            _registryName = endpoint.Host.Split('.')[0];
+            _registryUri = registryUri;
+            _registryName = registryUri.Host.Split('.')[0];
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
-            _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
+            _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, registryUri.AbsoluteUri);
 
             _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, AcrAadScope, _acrAuthClient));
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _registryUri.AbsoluteUri);

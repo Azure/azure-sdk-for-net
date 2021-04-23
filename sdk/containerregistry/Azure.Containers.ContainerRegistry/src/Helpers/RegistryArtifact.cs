@@ -33,11 +33,11 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// </summary>
-        internal RegistryArtifact(string repository, string tagOrDigest, Uri endpoint, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
+        internal RegistryArtifact(string repository, string tagOrDigest, Uri registryUri, ClientDiagnostics clientDiagnostics, ContainerRegistryRestClient restClient)
         {
             _repository = repository;
             _tagOrDigest = tagOrDigest;
-            _fullyQualifiedName = $"{endpoint.Host}/{repository}{(IsDigest(tagOrDigest) ? '@' : ':')}{tagOrDigest}";
+            _fullyQualifiedName = $"{registryUri.Host}/{repository}{(IsDigest(tagOrDigest) ? '@' : ':')}{tagOrDigest}";
 
             _clientDiagnostics = clientDiagnostics;
             _restClient = restClient;
@@ -60,7 +60,7 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = await GetDigestAsync(cancellationToken).ConfigureAwait(false);
-                return await _restClient.GetRegistryArtifactPropertiesAsync(_repository, digest, cancellationToken).ConfigureAwait(false);
+                return await _restClient.GetManifestPropertiesAsync(_repository, digest, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -79,7 +79,7 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = GetDigest(cancellationToken);
-                return _restClient.GetRegistryArtifactProperties(_repository, digest, cancellationToken);
+                return _restClient.GetManifestProperties(_repository, digest, cancellationToken);
             }
             catch (Exception e)
             {
@@ -126,7 +126,7 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = await GetDigestAsync(cancellationToken).ConfigureAwait(false);
-                return await _restClient.UpdateManifestAttributesAsync(_repository, digest, value, cancellationToken).ConfigureAwait(false);
+                return await _restClient.UpdateManifestPropertiesAsync(_repository, digest, value, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -147,7 +147,7 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = GetDigest(cancellationToken);
-                return _restClient.UpdateManifestAttributes(_repository, digest, value, cancellationToken);
+                return _restClient.UpdateManifestProperties(_repository, digest, value, cancellationToken);
             }
             catch (Exception e)
             {
@@ -196,9 +196,9 @@ namespace Azure.Containers.ContainerRegistry
 
         #region Tag methods
         /// <summary> Get the collection of tags for a repository. </summary>
-        /// <param name="options"> Options to override default collection getting behavior. </param>
+        /// <param name="orderBy"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<TagProperties> GetTagsAsync(GetTagsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TagProperties> GetTagsAsync(TagOrderBy orderBy = TagOrderBy.None, CancellationToken cancellationToken = default)
         {
             async Task<Page<TagProperties>> FirstPageFunc(int? pageSizeHint)
             {
@@ -207,7 +207,8 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     string digest = await GetDigestAsync(cancellationToken).ConfigureAwait(false);
-                    var response = await _restClient.GetTagsAsync(_repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), digest: digest, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    string order = orderBy == TagOrderBy.None ? null : orderBy.ToSerialString();
+                    var response = await _restClient.GetTagsAsync(_repository, last: null, n: pageSizeHint, orderby: order, digest: digest, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -224,8 +225,9 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     string digest = await GetDigestAsync(cancellationToken).ConfigureAwait(false);
+                    string order = orderBy == TagOrderBy.None ? null : orderBy.ToSerialString();
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
-                    var response = await _restClient.GetTagsNextPageAsync(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: digest, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetTagsNextPageAsync(uriReference, _repository, last: null, n: null, orderby: order, digest: digest, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -239,9 +241,9 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Get the collection of tags for a repository. </summary>
-        /// <param name="options"> Options to override default collection getting behavior. </param>
+        /// <param name="orderBy"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<TagProperties> GetTags(GetTagsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TagProperties> GetTags(TagOrderBy orderBy = TagOrderBy.None, CancellationToken cancellationToken = default)
         {
             Page<TagProperties> FirstPageFunc(int? pageSizeHint)
             {
@@ -250,7 +252,8 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     string digest = GetDigest(cancellationToken);
-                    var response = _restClient.GetTags(_repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), digest: digest, cancellationToken: cancellationToken);
+                    string order = orderBy == TagOrderBy.None ? null : orderBy.ToSerialString();
+                    var response = _restClient.GetTags(_repository, last: null, n: pageSizeHint, orderby: order, digest: digest, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -267,8 +270,9 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     string digest = GetDigest(cancellationToken);
+                    string order = orderBy == TagOrderBy.None ? null : orderBy.ToSerialString();
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
-                    var response = _restClient.GetTagsNextPage(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: digest, cancellationToken);
+                    var response = _restClient.GetTagsNextPage(uriReference, _repository, last: null, n: null, orderby: order, digest: digest, cancellationToken);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
