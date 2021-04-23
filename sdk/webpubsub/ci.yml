@@ -23,7 +23,7 @@ pr:
     - common/Perf/
     - common/PerfStressShared/
     - common/Stress/
-    - sdk/template/
+    - sdk/webpubsub/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
