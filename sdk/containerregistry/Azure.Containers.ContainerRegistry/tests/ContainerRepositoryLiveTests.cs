@@ -151,7 +151,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.IsNotNull(latest);
-            Assert.AreEqual(_repositoryName, latest.Repository);
+            Assert.AreEqual(_repositoryName, latest.RepositoryName);
         }
 
         [RecordedTest]
@@ -248,7 +248,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
 
                 // Act
-                AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestsAsync(new GetManifestsOptions(ManifestOrderBy.LastUpdatedOnDescending));
+                AsyncPageable<ArtifactManifestProperties> manifests = repository.GetManifestsAsync(ManifestOrderBy.LastUpdatedOnDescending);
 
                 // Assert
                 string digest = null;
@@ -258,7 +258,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     if (manifest.References != null && manifest.References.Count > 0)
                     {
                         digest = manifest.Digest;
-                        Assert.That(manifest.Repository.Contains(repositoryName));
+                        Assert.That(manifest.RepositoryName.Contains(repositoryName));
                         Assert.That(manifest.Tags.Contains(tag));
                         break;
                     }

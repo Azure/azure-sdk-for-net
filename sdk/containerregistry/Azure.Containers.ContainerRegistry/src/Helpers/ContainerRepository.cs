@@ -51,6 +51,25 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
+        /// <summary>
+        /// Create a new <see cref="RegistryArtifact"/> object for the specified artifact.
+        /// </summary>
+        /// <param name="repositoryName"> The name of the repository to reference. </param>
+        /// <param name="tagOrDigest"> Either a tag or a digest that uniquely identifies the artifact. </param>
+        /// <returns> A new <see cref="RegistryArtifact"/> for the desired repository. </returns>
+        public virtual RegistryArtifact GetArtifact(string repositoryName, string tagOrDigest)
+        {
+            Argument.AssertNotNull(repositoryName, nameof(repositoryName));
+            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
+
+            return new RegistryArtifact(
+                _registryUri,
+                repositoryName,
+                tagOrDigest,
+                _clientDiagnostics,
+                _restClient);
+        }
+
         #region Repository methods
         /// <summary> Get repository properties. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

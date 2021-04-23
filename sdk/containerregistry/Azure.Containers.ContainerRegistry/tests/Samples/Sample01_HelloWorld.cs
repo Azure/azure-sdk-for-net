@@ -28,7 +28,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 
             // Perform an operation
-            Pageable<string> repositories = client.GetRepositories();
+            Pageable<string> repositories = client.GetRepositoryNames();
             foreach (string repository in repositories)
             {
                 Console.WriteLine(repository);
@@ -50,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 
             // Perform an operation
-            AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
             await foreach (string repository in repositories)
             {
                 Console.WriteLine(repository);

@@ -46,7 +46,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.Contains(tag, properties.Tags.ToList());
-            Assert.AreEqual(_repositoryName, properties.Repository);
+            Assert.AreEqual(_repositoryName, properties.RepositoryName);
             Assert.GreaterOrEqual(helloWorldManifestReferences, properties.Manifests.Count);
 
             Assert.IsTrue(properties.Manifests.Any(
@@ -78,7 +78,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ArtifactManifestProperties properties = await childArtifact.GetManifestPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(_repositoryName, properties.Repository);
+            Assert.AreEqual(_repositoryName, properties.RepositoryName);
             Assert.IsNotNull(properties.Digest);
             Assert.AreEqual(ArtifactArchitecture.Arm64, properties.Architecture);
             Assert.AreEqual(ArtifactOperatingSystem.Linux, properties.OperatingSystem);
@@ -163,10 +163,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var artifact = client.GetArtifact(_repositoryName, tagName);
 
             // Act
-            AsyncPageable<TagProperties> tags = artifact.GetTagsAsync();
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagsAsync();
 
             bool gotV1Tag = false;
-            await foreach (TagProperties tag in tags)
+            await foreach (ArtifactTagProperties tag in tags)
             {
                 if (tag.Name.Contains("v1"))
                 {
@@ -189,7 +189,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<TagProperties> tags = artifact.GetTagsAsync();
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagsAsync();
             var pages = tags.AsPages(pageSizeHint: pageSize);
 
             int pageCount = 0;
@@ -214,11 +214,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<TagProperties> tags = artifact.GetTagsAsync();
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagsAsync();
             var pages = tags.AsPages($"</acr/v1/{_repositoryName}/_tags?last=v1&n={pageSize}>");
 
             int pageCount = 0;
-            Page<TagProperties> firstPage = null;
+            Page<ArtifactTagProperties> firstPage = null;
             await foreach (var page in pages)
             {
                 if (pageCount == 0)
@@ -245,7 +245,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var artifact = client.GetArtifact(_repositoryName, tag);
 
             // Act
-            TagProperties properties = await artifact.GetTagPropertiesAsync(tag);
+            ArtifactTagProperties properties = await artifact.GetTagPropertiesAsync(tag);
 
             // Assert
             Assert.AreEqual(tag, properties.Name);
@@ -266,10 +266,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Act
-            AsyncPageable<TagProperties> tags = artifact.GetTagsAsync(new GetTagsOptions(TagOrderBy.LastUpdatedOnDescending));
+            AsyncPageable<ArtifactTagProperties> tags = artifact.GetTagsAsync(TagOrderBy.LastUpdatedOnDescending);
 
             // Assert
-            await foreach (TagProperties tag in tags)
+            await foreach (ArtifactTagProperties tag in tags)
             {
                 Assert.That(tag.Name.Contains("newest"));
                 break;
@@ -284,11 +284,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string tag = "latest";
             var artifact = client.GetArtifact(_repositoryName, tag);
 
-            TagProperties tagProperties = await artifact.GetTagPropertiesAsync(tag);
+            ArtifactTagProperties tagProperties = await artifact.GetTagPropertiesAsync(tag);
             ContentProperties originalContentProperties = tagProperties.WriteableProperties;
 
             // Act
-            TagProperties properties = await artifact.SetTagPropertiesAsync(
+            ArtifactTagProperties properties = await artifact.SetTagPropertiesAsync(
                 tag,
                 new ContentProperties()
                 {
@@ -304,7 +304,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.IsFalse(properties.WriteableProperties.CanWrite);
             Assert.IsFalse(properties.WriteableProperties.CanDelete);
 
-            TagProperties updatedProperties = await artifact.GetTagPropertiesAsync(tag);
+            ArtifactTagProperties updatedProperties = await artifact.GetTagPropertiesAsync(tag);
 
             Assert.IsFalse(updatedProperties.WriteableProperties.CanList);
             Assert.IsFalse(updatedProperties.WriteableProperties.CanRead);
@@ -329,7 +329,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Act
-            await artifact.UntagAsync(tag);
+            await artifact.DeleteTagAsync(tag);
 
             // Assert
 
