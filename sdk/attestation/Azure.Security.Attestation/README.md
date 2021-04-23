@@ -266,7 +266,7 @@ This example assumes that you have an existing `AttestationClient` object which 
 //
 // The Attestation service will validate that the Evidence is valid and that the SHA256 of the RuntimeData
 // parameter is included in the evidence.
-AttestationResponse<AttestationResult> attestationResult = client.AttestSgxEnclave(new AttestRequest
+AttestationResponse<AttestationResult> attestationResult = client.AttestSgxEnclave(new AttestationRequest
 {
     Evidence = BinaryData.FromBytes(binaryQuote),
     RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
