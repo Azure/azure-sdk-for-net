@@ -67,14 +67,14 @@ Using this library, you can send messages to the client connections. A message c
 ### Broadcast a text message to all clients
 
 ```csharp
-var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new Azure.AzureKeyCredential("<access-key>"));
+var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new AzureKeyCredential("<access-key>"));
 await serviceClient.SendToAll("Hello world!");
 ```
 
 ### Broadcast a JSON message to all clients
 
 ```csharp
-var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new Azure.AzureKeyCredential("<access-key>"));
+var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new AzureKeyCredential("<access-key>"));
 await serviceClient.SendToAll(
     RequestContent.Create(
         new {
@@ -86,9 +86,12 @@ await serviceClient.SendToAll(
 ### Broadcast a binary message to all clients
 
 ```csharp
-var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new Azure.AzureKeyCredential("<access-key>"));
+var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new AzureKeyCredential("<access-key>"));
 
-client.SendToAll(RequestContent.Create(new byte[] {1, 2, 3}), HttpHeader.Common.OctetStreamContentType.Value);
+client.SendToAll(
+    RequestContent.Create(new byte[] {0x1, 0x2, 0x3}), 
+    HttpHeader.Common.OctetStreamContentType.Value
+);
 ```
 
 ## Troubleshooting

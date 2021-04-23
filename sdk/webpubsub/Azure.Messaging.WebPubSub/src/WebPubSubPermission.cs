@@ -4,7 +4,7 @@
 namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
-    /// Web PubSub Authentication Policy.
+    /// Web PubSub permissions.
     /// </summary>
     public enum WebPubSubPermission
     {
