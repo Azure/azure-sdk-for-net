@@ -20,6 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private const string DataSourceCollectionId = "collectId";
         private const string DataSourceCommand = "command";
         private const string DataSourceConnectionString = "connectionStr";
+        private const string DataSourceConsumerGroup = "consumerGroup";
         private const string DataSourceContainer = "container";
         private const string DataSourceDatabase = "database";
         private const string DataSourceDirectory = "dir";
@@ -243,6 +244,46 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureDataLakeStorageGen2));
 
             ValidateAzureDataLakeStorageGen2DataSource(createdDataFeed.DataSource as AzureDataLakeStorageGen2DataFeedSource);
+        }
+
+        [RecordedTest]
+        public async Task CreateAndGetAzureEventHubsDataFeedWithMinimumSetup()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureEventHubsDataFeedSource(DataSourceConnectionString, DataSourceConsumerGroup);
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(createdDataFeed, disposableDataFeed.Id, dataFeedName);
+
+            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureEventHubs));
+
+            ValidateAzureEventHubsDataSource(createdDataFeed.DataSource as AzureEventHubsDataFeedSource);
+        }
+
+        [RecordedTest]
+        public async Task CreateAndGetAzureEventHubsDataFeedWithOptionalMembers()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureEventHubsDataFeedSource(DataSourceConnectionString, DataSourceConsumerGroup);
+            DataFeed dataFeedToCreate = GetDataFeedWithOptionalMembersSet(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed createdDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithOptionalMembersSet(createdDataFeed, disposableDataFeed.Id, dataFeedName);
+
+            Assert.That(createdDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureEventHubs));
+
+            ValidateAzureEventHubsDataSource(createdDataFeed.DataSource as AzureEventHubsDataFeedSource);
         }
 
         [RecordedTest]
@@ -2393,6 +2434,14 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dataSource.FileSystemName, Is.EqualTo(DataSourceFileSystem));
             Assert.That(dataSource.DirectoryTemplate, Is.EqualTo(DataSourceDirectory));
             Assert.That(dataSource.FileTemplate, Is.EqualTo(DataSourceFile));
+        }
+
+        private void ValidateAzureEventHubsDataSource(AzureEventHubsDataFeedSource dataSource)
+        {
+            var expectedConnectStr = TestEnvironment.Mode == RecordedTestMode.Playback ? "Sanitized" : DataSourceConnectionString;
+
+            Assert.That(dataSource.ConnectionString, Is.EqualTo(expectedConnectStr));
+            Assert.That(dataSource.ConsumerGroup, Is.EqualTo(DataSourceConsumerGroup));
         }
 
         private void ValidateAzureTableDataSource(AzureTableDataFeedSource dataSource)
