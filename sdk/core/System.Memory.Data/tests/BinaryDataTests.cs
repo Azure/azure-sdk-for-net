@@ -565,6 +565,18 @@ namespace System.Tests
             Assert.False(stream.CanSeek);
         }
 
+        [Fact]
+        public void EmptyIsEmpty()
+        {
+            Assert.Equal(Array.Empty<byte>(), BinaryData.Empty.ToArray());
+        }
+
+        [Fact]
+        public void EmptyIsSingleton()
+        {
+            Assert.Same(BinaryData.Empty, BinaryData.Empty);
+        }
+
         private class DerivedModel : TestModel
         {
             public string E { get; set; }
