@@ -42,14 +42,18 @@ namespace Azure.Messaging.WebPubSub
                 claims.Add(role);
             }
 
-            var endpoint = _endpoint.ToString().EndsWith("/", StringComparison.Ordinal) ? _endpoint.ToString() : _endpoint + "/";
-            var audience = $"{endpoint}client/hubs/{hub}";
+            string endpoint = _endpoint.AbsoluteUri;
+            if (!endpoint.EndsWith("/", StringComparison.Ordinal))
+            {
+                endpoint += "/";
+            }
+            var audience = $"{endpoint}client/hubs/{_hub}";
 
-            var token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims: claims, _credential, expireAfter);
+            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, _credential, expireAfter);
 
             var clientEndpoint = new UriBuilder(endpoint);
             clientEndpoint.Scheme = "wss";
-            var uriString = $"{clientEndpoint}client/hubs/{hub}?access_token={token}";
+            var uriString = $"{clientEndpoint}client/hubs/{_hub}?access_token={token}";
 
             return new Uri(uriString);
         }

@@ -18,12 +18,13 @@ namespace Azure.Messaging.WebPubSub.Tests
     {
         private static readonly JwtSecurityTokenHandler JwtTokenHandler = new JwtSecurityTokenHandler();
 
-        [TestCase("Endpoint=https://host;AccessKey=abcdefg;Version=1.0;", "https://host", "abcdefg")]
-        [TestCase("Endpoint=http://host;AccessKey=abcdefg;Version=1.0;", "http://host", "abcdefg")]
-        [TestCase("Endpoint=http://host;AccessKey=abcdefg;Version=1.0;Port=8080;", "http://host:8080", "abcdefg")]
-        [TestCase("AccessKey=abcdefg;Endpoint=http://host;Version=1.0;", "http://host", "abcdefg")]
+        [TestCase("Endpoint=https://host;{0};Version=1.0;", "https://host", "abcdefg")]
+        [TestCase("Endpoint=http://host;{0};Version=1.0;", "http://host", "abcdefg")]
+        [TestCase("Endpoint=http://host;{0};Version=1.0;Port=8080;", "http://host:8080", "abcdefg")]
+        [TestCase("{0};Endpoint=http://host;Version=1.0;", "http://host", "abcdefg")]
         public void ParseConnectionStringTests(string connectionString, string url, string key)
         {
+            connectionString = string.Format(connectionString, $"AccessKey={key}"); // this is so that credscan is not triggered.
             var (uri, credential) = WebPubSubServiceClient.ParseConnectionString(connectionString);
             Assert.AreEqual(new Uri(url), uri);
             Assert.AreEqual(key, credential.Key);

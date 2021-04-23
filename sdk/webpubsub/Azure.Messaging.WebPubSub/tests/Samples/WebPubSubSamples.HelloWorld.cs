@@ -22,7 +22,7 @@ namespace Azure.Template.Tests.Samples
             #region Snippet:WebPubSubHelloWorld
             var client = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
-            client.SendToAll("some_hub", "Hello World!");
+            client.SendToAll("Hello World!");
             #endregion
         }
 
@@ -33,7 +33,7 @@ namespace Azure.Template.Tests.Samples
             #region Snippet:WebPubSubHelloWorld
             var client = new WebPubSubServiceClient(connectionString, "some_hub");
 
-            client.SendToAll("some_hub", "Hello World!");
+            client.SendToAll("Hello World!");
             #endregion
         }
 
@@ -62,7 +62,7 @@ namespace Azure.Template.Tests.Samples
             #region Snippet:WebPubSubSendJson
             var client = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
-            Stream stream = new MemoryStream(Encoding.ASCII.GetBytes("Hello World!"));
+            Stream stream = BinaryData.FromString("Hello World!").ToStream();
 
             client.SendToAll(RequestContent.Create(stream), HttpHeader.Common.OctetStreamContentType.Value);
             #endregion

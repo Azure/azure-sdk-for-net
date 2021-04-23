@@ -2,16 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
 using Azure.Core.Pipeline;
 using Microsoft.IdentityModel.Tokens;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Collections.Concurrent;
-using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace Azure.Messaging.WebPubSub
 {
@@ -58,29 +56,6 @@ namespace Azure.Messaging.WebPubSub
             private static readonly JwtSecurityTokenHandler JwtTokenHandler = new JwtSecurityTokenHandler();
             private static readonly ConditionalWeakTable<AzureKeyCredential, UniqueKey> KeyForCredential = new ConditionalWeakTable<AzureKeyCredential, UniqueKey>();
 
-            //public static string GenerateAccessToken(byte[] key, string audience, string userId, TimeSpan expiresAfter)
-            //{
-            //    var expiresAt = DateTime.UtcNow.Add(expiresAfter);
-
-            //    Claim[] claims = null;
-            //    if (userId != null)
-            //    {
-            //        claims = new Claim[] { new Claim(ClaimTypes.NameIdentifier, userId) };
-            //    }
-
-            //    var securityKey = new SymmetricSecurityKey(key);
-            //    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            //    var token = JwtTokenHandler.CreateJwtSecurityToken(
-            //        issuer: null,
-            //        audience: audience,
-            //        subject: claims == null ? null : new ClaimsIdentity(claims),
-            //        expires: expiresAt,
-            //        signingCredentials: credentials);
-
-            //    return JwtTokenHandler.WriteToken(token);
-            //}
-
             public static string GenerateJwtBearer(
                 string audience,
                 IEnumerable<Claim> claims,
@@ -112,18 +87,23 @@ namespace Azure.Messaging.WebPubSub
                     subject: subject,
                     notBefore: null,
                     expires: expiresAt,
-                    issuedAt: null,
+                    issuedAt: DateTime.UtcNow,
                     signingCredentials: credentials);
-                return JwtTokenHandler.WriteToken(token);
+
+                try
+                {
+                    return JwtTokenHandler.WriteToken(token);
+                }
+                catch (Exception e)
+                {
+                    // this is so we don't leak implementation details.
+                    throw new InvalidOperationException("Token generation failed.", e);
+                }
             }
 
             private sealed class UniqueKey
             {
-                public string Key { get; }
-                public UniqueKey()
-                {
-                    Key = Guid.NewGuid().ToString("N");
-                }
+                public string Key { get; } = Guid.NewGuid().ToString("N");
             }
         }
     }

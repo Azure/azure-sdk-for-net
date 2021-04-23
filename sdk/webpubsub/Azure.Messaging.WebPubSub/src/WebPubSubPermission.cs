@@ -11,10 +11,10 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>
         /// Permission to send messages to a group.
         /// </summary>
-        SendToGroup,
+        SendToGroup = 1,
         /// <summary>
         /// Permission to join and leave a group.
         /// </summary>
-        JoinLeaveGroup
+        JoinLeaveGroup = 2
     }
 }

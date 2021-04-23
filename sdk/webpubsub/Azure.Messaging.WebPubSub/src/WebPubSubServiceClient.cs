@@ -16,13 +16,11 @@ namespace Azure.Messaging.WebPubSub
     /// </summary>
     public partial class WebPubSubServiceClient
     {
-        private const string ApiVersion = "2020-10-01";
-
         private const string JsonContent = "application/json";
         private const string TextContent = "text/plain";
 
         private Uri _endpoint;
-        private readonly string hub;
+        private readonly string _hub;
         private readonly ClientDiagnostics _clientDiagnostics;
         private AzureKeyCredential _credential;
 
@@ -34,7 +32,8 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="endpoint"></param>
         /// <param name="hub">Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.</param>
         /// <param name="credential"></param>
-        public WebPubSubServiceClient(Uri endpoint, string hub, AzureKeyCredential credential) : this(endpoint, hub, credential, new WebPubSubServiceClientOptions())
+        public WebPubSubServiceClient(Uri endpoint, string hub, AzureKeyCredential credential) :
+            this(endpoint, hub, credential, new WebPubSubServiceClientOptions())
         {
         }
 
@@ -45,13 +44,11 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="hub">Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.</param>
         /// <param name="credential"></param>
         /// <param name="options"></param>
-        public WebPubSubServiceClient(Uri endpoint, string hub, AzureKeyCredential credential, WebPubSubServiceClientOptions options): this(
-            new ClientDiagnostics(options),
-            HttpPipelineBuilder.Build(options, new WebPubSubAuthenticationPolicy(credential)),
-            endpoint)
+        public WebPubSubServiceClient(Uri endpoint, string hub, AzureKeyCredential credential, WebPubSubServiceClientOptions options) :
+            this(endpoint, credential, options)
         {
             _endpoint = endpoint;
-            this.hub = hub;
+            _hub = hub;
             _credential = credential;
         }
 
@@ -70,7 +67,8 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionString">Connection string contains Endpoint and AccessKey.</param>
         /// <param name="hub">Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.</param>
         /// <param name="options"></param>
-        public WebPubSubServiceClient(string connectionString, string hub, WebPubSubServiceClientOptions options) : this(ParseConnectionString(connectionString), hub, options)
+        public WebPubSubServiceClient(string connectionString, string hub, WebPubSubServiceClientOptions options) :
+            this(ParseConnectionString(connectionString), hub, options)
         {
         }
 
@@ -81,34 +79,39 @@ namespace Azure.Messaging.WebPubSub
         {
         }
 
-        internal WebPubSubServiceClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri vaultBaseUrl)
+        internal WebPubSubServiceClient(Uri endpoint, AzureKeyCredential credential, WebPubSubServiceClientOptions options)
         {
-            RestClient = new WebPubSubRestClient(clientDiagnostics, pipeline, vaultBaseUrl, ApiVersion);
+            if (credential == default) throw new ArgumentNullException(nameof(credential));
+            if (options == default) options = new WebPubSubServiceClientOptions();
+
+            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(options);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new WebPubSubAuthenticationPolicy(credential));
+            RestClient = new WebPubSubRestClient(clientDiagnostics, pipeline, endpoint, options.Version);
             _clientDiagnostics = clientDiagnostics;
         }
 
-        private WebPubSubServiceClient((Uri Endpoint, AzureKeyCredential Credential) parsedConnectionString, string hub) : this(
-            parsedConnectionString.Endpoint, hub, parsedConnectionString.Credential)
+        private WebPubSubServiceClient((Uri Endpoint, AzureKeyCredential Credential) parsedConnectionString, string hub) :
+            this(parsedConnectionString.Endpoint, hub, parsedConnectionString.Credential)
         {
         }
 
-        private WebPubSubServiceClient((Uri Endpoint, AzureKeyCredential Credential) parsedConnectionString, string hub, WebPubSubServiceClientOptions options) : this(
-            parsedConnectionString.Endpoint, hub, parsedConnectionString.Credential, options)
+        private WebPubSubServiceClient((Uri Endpoint, AzureKeyCredential Credential) parsedConnectionString, string hub, WebPubSubServiceClientOptions options) :
+            this(parsedConnectionString.Endpoint, hub, parsedConnectionString.Credential, options)
         {
         }
 
-        /// <summary>Broadcast content inside request body to all the connected client connections.</summary>
+        /// <summary>Broadcast message to all the connected client connections.</summary>
         /// <param name="message"></param>
         /// <param name="excluded">Excluded connection Ids.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToAllAsync(string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(WebPubSubServiceClient)}.{nameof(SendToAll)}");
             scope.Start();
             try
             {
-                return await RestClient.SendToAllAsync(hub, RequestContent.Create(message), TextContent, excluded, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToAllAsync(_hub, RequestContent.Create(message), TextContent, excluded, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -117,18 +120,18 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        /// <summary>Broadcast content inside request body to all the connected client connections.</summary>
+        /// <summary>Broadcast message to all the connected client connections.</summary>
         /// <param name="message"></param>
         /// <param name="excluded">Excluded connection Ids.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToAll(string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.Broadcast");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToAll");
             scope.Start();
             try
             {
-                return RestClient.SendToAll(hub, RequestContent.Create(message), TextContent, excluded, cancellationToken);
+                return RestClient.SendToAll(_hub, RequestContent.Create(message), TextContent, excluded, cancellationToken);
             }
             catch (Exception e)
             {
@@ -137,19 +140,19 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        /// <summary>Broadcast content inside request body to all the connected client connections.</summary>
+        /// <summary>Broadcast message to all the connected client connections.</summary>
         /// <param name="message"></param>
         /// <param name="contentType">Supported values are: application/json, application/octet-stream, and text/plain.</param>
         /// <param name="excluded">Excluded connection Ids.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToAllAsync(RequestContent message, string contentType = JsonContent, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.BroadcastAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToAllAsync");
             scope.Start();
             try
             {
-                return await RestClient.SendToAllAsync(hub, message, contentType, excluded, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToAllAsync(_hub, message, contentType, excluded, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -158,19 +161,19 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        /// <summary>Broadcast content inside request body to all the connected client connections.</summary>
+        /// <summary>Broadcast message to all the connected client connections.</summary>
         /// <param name="message"></param>
         /// <param name="contentType">Supported values are: application/json, application/octet-stream, and text/plain.</param>
         /// <param name="excluded">Excluded connection Ids.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToAll(RequestContent message, string contentType = JsonContent, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.Broadcast");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToAll");
             scope.Start();
             try
             {
-                return RestClient.SendToAll(hub, message, contentType, excluded, cancellationToken);
+                return RestClient.SendToAll(_hub, message, contentType, excluded, cancellationToken);
             }
             catch (Exception e)
             {
@@ -180,19 +183,19 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Send content inside request body to the specific user.
+        /// Send message to the specific user.
         /// </summary>
         /// <param name="userId">The user Id.</param>
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToUserAsync(string userId, string message, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToUserAsync");
             scope.Start();
             try
             {
-                return await RestClient.SendToUserAsync(hub, userId, RequestContent.Create(message), TextContent, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToUserAsync(_hub, userId, RequestContent.Create(message), TextContent, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -202,19 +205,19 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Send content inside request body to the specific user.
+        /// Send message to the specific user.
         /// </summary>
         /// <param name="userId">The user Id.</param>
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToUser(string userId, string message, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToUser");
             scope.Start();
             try
             {
-                return RestClient.SendToUser(hub, userId, RequestContent.Create(message), TextContent, cancellationToken);
+                return RestClient.SendToUser(_hub, userId, RequestContent.Create(message), TextContent, cancellationToken);
             }
             catch (Exception e)
             {
@@ -224,20 +227,20 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Send content inside request body to the specific user.
+        /// Send message to the specific user.
         /// </summary>
         /// <param name="userId">The user Id.</param>
         /// <param name="message"></param>
         /// <param name="contentType">Supported values are: application/json, application/octet-stream, and text/plain.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToUserAsync(string userId, RequestContent message, string contentType = JsonContent, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToUserAsync");
             scope.Start();
             try
             {
-                return await RestClient.SendToUserAsync(hub, userId, message, contentType, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToUserAsync(_hub, userId, message, contentType, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -247,20 +250,20 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Send content inside request body to the specific user.
+        /// Send message to the specific user.
         /// </summary>
         /// <param name="userId">The user Id.</param>
         /// <param name="message"></param>
         /// <param name="contentType">Supported values are: application/json, application/octet-stream, and text/plain.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToUser(string userId, RequestContent message, string contentType = JsonContent, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToUser");
             scope.Start();
             try
             {
-                return RestClient.SendToUser(hub, userId, message, contentType, cancellationToken);
+                return RestClient.SendToUser(_hub, userId, message, contentType, cancellationToken);
             }
             catch (Exception e)
             {
@@ -270,19 +273,19 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Send content inside request body to the specific connection.
+        /// Send message to the specific connection.
         /// </summary>
         /// <param name="connectionId">The connection Id.</param>
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToConnectionAsync(string connectionId, string message, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToConnectionAsync");
             scope.Start();
             try
             {
-                return await RestClient.SendToConnectionAsync(hub, connectionId, RequestContent.Create(message), TextContent, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToConnectionAsync(_hub, connectionId, RequestContent.Create(message), TextContent, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -292,19 +295,19 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Send content inside request body to the specific connection.
+        /// Send message to the specific connection.
         /// </summary>
         /// <param name="connectionId">The connection Id.</param>
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToConnection(string connectionId, string message, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToConnection");
             scope.Start();
             try
             {
-                return RestClient.SendToConnection(hub, connectionId, RequestContent.Create(message), TextContent, cancellationToken);
+                return RestClient.SendToConnection(_hub, connectionId, RequestContent.Create(message), TextContent, cancellationToken);
             }
             catch (Exception e)
             {
@@ -314,20 +317,20 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Send content inside request body to the specific connection.
+        /// Send message to the specific connection.
         /// </summary>
         /// <param name="connectionId">The connection Id.</param>
         /// <param name="message"></param>
         /// <param name="contentType">Supported values are: application/json, application/octet-stream, and text/plain.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent message, string contentType = JsonContent, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToConnectionAsync");
             scope.Start();
             try
             {
-                return await RestClient.SendToConnectionAsync(hub, connectionId, message, contentType, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToConnectionAsync(_hub, connectionId, message, contentType, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -337,20 +340,20 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Send content inside request body to the specific connection.
+        /// Send message to the specific connection.
         /// </summary>
         /// <param name="connectionId">The connection Id.</param>
         /// <param name="message"></param>
         /// <param name="contentType">Supported values are: application/json, application/octet-stream, and text/plain.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToConnection(string connectionId, RequestContent message, string contentType = JsonContent, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToConnection");
             scope.Start();
             try
             {
-                return RestClient.SendToConnection(hub, connectionId, message, contentType, cancellationToken);
+                return RestClient.SendToConnection(_hub, connectionId, message, contentType, cancellationToken);
             }
             catch (Exception e)
             {
@@ -360,20 +363,20 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Send content inside request body to a group of connections.
+        /// Send message to a group of connections.
         /// </summary>
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="message"></param>
         /// <param name="excluded">Excluded connection Ids</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToGroupAsync(string group, string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToGroupAsync");
             scope.Start();
             try
             {
-                return await RestClient.SendToGroupAsync(hub, group, RequestContent.Create(message), TextContent, excluded, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToGroupAsync(_hub, group, RequestContent.Create(message), TextContent, excluded, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -383,20 +386,20 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Send content inside request body to a group of connections.
+        /// Send message to a group of connections.
         /// </summary>
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="message"></param>
         /// <param name="excluded">Excluded connection Ids</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToGroup(string group, string message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToGroup");
             scope.Start();
             try
             {
-                return RestClient.SendToGroup(hub, group, RequestContent.Create(message), TextContent, excluded, cancellationToken);
+                return RestClient.SendToGroup(_hub, group, RequestContent.Create(message), TextContent, excluded, cancellationToken);
             }
             catch (Exception e)
             {
@@ -406,21 +409,21 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Send content inside request body to a group of connections.
+        /// Send message to a group of connections.
         /// </summary>
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="message"></param>
         /// <param name="contentType">Supported values are: application/json, application/octet-stream, and text/plain.</param>
         /// <param name="excluded">Excluded connection Ids</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> SendToGroupAsync(string group, RequestContent message, string contentType = JsonContent, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToGroupAsync");
             scope.Start();
             try
             {
-                return await RestClient.SendToGroupAsync(hub, group, message, contentType, excluded, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToGroupAsync(_hub, group, message, contentType, excluded, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -430,21 +433,21 @@ namespace Azure.Messaging.WebPubSub
         }
 
         /// <summary>
-        /// Send content inside request body to a group of connections.
+        /// Send message to a group of connections.
         /// </summary>
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="message"></param>
         /// <param name="contentType">Supported values are: application/json, application/octet-stream, and text/plain.</param>
         /// <param name="excluded">Excluded connection Ids</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response SendToGroup(string group, RequestContent message, string contentType = JsonContent, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToGroup");
             scope.Start();
             try
             {
-                return RestClient.SendToGroup(hub, group, message, contentType, excluded, cancellationToken);
+                return RestClient.SendToGroup(_hub, group, message, contentType, excluded, cancellationToken);
             }
             catch (Exception e)
             {
@@ -456,14 +459,14 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>Check if the connection with the given connectionId exists</summary>
         /// <param name="connectionId">The connection Id.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>true if the specified connection exists; false otherwise.</returns>
         public virtual async Task<Response<bool>> ConnectionExistsAsync(string connectionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.CheckConnectionExistenceAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.ConnectionExistsAsync");
             scope.Start();
             try
             {
-                var response = await RestClient.ConnectionExistsAsync(hub, connectionId, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.ConnectionExistsAsync(_hub, connectionId, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Status == 200, response);
             }
             catch (Exception e)
@@ -476,14 +479,14 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>Check if the connection with the given connectionId exists</summary>
         /// <param name="connectionId">The connection Id.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>true if the specified connection exists; false otherwise.</returns>
         public virtual Response<bool> ConnectionExists(string connectionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.SendToGroup");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.ConnectionExists");
             scope.Start();
             try
             {
-                var response = RestClient.ConnectionExists(hub, connectionId, cancellationToken);
+                var response = RestClient.ConnectionExists(_hub, connectionId, cancellationToken);
                 return Response.FromValue(response.Status == 200, response);
             }
             catch (Exception e)
@@ -496,14 +499,14 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>Check if the connection with the given connectionId exists</summary>
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>true if the specified group exists; false otherwise.</returns>
         public virtual async Task<Response<bool>> GroupExistsAsync(string group, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.CheckGroupExistenceAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.GroupExistsAsync");
             scope.Start();
             try
             {
-                var response = await RestClient.GroupExistsAsync(hub, group, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.GroupExistsAsync(_hub, group, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Status == 200, response);
             }
             catch (Exception e)
@@ -516,14 +519,14 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>Check if the connection with the given connectionId exists</summary>
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>true if the specified group exists; false otherwise.</returns>
         public virtual Response<bool> GroupExists(string group, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.CheckGroupExistence");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.GroupExists");
             scope.Start();
             try
             {
-                var response = RestClient.GroupExists(hub, group, cancellationToken);
+                var response = RestClient.GroupExists(_hub, group, cancellationToken);
                 return Response.FromValue(response.Status == 200, response);
             }
             catch (Exception e)
@@ -536,14 +539,14 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>Check if there are any client connections connected for the given user</summary>
         /// <param name="userId">Target user Id</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>true if the specified user exists; false otherwise.</returns>
         public virtual async Task<Response<bool>> UserExistsAsync(string userId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.CheckUserExistenceAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.UserExistsAsync");
             scope.Start();
             try
             {
-                var response = await RestClient.UserExistsAsync(hub, userId, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.UserExistsAsync(_hub, userId, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Status == 200, response);
             }
             catch (Exception e)
@@ -556,14 +559,14 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>Check if there are any client connections connected for the given user</summary>
         /// <param name="userId">Target user Id</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>true if the specified user exists; false otherwise.</returns>
         public virtual Response<bool> UserExists(string userId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.CheckUserExistence");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.UserExists");
             scope.Start();
             try
             {
-                var response = RestClient.UserExists(hub, userId, cancellationToken);
+                var response = RestClient.UserExists(_hub, userId, cancellationToken);
                 return Response.FromValue(response.Status == 200, response);
             }
             catch (Exception e)
@@ -577,19 +580,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="connectionId">Target connection Id</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, CancellationToken cancellationToken = default)
         {
-            if (connectionId is null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.AddConnectionToGroupAsync");
             scope.Start();
             try
             {
-                return await RestClient.AddConnectionToGroupAsync(hub, group, connectionId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.AddConnectionToGroupAsync(_hub, group, connectionId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -602,14 +600,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="connectionId">Target connection Id</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response AddConnectionToGroup(string group, string connectionId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.AddConnectionToGroup");
             scope.Start();
             try
             {
-                return RestClient.AddConnectionToGroup(hub, group, connectionId, cancellationToken);
+                return RestClient.AddConnectionToGroup(_hub, group, connectionId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -621,14 +619,14 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>Remove a user from all groups.</summary>
         /// <param name="userId">Target user Id</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.RemoveUserFromAllGroupsAsync");
             scope.Start();
             try
             {
-                return await RestClient.RemoveUserFromAllGroupsAsync(hub, userId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.RemoveUserFromAllGroupsAsync(_hub, userId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -640,14 +638,14 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>Remove a user from all groups.</summary>
         /// <param name="userId">Target user Id</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response RemoveUserFromAllGroups(string userId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.RemoveUserFromAllGroups");
             scope.Start();
             try
             {
-                return RestClient.RemoveUserFromAllGroups(hub, userId, cancellationToken);
+                return RestClient.RemoveUserFromAllGroups(_hub, userId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -661,14 +659,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId">Target connection Id.</param>
         /// <param name="targetName">If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> GrantPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = default, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.GrantPermissionAsync");
             scope.Start();
             try
             {
-                return await RestClient.GrantPermissionAsync(hub, ToPermission(permission), connectionId, targetName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GrantPermissionAsync(_hub, ToPermission(permission), connectionId, targetName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -682,14 +680,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId">Target connection Id.</param>
         /// <param name="targetName">Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response GrantPermission(WebPubSubPermission permission, string connectionId, string targetName = default, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.GrantPermission");
             scope.Start();
             try
             {
-                return RestClient.GrantPermission(hub, ToPermission(permission), connectionId, targetName, cancellationToken);
+                return RestClient.GrantPermission(_hub, ToPermission(permission), connectionId, targetName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -703,14 +701,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId">Target connection Id.</param>
         /// <param name="targetName">If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> RevokePermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = default, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.RevokePermissionAsync");
             scope.Start();
             try
             {
-                return await RestClient.RevokePermissionAsync(hub, ToPermission(permission), connectionId, targetName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.RevokePermissionAsync(_hub, ToPermission(permission), connectionId, targetName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -724,14 +722,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId">Target connection Id.</param>
         /// <param name="targetName">If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response RevokePermission(WebPubSubPermission permission, string connectionId, string targetName = default, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.RevokePermission");
             scope.Start();
             try
             {;
-                return RestClient.RevokePermission(hub, ToPermission(permission), connectionId, targetName, cancellationToken);
+                return RestClient.RevokePermission(_hub, ToPermission(permission), connectionId, targetName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -752,7 +750,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                var response = await RestClient.CheckPermissionAsync(hub, ToPermission(permission), connectionId, targetName, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.CheckPermissionAsync(_hub, ToPermission(permission), connectionId, targetName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Status == 200, response);
             }
             catch (Exception e)
@@ -774,7 +772,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                var response = RestClient.CheckPermission(hub, ToPermission(permission), connectionId, targetName, cancellationToken);
+                var response = RestClient.CheckPermission(_hub, ToPermission(permission), connectionId, targetName, cancellationToken);
                 return Response.FromValue(response.Status == 200, response);
             }
             catch (Exception e)
@@ -790,14 +788,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId">Target connection Id.</param>
         /// <param name="reason">The reason closing the client connection.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> CloseClientConnectionAsync(string connectionId, string reason = default, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.CloseClientConnectionAsync");
             scope.Start();
             try
             {
-                var response = await RestClient.CloseClientConnectionAsync(hub, connectionId, reason, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.CloseClientConnectionAsync(_hub, connectionId, reason, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -813,14 +811,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId">Target connection Id.</param>
         /// <param name="reason">The reason closing the client connection.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response CloseClientConnection(string connectionId, string reason = default, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.CloseClientConnection");
             scope.Start();
             try
             {
-                var response = RestClient.CloseClientConnection(hub, connectionId, reason, cancellationToken);
+                var response = RestClient.CloseClientConnection(_hub, connectionId, reason, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -836,14 +834,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="connectionId">Target connection Id.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.CloseClientConnectionAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.RemoveConnectionFromGroupAsync");
             scope.Start();
             try
             {
-                var response = await RestClient.RemoveConnectionFromGroupAsync(hub, group, connectionId, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.RemoveConnectionFromGroupAsync(_hub, group, connectionId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -859,14 +857,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="connectionId">Target connection Id.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response RemoveConnectionFromGroup(string group, string connectionId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.CloseClientConnection");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.RemoveConnectionFromGroup");
             scope.Start();
             try
             {
-                var response = RestClient.RemoveConnectionFromGroup(hub, group, connectionId, cancellationToken);
+                var response = RestClient.RemoveConnectionFromGroup(_hub, group, connectionId, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -880,14 +878,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="userId">Target user Id.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> AddUserToGroupAsync(string group, string userId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.AddConnectionToGroupAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.AddUserToGroupAsync");
             scope.Start();
             try
             {
-                return await RestClient.AddUserToGroupAsync(hub, group, userId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.AddUserToGroupAsync(_hub, group, userId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -900,14 +898,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="userId">Target user Id.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response AddUserToGroup(string group, string userId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.AddConnectionToGroup");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.AddUserToGroup");
             scope.Start();
             try
             {
-                return RestClient.AddUserToGroup(hub, group, userId, cancellationToken);
+                return RestClient.AddUserToGroup(_hub, group, userId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -920,14 +918,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="userId">Target user Id</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual async Task<Response> RemoveUserFromGroupAsync(string group, string userId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.RemoveUserFromAllGroupsAsync");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.RemoveUserFromGroupAsync");
             scope.Start();
             try
             {
-                return await RestClient.RemoveUserFromGroupAsync(hub, group, userId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.RemoveUserFromGroupAsync(_hub, group, userId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -940,14 +938,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="group">Target group name, which length should be greater than 0 and less than 1025.</param>
         /// <param name="userId">Target user Id</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
         public virtual Response RemoveUserFromGroup(string group, string userId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.RemoveUserFromAllGroups");
+            using var scope = _clientDiagnostics.CreateScope("WebPubSubServiceRestClient.RemoveUserFromGroup");
             scope.Start();
             try
             {
-                return RestClient.RemoveUserFromGroup(hub, group, userId, cancellationToken);
+                return RestClient.RemoveUserFromGroup(_hub, group, userId, cancellationToken);
             }
             catch (Exception e)
             {

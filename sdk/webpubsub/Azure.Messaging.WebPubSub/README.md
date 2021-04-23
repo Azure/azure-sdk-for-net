@@ -4,7 +4,7 @@
 
 Any scenario that requires real-time publish-subscribe messaging between server and clients or among clients, can use Azure Web PubSub service. Traditional real-time features that often require polling from server or submitting HTTP requests, can also use Azure Web PubSub service.
 
-This library can be used to do the following actions. Details about the terms used here are described in [Key concepts](#terms) section.
+This library can be used to do the following actions. Details about the terms used here are described in [Key concepts](#key-concepts) section.
 
 - Send messages to hubs and groups. 
 - Send messages to particular users and connections.

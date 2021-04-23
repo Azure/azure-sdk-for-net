@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Messaging.WebPubSub
 {
     /// <summary>
-    /// The options for <see cref="WebPubSubServiceClientOptions"/>
+    /// The options for <see cref="WebPubSubServiceClient"/>.
     /// </summary>
     public class WebPubSubServiceClientOptions : ClientOptions
     {
@@ -16,25 +16,26 @@ namespace Azure.Messaging.WebPubSub
         /// <summary>
         /// Initializes a new instance of the <see cref="WebPubSubServiceClientOptions"/>.
         /// </summary>
-        public WebPubSubServiceClientOptions(ServiceVersion version = ServiceVersion.V2020_10_01_beta)
+        /// <param name="version">Service API version</param>
+        public WebPubSubServiceClientOptions(ServiceVersion version = ServiceVersion.V2021_05_01)
         {
             Version = version switch
             {
-                ServiceVersion.V2020_10_01_beta => "2020.10.01",
+                ServiceVersion.V2021_05_01 => "2021-05-01-preview",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
         }
 
         /// <summary>
-        /// The template service version.
+        /// The Azure Web PubSub service version.
         /// </summary>
         public enum ServiceVersion
         {
             /// <summary>
-            /// The version 1.0 beta of the secret service.
+            /// The 2021.05.01 beta of Azure Web PubSub.
             /// </summary>
 #pragma warning disable CA1707 // Remove the underscores from member name
-            V2020_10_01_beta = 1
+            V2021_05_01 = 1
 #pragma warning restore
         }
     }
