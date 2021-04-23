@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Monitory.Query.Models
 {
-    public partial class LocalizableString
+    internal partial class LocalizableString
     {
         internal static LocalizableString DeserializeLocalizableString(JsonElement element)
         {

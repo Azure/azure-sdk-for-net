@@ -26,7 +26,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc />
-        protected override VirtualMachine GetResource()
+        protected override VirtualMachine GetResource(CancellationToken cancellation = default)
         {
             return this;
         }

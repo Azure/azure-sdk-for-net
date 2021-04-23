@@ -53,7 +53,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret">
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateServiceClientWithClientSecret" language="csharp">
         /// // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
         /// // It attempts to use multiple credential types in an order until it finds a working credential.
         /// TokenCredential tokenCredential = new DefaultAzureCredential();
@@ -138,7 +138,7 @@ namespace Azure.DigitalTwins.Core
         /// <example>
         /// This sample demonstrates getting and deserializing a digital twin into a custom data type.
         ///
-        /// <code snippet="Snippet:DigitalTwinsSampleGetCustomDigitalTwin">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetCustomDigitalTwin" language="csharp">
         /// Response&lt;CustomDigitalTwin&gt; getCustomDtResponse = await client.GetDigitalTwinAsync&lt;CustomDigitalTwin&gt;(customDtId);
         /// CustomDigitalTwin customDt = getCustomDtResponse.Value;
         /// Console.WriteLine($&quot;Retrieved and deserialized digital twin {customDt.Id}:\n\t&quot; +
@@ -255,7 +255,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="digitalTwin"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleCreateCustomTwin">
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateCustomTwin" language="csharp">
         /// var customTwin = new CustomDigitalTwin
         /// {
         ///     Id = customDtId,
@@ -393,7 +393,7 @@ namespace Azure.DigitalTwins.Core
         /// To delete a digital twin, any relationships referencing it must be deleted first.
         /// </remarks>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleDeleteTwin">
+        /// <code snippet="Snippet:DigitalTwinsSampleDeleteTwin" language="csharp">
         /// await client.DeleteDigitalTwinAsync(digitalTwinId);
         /// Console.WriteLine($&quot;Deleted digital twin &apos;{digitalTwinId}&apos;.&quot;);
         /// </code>
@@ -558,7 +558,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleGetComponent">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetComponent" language="csharp">
         /// await client.GetComponentAsync&lt;MyCustomComponent&gt;(basicDtId, SamplesConstants.ComponentName);
         /// Console.WriteLine($&quot;Retrieved component for digital twin &apos;{basicDtId}&apos;.&quot;);
         /// </code>
@@ -653,7 +653,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
         /// </exception>
-        /// <code snippet="Snippet:DigitalTwinsSampleUpdateComponent">
+        /// <code snippet="Snippet:DigitalTwinsSampleUpdateComponent" language="csharp">
         /// // Update Component1 by replacing the property ComponentProp1 value,
         /// // using an optional utility to build the payload.
         /// var componentJsonPatchDocument = new JsonPatchDocument();
@@ -770,7 +770,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// This sample demonstrates iterating over outgoing relationships and deserializing relationship strings into BasicRelationship objects.
-        /// <code snippet="Snippet:DigitalTwinsSampleGetAllRelationships">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetAllRelationships" language="csharp">
         /// AsyncPageable&lt;BasicRelationship&gt; relationships = client.GetRelationshipsAsync&lt;BasicRelationship&gt;(&quot;buildingTwinId&quot;);
         /// await foreach (BasicRelationship relationship in relationships)
         /// {
@@ -936,7 +936,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleGetIncomingRelationships">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetIncomingRelationships" language="csharp">
         /// AsyncPageable&lt;IncomingRelationship&gt; incomingRelationships = client.GetIncomingRelationshipsAsync(&quot;buildingTwinId&quot;);
         ///
         /// await foreach (IncomingRelationship incomingRelationship in incomingRelationships)
@@ -1086,7 +1086,7 @@ namespace Azure.DigitalTwins.Core
         /// </exception>
         /// <example>
         /// This sample demonstrates getting and deserializing a digital twin relationship into a custom data type.
-        /// <code snippet="Snippet:DigitalTwinsSampleGetCustomRelationship">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetCustomRelationship" language="csharp">
         /// Response&lt;CustomRelationship&gt; getCustomRelationshipResponse = await client.GetRelationshipAsync&lt;CustomRelationship&gt;(
         ///     &quot;floorTwinId&quot;,
         ///     &quot;floorBuildingRelationshipId&quot;);
@@ -1285,7 +1285,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleCreateCustomRelationship">
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateCustomRelationship" language="csharp">
         /// var floorBuildingRelationshipPayload = new CustomRelationship
         /// {
         ///     Id = &quot;floorBuildingRelationshipId&quot;,
@@ -1529,7 +1529,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleGetModels">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetModels" language="csharp">
         /// AsyncPageable&lt;DigitalTwinsModelData&gt; allModels = client.GetModelsAsync();
         /// await foreach (DigitalTwinsModelData model in allModels)
         /// {
@@ -1689,7 +1689,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleGetModel">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetModel" language="csharp">
         /// Response&lt;DigitalTwinsModelData&gt; sampleModelResponse = await client.GetModelAsync(sampleModelId);
         /// Console.WriteLine($&quot;Retrieved model &apos;{sampleModelResponse.Value.Id}&apos;.&quot;);
         /// </code>
@@ -1771,7 +1771,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleDecommisionModel">
+        /// <code snippet="Snippet:DigitalTwinsSampleDecommisionModel" language="csharp">
         /// try
         /// {
         ///     await client.DecommissionModelAsync(sampleModelId);
@@ -1866,7 +1866,7 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         /// <seealso href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models" />
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleCreateModels">
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateModels" language="csharp">
         /// await client.CreateModelsAsync(new[] { newComponentModelPayload, newModelPayload });
         /// Console.WriteLine($&quot;Created models &apos;{componentModelId}&apos; and &apos;{sampleModelId}&apos;.&quot;);
         /// </code>
@@ -1967,7 +1967,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleDeleteModel">
+        /// <code snippet="Snippet:DigitalTwinsSampleDeleteModel" language="csharp">
         /// try
         /// {
         ///     await client.DeleteModelAsync(sampleModelId);
@@ -2058,7 +2058,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleQueryTwins">
+        /// <code snippet="Snippet:DigitalTwinsSampleQueryTwins" language="csharp">
         /// // This code snippet demonstrates the simplest way to iterate over the digital twin results, where paging
         /// // happens under the covers.
         /// AsyncPageable&lt;BasicDigitalTwin&gt; asyncPageableResponse = client.QueryAsync&lt;BasicDigitalTwin&gt;(&quot;SELECT * FROM digitaltwins&quot;);
@@ -2277,7 +2277,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleGetEventRoutes">
+        /// <code snippet="Snippet:DigitalTwinsSampleGetEventRoutes" language="csharp">
         /// AsyncPageable&lt;DigitalTwinsEventRoute&gt; response = client.GetEventRoutesAsync();
         /// await foreach (DigitalTwinsEventRoute er in response)
         /// {
@@ -2509,7 +2509,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleCreateEventRoute">
+        /// <code snippet="Snippet:DigitalTwinsSampleCreateEventRoute" language="csharp">
         /// string eventFilter = &quot;$eventType = &apos;DigitalTwinTelemetryMessages&apos; or $eventType = &apos;DigitalTwinLifecycleNotification&apos;&quot;;
         /// var eventRoute = new DigitalTwinsEventRoute(eventhubEndpointName, eventFilter);
         ///
@@ -2587,7 +2587,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSampleDeleteEventRoute">
+        /// <code snippet="Snippet:DigitalTwinsSampleDeleteEventRoute" language="csharp">
         /// await client.DeleteEventRouteAsync(_eventRouteId);
         /// Console.WriteLine($&quot;Deleted event route &apos;{_eventRouteId}&apos;.&quot;);
         /// </code>
@@ -2665,7 +2665,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="payload"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSamplePublishTelemetry">
+        /// <code snippet="Snippet:DigitalTwinsSamplePublishTelemetry" language="csharp">
         /// // construct your json telemetry payload by hand.
         /// await client.PublishTelemetryAsync(twinId, Guid.NewGuid().ToString(), &quot;{\&quot;Telemetry1\&quot;: 5}&quot;);
         /// Console.WriteLine($&quot;Published telemetry message to twin &apos;{twinId}&apos;.&quot;);
@@ -2788,7 +2788,7 @@ namespace Azure.DigitalTwins.Core
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> or <paramref name="payload"/> is <c>null</c>.
         /// </exception>
         /// <example>
-        /// <code snippet="Snippet:DigitalTwinsSamplePublishComponentTelemetry">
+        /// <code snippet="Snippet:DigitalTwinsSamplePublishComponentTelemetry" language="csharp">
         /// // construct your json telemetry payload by serializing a dictionary.
         /// var telemetryPayload = new Dictionary&lt;string, int&gt;
         /// {

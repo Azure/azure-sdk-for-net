@@ -55,7 +55,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> URL up to 2KB in length that specifies the source file used in the last attempted Copy File operation where this file was the destination file. </summary>
         public string CopySource => _response.Headers.TryGetValue("x-ms-copy-source", out string value) ? value : null;
         /// <summary> State of the copy operation identified by &apos;x-ms-copy-id&apos;. </summary>
-        public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatus() : (CopyStatus?)null;
+        public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatus() : null;
         /// <summary> If the file has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole file&apos;s MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range. </summary>
         public byte[] FileContentMD5 => _response.Headers.TryGetValue("x-ms-content-md5", out byte[] value) ? value : null;
         /// <summary> The value of this header is set to true if the file data and application metadata are completely encrypted using the specified algorithm. Otherwise, the value is set to false (when the file is unencrypted, or if only parts of the file/application metadata are encrypted). </summary>
@@ -75,10 +75,10 @@ namespace Azure.Storage.Files.Shares
         /// <summary> The parent fileId of the file. </summary>
         public string FileParentId => _response.Headers.TryGetValue("x-ms-file-parent-id", out string value) ? value : null;
         /// <summary> When a file is leased, specifies whether the lease is of infinite or fixed duration. </summary>
-        public ShareLeaseDuration? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToShareLeaseDuration() : (ShareLeaseDuration?)null;
+        public ShareLeaseDuration? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToShareLeaseDuration() : null;
         /// <summary> Lease state of the file. </summary>
-        public ShareLeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToShareLeaseState() : (ShareLeaseState?)null;
+        public ShareLeaseState? LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value.ToShareLeaseState() : null;
         /// <summary> The current lease status of the file. </summary>
-        public ShareLeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToShareLeaseStatus() : (ShareLeaseStatus?)null;
+        public ShareLeaseStatus? LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value.ToShareLeaseStatus() : null;
     }
 }

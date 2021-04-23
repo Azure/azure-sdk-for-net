@@ -446,5 +446,27 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="id"> The resource identifier. </param>
         public static implicit operator string(ResourceIdentifier id) => id?.ToString();
+
+        /// <summary>
+        /// Operator overloading for '=='.
+        /// </summary>
+        /// <param name="id1">Left ResourceIdentifier object to compare.</param>
+        /// <param name="id2">Right ResourceIdentifier object to compare.</param>
+        /// <returns></returns>
+        public static bool operator ==(ResourceIdentifier id1, ResourceIdentifier id2)
+        {
+            return ResourceIdentifier.Equals(id1,id2);
+        }
+
+        /// <summary>
+        /// Operator overloading for '!='.
+        /// </summary>
+        /// <param name="id1">Left ResourceIdentifier object to compare.</param>
+        /// <param name="id2">Right ResourceIdentifier object to compare.</param>
+        /// <returns></returns>
+        public static bool operator !=(ResourceIdentifier id1, ResourceIdentifier id2)
+        {
+            return !ResourceIdentifier.Equals(id1,id2);
+        }
     }
 }

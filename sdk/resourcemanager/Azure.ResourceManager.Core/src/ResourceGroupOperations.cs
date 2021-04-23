@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource();
+                var resource = GetResource(cancellationToken);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags[key] = value;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource();
+                var resource = GetResource(cancellationToken);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags[key] = value;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource();
+                var resource = GetResource(cancellationToken);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(tags);
                 return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource();
+                var resource = GetResource(cancellationToken);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(tags);
                 return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource();
+                var resource = GetResource(cancellationToken);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource();
+                var resource = GetResource(cancellationToken);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                var resource = GetResource();
+                var resource = GetResource(cancellationToken);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);

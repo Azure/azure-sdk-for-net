@@ -2609,7 +2609,6 @@ namespace Storage.Tests
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
                 Assert.Equal(2, account.KeyPolicy.KeyExpirationPeriodInDays);
-                //Assert.Equal(ExpirationAction.Log, account.SasPolicy.ExpirationAction);
                 Assert.Equal("2.02:03:59", account.SasPolicy.SasExpirationPeriod);
 
                 // Update storage account type
@@ -2622,14 +2621,16 @@ namespace Storage.Tests
                 };
                 account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
                 Assert.Equal(9, account.KeyPolicy.KeyExpirationPeriodInDays);
-                //Assert.Equal(ExpirationAction.Log, account.SasPolicy.ExpirationAction);
                 Assert.Equal("0.02:03:59", account.SasPolicy.SasExpirationPeriod);
+                Assert.NotNull(account.KeyCreationTime.Key1);
+                Assert.NotNull(account.KeyCreationTime.Key2);
 
                 // Validate
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 Assert.Equal(9, account.KeyPolicy.KeyExpirationPeriodInDays);
-                //Assert.Equal(ExpirationAction.Log, account.SasPolicy.ExpirationAction);
                 Assert.Equal("0.02:03:59", account.SasPolicy.SasExpirationPeriod);
+                Assert.NotNull(account.KeyCreationTime.Key1);
+                Assert.NotNull(account.KeyCreationTime.Key2);
             }
         }
     }

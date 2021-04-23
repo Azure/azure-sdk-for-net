@@ -206,6 +206,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                           CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpConsumer));
+            Argument.AssertNotClosed(ConnectionScope.IsDisposed, nameof(EventHubConnection));
             Argument.AssertAtLeast(maximumEventCount, 1, nameof(maximumEventCount));
 
             var receivedEventCount = 0;

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Core.Adapters;
 
 namespace Azure.ResourceManager.Core
 {
@@ -55,9 +56,6 @@ namespace Azure.ResourceManager.Core
             : base(id, location, null)
         {
         }
-
-        /// <inheritdoc/>
-        public override TenantResourceIdentifier Id { get; protected set; }
 
         /// <summary>
         /// Gets or sets who this resource is managed by.

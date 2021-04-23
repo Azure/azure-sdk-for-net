@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.Core
     /// <typeparam name="TOperations"> The type of the class containing operations for the underlying resource. </typeparam>
     /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
     public abstract class ResourceContainerBase<TIdentifier, TOperations, TResource> : ContainerBase<TIdentifier, TOperations>
-        where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
-        where TResource : Resource<TIdentifier>
         where TIdentifier : TenantResourceIdentifier
+        where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
+        where TResource : class
     {
         private static readonly object _parentLock = new object();
         private object _parentResource;

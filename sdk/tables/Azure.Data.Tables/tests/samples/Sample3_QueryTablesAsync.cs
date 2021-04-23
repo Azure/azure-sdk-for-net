@@ -35,7 +35,7 @@ namespace Azure.Data.Tables.Samples
             // Iterate the <see cref="Pageable"> in order to access individual queried tables.
             await foreach (TableItem table in queryTableResults)
             {
-                Console.WriteLine(table.TableName);
+                Console.WriteLine(table.Name);
             }
             #endregion
 

@@ -183,6 +183,71 @@ namespace Azure.Core.Tests
             Assert.AreEqual(exception.ErrorCode, deserialized.ErrorCode);
         }
 
+        [Test]
+        public async Task ParsesJsonErrors()
+        {
+            var formattedResponse =
+                "Custom message" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: StatusCode" + s_nl +
+                s_nl +
+                "Content:" + s_nl +
+                "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" + s_nl +
+                s_nl +
+                "Headers:" + s_nl +
+                "Content-Type: text/json" + s_nl;
+
+            var response = new MockResponse(210, "Reason");
+            response.SetContent("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}");
+            response.AddHeader(new HttpHeader("Content-Type", "text/json"));
+
+            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            Assert.AreEqual(formattedResponse, exception.Message);
+            Assert.AreEqual("StatusCode", exception.ErrorCode);
+        }
+
+        [Test]
+        public async Task IgnoresInvalidJsonErrors()
+        {
+            var formattedResponse =
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                "Content:" + s_nl +
+                "{ \"error\": { \"code\":\"StatusCode\"" + s_nl +
+                s_nl +
+                "Headers:" + s_nl +
+                "Content-Type: text/json" + s_nl;
+
+            var response = new MockResponse(210, "Reason");
+            response.SetContent("{ \"error\": { \"code\":\"StatusCode\"");
+            response.AddHeader(new HttpHeader("Content-Type", "text/json"));
+
+            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            Assert.AreEqual(formattedResponse, exception.Message);
+        }
+
+        [Test]
+        public async Task IgnoresNonStandardJson()
+        {
+            var formattedResponse =
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                "Content:" + s_nl +
+                "{ \"code\":\"StatusCode\" }" + s_nl +
+                s_nl +
+                "Headers:" + s_nl +
+                "Content-Type: text/json" + s_nl;
+
+            var response = new MockResponse(210, "Reason");
+            response.SetContent("{ \"code\":\"StatusCode\" }");
+            response.AddHeader(new HttpHeader("Content-Type", "text/json"));
+
+            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            Assert.AreEqual(formattedResponse, exception.Message);
+        }
+
         private class TestClientOption : ClientOptions
         {
             public TestClientOption()

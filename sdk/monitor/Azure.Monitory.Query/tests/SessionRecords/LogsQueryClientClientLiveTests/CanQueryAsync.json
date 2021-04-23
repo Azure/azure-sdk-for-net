@@ -6,34 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "21",
+        "Content-Length": "121",
         "Content-Type": "application/json",
-        "traceparent": "00-76be1c0803315345b4fdf404a878c7fd-009effdc0b6e4d4e-00",
+        "traceparent": "00-133cd09a096f5846ac8806dd1542c190-3b45c2b5fba49542-00",
         "User-Agent": [
-          "azsdk-net-Monitory.Query/1.0.0-alpha.20210408.1",
-          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Monitory.Query/1.0.0-alpha.20210420.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "619724faaa519c39f43a4ee91f7a72bf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "Heartbeat"
+        "query": "TableA1_102_CL |project StringColumn_s, IntColumn_d, BoolColumn_b, FloatColumn_d |order by StringColumn_s asc"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "0",
+        "Age": "1",
         "Connection": "keep-alive",
-        "Content-Length": "1240",
+        "Content-Length": "265",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 08 Apr 2021 21:40:05 GMT",
+        "Date": "Tue, 20 Apr 2021 22:12:14 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-69f9f48db4-v67dc",
+        "Via": "1.1 draft-oms-6ddc976cfd-hq94g",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -42,133 +42,49 @@
             "name": "PrimaryResult",
             "columns": [
               {
-                "name": "TenantId",
+                "name": "StringColumn_s",
                 "type": "string"
               },
               {
-                "name": "SourceSystem",
-                "type": "string"
+                "name": "IntColumn_d",
+                "type": "real"
               },
               {
-                "name": "TimeGenerated",
-                "type": "datetime"
-              },
-              {
-                "name": "MG",
-                "type": "string"
-              },
-              {
-                "name": "ManagementGroupName",
-                "type": "string"
-              },
-              {
-                "name": "SourceComputerId",
-                "type": "string"
-              },
-              {
-                "name": "ComputerIP",
-                "type": "string"
-              },
-              {
-                "name": "Computer",
-                "type": "string"
-              },
-              {
-                "name": "Category",
-                "type": "string"
-              },
-              {
-                "name": "OSType",
-                "type": "string"
-              },
-              {
-                "name": "OSName",
-                "type": "string"
-              },
-              {
-                "name": "OSMajorVersion",
-                "type": "string"
-              },
-              {
-                "name": "OSMinorVersion",
-                "type": "string"
-              },
-              {
-                "name": "Version",
-                "type": "string"
-              },
-              {
-                "name": "SCAgentChannel",
-                "type": "string"
-              },
-              {
-                "name": "IsGatewayInstalled",
+                "name": "BoolColumn_b",
                 "type": "bool"
               },
               {
-                "name": "RemoteIPLongitude",
+                "name": "FloatColumn_d",
                 "type": "real"
-              },
-              {
-                "name": "RemoteIPLatitude",
-                "type": "real"
-              },
-              {
-                "name": "RemoteIPCountry",
-                "type": "string"
-              },
-              {
-                "name": "SubscriptionId",
-                "type": "string"
-              },
-              {
-                "name": "ResourceGroup",
-                "type": "string"
-              },
-              {
-                "name": "ResourceProvider",
-                "type": "string"
-              },
-              {
-                "name": "Resource",
-                "type": "string"
-              },
-              {
-                "name": "ResourceId",
-                "type": "string"
-              },
-              {
-                "name": "ResourceType",
-                "type": "string"
-              },
-              {
-                "name": "ComputerEnvironment",
-                "type": "string"
-              },
-              {
-                "name": "Solutions",
-                "type": "string"
-              },
-              {
-                "name": "VMUUID",
-                "type": "string"
-              },
-              {
-                "name": "Type",
-                "type": "string"
-              },
-              {
-                "name": "_ResourceId",
-                "type": "string"
               }
             ],
-            "rows": []
+            "rows": [
+              [
+                "a",
+                1,
+                false,
+                0
+              ],
+              [
+                "b",
+                3,
+                true,
+                1.2
+              ],
+              [
+                "c",
+                1,
+                false,
+                1.1
+              ]
+            ]
           }
         ]
       }
     }
   ],
   "Variables": {
+    "DateTimeOffsetNow": "2021-04-20T15:12:14.3630118-07:00",
     "RandomSeed": "1465646503",
     "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254"
   }

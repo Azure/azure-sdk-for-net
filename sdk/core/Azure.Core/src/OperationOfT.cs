@@ -69,7 +69,7 @@ namespace Azure
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
         {
-            return (await WaitForCompletionAsync(cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            return (await WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
     }
 }
