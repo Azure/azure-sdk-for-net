@@ -47,7 +47,6 @@ jobs:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
-      - template: /eng/pipelines/templates/steps/nuget-cache.yml
       - script: >-
           dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"

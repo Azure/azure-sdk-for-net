@@ -67,7 +67,6 @@ jobs:
         inputs:
           versionSpec: '3.6'
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
-      - template: /eng/pipelines/templates/steps/nuget-cache.yml
       - script: >-
           dotnet pack eng/service.proj -warnaserror
           /p:SDKType=${{ parameters.SDKType }}
@@ -78,9 +77,6 @@ jobs:
           /p:CommitSHA=$(Build.SourceVersion)
           /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
         displayName: "Build and Package"
-        env:
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
       - template: /eng/common/pipelines/templates/steps/create-apireview.yml
         parameters:
@@ -132,12 +128,8 @@ jobs:
           versionSpec: '14.x'
         displayName: 'Install NodeJS'
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
-      - template: /eng/pipelines/templates/steps/nuget-cache.yml
       - task: PowerShell@2
         displayName: "Verify generated code"
-        env:
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
           arguments: >
