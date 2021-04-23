@@ -36,7 +36,7 @@ dotnet add package Azure.Messaging.WebPubSub --prerelease
 ### Create a `WebPubSubServiceClient`
 
 ```csharp
-var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new Azure.AzureKeyCredential("<access-key>"));
+var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new AzureKeyCredential("<access-key>"));
 ```
 
 <a name="terms"></a>
