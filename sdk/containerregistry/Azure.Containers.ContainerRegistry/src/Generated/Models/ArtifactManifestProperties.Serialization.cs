@@ -21,8 +21,8 @@ namespace Azure.Containers.ContainerRegistry
             Optional<long> imageSize = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
-            Optional<ArtifactArchitecture> architecture = default;
-            Optional<ArtifactOperatingSystem> os = default;
+            Optional<ArtifactArchitecture?> architecture = default;
+            Optional<ArtifactOperatingSystem?> os = default;
             Optional<IReadOnlyList<ManifestAttributesManifestReferences>> references = default;
             Optional<IReadOnlyList<string>> tags = default;
             Optional<ContentProperties> changeableAttributes = default;
@@ -81,7 +81,7 @@ namespace Azure.Containers.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                architecture = null;
                                 continue;
                             }
                             architecture = new ArtifactArchitecture(property0.Value.GetString());
@@ -91,7 +91,7 @@ namespace Azure.Containers.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                os = null;
                                 continue;
                             }
                             os = new ArtifactOperatingSystem(property0.Value.GetString());
@@ -141,7 +141,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ArtifactManifestProperties(imageName.Value, digest.Value, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture, os, Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
+            return new ArtifactManifestProperties(imageName.Value, digest.Value, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
         }
     }
 }

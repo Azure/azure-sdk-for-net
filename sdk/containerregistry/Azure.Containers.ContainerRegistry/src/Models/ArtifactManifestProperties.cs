@@ -21,14 +21,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> List of manifest attributes details. </summary>
         internal IReadOnlyList<ManifestAttributesManifestReferences> References { get; }
 
-        /// <summary>
-        /// </summary>
-        public ArtifactArchitecture Architecture { get; }
-
-        /// <summary>
-        /// </summary>
-        public ArtifactOperatingSystem OperatingSystem { get; }
-
         /// <summary></summary>
         public IReadOnlyList<ArtifactManifestProperties> Manifests
         {
