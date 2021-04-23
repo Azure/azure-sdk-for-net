@@ -199,7 +199,7 @@ namespace Azure.Core.TestFramework
         /// <returns>A task.</returns>
         public async ValueTask WaitForEnvironmentAsync()
         {
-            if (Mode == RecordedTestMode.Live)
+            if (GlobalIsRunningInCI && Mode == RecordedTestMode.Live)
             {
                 await s_environmentStateCache.GetOrAdd(GetType(), t => WaitForEnvironmentInternalAsync());
             }
