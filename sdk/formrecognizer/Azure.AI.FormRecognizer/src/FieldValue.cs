@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -234,7 +235,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="long"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="long"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Int64"/> or when the value is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Int64"/> or when the value was not correctly normalized to its type.
+        /// Consider accessing the `ValueData.text` property for a textual representation of the value.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public long AsInt64()
         {
             if (ValueType != FieldValueType.Int64)
@@ -242,6 +245,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as Integer.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueInteger;
@@ -249,7 +253,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueInteger.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Int64)} type. Consider using the 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to its type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
             }
 
             return _fieldValue.ValueInteger.Value;
@@ -257,26 +261,39 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// Gets the value of the field as a <see cref="long"/>.
-        /// If the operation fails, null value will be returned.
+        /// If the value is extracted from the form, but cannot be normalized to its type,
+        /// this method will return null. Consider accessing the `ValueData.text` property for a textual representation of the value.
         /// </summary>
-        /// <returns>The value of the field converted to a <see cref="long"/>, or null in case of failure.</returns>
+        /// <returns>The value of the field converted to a <see cref="long"/>, or null in case value was extracted but cannot be normalized to
+        /// <see cref="long"/>.</returns>
         public long? AsInt64OrNull()
         {
-            try
+            if (ValueType != FieldValueType.Int64)
             {
-                return AsInt64();
+                throw new InvalidOperationException($"Cannot get field as Integer.  Field value's type is {ValueType}.");
             }
-            catch
+
+            // Use when mocking
+            if (_fieldValue == null)
+            {
+                return ValueInteger;
+            }
+
+            if (!_fieldValue.ValueInteger.HasValue)
             {
                 return null;
             }
+
+            return _fieldValue.ValueInteger.Value;
         }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="float"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="float"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Float"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Float"/> or when the value was not correctly normalized to its type.
+        /// Consider accessing the `ValueData.text` property for a textual representation of the value.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public float AsFloat()
         {
             if (ValueType != FieldValueType.Float)
@@ -284,6 +301,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as Float.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueNumber;
@@ -298,7 +316,7 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 else
                 {
-                    throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Float)} type. Consider using the 'ValueData.Text' property.");
+                    throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to its type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
                 }
             }
 
@@ -307,26 +325,39 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// Gets the value of the field as a <see cref="float"/>.
-        /// If the operation fails, null value will be returned.
+        /// If the value is extracted from the form, but cannot be normalized to its type,
+        /// this method will return null. Consider accessing the `ValueData.text` property for a textual representation of the value.
         /// </summary>
-        /// <returns>The value of the field converted to a <see cref="float"/>, or null in case of failure.</returns>
+        /// <returns>The value of the field converted to a <see cref="float"/>, or null in case value was extracted but cannot be normalized to
+        /// <see cref="float"/>.</returns>
         public float? AsFloatOrNull()
         {
-            try
+            if (ValueType != FieldValueType.Float)
             {
-                return AsFloat();
+                throw new InvalidOperationException($"Cannot get field as Float.  Field value's type is {ValueType}.");
             }
-            catch
+
+            // Use when mocking
+            if (_fieldValue == null)
+            {
+                return ValueNumber;
+            }
+
+            if (!_fieldValue.ValueNumber.HasValue)
             {
                 return null;
             }
+
+            return _fieldValue.ValueNumber.Value;
         }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="DateTime"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="DateTime"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Date"/> or when the value is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Date"/> or when the value was not correctly normalized to its type.
+        /// Consider accessing the `ValueData.text` property for a textual representation of the value.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public DateTime AsDate()
         {
             if (ValueType != FieldValueType.Date)
@@ -334,6 +365,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as Date.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueDate;
@@ -341,7 +373,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueDate.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Date)} type. Consider using the 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to its type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
             }
 
             return _fieldValue.ValueDate.Value.UtcDateTime;
@@ -349,26 +381,39 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// Gets the value of the field as a <see cref="DateTime"/>.
-        /// If the operation fails, null value will be returned.
+        /// If the value is extracted from the form, but cannot be normalized to its type,
+        /// this method will return null. Consider accessing the `ValueData.text` property for a textual representation of the value.
         /// </summary>
-        /// <returns>The value of the field converted to a <see cref="DateTime"/>, or null in case of failure.</returns>
+        /// <returns>The value of the field converted to a <see cref="DateTime"/>, or null in case value was extracted but cannot be normalized to
+        /// <see cref="DateTime"/>.</returns>
         public DateTime? AsDateOrNull()
         {
-            try
+            if (ValueType != FieldValueType.Date)
             {
-                return AsDate();
+                throw new InvalidOperationException($"Cannot get field as Date.  Field value's type is {ValueType}.");
             }
-            catch
+
+            // Use when mocking
+            if (_fieldValue == null)
+            {
+                return ValueDate;
+            }
+
+            if (!_fieldValue.ValueDate.HasValue)
             {
                 return null;
             }
+
+            return _fieldValue.ValueDate.Value.UtcDateTime;
         }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="TimeSpan"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="TimeSpan"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Time"/> or when the value is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Time"/> or when the value was not correctly normalized to its type.
+        /// Consider accessing the `ValueData.text` property for a textual representation of the value.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public TimeSpan AsTime()
         {
             if (ValueType != FieldValueType.Time)
@@ -376,6 +421,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as Time.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueTime;
@@ -383,7 +429,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueTime.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Time)} type. Consider using the 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to its type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
             }
 
             return _fieldValue.ValueTime.Value;
@@ -391,25 +437,36 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// Gets the value of the field as a <see cref="TimeSpan"/>.
-        /// If the operation fails, null value will be returned.
+        /// If the value is extracted from the form, but cannot be normalized to its type,
+        /// this method will return null. Consider accessing the `ValueData.text` property for a textual representation of the value.
         /// </summary>
-        /// <returns>The value of the field converted to a <see cref="TimeSpan"/>, or null in case of failure.</returns>
+        /// <returns>The value of the field converted to a <see cref="TimeSpan"/>, or null in case value was extracted but cannot be normalized to
+        /// <see cref="TimeSpan"/>.</returns>
         public TimeSpan? AsTimeOrNull()
         {
-            try
+            if (ValueType != FieldValueType.Time)
             {
-                return AsTime();
+                throw new InvalidOperationException($"Cannot get field as Time.  Field value's type is {ValueType}.");
             }
-            catch
+
+            // Use when mocking
+            if (_fieldValue == null)
+            {
+                return ValueTime;
+            }
+
+            if (!_fieldValue.ValueTime.HasValue)
             {
                 return null;
             }
+
+            return _fieldValue.ValueTime.Value;
         }
 
         /// <summary>
         /// Gets the value of the field as a phone number <see cref="string"/>.
         /// </summary>
-        /// <returns>The value of the field converted to a phone number <see cref="string"/>.</returns>
+        /// <returns>The value of the field converted to a phone number <see cref="string"/>. Otherwise, null.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.PhoneNumber"/>.</exception>
         public string AsPhoneNumber()
         {
@@ -418,6 +475,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as PhoneNumber.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueString;
@@ -438,6 +496,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as List.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueList;
@@ -453,23 +512,6 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Gets the value of the field as a <see cref="IReadOnlyList{T}"/>.
-        /// If the operation fails, null value will be returned.
-        /// </summary>
-        /// <returns>The value of the field converted to a <see cref="IReadOnlyList{T}"/>, or null in case of failure.</returns>
-        public IReadOnlyList<FormField> AsListOrNull()
-        {
-            try
-            {
-                return AsList();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
         /// Gets the value of the field as a <see cref="Dictionary{TKey, TValue}"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="Dictionary{TKey, TValue}"/>.</returns>
@@ -481,6 +523,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as Dictionary.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueDictionary;
@@ -504,27 +547,12 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Gets the value of the field as a <see cref="Dictionary{TKey, TValue}"/>.
-        /// If the operation fails, null value will be returned.
-        /// </summary>
-        /// <returns>The value of the field converted to a <see cref="Dictionary{TKey, TValue}"/>, or null in case of failure.</returns>
-        public IReadOnlyDictionary<string, FormField> AsDictionaryOrNull()
-        {
-            try
-            {
-                return AsDictionary();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
         /// Gets the value of the field as a <see cref="SelectionMarkState"/>.
         /// </summary>
         /// <returns>The value of the field converted to <see cref="SelectionMarkState"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.SelectionMark"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.SelectionMark"/> or when the value was not correctly normalized to its type.
+        /// Consider accessing the `ValueData.text` property for a textual representation of the value.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public SelectionMarkState AsSelectionMarkState()
         {
             if (ValueType != FieldValueType.SelectionMark)
@@ -532,6 +560,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as SelectionMark.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueSelectionMark;
@@ -539,7 +568,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueSelectionMark.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.SelectionMark)} type. Consider using the 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to its type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
             }
 
             return _fieldValue.ValueSelectionMark.Value;
@@ -547,25 +576,36 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// Gets the value of the field as a <see cref="SelectionMarkState"/>.
-        /// If the operation fails, null value will be returned.
+        /// If the value is extracted from the form, but cannot be normalized to its type,
+        /// this method will return null. Consider accessing the `ValueData.text` property for a textual representation of the value.
         /// </summary>
-        /// <returns>The value of the field converted to a <see cref="SelectionMarkState"/>, or null in case of failure.</returns>
+        /// <returns>The value of the field converted to a <see cref="SelectionMarkState"/>, or null in case value was extracted but cannot be normalized to
+        /// <see cref="SelectionMarkState"/>.</returns>
         public SelectionMarkState? AsSelectionMarkStateOrNull()
         {
-            try
+            if (ValueType != FieldValueType.SelectionMark)
             {
-                return AsSelectionMarkState();
+                throw new InvalidOperationException($"Cannot get field as SelectionMark.  Field value's type is {ValueType}.");
             }
-            catch
+
+            // Use when mocking
+            if (_fieldValue == null)
+            {
+                return ValueSelectionMark;
+            }
+
+            if (!_fieldValue.ValueSelectionMark.HasValue)
             {
                 return null;
             }
+
+            return _fieldValue.ValueSelectionMark.Value;
         }
 
         /// <summary>
         /// Gets the value of the field as an ISO 3166-1 alpha-3 country code <see cref="string"/>.
         /// </summary>
-        /// <returns>The value of the field converted to an ISO 3166-1 alpha-3 country code <see cref="string"/>.</returns>
+        /// <returns>The value of the field converted to an ISO 3166-1 alpha-3 country code <see cref="string"/>. Otherwise, null.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Country"/>.</exception>
         public string AsCountryCode()
         {
@@ -574,6 +614,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as country code.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueString;
@@ -586,7 +627,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="FieldValueGender"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="FieldValueGender"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Gender"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Gender"/> or when the value was not correctly normalized to its type.
+        /// Consider accessing the `ValueData.text` property for a textual representation of the value.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public FieldValueGender AsGender()
         {
             if (ValueType != FieldValueType.Gender)
@@ -594,6 +637,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as gender.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueGender;
@@ -601,7 +645,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueGender.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Gender)} type. Consider using the 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to its type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
             }
 
             return _fieldValue.ValueGender.Value;
@@ -609,19 +653,30 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// Gets the value of the field as a <see cref="FieldValueGender"/>.
-        /// If the operation fails, null value will be returned.
+        /// If the value is extracted from the form, but cannot be normalized to its type,
+        /// this method will return null. Consider accessing the `ValueData.text` property for a textual representation of the value.
         /// </summary>
-        /// <returns>The value of the field converted to a <see cref="FieldValueGender"/>, or null in case of failure.</returns>
+        /// <returns>The value of the field converted to a <see cref="FieldValueGender"/>, or null in case value was extracted but cannot be normalized to
+        /// <see cref="FieldValueGender"/>.</returns>
         public FieldValueGender? AsGenderOrNull()
         {
-            try
+            if (ValueType != FieldValueType.Gender)
             {
-                return AsGender();
+                throw new InvalidOperationException($"Cannot get field as gender.  Field value's type is {ValueType}.");
             }
-            catch
+
+            // Use when mocking
+            if (_fieldValue == null)
+            {
+                return ValueGender;
+            }
+
+            if (!_fieldValue.ValueGender.HasValue)
             {
                 return null;
             }
+
+            return _fieldValue.ValueGender.Value;
         }
     }
 }
