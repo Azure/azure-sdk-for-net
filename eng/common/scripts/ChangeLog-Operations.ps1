@@ -2,7 +2,7 @@
 . "${PSScriptRoot}\logging.ps1"
 . "${PSScriptRoot}\SemVer.ps1"
 
-$RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+\s+$([AzureEngSemanticVersion]::SEMVER_REGEX))(\s+(?<releaseStatus>\(.*\))))"
+$RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+\s+(?<version>$([AzureEngSemanticVersion]::SEMVER_REGEX))(\s+(?<releaseStatus>\(.+\))))"
 $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
 
