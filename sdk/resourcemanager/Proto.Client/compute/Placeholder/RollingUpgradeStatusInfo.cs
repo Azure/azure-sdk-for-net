@@ -11,15 +11,21 @@ using Azure.ResourceManager.Core;
 namespace Proto.Compute
 {
     /// <summary> The status of the latest virtual machine scale set rolling upgrade. </summary>
-    public partial class RollingUpgradeStatusInfo : ProxyResource<ResourceGroupResourceIdentifier, Azure.ResourceManager.Compute.Models.RollingUpgradeStatusInfo>
+    public partial class RollingUpgradeStatusInfo : Resource<ResourceGroupResourceIdentifier>
     {
         /// <summary> 
         /// Initializes a new instance of the <see cref="rollingUpgradeStatusInfo"/> class. 
         /// </summary>
         public RollingUpgradeStatusInfo(Azure.ResourceManager.Compute.Models.RollingUpgradeStatusInfo rollingUpgradeStatusInfo) 
-            : base(rollingUpgradeStatusInfo.Id, rollingUpgradeStatusInfo)
+            : base(rollingUpgradeStatusInfo.Id, rollingUpgradeStatusInfo.Name, VirtualMachineScaleSetRollingUpgradeOperations.ResourceType)
         {
+            Model = rollingUpgradeStatusInfo;
         }
+
+        /// <summary>
+        /// Gets or sets the Model this resource is based of. 
+        ///</summary>
+        public virtual Azure.ResourceManager.Compute.Models.RollingUpgradeStatusInfo Model { get; }
 
         /// <summary>
         /// Gets the subnet id. 

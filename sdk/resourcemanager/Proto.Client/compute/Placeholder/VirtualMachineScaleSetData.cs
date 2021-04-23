@@ -67,9 +67,9 @@ namespace Proto.Compute
         /// <summary> Fault Domain count for each placement group. </summary>
         public int? PlatformFaultDomainCount { get; set; }
         /// <summary> Specifies information about the proximity placement group that the virtual machine scale set should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version: 2018-04-01. </summary>
-        public SubResource ProximityPlacementGroup { get; set; }
+        public Azure.ResourceManager.Compute.Models.SubResource ProximityPlacementGroup { get; set; }
         /// <summary> Specifies information about the dedicated host group that the virtual machine scale set resides in. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-06-01. </summary>
-        public SubResource HostGroup { get; set; }
+        public Azure.ResourceManager.Compute.Models.SubResource HostGroup { get; set; }
         /// <summary> Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
         /// <summary> Specifies the scale-in policy that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in. </summary>
