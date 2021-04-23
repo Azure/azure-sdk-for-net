@@ -19,12 +19,13 @@ namespace Azure.Storage.Blobs.Tests
 
         private async Task<bool> DoesOAuthWorkAsync()
         {
-            TestContext.Out.WriteLine("Blob Probing OAuth");
-            BlobServiceClient serviceClient = new BlobServiceClient(
-                new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint),
-                GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant));
+            TestContext.Error.WriteLine("Blob Probing OAuth");
+
             try
             {
+                BlobServiceClient serviceClient = new BlobServiceClient(
+                    new Uri(TestConfigurations.DefaultTargetOAuthTenant.BlobServiceEndpoint),
+                    GetOAuthCredential(TestConfigurations.DefaultTargetOAuthTenant));
                 await serviceClient.GetPropertiesAsync();
                 var containerName = Guid.NewGuid().ToString();
                 var containerClient = serviceClient.GetBlobContainerClient(containerName);
@@ -43,10 +44,10 @@ namespace Azure.Storage.Blobs.Tests
                 }
             } catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
             {
-                TestContext.Out.WriteLine("Blob Probing OAuth - not ready");
+                TestContext.Error.WriteLine("Blob Probing OAuth - not ready");
                 return false;
             }
-            TestContext.Out.WriteLine("Blob Probing OAuth - ready");
+            TestContext.Error.WriteLine("Blob Probing OAuth - ready");
             return true;
         }
     }
