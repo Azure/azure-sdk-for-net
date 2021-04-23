@@ -79,7 +79,7 @@ await serviceClient.sendToAll(
     RequestContent.Create(
         new {
             Foo = "Hello World!",
-            Bar = "Hi!"
+            Bar = 42
         }));
 ```
 
