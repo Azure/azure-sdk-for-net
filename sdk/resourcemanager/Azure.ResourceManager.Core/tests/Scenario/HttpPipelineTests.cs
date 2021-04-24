@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Core.Tests.Scenario
         [Test]
         public async Task ValidateHttpPipelines()
         {
-            ResourceGroup resourceGroup = await _client.DefaultSubscription
+            await _client.DefaultSubscription
                 .GetResourceGroups().Construct("westus")
                 .CreateOrUpdateAsync("test-CacheHttpPipeline");
             await foreach (var rg in _client.DefaultSubscription.GetResourceGroups().ListAsync())

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the HTTP pipeline.
         /// </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        protected internal virtual HttpPipeline Pipeline { get; }
 
         /// <summary>
         /// Gets the valid Azure resource type for the current operations.
