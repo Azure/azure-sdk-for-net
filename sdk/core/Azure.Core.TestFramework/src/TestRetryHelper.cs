@@ -7,13 +7,25 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.TestFramework
 {
-    public static class TestRetryHelper
+    public class TestRetryHelper
     {
-        public static async Task<T> RetryAsync<T>(Func<Task<T>> operation, int maxIterations = 20, TimeSpan delay = default)
+        private readonly bool _noWait;
+
+        public TestRetryHelper(bool noWait)
+        {
+            _noWait = noWait;
+        }
+
+        public async Task<T> RetryAsync<T>(Func<Task<T>> operation, int maxIterations = 20, TimeSpan delay = default)
         {
             if (delay == default)
             {
                 delay = TimeSpan.FromSeconds(5);
+            }
+
+            if (_noWait)
+            {
+                delay = TimeSpan.Zero;
             }
 
             List<Exception> exceptions = null;

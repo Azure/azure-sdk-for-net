@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,7 +19,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using Azure PowerShell to obtain an access token.
     /// </summary>
-    public class AzurePowerShellCredential: TokenCredential
+    public class AzurePowerShellCredential : TokenCredential
     {
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
@@ -48,8 +49,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">Options for configuring the credential.</param>
         public AzurePowerShellCredential(AzurePowerShellCredentialOptions options) : this(options, default, default)
-        {
-        }
+        { }
 
         internal AzurePowerShellCredential(AzurePowerShellCredentialOptions options, CredentialPipeline pipeline, IProcessService processService)
         {
@@ -144,6 +144,11 @@ namespace Azure.Identity
             {
                 throw new CredentialUnavailableException(AzurePowerShellModuleNotInstalledError);
             }
+
+            if (output.IndexOf("Microsoft.Azure.Commands.Profile.Models.PSAccessToken", StringComparison.OrdinalIgnoreCase) < 0)
+            {
+                throw new CredentialUnavailableException("PowerShell did not return a valid response.");
+            }
         }
 
         private static ProcessStartInfo GetAzurePowerShellProcessStartInfo(string fileName, string argument) =>
@@ -159,11 +164,11 @@ namespace Azure.Identity
 
         private void GetFileNameAndArguments(string resource, out string fileName, out string argument)
         {
-            string powershellExe = "pwsh -EncodedCommand";
+            string powershellExe = "pwsh -NonInteractive -EncodedCommand";
 
             if (UseLegacyPowerShell)
             {
-                powershellExe = "powershell -EncodedCommand";
+                powershellExe = "powershell -NonInteractive -EncodedCommand";
             }
 
             string command = @$"
@@ -179,7 +184,8 @@ if (! $m) {{
 
 $token = Get-AzAccessToken -ResourceUrl '{resource}'
 
-return $token | ConvertTo-Json
+$x = $token | ConvertTo-Xml
+return $x.Objects.FirstChild.OuterXml
 ";
 
             string commandBase64 = Base64Encode(command);
@@ -198,11 +204,35 @@ return $token | ConvertTo-Json
 
         private static AccessToken DeserializeOutput(string output)
         {
-            using JsonDocument document = JsonDocument.Parse(output);
+            XDocument document = XDocument.Parse(output);
+            string accessToken = null;
+            DateTimeOffset expiresOn = default;
 
-            JsonElement root = document.RootElement;
-            string accessToken = root.GetProperty("Token").GetString();
-            DateTimeOffset expiresOn = DateTimeOffset.ParseExact(root.GetProperty("ExpiresOn").GetString(), "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+            if (document?.Root == null)
+            {
+                throw new CredentialUnavailableException("Error parsing token response.");
+            }
+
+            foreach (var e in document.Root.Elements())
+            {
+                switch (e.Attribute("Name")?.Value)
+                {
+                    case "Token":
+                        accessToken = e.Value;
+                        break;
+
+                    case "ExpiresOn":
+                        expiresOn = DateTimeOffset.Parse(e.Value, CultureInfo.InvariantCulture).ToUniversalTime();
+                        break;
+                }
+
+                if (expiresOn != default && accessToken != null) break;
+            }
+
+            if (accessToken == null)
+            {
+                throw new CredentialUnavailableException("Error parsing token response.");
+            }
 
             return new AccessToken(accessToken, expiresOn);
         }

@@ -388,6 +388,46 @@ namespace Azure.Monitor.Query.Tests
             Assert.True(result2.All(r => r >= minOffset));
         }
 
+        [RecordedTest]
+        public void ThrowsExceptionWhenQueryFails()
+        {
+            var client = CreateClient();
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.QueryAsync(TestEnvironment.WorkspaceId, "this won't work"));
+
+            Assert.AreEqual("BadArgumentError", exception.ErrorCode);
+            StringAssert.StartsWith("The request had some invalid properties", exception.Message);
+        }
+
+        [RecordedTest]
+        public async Task ThrowsExceptionWhenQueryFailsBatch()
+        {
+            var client = CreateClient();
+
+            LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
+            var queryId = batch.AddQuery(TestEnvironment.WorkspaceId, "this won't work");
+            var batchResult = await batch.SubmitAsync();
+
+            var exception = Assert.Throws<RequestFailedException>(() => batchResult.Value.GetResult(queryId));
+
+            Assert.AreEqual("BadArgumentError", exception.ErrorCode);
+            StringAssert.StartsWith("The request had some invalid properties", exception.Message);
+        }
+
+        [RecordedTest]
+        public async Task ThrowsExceptionWhenBatchQueryNotFound()
+        {
+            var client = CreateClient();
+
+            LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
+            batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName);
+            var batchResult = await batch.SubmitAsync();
+
+            var exception = Assert.Throws<ArgumentException>(() => batchResult.Value.GetResult("12345"));
+
+            Assert.AreEqual("queryId", exception.ParamName);
+            StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of the LogsBatchQuery.AddQuery as the 'queryId' argument.", exception.Message);
+        }
+
         private record TestModel
         {
             public string Name { get; set; }

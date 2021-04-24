@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// include: 'None', 'Normal', 'Warning', 'Critical'</param>
         /// <param name="healthErrors">The list of health errors.</param>
         /// <param name="allowedOperations">The allowed operations on the
-        /// migration item, based on the current migration state of the
+        /// migration item based on the current migration state of the
         /// item.</param>
         /// <param name="currentJob">The current job details.</param>
         /// <param name="eventCorrelationId">The correlation Id for events
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public IList<HealthError> HealthErrors { get; private set; }
 
         /// <summary>
-        /// Gets the allowed operations on the migration item, based on the
+        /// Gets the allowed operations on the migration item based on the
         /// current migration state of the item.
         /// </summary>
         [JsonProperty(PropertyName = "allowedOperations")]

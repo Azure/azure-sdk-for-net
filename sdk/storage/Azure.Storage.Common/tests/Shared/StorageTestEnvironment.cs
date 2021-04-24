@@ -10,10 +10,13 @@ namespace Azure.Storage.Test.Shared
 {
     public class StorageTestEnvironment : TestEnvironment
     {
-        protected TokenCredential OAuthCredential { get; } = new ClientSecretCredential(
-                    TestConfigurations.DefaultTargetOAuthTenant.ActiveDirectoryTenantId,
-                    TestConfigurations.DefaultTargetOAuthTenant.ActiveDirectoryApplicationId,
-                    TestConfigurations.DefaultTargetOAuthTenant.ActiveDirectoryApplicationSecret,
-                    new TokenCredentialOptions() { AuthorityHost = new Uri(TestConfigurations.DefaultTargetOAuthTenant.ActiveDirectoryAuthEndpoint) });
+        protected TokenCredential GetOAuthCredential(TenantConfiguration tenantConfiguration)
+        {
+            return new ClientSecretCredential(
+                tenantConfiguration.ActiveDirectoryTenantId,
+                tenantConfiguration.ActiveDirectoryApplicationId,
+                tenantConfiguration.ActiveDirectoryApplicationSecret,
+                new TokenCredentialOptions() { AuthorityHost = new Uri(tenantConfiguration.ActiveDirectoryAuthEndpoint) });
+        }
     }
 }

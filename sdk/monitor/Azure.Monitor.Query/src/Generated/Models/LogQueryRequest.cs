@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> An single request in a batch. </summary>
@@ -13,17 +16,20 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of LogQueryRequest. </summary>
         public LogQueryRequest()
         {
+            Headers = new ChangeTrackingDictionary<string, string>();
             Path = "/query";
             Method = "POST";
         }
 
         /// <summary> The error details. </summary>
         public string Id { get; set; }
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        public IDictionary<string, string> Headers { get; }
         /// <summary> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </summary>
         public QueryBody Body { get; set; }
         public string Path { get; set; }
         public string Method { get; set; }
-        /// <summary> Workspace name. </summary>
+        /// <summary> Workspace Id to be included in the query. </summary>
         public string Workspace { get; set; }
     }
 }

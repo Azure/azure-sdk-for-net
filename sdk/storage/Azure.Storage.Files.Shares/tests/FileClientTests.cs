@@ -2988,9 +2988,11 @@ namespace Azure.Storage.Files.Shares.Tests
             string leaseId = Recording.Random.NewGuid().ToString();
 
             // Act
-            Response<ShareFileLease> response = await InstrumentClient(file.GetShareLeaseClient(leaseId)).AcquireAsync();
+            var leaseClient = InstrumentClient(file.GetShareLeaseClient(leaseId));
+            Response<ShareFileLease> response = await leaseClient.AcquireAsync();
 
             // Assert
+            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
             Assert.AreNotEqual(new ETag(), response.Value.ETag);
             Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
             Assert.IsNotNull(response.Value.LeaseId);
@@ -3072,6 +3074,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await leaseClient.ChangeAsync(newLeaseId);
 
             // Assert
+            Assert.AreEqual(response.Value.LeaseId, newLeaseId);
+            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
             Assert.AreNotEqual(new ETag(), response.Value.ETag);
             Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
             Assert.IsNotNull(response.Value.LeaseId);

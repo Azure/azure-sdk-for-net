@@ -23,6 +23,9 @@ namespace Azure.Storage.Test
         public const int DataLakeRetryDelay = 70000;
         public const int RetryDelay = 10000;
 
+        // quick query fails with with connection reset, retry until it's solved properly https://github.com/Azure/azure-sdk-for-net/issues/17403
+        public const int QuickQueryRetryCount = 5;
+
         public string CacheControl { get; private set; }
         public string ContentDisposition { get; private set; }
         public string ContentEncoding { get; private set; }

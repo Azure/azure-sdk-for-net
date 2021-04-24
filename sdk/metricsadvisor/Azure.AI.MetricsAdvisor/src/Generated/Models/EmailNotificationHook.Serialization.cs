@@ -16,11 +16,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HookParameter))
-            {
-                writer.WritePropertyName("hookParameter");
-                writer.WriteObjectValue(HookParameter);
-            }
+            writer.WritePropertyName("hookParameter");
+            writer.WriteObjectValue(HookParameter);
             writer.WritePropertyName("hookType");
             writer.WriteStringValue(HookType.ToString());
             writer.WritePropertyName("hookName");
@@ -40,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static EmailNotificationHook DeserializeEmailNotificationHook(JsonElement element)
         {
-            Optional<EmailHookParameter> hookParameter = default;
+            EmailHookParameter hookParameter = default;
             HookType hookType = default;
             Optional<string> hookId = default;
             string hookName = default;
@@ -51,11 +48,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("hookParameter"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     hookParameter = EmailHookParameter.DeserializeEmailHookParameter(property.Value);
                     continue;
                 }
@@ -100,7 +92,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new EmailNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter.Value);
+            return new EmailNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter);
         }
     }
 }

@@ -26,6 +26,9 @@ namespace Azure.Monitor.Query.Models
 
             Query = query;
             Workspaces = new ChangeTrackingList<string>();
+            QualifiedNames = new ChangeTrackingList<string>();
+            WorkspaceIds = new ChangeTrackingList<string>();
+            AzureResourceIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> The query to execute. </summary>
@@ -34,5 +37,11 @@ namespace Azure.Monitor.Query.Models
         public string Timespan { get; set; }
         /// <summary> A list of workspaces that are included in the query. </summary>
         public IList<string> Workspaces { get; }
+        /// <summary> A list of qualified workspace names that are included in the query. </summary>
+        public IList<string> QualifiedNames { get; }
+        /// <summary> A list of workspace IDs that are included in the query. </summary>
+        public IList<string> WorkspaceIds { get; }
+        /// <summary> A list of Azure resource IDs that are included in the query. </summary>
+        public IList<string> AzureResourceIds { get; }
     }
 }

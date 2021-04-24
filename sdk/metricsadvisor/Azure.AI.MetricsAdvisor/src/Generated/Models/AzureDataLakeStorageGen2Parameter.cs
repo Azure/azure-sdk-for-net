@@ -12,11 +12,24 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         /// <summary> Initializes a new instance of AzureDataLakeStorageGen2Parameter. </summary>
         /// <param name="accountName"> Account name. </param>
+        /// <param name="fileSystemName"> File system name (Container). </param>
+        /// <param name="directoryTemplate"> Directory template. </param>
+        /// <param name="fileTemplate"> File template. </param>
+        public AzureDataLakeStorageGen2Parameter(string accountName, string fileSystemName, string directoryTemplate, string fileTemplate)
+        {
+            AccountName = accountName;
+            FileSystemName = fileSystemName;
+            DirectoryTemplate = directoryTemplate;
+            FileTemplate = fileTemplate;
+        }
+
+        /// <summary> Initializes a new instance of AzureDataLakeStorageGen2Parameter. </summary>
+        /// <param name="accountName"> Account name. </param>
         /// <param name="accountKey"> Account key. </param>
         /// <param name="fileSystemName"> File system name (Container). </param>
         /// <param name="directoryTemplate"> Directory template. </param>
         /// <param name="fileTemplate"> File template. </param>
-        public AzureDataLakeStorageGen2Parameter(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate)
+        internal AzureDataLakeStorageGen2Parameter(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate)
         {
             AccountName = accountName;
             AccountKey = accountKey;

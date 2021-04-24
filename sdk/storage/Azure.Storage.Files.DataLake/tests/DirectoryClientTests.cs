@@ -3510,7 +3510,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 GetOptions());
 
             // Act
-            Response<PathProperties> response = await sasDirectoryClient.GetPropertiesAsync();
+            // It may take up to 30 seconds for policy to take effect.
+            Response<PathProperties> response = await RetryAsync(async () => await sasDirectoryClient.GetPropertiesAsync(), e => e.Status == 403);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
