@@ -2,6 +2,8 @@
 
 ## 1.0.0-beta.4 (Unreleased)
 
+### New Features
+- Added class `AzureEventHubsDataFeedSource` to support Azure Event Hubs data sources when creating a data feed.
 
 ## 1.0.0-beta.3 (2021-02-09)
 

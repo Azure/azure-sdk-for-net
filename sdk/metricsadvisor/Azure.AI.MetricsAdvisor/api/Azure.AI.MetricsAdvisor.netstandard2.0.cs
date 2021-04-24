@@ -451,6 +451,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string FileSystemName { get { throw null; } }
         public string FileTemplate { get { throw null; } }
     }
+    public partial class AzureEventHubsDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
+    {
+        public AzureEventHubsDataFeedSource(string connectionString, string consumerGroup) { }
+        public string ConnectionString { get { throw null; } }
+        public string ConsumerGroup { get { throw null; } }
+    }
     public partial class AzureTableDataFeedSource : Azure.AI.MetricsAdvisor.Models.DataFeedSource
     {
         public AzureTableDataFeedSource(string connectionString, string table, string query) { }
