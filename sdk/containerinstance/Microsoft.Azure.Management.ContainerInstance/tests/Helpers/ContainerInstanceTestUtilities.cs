@@ -33,7 +33,7 @@ namespace ContainerInstance.Tests
 
             return client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup
             {
-                Location = "westus"
+                Location = "eastus"
             });
         }
 
@@ -61,7 +61,7 @@ namespace ContainerInstance.Tests
                 new InitContainerDefinition(
                     name: $"{containerGroupName}init",
                     image: "alpine",
-                    command: new List<string>() { "/bin/sh", "-c", "sleep 5" },
+                    command: new List<string>() { "/bin/sh", "-c", "echo helloworld && sleep 5" },
                     environmentVariables: new List<EnvironmentVariable>
                     {
                         new EnvironmentVariable(name: "secretEnv", secureValue: "secretValue1")
@@ -86,7 +86,7 @@ namespace ContainerInstance.Tests
 
             var containerGroup = new ContainerGroup(
                 name: containerGroupName,
-                location: "westus",
+                location: "eastus",
                 osType: OperatingSystemTypes.Linux,
                 ipAddress: ipAddress,
                 restartPolicy: "Never",

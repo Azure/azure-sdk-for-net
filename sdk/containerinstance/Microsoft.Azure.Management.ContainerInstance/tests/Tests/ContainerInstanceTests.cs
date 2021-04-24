@@ -73,6 +73,49 @@ namespace ContainerInstance.Tests
         /// Test get container instance.
         /// </summary>
         [Fact]
+        public void ContainerInstanceLogsAndAttachTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerInstanceTestUtilities.GetResourceManagementClient(context, handler);
+                var containerInstanceClient = ContainerInstanceTestUtilities.GetContainerInstanceManagementClient(context, handler);
+
+                var resourceGroup = ContainerInstanceTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create container group.
+                var containerGroupName = TestUtilities.GenerateName("acinetsdk");
+                var containerGroup = ContainerInstanceTestUtilities.CreateTestContainerGroup(containerGroupName);
+
+                // Verify created container group.
+                var createdContainerGroup = containerInstanceClient.ContainerGroups.CreateOrUpdate(resourceGroup.Name, containerGroupName, containerGroup);
+                ContainerInstanceTestUtilities.VerifyContainerGroupProperties(containerGroup, createdContainerGroup);
+
+                // Verifiy container logs.
+                var logs = containerInstanceClient.Containers.ListLogs(
+                    resourceGroup.Name,
+                    containerGroupName,
+                    $"{containerGroupName}init",
+                    timestamps: true);
+
+                Assert.Contains("helloworld", logs.Content);
+                Assert.Contains("2021", logs.Content);
+
+                // Verifiy container attach.
+                var attach = containerInstanceClient.Containers.Attach(
+                    resourceGroup.Name,
+                    containerGroupName,
+                    containerGroupName);
+
+                Assert.NotEmpty(attach.WebSocketUri);
+            }
+        }
+
+        /// <summary>
+        /// Test get container instance.
+        /// </summary>
+        [Fact]
         public void ContainerInstanceDeleteTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
