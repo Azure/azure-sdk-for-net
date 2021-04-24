@@ -39,7 +39,7 @@ namespace Azure.Messaging.WebPubSub
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateSendToAllRequest(string hub, RequestContent message, string contentType, IEnumerable<string> excluded)
+        internal HttpMessage CreateSendToAllRequest(string hub, ContentType contentType, RequestContent message, IEnumerable<string> excluded)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -58,19 +58,19 @@ namespace Azure.Messaging.WebPubSub
                 uri.AppendQuery("api-version", apiVersion, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType);
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = message;
             return message0;
         }
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="message"> The payload body. </param>
-        /// <param name="contentType"> The contentType of the payload. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="message"/> is null. </exception>
-        public async Task<Response> SendToAllAsync(string hub, RequestContent message, string contentType, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
+        public async Task<Response> SendToAllAsync(string hub, ContentType contentType, RequestContent message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.Messaging.WebPubSub
                 throw new ArgumentNullException(nameof(message));
             }
 
-            using var message0 = CreateSendToAllRequest(hub, message, contentType, excluded);
+            using var message0 = CreateSendToAllRequest(hub, contentType, message, excluded);
             await _pipeline.SendAsync(message0, cancellationToken).ConfigureAwait(false);
             switch (message0.Response.Status)
             {
@@ -94,12 +94,12 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="message"> The payload body. </param>
-        /// <param name="contentType"> The contentType of the payload. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="message"/> is null. </exception>
-        public Response SendToAll(string hub, RequestContent message, string contentType, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
+        public Response SendToAll(string hub, ContentType contentType, RequestContent message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -110,7 +110,7 @@ namespace Azure.Messaging.WebPubSub
                 throw new ArgumentNullException(nameof(message));
             }
 
-            using var message0 = CreateSendToAllRequest(hub, message, contentType, excluded);
+            using var message0 = CreateSendToAllRequest(hub, contentType, message, excluded);
             _pipeline.Send(message0, cancellationToken);
             switch (message0.Response.Status)
             {
@@ -355,7 +355,7 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        internal HttpMessage CreateSendToConnectionRequest(string hub, string connectionId, RequestContent message, string contentType)
+        internal HttpMessage CreateSendToConnectionRequest(string hub, string connectionId, ContentType contentType, RequestContent message)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -372,7 +372,7 @@ namespace Azure.Messaging.WebPubSub
                 uri.AppendQuery("api-version", apiVersion, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType);
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = message;
             return message0;
         }
@@ -380,11 +380,11 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to the specific connection. </summary>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="connectionId"> The connection Id. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="message"> The payload body. </param>
-        /// <param name="contentType"> The contentType of the payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="connectionId"/>, or <paramref name="message"/> is null. </exception>
-        public async Task<Response> SendToConnectionAsync(string hub, string connectionId, RequestContent message, string contentType, CancellationToken cancellationToken = default)
+        public async Task<Response> SendToConnectionAsync(string hub, string connectionId, ContentType contentType, RequestContent message, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -399,7 +399,7 @@ namespace Azure.Messaging.WebPubSub
                 throw new ArgumentNullException(nameof(message));
             }
 
-            using var message0 = CreateSendToConnectionRequest(hub, connectionId, message, contentType);
+            using var message0 = CreateSendToConnectionRequest(hub, connectionId, contentType, message);
             await _pipeline.SendAsync(message0, cancellationToken).ConfigureAwait(false);
             switch (message0.Response.Status)
             {
@@ -413,11 +413,11 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to the specific connection. </summary>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="connectionId"> The connection Id. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="message"> The payload body. </param>
-        /// <param name="contentType"> The contentType of the payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="connectionId"/>, or <paramref name="message"/> is null. </exception>
-        public Response SendToConnection(string hub, string connectionId, RequestContent message, string contentType, CancellationToken cancellationToken = default)
+        public Response SendToConnection(string hub, string connectionId, ContentType contentType, RequestContent message, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -432,7 +432,7 @@ namespace Azure.Messaging.WebPubSub
                 throw new ArgumentNullException(nameof(message));
             }
 
-            using var message0 = CreateSendToConnectionRequest(hub, connectionId, message, contentType);
+            using var message0 = CreateSendToConnectionRequest(hub, connectionId, contentType, message);
             _pipeline.Send(message0, cancellationToken);
             switch (message0.Response.Status)
             {
@@ -604,15 +604,41 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
+        internal HttpMessage CreateSendToGroupRequest(string hub, string group, ContentType contentType, RequestContent message, IEnumerable<string> excluded)
+        {
+            var message0 = _pipeline.CreateMessage();
+            var request = message0.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(hub, true);
+            uri.AppendPath("/groups/", false);
+            uri.AppendPath(group, true);
+            uri.AppendPath("/:send", false);
+            if (excluded != null)
+            {
+                uri.AppendQueryDelimited("excluded", excluded, ",", true);
+            }
+            if (apiVersion != null)
+            {
+                uri.AppendQuery("api-version", apiVersion, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", contentType.ToString());
+            request.Content = message;
+            return message0;
+        }
+
         /// <summary> Send content inside request body to a group of connections. </summary>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="message"> The payload body. </param>
-        /// <param name="contentType"> The contentType of the payload. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/>, or <paramref name="message"/> is null. </exception>
-        public async Task<Response> SendToGroupAsync(string hub, string group, RequestContent message, string contentType, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
+        public async Task<Response> SendToGroupAsync(string hub, string group, ContentType contentType, RequestContent message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -627,7 +653,7 @@ namespace Azure.Messaging.WebPubSub
                 throw new ArgumentNullException(nameof(message));
             }
 
-            using var message0 = CreateSendToGroupRequest(hub, group, message, contentType, excluded);
+            using var message0 = CreateSendToGroupRequest(hub, group, contentType, message, excluded);
             await _pipeline.SendAsync(message0, cancellationToken).ConfigureAwait(false);
             switch (message0.Response.Status)
             {
@@ -641,12 +667,12 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to a group of connections. </summary>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="message"> The payload body. </param>
-        /// <param name="contentType"> The contentType of the payload. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="group"/>, or <paramref name="message"/> is null. </exception>
-        public Response SendToGroup(string hub, string group, RequestContent message, string contentType, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
+        public Response SendToGroup(string hub, string group, ContentType contentType, RequestContent message, IEnumerable<string> excluded = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -661,7 +687,7 @@ namespace Azure.Messaging.WebPubSub
                 throw new ArgumentNullException(nameof(message));
             }
 
-            using var message0 = CreateSendToGroupRequest(hub, group, message, contentType, excluded);
+            using var message0 = CreateSendToGroupRequest(hub, group, contentType, message, excluded);
             _pipeline.Send(message0, cancellationToken);
             switch (message0.Response.Status)
             {
@@ -762,32 +788,6 @@ namespace Azure.Messaging.WebPubSub
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message0.Response);
             }
-        }
-
-        internal HttpMessage CreateSendToGroupRequest(string hub, string group, RequestContent message, string contentType, IEnumerable<string> excluded)
-        {
-            var message0 = _pipeline.CreateMessage();
-            var request = message0.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(hub, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            uri.AppendPath("/:send", false);
-            if (excluded != null)
-            {
-                uri.AppendQueryDelimited("excluded", excluded, ",", true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType);
-            request.Content = message;
-            return message0;
         }
 
         internal HttpMessage CreateAddConnectionToGroupRequest(string hub, string group, string connectionId)
@@ -1037,7 +1037,7 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        internal HttpMessage CreateSendToUserRequest(string hub, string userId, RequestContent message, string contentType)
+        internal HttpMessage CreateSendToUserRequest(string hub, string userId, ContentType contentType, RequestContent message)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -1054,7 +1054,7 @@ namespace Azure.Messaging.WebPubSub
                 uri.AppendQuery("api-version", apiVersion, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", contentType);
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = message;
             return message0;
         }
@@ -1062,11 +1062,11 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to the specific user. </summary>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="userId"> The user Id. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="message"> The payload body. </param>
-        /// <param name="contentType"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/>, or <paramref name="message"/> is null. </exception>
-        public async Task<Response> SendToUserAsync(string hub, string userId, RequestContent message, string contentType, CancellationToken cancellationToken = default)
+        public async Task<Response> SendToUserAsync(string hub, string userId, ContentType contentType, RequestContent message, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -1081,7 +1081,7 @@ namespace Azure.Messaging.WebPubSub
                 throw new ArgumentNullException(nameof(message));
             }
 
-            using var message0 = CreateSendToUserRequest(hub, userId, message, contentType);
+            using var message0 = CreateSendToUserRequest(hub, userId, contentType, message);
             await _pipeline.SendAsync(message0, cancellationToken).ConfigureAwait(false);
             switch (message0.Response.Status)
             {
@@ -1095,11 +1095,11 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to the specific user. </summary>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="userId"> The user Id. </param>
+        /// <param name="contentType"> Upload file type. </param>
         /// <param name="message"> The payload body. </param>
-        /// <param name="contentType"> The contentType of the payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/>, <paramref name="userId"/>, or <paramref name="message"/> is null. </exception>
-        public Response SendToUser(string hub, string userId, RequestContent message, string contentType, CancellationToken cancellationToken = default)
+        public Response SendToUser(string hub, string userId, ContentType contentType, RequestContent message, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -1114,7 +1114,7 @@ namespace Azure.Messaging.WebPubSub
                 throw new ArgumentNullException(nameof(message));
             }
 
-            using var message0 = CreateSendToUserRequest(hub, userId, message, contentType);
+            using var message0 = CreateSendToUserRequest(hub, userId, contentType, message);
             _pipeline.Send(message0, cancellationToken);
             switch (message0.Response.Status)
             {
@@ -1457,7 +1457,7 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        internal HttpMessage CreateGrantPermissionRequest(string hub, Models.WebPubSubPermission permission, string connectionId, string targetName)
+        internal HttpMessage CreateGrantPermissionRequest(string hub, WebPubSubPermission permission, string connectionId, string targetName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1467,7 +1467,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(hub, true);
             uri.AppendPath("/permissions/", false);
-            uri.AppendPath(permission.ToString(), true);
+            uri.AppendPath(permission.ToSerialString(), true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
             if (targetName != null)
@@ -1489,7 +1489,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="connectionId"/> is null. </exception>
-        public async Task<Response> GrantPermissionAsync(string hub, Models.WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        public async Task<Response> GrantPermissionAsync(string hub, WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -1518,7 +1518,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="connectionId"/> is null. </exception>
-        public Response GrantPermission(string hub, Models.WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        public Response GrantPermission(string hub, WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -1540,7 +1540,7 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        internal HttpMessage CreateRevokePermissionRequest(string hub, Models.WebPubSubPermission permission, string connectionId, string targetName)
+        internal HttpMessage CreateRevokePermissionRequest(string hub, WebPubSubPermission permission, string connectionId, string targetName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1550,7 +1550,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(hub, true);
             uri.AppendPath("/permissions/", false);
-            uri.AppendPath(permission.ToString(), true);
+            uri.AppendPath(permission.ToSerialString(), true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
             if (targetName != null)
@@ -1572,7 +1572,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="connectionId"/> is null. </exception>
-        public async Task<Response> RevokePermissionAsync(string hub, Models.WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        public async Task<Response> RevokePermissionAsync(string hub, WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -1601,7 +1601,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="connectionId"/> is null. </exception>
-        public Response RevokePermission(string hub, Models.WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        public Response RevokePermission(string hub, WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -1623,7 +1623,7 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
-        internal HttpMessage CreateCheckPermissionRequest(string hub, Models.WebPubSubPermission permission, string connectionId, string targetName)
+        internal HttpMessage CreateCheckPermissionRequest(string hub, WebPubSubPermission permission, string connectionId, string targetName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1633,7 +1633,7 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/api/hubs/", false);
             uri.AppendPath(hub, true);
             uri.AppendPath("/permissions/", false);
-            uri.AppendPath(permission.ToString(), true);
+            uri.AppendPath(permission.ToSerialString(), true);
             uri.AppendPath("/connections/", false);
             uri.AppendPath(connectionId, true);
             if (targetName != null)
@@ -1655,7 +1655,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="connectionId"/> is null. </exception>
-        public async Task<Response> CheckPermissionAsync(string hub, Models.WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CheckPermissionAsync(string hub, WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {
@@ -1685,7 +1685,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hub"/> or <paramref name="connectionId"/> is null. </exception>
-        public Response CheckPermission(string hub, Models.WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
+        public Response CheckPermission(string hub, WebPubSubPermission permission, string connectionId, string targetName = null, CancellationToken cancellationToken = default)
         {
             if (hub == null)
             {

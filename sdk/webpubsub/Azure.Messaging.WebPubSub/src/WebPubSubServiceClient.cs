@@ -19,10 +19,10 @@ namespace Azure.Messaging.WebPubSub
         private const string JsonContent = "application/json";
         private const string TextContent = "text/plain";
 
-        private Uri _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _hub;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private AzureKeyCredential _credential;
+        private readonly AzureKeyCredential _credential;
 
         internal WebPubSubRestClient RestClient { get; }
 
@@ -111,7 +111,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return await RestClient.SendToAllAsync(_hub, RequestContent.Create(message), TextContent, excluded, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToAllAsync(_hub, TextContent, RequestContent.Create(message), excluded, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -131,7 +131,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return RestClient.SendToAll(_hub, RequestContent.Create(message), TextContent, excluded, cancellationToken);
+                return RestClient.SendToAll(_hub, TextContent, RequestContent.Create(message), excluded, cancellationToken);
             }
             catch (Exception e)
             {
@@ -152,7 +152,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return await RestClient.SendToAllAsync(_hub, message, contentType, excluded, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToAllAsync(_hub, contentType, message, excluded, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -173,7 +173,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return RestClient.SendToAll(_hub, message, contentType, excluded, cancellationToken);
+                return RestClient.SendToAll(_hub, contentType, message, excluded, cancellationToken);
             }
             catch (Exception e)
             {
@@ -195,7 +195,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return await RestClient.SendToUserAsync(_hub, userId, RequestContent.Create(message), TextContent, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToUserAsync(_hub, userId, TextContent, RequestContent.Create(message), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -217,7 +217,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return RestClient.SendToUser(_hub, userId, RequestContent.Create(message), TextContent, cancellationToken);
+                return RestClient.SendToUser(_hub, userId, TextContent, RequestContent.Create(message), cancellationToken);
             }
             catch (Exception e)
             {
@@ -240,7 +240,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return await RestClient.SendToUserAsync(_hub, userId, message, contentType, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToUserAsync(_hub, userId, contentType, message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -263,7 +263,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return RestClient.SendToUser(_hub, userId, message, contentType, cancellationToken);
+                return RestClient.SendToUser(_hub, userId, contentType, message, cancellationToken);
             }
             catch (Exception e)
             {
@@ -285,7 +285,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return await RestClient.SendToConnectionAsync(_hub, connectionId, RequestContent.Create(message), TextContent, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToConnectionAsync(_hub, connectionId, TextContent, RequestContent.Create(message), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -307,7 +307,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return RestClient.SendToConnection(_hub, connectionId, RequestContent.Create(message), TextContent, cancellationToken);
+                return RestClient.SendToConnection(_hub, connectionId, TextContent, RequestContent.Create(message), cancellationToken);
             }
             catch (Exception e)
             {
@@ -330,7 +330,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return await RestClient.SendToConnectionAsync(_hub, connectionId, message, contentType, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToConnectionAsync(_hub, connectionId, contentType, message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -353,7 +353,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return RestClient.SendToConnection(_hub, connectionId, message, contentType, cancellationToken);
+                return RestClient.SendToConnection(_hub, connectionId, contentType, message, cancellationToken);
             }
             catch (Exception e)
             {
@@ -376,7 +376,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return await RestClient.SendToGroupAsync(_hub, group, RequestContent.Create(message), TextContent, excluded, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToGroupAsync(_hub, group, TextContent, RequestContent.Create(message), excluded, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -399,7 +399,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return RestClient.SendToGroup(_hub, group, RequestContent.Create(message), TextContent, excluded, cancellationToken);
+                return RestClient.SendToGroup(_hub, group, TextContent, RequestContent.Create(message), excluded, cancellationToken);
             }
             catch (Exception e)
             {
@@ -423,7 +423,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return await RestClient.SendToGroupAsync(_hub, group, message, contentType, excluded, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SendToGroupAsync(_hub, group, contentType, message, excluded, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return RestClient.SendToGroup(_hub, group, message, contentType, excluded, cancellationToken);
+                return RestClient.SendToGroup(_hub, group, contentType, message, excluded, cancellationToken);
             }
             catch (Exception e)
             {
@@ -666,7 +666,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return await RestClient.GrantPermissionAsync(_hub, ToPermission(permission), connectionId, targetName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GrantPermissionAsync(_hub, permission, connectionId, targetName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -687,7 +687,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return RestClient.GrantPermission(_hub, ToPermission(permission), connectionId, targetName, cancellationToken);
+                return RestClient.GrantPermission(_hub, permission, connectionId, targetName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -708,7 +708,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                return await RestClient.RevokePermissionAsync(_hub, ToPermission(permission), connectionId, targetName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.RevokePermissionAsync(_hub, permission, connectionId, targetName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -729,7 +729,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {;
-                return RestClient.RevokePermission(_hub, ToPermission(permission), connectionId, targetName, cancellationToken);
+                return RestClient.RevokePermission(_hub, permission, connectionId, targetName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -750,7 +750,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                var response = await RestClient.CheckPermissionAsync(_hub, ToPermission(permission), connectionId, targetName, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.CheckPermissionAsync(_hub, permission, connectionId, targetName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Status == 200, response);
             }
             catch (Exception e)
@@ -772,7 +772,7 @@ namespace Azure.Messaging.WebPubSub
             scope.Start();
             try
             {
-                var response = RestClient.CheckPermission(_hub, ToPermission(permission), connectionId, targetName, cancellationToken);
+                var response = RestClient.CheckPermission(_hub, permission, connectionId, targetName, cancellationToken);
                 return Response.FromValue(response.Status == 200, response);
             }
             catch (Exception e)
@@ -952,16 +952,6 @@ namespace Azure.Messaging.WebPubSub
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private static Models.WebPubSubPermission ToPermission(WebPubSubPermission permission)
-        {
-            if (permission == WebPubSubPermission.JoinLeaveGroup)
-                return Models.WebPubSubPermission.JoinLeaveGroup;
-            if (permission == WebPubSubPermission.SendToGroup)
-                return Models.WebPubSubPermission.SendToGroup;
-            else
-                throw new InvalidOperationException($"Invalid permission {(int)permission}");
         }
     }
 }
