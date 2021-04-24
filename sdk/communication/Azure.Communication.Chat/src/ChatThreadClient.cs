@@ -139,23 +139,21 @@ namespace Azure.Communication.Chat
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<SendChatMessageResult>> SendMessageAsync(string content, ChatMessageType type = default, string senderDisplayName = null, CancellationToken cancellationToken = default)
         {
-            return await SendMessageAsync(content, properties: null, type, senderDisplayName, cancellationToken).ConfigureAwait(false);
+            return await SendMessageAsync(new SendChatMessageOptions { Content = content, ChatMessageType = type, SenderDisplayName = senderDisplayName }, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Sends a message to a thread asynchronously. </summary>
-        /// <param name="content"> Chat message content. </param>
-        /// <param name="type"> The chat message type. </param>
-        /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
-        /// <param name="properties"> Property bag of message metadata key - value pairs. </param>
+        /// <param name="sendChatMessageOptions"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<SendChatMessageResult>> SendMessageAsync(string content, IDictionary<string, string> properties, ChatMessageType type = default, string senderDisplayName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SendChatMessageResult>> SendMessageAsync(SendChatMessageOptions sendChatMessageOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendMessage)}");
             scope.Start();
             try
             {
-                Response<SendChatMessageResultInternal> sendChatMessageResultInternal = await _chatThreadRestClient.SendChatMessageAsync(Id, content, senderDisplayName, type, properties ?? new Dictionary<string, string>(), cancellationToken).ConfigureAwait(false);
+                Response<SendChatMessageResultInternal> sendChatMessageResultInternal =
+                    await _chatThreadRestClient.SendChatMessageAsync(Id, sendChatMessageOptions.Content, sendChatMessageOptions.SenderDisplayName, sendChatMessageOptions.ChatMessageType, sendChatMessageOptions.Properties ?? new Dictionary<string, string>(), cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SendChatMessageResult(sendChatMessageResultInternal.Value), sendChatMessageResultInternal.GetRawResponse());
             }
             catch (Exception ex)
@@ -172,24 +170,20 @@ namespace Azure.Communication.Chat
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<SendChatMessageResult> SendMessage(string content, ChatMessageType type = default, string senderDisplayName = null, CancellationToken cancellationToken = default)
-        {
-            return SendMessage(content, properties: null, type, senderDisplayName, cancellationToken);
-        }
+            => SendMessage(new SendChatMessageOptions { Content = content, ChatMessageType = type, SenderDisplayName = senderDisplayName }, cancellationToken);
 
         /// <summary> Sends a message to a thread. </summary>
-        /// <param name="content"> Message content. </param>
-        /// <param name="type"> The chat message type. </param>
-        /// <param name="senderDisplayName"> The display name of the message sender. This property is used to populate sender name for push notifications. </param>
-        /// <param name="properties"> Property bag of message metadata key - value pairs. </param>
+        /// <param name="sendChatMessageOptions">Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<SendChatMessageResult> SendMessage(string content, IDictionary<string, string> properties, ChatMessageType type = default, string senderDisplayName = null, CancellationToken cancellationToken = default)
+        public virtual Response<SendChatMessageResult> SendMessage(SendChatMessageOptions sendChatMessageOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendMessage)}");
             scope.Start();
             try
             {
-                Response<SendChatMessageResultInternal> sendChatMessageResultInternal = _chatThreadRestClient.SendChatMessage(Id, content, senderDisplayName, type, properties ?? new Dictionary<string, string>(), cancellationToken);
+                Response<SendChatMessageResultInternal> sendChatMessageResultInternal =
+                    _chatThreadRestClient.SendChatMessage(Id, sendChatMessageOptions.Content, sendChatMessageOptions.SenderDisplayName, sendChatMessageOptions.ChatMessageType, sendChatMessageOptions.Properties ?? new Dictionary<string, string>(), cancellationToken);
                 return Response.FromValue(new SendChatMessageResult(sendChatMessageResultInternal.Value), sendChatMessageResultInternal.GetRawResponse());
             }
             catch (Exception ex)
@@ -330,22 +324,21 @@ namespace Azure.Communication.Chat
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> UpdateMessageAsync(string messageId, string content, CancellationToken cancellationToken = default)
         {
-            return await UpdateMessageAsync(messageId, content, properties: null, cancellationToken).ConfigureAwait(false);
+            return await UpdateMessageAsync(new UpdateChatMessageOptions { MessageId = messageId, Content = content }, cancellationToken).ConfigureAwait(false);
+            //return await UpdateMessageAsync(messageId, content, updateChatMessageOptions: default, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Updates a message asynchronously. </summary>
-        /// <param name="messageId"> The message id. </param>
-        /// <param name="content"> Chat message content. </param>
-        /// <param name="properties"> Property bag of message metadata key - value pairs. </param>
+        /// <param name="updateChatMessageOptions"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> UpdateMessageAsync(string messageId, string content, IDictionary<string, string> properties, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateMessageAsync(UpdateChatMessageOptions updateChatMessageOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(UpdateMessage)}");
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.UpdateChatMessageAsync(Id, messageId, content, properties ?? new Dictionary<string, string>(), cancellationToken).ConfigureAwait(false);
+                return await _chatThreadRestClient.UpdateChatMessageAsync(Id, updateChatMessageOptions.MessageId, updateChatMessageOptions.Content, updateChatMessageOptions.Properties ?? new Dictionary<string, string>(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -361,22 +354,21 @@ namespace Azure.Communication.Chat
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response UpdateMessage(string messageId, string content, CancellationToken cancellationToken = default)
         {
-            return UpdateMessage(messageId, content, properties: null, cancellationToken);
+            return UpdateMessage(new UpdateChatMessageOptions { MessageId = messageId, Content = content }, cancellationToken);
+            //return UpdateMessage(messageId, content, updateChatMessageOptions: default, cancellationToken);
         }
 
         /// <summary> Updates a message asynchronously. </summary>
-        /// <param name="messageId"> The message id. </param>
-        /// <param name="content"> Chat message content. </param>
-        /// <param name="properties"> Property bag of message metadata key - value pairs. </param>
+        /// <param name="updateChatMessageOptions"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response UpdateMessage(string messageId, string content, IDictionary<string, string> properties, CancellationToken cancellationToken = default)
+        public virtual Response UpdateMessage(UpdateChatMessageOptions updateChatMessageOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(UpdateMessage)}");
             scope.Start();
             try
             {
-                return _chatThreadRestClient.UpdateChatMessage(Id, messageId, content, properties ?? new Dictionary<string, string>(), cancellationToken);
+                return _chatThreadRestClient.UpdateChatMessage(Id, updateChatMessageOptions.MessageId, updateChatMessageOptions.Content, updateChatMessageOptions.Properties ?? new Dictionary<string, string>(), cancellationToken);
             }
             catch (Exception ex)
             {

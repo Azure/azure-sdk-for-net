@@ -54,7 +54,7 @@ namespace Azure.Communication.Chat.Tests
             string repeatabilityRequestId2 = "contoso-A0A747F1-6245-4307-8267-B974340677DA";
 
             var topic = "Thread sync from C# sdk";
-            var displayNameMessage = "DisplayName sender message 1";
+            var displayNameMessage = "DisplayName sender message";
             var participants = new[]
             {
                 new ChatParticipant(user1) { DisplayName = "user1" },
@@ -95,12 +95,27 @@ namespace Azure.Communication.Chat.Tests
             string messageContent6 = "Content for message 6";
             string messageId6 = chatThreadClient3.SendMessage(messageContent6, ChatMessageType.Text, displayNameMessage).Value.Id;
 
+            SendChatMessageOptions sendChatMessageOptions7 = new()
+            {
+                Content = "Content for message 7",
+                ChatMessageType = ChatMessageType.Html,
+                SenderDisplayName = "DisplayName sender message options message 7",
+                Properties = {
+                    { "tags", "tag value" },
+                    { "deliveryMode", "deliveryMode value" },
+                    { "onedriveReferences", "onedriveReferences value" },
+                    { "key", "value key" },  //not in allow list
+                }
+            };
+            string messageId7 = chatThreadClient3.SendMessage(sendChatMessageOptions7).Value.Id;
+
             ChatMessage message = chatThreadClient.GetMessage(messageId);
             ChatMessage message2 = chatThreadClient2.GetMessage(messageId2);
             ChatMessage message3 = chatThreadClient3.GetMessage(messageId3);
             ChatMessage message4 = chatThreadClient3.GetMessage(messageId4);
             ChatMessage message5 = chatThreadClient3.GetMessage(messageId5);
             ChatMessage message6 = chatThreadClient3.GetMessage(messageId6);
+            ChatMessage message7 = chatThreadClient3.GetMessage(messageId7);
 
             Pageable<ChatMessage> messages = chatThreadClient.GetMessages();
             Pageable<ChatMessage> messages2 = chatThreadClient2.GetMessages();
@@ -108,7 +123,7 @@ namespace Azure.Communication.Chat.Tests
             var getMessagesCount2 = messages2.Count();
 
             Pageable<ChatMessage> pageableMessages = chatThreadClient.GetMessages();
-            PageableTester<ChatMessage>.AssertPagination(enumerableResource:pageableMessages, expectedPageSize: 2, expectedTotalResources : 8);
+            PageableTester<ChatMessage>.AssertPagination(enumerableResource:pageableMessages, expectedPageSize: 2, expectedTotalResources : 9);
 
             string updatedMessageContent = "Instead of 11am, let's meet at 2pm";
             chatThreadClient.UpdateMessage(messageId, content: "Instead of 11am, let's meet at 2pm");
@@ -163,9 +178,15 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(messageContent5, message5.Content.Message);
             Assert.AreEqual(messageContent6, message6.Content.Message);
 
+            Assert.AreEqual(sendChatMessageOptions7.ChatMessageType, message7.Type);
+            Assert.AreEqual(sendChatMessageOptions7.SenderDisplayName, message7.SenderDisplayName);
+            Assert.AreEqual(sendChatMessageOptions7.Content, message7.Content.Message);
+            Assert.AreEqual(3, message7.Properties.Count);
+            CollectionAssert.IsSubsetOf(message7.Properties, sendChatMessageOptions7.Properties);
+
             Assert.AreEqual(2, threadsCount);
-            Assert.AreEqual(8, getMessagesCount); //Including all types : 5 text message, 3 control messages
-            Assert.AreEqual(3, getMessagesCount2); //Including all types : 1 text message, 2 control messages
+            Assert.AreEqual(9, getMessagesCount); //Including all types : 6 text/html message, 3 control messages
+            Assert.AreEqual(3, getMessagesCount2); //Including all types : 1 text/html message, 2 control messages
 
             Assert.AreEqual(1, participantAddedMessage.Content.Participants.Count);
             Assert.AreEqual(user5.Id, CommunicationIdentifierSerializer.Serialize(participantAddedMessage.Content.Participants[0].User).CommunicationUser.Id);
