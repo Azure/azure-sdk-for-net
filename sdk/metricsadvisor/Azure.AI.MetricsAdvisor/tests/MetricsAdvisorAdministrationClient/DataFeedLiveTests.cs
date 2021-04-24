@@ -2734,6 +2734,23 @@ namespace Azure.AI.MetricsAdvisor.Tests
                     Assert.That(specificDataSource.FileTemplate, Is.Null);
                 }
             }
+            else if (sourceType == DataFeedSourceType.AzureEventHubs)
+            {
+                var specificDataSource = dataSource as AzureEventHubsDataFeedSource;
+
+                Assert.That(specificDataSource, Is.Not.Null);
+
+                if (isAdmin)
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Not.Null.And.Not.Empty);
+                    Assert.That(specificDataSource.ConsumerGroup, Is.Not.Null.And.Not.Empty);
+                }
+                else
+                {
+                    Assert.That(specificDataSource.ConnectionString, Is.Null);
+                    Assert.That(specificDataSource.ConsumerGroup, Is.Null);
+                }
+            }
             else if (sourceType == DataFeedSourceType.AzureTable)
             {
                 var specificDataSource = dataSource as AzureTableDataFeedSource;
