@@ -1139,6 +1139,112 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
+        public async Task UpdateAzureEventHubsDataFeedWithMinimumSetupAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureEventHubsDataFeedSource(DataSourceConnectionString, DataSourceConsumerGroup);
+            const string description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            dataFeedToUpdate.Description = description;
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureEventHubs));
+
+            ValidateAzureEventHubsDataSource(updatedDataFeed.DataSource as AzureEventHubsDataFeedSource);
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureEventHubsDataFeedWithMinimumSetupAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureEventHubsDataFeedSource(DataSourceConnectionString, DataSourceConsumerGroup);
+            const string description = "This data feed was created to test the .NET client.";
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            var dataFeedToUpdate = new DataFeed() { Description = description };
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateDataFeedWithMinimumSetup(updatedDataFeed, disposableDataFeed.Id, dataFeedName, description);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureEventHubs));
+
+            ValidateAzureEventHubsDataSource(updatedDataFeed.DataSource as AzureEventHubsDataFeedSource);
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureEventHubsDataFeedWithEveryMemberAndGetInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureEventHubsDataFeedSource(DataSourceConnectionString, DataSourceConsumerGroup);
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            DataFeed dataFeedToUpdate = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureEventHubs));
+
+            ValidateAzureEventHubsDataSource(updatedDataFeed.DataSource as AzureEventHubsDataFeedSource);
+        }
+
+        [RecordedTest]
+        public async Task UpdateAzureEventHubsDataFeedWithEveryMemberAndNewInstance()
+        {
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+
+            var dataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var updatedDataFeedName = Recording.GenerateAlphaNumericId("dataFeed");
+            var dataSource = new AzureEventHubsDataFeedSource(DataSourceConnectionString, DataSourceConsumerGroup);
+            DataFeed dataFeedToCreate = GetDataFeedWithMinimumSetup(dataFeedName, dataSource);
+
+            await using var disposableDataFeed = await DisposableDataFeed.CreateDataFeedAsync(adminClient, dataFeedToCreate);
+
+            var dataFeedToUpdate = new DataFeed();
+
+            SetOptionalMembers(dataFeedToUpdate, updatedDataFeedName);
+
+            await adminClient.UpdateDataFeedAsync(disposableDataFeed.Id, dataFeedToUpdate);
+
+            DataFeed updatedDataFeed = await adminClient.GetDataFeedAsync(disposableDataFeed.Id);
+
+            ValidateUpdatedDataFeedWithOptionalMembersSet(updatedDataFeed, disposableDataFeed.Id, updatedDataFeedName);
+
+            Assert.That(updatedDataFeed.SourceType, Is.EqualTo(DataFeedSourceType.AzureEventHubs));
+
+            ValidateAzureEventHubsDataSource(updatedDataFeed.DataSource as AzureEventHubsDataFeedSource);
+        }
+
+        [RecordedTest]
         public async Task UpdateAzureTableDataFeedWithMinimumSetupAndGetInstance()
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
