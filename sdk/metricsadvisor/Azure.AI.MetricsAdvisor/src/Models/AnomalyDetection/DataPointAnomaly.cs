@@ -28,6 +28,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             SeriesKey = new DimensionKey(dimension);
             Severity = property.AnomalySeverity;
             Status = property.AnomalyStatus;
+            Value = property.Value.Value;
+            ExpectedValue = property.ExpectedValue;
         }
 
         /// <summary>
@@ -84,5 +86,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// or <see cref="MetricsAdvisorClient.GetAnomaliesAsync(string, string, GetAnomaliesForAlertOptions, CancellationToken)"/>.
         /// </summary>
         public DateTimeOffset? ModifiedTime { get; }
+
+        /// <summary>
+        /// The value of the data point that generated this anomaly.
+        /// </summary>
+        public double Value { get; }
+
+        /// <summary>
+        /// The value this data point was expected to have according to the TODO? if smart configuration is being used. TODOTODO.
+        /// </summary>
+        public double? ExpectedValue { get; }
     }
 }

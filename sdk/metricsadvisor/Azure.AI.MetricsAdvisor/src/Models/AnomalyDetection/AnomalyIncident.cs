@@ -27,6 +27,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             DimensionKey = new DimensionKey(rootNode.Dimension);
             Severity = property.MaxSeverity;
             Status = property.IncidentStatus;
+            ValueOfRootNode = property.ValueOfRootNode.Value;
+            ExpectedValueOfRootNode = property.ExpectedValueOfRootNode;
         }
 
         /// <summary>
@@ -77,5 +79,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         [CodeGenMember("IncidentStatus")]
         public AnomalyIncidentStatus Status { get; }
+
+        /// <summary>
+        /// TODO: what's a root node?
+        /// </summary>
+        public double ValueOfRootNode { get; }
+
+        /// <summary>
+        /// TODO: what's a root node?
+        /// </summary>
+        public double? ExpectedValueOfRootNode { get; }
     }
 }
