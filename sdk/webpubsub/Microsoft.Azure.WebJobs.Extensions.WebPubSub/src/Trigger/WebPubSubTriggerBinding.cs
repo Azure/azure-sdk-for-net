@@ -165,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             private static object ConvertTypeIfPossible(object source, Type target)
             {
-                if (source is WebPubSubMessage message)
+                if (source is BinaryData message)
                 {
                     return message.Convert(target);
                 }

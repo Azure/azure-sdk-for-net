@@ -7,28 +7,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal interface IWebPubSubService
     {
-        Task SendToAll(WebPubSubEvent webPubSubEvent);
+        Task SendToAll(SendToAll webPubSubEvent);
 
-        Task CloseClientConnection(WebPubSubEvent webPubSubEvent);
+        Task CloseClientConnection(CloseClientConnection webPubSubEvent);
 
-        Task SendToConnection(WebPubSubEvent webPubSubEvent);
+        Task SendToConnection(SendToConnection webPubSubEvent);
 
-        Task SendToGroup(WebPubSubEvent webPubSubEvent);
+        Task SendToGroup(SendToGroup webPubSubEvent);
 
-        Task AddConnectionToGroup(WebPubSubEvent webPubSubEvent);
+        Task AddConnectionToGroup(AddConnectionToGroup webPubSubEvent);
 
-        Task RemoveConnectionFromGroup(WebPubSubEvent webPubSubEvent);
+        Task RemoveConnectionFromGroup(RemoveConnectionFromGroup webPubSubEvent);
 
-        Task SendToUser(WebPubSubEvent webPubSubEvent);
+        Task SendToUser(SendToUser webPubSubEvent);
 
-        Task AddUserToGroup(WebPubSubEvent webPubSubEvent);
+        Task AddUserToGroup(AddUserToGroup webPubSubEvent);
 
-        Task RemoveUserFromGroup(WebPubSubEvent webPubSubEvent);
+        Task RemoveUserFromGroup(RemoveUserFromGroup webPubSubEvent);
 
-        Task RemoveUserFromAllGroups(WebPubSubEvent webPubSubEvent);
+        Task RemoveUserFromAllGroups(RemoveUserFromAllGroups webPubSubEvent);
 
-        Task GrantGroupPermission(WebPubSubEvent webPubSubEvent);
+        Task GrantGroupPermission(GrantGroupPermission webPubSubEvent);
 
-        Task RevokeGroupPermission(WebPubSubEvent webPubSubEvent);
+        Task RevokeGroupPermission(RevokeGroupPermission webPubSubEvent);
     }
 }

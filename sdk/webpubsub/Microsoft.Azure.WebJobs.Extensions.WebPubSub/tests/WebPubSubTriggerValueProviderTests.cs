@@ -1,6 +1,7 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Reflection;
 using Xunit;
 
@@ -25,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
                     UserId = "user1"
                 },
                 Reason = "reason",
-                Message = new WebPubSubMessage("message"),
+                Message = BinaryData.FromString("message"),
             };
 
             var value = typeof(WebPubSubTriggerEvent)

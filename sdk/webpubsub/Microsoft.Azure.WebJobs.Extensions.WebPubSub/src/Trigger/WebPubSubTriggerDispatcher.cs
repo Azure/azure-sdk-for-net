@@ -65,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (_listeners.TryGetValue(function, out var executor))
             {
-                WebPubSubMessage message = null;
+                BinaryData message = null;
                 MessageDataType dataType = MessageDataType.Text;
                 IDictionary<string, string[]> claims = null;
                 IDictionary<string, string[]> query = null;
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             }
 
                             var payload = await req.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                            message = new WebPubSubMessage(payload);
+                            message = BinaryData.FromBytes(payload);
                             break;
                         }
                     default:

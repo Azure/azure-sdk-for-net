@@ -1,12 +1,14 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
@@ -14,64 +16,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
     public class JObjectTests
     {
-        public static IEnumerable<object[]> MessageTestData =>
-            new List<object[]>
-            {
-                new object[] {new WebPubSubMessage("Hello"), MessageDataType.Binary, "Hello" },
-                new object[] {new WebPubSubMessage("Hello"), MessageDataType.Json, "Hello" },
-                new object[] {new WebPubSubMessage("Hello"), MessageDataType.Text, "Hello" },
-                new object[] {new WebPubSubMessage(Encoding.UTF8.GetBytes("Hello")) , MessageDataType.Binary, "Hello" },
-                new object[] {new WebPubSubMessage(Encoding.UTF8.GetBytes("Hello")), MessageDataType.Json, "Hello" },
-                new object[] {new WebPubSubMessage(Encoding.UTF8.GetBytes("Hello")), MessageDataType.Text, "Hello" },
-                new object[] {new WebPubSubMessage(new MemoryStream(Encoding.UTF8.GetBytes("Hello"))), MessageDataType.Binary, "Hello" },
-                new object[] {new WebPubSubMessage(new MemoryStream(Encoding.UTF8.GetBytes("Hello"))), MessageDataType.Json, "Hello" },
-                new object[] {new WebPubSubMessage(new MemoryStream(Encoding.UTF8.GetBytes("Hello"))), MessageDataType.Text, "Hello" }
-            };
-
-        [Fact]
-        public void TestConvertFromJObject()
-        {
-            var wpsEvent = @"{
-                ""operation"":""sendToUser"",
-                ""userId"": ""abc"",
-                ""message"": ""test"",
-                ""dataType"": ""text""
-                }";
-
-            var jsevent = JObject.Parse(wpsEvent);
-
-            var result = jsevent.ToObject<WebPubSubEvent>();
-
-            Assert.Equal("test", result.Message.ToString());
-            Assert.Equal(MessageDataType.Text, result.DataType);
-            Assert.Equal(WebPubSubOperation.SendToUser, result.Operation);
-            Assert.Equal("abc", result.UserId);
-        }
-
         [Theory]
-        [MemberData(nameof(MessageTestData))]
-        public void TestConvertMessageToAndFromJObject(WebPubSubMessage message, MessageDataType dataType, string expected)
+        [InlineData(nameof(SendToAll))]
+        [InlineData(nameof(SendToConnection))]
+        [InlineData(nameof(SendToGroup))]
+        [InlineData(nameof(SendToUser))]
+        [InlineData(nameof(AddConnectionToGroup))]
+        [InlineData(nameof(AddUserToGroup))]
+        [InlineData(nameof(RemoveConnectionFromGroup))]
+        [InlineData(nameof(RemoveUserFromAllGroups))]
+        [InlineData(nameof(RemoveUserFromGroup))]
+        [InlineData(nameof(CloseClientConnection))]
+        [InlineData(nameof(GrantGroupPermission))]
+        [InlineData(nameof(RevokeGroupPermission))]
+        public void TestOutputConvert(string operationKind)
         {
-            var wpsEvent = new WebPubSubEvent
-            {
-                Operation = WebPubSubOperation.SendToConnection,
-                ConnectionId = "abc",
-                Message = message,
-                DataType = dataType
-            };
+            var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""message"":""test"",""dataType"":""text"", ""reason"":""close""}";
 
-            var jsObject = JObject.FromObject(wpsEvent);
+            var replacedInput = input.Replace("{0}", operationKind);
 
-            Assert.Equal("sendToConnection", jsObject["operation"].ToString());
-            Assert.Equal("abc", jsObject["connectionId"].ToString());
-            Assert.Equal(expected, jsObject["message"].ToString());
+            var jObject = JObject.Parse(replacedInput);
 
-            var result = jsObject.ToObject<WebPubSubEvent>();
+            var converted = JsonConvert.DeserializeObject<WebPubSubOperation>(replacedInput, new WebPubSubOperationJsonConverter());
 
-            Assert.Equal(expected, result.Message.ToString());
-            Assert.Equal(dataType, result.DataType);
-            Assert.Equal(WebPubSubOperation.SendToConnection, result.Operation);
-            Assert.Equal("abc", result.ConnectionId);
+            Assert.Equal(operationKind, converted.OperationKind.ToString());
         }
 
         [Fact]

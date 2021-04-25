@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     /// Supported operations of rest calls.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum WebPubSubOperation
+    public enum WebPubSubOperationKind
     {
         [EnumMember(Value = "sendToAll")]
         SendToAll,

@@ -11,6 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     internal class ServiceConfigParser
     {
         private static char[] _valueSeparator = new char[] { '=' };
+        private static char _partSeparator = ';';
 
         public Uri Endpoint { get; }
 
@@ -43,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
 
             var setting = new Dictionary<string, string>();
-            var items = connectionString.Split(';');
+            var items = connectionString.Split(_partSeparator);
 
             try
             {

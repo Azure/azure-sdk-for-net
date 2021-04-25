@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Threading.Tasks;
 using Moq;
 using Xunit;
@@ -16,17 +17,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var collector = new WebPubSubAsyncCollector(serviceMock.Object);
 
             var message = "new message";
-            await collector.AddAsync(new WebPubSubEvent
+            await collector.AddAsync(new SendToAll
             {
-                Operation = WebPubSubOperation.SendToAll,
-                Message = new WebPubSubMessage(message),
+                Message = BinaryData.FromString(message),
                 DataType = MessageDataType.Text
             });
 
-            serviceMock.Verify(c => c.SendToAll(It.IsAny<WebPubSubEvent>()), Times.Once);
+            serviceMock.Verify(c => c.SendToAll(It.IsAny<SendToAll>()), Times.Once);
             serviceMock.VerifyNoOtherCalls();
 
-            var actualData = (WebPubSubEvent)serviceMock.Invocations[0].Arguments[0];
+            var actualData = (SendToAll)serviceMock.Invocations[0].Arguments[0];
             Assert.Equal(MessageDataType.Text, actualData.DataType);
             Assert.Equal(message, actualData.Message.ToString());
         }

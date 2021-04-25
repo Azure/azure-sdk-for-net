@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
-    internal class WebPubSubAsyncCollector: IAsyncCollector<WebPubSubEvent>
+    internal class WebPubSubAsyncCollector : IAsyncCollector<WebPubSubOperation>
     {
         private readonly IWebPubSubService _service;
 
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             _service = service;
         }
 
-        public async Task AddAsync(WebPubSubEvent item, CancellationToken cancellationToken = default)
+        public async Task AddAsync(WebPubSubOperation item, CancellationToken cancellationToken = default)
         {
             if (item == null)
             {
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             try
             {
-                var method = typeof(IWebPubSubService).GetMethod(item.Operation.ToString(),
+                var method = typeof(IWebPubSubService).GetMethod(item.OperationKind.ToString(),
                     BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
                 var task = (Task)method.Invoke(_service, new object[] { item });
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Not supported operation: {item.Operation}, exception: {ex}");
+                throw new ArgumentException($"Not supported operation: {item.OperationKind}, exception: {ex}");
             }
         }
 

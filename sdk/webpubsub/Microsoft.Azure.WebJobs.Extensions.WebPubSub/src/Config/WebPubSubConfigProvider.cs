@@ -14,6 +14,7 @@ using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -66,8 +67,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             // bindings
             context
                 .AddConverter<WebPubSubConnection, JObject>(JObject.FromObject)
-                .AddConverter<JObject, WebPubSubEvent>(ConvertFromJObject<WebPubSubEvent>)
-                .AddConverter<JObject, WebPubSubEvent[]>(ConvertFromJObject<WebPubSubEvent[]>);
+                .AddConverter<JObject, WebPubSubOperation>(ConvertWebPubSubOperationFromJObject<WebPubSubOperation>)
+                .AddConverter<JObject, WebPubSubOperation[]>(ConvertWebPubSubOperationFromJObject<WebPubSubOperation[]>);
 
             // Trigger binding
             context.AddBindingRule<WebPubSubTriggerAttribute>()
@@ -110,7 +111,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return new WebPubSubService(connectionString, hubName);
         }
 
-        private IAsyncCollector<WebPubSubEvent> CreateCollector(WebPubSubAttribute attribute)
+        private IAsyncCollector<WebPubSubOperation> CreateCollector(WebPubSubAttribute attribute)
         {
             return new WebPubSubAsyncCollector(GetService(attribute));
         }
@@ -143,9 +144,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
         }
 
-        private static T ConvertFromJObject<T>(JObject input)
+        private static T ConvertWebPubSubOperationFromJObject<T>(JObject input)
         {
-            return input.ToObject<T>();
+            return JsonConvert.DeserializeObject<T>(input.ToString(), new WebPubSubOperationJsonConverter());
         }
     }
 }

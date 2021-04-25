@@ -8,9 +8,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
-    internal static class WebPubSubMessageExtensions
+    internal static class BinaryDataExtensions
     {
-        public static object Convert(this WebPubSubMessage message, Type targetType)
+        public static object Convert(this BinaryData message, Type targetType)
         {
             if (targetType == typeof(JObject))
             {
@@ -30,6 +30,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             if (targetType == typeof(string))
             {
                 return message.ToString();
+            }
+
+            if (targetType == typeof(BinaryData))
+            {
+                return message;
             }
 
             return null;
