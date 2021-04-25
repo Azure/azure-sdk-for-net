@@ -325,7 +325,6 @@ namespace Azure.Communication.Chat
         public virtual async Task<Response> UpdateMessageAsync(string messageId, string content, CancellationToken cancellationToken = default)
         {
             return await UpdateMessageAsync(new UpdateChatMessageOptions { MessageId = messageId, Content = content }, cancellationToken).ConfigureAwait(false);
-            //return await UpdateMessageAsync(messageId, content, updateChatMessageOptions: default, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Updates a message asynchronously. </summary>
@@ -347,7 +346,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        /// <summary> Updates a message asynchronously. </summary>
+        /// <summary> Updates a message synchronously. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="content"> Chat message content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -355,10 +354,9 @@ namespace Azure.Communication.Chat
         public virtual Response UpdateMessage(string messageId, string content, CancellationToken cancellationToken = default)
         {
             return UpdateMessage(new UpdateChatMessageOptions { MessageId = messageId, Content = content }, cancellationToken);
-            //return UpdateMessage(messageId, content, updateChatMessageOptions: default, cancellationToken);
         }
 
-        /// <summary> Updates a message asynchronously. </summary>
+        /// <summary> Updates a message synchronously. </summary>
         /// <param name="updateChatMessageOptions"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
