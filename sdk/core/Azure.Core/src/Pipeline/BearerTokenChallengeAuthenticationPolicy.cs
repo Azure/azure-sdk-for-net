@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 #nullable enable
 
@@ -16,10 +17,14 @@ namespace Azure.Core.Pipeline
     /// A policy that sends an <see cref="AccessToken"/> provided by a <see cref="TokenCredential"/> as an Authentication header.
     /// Note: This class is currently in preview and is therefore subject to possible future breaking changes.
     /// </summary>
-    internal class BearerTokenChallengeAuthenticationPolicy : HttpPipelinePolicy
+    public class BearerTokenChallengeAuthenticationPolicy : HttpPipelinePolicy
     {
-        private readonly AccessTokenCache _accessTokenCache;
+        /// <summary>
+        /// The scopes currently configured for token requests to the credential
+        /// </summary>
         protected string[] Scopes { get; private set; }
+
+        private readonly AccessTokenCache _accessTokenCache;
         private readonly ValueTask<bool> _falseValueTask = new ValueTask<bool>(Task.FromResult(false));
 
         /// <summary>
@@ -35,7 +40,8 @@ namespace Azure.Core.Pipeline
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scopes">Scopes to authenticate for.</param>
         public BearerTokenChallengeAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
-            : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30)) { }
+            : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
+        { }
 
         internal BearerTokenChallengeAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay)
         {
@@ -152,6 +158,7 @@ namespace Azure.Core.Pipeline
             private TokenRequestContext? _currentContext;
             private TaskCompletionSource<HeaderValueInfo>? _infoTcs;
             private TaskCompletionSource<HeaderValueInfo>? _backgroundUpdateTcs;
+
             public AccessTokenCache(TokenCredential credential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay, string[] initialScopes)
             {
                 _credential = credential;
@@ -322,12 +329,12 @@ namespace Azure.Core.Pipeline
                     // https://github.com/Azure/azure-sdk-for-net/issues/18539
                     //AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryDelay));
 
                     // https://github.com/Azure/azure-sdk-for-net/issues/18539
-                    //AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
+                    AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
                 }
                 finally
                 {

@@ -2,6 +2,9 @@
 
 ## 1.14.0-beta.1 (Unreleased)
 
+### Added
+
+- Added `BearerTokenChallengeAuthenticationPolicy`, which enables creation of authentication policies that can handle challenges.
 
 ## 1.13.0 (2021-04-07)
 
