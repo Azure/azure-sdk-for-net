@@ -77,9 +77,6 @@ jobs:
           /p:CommitSHA=$(Build.SourceVersion)
           /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
         displayName: "Build and Package"
-        env:
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
       - template: /eng/common/pipelines/templates/steps/create-apireview.yml
         parameters:
@@ -115,6 +112,9 @@ jobs:
           ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
             Directory: sdk/${{ parameters.ServiceDirectory }}
           CheckLinkGuidance: $true
+      - template: /eng/common/pipelines/templates/steps/verify-samples.yml
+        parameters:
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
       - script: |
           pip install setuptools wheel
           pip install doc-warden==$(DocWardenVersion)
@@ -130,9 +130,6 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - task: PowerShell@2
         displayName: "Verify generated code"
-        env:
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
           arguments: >

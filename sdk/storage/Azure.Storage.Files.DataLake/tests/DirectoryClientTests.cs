@@ -3512,7 +3512,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 GetOptions());
 
             // Act
-            Response<PathProperties> response = await sasDirectoryClient.GetPropertiesAsync();
+            // It may take up to 30 seconds for policy to take effect.
+            Response<PathProperties> response = await RetryAsync(async () => await sasDirectoryClient.GetPropertiesAsync(), e => e.Status == 403);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -3613,7 +3614,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public async Task SetHttpHeadersAsync()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
 
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
@@ -3642,7 +3643,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public async Task SetHttpHeadersAsync_Error()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
 
             await using DisposingFileSystem test = await GetNewFileSystem();
 
@@ -3666,7 +3667,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public async Task SetHttpHeadersAsync_Conditions()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in Conditions_Data)
             {
@@ -3702,7 +3703,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public async Task SetHttpHeadersAsync_ConditionsFail()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
@@ -5003,7 +5004,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
 
             // Act - DataLakeDirectoryClient(Uri blobContainerUri, fileClientOptions options = default)
@@ -5032,7 +5033,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void CanGenerateSas_GetFileClient()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
 
             // Act - DataLakeDirectoryClient(Uri blobContainerUri, fileClientOptions options = default)
@@ -5064,7 +5065,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void CanGenerateSas_GetSubDirectoryClient()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
 
             // Act - DataLakeDirectoryClient(Uri blobContainerUri, fileClientOptions options = default)
@@ -5113,7 +5114,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewDirectoryName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
@@ -5152,7 +5153,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_Builder()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewDirectoryName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
@@ -5197,7 +5198,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_BuilderNullFileSystemName()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewDirectoryName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
@@ -5243,7 +5244,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_BuilderWrongFileSystemName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
@@ -5275,7 +5276,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_BuilderNullPath()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewDirectoryName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
@@ -5321,7 +5322,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_BuilderWrongDirectoryName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string directoryName = GetNewDirectoryName();
             string fileSystemName = GetNewFileSystemName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
@@ -5353,7 +5354,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_BuilderIsDirectoryNull()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string path = GetNewDirectoryName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
@@ -5398,7 +5399,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_BuilderIsDirectoryError()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             string directoryName = GetNewDirectoryName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");

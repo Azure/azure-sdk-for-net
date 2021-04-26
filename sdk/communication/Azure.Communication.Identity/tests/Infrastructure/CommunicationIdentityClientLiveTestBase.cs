@@ -32,20 +32,27 @@ namespace Azure.Communication.Identity.Tests
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.ConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
         protected CommunicationIdentityClient CreateClientWithAzureKeyCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.Endpoint,
                     new AzureKeyCredential(TestEnvironment.AccessKey),
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
         protected CommunicationIdentityClient CreateClientWithTokenCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.Endpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    CreateIdentityClientOptionsWithCorrelationVectorLogs()));
+
+        private CommunicationIdentityClientOptions CreateIdentityClientOptionsWithCorrelationVectorLogs()
+        {
+            CommunicationIdentityClientOptions communicationIdentityClientOptions = new CommunicationIdentityClientOptions();
+            communicationIdentityClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
+            return InstrumentClientOptions(communicationIdentityClientOptions);
+        }
     }
 }

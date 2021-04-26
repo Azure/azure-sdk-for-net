@@ -74,6 +74,10 @@ namespace Azure.AI.FormRecognizer
 
             Diagnostics.LoggedQueryParameters.Add("includeKeys");
             Diagnostics.LoggedQueryParameters.Add("includeTextDetails");
+            Diagnostics.LoggedQueryParameters.Add("language");
+            Diagnostics.LoggedQueryParameters.Add("locale");
+            Diagnostics.LoggedQueryParameters.Add("pages");
+            Diagnostics.LoggedQueryParameters.Add("readingOrder");
             Diagnostics.LoggedQueryParameters.Add("op");
         }
     }

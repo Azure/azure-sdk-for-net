@@ -447,7 +447,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             byte[] certificateBytes = Encoding.ASCII.GetBytes(PemCertificateWithV3Extensions);
 
             #region Snippet:CertificateClientLiveTests_VerifyImportCertificatePem
-            //@@byte[] certificateBytes = File.ReadAllBytes("certificate.pem");
+#if SNIPPET
+            byte[] certificateBytes = File.ReadAllBytes("certificate.pem");
+#endif
 
             ImportCertificateOptions options = new ImportCertificateOptions(certificateName, certificateBytes)
             {

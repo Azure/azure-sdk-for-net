@@ -605,7 +605,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 Path = new PathDeletedItem
                 {
-                    Name = blobItemInternal.Name,
+                    Path = blobItemInternal.Name,
                     DeletionId = blobItemInternal.DeletionId,
                     DeletedOn = blobItemInternal.Properties.DeletedTime,
                     RemainingRetentionDays = blobItemInternal.Properties.RemainingRetentionDays
@@ -628,6 +628,7 @@ namespace Azure.Storage.Files.DataLake
                 Cors = blobServiceProperties.Cors.ToDataLakeCorsRules(),
                 DefaultServiceVersion = blobServiceProperties.DefaultServiceVersion,
                 DeleteRetentionPolicy = blobServiceProperties.DeleteRetentionPolicy.ToDataLakeRetentionPolicy(),
+                StaticWebsite = blobServiceProperties.StaticWebsite.ToDataLakeStaticWebsite()
             };
         }
 
@@ -705,6 +706,22 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
+        internal static DataLakeStaticWebsite ToDataLakeStaticWebsite(this BlobStaticWebsite blobStaticWebsite)
+        {
+            if (blobStaticWebsite == null)
+            {
+                return null;
+            }
+
+            return new DataLakeStaticWebsite
+            {
+                Enabled = blobStaticWebsite.Enabled,
+                IndexDocument = blobStaticWebsite.IndexDocument,
+                ErrorDocument404Path = blobStaticWebsite.ErrorDocument404Path,
+                DefaultIndexDocumentPath = blobStaticWebsite.DefaultIndexDocumentPath
+            };
+        }
+
         internal static BlobServiceProperties ToBlobServiceProperties(this DataLakeServiceProperties dataLakeServiceProperties)
         {
             if (dataLakeServiceProperties == null)
@@ -720,8 +737,7 @@ namespace Azure.Storage.Files.DataLake
                 Cors = dataLakeServiceProperties.Cors.ToBlobCorsRules(),
                 DefaultServiceVersion = dataLakeServiceProperties.DefaultServiceVersion,
                 DeleteRetentionPolicy = dataLakeServiceProperties.DeleteRetentionPolicy.ToBlobRetentionPolicy(),
-                // HNS enabled accounts do not support static website.
-                StaticWebsite = null
+                StaticWebsite = dataLakeServiceProperties.StaticWebsite.ToBlobStaticWebsite()
             };
         }
 
@@ -796,6 +812,22 @@ namespace Azure.Storage.Files.DataLake
                 Read = dataLakeAnalyticsLogging.Read,
                 Write = dataLakeAnalyticsLogging.Write,
                 RetentionPolicy = dataLakeAnalyticsLogging.RetentionPolicy.ToBlobRetentionPolicy()
+            };
+        }
+
+        internal static BlobStaticWebsite ToBlobStaticWebsite(this DataLakeStaticWebsite dataLakeStaticWebsite)
+        {
+            if (dataLakeStaticWebsite == null)
+            {
+                return null;
+            }
+
+            return new BlobStaticWebsite
+            {
+                Enabled = dataLakeStaticWebsite.Enabled,
+                IndexDocument = dataLakeStaticWebsite.IndexDocument,
+                ErrorDocument404Path = dataLakeStaticWebsite.ErrorDocument404Path,
+                DefaultIndexDocumentPath = dataLakeStaticWebsite.DefaultIndexDocumentPath
             };
         }
     }

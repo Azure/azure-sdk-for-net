@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 // loop within the context of this thread
-                while (!cancellationToken.IsCancellationRequested)
+                while (!cancellationToken.IsCancellationRequested && !Processor.Connection.IsClosed)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
                     ServiceBusReceivedMessage message = await Receiver.ReceiveMessageAsync(
@@ -116,8 +116,8 @@ namespace Azure.Messaging.ServiceBus
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticProperty.ConsumerKind);
-            scope.Start();
             scope.SetMessageData(new ServiceBusReceivedMessage[] { message });
+            scope.Start();
             try
             {
                 await ProcessOneMessage(
@@ -175,7 +175,7 @@ namespace Azure.Messaging.ServiceBus
                     // as we want in flight auto-completion to be able
                     // to finish
                     await Receiver.CompleteMessageAsync(
-                        message.LockToken,
+                        message.LockTokenGuid,
                         CancellationToken.None)
                         .ConfigureAwait(false);
                 }
@@ -212,7 +212,7 @@ namespace Azure.Messaging.ServiceBus
                         // as we want in flight abandon to be able
                         // to finish even if user stopped processing
                         await Receiver.AbandonMessageAsync(
-                            message.LockToken,
+                            message.LockTokenGuid,
                             cancellationToken: CancellationToken.None)
                             .ConfigureAwait(false);
                     }
@@ -256,7 +256,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 try
                 {
-                    ServiceBusEventSource.Log.ProcessorRenewMessageLockStart(Processor.Identifier, 1, message.LockToken);
+                    ServiceBusEventSource.Log.ProcessorRenewMessageLockStart(Processor.Identifier, 1, message.LockTokenGuid);
                     TimeSpan delay = CalculateRenewDelay(message.LockedUntil);
 
                     // We're awaiting the task created by 'ContinueWith' to avoid awaiting the Delay task which may be canceled

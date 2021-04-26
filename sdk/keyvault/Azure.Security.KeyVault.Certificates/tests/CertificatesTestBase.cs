@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         private KeyVaultTestEventListener _listener;
 
         public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
         }

@@ -22,6 +22,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public const string Configuration = "Configuration";
         public const string FabricInfrastructure = "FabricInfrastructure";
         public const string VersionExpiry = "VersionExpiry";
-        public const string AgentAutoUpdate = "AgentAutoUpdate";
+        public const string AgentAutoUpdateInfra = "AgentAutoUpdateInfra";
+        public const string AgentAutoUpdateArtifactDeleted = "AgentAutoUpdateArtifactDeleted";
+        public const string AgentAutoUpdateRunAsAccount = "AgentAutoUpdateRunAsAccount";
+        public const string AgentAutoUpdateRunAsAccountExpiry = "AgentAutoUpdateRunAsAccountExpiry";
+        public const string AgentAutoUpdateRunAsAccountExpired = "AgentAutoUpdateRunAsAccountExpired";
     }
 }
