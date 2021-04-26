@@ -113,7 +113,7 @@ namespace Azure.Security.Attestation
         /// Json Web Token Header "algorithm". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.1 for details.
         /// If the value of <see cref="Algorithm"/> is "none" it indicates that the token is unsecured.
         /// </summary>
-        public string Algorithm { get => Header.Algorithm; }
+        public string Algorithm => Header.Algorithm;
 
         /// <summary>
         /// Json Web Token Header "type". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.9 for details.
