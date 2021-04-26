@@ -146,7 +146,7 @@ namespace Azure.Security.Attestation
         public string Issuer { get => Payload.Issuer; }
 
         /// <summary>
-        /// An array of X.509Certificates which represent a certificate chain used to sign the token. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6 for details.
+        /// An array of <see cref="X.509Certificate"/> which represent a certificate chain used to sign the token.  <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6">RFC 7515 section 4.1.6</seealso> for details.
         /// </summary>
         public X509Certificate2[] X509CertificateChain {
             get
