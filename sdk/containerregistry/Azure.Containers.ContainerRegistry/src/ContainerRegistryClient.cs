@@ -22,7 +22,7 @@ namespace Azure.Containers.ContainerRegistry
         private readonly string AcrAadScope = "https://management.core.windows.net/.default";
 
         /// <summary>
-        /// Initializes a new instance of the ContainerRegistryClient for managing container images and artifacts.
+        /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts.
         /// </summary>
         /// <param name="registryUri">The URI endpoint of the container registry.  This is likely to be similar
         /// to  "https://{registry-name}.azurecr.io".</param>
