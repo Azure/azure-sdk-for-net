@@ -64,6 +64,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Get registry artifact properties by tag or digest. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<ArtifactManifestProperties>> GetManifestPropertiesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetManifestProperties)}");
@@ -83,6 +84,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Get registry artifact properties by tag or digest. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<ArtifactManifestProperties> GetManifestProperties(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetManifestProperties)}");
@@ -124,6 +126,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Update manifest attributes. </summary>
         /// <param name="value"> Manifest properties value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<ArtifactManifestProperties>> SetManifestPropertiesAsync(ContentProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
@@ -145,6 +149,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Update manifest attributes. </summary>
         /// <param name="value"> Manifest properties value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<ArtifactManifestProperties> SetManifestProperties(ContentProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
@@ -165,6 +171,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Delete registry artifact. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(Delete)}");
@@ -183,6 +190,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Delete registry artifact. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(Delete)}");
@@ -205,6 +213,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get the collection of tags for a repository. </summary>
         /// <param name="orderBy"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual AsyncPageable<ArtifactTagProperties> GetTagsAsync(TagOrderBy orderBy = TagOrderBy.None, CancellationToken cancellationToken = default)
         {
             async Task<Page<ArtifactTagProperties>> FirstPageFunc(int? pageSizeHint)
@@ -250,6 +259,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get the collection of tags for a repository. </summary>
         /// <param name="orderBy"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Pageable<ArtifactTagProperties> GetTags(TagOrderBy orderBy = TagOrderBy.None, CancellationToken cancellationToken = default)
         {
             Page<ArtifactTagProperties> FirstPageFunc(int? pageSizeHint)
@@ -295,6 +305,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get tag properties by tag. </summary>
         /// <param name="tag"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tag"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<ArtifactTagProperties>> GetTagPropertiesAsync(string tag, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagProperties)}");
@@ -313,6 +326,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get tag attributes by tag. </summary>
         /// <param name="tag"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tag"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<ArtifactTagProperties> GetTagProperties(string tag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tag, nameof(tag));
@@ -334,6 +350,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tag"> Tag name. </param>
         /// <param name="value"> Tag property value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tag"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<ArtifactTagProperties>> SetTagPropertiesAsync(string tag, ContentProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tag, nameof(tag));
@@ -356,6 +376,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tag"> Tag name. </param>
         /// <param name="value"> Tag property value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tag"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<ArtifactTagProperties> SetTagProperties(string tag, ContentProperties value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tag, nameof(tag));
@@ -377,6 +401,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Delete the tag.  This removes the tag from the artifact and its manifest. </summary>
         /// <param name="tag"> Name of tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tag"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response> DeleteTagAsync(string tag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tag, nameof(tag));
@@ -397,6 +424,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Delete the tag.  This removes the tag from the artifact and its manifest. </summary>
         /// <param name="tag"> Name of tag to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tag"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="tag"/> is empty. </exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response DeleteTag(string tag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tag, nameof(tag));

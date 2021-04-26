@@ -28,6 +28,7 @@ namespace Azure.Containers.ContainerRegistry
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> or <paramref name="credential"/> is null. </exception>
         public ContainerRegistryClient(Uri registryUri, TokenCredential credential) : this(registryUri, credential, new ContainerRegistryClientOptions())
         {
         }
@@ -40,6 +41,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> or <paramref name="credential"/> is null. </exception>
         public ContainerRegistryClient(Uri registryUri, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(registryUri, nameof(registryUri));
@@ -79,6 +81,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> List repositories in this registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual AsyncPageable<string> GetRepositoryNamesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
@@ -119,6 +122,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> List repositories in this registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Pageable<string> GetRepositoryNames(CancellationToken cancellationToken = default)
         {
             Page<string> FirstPageFunc(int? pageSizeHint)
@@ -174,8 +178,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Delete the repository identified by `repostitory`. </summary>
         /// <param name="repository"> Repository name (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repository"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="repository"/> is empty. </exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual async Task<Response<DeleteRepositoryResult>> DeleteRepositoryAsync(string repository, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(repository, nameof(repository));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
             scope.Start();
             try
@@ -192,8 +201,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Delete the repository identified by `repostitory`. </summary>
         /// <param name="repository"> Repository name (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repository"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="repository"/> is empty. </exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
         public virtual Response<DeleteRepositoryResult> DeleteRepository(string repository, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(repository, nameof(repository));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
             scope.Start();
             try
@@ -212,6 +226,8 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         /// <param name="name"> The name of the repository to reference. </param>
         /// <returns> A new <see cref="ContainerRepository"/> for the desired repository. </returns>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="name"/> is empty. </exception>
         public virtual ContainerRepository GetRepository(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -229,6 +245,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="repositoryName"> The name of the repository to reference. </param>
         /// <param name="tagOrDigest"> Either a tag or a digest that uniquely identifies the artifact. </param>
         /// <returns> A new <see cref="RegistryArtifact"/> for the desired repository. </returns>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tagOrDigest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="tagOrDigest"/> is empty. </exception>
         public virtual RegistryArtifact GetArtifact(string repositoryName, string tagOrDigest)
         {
             Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
