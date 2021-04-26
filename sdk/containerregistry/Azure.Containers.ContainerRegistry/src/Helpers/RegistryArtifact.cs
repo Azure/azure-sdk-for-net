@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> The registry artifact service method helper object. </summary>
+    /// <summary> A helper class that groups information and operations about an image or artifact in this container registry. </summary>
     public partial class RegistryArtifact
     {
         private readonly ClientDiagnostics _clientDiagnostics;

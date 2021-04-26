@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> The registry service client. </summary>
+    /// <summary> The Azure Container Registry service client. </summary>
     public partial class ContainerRegistryClient
     {
         private readonly Uri _registryUri;
@@ -22,13 +22,24 @@ namespace Azure.Containers.ContainerRegistry
         private readonly string AcrAadScope = "https://management.core.windows.net/.default";
 
         /// <summary>
+        /// Initializes a new instance of the ContainerRegistryClient for managing container images and artifacts.
         /// </summary>
+        /// <param name="registryUri">The URI endpoint of the container registry.  This is likely to be similar
+        /// to  "https://{registry-name}.azurecr.io".</param>
+        /// <param name="credential">The API key credential used to authenticate requests
+        /// against the container registry.  </param>
         public ContainerRegistryClient(Uri registryUri, TokenCredential credential) : this(registryUri, credential, new ContainerRegistryClientOptions())
         {
         }
 
         /// <summary>
+        /// Initializes a new instance of the ContainerRegistryClient for managing container images and artifacts.
         /// </summary>
+        /// <param name="registryUri">The URI endpoint of the container registry.  This is likely to be similar
+        /// to  "https://{registry-name}.azurecr.io".</param>
+        /// <param name="credential">The API key credential used to authenticate requests
+        /// against the container registry.  </param>
+        /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
         public ContainerRegistryClient(Uri registryUri, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(registryUri, nameof(registryUri));
@@ -57,10 +68,12 @@ namespace Azure.Containers.ContainerRegistry
         public virtual Uri RegistryUri => _registryUri;
 
         /// <summary>
+        /// Gets the name of this container registry.
         /// </summary>
         public virtual string Name => _registryName;
 
         /// <summary>
+        /// Gets the login server name for this container registry.
         /// </summary>
         public virtual string LoginServer => _registryUri.Host;
 

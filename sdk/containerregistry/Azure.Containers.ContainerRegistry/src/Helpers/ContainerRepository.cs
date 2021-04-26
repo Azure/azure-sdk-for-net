@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> The repository service client. </summary>
+    /// <summary> A helper class that groups information and operations about a repository in this container registry. </summary>
     public partial class ContainerRepository
     {
         private readonly ClientDiagnostics _clientDiagnostics;
