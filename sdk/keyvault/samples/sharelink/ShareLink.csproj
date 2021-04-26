@@ -25,7 +25,7 @@
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
-  !-- TODO: revert when Azure.Core ships -->
+  <!-- TODO: revert when Azure.Core ships -->
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
