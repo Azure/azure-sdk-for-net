@@ -555,7 +555,7 @@ namespace Azure.Storage.Sas
                 }
             }
 
-            Version = SasQueryParameters.DefaultSasVersion;
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
 
             if (!string.IsNullOrEmpty(PreauthorizedAgentObjectId) && !string.IsNullOrEmpty(AgentObjectId))
             {

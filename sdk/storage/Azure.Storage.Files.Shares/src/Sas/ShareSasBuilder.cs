@@ -389,7 +389,7 @@ namespace Azure.Storage.Sas
                 Resource = Constants.Sas.Resource.File;
             }
 
-            Version = SasQueryParameters.DefaultSasVersion;
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
         }
 
         internal static ShareSasBuilder DeepCopy(ShareSasBuilder originalShareSasBuilder)

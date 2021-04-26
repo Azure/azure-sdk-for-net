@@ -533,7 +533,7 @@ namespace Azure.Storage.Sas
                 }
             }
 
-            Version = SasQueryParameters.DefaultSasVersion;
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
         }
 
         /// <summary>
