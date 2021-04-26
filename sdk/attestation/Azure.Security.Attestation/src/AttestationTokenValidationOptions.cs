@@ -24,7 +24,6 @@ namespace Azure.Security.Attestation
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationTokenValidationOptions"/> class.
-        ///
         /// </summary>
         public AttestationTokenValidationOptions()
         {
