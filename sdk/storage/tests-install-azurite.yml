@@ -15,7 +15,7 @@ steps:
   - task: Npm@1
     inputs:
       command: custom
-      customCommand: install --prefix ${{ parameters.AzuriteLocation }} azurite@$(azurite_version)
+      customCommand: install --prefix ${{ parameters.AzuriteLocation }} azurite@$(AzuriteVersion)
     displayName: Install Azurite
   - task: PowerShell@2
     displayName: Add Azurite location as environment variable
