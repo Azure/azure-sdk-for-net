@@ -171,7 +171,7 @@ namespace Azure.Security.Attestation
         public string X509CertificateSha256Thumbprint { get => Header.X509CertificateSha256Thumbprint; }
 
         /// <summary>
-        /// Json Web Token Header "Critical". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.11 for details.
+        /// JSON Web Token Header "Critical". <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.11">RFC 7515 section 4.1.11</seealso> for details.
         /// </summary>
         public bool? Critical { get => Header.Critical; }
 
