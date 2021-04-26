@@ -51,8 +51,11 @@ namespace Azure.Search.Documents.Tests.Samples
             var suffix = new[] { null, "Express", "Standard", "Professional", "Enterprise", "Ultimate", "Foundation", ".NET", "Framework" };
             var components = new[] { prefixes, products, terms, type, suffix };
 
-            //@@ var random = new Random();
-            /*@@*/TestRandom random = Recording.Random;
+#if SNIPPET
+            var random = new Random();
+#else
+            TestRandom random = Recording.Random;
+#endif
             string RandomElement(string[] values) => values[(int)(random.NextDouble() * values.Length)];
             double RandomPrice() => (random.Next(2, 20) * 100.0) / 2.0 - .01;
 
@@ -87,7 +90,9 @@ namespace Azure.Search.Documents.Tests.Samples
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_CreateIndex_Create
             // Create the search index
             string indexName = "Products";
-            /*@@*/ indexName = Recording.Random.GetName();
+#if !SNIPPET
+            indexName = Recording.Random.GetName();
+#endif
             await indexClient.CreateIndexAsync(
                 new SearchIndex(indexName)
                 {
@@ -173,7 +178,9 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Check
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender2
-                //@@ await indexer.FlushAsync();
+#if SNIPPET
+                await indexer.FlushAsync();
+#endif
                 Assert.AreEqual(100000, (int)await searchClient.GetDocumentCountAsync());
                 #endregion
             }

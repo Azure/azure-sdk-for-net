@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class GalleryImagesOperationsExtensions
     {
             /// <summary>
-            /// Create or update a gallery Image Definition.
+            /// Create or update a gallery image definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute
             /// created.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be created or updated. The
+            /// The name of the gallery image definition to be created or updated. The
             /// allowed characters are alphabets and numbers with dots, dashes, and periods
             /// allowed in the middle. The maximum length is 80 characters.
             /// </param>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Create or update a gallery Image Definition.
+            /// Create or update a gallery image definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Compute
             /// created.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be created or updated. The
+            /// The name of the gallery image definition to be created or updated. The
             /// allowed characters are alphabets and numbers with dots, dashes, and periods
             /// allowed in the middle. The maximum length is 80 characters.
             /// </param>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Update a gallery Image Definition.
+            /// Update a gallery image definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Compute
             /// updated.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be updated. The allowed
+            /// The name of the gallery image definition to be updated. The allowed
             /// characters are alphabets and numbers with dots, dashes, and periods allowed
             /// in the middle. The maximum length is 80 characters.
             /// </param>
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Update a gallery Image Definition.
+            /// Update a gallery image definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Compute
             /// updated.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be updated. The allowed
+            /// The name of the gallery image definition to be updated. The allowed
             /// characters are alphabets and numbers with dots, dashes, and periods allowed
             /// in the middle. The maximum length is 80 characters.
             /// </param>
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Retrieves information about a gallery Image Definition.
+            /// Retrieves information about a gallery image definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Compute
             /// to be retrieved.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be retrieved.
+            /// The name of the gallery image definition to be retrieved.
             /// </param>
             public static GalleryImage Get(this IGalleryImagesOperations operations, string resourceGroupName, string galleryName, string galleryImageName)
             {
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Retrieves information about a gallery Image Definition.
+            /// Retrieves information about a gallery image definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.Compute
             /// to be retrieved.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be retrieved.
+            /// The name of the gallery image definition to be retrieved.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.Compute
             /// deleted.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be deleted.
+            /// The name of the gallery image definition to be deleted.
             /// </param>
             public static void Delete(this IGalleryImagesOperations operations, string resourceGroupName, string galleryName, string galleryImageName)
             {
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.Compute
             /// deleted.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be deleted.
+            /// The name of the gallery image definition to be deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// List gallery Image Definitions in a gallery.
+            /// List gallery image definitions in a gallery.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// List gallery Image Definitions in a gallery.
+            /// List gallery image definitions in a gallery.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -273,7 +273,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Create or update a gallery Image Definition.
+            /// Create or update a gallery image definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -286,7 +286,7 @@ namespace Microsoft.Azure.Management.Compute
             /// created.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be created or updated. The
+            /// The name of the gallery image definition to be created or updated. The
             /// allowed characters are alphabets and numbers with dots, dashes, and periods
             /// allowed in the middle. The maximum length is 80 characters.
             /// </param>
@@ -299,7 +299,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Create or update a gallery Image Definition.
+            /// Create or update a gallery image definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Compute
             /// created.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be created or updated. The
+            /// The name of the gallery image definition to be created or updated. The
             /// allowed characters are alphabets and numbers with dots, dashes, and periods
             /// allowed in the middle. The maximum length is 80 characters.
             /// </param>
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Update a gallery Image Definition.
+            /// Update a gallery image definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -344,7 +344,7 @@ namespace Microsoft.Azure.Management.Compute
             /// updated.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be updated. The allowed
+            /// The name of the gallery image definition to be updated. The allowed
             /// characters are alphabets and numbers with dots, dashes, and periods allowed
             /// in the middle. The maximum length is 80 characters.
             /// </param>
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Update a gallery Image Definition.
+            /// Update a gallery image definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -370,7 +370,7 @@ namespace Microsoft.Azure.Management.Compute
             /// updated.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be updated. The allowed
+            /// The name of the gallery image definition to be updated. The allowed
             /// characters are alphabets and numbers with dots, dashes, and periods allowed
             /// in the middle. The maximum length is 80 characters.
             /// </param>
@@ -402,7 +402,7 @@ namespace Microsoft.Azure.Management.Compute
             /// deleted.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be deleted.
+            /// The name of the gallery image definition to be deleted.
             /// </param>
             public static void BeginDelete(this IGalleryImagesOperations operations, string resourceGroupName, string galleryName, string galleryImageName)
             {
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.Management.Compute
             /// deleted.
             /// </param>
             /// <param name='galleryImageName'>
-            /// The name of the gallery Image Definition to be deleted.
+            /// The name of the gallery image definition to be deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -434,7 +434,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// List gallery Image Definitions in a gallery.
+            /// List gallery image definitions in a gallery.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -448,7 +448,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// List gallery Image Definitions in a gallery.
+            /// List gallery image definitions in a gallery.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

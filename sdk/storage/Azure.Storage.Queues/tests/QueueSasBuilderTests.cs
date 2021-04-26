@@ -25,7 +25,7 @@ namespace Azure.Storage.Queues.Test
         public void QueueSasBuilder_ToSasQueryParameters_VersionTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var queueName = GetNewQueueName();
             QueueSasBuilder queueSasBuilder = BuildQueueSasBuilder(constants, queueName, includeVersion: true);
             var signature = BuildSignature(constants, queueName, includeVersion: true);
@@ -51,7 +51,7 @@ namespace Azure.Storage.Queues.Test
         public void QueueSasBuilder_ToSasQueryParameters_NoVersionTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var queueName = GetNewQueueName();
             QueueSasBuilder queueSasBuilder = BuildQueueSasBuilder(constants, queueName, includeVersion: false);
             var signature = BuildSignature(constants, queueName, includeVersion: false);
@@ -77,7 +77,7 @@ namespace Azure.Storage.Queues.Test
         public void QueueSasBuilder_NullSharedKeyCredentialTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var queueName = GetNewQueueName();
             QueueSasBuilder queueSasBuilder = BuildQueueSasBuilder(constants, queueName, includeVersion: true);
 
@@ -89,7 +89,7 @@ namespace Azure.Storage.Queues.Test
         public void ToSasQueryParameters_IdentifierTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var queueName = GetNewQueueName();
 
             QueueSasBuilder sasBuilder = new QueueSasBuilder

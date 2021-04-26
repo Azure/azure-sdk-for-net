@@ -43,11 +43,14 @@ namespace Azure.Security.KeyVault.Administration.Samples
             string servicePrincipalObjectId = _objectId;
 
             #region Snippet:CreateRoleAssignmentKeysScope
-            //@@string definitionIdToAssign = "<roleDefinitionId>";
-            //@@string servicePrincipalObjectId = "<objectId>";
+#if SNIPPET
+            string definitionIdToAssign = "<roleDefinitionId>";
+            string servicePrincipalObjectId = "<objectId>";
 
-            //@@RoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectId);
-            /*@@*/KeyVaultRoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Keys, definitionIdToAssign, servicePrincipalObjectId , _roleAssignmentId).ConfigureAwait(false);
+            RoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(RoleAssignmentScope.Global, definitionIdToAssign, servicePrincipalObjectId);
+#else
+            KeyVaultRoleAssignment keysScopedAssignment = await client.CreateRoleAssignmentAsync(KeyVaultRoleScope.Keys, definitionIdToAssign, servicePrincipalObjectId , _roleAssignmentId).ConfigureAwait(false);
+#endif
             #endregion
 
             RegisterForCleanup(keysScopedAssignment);
@@ -60,11 +63,16 @@ namespace Azure.Security.KeyVault.Administration.Samples
             RegisterKeyForCleanup(keyName);
 
             #region Snippet:CreateRoleAssignmentKeyScope
-            //@@string keyName = "<your-key-name>";
+#if SNIPPET
+            string keyName = "<your-key-name>";
+#endif
             KeyVaultKey key = await keyClient.GetKeyAsync(keyName);
 
-            //@@RoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new RoleAssignmentScope(key.Id), definitionIdToAssign, servicePrincipalObjectId);
-            /*@@*/KeyVaultRoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new KeyVaultRoleScope(key.Id), definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId).ConfigureAwait(false);
+#if SNIPPET
+            RoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new RoleAssignmentScope(key.Id), definitionIdToAssign, servicePrincipalObjectId);
+#else
+            KeyVaultRoleAssignment keyScopedAssignment = await client.CreateRoleAssignmentAsync(new KeyVaultRoleScope(key.Id), definitionIdToAssign, servicePrincipalObjectId, _roleAssignmentId).ConfigureAwait(false);
+#endif
             #endregion
 
             RegisterForCleanup(keyScopedAssignment);

@@ -212,6 +212,15 @@ namespace Azure.Messaging.ServiceBus {
                 return ResourceManager.GetString("DefaultServerBusyException", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to he message processor is unable to continue and will stop processing; the host application has closed the connection to the Service Bus service..
+        /// </summary>
+        internal static string DisposedConnectionMessageProcessorMustStop {
+            get {
+                return ResourceManager.GetString("DisposedConnectionMessageProcessorMustStop", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to The minimum back off period &apos;{0}&apos; cannot exceed the maximum back off period of &apos;{1}&apos;..

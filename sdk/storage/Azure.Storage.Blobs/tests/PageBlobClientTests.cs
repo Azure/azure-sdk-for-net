@@ -2105,14 +2105,8 @@ namespace Azure.Storage.Blobs.Test
             Operation<long> operation = await destinationBlob.StartCopyIncrementalAsync(
                 sourceUri: sourceBlob.Uri,
                 snapshot: snapshot);
-            if (Mode == RecordedTestMode.Playback)
-            {
-                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
-            }
-            else
-            {
-                await operation.WaitForCompletionAsync();
-            }
+
+            await operation.WaitForCompletionAsync();
 
             // Assert
             Response<BlobProperties> properties = await destinationBlob.GetPropertiesAsync();
@@ -2174,14 +2168,7 @@ namespace Azure.Storage.Blobs.Test
                 Operation<long> operation = await blob.StartCopyIncrementalAsync(
                     sourceUri: sourceBlob.Uri,
                     snapshot: snapshot);
-                if (Mode == RecordedTestMode.Playback)
-                {
-                    await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
-                }
-                else
-                {
-                    await operation.WaitForCompletionAsync();
-                }
+                await operation.WaitForCompletionAsync();
                 parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
 
                 PageBlobRequestConditions accessConditions = BuildAccessConditions(parameters: parameters);
@@ -2233,14 +2220,7 @@ namespace Azure.Storage.Blobs.Test
                 Operation<long> operation = await blob.StartCopyIncrementalAsync(
                     sourceUri: sourceBlob.Uri,
                     snapshot: snapshot);
-                if (Mode == RecordedTestMode.Playback)
-                {
-                    await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
-                }
-                else
-                {
-                    await operation.WaitForCompletionAsync();
-                }
+                await operation.WaitForCompletionAsync();
                 parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                 await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
@@ -2403,14 +2383,9 @@ namespace Azure.Storage.Blobs.Test
             Operation<long> operation = await destinationBlob.StartCopyFromUriAsync(
                 sourceBlob.Uri,
                 accessTier: AccessTier.P20);
-            if (Mode == RecordedTestMode.Playback)
-            {
-                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
-            }
-            else
-            {
-                await operation.WaitForCompletionAsync();
-            }
+
+            await operation.WaitForCompletionAsync();
+
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
 
@@ -3484,6 +3459,39 @@ namespace Azure.Storage.Blobs.Test
             await result.Value.Content.CopyToAsync(dataResult);
             Assert.AreEqual(expectedData.Length, dataResult.Length);
             TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
+        }
+
+        [RecordedTest]
+        public async Task WithCustomerProvidedKey()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            PageBlobClient cpkBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()).WithCustomerProvidedKey(customerProvidedKey));
+            await cpkBlob.CreateAsync(Constants.KB);
+            PageBlobClient noCpkBlob = InstrumentClient(cpkBlob.WithCustomerProvidedKey(null));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                noCpkBlob.GetPropertiesAsync(),
+                e => Assert.AreEqual(BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task WithEncryptionScope()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string encryptionScope = TestConfigDefault.EncryptionScope;
+            PageBlobClient encryptionScopeBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()).WithEncryptionScope(encryptionScope));
+            await encryptionScopeBlob.CreateAsync(Constants.KB);
+            PageBlobClient noEncryptionScopeBlob = InstrumentClient(encryptionScopeBlob.WithEncryptionScope(null));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                noEncryptionScopeBlob.SetMetadataAsync(BuildMetadata()),
+                e => Assert.AreEqual(BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]

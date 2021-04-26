@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
-            using (GetNewFileSystem(service: service))
+            await using (await GetNewFileSystem(service: service))
             {
                 // Act
                 IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
@@ -597,6 +597,42 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [NonParallelizable]
+        public async Task SetPropertiesAsync_StaticWebsite()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeServiceProperties properties = await service.GetPropertiesAsync();
+            DataLakeStaticWebsite originalStaticWebsite = properties.StaticWebsite;
+            string errorDocument404Path = "error/404.html";
+            string defaultIndexDocumentPath = "index2.html";
+            properties.StaticWebsite = new DataLakeStaticWebsite
+            {
+                Enabled = true,
+                ErrorDocument404Path = errorDocument404Path,
+                DefaultIndexDocumentPath = defaultIndexDocumentPath
+            };
+
+            // Act
+            await service.SetPropertiesAsync(properties);
+
+            // Assert
+            properties = await service.GetPropertiesAsync();
+            Assert.IsTrue(properties.StaticWebsite.Enabled);
+            Assert.AreEqual(errorDocument404Path, properties.StaticWebsite.ErrorDocument404Path);
+            Assert.AreEqual(defaultIndexDocumentPath, properties.StaticWebsite.DefaultIndexDocumentPath);
+
+            // Cleanup
+            properties.StaticWebsite = originalStaticWebsite;
+            await service.SetPropertiesAsync(properties);
+            properties = await service.GetPropertiesAsync();
+            Assert.AreEqual(originalStaticWebsite.Enabled, properties.StaticWebsite.Enabled);
+            Assert.AreEqual(originalStaticWebsite.IndexDocument, properties.StaticWebsite.IndexDocument);
+            Assert.AreEqual(originalStaticWebsite.ErrorDocument404Path, properties.StaticWebsite.ErrorDocument404Path);
+            Assert.AreEqual(originalStaticWebsite.DefaultIndexDocumentPath, properties.StaticWebsite.DefaultIndexDocumentPath);
+        }
+
+        [Test]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
@@ -745,7 +781,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var uriEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (uriEndpoint, blobSecondaryEndpoint));
@@ -776,7 +812,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void CanGenerateSas_GetFileSystemClient()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var uriEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (uriEndpoint, blobSecondaryEndpoint));
@@ -827,7 +863,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -858,7 +894,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateAccountSas_Builder()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
@@ -891,7 +927,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateAccountSas_WrongService_Service()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);

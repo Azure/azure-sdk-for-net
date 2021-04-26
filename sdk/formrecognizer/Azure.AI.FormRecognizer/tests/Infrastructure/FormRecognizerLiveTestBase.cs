@@ -11,8 +11,6 @@ namespace Azure.AI.FormRecognizer.Tests
 {
     public class FormRecognizerLiveTestBase : RecordedTestBase<FormRecognizerTestEnvironment>
     {
-        protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 1);
-
         public FormRecognizerLiveTestBase(bool isAsync)
             : base(isAsync)
         {
@@ -111,18 +109,22 @@ namespace Azure.AI.FormRecognizer.Tests
                 ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
                 ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrl,
                 ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrl,
+                ContainerType.TableVariableRows => TestEnvironment.TableVariableRowsContainerSasUrl,
+                ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrl,
                 _ => TestEnvironment.BlobContainerSasUrl,
             };
             var trainingFilesUri = new Uri(trainingFiles);
 
-            return await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, PollingInterval, modelName);
+            return await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, modelName);
         }
 
         protected enum ContainerType
         {
             Singleforms,
             MultipageFiles,
-            SelectionMarks
+            SelectionMarks,
+            TableVariableRows,
+            TableFixedRows
         }
     }
 }

@@ -6,11 +6,11 @@
 	<PropertyGroup>
 		<Description>Provides management capabilities for Azure Change Analysis</Description>
 		<AssemblyTitle>Microsoft Azure Change Analysis Management Library</AssemblyTitle>
-		<Version>1.0.0-beta.1</Version>
+		<Version>1.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.ChangeAnalysis</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.ChangeAnalysis</PackageId>
 		<PackageTags>ChangeAnalysis;</PackageTags>
-		<PackageReleaseNotes>Release the first package for Azure Change Analysis</PackageReleaseNotes>
+		<PackageReleaseNotes>Release the first stable package for Azure Change Analysis</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
