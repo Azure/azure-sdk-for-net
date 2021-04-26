@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />  
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.AgFoodPlatform.Tests</PackageId>
+    <Description>Microsoft.Azure.Management.AgFoodPlatform.Tests Class Library</Description>
+    <Authors>Microsoft Corporation</Authors>
+    <AssemblyName>Microsoft.Azure.Management.AgFoodPlatform.Tests</AssemblyName>
+    <ExcludeFromBuild>true</ExcludeFromBuild>
+    <ExcludeFromTest>true</ExcludeFromTest>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.AgFoodPlatform.csproj" />
+  </ItemGroup>
+</Project>
