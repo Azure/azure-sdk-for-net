@@ -125,26 +125,6 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     tsiInstance.Should().NotBeNull();
                 }
                 numOfInstances.Should().BeGreaterOrEqualTo(numOfInstancesToSetup);
-
-                // Get search suggestions for the first instance
-                TimeSeriesId timeSeriesIdToSuggest = timeSeriesInstances.First().TimeSeriesId;
-                string suggestionString = timeSeriesIdToSuggest.ToArray().First();
-                Response<SearchSuggestion[]> searchSuggestionResponse = await TestRetryHelper.RetryAsync(async () =>
-                {
-                    Response<SearchSuggestion[]> searchSuggestions = await client
-                        .Instances
-                        .GetSearchSuggestionsAsync(suggestionString)
-                        .ConfigureAwait(false);
-
-                    if (searchSuggestions.Value.Length == 0)
-                    {
-                        throw new Exception($"Unable to find a search suggestion for string {suggestionString}.");
-                    }
-
-                    return searchSuggestions;
-                }, MaxNumberOfRetries, s_retryDelay);
-
-                searchSuggestionResponse.Value.Length.Should().Be(1);
             }
             finally
             {

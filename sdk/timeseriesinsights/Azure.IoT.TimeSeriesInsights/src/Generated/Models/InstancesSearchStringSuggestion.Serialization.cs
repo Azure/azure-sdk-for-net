@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class SearchSuggestion
+    internal partial class InstancesSearchStringSuggestion
     {
-        internal static SearchSuggestion DeserializeSearchSuggestion(JsonElement element)
+        internal static InstancesSearchStringSuggestion DeserializeInstancesSearchStringSuggestion(JsonElement element)
         {
             Optional<string> searchString = default;
             Optional<string> highlightedSearchString = default;
@@ -29,7 +29,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new SearchSuggestion(searchString.Value, highlightedSearchString.Value);
+            return new InstancesSearchStringSuggestion(searchString.Value, highlightedSearchString.Value);
         }
     }
 }
