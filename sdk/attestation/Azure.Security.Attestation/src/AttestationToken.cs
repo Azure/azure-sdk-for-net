@@ -161,7 +161,7 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
-        /// The "thumbprint" of the certificate used to sign the request. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.7 for details.
+        /// The "thumbprint" of the certificate used to sign the request. <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.7">RFC 7515 section 4.1.7</seealso> for details.
         /// </summary>
         public string X509CertificateThumbprint { get => Header.X509CertificateThumbprint; }
 
