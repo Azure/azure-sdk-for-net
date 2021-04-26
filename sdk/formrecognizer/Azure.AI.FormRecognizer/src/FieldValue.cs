@@ -572,34 +572,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// Gets the value of the field as a <see cref="SelectionMarkState"/>.
-        /// </summary>
-        /// <returns>The value of the field converted to <see cref="SelectionMarkState"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.SelectionMark"/> or when the value was not correctly normalized to its type.
-        /// Consider accessing the `ValueData.text` property for a textual representation of the value.</exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public SelectionMarkState AsSelectionMarkState()
-        {
-            if (ValueType != FieldValueType.SelectionMark)
-            {
-                throw new InvalidOperationException($"Cannot get field as SelectionMark.  Field value's type is {ValueType}.");
-            }
-
-            // Use when mocking
-            if (_fieldValue == null)
-            {
-                return ValueSelectionMark;
-            }
-
-            if (!_fieldValue.ValueSelectionMark.HasValue)
-            {
-                throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to its type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
-            }
-
-            return _fieldValue.ValueSelectionMark.Value;
-        }
-
-        /// <summary>
-        /// Gets the value of the field as a <see cref="SelectionMarkState"/>.
         /// If the value is extracted from the form, but cannot be normalized to its type,
         /// this method will return null. Consider accessing the `ValueData.text` property for a textual representation of the value.
         /// </summary>
@@ -628,28 +600,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// Gets the value of the field as an ISO 3166-1 alpha-3 country code <see cref="string"/>.
-        /// </summary>
-        /// <returns>The value of the field converted to an ISO 3166-1 alpha-3 country code <see cref="string"/>. Otherwise, null.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Country"/>.</exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string AsCountryCode()
-        {
-            if (ValueType != FieldValueType.Country)
-            {
-                throw new InvalidOperationException($"Cannot get field as country code.  Field value's type is {ValueType}.");
-            }
-
-            // Use when mocking
-            if (_fieldValue == null)
-            {
-                return ValueString;
-            }
-
-            return _fieldValue.ValueCountry;
-        }
-
-        /// <summary>
-        /// Gets the value of the field as an ISO 3166-1 alpha-3 country code <see cref="string"/>.
         /// If the value is extracted from the form, but cannot be normalized to its type,
         /// this method will return null. Consider accessing the `ValueData.text` property for a textual representation of the value.
         /// </summary>
@@ -669,34 +619,6 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return _fieldValue.ValueCountry;
-        }
-
-        /// <summary>
-        /// Gets the value of the field as a <see cref="FieldValueGender"/>.
-        /// </summary>
-        /// <returns>The value of the field converted to a <see cref="FieldValueGender"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Gender"/> or when the value was not correctly normalized to its type.
-        /// Consider accessing the `ValueData.text` property for a textual representation of the value.</exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public FieldValueGender AsGender()
-        {
-            if (ValueType != FieldValueType.Gender)
-            {
-                throw new InvalidOperationException($"Cannot get field as gender.  Field value's type is {ValueType}.");
-            }
-
-            // Use when mocking
-            if (_fieldValue == null)
-            {
-                return ValueGender;
-            }
-
-            if (!_fieldValue.ValueGender.HasValue)
-            {
-                throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to its type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
-            }
-
-            return _fieldValue.ValueGender.Value;
         }
 
         /// <summary>

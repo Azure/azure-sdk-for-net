@@ -246,17 +246,27 @@ namespace Azure.AI.FormRecognizer.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public Azure.AI.FormRecognizer.Models.FieldValueType ValueType { get { throw null; } }
-        public string AsCountryCode() { throw null; }
+        public string AsCountryCodeorNull() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTime AsDate() { throw null; }
+        public System.DateTime? AsDateOrNull() { throw null; }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.Models.FormField> AsDictionary() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public float AsFloat() { throw null; }
-        public Azure.AI.FormRecognizer.Models.FieldValueGender AsGender() { throw null; }
+        public float? AsFloatOrNull() { throw null; }
+        public Azure.AI.FormRecognizer.Models.FieldValueGender? AsGenderOrNull() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public long AsInt64() { throw null; }
+        public long? AsInt64OrNull() { throw null; }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormField> AsList() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string AsPhoneNumber() { throw null; }
-        public Azure.AI.FormRecognizer.Models.SelectionMarkState AsSelectionMarkState() { throw null; }
+        public string AsPhoneNumberOrNull() { throw null; }
+        public Azure.AI.FormRecognizer.Models.SelectionMarkState? AsSelectionMarkStateOrNull() { throw null; }
         public string AsString() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.TimeSpan AsTime() { throw null; }
+        public System.TimeSpan? AsTimeOrNull() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FieldValueGender : System.IEquatable<Azure.AI.FormRecognizer.Models.FieldValueGender>
