@@ -22,11 +22,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
         public ServiceBusClientFactory(
             IConfiguration configuration,
             AzureComponentFactory componentFactory,
-            MessagingProvider messagingProvider)
+            MessagingProvider messagingProvider,
+            AzureEventSourceLogForwarder logForwarder)
         {
             _configuration = configuration;
             _componentFactory = componentFactory;
             _messagingProvider = messagingProvider;
+            logForwarder.Start();
         }
 
         internal ServiceBusClient CreateClientFromSetting(string connection)
