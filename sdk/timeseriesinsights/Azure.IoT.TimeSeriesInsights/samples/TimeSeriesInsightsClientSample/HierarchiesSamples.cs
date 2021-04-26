@@ -23,12 +23,12 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             #region Snippet:TimeSeriesInsightsSampleCreateHierarchies
             var tsiHierarchyName = "sampleHierarchy";
-            var tsiInstanceField1 = "hiearchyLevel1";
+            var tsiInstanceField1 = "hierarchyLevel1";
             var hierarchySource = new TimeSeriesHierarchySource();
             hierarchySource.InstanceFieldNames.Add(tsiInstanceField1);
 
             var tsiHierarchy = new TimeSeriesHierarchy(tsiHierarchyName, hierarchySource);
-            tsiHierarchy.Id = "sampleHiearchyId";
+            tsiHierarchy.Id = "sampleHierarchyId";
 
             var timeSeriesHierarchies = new List<TimeSeriesHierarchy>
             {
@@ -51,26 +51,26 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 }
                 else
                 {
-                    Console.WriteLine($"Failed to create a Time Series hieararchy: {createHierarchiesResult.Value[i].Error.Message}.");
+                    Console.WriteLine($"Failed to create a Time Series hierarchy: {createHierarchiesResult.Value[i].Error.Message}.");
                 }
             }
             #endregion Snippet:TimeSeriesInsightsSampleCreateHierarchies
 
-            #region Snippet:TimeSeriesInsightsSampleGetAllHiearchies
+            #region Snippet:TimeSeriesInsightsSampleGetAllHierarchies
             // Get all Time Series hierarchies in the environment
             AsyncPageable<TimeSeriesHierarchy> getAllHierarchies = client.Hierarchies.GetAsync();
             await foreach (TimeSeriesHierarchy hierarchy in getAllHierarchies)
             {
-                Console.WriteLine($"Retrieved Time Series Insights hierarchy with Id: '{hierarchy?.Id}' and Name: '{hierarchy?.Name}'");
+                Console.WriteLine($"Retrieved Time Series Insights hierarchy with Id: '{hierarchy.Id}' and Name: '{hierarchy.Name}'.");
             }
-            #endregion Snippet:TimeSeriesInsightsSampleGetAllHiearchies
+            #endregion Snippet:TimeSeriesInsightsSampleGetAllHierarchies
 
-            #region Snippet:TimeSeriesInsightsSampleReplaceHiearchies
-            // Update hieararchies with adding a new instance field
-            var tsiInstanceField2 = "hiearchyLevel2";
-            foreach (TimeSeriesHierarchy hieararchy in timeSeriesHierarchies)
+            #region Snippet:TimeSeriesInsightsSampleReplaceHierarchies
+            // Update hierarchies with adding a new instance field
+            var tsiInstanceField2 = "hierarchyLevel2";
+            foreach (TimeSeriesHierarchy hierarchy in timeSeriesHierarchies)
             {
-                hieararchy.Source.InstanceFieldNames.Add(tsiInstanceField2);
+                hierarchy.Source.InstanceFieldNames.Add(tsiInstanceField2);
             }
 
             Response<TimeSeriesHierarchyOperationResult[]> updateHierarchiesResult = await client
@@ -84,19 +84,19 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             {
                 if (updateHierarchiesResult.Value[i].Error == null)
                 {
-                    Console.WriteLine($"Updated Time Series hieararchy successfully.");
+                    Console.WriteLine($"Updated Time Series hierarchy successfully.");
                 }
                 else
                 {
                     Console.WriteLine($"Failed to update a Time Series Insights hierarchy due to: {updateHierarchiesResult.Value[i].Error.Message}.");
                 }
             }
-            #endregion Snippet:TimeSeriesInsightsSampleReplaceHiearchies
+            #endregion Snippet:TimeSeriesInsightsSampleReplaceHierarchies
 
-            #region Snippet:TimeSeriesInsightsSampleGetHiearchiesById
+            #region Snippet:TimeSeriesInsightsSampleGetHierarchiesById
             var tsiHierarchyIds = new List<string>
             {
-                "sampleHiearchyId"
+                "sampleHierarchyId"
             };
 
             Response<TimeSeriesHierarchyOperationResult[]> getHierarchiesByIdsResult = await client
@@ -117,12 +117,12 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                     Console.WriteLine($"Failed to retrieve a Time Series hieararchy due to '{getHierarchiesByIdsResult.Value[i].Error.Message}'.");
                 }
             }
-            #endregion Snippet:TimeSeriesInsightsSampleGetHiearchiesById
+            #endregion Snippet:TimeSeriesInsightsSampleGetHierarchiesById
 
             // Clean up
             try
             {
-                #region Snippet:TimeSeriesInsightsSampleDeleteHiearchiesById
+                #region Snippet:TimeSeriesInsightsSampleDeleteHierarchiesById
                 // Delete Time Series hierarchies with Ids
                 var tsiHierarchyIdsToDelete = new List<string>
                 {
@@ -136,7 +136,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
                 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
                 // array in the request. If the error object is set to null, this means the operation was a success.
-                foreach (var result in deleteHierarchiesResponse.Value)
+                foreach (TimeSeriesOperationError result in deleteHierarchiesResponse.Value)
                 {
                     if (result != null)
                     {
@@ -147,7 +147,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                         Console.WriteLine($"Deleted a Time Series Insights hierarchy successfully.");
                     }
                 }
-                #endregion Snippet:TimeSeriesInsightsSampleDeleteHiearchiesById
+                #endregion Snippet:TimeSeriesInsightsSampleDeleteHierarchiesById
             }
             catch (Exception ex)
             {
