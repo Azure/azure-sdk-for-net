@@ -174,9 +174,9 @@ namespace Azure.Core.Tests
         {
             var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            MockTransport mockTransport = new MockTransport((_, ct) =>
+            MockTransport mockTransport = MockTransport.FromMessageCallback(message =>
             {
-                tcs.Task.Wait(ct);
+                tcs.Task.Wait(message.CancellationToken);
                 return null;
             });
 

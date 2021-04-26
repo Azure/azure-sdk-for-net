@@ -481,8 +481,6 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            // TODO: How to test this?
-            // For now it only tests that things don't fail
             var response = await client.QueryAsync(TestEnvironment.WorkspaceId, _logsTestData.TableAName, options: new LogsQueryOptions()
             {
                 Timeout = TimeSpan.FromMinutes(10)

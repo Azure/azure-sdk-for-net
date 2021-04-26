@@ -97,21 +97,17 @@ namespace Azure.Monitor.Query
                 queryBody.Timespan = TypeFormatters.ToString(timeSpan.Value, "P");
             }
 
-            StringBuilder preferBuilder = null;
+            prefer = null;
+
             if (options?.Timeout is TimeSpan timeout)
             {
-                preferBuilder ??= new();
-                preferBuilder.Append("wait=");
-                preferBuilder.Append((int) timeout.TotalSeconds);
+                prefer = "wait=" + (int) timeout.TotalSeconds;
             }
 
             if (options?.IncludeStatistics == true)
             {
-                preferBuilder ??= new();
-                preferBuilder.Append(" include-statistics=true");
+                prefer += " include-statistics=true";
             }
-
-            prefer = preferBuilder?.ToString();
 
             return queryBody;
         }
