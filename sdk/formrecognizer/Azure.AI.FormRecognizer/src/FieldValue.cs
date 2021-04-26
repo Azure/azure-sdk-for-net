@@ -468,7 +468,31 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <returns>The value of the field converted to a phone number <see cref="string"/>. Otherwise, null.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.PhoneNumber"/>.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string AsPhoneNumber()
+        {
+            if (ValueType != FieldValueType.PhoneNumber)
+            {
+                throw new InvalidOperationException($"Cannot get field as PhoneNumber.  Field value's type is {ValueType}.");
+            }
+
+            // Use when mocking
+            if (_fieldValue == null)
+            {
+                return ValueString;
+            }
+
+            return _fieldValue.ValuePhoneNumber;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as a phone number <see cref="string"/>.
+        /// If the value is extracted from the form, but cannot be normalized to its type,
+        /// this method will return null. Consider accessing the `ValueData.text` property for a textual representation of the value.
+        /// </summary>
+        /// <returns>The value of the field converted to a phone number <see cref="string"/>. Otherwise, null.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.PhoneNumber"/>.</exception>
+        public string AsPhoneNumberOrNull()
         {
             if (ValueType != FieldValueType.PhoneNumber)
             {
@@ -607,7 +631,31 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <returns>The value of the field converted to an ISO 3166-1 alpha-3 country code <see cref="string"/>. Otherwise, null.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Country"/>.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string AsCountryCode()
+        {
+            if (ValueType != FieldValueType.Country)
+            {
+                throw new InvalidOperationException($"Cannot get field as country code.  Field value's type is {ValueType}.");
+            }
+
+            // Use when mocking
+            if (_fieldValue == null)
+            {
+                return ValueString;
+            }
+
+            return _fieldValue.ValueCountry;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as an ISO 3166-1 alpha-3 country code <see cref="string"/>.
+        /// If the value is extracted from the form, but cannot be normalized to its type,
+        /// this method will return null. Consider accessing the `ValueData.text` property for a textual representation of the value.
+        /// </summary>
+        /// <returns>The value of the field converted to an ISO 3166-1 alpha-3 country code <see cref="string"/>. Otherwise, null.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Country"/>.</exception>
+        public string AsCountryCodeorNull()
         {
             if (ValueType != FieldValueType.Country)
             {
