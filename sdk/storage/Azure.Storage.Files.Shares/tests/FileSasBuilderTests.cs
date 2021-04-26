@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void FileSasBuilder_ToSasQueryParameters_FilePathTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var shareName = GetNewShareName();
             var filePath = GetNewDirectoryName();
             ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeVersion: true, includeFilePath: true, constants, shareName, filePath);
@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void FileSasBuilder_ToSasQueryParameters_NoVersionTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var shareName = GetNewShareName();
             var filePath = GetNewDirectoryName();
             ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeVersion: false, includeFilePath: false, constants, shareName, filePath);
@@ -80,7 +80,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void FileSasBuilder_NullSharedKeyCredentialTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var shareName = GetNewShareName();
             var filePath = GetNewDirectoryName();
             ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeVersion: true, includeFilePath: true, constants, shareName, filePath);
@@ -93,7 +93,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void FileSasBuilder_IdentifierTest()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string shareName = GetNewShareName();
             string resource = "s";
             ShareSasBuilder sasBuilder = new ShareSasBuilder

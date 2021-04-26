@@ -16,21 +16,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartTime))
-            {
-                writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime, "O");
-            }
-            if (Optional.IsDefined(EndTime))
-            {
-                writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndTime, "O");
-            }
-            if (Optional.IsDefined(ValueInternal))
-            {
-                writer.WritePropertyName("value");
-                writer.WriteObjectValue(ValueInternal);
-            }
+            writer.WritePropertyName("startTime");
+            writer.WriteStringValue(StartTime, "O");
+            writer.WritePropertyName("endTime");
+            writer.WriteStringValue(EndTime, "O");
+            writer.WritePropertyName("value");
+            writer.WriteObjectValue(ValueInternal);
             if (Optional.IsDefined(AnomalyDetectionConfigurationId))
             {
                 if (AnomalyDetectionConfigurationId != null)
@@ -66,9 +57,9 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MetricAnomalyFeedback DeserializeMetricAnomalyFeedback(JsonElement element)
         {
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<AnomalyFeedbackValue> value = default;
+            DateTimeOffset startTime = default;
+            DateTimeOffset endTime = default;
+            AnomalyFeedbackValue value = default;
             Optional<string> anomalyDetectionConfigurationId = default;
             Optional<AnomalyDetectionConfiguration> anomalyDetectionConfigurationSnapshot = default;
             FeedbackType feedbackType = default;
@@ -81,31 +72,16 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("startTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     value = AnomalyFeedbackValue.DeserializeAnomalyFeedbackValue(property.Value);
                     continue;
                 }
@@ -165,7 +141,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricAnomalyFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value.Value, anomalyDetectionConfigurationId.Value, anomalyDetectionConfigurationSnapshot.Value);
+            return new MetricAnomalyFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value, anomalyDetectionConfigurationId.Value, anomalyDetectionConfigurationSnapshot.Value);
         }
     }
 }

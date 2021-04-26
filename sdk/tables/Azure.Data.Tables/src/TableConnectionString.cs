@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
 using Azure.Core;
 using AccountSetting = System.Collections.Generic.KeyValuePair<string, System.Func<string, bool>>;

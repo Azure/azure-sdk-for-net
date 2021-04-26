@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             Queue = queue ?? throw new ArgumentNullException(nameof(queue));
             PoisonQueue = poisonQueue;
             Logger = loggerFactory?.CreateLogger(LogCategories.CreateTriggerCategory("Queue"));
-            Options = options;
+            Options = options.Clone();
         }
 
         /// <summary>

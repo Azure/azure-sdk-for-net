@@ -65,7 +65,10 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="isSealed"> . </param>
         /// <param name="rehydratePriority"> If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard. </param>
         /// <param name="lastAccessedOn"> . </param>
-        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, byte[] contentMD5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn)
+        /// <param name="immutabilityPolicyExpiresOn"> . </param>
+        /// <param name="immutabilityPolicyMode"> . </param>
+        /// <param name="legalHold"> . </param>
+        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, byte[] contentMD5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn, DateTimeOffset? immutabilityPolicyExpiresOn, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
         {
             CreationTime = creationTime;
             LastModified = lastModified;
@@ -104,6 +107,9 @@ namespace Azure.Storage.Blobs.Models
             IsSealed = isSealed;
             RehydratePriority = rehydratePriority;
             LastAccessedOn = lastAccessedOn;
+            ImmutabilityPolicyExpiresOn = immutabilityPolicyExpiresOn;
+            ImmutabilityPolicyMode = immutabilityPolicyMode;
+            LegalHold = legalHold;
         }
 
         public DateTimeOffset? CreationTime { get; }
@@ -146,5 +152,8 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard. </summary>
         public RehydratePriority? RehydratePriority { get; }
         public DateTimeOffset? LastAccessedOn { get; }
+        public DateTimeOffset? ImmutabilityPolicyExpiresOn { get; }
+        public BlobImmutabilityPolicyMode? ImmutabilityPolicyMode { get; }
+        public bool? LegalHold { get; }
     }
 }

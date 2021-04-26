@@ -18,10 +18,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: true))
             {
-                TestDiagnosticListener listener = null;
+                ClientDiagnosticListener listener = null;
                 if (enableTracing)
                 {
-                    listener = new TestDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+                    listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
                 }
                 try
                 {
