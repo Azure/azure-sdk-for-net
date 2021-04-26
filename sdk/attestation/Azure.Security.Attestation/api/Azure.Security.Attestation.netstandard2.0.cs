@@ -147,9 +147,7 @@ namespace Azure.Security.Attestation
         public System.Uri KeyUrl { get { throw null; } }
         public System.DateTimeOffset? NotBeforeTime { get { throw null; } }
         public Azure.Security.Attestation.AttestationSigner SigningCertificate { get { throw null; } }
-        public string TokenBody { get { throw null; } }
         public System.ReadOnlyMemory<byte> TokenBodyBytes { get { throw null; } }
-        public string TokenHeader { get { throw null; } }
         public System.ReadOnlyMemory<byte> TokenHeaderBytes { get { throw null; } }
         public System.ReadOnlyMemory<byte> TokenSignatureBytes { get { throw null; } }
         public string Type { get { throw null; } }
