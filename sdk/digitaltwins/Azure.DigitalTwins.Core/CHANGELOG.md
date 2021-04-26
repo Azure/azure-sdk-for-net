@@ -3,11 +3,6 @@
 ## 1.3.0-beta.1 (Unreleased)
 
 
-## 1.0.0-preview.1 (Unreleased)
-
-### New features
-
-- Initial preview of Azure.DigitalTwins.Core SDK
 ## 1.2.2 (2021-04-12)
 
 ### Fixes and improvements

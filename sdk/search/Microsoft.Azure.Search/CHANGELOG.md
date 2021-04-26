@@ -1,4 +1,8 @@
-# Release History
+# GA SDK Releases
+
+Every minor version release targets the same (GA) REST API version as that of the corresponding major version release. The REST API version targeted by the major version releases are listed where appropriate.
+
+Features and improvements in a GA SDK are considered generally available.
 
 ## 10.1.0 (2019-10-29)
 
