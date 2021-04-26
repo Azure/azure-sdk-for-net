@@ -12,7 +12,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
     internal class ModelSettingsSamples
     {
         /// <summary>
-        /// This sample demonstrates getting Time Series model settings, updating a model and changing the default type Id for a model.
+        /// This sample demonstrates getting Time Series model settings, updating model settings and changing the default type Id for a model.
         /// </summary>
         public async Task RunSamplesAsync(TimeSeriesInsightsClient client)
         {
@@ -21,7 +21,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #region Snippet:TimeSeriesInsightsSampleGetModelSettings
             Response<TimeSeriesModelSettings> getModelSettingsResponse = await client.ModelSettings.GetAsync();
             Console.WriteLine($"Retrieved Time Series Insights model settings:\n{JsonSerializer.Serialize(getModelSettingsResponse.Value)}");
-            #endregion
+            #endregion Snippet:TimeSeriesInsightsSampleGetModelSettings
 
             // Store the default type Id so it can be used during clean up
             string defaultTypeId = getModelSettingsResponse.Value.DefaultTypeId;
@@ -30,9 +30,12 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             Response<TimeSeriesModelSettings> updateModelSettingsNameResponse = await client.ModelSettings.UpdateNameAsync("NewModelSettingsName");
             Console.WriteLine($"Updated Time Series Insights model settings name:\n" +
                 $"{JsonSerializer.Serialize(updateModelSettingsNameResponse.Value)}");
-            #endregion
+            #endregion Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName
 
-            // Create a Time Series type
+            // For every Time Series Insights environment, there is a default type that any newly created Time Series instance will be associated with.
+            // You can change the default type for a TSI environment by creating a new type and calling the API to update the default type Id.
+
+            // Create a Time Series type.
             var aggregateVariable = new AggregateVariable(new TimeSeriesExpression("count()"));
             var variables = new Dictionary<string, TimeSeriesVariable>
             {
@@ -40,24 +43,21 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             };
             var type = new TimeSeriesType("tsiTypeName", variables);
             var timeSeriesTypes = new List<TimeSeriesType> { type };
-
+            string tsiTypeId = null;
             Response<TimeSeriesTypeOperationResult[]> createTsiTypeResponse = await client.Types.CreateOrReplaceAsync(timeSeriesTypes);
 
             // Ensure no error was reported as part of the response
-            if (createTsiTypeResponse.Value[0].Error != null)
+            if (createTsiTypeResponse.Value[0].Error == null)
             {
-                Console.WriteLine("Failed to create a Time Series Type.");
+                // Store the Time Series type id to use it for updating default type in model settings
+                tsiTypeId = createTsiTypeResponse.Value[0].TimeSeriesType.Id;
+
+                #region Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
+                Response<TimeSeriesModelSettings> updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
+                Console.WriteLine($"Updated Time Series Insights model settings default type Id:\n" +
+                    $"{JsonSerializer.Serialize(updateDefaultTypeIdResponse.Value)}");
+                #endregion Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
             }
-
-            // Store the Time Series type id to use it for updating default type in model settings
-            string tsiTypeId = createTsiTypeResponse.Value[0].TimeSeriesType.Id;
-
-            #region Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
-            Response<TimeSeriesModelSettings> updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
-            Console.WriteLine($"Updated Time Series Insights model settings default type Id:\n" +
-                $"{JsonSerializer.Serialize(updateDefaultTypeIdResponse.Value)}");
-            #endregion
-
             // Clean up
             try
             {
@@ -65,7 +65,10 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 await client.ModelSettings.UpdateDefaultTypeIdAsync(defaultTypeId);
 
                 // Delete the type created
-                await client.Types.DeleteByIdAsync(new List<string> { tsiTypeId });
+                if (tsiTypeId != null)
+                {
+                    await client.Types.DeleteByIdAsync(new List<string> { tsiTypeId });
+                }
             }
             catch (Exception ex)
             {
