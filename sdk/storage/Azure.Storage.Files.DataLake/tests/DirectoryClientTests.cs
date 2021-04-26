@@ -4783,11 +4783,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(fileName));
-
             string endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
             Uri blobUri = new Uri($"https://{test.FileSystem.AccountName}.blob.{endpointSuffix}/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(fileName)}");
             Uri dfsUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.{endpointSuffix}/{test.FileSystem.Name}/{Uri.EscapeDataString(directoryName)}/{Uri.EscapeDataString(fileName)}");
-            
             string expectedPath = $"{directoryName}/{fileName}";
 
             // Act

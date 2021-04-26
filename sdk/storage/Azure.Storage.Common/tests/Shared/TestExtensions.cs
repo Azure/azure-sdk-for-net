@@ -105,7 +105,7 @@ namespace Azure.Storage
             if (!string.IsNullOrEmpty(endpointSuffix))
             {
                 endpointSuffix = Environment.GetEnvironmentVariable("STORAGE_ENDPOINT_SUFFIX") ?? Constants.ConnectionStrings.DefaultEndpointSuffix;
-            }            
+            }
             var conn = new StorageConnectionString(storageCredentials);
             if (storageCredentials == null)
             {
