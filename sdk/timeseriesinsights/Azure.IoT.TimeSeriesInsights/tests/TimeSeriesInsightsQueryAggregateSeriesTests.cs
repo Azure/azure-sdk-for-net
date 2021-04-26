@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.IoT.TimeSeriesInsights.Tests
 {
-    //[LiveOnly]
+    [LiveOnly]
     public class TimeSeriesInsightsQueryAggregateSeriesTests : E2eTestBase
     {
         private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(30);
@@ -66,7 +66,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // This retry logic was added as the TSI instance are not immediately available after creation
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
-                    QueryResults queryAggregateSeriesPages = tsiClient.Query.QueryAggregateSeriesAsync(
+                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Query.CreateAggregateSeriesQueryAnalyzer(
                         tsiId,
                         startTime,
                         endTime,
@@ -88,6 +88,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                         nonNullFound.Should().BeTrue();
                     }
+
+                    queryAggregateSeriesPages.Progress.Should().Be(100);
 
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);
@@ -112,7 +114,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
-                    QueryResults queryAggregateSeriesPages = tsiClient.Query.QueryAggregateSeriesAsync(
+                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Query.CreateAggregateSeriesQueryAnalyzer(
                         tsiId,
                         startTime,
                         endTime,
@@ -156,7 +158,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 queryAggregateSeriesRequestOptions.Filter = "$event.Temperature.Double = 1.2";
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
-                    QueryResults queryAggregateSeriesPages = tsiClient.Query.QueryAggregateSeriesAsync(
+                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Query.CreateAggregateSeriesQueryAnalyzer(
                         tsiId,
                         startTime,
                         endTime,
@@ -230,7 +232,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // This retry logic was added as the TSI instance are not immediately available after creation
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
-                    QueryResults queryAggregateSeriesPages = tsiClient.Query.QueryAggregateSeriesAsync(
+                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Query.CreateAggregateSeriesQueryAnalyzer(
                         tsiId,
                         startTime,
                         endTime,
@@ -296,7 +298,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
-                    QueryResults queryAggregateSeriesPages = tsiClient.Query.QueryAggregateSeriesAsync(
+                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Query.CreateAggregateSeriesQueryAnalyzer(
                         tsiId,
                         startTime,
                         endTime,

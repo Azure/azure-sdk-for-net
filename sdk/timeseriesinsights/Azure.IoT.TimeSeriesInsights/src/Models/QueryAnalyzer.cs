@@ -11,13 +11,18 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary>
     /// Time Series Insights query results.
     /// </summary>
-    public class QueryResults
+    public class QueryAnalyzer
     {
-        private CancellationToken _cancellationToken;
-
         private readonly QueryRequest _queryRequest;
         private readonly QueryRestClient _queryClient;
         private readonly string _storeType;
+        private CancellationToken _cancellationToken;
+
+        /// <summary>
+        /// Approximate progress of the query in percentage. It can be between 0 and 100. When the continuation token in the response is null,
+        /// the progress is expected to be 100.
+        /// </summary>
+        public double? Progress { get; internal set; }
 
         /// <summary>
         /// Initializes a new instance of the QueryResults class.
@@ -26,12 +31,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="queryRequest">The query request payload.</param>
         /// <param name="storeType">The store the query should be executed on.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        internal QueryResults(QueryRestClient queryClient, QueryRequest queryRequest, string storeType, CancellationToken cancellationToken)
+        internal QueryAnalyzer(QueryRestClient queryClient, QueryRequest queryRequest, string storeType, CancellationToken cancellationToken)
         {
             _queryRequest = queryRequest;
             _storeType = storeType;
             _cancellationToken = cancellationToken;
             _queryClient = queryClient;
+            Progress = 0;
         }
 
         /// <summary>
@@ -50,6 +56,8 @@ namespace Azure.IoT.TimeSeriesInsights
 
                     TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value);
 
+                    Progress = response.Value.Progress;
+
                     return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
                 }
                 catch (Exception)
@@ -67,6 +75,8 @@ namespace Azure.IoT.TimeSeriesInsights
                         .ConfigureAwait(false);
 
                     TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value);
+
+                    Progress = response.Value.Progress;
 
                     return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
                 }
@@ -94,6 +104,8 @@ namespace Azure.IoT.TimeSeriesInsights
 
                     TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value);
 
+                    Progress = response.Value.Progress;
+
                     return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
                 }
                 catch (Exception)
@@ -110,6 +122,8 @@ namespace Azure.IoT.TimeSeriesInsights
                         .Execute(_queryRequest, _storeType, nextLink, null, _cancellationToken);
 
                     TimeSeriesPoint[] points = QueryHelper.CreateQueryResponse(response.Value);
+
+                    Progress = response.Value.Progress;
 
                     return Page.FromValues(points, response.Value.ContinuationToken, response.GetRawResponse());
                 }
