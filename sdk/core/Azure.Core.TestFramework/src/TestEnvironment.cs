@@ -12,7 +12,6 @@ using Azure.Identity;
 using System.ComponentModel;
 using System.Linq;
 using NUnit.Framework;
-using System.Collections.Concurrent;
 
 namespace Azure.Core.TestFramework
 {
@@ -25,7 +24,7 @@ namespace Azure.Core.TestFramework
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
 
-        private static readonly ConcurrentDictionary<Type, Task> s_environmentStateCache = new ConcurrentDictionary<Type, Task>();
+        private static readonly Dictionary<Type, Task> s_environmentStateCache = new Dictionary<Type, Task>();
 
         private readonly string _prefix;
 
