@@ -26,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             get
             {
-                List<ArtifactManifestProperties> artifacts = new List<ArtifactManifestProperties>();
+                List<ArtifactManifestProperties> artifacts = new List<ArtifactManifestProperties>(this.References.Count);
 
                 foreach (var reference in this.References)
                 {

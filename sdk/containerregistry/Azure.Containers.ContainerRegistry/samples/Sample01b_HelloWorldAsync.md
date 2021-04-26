@@ -32,7 +32,7 @@ All Container Registry operations will throw a RequestFailedException on failure
 ```C# Snippet:ContainerRegistry_Tests_Samples_HandleErrorsAsync
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
-// Create an invalid ContainerRepositoryClient
+// Create a ContainerRepository class for an invalid repository
 string fakeRepositoryName = "doesnotexist";
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 ContainerRepository repository = client.GetRepository(fakeRepositoryName);
