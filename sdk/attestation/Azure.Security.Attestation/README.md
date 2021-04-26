@@ -45,7 +45,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 * Create a service principal and configure its access to Azure resources:
 
-    ```PowerShell
+    ```Powershell
     az ad sp create-for-rbac -n <your-application-name> --skip-assignment
     ```
 

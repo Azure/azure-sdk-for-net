@@ -13,6 +13,8 @@ namespace Azure.Security.Attestation.Tests
 {
     public class AttestationTests : RecordedTestBase<AttestationClientTestEnvironment>
     {
+        // A Base64Url encoded pre-canned OpenEnclave Report, used to test
+        // the attestation APIs.
         private readonly string _openEnclaveReport = "AQAAAAIAAADkEQAAAAAAAAMAAg" +
             "AAAAAABQAKAJOacjP3nEyplAoNs5V_Bgc42MPzGo7hPWS_h-3tExJrAAAAABERAwX_g" +
             "AYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAAAAAAAAA" +
@@ -107,6 +109,8 @@ namespace Azure.Security.Attestation.Tests
             "RHZvOGgyazVkdTFpV0RkQmtBbiswaWlBPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0" +
             "tLQoA";
 
+        // A Base64Url encoded pre-canned JSON Web Key, used to test
+        // the attestation APIs.
         private readonly string _runtimeData = "CiAgICAgICAgewogI" +
             "CAgICAgICAgICAiandrIiA6IHsKICAgICAgICAgICAgICAgICJrdHkiOiJFQyIsCiAg" +
             "ICAgICAgICAgICAgICAidXNlIjoic2lnIiwKICAgICAgICAgICAgICAgICJjcnYiOiJ" +

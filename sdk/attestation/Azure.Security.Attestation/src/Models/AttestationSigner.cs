@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using Azure.Core;
 
@@ -21,9 +22,9 @@ namespace Azure.Security.Attestation
         /// <param name="certificateKeyId"></param>
         public AttestationSigner(IEnumerable<X509Certificate2> signingCertificates, string certificateKeyId)
         {
-            SigningCertificates = signingCertificates switch =>
+            SigningCertificates = signingCertificates switch
             {
-                IReadOnlyList<X509Certificate2> certificateList => certificateList,
+                IReadOnlyList<X509Certificate2> => (IReadOnlyList<X509Certificate2>)signingCertificates,
                 _ => signingCertificates.ToList().AsReadOnly()
             };
             CertificateKeyId = certificateKeyId;
@@ -46,7 +47,7 @@ namespace Azure.Security.Attestation
             {
                 returnedCertificates.Add(FromJsonWebKey(key));
             }
-            return returnedCertificates.ToArray();
+            return returnedCertificates.AsReadOnly();
         }
 
         internal static AttestationSigner FromJsonWebKey(JsonWebKey key)

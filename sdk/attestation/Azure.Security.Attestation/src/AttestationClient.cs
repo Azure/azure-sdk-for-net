@@ -407,4 +407,3 @@ namespace Azure.Security.Attestation
         }
     }
 }
-#pragma warning restore CS1001

@@ -173,7 +173,7 @@ namespace Azure.Security.Attestation.Tests
             Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new AttestationTokenValidationOptions { ValidateExpirationTime = true }, null));
 
             // The body of the token should match the expected body.
-            Assert.AreEqual(JsonSerializer.Serialize(expectedBody), parsedToken.TokenBody);
+            Assert.AreEqual(JsonSerializer.Serialize(expectedBody), Encoding.UTF8.GetString(parsedToken.TokenBodyBytes.ToArray()));
         }
     }
 }

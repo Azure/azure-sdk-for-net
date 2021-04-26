@@ -146,7 +146,7 @@ namespace Azure.Security.Attestation
         public string Issuer { get => Payload.Issuer; }
 
         /// <summary>
-        /// An array of <see cref="X.509Certificate"/> which represent a certificate chain used to sign the token.  <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6">RFC 7515 section 4.1.6</seealso> for details.
+        /// An array of <see cref="X509Certificate"/> which represent a certificate chain used to sign the token.  <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6">RFC 7515 section 4.1.6</seealso> for details.
         /// </summary>
         public X509Certificate2[] X509CertificateChain {
             get
@@ -229,16 +229,6 @@ namespace Azure.Security.Attestation
                 return null;
             }
         }
-
-        /// <summary>
-        /// Represents the body of the token encoded as a string.
-        /// </summary>
-        public string TokenBody  { get => Encoding.UTF8.GetString(TokenBodyBytes.ToArray()); }
-
-        /// <summary>
-        /// Represents the body of the token encoded as a string.
-        /// </summary>
-        public string TokenHeader { get => Encoding.UTF8.GetString(TokenHeaderBytes.ToArray()); }
 
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.
@@ -577,8 +567,6 @@ namespace Azure.Security.Attestation
         /// Creates a new instance of the <see cref="AttestationToken"/> class based on a specified JSON Web Token.
         /// </summary>
         /// <param name="token">string JWT to Deserialize.</param>
-        /// <remarks>
-        /// </remarks>
         public static AttestationToken Deserialize(string token)
         {
             return new AttestationToken(token, null);
@@ -589,8 +577,6 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="token">string JWT to Deserialize.</param>
         /// <param name="diagnostics">Client Diagnostics object, used when raising Validation events.</param>
-        /// <remarks>
-        /// </remarks>
         internal static AttestationToken Deserialize(string token, ClientDiagnostics diagnostics)
         {
             return new AttestationToken(token, diagnostics);

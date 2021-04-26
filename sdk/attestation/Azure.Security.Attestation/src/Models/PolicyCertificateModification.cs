@@ -20,12 +20,12 @@ namespace Azure.Security.Attestation
         /// <param name="bodyCertificate"><see cref="X509Certificate2"/> to be encoded as a JSON Web Key in the body of the token.</param>
         internal PolicyCertificateModification(X509Certificate2 bodyCertificate)
         {
-            this.InternalPolicyCertificate = new JsonWebKey(kty: "RSA")
+            InternalPolicyCertificate = new JsonWebKey(kty: "RSA")
             {
                 Alg = "RS256",
                 Use = "sig",
             };
-            this.InternalPolicyCertificate.X5C.Add(Convert.ToBase64String(bodyCertificate.Export(X509ContentType.Cert)));
+            InternalPolicyCertificate.X5C.Add(Convert.ToBase64String(bodyCertificate.Export(X509ContentType.Cert)));
         }
 
         /// <summary>

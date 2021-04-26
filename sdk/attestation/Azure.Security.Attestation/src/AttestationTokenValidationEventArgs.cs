@@ -13,10 +13,10 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationTokenValidationEventArgs"/> class.
         /// </summary>
-        /// <param name="token"></param>
-        /// <param name="signer"></param>
-        /// <param name="isRunningSynchronously"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="token">Attestation token for the client to validate.</param>
+        /// <param name="signer">Attestation Signer which signed the token.</param>
+        /// <param name="isRunningSynchronously">true if this event should be interpreted synchronously.</param>
+        /// <param name="cancellationToken">Cancellation token, set if customer has canceled the request.</param>
         internal AttestationTokenValidationEventArgs(AttestationToken token, AttestationSigner signer, bool isRunningSynchronously, CancellationToken cancellationToken) : base(isRunningSynchronously, cancellationToken)
         {
             Token = token;
@@ -28,6 +28,7 @@ namespace Azure.Security.Attestation
         /// Returns the token which has been validated.
         /// </summary>
         public AttestationToken Token { get; private set; }
+
         /// <summary>
         /// Returns the signer of the token.
         /// </summary>
