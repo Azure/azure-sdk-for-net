@@ -16,19 +16,16 @@ namespace Azure.Data.Tables.Models
         }
 
         /// <summary> Initializes a new instance of TableItem. </summary>
-        /// <param name="tableName"> The name of the table. </param>
+        /// <param name="name"> The name of the table. </param>
         /// <param name="odataType"> The odata type of the table. </param>
         /// <param name="odataId"> The id of the table. </param>
         /// <param name="odataEditLink"> The edit link of the table. </param>
-        internal TableItem(string tableName, string odataType, string odataId, string odataEditLink)
+        internal TableItem(string name, string odataType, string odataId, string odataEditLink)
         {
-            TableName = tableName;
+            Name = name;
             OdataType = odataType;
             OdataId = odataId;
             OdataEditLink = odataEditLink;
         }
-
-        /// <summary> The name of the table. </summary>
-        public string TableName { get; }
     }
 }

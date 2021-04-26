@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Azure Resource Manager client options.
         /// </summary>
-        private ArmClientOptions ClientOptions;
+        protected virtual ArmClientOptions ClientOptions { get; private set; }
 
         /// <summary>
         /// Gets the Azure credential.
         /// </summary>
-        private TokenCredential Credential;
+        protected virtual TokenCredential Credential { get; private set; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        private Uri BaseUri;
+        protected virtual Uri BaseUri { get; private set; }
 
         /// <summary>
         /// Gets the Azure subscriptions.

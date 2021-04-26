@@ -192,7 +192,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        protected override NetworkSecurityGroup GetResource()
+        protected override NetworkSecurityGroup GetResource(CancellationToken cancellationToken = default)
         {
             return Get().Value;
         }

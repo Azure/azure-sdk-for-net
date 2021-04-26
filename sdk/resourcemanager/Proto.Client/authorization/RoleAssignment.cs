@@ -29,7 +29,7 @@ namespace Proto.Authorization
         public RoleAssignmentData Data { get; }
 
         /// <inheritdoc />
-        protected override RoleAssignment GetResource()
+        protected override RoleAssignment GetResource(CancellationToken cancellationToken = default)
         {
             return this;
         }

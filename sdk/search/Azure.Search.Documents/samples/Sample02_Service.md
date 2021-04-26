@@ -66,7 +66,7 @@ string synonymMapPath = "countries.txt";
 SynonymMap synonyms;
 using (StreamReader file = File.OpenText(synonymMapPath))
 {
-synonyms = new SynonymMap(synonymMapName, file);
+    synonyms = new SynonymMap(synonymMapName, file);
 }
 
 await indexClient.CreateSynonymMapAsync(synonyms);

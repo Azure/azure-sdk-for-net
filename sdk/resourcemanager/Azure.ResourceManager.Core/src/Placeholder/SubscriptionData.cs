@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="subscription"> The subscription model. </param>
         public SubscriptionData(ResourceManager.Resources.Models.Subscription subscription)
+            :base(subscription.Id, subscription.DisplayName, SubscriptionOperations.ResourceType)
         {
             Name = subscription.DisplayName;
             SubscriptionGuid = subscription.SubscriptionId;
@@ -23,7 +24,6 @@ namespace Azure.ResourceManager.Core
             State = subscription.State;
             SubscriptionPolicies = subscription.SubscriptionPolicies;
             AuthorizationSource = subscription.AuthorizationSource;
-            Id = new SubscriptionResourceIdentifier(subscription.Id);
             ManagedByTenants = subscription.ManagedByTenants;
             Tags = subscription.Tags;
         }
@@ -57,9 +57,6 @@ namespace Azure.ResourceManager.Core
         /// Gets the authorization source of the subscription.
         /// </summary>
         public string AuthorizationSource { get; }
-
-        /// <inheritdoc/>
-        public override SubscriptionResourceIdentifier Id { get; protected set; }
 
         /// <summary>
         /// Gets an array containing the tenants managing the subscription.

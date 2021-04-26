@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
@@ -133,6 +134,31 @@ namespace Azure.Core.Tests.Management
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             Assert.AreEqual("success", testResource.Method());
+        }
+
+        [Test]
+        public void ValidateExceptionResponse()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResourceOperations rgOp = client.GetTestResourceOperations();
+            Assert.ThrowsAsync(typeof(ArgumentException), async () => await rgOp.GetArmResponseExceptionAsync());
+        }
+
+        [Test]
+        public void ValidateExceptionOperation()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResourceOperations rgOp = client.GetTestResourceOperations();
+            Assert.ThrowsAsync(typeof(ArgumentException), async () => await rgOp.GetArmOperationExceptionAsync());
+        }
+
+        [Test]
+        public async Task ValidateExceptionOperationWaitForCompletion()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResourceOperations rgOp = client.GetTestResourceOperations();
+            var testResourceOp = await rgOp.GetArmOperationAsync(true);
+            Assert.ThrowsAsync(typeof(ArgumentException), async () => await testResourceOp.WaitForCompletionAsync());
         }
     }
 }

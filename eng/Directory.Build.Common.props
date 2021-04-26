@@ -118,7 +118,6 @@
   </PropertyGroup>
 
   <Import Project="$(RepoRoot)/sdk/core/Azure.Core/src/Azure.Core.props" Condition="'$(IsMgmtLibrary)' == 'true'"/>
-  <Import Project="TestFramework.props" Condition="'$(IsTestProject)' == 'true'"/>
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

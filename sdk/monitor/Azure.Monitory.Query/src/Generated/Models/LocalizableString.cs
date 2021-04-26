@@ -10,7 +10,7 @@ using System;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> The localizable string class. </summary>
-    public partial class LocalizableString
+    internal partial class LocalizableString
     {
         /// <summary> Initializes a new instance of LocalizableString. </summary>
         /// <param name="value"> the invariant value. </param>

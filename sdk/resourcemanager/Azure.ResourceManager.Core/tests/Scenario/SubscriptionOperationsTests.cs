@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class SubscriptionOperationsTests : ResourceManagerTestBase
     {
         public SubscriptionOperationsTests(bool isAsync)
@@ -20,7 +21,6 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Will fix after user study")]
         public async Task GetSubscriptionOperation()
         {
             var sub = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
@@ -28,9 +28,7 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [TestCase(null)]
-        [TestCase("")]
         [RecordedTest]
-        [Ignore("Will fix after user study")]
         public async Task TestGetResourceGroupOpsArgNullException(string resourceGroupName)
         {
             var subOps = Client.DefaultSubscription;
@@ -39,7 +37,7 @@ namespace Azure.ResourceManager.Core.Tests
                 _ = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
                 Assert.Fail("Expected exception was not thrown");
             }
-            catch (ArgumentException)
+            catch (ArgumentNullException)
             {
             }
         }
@@ -48,7 +46,6 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase("te$st")]
         [TestCase("te#st")]
         [RecordedTest]
-        [Ignore("Will fix after user study")]
         public async Task TestGetResourceGroupOpsArgException(string resourceGroupName)
         {
             var subOps = Client.DefaultSubscription;
@@ -60,15 +57,25 @@ namespace Azure.ResourceManager.Core.Tests
             catch (RequestFailedException e) when (e.Status == 400)
             {
             }
-            catch(Exception e)
+        }
+
+        [TestCase("")]
+        [RecordedTest]
+        public async Task TestGetResourceGroupOpsEmptyString(string resourceGroupName)
+        {
+            var subOps = Client.DefaultSubscription;
+            try
             {
-                string x = e.Message;
+                ResourceGroup rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
+                Assert.Fail("Expected exception was not thrown");
+            }
+            catch (ArgumentException)
+            {
             }
         }
 
         [TestCase(91)]
         [RecordedTest]
-        [Ignore("Will fix after user study")]
         public async Task TestGetResourceGroupOpsOutOfRangeArgException(int length)
         {
             var resourceGroupName = GetLongString(length);
@@ -88,7 +95,6 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase("te")]
         [TestCase("t")]
         [RecordedTest]
-        [Ignore("Will fix after user study")]
         public async Task TestGetResourceGroupOpsValid(string resourceGroupName)
         {
             var subOps = Client.DefaultSubscription;
@@ -104,7 +110,6 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase(89)]
         [TestCase(90)]
         [RecordedTest]
-        [Ignore("Will fix after user study")]
         public async Task TestGetResourceGroupOpsLong(int length)
         {
             var resourceGroupName = GetLongString(length);

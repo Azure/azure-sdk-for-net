@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Core.Adapters;
 using Azure.ResourceManager.Network.Models;
 using System.Collections.Generic;
 

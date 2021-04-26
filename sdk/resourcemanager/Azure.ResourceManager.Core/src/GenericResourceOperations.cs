@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public ArmResponse<GenericResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            GenericResource resource = GetResource();
+            GenericResource resource = GetResource(cancellationToken);
             resource.Data.Tags[key] = value;
             var apiVersion = GetApiVersion(cancellationToken);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public ArmOperation<GenericResource> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            GenericResource resource = GetResource();
+            GenericResource resource = GetResource(cancellationToken);
             resource.Data.Tags[key] = value;
             var apiVersion = GetApiVersion(cancellationToken);
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public ArmResponse<GenericResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            GenericResource resource = GetResource();
+            GenericResource resource = GetResource(cancellationToken);
             resource.Data.Tags.ReplaceWith(tags);
             var apiVersion = GetApiVersion(cancellationToken);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public ArmOperation<GenericResource> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            GenericResource resource = GetResource();
+            GenericResource resource = GetResource(cancellationToken);
             resource.Data.Tags.ReplaceWith(tags);
             var apiVersion = GetApiVersion(cancellationToken);
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public ArmResponse<GenericResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            GenericResource resource = GetResource();
+            GenericResource resource = GetResource(cancellationToken);
             resource.Data.Tags.Remove(key);
             var apiVersion = GetApiVersion(cancellationToken);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public ArmOperation<GenericResource> StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            GenericResource resource = GetResource();
+            GenericResource resource = GetResource(cancellationToken);
             resource.Data.Tags.Remove(key);
             var apiVersion = GetApiVersion(cancellationToken);
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(

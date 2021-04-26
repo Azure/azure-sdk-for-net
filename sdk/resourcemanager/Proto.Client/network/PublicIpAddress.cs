@@ -26,7 +26,7 @@ namespace Proto.Network
         public PublicIPAddressData Data { get; private set; }
 
         /// <inheritdoc />
-        protected override PublicIpAddress GetResource()
+        protected override PublicIpAddress GetResource(CancellationToken cancellation = default)
         {
             return this;
         }

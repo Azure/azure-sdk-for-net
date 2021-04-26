@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Data.Tables;
 using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests

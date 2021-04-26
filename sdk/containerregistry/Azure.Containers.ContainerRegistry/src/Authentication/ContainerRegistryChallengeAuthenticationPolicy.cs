@@ -44,7 +44,7 @@ namespace Azure.Containers.ContainerRegistry
             _authenticationClient = authenticationClient;
         }
 
-        protected override async ValueTask<bool> AuthenticateRequestOnChallengeAsync(HttpMessage message, bool async)
+        protected override async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message, bool async)
         {
             // Once we're here, we've completed Step 1.
 

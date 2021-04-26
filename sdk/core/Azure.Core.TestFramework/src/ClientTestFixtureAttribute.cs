@@ -15,13 +15,6 @@ namespace Azure.Core.TestFramework
     {
         public static readonly string SyncOnlyKey = "SyncOnly";
         public static readonly string RecordingDirectorySuffixKey = "RecordingDirectory";
-        public static readonly string OnlyTestLatestServiceVersionKey = "AZURE_ONLY_TEST_LATEST_SERVICE_VERSION";
-
-        private static readonly Lazy<bool> OnlyTestLatestServiceVersionLazy = new Lazy<bool>(() =>
-        {
-            bool.TryParse(Environment.GetEnvironmentVariable(OnlyTestLatestServiceVersionKey), out bool onlyTestLatestServiceVersion);
-            return onlyTestLatestServiceVersion;
-        });
 
         private readonly object[] _additionalParameters;
         private readonly object[] _serviceVersions;
@@ -66,17 +59,36 @@ namespace Azure.Core.TestFramework
             var latestVersion = _serviceVersions.Any() ? _serviceVersions.Max(Convert.ToInt32) : (int?)null;
             _actualPlaybackServiceVersion = RecordingServiceVersion != null ? Convert.ToInt32(RecordingServiceVersion) : latestVersion;
 
-            var liveVersions = LiveServiceVersions ?? _serviceVersions;
+            int[] liveVersions = (LiveServiceVersions ?? _serviceVersions).Select(Convert.ToInt32).ToArray();
 
             if (liveVersions.Any())
             {
-                if (OnlyTestLatestServiceVersionLazy.Value)
+                if (TestEnvironment.GlobalTestOnlyLatestVersion)
                 {
-                    _actualLiveServiceVersions = new[] { liveVersions.Max(Convert.ToInt32) };
+                    _actualLiveServiceVersions = new[] { liveVersions.Max() };
+                }
+                else if (TestEnvironment.GlobalTestServiceVersions is { Length: > 0 } globalTestServiceVersions &&
+                         _serviceVersions is { Length: > 0 })
+                {
+                    var enumType = _serviceVersions[0].GetType();
+                    var selectedVersions = new List<int>();
+
+                    foreach (var versionString in globalTestServiceVersions)
+                    {
+                        try
+                        {
+                            selectedVersions.Add(Convert.ToInt32(Enum.Parse(enumType, versionString)));
+                        }
+                        catch
+                        {
+                        }
+                    }
+
+                    _actualLiveServiceVersions = selectedVersions.ToArray();
                 }
                 else
                 {
-                    _actualLiveServiceVersions = liveVersions.Select(Convert.ToInt32).ToArray();
+                    _actualLiveServiceVersions = liveVersions.ToArray();
                 }
             }
 
@@ -98,7 +110,7 @@ namespace Azure.Core.TestFramework
 
             if (_serviceVersions.Any())
             {
-                foreach (object serviceVersion in _serviceVersions)
+                foreach (object serviceVersion in _serviceVersions.Distinct())
                 {
                     if (_additionalParameters.Any())
                     {
@@ -142,23 +154,44 @@ namespace Azure.Core.TestFramework
             var serviceVersionNumber = Convert.ToInt32(serviceVersion);
             ApplyLimits(serviceVersionNumber, testSuite);
 
+            ProcessTestList(testSuite, serviceVersion, isAsync, parameter, serviceVersionNumber);
+        }
+
+        private void ProcessTestList(TestSuite testSuite, object serviceVersion, bool isAsync, object parameter, int serviceVersionNumber)
+        {
+            List<Test> testsDoDelete = null;
             foreach (Test test in testSuite.Tests)
             {
                 if (test is ParameterizedMethodSuite parameterizedMethodSuite)
                 {
-                    foreach (Test parameterizedTest in parameterizedMethodSuite.Tests)
+                    ProcessTestList(parameterizedMethodSuite, serviceVersion, isAsync, parameter, serviceVersionNumber);
+                    if (parameterizedMethodSuite.Tests.Count == 0)
                     {
-                        ProcessTest(serviceVersion, isAsync, serviceVersionNumber, parameter, parameterizedTest);
+                        testsDoDelete ??= new List<Test>();
+                        testsDoDelete.Add(test);
                     }
                 }
                 else
                 {
-                    ProcessTest(serviceVersion, isAsync, serviceVersionNumber, parameter, test);
+                    if (!ProcessTest(serviceVersion, isAsync, serviceVersionNumber, parameter, test))
+                    {
+                        testsDoDelete ??= new List<Test>();
+                        testsDoDelete.Add(test);
+                    }
+                }
+            }
+
+            // These tests won't run neither live nor recorded with current set of settings
+            if (testsDoDelete != null)
+            {
+                foreach (var testDoDelete in testsDoDelete)
+                {
+                    testSuite.Tests.Remove(testDoDelete);
                 }
             }
         }
 
-        private void ProcessTest(object serviceVersion, bool isAsync, int serviceVersionNumber, object parameter, Test test)
+        private bool ProcessTest(object serviceVersion, bool isAsync, int serviceVersionNumber, object parameter, Test test)
         {
             if (parameter != null)
             {
@@ -180,27 +213,47 @@ namespace Azure.Core.TestFramework
                 test.Properties.Set("_SKIPREASON", $"Test ignored in sync run because it's marked with {nameof(AsyncOnlyAttribute)}");
             }
 
+            bool runsRecorded = true;
+            bool runsLive = true;
+
             if (serviceVersion == null)
             {
-                return;
+                return true;
             }
-
-            if (serviceVersionNumber != _actualPlaybackServiceVersion)
+            else
             {
-                test.Properties.Add("SkipRecordings", $"Test is ignored when not running live because the service version {serviceVersion} is not {_actualPlaybackServiceVersion}.");
+                if (serviceVersionNumber != _actualPlaybackServiceVersion)
+                {
+                    test.Properties.Add("_SkipRecordings", $"Test is ignored when not running live because the service version {serviceVersion} is not {_actualPlaybackServiceVersion}.");
+                    runsRecorded = false;
+                }
+
+                if (_actualLiveServiceVersions != null &&
+                    !_actualLiveServiceVersions.Contains(serviceVersionNumber))
+                {
+                    test.Properties.Set("_SkipLive",
+                        $"Test ignored when running live service version {serviceVersion} is not one of {string.Join(", " , _actualLiveServiceVersions)}.");
+                    runsLive = false;
+                }
+                var passesVersionLimits = ApplyLimits(serviceVersionNumber, test);
+                runsLive &= passesVersionLimits;
+                runsRecorded &= passesVersionLimits;
             }
 
-            if (_actualLiveServiceVersions != null &&
-                !_actualLiveServiceVersions.Contains(serviceVersionNumber))
+            if (runsRecorded)
             {
-                test.Properties.Set("SkipLive",
-                    $"Test ignored when running live service version {serviceVersion} is not one of {string.Join(", " , _actualLiveServiceVersions)}.");
+                test.Properties.Set("RunsRecorded", "These tests would run in Record mode.");
             }
 
-            ApplyLimits(serviceVersionNumber, test);
+            if (runsLive)
+            {
+                test.Properties.Set("RunsLive", "These tests would run in Live mode.");
+            }
+
+            return runsRecorded || runsLive;
         }
 
-        private static void ApplyLimits(int serviceVersionNumber, Test test)
+        private static bool ApplyLimits(int serviceVersionNumber, Test test)
         {
             var minServiceVersion = test.GetCustomAttributes<ServiceVersionAttribute>(true);
             foreach (ServiceVersionAttribute serviceVersionAttribute in minServiceVersion)
@@ -210,6 +263,7 @@ namespace Azure.Core.TestFramework
                 {
                     test.RunState = RunState.Ignored;
                     test.Properties.Set("_SKIPREASON", $"Test ignored because it's minimum service version is set to {serviceVersionAttribute.Min}");
+                    return false;
                 }
 
                 if (serviceVersionAttribute.Max != null &
@@ -217,8 +271,11 @@ namespace Azure.Core.TestFramework
                 {
                     test.RunState = RunState.Ignored;
                     test.Properties.Set("_SKIPREASON", $"Test ignored because it's maximum service version is set to {serviceVersionAttribute.Max}");
+                    return false;
                 }
             }
+
+            return true;
         }
 
         bool IPreFilter.IsMatch(Type type) => true;

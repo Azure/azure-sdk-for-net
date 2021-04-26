@@ -14,46 +14,62 @@ namespace Azure.Core.Tests
     public class ArmOperationTest<T> : ArmOperation<T>
         where T : class
     {
-        private readonly ResourceOperationsBase _operations;
+        private T _value;
+        private bool _exceptionOnWait;
 
         protected ArmOperationTest()
         {
         }
 
-        internal ArmOperationTest(ResourceOperationsBase operations, Response<T> response)
-            : base(response)
+        public ArmOperationTest(T value, bool exceptionOnWait = false)
         {
-            _operations = operations;
+            _value = value;
+            _exceptionOnWait = exceptionOnWait;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateResourceGroupOperation"/> class.
-        /// </summary>
-        /// <param name="operations"> The arm operations object to copy from. </param>
-        /// <param name="request"> The original request. </param>
-        /// <param name="response"> The original response. </param>
-        internal ArmOperationTest(ResourceOperationsBase operations, Request request, Response response)
-            : base(operations,
-                  request,
-                  response,
-                  OperationFinalStateVia.Location,
-                  "UpdateResourceGroupOperation")
+        public override string Id => "testId";
+
+        public override T Value => _value;
+
+        public override bool HasCompleted => true;
+
+        public override bool HasValue => true;
+
+        public override Response GetRawResponse()
         {
-            _operations = operations;
+            return Response.FromValue(_value, null) as Response;
+        }
+
+        public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+        {
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
+
+            return new ValueTask<Response<T>>(Response.FromValue(_value, null));
+        }
+
+        public override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        {
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
+
+            return new ValueTask<Response<T>>(Response.FromValue(_value, null));
         }
 
         public override T CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var method = typeof(T).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Deserialize", StringComparison.InvariantCulture) && !m.IsPublic && m.IsStatic);
-            return method.Invoke(null, new object[] { document.RootElement }) as T;
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
+
+            return new ValueTask<Response>(Response.FromValue(_value, null) as Response);
         }
 
         public async override ValueTask<T> CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var method = typeof(T).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Deserialize", StringComparison.InvariantCulture) && !m.IsPublic && m.IsStatic);
-            return method.Invoke(null, new object[] { document.RootElement }) as T;
+            if (_exceptionOnWait)
+                throw new ArgumentException("FakeArg");
+
+            return Response.FromValue(_value, null) as Response;
         }
     }
 }

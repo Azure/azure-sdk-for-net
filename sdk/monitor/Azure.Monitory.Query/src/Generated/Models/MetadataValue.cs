@@ -16,16 +16,13 @@ namespace Azure.Monitory.Query.Models
         }
 
         /// <summary> Initializes a new instance of MetadataValue. </summary>
-        /// <param name="name"> the name of the metadata. </param>
+        /// <param name="localizedName"> the name of the metadata. </param>
         /// <param name="value"> the value of the metadata. </param>
-        internal MetadataValue(LocalizableString name, string value)
+        internal MetadataValue(LocalizableString localizedName, string value)
         {
-            Name = name;
+            LocalizedName = localizedName;
             Value = value;
         }
-
-        /// <summary> the name of the metadata. </summary>
-        public LocalizableString Name { get; }
         /// <summary> the value of the metadata. </summary>
         public string Value { get; }
     }
