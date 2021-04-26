@@ -35,7 +35,6 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 double currentHumidity = minHumidity + rand.NextDouble() * 20;
                 messageBase[Temperature] = currentTemperature;
                 messageBase[Humidity] = currentHumidity;
-                Console.WriteLine($"Sending Temperature {currentTemperature}. Humidity {currentHumidity}");
                 string messageBody = JsonSerializer.Serialize(messageBase);
                 var message = new Message(Encoding.ASCII.GetBytes(messageBody))
                 {

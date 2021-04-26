@@ -14,6 +14,8 @@ namespace Azure.IoT.TimeSeriesInsights
     [CodeGenModel("PropertyValues")]
     public partial class PropertyValues : EventProperty
     {
+        // This class has been customized and overriden to change the property Values into a JsonElement. Changing it into a JsonElement
+        // allows lazy load of the values. Only when Values is accesssed, we will deseialize the JsonElement into a TimeSeriesValue array.
         private TimeSeriesValue[] _values;
 
         [CodeGenMember("Values")]
