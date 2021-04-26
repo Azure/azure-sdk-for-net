@@ -102,21 +102,16 @@ namespace Azure.Containers.ContainerRegistry
 
         private async Task<string> GetDigestAsync(CancellationToken cancellationToken)
         {
-            if (_digest == null)
-            {
-                _digest = IsDigest(_tagOrDigest) ? _tagOrDigest :
-                    (await _restClient.GetTagPropertiesAsync(_repositoryName, _tagOrDigest, cancellationToken).ConfigureAwait(false)).Value.Digest;
-            }
+            _digest ??= IsDigest(_tagOrDigest) ? _tagOrDigest :
+                (await _restClient.GetTagPropertiesAsync(_repositoryName, _tagOrDigest, cancellationToken).ConfigureAwait(false)).Value.Digest;
 
             return _digest;
         }
 
         private string GetDigest(CancellationToken cancellationToken)
         {
-            if (_digest == null)
-            {
-                _digest = IsDigest(_tagOrDigest) ? _tagOrDigest : _restClient.GetTagProperties(_repositoryName, _tagOrDigest, cancellationToken).Value.Digest;
-            }
+            _digest ??= IsDigest(_tagOrDigest) ? _tagOrDigest :
+                _restClient.GetTagProperties(_repositoryName, _tagOrDigest, cancellationToken).Value.Digest;
 
             return _digest;
         }
@@ -320,7 +315,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ArtifactTagProperties> GetTagProperties(string tag, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tag, nameof(tag));
+            Argument.AssertNotNullOrEmpty(tag, nameof(tag));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(GetTagProperties)}");
             scope.Start();
@@ -341,7 +336,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ArtifactTagProperties>> SetTagPropertiesAsync(string tag, ContentProperties value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tag, nameof(tag));
+            Argument.AssertNotNullOrEmpty(tag, nameof(tag));
             Argument.AssertNotNull(value, nameof(value));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(SetTagProperties)}");
@@ -363,7 +358,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ArtifactTagProperties> SetTagProperties(string tag, ContentProperties value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tag, nameof(tag));
+            Argument.AssertNotNullOrEmpty(tag, nameof(tag));
             Argument.AssertNotNull(value, nameof(value));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(SetTagProperties)}");
@@ -384,7 +379,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteTagAsync(string tag, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tag, nameof(tag));
+            Argument.AssertNotNullOrEmpty(tag, nameof(tag));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(DeleteTag)}");
             scope.Start();
@@ -404,7 +399,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeleteTag(string tag, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tag, nameof(tag));
+            Argument.AssertNotNullOrEmpty(tag, nameof(tag));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RegistryArtifact)}.{nameof(DeleteTag)}");
             scope.Start();

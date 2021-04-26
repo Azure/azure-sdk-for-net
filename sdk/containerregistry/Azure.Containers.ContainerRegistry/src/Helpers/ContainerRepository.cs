@@ -59,8 +59,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <returns> A new <see cref="RegistryArtifact"/> for the desired repository. </returns>
         public virtual RegistryArtifact GetArtifact(string repositoryName, string tagOrDigest)
         {
-            Argument.AssertNotNull(repositoryName, nameof(repositoryName));
-            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
+            Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
+            Argument.AssertNotNullOrEmpty(tagOrDigest, nameof(tagOrDigest));
 
             return new RegistryArtifact(
                 _registryUri,
