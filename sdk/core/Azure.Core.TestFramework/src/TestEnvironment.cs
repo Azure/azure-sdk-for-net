@@ -199,16 +199,13 @@ namespace Azure.Core.TestFramework
         {
             if (GlobalIsRunningInCI && Mode == RecordedTestMode.Live)
             {
-                // GetOrAdd from ConcurrentDictionary isn't atomic, hence double-checked-lock.
-                if (!s_environmentStateCache.TryGetValue(GetType(), out Task task))
+                Task task;
+                lock (s_environmentStateCache)
                 {
-                    lock (s_environmentStateCache)
+                    if (!s_environmentStateCache.TryGetValue(GetType(), out task))
                     {
-                        if (!s_environmentStateCache.TryGetValue(GetType(), out task))
-                        {
-                            task = WaitForEnvironmentInternalAsync();
-                            s_environmentStateCache[GetType()] = task;
-                        }
+                        task = WaitForEnvironmentInternalAsync();
+                        s_environmentStateCache[GetType()] = task;
                     }
                 }
                 await task;
