@@ -166,7 +166,7 @@ namespace Azure.Security.Attestation
         public string X509CertificateThumbprint { get => Header.X509CertificateThumbprint; }
 
         /// <summary>
-        /// The "thumbprint" of the certificate used to sign the request generated using the SHA256 algorithm. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.8 for details.
+        /// The "thumbprint" of the certificate used to sign the request generated using the SHA256 algorithm. <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.8">RFC 7515 section 4.1.8</seealso> for details.
         /// </summary>
         public string X509CertificateSha256Thumbprint { get => Header.X509CertificateSha256Thumbprint; }
 
