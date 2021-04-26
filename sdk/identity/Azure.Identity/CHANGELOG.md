@@ -14,6 +14,10 @@ This indicates to AAD that your application is CAE ready and can handle the CAE 
 </ItemGroup> 
   ```
 
+### Breaking Changes
+
+- Renamed the `UnsafeAllowUnencryptedStorage` property to `AllowUnencryptedStorage` on `TokenCachePersistenceOptions`.
+
 ## 1.4.0-beta.5 (2021-04-06)
 
 ### Acknowledgments

@@ -58,9 +58,9 @@ namespace Azure.Identity.Tests
 
         public static IEnumerable<object[]> PersistentCacheOptions()
         {
-            yield return new object[] { new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true, Name = "foo" }, true, "foo" };
-            yield return new object[] { new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = false, Name = "bar" }, false, "bar" };
-            yield return new object[] { new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = false }, false, Constants.DefaultMsalTokenCacheName };
+            yield return new object[] { new TokenCachePersistenceOptions { AllowUnencryptedStorage = true, Name = "foo" }, true, "foo" };
+            yield return new object[] { new TokenCachePersistenceOptions { AllowUnencryptedStorage = false, Name = "bar" }, false, "bar" };
+            yield return new object[] { new TokenCachePersistenceOptions { AllowUnencryptedStorage = false }, false, Constants.DefaultMsalTokenCacheName };
             yield return new object[] { new TokenCachePersistenceOptions { Name = "fizz" }, false, "fizz" };
             yield return new object[] { new TokenCachePersistenceOptions(), false, Constants.DefaultMsalTokenCacheName };
         }
@@ -205,7 +205,7 @@ namespace Azure.Identity.Tests
             mockWrapper.SetupSequence(m => m.VerifyPersistence())
             .Throws<MsalCachePersistenceException>()
             .Pass();
-            cache = new TokenCache(new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true }, mockWrapper.Object);
+            cache = new TokenCache(new TokenCachePersistenceOptions { AllowUnencryptedStorage = true }, mockWrapper.Object);
 
             await cache.RegisterCache(IsAsync, mockMSALCache.Object, default);
 
@@ -225,8 +225,8 @@ namespace Azure.Identity.Tests
         {
             var options = System.Environment.OSVersion.Platform switch
             {
-                // Linux tests will fail without UnsafeAllowUnencryptedStorage = true.
-                PlatformID.Unix => new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true },
+                // Linux tests will fail without AllowUnencryptedStorage = true.
+                PlatformID.Unix => new TokenCachePersistenceOptions { AllowUnencryptedStorage = true },
                 _ => new TokenCachePersistenceOptions()
             };
             cache = new TokenCache(options);

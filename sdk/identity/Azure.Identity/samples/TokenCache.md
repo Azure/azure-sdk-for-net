@@ -40,7 +40,7 @@ However, there are cases where no data protection is available, and applications
 This is accomplished with the `UnsafeAllowUnencryptedStorage` option.
 
 ```C# Snippet:Identity_TokenCache_PersistentUnencrypted
-var persistenceOptions = new TokenCachePersistenceOptions { UnsafeAllowUnencryptedStorage = true };
+var persistenceOptions = new TokenCachePersistenceOptions { AllowUnencryptedStorage = true };
 
 var credential = new InteractiveBrowserCredential(
     new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = persistenceOptions }

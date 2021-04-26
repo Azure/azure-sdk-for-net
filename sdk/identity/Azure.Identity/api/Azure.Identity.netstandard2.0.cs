@@ -234,8 +234,8 @@ namespace Azure.Identity
     public partial class TokenCachePersistenceOptions
     {
         public TokenCachePersistenceOptions() { }
+        public bool AllowUnencryptedStorage { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public bool UnsafeAllowUnencryptedStorage { get { throw null; } set { } }
     }
     public partial class TokenCacheUpdatedArgs
     {
