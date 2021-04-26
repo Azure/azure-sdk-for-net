@@ -22,10 +22,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string sourcePath = FormRecognizerTestEnvironment.CreatePath("license.jpg");
-
             #region Snippet:FormRecognizerSampleRecognizeIdDocumentsFileStream
-            //@@ string sourcePath = "<sourcePath>";
+#if SNIPPET
+            string sourcePath = "<sourcePath>";
+#else
+            string sourcePath = FormRecognizerTestEnvironment.CreatePath("license.jpg");
+#endif
 
             using var stream = new FileStream(sourcePath, FileMode.Open);
 

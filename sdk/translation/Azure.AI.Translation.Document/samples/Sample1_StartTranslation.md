@@ -25,8 +25,8 @@ To call `StartTranslationAsync` you need to initialize an object of type `Docume
 More on generating SAS Tokens [here](https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#create-sas-access-tokens-for-document-translation)
 
 ```C# Snippet:StartTranslationAsync
-Uri sourceUri = <source SAS URI>;
-Uri targetUri = <target SAS URI>;
+Uri sourceUri = new Uri("<source SAS URI>");
+Uri targetUri = new Uri("<target SAS URI>");
 
 var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 

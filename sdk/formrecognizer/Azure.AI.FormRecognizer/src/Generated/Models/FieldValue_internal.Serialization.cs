@@ -115,7 +115,14 @@ namespace Azure.AI.FormRecognizer.Models
                     Dictionary<string, FieldValue_internal> dictionary = new Dictionary<string, FieldValue_internal>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeFieldValue_internal(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, DeserializeFieldValue_internal(property0.Value));
+                        }
                     }
                     valueObject = dictionary;
                     continue;

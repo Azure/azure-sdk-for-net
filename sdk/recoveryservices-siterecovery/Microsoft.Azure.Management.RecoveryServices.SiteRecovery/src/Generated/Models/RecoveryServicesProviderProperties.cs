@@ -52,13 +52,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="healthErrorDetails">The recovery services provider
         /// health error details.</param>
         /// <param name="draIdentifier">The DRA Id.</param>
+        /// <param name="machineId">The machine Id.</param>
+        /// <param name="machineName">The machine name.</param>
+        /// <param name="biosId">The Bios Id.</param>
         /// <param name="authenticationIdentityDetails">The authentication
         /// identity details.</param>
         /// <param name="resourceAccessIdentityDetails">The resource access
         /// identity details.</param>
+        /// <param name="dataPlaneAuthenticationIdentityDetails">The data plane
+        /// authentication identity details.</param>
         /// <param name="providerVersionDetails">The provider version
         /// details.</param>
-        public RecoveryServicesProviderProperties(string fabricType = default(string), string friendlyName = default(string), string providerVersion = default(string), string serverVersion = default(string), string providerVersionState = default(string), System.DateTime? providerVersionExpiryDate = default(System.DateTime?), string fabricFriendlyName = default(string), System.DateTime? lastHeartBeat = default(System.DateTime?), string connectionStatus = default(string), int? protectedItemCount = default(int?), IList<string> allowedScenarios = default(IList<string>), IList<HealthError> healthErrorDetails = default(IList<HealthError>), string draIdentifier = default(string), IdentityProviderDetails authenticationIdentityDetails = default(IdentityProviderDetails), IdentityProviderDetails resourceAccessIdentityDetails = default(IdentityProviderDetails), VersionDetails providerVersionDetails = default(VersionDetails))
+        public RecoveryServicesProviderProperties(string fabricType = default(string), string friendlyName = default(string), string providerVersion = default(string), string serverVersion = default(string), string providerVersionState = default(string), System.DateTime? providerVersionExpiryDate = default(System.DateTime?), string fabricFriendlyName = default(string), System.DateTime? lastHeartBeat = default(System.DateTime?), string connectionStatus = default(string), int? protectedItemCount = default(int?), IList<string> allowedScenarios = default(IList<string>), IList<HealthError> healthErrorDetails = default(IList<HealthError>), string draIdentifier = default(string), string machineId = default(string), string machineName = default(string), string biosId = default(string), IdentityProviderDetails authenticationIdentityDetails = default(IdentityProviderDetails), IdentityProviderDetails resourceAccessIdentityDetails = default(IdentityProviderDetails), IdentityProviderDetails dataPlaneAuthenticationIdentityDetails = default(IdentityProviderDetails), VersionDetails providerVersionDetails = default(VersionDetails))
         {
             FabricType = fabricType;
             FriendlyName = friendlyName;
@@ -73,8 +78,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             AllowedScenarios = allowedScenarios;
             HealthErrorDetails = healthErrorDetails;
             DraIdentifier = draIdentifier;
+            MachineId = machineId;
+            MachineName = machineName;
+            BiosId = biosId;
             AuthenticationIdentityDetails = authenticationIdentityDetails;
             ResourceAccessIdentityDetails = resourceAccessIdentityDetails;
+            DataPlaneAuthenticationIdentityDetails = dataPlaneAuthenticationIdentityDetails;
             ProviderVersionDetails = providerVersionDetails;
             CustomInit();
         }
@@ -163,6 +172,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string DraIdentifier { get; set; }
 
         /// <summary>
+        /// Gets or sets the machine Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "machineId")]
+        public string MachineId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the machine name.
+        /// </summary>
+        [JsonProperty(PropertyName = "machineName")]
+        public string MachineName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Bios Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "biosId")]
+        public string BiosId { get; set; }
+
+        /// <summary>
         /// Gets or sets the authentication identity details.
         /// </summary>
         [JsonProperty(PropertyName = "authenticationIdentityDetails")]
@@ -173,6 +200,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "resourceAccessIdentityDetails")]
         public IdentityProviderDetails ResourceAccessIdentityDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets the data plane authentication identity details.
+        /// </summary>
+        [JsonProperty(PropertyName = "dataPlaneAuthenticationIdentityDetails")]
+        public IdentityProviderDetails DataPlaneAuthenticationIdentityDetails { get; set; }
 
         /// <summary>
         /// Gets or sets the provider version details.

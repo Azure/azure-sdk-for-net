@@ -43,12 +43,19 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// <param name="scaleInterval">The period in seconds on which a
         /// decision is made whether to scale or not. This property should come
         /// in ISO 8601 format "hh:mm:ss".</param>
-        public AverageServiceLoadScalingTrigger(string metricName, double lowerLoadThreshold, double upperLoadThreshold, string scaleInterval)
+        /// <param name="useOnlyPrimaryLoad">Flag determines whether only the
+        /// load of primary replica should be considered for scaling. If set to
+        /// true, then trigger will only consider the load of primary replicas
+        /// of stateful service. If set to false, trigger will consider load of
+        /// all replicas. This parameter cannot be set to true for stateless
+        /// service.</param>
+        public AverageServiceLoadScalingTrigger(string metricName, double lowerLoadThreshold, double upperLoadThreshold, string scaleInterval, bool useOnlyPrimaryLoad)
         {
             MetricName = metricName;
             LowerLoadThreshold = lowerLoadThreshold;
             UpperLoadThreshold = upperLoadThreshold;
             ScaleInterval = scaleInterval;
+            UseOnlyPrimaryLoad = useOnlyPrimaryLoad;
             CustomInit();
         }
 
@@ -85,6 +92,17 @@ namespace Microsoft.Azure.Management.ServiceFabricManagedClusters.Models
         /// </summary>
         [JsonProperty(PropertyName = "scaleInterval")]
         public string ScaleInterval { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag determines whether only the load of primary
+        /// replica should be considered for scaling. If set to true, then
+        /// trigger will only consider the load of primary replicas of stateful
+        /// service. If set to false, trigger will consider load of all
+        /// replicas. This parameter cannot be set to true for stateless
+        /// service.
+        /// </summary>
+        [JsonProperty(PropertyName = "useOnlyPrimaryLoad")]
+        public bool UseOnlyPrimaryLoad { get; set; }
 
         /// <summary>
         /// Validate the object.
