@@ -27,12 +27,12 @@ namespace Azure.AI.MetricsAdvisor.Samples
 #if SNIPPET
             string hookId = "<hookId>";
             string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
+            string configurationName = "<configurationName>";
 #else
             string hookId = HookId;
             string anomalyDetectionConfigurationId = DetectionConfigurationId;
+            string configurationName = GetUniqueName();
 #endif
-
-            string configurationName = "Sample anomaly alert configuration";
 
             AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
             {
