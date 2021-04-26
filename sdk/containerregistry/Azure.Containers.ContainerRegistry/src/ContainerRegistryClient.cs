@@ -36,7 +36,7 @@ namespace Azure.Containers.ContainerRegistry
         /// Initializes a new instance of the ContainerRegistryClient for managing container images and artifacts.
         /// </summary>
         /// <param name="registryUri">The URI endpoint of the container registry.  This is likely to be similar
-        /// to  "https://{registry-name}.azurecr.io".</param>
+        /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
