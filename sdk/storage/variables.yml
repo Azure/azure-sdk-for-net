@@ -1,0 +1,3 @@
+variables:
+  azurite_location: $(Pipeline.Workspace)/.storage/azurite
+  azurite_version: 3.11.0
