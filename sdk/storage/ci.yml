@@ -23,9 +23,6 @@ pr:
     include:
     - sdk/storage/
 
-variables:
-  - template: ./variables.yml
-
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

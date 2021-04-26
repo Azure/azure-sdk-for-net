@@ -1,8 +1,5 @@
 trigger: none
 
-variables:
-  - template: ./variables.yml
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
