@@ -460,7 +460,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             ServiceBusReceiver receiver = sbClient.CreateReceiver(queueName);
             ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
-            await receiver.DeadLetterMessageAsync(msg.LockToken);
+            await receiver.DeadLetterMessageAsync(msg);
 
             List<QueueRuntimeProperties> runtimeInfoList = new List<QueueRuntimeProperties>();
             await foreach (QueueRuntimeProperties queueRuntimeInfo in mgmtClient.GetQueuesRuntimePropertiesAsync())
@@ -528,7 +528,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
 
             ServiceBusReceiver receiver = sbClient.CreateReceiver(topicName, subscriptionName);
             ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
-            await receiver.DeadLetterMessageAsync(msg.LockToken);
+            await receiver.DeadLetterMessageAsync(msg);
 
             List<SubscriptionRuntimeProperties> runtimeInfoList = new List<SubscriptionRuntimeProperties>();
             await foreach (SubscriptionRuntimeProperties subscriptionRuntimeInfo in client.GetSubscriptionsRuntimePropertiesAsync(topicName))
@@ -775,13 +775,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             ServiceBusReceivedMessage msg = await receiver.ReceiveMessageAsync();
             Assert.NotNull(msg);
             Assert.AreEqual("mid", msg.MessageId);
-            await receiver.DeadLetterMessageAsync(msg.LockToken);
+            await receiver.DeadLetterMessageAsync(msg);
 
             receiver = sbClient.CreateReceiver(dlqDestinationName);
             msg = await receiver.ReceiveMessageAsync();
             Assert.NotNull(msg);
             Assert.AreEqual("mid", msg.MessageId);
-            await receiver.CompleteMessageAsync(msg.LockToken);
+            await receiver.CompleteMessageAsync(msg);
 
             await mgmtClient.DeleteQueueAsync(queueName);
             await mgmtClient.DeleteQueueAsync(destinationName);

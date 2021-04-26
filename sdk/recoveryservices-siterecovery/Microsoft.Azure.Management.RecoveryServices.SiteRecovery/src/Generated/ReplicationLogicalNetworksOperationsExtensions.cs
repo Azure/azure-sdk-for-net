@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the list of logical networks under a fabric.
             /// </summary>
             /// <remarks>
-            /// Lists all the logical networks of the Azure Site Recovery fabric
+            /// Lists all the logical networks of the Azure Site Recovery fabric.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the list of logical networks under a fabric.
             /// </summary>
             /// <remarks>
-            /// Lists all the logical networks of the Azure Site Recovery fabric
+            /// Lists all the logical networks of the Azure Site Recovery fabric.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the list of logical networks under a fabric.
             /// </summary>
             /// <remarks>
-            /// Lists all the logical networks of the Azure Site Recovery fabric
+            /// Lists all the logical networks of the Azure Site Recovery fabric.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Gets the list of logical networks under a fabric.
             /// </summary>
             /// <remarks>
-            /// Lists all the logical networks of the Azure Site Recovery fabric
+            /// Lists all the logical networks of the Azure Site Recovery fabric.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

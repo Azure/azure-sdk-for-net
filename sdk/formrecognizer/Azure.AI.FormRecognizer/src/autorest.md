@@ -74,6 +74,14 @@ directive:
     $.properties.fields.additionalProperties["x-nullable"] = true;
 ```
 
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.FieldValue
+  transform: >
+    $.properties.valueObject.additionalProperties["x-nullable"] = true;
+```
+
 ### Make generated models internal by default
 
 ``` yaml

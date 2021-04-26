@@ -13,6 +13,7 @@ using Azure.Identity;
 using System.ComponentModel;
 using System.Linq;
 using NUnit.Framework;
+using System.Collections.Concurrent;
 
 namespace Azure.Core.TestFramework
 {
@@ -24,6 +25,8 @@ namespace Azure.Core.TestFramework
     {
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
+
+        private static readonly ConcurrentDictionary<Type, Task> s_environmentStateCache = new ConcurrentDictionary<Type, Task>();
 
         private readonly string _prefix;
 
@@ -173,6 +176,50 @@ namespace Azure.Core.TestFramework
 
                 return _credential;
             }
+        }
+
+        /// <summary>
+        /// Returns whether environment is ready to use. Should be overriden to provide service specific sampling scenario.
+        /// The test framework will wait until this returns true before starting tests.
+        /// Use this place to hook up logic that polls if eventual consistency has happened.
+        ///
+        /// Return true if environment is ready to use.
+        /// Return false if environment is not ready to use and framework should wait.
+        /// Throw if you want to fail the run fast.
+        /// </summary>
+        /// <returns>Whether environment is ready to use.</returns>
+        protected virtual ValueTask<bool> IsEnvironmentReadyAsync()
+        {
+            return new ValueTask<bool>(true);
+        }
+
+        /// <summary>
+        /// Waits until environment becomes ready to use. See <see cref="IsEnvironmentReadyAsync"/> to define sampling scenario.
+        /// </summary>
+        /// <returns>A task.</returns>
+        public async ValueTask WaitForEnvironmentAsync()
+        {
+            if (GlobalIsRunningInCI && Mode == RecordedTestMode.Live)
+            {
+                await s_environmentStateCache.GetOrAdd(GetType(), t => WaitForEnvironmentInternalAsync());
+            }
+        }
+
+        private async Task WaitForEnvironmentInternalAsync()
+        {
+            int numberOfTries = 60;
+            TimeSpan delay = TimeSpan.FromSeconds(10);
+            for (int i = 0; i < numberOfTries; i++)
+            {
+                var isReady = await IsEnvironmentReadyAsync();
+                if (isReady)
+                {
+                    return;
+                }
+                await Task.Delay(delay);
+            }
+
+            throw new InvalidOperationException("The environment has not become ready, check your TestEnvironment.IsEnvironmentReady scenario.");
         }
 
         /// <summary>
