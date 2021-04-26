@@ -284,6 +284,9 @@ var encryptedData = SendTokenToRelyingParty(attestationResult.Token);
 // Now the encrypted data can be passed into the enclave which can decrypt that data.
 ```
 
+Additional information on how to perform attestation token validation can be found in the [MAA Service Attestation Sample](https://github.com/gkostal/attestation/tree/d6a216cd6af5a509e20ac0a752197fdb242fabc3/sgx.attest.sample).
+
+
 ### Retrieve Token Certificates
 
 Use `GetSigningCertificatesAsync` to retrieve the certificates which can be used to validate the token returned from the attestation service.
