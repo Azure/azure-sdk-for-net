@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -22,10 +23,13 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// The scopes currently configured for token requests to the credential
         /// </summary>
-        protected string[] Scopes { get; private set; }
+        protected ReadOnlyCollection<string> Scopes => _readOnlyScopes ??= Array.AsReadOnly(_scopes);
+
+        private string[] _scopes;
+        private ReadOnlyCollection<string>? _readOnlyScopes;
 
         private readonly AccessTokenCache _accessTokenCache;
-        private readonly ValueTask<bool> _falseValueTask = new ValueTask<bool>(Task.FromResult(false));
+        private readonly ValueTask<bool> _falseValueTask = new(Task.FromResult(false));
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenChallengeAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
@@ -38,7 +42,7 @@ namespace Azure.Core.Pipeline
         /// Creates a new instance of <see cref="BearerTokenChallengeAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
-        /// <param name="scopes">Scopes to authenticate for.</param>
+        /// <param name="scopes">_scopes to authenticate for.</param>
         public BearerTokenChallengeAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
             : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
         { }
@@ -48,7 +52,7 @@ namespace Azure.Core.Pipeline
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
 
-            Scopes = scopes.ToArray();
+            _scopes = scopes.ToArray();
             _accessTokenCache = new AccessTokenCache(credential, tokenRefreshOffset, tokenRefreshRetryDelay, scopes.ToArray());
         }
 
@@ -71,9 +75,9 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        protected virtual Task AuthorizeRequestAsync(HttpMessage message, bool async)
+        protected virtual ValueTask AuthorizeRequestAsync(HttpMessage message, bool async)
         {
-            var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
+            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
             return SetAuthorizationHeader(message, context, async);
         }
 
@@ -133,7 +137,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> with the <see cref="Request"/> to be authorized.</param>
         /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
         /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
-        protected async Task SetAuthorizationHeader(HttpMessage message, TokenRequestContext context, bool async)
+        protected async ValueTask SetAuthorizationHeader(HttpMessage message, TokenRequestContext context, bool async)
         {
             string headerValue;
             if (async)
@@ -322,18 +326,14 @@ namespace Azure.Core.Pipeline
                     HeaderValueInfo newInfo = await GetHeaderValueFromCredentialAsync(context, async, cts.Token).ConfigureAwait(false);
                     backgroundUpdateTcs.SetResult(newInfo);
                 }
-                catch (OperationCanceledException) when (cts.IsCancellationRequested)
+                catch (OperationCanceledException oce) when (cts.IsCancellationRequested)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow));
-
-                    // https://github.com/Azure/azure-sdk-for-net/issues/18539
-                    //AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
+                    AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
                 }
                 catch (Exception e)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryDelay));
-
-                    // https://github.com/Azure/azure-sdk-for-net/issues/18539
                     AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
                 }
                 finally

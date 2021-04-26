@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 
 #nullable enable
 
@@ -39,8 +40,8 @@ namespace Azure.Core.Pipeline
                 return false;
             }
 
-            string claimsChallenge = Base64Url.DecodeString(challenge.ToString());
-            var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId, claimsChallenge);
+            string claimsChallenge = Base64Url.DecodeString(challenge);
+            var context = new TokenRequestContext(Scopes.ToArray(), message.Request.ClientRequestId, claimsChallenge);
             await SetAuthorizationHeader(message, context, async);
             return true;
         }

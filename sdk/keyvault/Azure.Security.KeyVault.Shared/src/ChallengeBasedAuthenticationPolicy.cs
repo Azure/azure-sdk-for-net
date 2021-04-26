@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault
 {
     internal class ChallengeBasedAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
     {
-        private static ConcurrentDictionary<string, AuthorityScope> _scopeCache = new ConcurrentDictionary<string, AuthorityScope>();
+        private static ConcurrentDictionary<string, AuthorityScope> _scopeCache = new();
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
         private AuthorityScope _scope;
 
@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault
         { }
 
         /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequestOnChallengeAsync(HttpMessage, bool)" />
-        protected override async Task AuthorizeRequestAsync(HttpMessage message, bool async)
+        protected override async ValueTask AuthorizeRequestAsync(HttpMessage message, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -20,7 +21,8 @@ namespace Azure.Core.Tests
         public async Task BearerTokenChallengeAuthenticationPolicy_UsesTokenProvidedByCredentials()
         {
             var credential = new TokenCredentialStub(
-                (r, c) => r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default, IsAsync);
+                (r, c) => r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default,
+                IsAsync);
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, new[] { "scope1", "scope2" });
 
             MockTransport transport = CreateMockTransport(new MockResponse(200));
@@ -38,7 +40,8 @@ namespace Azure.Core.Tests
             accessTokens.Enqueue(new AccessToken("token2", DateTimeOffset.UtcNow));
 
             var credential = new TokenCredentialStub(
-                (r, c) => r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? accessTokens.Dequeue() : default, IsAsync);
+                (r, c) => r.Scopes.SequenceEqual(new[] { "scope1", "scope2" }) ? accessTokens.Dequeue() : default,
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, new[] { "scope1", "scope2" });
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
@@ -57,7 +60,8 @@ namespace Azure.Core.Tests
         public async Task BearerTokenChallengeAuthenticationPolicy_CachesHeaderValue()
         {
             var credential = new TokenCredentialStub(
-                (r, c) => r.Scopes.SequenceEqual(new[] { "scope" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default, IsAsync);
+                (r, c) => r.Scopes.SequenceEqual(new[] { "scope" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default,
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
@@ -76,7 +80,8 @@ namespace Azure.Core.Tests
         public void BearerTokenChallengeAuthenticationPolicy_ThrowsForNonTlsEndpoint()
         {
             var credential = new TokenCredentialStub(
-                (r, c) => r.Scopes.SequenceEqual(new[] { "scope" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default, IsAsync);
+                (r, c) => r.Scopes.SequenceEqual(new[] { "scope" }) ? new AccessToken("token", DateTimeOffset.MaxValue) : default,
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport();
@@ -99,10 +104,11 @@ namespace Azure.Core.Tests
         public async Task BearerTokenChallengeAuthenticationPolicy_OneHundredConcurrentCalls()
         {
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                Thread.Sleep(100);
-                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(30));
-            }, IsAsync);
+                {
+                    Thread.Sleep(100);
+                    return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(30));
+                },
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(r => new MockResponse(200));
@@ -129,11 +135,12 @@ namespace Azure.Core.Tests
             var requestMre = new ManualResetEventSlim(false);
             var responseMre = new ManualResetEventSlim(false);
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(30));
-            }, IsAsync);
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(30));
+                },
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
@@ -158,15 +165,16 @@ namespace Azure.Core.Tests
             var requestMre = new ManualResetEventSlim(false);
             var callCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                Interlocked.Increment(ref callCount);
-                var offsetTime = DateTimeOffset.UtcNow;
-                requestMre.Set();
+                {
+                    Interlocked.Increment(ref callCount);
+                    var offsetTime = DateTimeOffset.UtcNow;
+                    requestMre.Set();
 
-                return callCount == 2
-                    ? throw new InvalidOperationException("Call Failed")
-                    : new AccessToken(Guid.NewGuid().ToString(), offsetTime.AddMilliseconds(1000));
-            }, IsAsync);
+                    return callCount == 2
+                        ? throw new InvalidOperationException("Call Failed")
+                        : new AccessToken(Guid.NewGuid().ToString(), offsetTime.AddMilliseconds(1000));
+                },
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, new[] { "scope" }, TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(30));
             MockTransport transport = CreateMockTransport(r => new MockResponse(200));
@@ -218,14 +226,15 @@ namespace Azure.Core.Tests
             var expires = new Queue<DateTimeOffset>(new[] { currentTime.AddMinutes(2), currentTime.AddMinutes(30) });
             var callCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                requestMre.Reset();
-                callCount++;
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    requestMre.Reset();
+                    callCount++;
 
-                return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
-            }, IsAsync);
+                    return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
+                },
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
@@ -256,6 +265,111 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task BearerTokenChallengeAuthenticationPolicy_BackgroundRefreshCancelledAndLogs()
+        {
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+            var currentTime = DateTimeOffset.UtcNow;
+            var expires = new Queue<DateTimeOffset>(new[] { currentTime.AddMinutes(2), currentTime.AddMinutes(30) });
+            var callCount = 0;
+            var logged = false;
+            string msg = "fail to refresh";
+            var credential = new TokenCredentialStub((r, c) =>
+                {
+                    if (callCount > 0)
+                    {
+                        Task.Delay(100).GetAwaiter().GetResult();
+                        throw new OperationCanceledException(msg);
+                    }
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    requestMre.Reset();
+                    callCount++;
+
+                    return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
+                },
+                IsAsync);
+
+            AzureEventSourceListener listener = new((args, text) =>
+            {
+                if (args.EventName == "BackgroundRefreshFailed" && text.Contains(msg))
+                {
+                    logged = true;
+                }
+            }, System.Diagnostics.Tracing.EventLevel.Informational);
+
+            var policy = new BearerTokenChallengeAuthenticationPolicy(credential, new[] { "scope" }, TimeSpan.FromMinutes(5), TimeSpan.FromMilliseconds(10));
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/1/Original"));
+            responseMre.Reset();
+
+            Task requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/Refresh"));
+            // requestMre.Wait();
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/2/AlmostExpired"));
+            await requestTask;
+            responseMre.Set();
+            await Task.Delay(1_000);
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/AfterRefresh"));
+
+            Assert.IsTrue(logged);
+        }
+
+        [Test]
+        public async Task BearerTokenChallengeAuthenticationPolicy_BackgroundRefreshFailsAndLogs()
+        {
+            var requestMre = new ManualResetEventSlim(true);
+            var responseMre = new ManualResetEventSlim(true);
+            var currentTime = DateTimeOffset.UtcNow;
+            var expires = new Queue<DateTimeOffset>(new[] { currentTime.AddMinutes(2), currentTime.AddMinutes(30) });
+            var callCount = 0;
+            var logged = false;
+            string msg = "fail to refresh";
+            var credential = new TokenCredentialStub((r, c) =>
+                {
+                    if (callCount > 0)
+                    {
+                        throw new Exception(msg);
+                    }
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    requestMre.Reset();
+                    callCount++;
+
+                    return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
+                },
+                IsAsync);
+
+            AzureEventSourceListener listener = new((args, text) =>
+            {
+                if (args.EventName == "BackgroundRefreshFailed" && text.Contains(msg))
+                {
+                    logged = true;
+                }
+            }, System.Diagnostics.Tracing.EventLevel.Informational);
+
+            var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/1/Original"));
+            responseMre.Reset();
+
+            Task requestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com/3/Refresh"));
+            // requestMre.Wait();
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/2/AlmostExpired"));
+            await requestTask;
+            responseMre.Set();
+            await Task.Delay(1_000);
+
+            await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/AfterRefresh"));
+
+            Assert.IsTrue(logged);
+        }
+
+        [Test]
         public async Task BearerTokenChallengeAuthenticationPolicy_TokenAlmostExpired_NoRefresh()
         {
             var requestMre = new ManualResetEventSlim(true);
@@ -264,13 +378,14 @@ namespace Azure.Core.Tests
             var callCount = 0;
 
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                callCount++;
-                responseMre.Wait(c);
-                requestMre.Set();
+                {
+                    callCount++;
+                    responseMre.Wait(c);
+                    requestMre.Set();
 
-                return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
-            }, IsAsync);
+                    return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
+                },
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200), new MockResponse(200));
@@ -307,11 +422,12 @@ namespace Azure.Core.Tests
             var currentTime = DateTimeOffset.UtcNow;
             var expires = new Queue<DateTimeOffset>(new[] { currentTime.AddSeconds(2), currentTime.AddMinutes(30) });
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
-            }, IsAsync);
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    return new AccessToken(Guid.NewGuid().ToString(), expires.Dequeue());
+                },
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, new[] { "scope" }, TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(50));
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
@@ -343,10 +459,11 @@ namespace Azure.Core.Tests
         public void BearerTokenChallengeAuthenticationPolicy_OneHundredConcurrentCallsFailed()
         {
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                Thread.Sleep(100);
-                throw new InvalidOperationException("Error");
-            }, IsAsync);
+                {
+                    Thread.Sleep(100);
+                    throw new InvalidOperationException("Error");
+                },
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(r => new MockResponse(200));
@@ -371,11 +488,12 @@ namespace Azure.Core.Tests
             var requestMre = new ManualResetEventSlim(false);
             var responseMre = new ManualResetEventSlim(false);
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                throw new InvalidOperationException("Error");
-            }, IsAsync);
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    throw new InvalidOperationException("Error");
+                },
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
@@ -401,17 +519,18 @@ namespace Azure.Core.Tests
             var responseMre = new ManualResetEventSlim(true);
             var fail = false;
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                if (fail)
                 {
-                    throw new InvalidOperationException("Error");
-                }
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    if (fail)
+                    {
+                        throw new InvalidOperationException("Error");
+                    }
 
-                fail = true;
-                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddSeconds(2));
-            }, IsAsync);
+                    fail = true;
+                    return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddSeconds(2));
+                },
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, new[] { "scope" }, TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(50));
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200), new MockResponse(200));
@@ -449,16 +568,17 @@ namespace Azure.Core.Tests
             var getTokenRequestTimes = new List<DateTimeOffset>();
             var transportCallCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                if (transportCallCount > 0)
                 {
-                    credentialMre.Set();
-                    getTokenRequestTimes.Add(DateTimeOffset.UtcNow);
-                    throw new InvalidOperationException("Error");
-                }
+                    if (transportCallCount > 0)
+                    {
+                        credentialMre.Set();
+                        getTokenRequestTimes.Add(DateTimeOffset.UtcNow);
+                        throw new InvalidOperationException("Error");
+                    }
 
-                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(1.5));
-            }, IsAsync);
+                    return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(1.5));
+                },
+                IsAsync);
 
             var tokenRefreshRetryDelay = TimeSpan.FromSeconds(2);
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, new[] { "scope" }, TimeSpan.FromMinutes(2), tokenRefreshRetryDelay);
@@ -516,11 +636,12 @@ namespace Azure.Core.Tests
             var responseMre = new ManualResetEventSlim(false);
             var cts = new CancellationTokenSource();
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                throw new InvalidOperationException("Error");
-            }, IsAsync);
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    throw new InvalidOperationException("Error");
+                },
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
@@ -545,11 +666,12 @@ namespace Azure.Core.Tests
             var responseMre = new ManualResetEventSlim(false);
             var cts = new CancellationTokenSource();
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
-            }, IsAsync);
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
+                },
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport((req) => new MockResponse(200));
@@ -576,11 +698,12 @@ namespace Azure.Core.Tests
             var cts1 = new CancellationTokenSource();
             var cts2 = new CancellationTokenSource();
             var credential = new TokenCredentialStub((r, c) =>
-            {
-                requestMre.Set();
-                responseMre.Wait(c);
-                return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
-            }, IsAsync);
+                {
+                    requestMre.Set();
+                    responseMre.Wait(c);
+                    return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
+                },
+                IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport((req) =>
