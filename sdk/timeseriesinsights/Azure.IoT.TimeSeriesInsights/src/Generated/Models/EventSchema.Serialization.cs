@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class EventSchema
+    internal partial class EventSchema
     {
         internal static EventSchema DeserializeEventSchema(JsonElement element)
         {

@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class EventAvailability
+    internal partial class Availability
     {
-        internal static EventAvailability DeserializeEventAvailability(JsonElement element)
+        internal static Availability DeserializeAvailability(JsonElement element)
         {
             Optional<DateTimeRange> range = default;
             Optional<TimeSpan> intervalSize = default;
@@ -57,7 +57,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new EventAvailability(range.Value, Optional.ToNullable(intervalSize), Optional.ToDictionary(distribution));
+            return new Availability(range.Value, Optional.ToNullable(intervalSize), Optional.ToDictionary(distribution));
         }
     }
 }

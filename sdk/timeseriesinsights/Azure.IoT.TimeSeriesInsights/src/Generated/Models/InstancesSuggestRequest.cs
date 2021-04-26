@@ -10,7 +10,7 @@ using System;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Request to get search string suggestions for time series instances search based on prefix text. </summary>
-    public partial class InstancesSuggestRequest
+    internal partial class InstancesSuggestRequest
     {
         /// <summary> Initializes a new instance of InstancesSuggestRequest. </summary>
         /// <param name="searchString"> Search string for which suggestions are required. Empty is allowed, but not null. </param>
