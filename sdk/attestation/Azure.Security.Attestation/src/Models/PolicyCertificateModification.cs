@@ -25,7 +25,7 @@ namespace Azure.Security.Attestation
                 Alg = "RS256",
                 Use = "sig",
             };
-            this.InternalPolicyCertificate.X5C.Add(Convert.ToBase64String(bodyCertificate.Export(X509ContentType.Cert)));
+            InternalPolicyCertificate.X5C.Add(Convert.ToBase64String(bodyCertificate.Export(X509ContentType.Cert)));
         }
 
         /// <summary>
