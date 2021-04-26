@@ -44,7 +44,7 @@ namespace KeyVault.TestFramework
                     case HttpRecorderMode.Playback:
                         return new RetryPolicy<SoftDeleteErrorDetectionStrategy>(new FixedIntervalRetryStrategy(5, TimeSpan.Zero));
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        throw new NotSupportedException($"{HttpMockServer.Mode} is not supported");
                 }
             }
         }
