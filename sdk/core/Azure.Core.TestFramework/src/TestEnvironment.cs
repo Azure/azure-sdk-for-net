@@ -26,6 +26,7 @@ namespace Azure.Core.TestFramework
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
 
+        private static readonly SemaphoreSlim s_environmentStateCacheSemaphore = new SemaphoreSlim(1, 1);
         private static readonly ConcurrentDictionary<Type, Task> s_environmentStateCache = new ConcurrentDictionary<Type, Task>();
 
         private readonly string _prefix;
@@ -201,7 +202,24 @@ namespace Azure.Core.TestFramework
         {
             if (GlobalIsRunningInCI && Mode == RecordedTestMode.Live)
             {
-                await s_environmentStateCache.GetOrAdd(GetType(), t => WaitForEnvironmentInternalAsync());
+                // GetOrAdd from ConcurrentDictionary isn't atomic, hence double-checked-lock.
+                if (!s_environmentStateCache.TryGetValue(GetType(), out Task task))
+                {
+                    await s_environmentStateCacheSemaphore.WaitAsync();
+                    try
+                    {
+                        if (!s_environmentStateCache.TryGetValue(GetType(), out task))
+                        {
+                            task = WaitForEnvironmentInternalAsync();
+                            s_environmentStateCache[GetType()] = task;
+                        }
+                    }
+                    finally
+                    {
+                        s_environmentStateCacheSemaphore.Release();
+                    }
+                }
+                await task;
             }
         }
 
