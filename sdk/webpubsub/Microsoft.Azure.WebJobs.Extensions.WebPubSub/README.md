@@ -20,15 +20,15 @@ You must have an [Azure subscription](https://azure.microsoft.com/free/) and an 
 
 ### Using Web PubSub input binding
 
-Please follow the [input binding tutorial](https://scaling-garbanzo-3fe86650.pages.github.io/references/functions-bindings#input-binding) to learn about using this extension for building `WebPubSubConnection` to create Websockets connection to service with input binding.
+Please follow the [input binding tutorial](https://azure.github.io/azure-webpubsub/references/functions-bindings#input-binding) to learn about using this extension for building `WebPubSubConnection` to create Websockets connection to service with input binding.
 
 ### Using Web PubSub output binding
 
-Please follow the [output binding tutorial](https://scaling-garbanzo-3fe86650.pages.github.io/references/functions-bindings#output-binding) to learn about using this extension for publishing Web PubSub messages.
+Please follow the [output binding tutorial](https://azure.github.io/azure-webpubsub/references/functions-bindings#output-binding) to learn about using this extension for publishing Web PubSub messages.
 
 ### Using Web PubSub trigger
 
-Please follow the [trigger binding tutorial](https://scaling-garbanzo-3fe86650.pages.github.io/references/functions-bindings#trigger-binding) to learn about triggering an Azure Function when an event is sent from service upstream.
+Please follow the [trigger binding tutorial](https://azure.github.io/azure-webpubsub/references/functions-bindings#trigger-binding) to learn about triggering an Azure Function when an event is sent from service upstream.
 
 ## Examples
 
@@ -51,12 +51,11 @@ public static WebPubSubConnection Run(
 [FunctionName("WebPubSubOutputBindingFunction")]
 public static async Task RunAsync(
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
-    [WebPubSub(Hub = "simplechat")] IAsyncCollector<WebPubSubEvent> webpubsubEvent)
+    [WebPubSub(Hub = "simplechat")] IAsyncCollector<WebPubSubOperation> operation)
 {
-    await webpubsubEvent.AddAsync(new WebPubSubEvent
+    await operation.AddAsync(new SendToAll
     {
-        Operation = Operation.SendToAll,
-        Message = new Message("Hello Web PubSub"),
+        Message = BinaryData.FromString("Hello Web PubSub"),
         DataType = MessageDataType.Text
     });
 }
@@ -67,17 +66,17 @@ public static async Task RunAsync(
 ```C# Snippet:WebPubSubTriggerFunction
 [FunctionName("WebPubSubTriggerFunction")]
 public static async Task<MessageResponse> RunAsync(
-    [WebPubSubTrigger("message", EventType.User)] 
+    [WebPubSubTrigger("message", WebPubSubEventType.User)] 
     ConnectionContext context,
-    WebPubSubMessage message,
+    string message,
     MessageDataType dataType)
 {
     Console.WriteLine($"Request from: {context.userId}");
-    Console.WriteLine($"Request message: {message.Body.ToString()}");
+    Console.WriteLine($"Request message: {message}");
     Console.WriteLine($"Request message DataType: {dataType}");
     return new MessageResponse
     {
-        Message = new WebPubSubMessage("ack"),
+        Message = BinaryData.FromString("ack"),
     };
 }
 ```

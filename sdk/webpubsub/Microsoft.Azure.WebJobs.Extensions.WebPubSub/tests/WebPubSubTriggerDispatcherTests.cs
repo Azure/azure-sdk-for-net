@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
@@ -24,75 +24,73 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private static HashSet<string> ValidAccessKeys = new HashSet<string>(new string[] { TestKey.AccessKey });
         private static string[] ValidSignature = new string[] { TestKey.Signature };
 
-        [Fact]
+        [TestCase]
         public async Task TestProcessRequest_ValidRequest()
         {
             var dispatcher = SetupDispatcher();
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature);
             var response = await dispatcher.ExecuteAsync(request, EmptySetting, ValidAccessKeys);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [Fact]
+        [TestCase]
         public async Task TestProcessRequest_AllowNullUserId()
         {
             var dispatcher = SetupDispatcher();
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, userId: null);
             var response = await dispatcher.ExecuteAsync(request, EmptySetting, ValidAccessKeys);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [Fact]
+        [TestCase]
         public async Task TestProcessRequest_RouteNotFound()
         {
             var dispatcher = SetupDispatcher();
             var request = TestHelpers.CreateHttpRequestMessage("hub1", TestType, TestEvent, TestKey.ConnectionId, ValidSignature);
             var response = await dispatcher.ExecuteAsync(request, EmptySetting, ValidAccessKeys);
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
-        [Fact]
+        [TestCase]
         public async Task TestProcessRequest_SignatureInvalid()
         {
             var dispatcher = SetupDispatcher();
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, new string[] { "abc" });
             var response = await dispatcher.ExecuteAsync(request, EmptySetting, ValidAccessKeys);
-            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
-        [Fact]
+        [TestCase]
         public async Task TestProcessRequest_ConnectionIdNullBadRequest()
         {
             var dispatcher = SetupDispatcher();
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, null, ValidSignature, httpMethod: "Delete");
             var response = await dispatcher.ExecuteAsync(request, EmptySetting, ValidAccessKeys);
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        [Fact]
+        [TestCase]
         public async Task TestProcessRequest_DeleteMethodBadRequest()
         {
             var dispatcher = SetupDispatcher();
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, httpMethod: "Delete");
             var response = await dispatcher.ExecuteAsync(request, EmptySetting, ValidAccessKeys);
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        [Theory]
-        [InlineData("OPTIONS", "abc.com")]
-        [InlineData("GET", "abc.com")]
+        [TestCase("OPTIONS", "abc.com")]
+        [TestCase("GET", "abc.com")]
         public async Task TestProcessRequest_AbuseProtectionValidOK(string method, string host)
         {
             var allowedHost = new HashSet<string>(new string[] { host });
             var dispatcher = SetupDispatcher();
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, new string[] { TestKey.Signature }, httpMethod: method, host: host);
             var response = await dispatcher.ExecuteAsync(request, allowedHost, ValidAccessKeys);
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [Theory]
-        [InlineData("OPTIONS", "abc.com")]
-        [InlineData("GET", "abc.com")]
+        [TestCase("OPTIONS", "abc.com")]
+        [TestCase("GET", "abc.com")]
         public async Task TestProcessRequest_AbuseProtectionInvalidBadRequest(string method, string allowedHost)
         {
             var allowedHosts = new HashSet<string>(new string[] { allowedHost });
@@ -100,17 +98,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var dispatcher = SetupDispatcher();
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, new string[] { TestKey.Signature }, httpMethod: method, host: testhost);
             var response = await dispatcher.ExecuteAsync(request, allowedHosts, ValidAccessKeys);
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        [Theory]
-        [InlineData("application/xml", HttpStatusCode.BadRequest)]
+        [TestCase("application/xml", HttpStatusCode.BadRequest)]
         public async Task TestProcessRequest_MessageMediaTypes(string mediaType, HttpStatusCode expectedCode)
         {
             var dispatcher = SetupDispatcher(TestHub, WebPubSubEventType.User, Constants.Events.MessageEvent);
             var request = TestHelpers.CreateHttpRequestMessage(TestHub, WebPubSubEventType.User, Constants.Events.MessageEvent, TestKey.ConnectionId, ValidSignature, contentType: mediaType, payload: Encoding.UTF8.GetBytes("Hello"));
             var response = await dispatcher.ExecuteAsync(request, EmptySetting, ValidAccessKeys).ConfigureAwait(false);
-            Assert.Equal(expectedCode, response.StatusCode);
+            Assert.AreEqual(expectedCode, response.StatusCode);
         }
 
         private WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent)

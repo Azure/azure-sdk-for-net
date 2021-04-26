@@ -3,16 +3,15 @@
 
 using System;
 using System.Reflection;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
     public class WebPubSubTriggerValueProviderTests
     {
-        [Theory]
-        [InlineData("connectioncontext")]
-        [InlineData("reason")]
-        [InlineData("message")]
+        [TestCase("connectioncontext")]
+        [TestCase("reason")]
+        [TestCase("message")]
         public void TestGetValueByName_Valid(string name)
         {
             var triggerEvent = new WebPubSubTriggerEvent

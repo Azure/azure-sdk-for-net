@@ -4,13 +4,13 @@
 using System;
 using System.Threading.Tasks;
 using Moq;
-using Xunit;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 {
     public class WebPubSubAsyncCollectorTests
     {
-        [Fact]
+        [TestCase]
         public async Task AddAsync_WebPubSubEvent_SendAll()
         {
             var serviceMock = new Mock<IWebPubSubService>();
@@ -27,8 +27,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             serviceMock.VerifyNoOtherCalls();
 
             var actualData = (SendToAll)serviceMock.Invocations[0].Arguments[0];
-            Assert.Equal(MessageDataType.Text, actualData.DataType);
-            Assert.Equal(message, actualData.Message.ToString());
+            Assert.AreEqual(MessageDataType.Text, actualData.DataType);
+            Assert.AreEqual(message, actualData.Message.ToString());
         }
 
         //[Fact]

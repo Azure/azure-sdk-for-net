@@ -130,7 +130,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new InvalidOperationException($"The Service connection string must be set either via an '{Constants.WebPubSubConnectionStringName}' app setting, via an '{Constants.WebPubSubConnectionStringName}' environment variable, or directly in code via {nameof(WebPubSubOptions)}.{nameof(WebPubSubOptions.ConnectionString)} or {attributeConnectionStringName}.");
+                throw new InvalidOperationException($"The Service connection string must be set either via an '{Constants.WebPubSubConnectionStringName}' app setting, via an '{Constants.WebPubSubConnectionStringName}' environment variable, or {attributeConnectionStringName}.");
             }
         }
 
