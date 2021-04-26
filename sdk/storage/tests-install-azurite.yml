@@ -1,20 +1,24 @@
-variables:
-  azurite_location: $(Pipeline.Workspace)/.storage/azurite
-  azurite_version: 3.11.0
+parameters:
+- name: AzuriteLocation
+  type: string
+  default: $(Pipeline.Workspace)/.storage/azurite
+- name: AzuriteVersion
+  type: string
+  default: 3.11.0
 
 steps:
   - task: Cache@2
     inputs:
-      key: storageazurite | "$(Agent.OS)" | $(azurite_version)
-      path: $(azurite_location)
+      key: storageazurite | "$(Agent.OS)" | ${{ parameters.AzuriteVersion }}
+      path: ${{ parameters.AzuriteLocation }}
     displayName: Cache Azurite instalation
   - task: Npm@1
     inputs:
       command: custom
-      customCommand: install --prefix $(azurite_location) azurite@$(azurite_version)
+      customCommand: install --prefix ${{ parameters.AzuriteLocation }} azurite@$(azurite_version)
     displayName: Install Azurite
   - task: PowerShell@2
     displayName: Add Azurite location as environment variable
     inputs:
       targetType: 'inline'
-      script: Write-Host "##vso[task.setvariable variable=Azure.Azurite.Location;]$(azurite_location)"
+      script: Write-Host "##vso[task.setvariable variable=Azure.Azurite.Location;]${{ parameters.AzuriteLocation }}"
