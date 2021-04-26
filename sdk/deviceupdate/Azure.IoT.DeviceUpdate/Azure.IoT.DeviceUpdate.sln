@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.IoT.DeviceUpdate", "src\Azure.IoT.DeviceUpdate.csproj", "{F1AB3BFB-DBBF-4002-A93F-DFB02545C666}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.IoT.DeviceUpdate.Tests", "tests\Azure.IoT.DeviceUpdate.Tests.csproj", "{C039F382-F091-433C-9DAA-CC2FF7CF4644}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{24219D07-7E76-4631-9D89-49DCB79F7A84}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceUpdateClientSample", "samples\DeviceUpdateClientSample\DeviceUpdateClientSample.csproj", "{4719AE90-2B90-4DBC-92DA-8CCE29D5B7F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1AB3BFB-DBBF-4002-A93F-DFB02545C666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1AB3BFB-DBBF-4002-A93F-DFB02545C666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1AB3BFB-DBBF-4002-A93F-DFB02545C666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1AB3BFB-DBBF-4002-A93F-DFB02545C666}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C039F382-F091-433C-9DAA-CC2FF7CF4644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C039F382-F091-433C-9DAA-CC2FF7CF4644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C039F382-F091-433C-9DAA-CC2FF7CF4644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C039F382-F091-433C-9DAA-CC2FF7CF4644}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24219D07-7E76-4631-9D89-49DCB79F7A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24219D07-7E76-4631-9D89-49DCB79F7A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24219D07-7E76-4631-9D89-49DCB79F7A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24219D07-7E76-4631-9D89-49DCB79F7A84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4719AE90-2B90-4DBC-92DA-8CCE29D5B7F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4719AE90-2B90-4DBC-92DA-8CCE29D5B7F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4719AE90-2B90-4DBC-92DA-8CCE29D5B7F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4719AE90-2B90-4DBC-92DA-8CCE29D5B7F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3D97F8B9-00F4-4457-BD23-58F8D58B9C64}
+	EndGlobalSection
+EndGlobal

@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Keys
     }
     public partial class DeleteKeyOperation : Azure.Operation<Azure.Security.KeyVault.Keys.DeletedKey>
     {
-        internal DeleteKeyOperation() { }
+        protected DeleteKeyOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -271,7 +271,7 @@ namespace Azure.Security.KeyVault.Keys
     }
     public partial class RecoverDeletedKeyOperation : Azure.Operation<Azure.Security.KeyVault.Keys.KeyVaultKey>
     {
-        internal RecoverDeletedKeyOperation() { }
+        protected RecoverDeletedKeyOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

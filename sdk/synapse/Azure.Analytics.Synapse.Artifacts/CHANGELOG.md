@@ -1,9 +1,21 @@
 # Release History
 
-## 1.0.0-preview.7 (Unreleased)
+## 1.0.0-preview.9 (Unreleased)
+
+
+## 1.0.0-preview.8 (2021-04-06)
+
+### Added
+- Many additional model classes
+
+### Changed
+- Exposed Serialization and Deserialization methods.
+
+## 1.0.0-preview.7 (2021-03-17)
 
 ### Added
 - Many models classes now have public getters.
+- Added new `LibraryClient` and associated support types.
 
 ## 1.0.0-preview.6 (2021-02-10)
 

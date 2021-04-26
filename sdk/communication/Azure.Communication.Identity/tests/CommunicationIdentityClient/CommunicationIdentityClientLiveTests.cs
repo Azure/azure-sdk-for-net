@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Communication.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -61,11 +62,89 @@ namespace Azure.Communication.Identity.Tests
             }
         }
 
-        public enum AuthMethod
+        [Test]
+        public async Task GetTokenWithNullUserShouldThrow()
         {
-            ConnectionString,
-            KeyCredential,
-            TokenCredential,
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: null, scopes: new[] { CommunicationTokenScope.Chat });
+            }
+            catch (NullReferenceException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("RevokeTokensAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task GetTokenWithNullScopesShouldThrow()
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
+                Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: null);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("scopes", ex.ParamName);
+                return;
+            }
+            Assert.Fail("RevokeTokensAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task CreateUserAndTokenWithNullScopeShouldThrow()
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: null);
+            }
+            catch (NullReferenceException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("CreateUserAndTokenAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task DeleteUserWithNullUserShouldThrow()
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response deleteResponse = await client.DeleteUserAsync(communicationUser: null);
+            }
+            catch (NullReferenceException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("DeleteUserAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task RevokeTokenWithNullUserShouldThrow()
+        {
+            try
+            {
+                CommunicationIdentityClient client = CreateClientWithConnectionString();
+                Response deleteResponse = await client.RevokeTokensAsync(communicationUser: null);
+            }
+            catch (NullReferenceException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("RevokeTokensAsync should have thrown an exception.");
         }
     }
 }

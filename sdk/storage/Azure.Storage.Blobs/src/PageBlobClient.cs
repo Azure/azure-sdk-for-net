@@ -337,6 +337,46 @@ namespace Azure.Storage.Blobs.Specialized
                 ClientConfiguration);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageBlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/>.
+        ///
+        /// </summary>
+        /// <param name="customerProvidedKey">The customer provided key.</param>
+        /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the customer provide key in the returned <see cref="PageBlobClient"/>.
+        /// </remarks>
+        public new PageBlobClient WithCustomerProvidedKey(CustomerProvidedKey? customerProvidedKey)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.CustomerProvidedKey = customerProvidedKey;
+            return new PageBlobClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageBlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="encryptionScope"/>.
+        ///
+        /// </summary>
+        /// <param name="encryptionScope">The encryption scope.</param>
+        /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the encryption scope in the returned <see cref="PageBlobClient"/>.
+        /// </remarks>
+        public new PageBlobClient WithEncryptionScope(string encryptionScope)
+        {
+            BlobClientConfiguration newClientConfiguration = BlobClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.EncryptionScope = encryptionScope;
+            return new PageBlobClient(
+                blobUri: Uri,
+                clientConfiguration: newClientConfiguration);
+        }
+
         #region Create
         /// <summary>
         /// The <see cref="Create(long, PageBlobCreateOptions, CancellationToken)"/>

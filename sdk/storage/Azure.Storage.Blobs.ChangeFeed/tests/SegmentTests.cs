@@ -16,15 +16,15 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class SegmentTests : ChangeFeedTestBase
     {
-        public SegmentTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public SegmentTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         /// <summary>
         /// Test building a Segment with a SegmentCursor, and then calling Segment.GetCursor().
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task GetCursor()
         {
             // Arrange
@@ -61,16 +61,16 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             using FileStream stream = File.OpenRead(
                 $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"SegmentManifest.json"}");
-            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
+            BlobDownloadStreamingResult blobDownloadStreamingResult = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadStreamingResult, new MockResponse(200));
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync()).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download()).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default)).Returns(downloadResponse);
             }
 
             shardFactory.SetupSequence(r => r.BuildShard(
@@ -114,11 +114,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync());
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default));
             }
             else
             {
-                blobClient.Verify(r => r.Download());
+                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default));
             }
 
             for (int i = 0; i < shards.Count; i++)
@@ -136,7 +136,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// We are round-robining the Shards, so we will return the events for
         /// the shards indexes: 0 1 2 0 1.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task GetPage()
         {
             // Arrange
@@ -165,16 +165,16 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             using FileStream stream = File.OpenRead(
                 $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}{"SegmentManifest.json"}");
-            BlobDownloadInfo blobDownloadInfo = BlobsModelFactory.BlobDownloadInfo(content: stream);
-            Response<BlobDownloadInfo> downloadResponse = Response.FromValue(blobDownloadInfo, new MockResponse(200));
+            BlobDownloadStreamingResult blobDownloadStreamingResult = BlobsModelFactory.BlobDownloadStreamingResult(content: stream);
+            Response<BlobDownloadStreamingResult> downloadResponse = Response.FromValue(blobDownloadStreamingResult, new MockResponse(200));
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadAsync()).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.Download()).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default)).Returns(downloadResponse);
             }
 
             shardFactory.SetupSequence(r => r.BuildShard(
@@ -246,11 +246,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             containerClient.Verify(r => r.GetBlobClient(manifestPath));
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadAsync());
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default));
             }
             else
             {
-                blobClient.Verify(r => r.Download());
+                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default));
             }
 
             for (int i = 0; i < shards.Count; i++)

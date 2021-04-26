@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -101,7 +101,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     var role = relation.Roles.ElementAt(0);
                     Assert.IsNotNull(relation.Roles);
                     Assert.AreEqual(2, relation.Roles.Count());
-                    Assert.AreEqual("Attribute", role.Name);
+                    Assert.AreEqual("Dosage", role.Name);
                     Assert.AreEqual("100mg", role.Entity.Text);
                     Assert.AreEqual(18, role.Entity.Offset);
                     Assert.AreEqual("Dosage", role.Entity.Category);
@@ -110,7 +110,6 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        [Ignore("Waiting for service to deploy to WestU2. Issue https://github.com/Azure/azure-sdk-for-net/issues/19152")]
         [Test]
         public async Task RecognizeHealthcareEntitiesTestWithAssertions()
         {
@@ -130,7 +129,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -163,7 +162,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual("Diagnosis", entity.Category);
                     Assert.AreEqual(10, entity.Length);
                     Assert.IsNotNull(entity.Assertion);
-                    Assert.AreEqual(Certainty.NegativePossible, entity.Assertion.Certainty.Value);
+                    Assert.AreEqual(EntityCertainty.NegativePossible, entity.Assertion.Certainty.Value);
                 }
 
                 if (entity.Text == "Penicillin")
@@ -171,7 +170,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual("MedicationName", entity.Category);
                     Assert.AreEqual(10, entity.Length);
                     Assert.IsNotNull(entity.Assertion);
-                    Assert.AreEqual(Certainty.NeutralPossible, entity.Assertion.Certainty.Value);
+                    Assert.AreEqual(EntityCertainty.NeutralPossible, entity.Assertion.Certainty.Value);
                 }
             }
         }
@@ -182,7 +181,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en");
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -211,7 +210,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -235,7 +234,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -263,7 +262,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en", options);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -286,7 +285,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -314,7 +313,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, options);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -378,7 +377,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.Throws<InvalidOperationException>(() => operation.GetValues());
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);

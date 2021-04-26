@@ -50,17 +50,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="systemNumber"> System number of the BW system where the open hub destination is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
         /// <param name="clientId"> Client ID of the client on the BW system where the open hub destination is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
         /// <param name="language"> Language of the BW system where the open hub destination is located. The default value is EN. Type: string (or Expression with resultType string). </param>
+        /// <param name="systemId"> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password to access the SAP BW server where the open hub destination is located. </param>
+        /// <param name="messageServer"> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </param>
+        /// <param name="messageServerService"> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </param>
+        /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SapOpenHubLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, object systemNumber, object clientId, object language, object userName, SecretBase password, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SapOpenHubLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object server, object systemNumber, object clientId, object language, object systemId, object userName, SecretBase password, object messageServer, object messageServerService, object logonGroup, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             SystemNumber = systemNumber;
             ClientId = clientId;
             Language = language;
+            SystemId = systemId;
             UserName = userName;
             Password = password;
+            MessageServer = messageServer;
+            MessageServerService = messageServerService;
+            LogonGroup = logonGroup;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "SapOpenHub";
         }
@@ -73,10 +81,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ClientId { get; set; }
         /// <summary> Language of the BW system where the open hub destination is located. The default value is EN. Type: string (or Expression with resultType string). </summary>
         public object Language { get; set; }
+        /// <summary> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </summary>
+        public object SystemId { get; set; }
         /// <summary> Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string). </summary>
         public object UserName { get; set; }
         /// <summary> Password to access the SAP BW server where the open hub destination is located. </summary>
         public SecretBase Password { get; set; }
+        /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
+        public object MessageServer { get; set; }
+        /// <summary> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </summary>
+        public object MessageServerService { get; set; }
+        /// <summary> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </summary>
+        public object LogonGroup { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
     }

@@ -1,8 +1,5 @@
 # Azure Communication Identity client library for .NET
 
-> Server Version:
-> Identity client: 2021-03-07
-
 Azure Communication Identity is managing tokens for Azure Communication Services.
 
 [Source code][source] <!--| [Package (NuGet)][package]--> | [Product documentation][product_docs] | [Samples][source_samples]
@@ -14,7 +11,7 @@ Azure Communication Identity is managing tokens for Azure Communication Services
 Install the Azure Communication Identity client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Communication.Identity --version 1.0.0-beta.4
+dotnet add package Azure.Communication.Identity --version 1.0.0
 ```
 
 ### Prerequisites
@@ -77,7 +74,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-### Create a new identity
+### Creating a new user
 
 ```C# Snippet:CreateCommunicationUserAsync
 Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
@@ -93,6 +90,14 @@ string token = tokenResponse.Value.Token;
 DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
 Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
+```
+
+### Creating a user and a token in the same request
+```C# Snippet:CreateCommunicationUserAndToken
+Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat });
+var (user, token) = response.Value;
+Console.WriteLine($"User id: {user.Id}");
+Console.WriteLine($"Token: {token.Token}");
 ```
 
 ### Revoking a user's tokens

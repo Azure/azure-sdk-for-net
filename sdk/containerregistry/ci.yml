@@ -9,7 +9,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/containerregistry/
+    - sdk/containerregistry/ci.yml
+    - sdk/containerregistry/service.projects
+    - sdk/containerregistry/Azure.Containers.ContainerRegistry
 
 pr:
   branches:
@@ -21,13 +23,16 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/containerregistry/
+    - sdk/containerregistry/ci.yml
+    - sdk/containerregistry/service.projects
+    - sdk/containerregistry/Azure.Containers.ContainerRegistry
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client
     ServiceDirectory: containerregistry
     ArtifactName: packages
     Artifacts:
-    - name: Microsoft.Azure.ContainerRegistry
-      safeName: MicrosoftAzureContainerRegistry
+    - name: Azure.Containers.ContainerRegistry
+      safeName: AzureContainersContainerRegistry

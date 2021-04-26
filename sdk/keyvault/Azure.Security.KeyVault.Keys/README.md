@@ -217,7 +217,7 @@ Console.WriteLine(ecKey.KeyType);
 ```
 
 ### Retrieve a key
-`GetKeyAsync` retrieves a key previously stored in the Azure Key Vault.
+`GetKey` retrieves a key previously stored in the Azure Key Vault.
 
 ```C# Snippet:RetrieveKey
 KeyVaultKey key = client.GetKey("key-name");

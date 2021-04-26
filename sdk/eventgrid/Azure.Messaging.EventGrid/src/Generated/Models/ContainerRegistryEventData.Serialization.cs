@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ContainerRegistryEventDataConverter))]
     public partial class ContainerRegistryEventData
     {
         internal static ContainerRegistryEventData DeserializeContainerRegistryEventData(JsonElement element)
@@ -86,6 +88,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new ContainerRegistryEventData(id.Value, Optional.ToNullable(timestamp), action.Value, target.Value, request.Value, actor.Value, source.Value);
+        }
+
+        internal partial class ContainerRegistryEventDataConverter : JsonConverter<ContainerRegistryEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ContainerRegistryEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override ContainerRegistryEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeContainerRegistryEventData(document.RootElement);
+            }
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private TriggerClient CreateClient()
         {
             return InstrumentClient(new TriggerClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private PipelineClient CreatePipelineClient()
         {
             return InstrumentClient(new PipelineClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));

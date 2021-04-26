@@ -300,4 +300,16 @@
   <data name="InvalidEndpointAddress" xml:space="preserve">
     <value>The endpoint address could not be parsed; it was either malformed or not using the `sb://` scheme.</value>
   </data>
+  <data name="UnsupportedCredential" xml:space="preserve">
+    <value>The credential provided is not a supported type.</value>
+  </data>
+  <data name="InvalidAmqpMessageBodyType" xml:space="preserve">
+    <value>{0} is not a supported body type.</value>
+  </data>
+  <data name="InvalidAmqpMessageValueBody" xml:space="preserve">
+    <value>{0} is not a supported value body type.</value>
+  </data>
+  <data name="DisposedConnectionMessageProcessorMustStop" xml:space="preserve">
+    <value>The message processor is unable to continue and will stop processing; the host application has closed the connection to the Service Bus service.</value>
+  </data>
 </root>

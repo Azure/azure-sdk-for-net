@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var returnTwoVM = await CreateVM(rgName, asName, storageAccountName, imageRef, hasManagedDisks: hasManagedDisks, hasDiffDisks: hasDiffDisks, vmSize: vmSize, osDiskStorageAccountType: osDiskStorageAccountType,
                 dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones, ppgName: ppgName, diskEncryptionSetId: diskEncryptionSetId);
             //VirtualMachine outVM = returnTwoVM.Item1;
-            inputVM = returnTwoVM.Item2;
-            string inputVMName = returnTwoVM.Item3;
+            inputVM = returnTwoVM.Input;
+            string inputVMName = returnTwoVM.Name;
             // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to
             // allow GA blob to populate.
             WaitMinutes(5);

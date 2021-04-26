@@ -182,6 +182,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
         }
 
         [Test]
@@ -202,6 +204,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
         }
 
         [Test]
@@ -222,6 +226,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
         }
 
         [Test]
@@ -242,6 +248,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
         }
 
         [Test]
@@ -262,6 +270,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
         }
 
         [Test]
@@ -282,6 +292,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
         }
 
         [Test]
@@ -305,6 +317,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
         }
 
         [Test]
@@ -328,6 +342,8 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
         }
 
         [Test]
@@ -347,6 +363,50 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
             Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithCountryCodeValueType()
+        {
+            var value = "BRA";
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithCountryCodeValueType(value);
+
+            Assert.AreEqual(FieldValueType.Country, fieldValue.ValueType);
+            Assert.AreEqual(value, fieldValue.AsCountryCode());
+
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsGender());
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFieldValueWithGenderValueType()
+        {
+            var value = FieldValueGender.F;
+            var fieldValue = FormRecognizerModelFactory.FieldValueWithGenderValueType(value);
+
+            Assert.AreEqual(FieldValueType.Gender, fieldValue.ValueType);
+            Assert.AreEqual(value, fieldValue.AsGender());
+
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsString());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsInt64());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsFloat());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDate());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsTime());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsList());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsPhoneNumber());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsDictionary());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsSelectionMarkState());
+            Assert.Throws<InvalidOperationException>(() => fieldValue.AsCountryCode());
         }
 
         [Test]
@@ -355,7 +415,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var name = "Cardano";
             var labelData = new FieldData(default, default, default, default);
             var valueData = new FieldData(default, default, default, default);
-            var value = new FieldValue("Hopper");
+            var value = new FieldValue(1);
             var confidence = 0.8854f;
 
             var formField = FormRecognizerModelFactory.FormField(name, labelData, valueData, value, confidence);
@@ -376,21 +436,23 @@ namespace Azure.AI.FormRecognizer.Tests
             var pageNumber = 389;
             var text = "Bhaskara";
             var words = new List<FormWord>() { formWord };
+            var appearance = new TextAppearance();
 
-            var formLine = FormRecognizerModelFactory.FormLine(boundingBox, pageNumber, text, words);
+            var formLine = FormRecognizerModelFactory.FormLine(boundingBox, pageNumber, text, words, appearance);
 
             Assert.AreEqual(boundingBox, formLine.BoundingBox);
             Assert.AreEqual(pageNumber, formLine.PageNumber);
             Assert.AreEqual(text, formLine.Text);
             Assert.AreNotSame(words, formLine.Words);
             Assert.AreEqual(words, formLine.Words);
+            Assert.AreEqual(appearance, formLine.Appearance);
         }
 
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateFormPage()
         {
-            var formLine = new FormLine(default, default, default, default);
-            var formTable = new FormTable(default, default, default, default);
+            var formLine = new FormLine(default, default, default, default, default);
+            var formTable = new FormTable(default, default, default, default, default);
             var formSelectionMark = new FormSelectionMark(default, default, default, default, default);
 
             var pageNumber = 503;
@@ -455,6 +517,24 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        public void FormRecognizerModelFactoryCanInstantiateFormSelectionMark()
+        {
+            var boundingBox = new FieldBoundingBox(ListOfPoints);
+            var pageNumber = 113;
+            var text = "selected";
+            var confidence = 0.1602f;
+            var state = SelectionMarkState.Selected;
+
+            var formSelectionMark = FormRecognizerModelFactory.FormSelectionMark(boundingBox, pageNumber, text, confidence, state);
+
+            Assert.AreEqual(boundingBox, formSelectionMark.BoundingBox);
+            Assert.AreEqual(pageNumber, formSelectionMark.PageNumber);
+            Assert.AreEqual(text, formSelectionMark.Text);
+            Assert.AreEqual(confidence, formSelectionMark.Confidence);
+            Assert.AreEqual(state, formSelectionMark.State);
+        }
+
+        [Test]
         public void FormRecognizerModelFactoryCanInstantiateFormTable()
         {
             var formTableCell = new FormTableCell(default, default, default, default, default, default, default, default, default, default, default);
@@ -463,14 +543,16 @@ namespace Azure.AI.FormRecognizer.Tests
             var columnCount = 89;
             var rowCount = 97;
             var cells = new List<FormTableCell>() { formTableCell };
+            var boundingBox = new FieldBoundingBox(ListOfPoints);
 
-            var formTable = FormRecognizerModelFactory.FormTable(pageNumber, columnCount, rowCount, cells);
+            var formTable = FormRecognizerModelFactory.FormTable(pageNumber, columnCount, rowCount, cells, boundingBox);
 
             Assert.AreEqual(pageNumber, formTable.PageNumber);
             Assert.AreEqual(columnCount, formTable.ColumnCount);
             Assert.AreEqual(rowCount, formTable.RowCount);
             Assert.AreNotSame(cells, formTable.Cells);
             Assert.AreEqual(cells, formTable.Cells);
+            Assert.AreEqual(boundingBox, formTable.BoundingBox);
         }
 
         [Test]
@@ -561,21 +643,25 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerModelFactoryCanInstantiateFormSelectionMark()
+        public void FormRecognizerModelFactoryCanInstantiateTextAppearance()
         {
-            var boundingBox = new FieldBoundingBox(ListOfPoints);
-            var pageNumber = 113;
-            var text = "selected";
-            var confidence = 0.1602f;
-            var state = SelectionMarkState.Selected;
+            var style = new TextStyle(default, default);
 
-            var formSelectionMark = FormRecognizerModelFactory.FormSelectionMark(boundingBox, pageNumber, text, confidence, state);
+            var textAppearance = FormRecognizerModelFactory.TextAppearance(style);
 
-            Assert.AreEqual(boundingBox, formSelectionMark.BoundingBox);
-            Assert.AreEqual(pageNumber, formSelectionMark.PageNumber);
-            Assert.AreEqual(text, formSelectionMark.Text);
-            Assert.AreEqual(confidence, formSelectionMark.Confidence);
-            Assert.AreEqual(state, formSelectionMark.State);
+            Assert.AreEqual(style, textAppearance.Style);
+        }
+
+        [Test]
+        public void FormRecognizerModelFactoryCanInstantiateTextStyle()
+        {
+            var name = TextStyleName.Handwriting;
+            var confidence = 0.299792f;
+
+            var textStyle = FormRecognizerModelFactory.TextStyle(name, confidence);
+
+            Assert.AreEqual(name, textStyle.Name);
+            Assert.AreEqual(confidence, textStyle.Confidence);
         }
 
         [Test]

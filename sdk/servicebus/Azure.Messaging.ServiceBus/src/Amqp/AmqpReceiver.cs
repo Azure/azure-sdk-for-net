@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -16,7 +19,6 @@ using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
-using Microsoft.Azure.Amqp.Transaction;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -72,7 +74,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly string _identifier;
         private readonly FaultTolerantAmqpObject<ReceivingAmqpLink> _receiveLink;
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
-        private readonly string _transactionGroup;
+
+        private const int SizeOfGuidInBytes = 16;
 
         /// <summary>
         /// Gets the sequence number of the last peeked message.
@@ -92,6 +95,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         private readonly ConcurrentExpiringSet<Guid> _requestResponseLockedMessages;
 
+        private static IReadOnlyList<ServiceBusReceivedMessage> s_backingEmptyList;
+
+        private static IReadOnlyList<ServiceBusReceivedMessage> EmptyList
+        {
+            get
+            {
+                s_backingEmptyList ??= new ReadOnlyCollection<ServiceBusReceivedMessage>(new List<ServiceBusReceivedMessage>(0));
+                return s_backingEmptyList;
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AmqpReceiver"/> class.
         /// </summary>
@@ -101,10 +115,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
-        /// <param name="identifier"></param>
-        /// <param name="sessionId"></param>
-        /// <param name="isSessionReceiver"></param>
-        /// <param name="transactionGroup"></param>
+        /// <param name="identifier">The identifier for the sender.</param>
+        /// <param name="sessionId">The session ID to receive messages for.</param>
+        /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
+        /// open link operation. Only applicable for session receivers.</param>
         ///
         /// <remarks>
         /// As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -123,7 +138,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string identifier,
             string sessionId,
             bool isSessionReceiver,
-            string transactionGroup)
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -137,7 +152,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _identifier = identifier;
             _requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             SessionId = sessionId;
-            _transactionGroup = transactionGroup;
 
             _receiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
@@ -147,7 +161,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         receiveMode: receiveMode,
                         isSessionReceiver: isSessionReceiver,
                         identifier: identifier,
-                        transactionGroup: transactionGroup),
+                        // The cancellationToken will always be CancellationToken.None for non-session receivers
+                        // it is okay to register the user provided cancellationToken from the AcceptNextSessionAsync call in
+                        // the fault tolerant object because session receivers are never reconnected.
+                        cancellationToken: cancellationToken),
                 link => CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
@@ -173,7 +190,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusReceiveMode receiveMode,
             bool isSessionReceiver,
             string identifier,
-            string transactionGroup)
+            CancellationToken cancellationToken)
         {
             ServiceBusEventSource.Log.CreateReceiveLinkStart(_identifier);
 
@@ -187,8 +204,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     receiveMode: receiveMode,
                     sessionId: SessionId,
                     isSessionReceiver: isSessionReceiver,
-                    transactionGroup: transactionGroup,
-                    cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (isSessionReceiver)
                 {
                     SessionLockedUntil = link.Settings.Properties.TryGetValue<long>(
@@ -249,19 +265,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan? maxWaitTime,
             CancellationToken cancellationToken)
         {
-            IReadOnlyList<ServiceBusReceivedMessage> messages = null;
-            await _retryPolicy.RunOperation(async (timeout) =>
-            {
-                messages = await ReceiveMessagesAsyncInternal(
-                    maxMessages,
-                    maxWaitTime,
-                    timeout,
-                    cancellationToken).ConfigureAwait(false);
-            },
-            _connectionScope,
-            cancellationToken).ConfigureAwait(false);
-
-            return messages;
+            return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
+                {
+                    var (receiver, maxMessages, maxWaitTime) = value;
+                    return await receiver.ReceiveMessagesAsyncInternal(
+                        maxMessages,
+                        maxWaitTime,
+                        timeout,
+                        token).ConfigureAwait(false);
+                },
+                (this, maxMessages, maxWaitTime),
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -283,8 +298,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             var link = default(ReceivingAmqpLink);
-            var amqpMessages = default(IEnumerable<AmqpMessage>);
-            var receivedMessages = new List<ServiceBusReceivedMessage>();
 
             ThrowIfSessionLockLost();
 
@@ -292,49 +305,95 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 if (!_receiveLink.TryGetOpenedObject(out link))
                 {
-                    link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
+                    link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout))
+                        .ConfigureAwait(false);
                 }
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                var messagesReceived = await Task.Factory.FromAsync
-                (
-                    (callback, state) => link.BeginReceiveRemoteMessages(
-                        maxMessages,
-                        TimeSpan.FromMilliseconds(20),
-                        maxWaitTime ?? timeout,
-                        callback,
-                        state),
-                    (asyncResult) => link.EndReceiveMessages(asyncResult, out amqpMessages),
-                    TaskCreationOptions.RunContinuationsAsynchronously
-                ).ConfigureAwait(false);
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                var receiveMessagesCompletionSource =
+                    new TaskCompletionSource<IEnumerable<AmqpMessage>>(TaskCreationOptions
+                        .RunContinuationsAsynchronously);
+
+                using var registration = cancellationToken.Register(static state =>
+                {
+                    var tcs = (TaskCompletionSource<IEnumerable<AmqpMessage>>)state;
+                    tcs.TrySetCanceled();
+                }, receiveMessagesCompletionSource, useSynchronizationContext: false);
+
+                // in case BeginReceiveRemoteMessages throws exception will be materialized on the synchronous path
+                _ = Task.Factory
+                    .FromAsync<(ReceivingAmqpLink, int, TimeSpan?, TimeSpan,
+                        TaskCompletionSource<IEnumerable<AmqpMessage>>)>
+                    (
+                        static(arguments, callback, state) =>
+                        {
+                            var (link, maxMessages, maxWaitTime, timeout, receiveMessagesCompletionSource) = arguments;
+                            return link.BeginReceiveRemoteMessages(
+                                maxMessages,
+                                TimeSpan.FromMilliseconds(20),
+                                maxWaitTime ?? timeout,
+                                callback,
+                                (link, receiveMessagesCompletionSource));
+                        },
+                        static asyncResult =>
+                        {
+                            var (link, receiveMessagesCompletionSource) =
+                                ((ReceivingAmqpLink, TaskCompletionSource<IEnumerable<AmqpMessage>>))asyncResult
+                                    .AsyncState;
+                            try
+                            {
+                                bool received =
+                                    link.EndReceiveMessages(asyncResult, out IEnumerable<AmqpMessage> amqpMessages);
+                                receiveMessagesCompletionSource.TrySetResult(received
+                                    ? amqpMessages
+                                    : Enumerable.Empty<AmqpMessage>());
+                            }
+                            catch (Exception e)
+                            {
+                                receiveMessagesCompletionSource.TrySetException(e);
+                            }
+                        },
+                        (link, maxMessages, maxWaitTime, timeout, receiveMessagesCompletionSource),
+                        default
+                    ).ConfigureAwait(false);
+
+                var messagesReceived = await receiveMessagesCompletionSource.Task
+                    .ConfigureAwait(false);
+
+                List<ServiceBusReceivedMessage> receivedMessages = null;
                 // If event messages were received, then package them for consumption and
                 // return them.
-
-                if ((messagesReceived) && (amqpMessages != null))
+                foreach (AmqpMessage message in messagesReceived)
                 {
-                    foreach (AmqpMessage message in amqpMessages)
+                    // Getting the count of the underlying collection is good for performance/allocations to prevent the list from growing
+                    receivedMessages ??= messagesReceived is IReadOnlyCollection<AmqpMessage> readOnlyList
+                        ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
+                        : new List<ServiceBusReceivedMessage>();
+
+                    if (_receiveMode == ServiceBusReceiveMode.ReceiveAndDelete)
                     {
-                        if (_receiveMode == ServiceBusReceiveMode.ReceiveAndDelete)
-                        {
-                            link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
-                        }
-                        receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
-                        message.Dispose();
+                        link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     }
+
+                    receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
+                    message.Dispose();
                 }
 
-                return receivedMessages;
+                return receivedMessages ?? EmptyList;
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
             }
             catch (Exception exception)
             {
                 ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
-                    exception,
-                    link?.GetTrackingId(),
-                    null,
-                    !cancellationToken.IsCancellationRequested && HasLinkCommunicationError(link)))
-                .Throw();
+                        exception,
+                        link?.GetTrackingId(),
+                        null,
+                        !cancellationToken.IsCancellationRequested && HasLinkCommunicationError(link)))
+                    .Throw();
 
                 throw; // will never be reached
             }
@@ -354,55 +413,63 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task CompleteAsync(
-            string lockToken,
+            Guid lockToken,
             CancellationToken cancellationToken = default) =>
             await _retryPolicy.RunOperation(
-                async (timeout) =>
-                await CompleteInternalAsync(
-                    lockToken,
-                    timeout).ConfigureAwait(false),
+                static async (value, timeout, _) =>
+                {
+                    var (receiver, lockToken) = value;
+                    await receiver.CompleteInternalAsync(
+                        lockToken,
+                        timeout).ConfigureAwait(false);
+                },
+                (this, lockToken),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
+        /// Completes a <see cref="ServiceBusReceivedMessage"/> using a lock token. This will delete the message from the service.
         /// </summary>
         ///
         /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
         /// <param name="timeout"></param>
         private async Task CompleteInternalAsync(
-            string lockToken,
+            Guid lockToken,
             TimeSpan timeout)
         {
-            Guid lockTokenGuid = new Guid(lockToken);
-            var lockTokenGuids = new[] { lockTokenGuid };
-            if (_requestResponseLockedMessages.Contains(lockTokenGuid))
+            if (_requestResponseLockedMessages.Contains(lockToken))
             {
                 await DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
+                    lockToken,
                     timeout,
                     DispositionStatus.Completed,
                     SessionId).ConfigureAwait(false);
                 return;
             }
-            await DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout).ConfigureAwait(false);
+            await DisposeMessageAsync(lockToken, AmqpConstants.AcceptedOutcome, timeout).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
+        /// Settles a <see cref="ServiceBusReceivedMessage"/> using a lock token.
         /// </summary>
         ///
-        /// <param name="lockTokens">An <see cref="IEnumerable{T}"/> containing the lock tokens of the corresponding messages to complete.</param>
+        /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
         /// <param name="outcome"></param>
         /// <param name="timeout"></param>
-        private async Task DisposeMessagesAsync(
-            IEnumerable<Guid> lockTokens,
+        private async Task DisposeMessageAsync(
+            Guid lockToken,
             Outcome outcome,
             TimeSpan timeout)
         {
             ThrowIfSessionLockLost();
-            List<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(lockTokens);
 
+            byte[] bufferForLockToken = ArrayPool<byte>.Shared.Rent(SizeOfGuidInBytes);
+            if (!MemoryMarshal.TryWrite(bufferForLockToken, ref lockToken))
+            {
+                lockToken.ToByteArray().AsSpan().CopyTo(bufferForLockToken);
+            }
+
+            ArraySegment<byte> deliveryTag = new ArraySegment<byte>(bufferForLockToken, 0, SizeOfGuidInBytes);
             ReceivingAmqpLink receiveLink = null;
             try
             {
@@ -413,7 +480,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     transactionId = await AmqpTransactionManager.Instance.EnlistAsync(
                         ambientTransaction,
                         _connectionScope,
-                        _transactionGroup,
                         timeout).ConfigureAwait(false);
                 }
 
@@ -422,27 +488,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     receiveLink = await _receiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
                 }
 
-                var disposeMessageTasks = new Task<Outcome>[deliveryTags.Count];
-                var i = 0;
-                foreach (ArraySegment<byte> deliveryTag in deliveryTags)
-                {
-                    disposeMessageTasks[i++] = receiveLink.DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout);
-                }
-
-                Outcome[] outcomes = await Task.WhenAll(disposeMessageTasks).ConfigureAwait(false);
+                Outcome outcomeResult = await receiveLink
+                    .DisposeMessageAsync(deliveryTag, transactionId, outcome, true, timeout).ConfigureAwait(false);
                 Error error = null;
-                foreach (Outcome item in outcomes)
+                Outcome disposedOutcome =
+                    outcomeResult.DescriptorCode == Rejected.Code && ((error = ((Rejected)outcomeResult).Error) != null)
+                        ? outcomeResult
+                        : null;
+                if (disposedOutcome != null)
                 {
-                    Outcome disposedOutcome = item.DescriptorCode == Rejected.Code && ((error = ((Rejected)item).Error) != null) ? item : null;
-                    if (disposedOutcome != null)
+                    if (error.Condition.Equals(AmqpErrorCode.NotFound))
                     {
-                        if (error.Condition.Equals(AmqpErrorCode.NotFound))
-                        {
-                            ThrowLockLostException();
-                        }
-
-                        throw error.ToMessagingContractException();
+                        ThrowLockLostException();
                     }
+
+                    throw error.ToMessagingContractException();
                 }
             }
             catch (Exception exception)
@@ -461,6 +521,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
 
                 throw;
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(bufferForLockToken);
             }
         }
 
@@ -484,7 +548,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
+        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockTokenGuid"/>,
         /// only when <see cref="ServiceBusReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// In order to receive this message again in the future, you will need to save
         /// the <see cref="ServiceBusReceivedMessage.SequenceNumber"/>
@@ -495,14 +559,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task DeferAsync(
-            string lockToken,
+            Guid lockToken,
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default) =>
             await _retryPolicy.RunOperation(
-                async (timeout) => await DeferInternalAsync(
-                    lockToken,
-                    timeout,
-                    propertiesToModify).ConfigureAwait(false),
+                static async (value, timeout, _) =>
+                {
+                    var (receiver, lockToken, properties) = value;
+                    await receiver.DeferInternalAsync(
+                        lockToken,
+                        timeout,
+                        properties).ConfigureAwait(false);
+                },
+                (this, lockToken, propertiesToModify),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
@@ -513,22 +582,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="propertiesToModify">The properties of the message to modify while deferring the message.</param>
         ///
         private Task DeferInternalAsync(
-            string lockToken,
+            Guid lockToken,
             TimeSpan timeout,
             IDictionary<string, object> propertiesToModify = null)
         {
-            Guid lockTokenGuid = new Guid(lockToken);
-            var lockTokenGuids = new[] { lockTokenGuid };
-            if (_requestResponseLockedMessages.Contains(lockTokenGuid))
+            if (_requestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
+                    lockToken,
                     timeout,
                     DispositionStatus.Defered,
                     SessionId,
                     propertiesToModify);
             }
-            return DisposeMessagesAsync(lockTokenGuids, GetDeferOutcome(propertiesToModify), timeout);
+            return DisposeMessageAsync(lockToken, GetDeferOutcome(propertiesToModify), timeout);
         }
 
         /// <summary>
@@ -547,14 +614,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task AbandonAsync(
-            string lockToken,
+            Guid lockToken,
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default) =>
             await _retryPolicy.RunOperation(
-                async (timeout) => await AbandonInternalAsync(
-                    lockToken,
-                    timeout,
-                    propertiesToModify).ConfigureAwait(false),
+                static async (value, timeout, _) =>
+                {
+                    var (receiver, lockToken, properties) = value;
+                    await receiver.AbandonInternalAsync(
+                        lockToken,
+                        timeout,
+                        properties).ConfigureAwait(false);
+                },
+                (this, lockToken, propertiesToModify),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
@@ -566,22 +638,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="timeout"></param>
         /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
         private Task AbandonInternalAsync(
-            string lockToken,
+            Guid lockToken,
             TimeSpan timeout,
             IDictionary<string, object> propertiesToModify = null)
         {
-            Guid lockTokenGuid = new Guid(lockToken);
-            var lockTokenGuids = new[] { lockTokenGuid };
-            if (_requestResponseLockedMessages.Contains(lockTokenGuid))
+            if (_requestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
+                    lockToken,
                     timeout,
                     DispositionStatus.Abandoned,
                     SessionId,
                     propertiesToModify);
             }
-            return DisposeMessagesAsync(lockTokenGuids, GetAbandonOutcome(propertiesToModify), timeout);
+            return DisposeMessageAsync(lockToken, GetAbandonOutcome(propertiesToModify), timeout);
         }
 
         /// <summary>
@@ -604,18 +674,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task DeadLetterAsync(
-            string lockToken,
+            Guid lockToken,
             string deadLetterReason,
             string deadLetterErrorDescription = default,
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default) =>
             await _retryPolicy.RunOperation(
-                async (timeout) => await DeadLetterInternalAsync(
-                    lockToken,
-                    timeout,
-                    propertiesToModify,
-                    deadLetterReason,
-                    deadLetterErrorDescription).ConfigureAwait(false),
+                static async (value, timeout, _) =>
+                {
+                    var (receiver, lockToken, propertiesToModify, deadLetterReason, deadLetterErrorDescription) = value;
+                    await receiver.DeadLetterInternalAsync(
+                        lockToken,
+                        timeout,
+                        propertiesToModify,
+                        deadLetterReason,
+                        deadLetterErrorDescription).ConfigureAwait(false);
+                },
+                (this, lockToken, propertiesToModify, deadLetterReason, deadLetterErrorDescription),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
@@ -629,7 +704,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
         internal virtual Task DeadLetterInternalAsync(
-            string lockToken,
+            Guid lockToken,
             TimeSpan timeout,
             IDictionary<string, object> propertiesToModify,
             string deadLetterReason,
@@ -638,12 +713,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotTooLong(deadLetterReason, Constants.MaxDeadLetterReasonLength, nameof(deadLetterReason));
             Argument.AssertNotTooLong(deadLetterErrorDescription, Constants.MaxDeadLetterReasonLength, nameof(deadLetterErrorDescription));
 
-            Guid lockTokenGuid = new Guid(lockToken);
-            var lockTokenGuids = new[] { lockTokenGuid };
-            if (_requestResponseLockedMessages.Contains(lockTokenGuid))
+            if (_requestResponseLockedMessages.Contains(lockToken))
             {
                 return DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
+                    lockToken,
                     timeout,
                     DispositionStatus.Suspended,
                     SessionId,
@@ -652,8 +725,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     deadLetterErrorDescription);
             }
 
-            return DisposeMessagesAsync(
-                lockTokenGuids,
+            return DisposeMessageAsync(
+                lockToken,
                 GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription),
                 timeout);
         }
@@ -700,7 +773,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Updates the disposition status of deferred messages.
         /// </summary>
         ///
-        /// <param name="lockTokens">Message lock tokens to update disposition status.</param>
+        /// <param name="lockToken">Message lock token to update disposition status.</param>
         /// <param name="timeout"></param>
         /// <param name="dispositionStatus"></param>
         /// <param name="sessionId"></param>
@@ -708,7 +781,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="deadLetterReason"></param>
         /// <param name="deadLetterDescription"></param>
         private async Task DisposeMessageRequestResponseAsync(
-            Guid[] lockTokens,
+            Guid lockToken,
             TimeSpan timeout,
             DispositionStatus dispositionStatus,
             string sessionId = null,
@@ -724,7 +797,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
             }
 
-            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = lockTokens;
+            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new Guid[]{ lockToken };
             amqpRequestMessage.Map[ManagementConstants.Properties.DispositionStatus] = dispositionStatus.ToString().ToLowerInvariant();
 
             if (deadLetterReason != null)
@@ -780,11 +853,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private static Outcome GetDeferOutcome(IDictionary<string, object> propertiesToModify) =>
             GetModifiedOutcome(propertiesToModify, true);
 
-        private static List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
-        {
-            return lockTokens.Select(lockToken => new ArraySegment<byte>(lockToken.ToByteArray())).ToList();
-        }
-
         private static Outcome GetModifiedOutcome(
             IDictionary<string, object> propertiesToModify,
             bool undeliverableHere)
@@ -836,20 +904,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken = default)
         {
             long seqNumber = sequenceNumber ?? LastPeekedSequenceNumber + 1;
-            IReadOnlyList<ServiceBusReceivedMessage> messages = null;
-
-            await _retryPolicy.RunOperation(
-                async (timeout) =>
-                messages = await PeekMessagesInternalAsync(
-                    seqNumber,
-                    messageCount,
-                    timeout,
-                    cancellationToken)
-                .ConfigureAwait(false),
+            return await _retryPolicy.RunOperation(
+                static async (value, timeout, token) =>
+                {
+                    var (receiver, seqNumber, messageCount) = value;
+                    return await receiver.PeekMessagesInternalAsync(
+                            seqNumber,
+                            messageCount,
+                            timeout,
+                            token)
+                        .ConfigureAwait(false);
+                },
+                (this, seqNumber, messageCount),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
-
-            return messages;
         }
 
         /// <summary>
@@ -901,13 +969,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
 
-            var messages = new List<ServiceBusReceivedMessage>();
+            List<ServiceBusReceivedMessage> messages = null;
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
             {
                 ServiceBusReceivedMessage message = null;
-                IEnumerable<AmqpMap> messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
-                foreach (AmqpMap entry in messageList)
+                var messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
+                // not using foreach for better performance
+                for (var index = 0; index < messageList.Count; index++)
                 {
+                    AmqpMap entry = messageList[index];
+                    // Getting the count of the underlying collection is good for performance/allocations to prevent the list from growing
+                    messages ??= messageList is IReadOnlyCollection<AmqpMap> readOnlyList
+                        ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
+                        : new List<ServiceBusReceivedMessage>();
+
                     var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                     var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
                     message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, true);
@@ -918,13 +993,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     LastPeekedSequenceNumber = message.SequenceNumber;
                 }
-                return messages;
+                return messages ?? EmptyList;
             }
 
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
                 (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
             {
-                return messages;
+                return EmptyList;
             }
 
             throw amqpResponseMessage.ToMessagingContractException();
@@ -938,20 +1013,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="lockToken">Lock token associated with the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task<DateTimeOffset> RenewMessageLockAsync(
-            string lockToken,
+            Guid lockToken,
             CancellationToken cancellationToken)
         {
-            DateTimeOffset lockedUntil = DateTimeOffset.MinValue;
-            await _retryPolicy.RunOperation(
-                async (timeout) =>
+            return await _retryPolicy.RunOperation(
+                static async (value, timeout, _) =>
                 {
-                    lockedUntil = await RenewMessageLockInternalAsync(
+                    var (receiver, lockToken) = value;
+                    return await receiver.RenewMessageLockInternalAsync(
                         lockToken,
                         timeout).ConfigureAwait(false);
                 },
+                (this, lockToken),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
-            return lockedUntil;
         }
 
         /// <summary>
@@ -963,7 +1038,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="lockToken">Lock token associated with the message.</param>
         /// <param name="timeout"></param>
         private async Task<DateTimeOffset> RenewMessageLockInternalAsync(
-            string lockToken,
+            Guid lockToken,
             TimeSpan timeout)
         {
             DateTimeOffset lockedUntil;
@@ -978,7 +1053,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
             }
-            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new[] { new Guid(lockToken) };
+            amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new Guid[] { lockToken };
 
             AmqpResponseMessage amqpResponseMessage = await ExecuteRequest(
                 timeout,
@@ -1004,7 +1079,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _connectionScope,
                 _managementLink,
                 amqpRequestMessage,
-                _transactionGroup,
                 timeout).ConfigureAwait(false);
             return amqpResponseMessage;
         }
@@ -1014,13 +1088,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         public override async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
-            DateTimeOffset lockedUntil;
-            await _retryPolicy.RunOperation(
-                async (timeout) =>
-                {
-                    lockedUntil = await RenewSessionLockInternal(
-                        timeout).ConfigureAwait(false);
-                },
+            var lockedUntil = await _retryPolicy.RunOperation(
+                static async (receiver, timeout, _) => await receiver.RenewSessionLockInternal(
+                    timeout).ConfigureAwait(false),
+                this,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
             SessionLockedUntil = lockedUntil;
@@ -1064,15 +1135,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>The session state as <see cref="BinaryData"/>.</returns>
         public override async Task<BinaryData> GetStateAsync(CancellationToken cancellationToken = default)
         {
-            BinaryData sessionState = default;
-            await _retryPolicy.RunOperation(
-                async (timeout) =>
-                {
-                    sessionState = await GetStateInternal(timeout).ConfigureAwait(false);
-                },
+            return await _retryPolicy.RunOperation(
+                static async (receiver, timeout, _) => await receiver.GetStateInternal(timeout).ConfigureAwait(false),
+                this,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
-            return sessionState;
         }
 
         internal async Task<BinaryData> GetStateInternal(TimeSpan timeout)
@@ -1119,12 +1186,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken)
         {
             await _retryPolicy.RunOperation(
-                async (timeout) =>
+                static async (value, timeout, _) =>
                 {
-                    await SetStateInternal(
+                    var (receiver, sessionState) = value;
+                    await receiver.SetStateInternal(
                         sessionState,
                         timeout).ConfigureAwait(false);
                 },
+                (this, sessionState),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
         }
@@ -1171,21 +1240,24 @@ namespace Azure.Messaging.ServiceBus.Amqp
             long[] sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            IReadOnlyList<ServiceBusReceivedMessage> messages = null;
-            await _retryPolicy.RunOperation(
-                async (timeout) => messages = await ReceiveDeferredMessagesAsyncInternal(
-                    sequenceNumbers,
-                    timeout).ConfigureAwait(false),
+            return await _retryPolicy.RunOperation(
+                static async (value, timeout, _) =>
+                {
+                    var (receiver, sequenceNumbers) = value;
+                    return await receiver.ReceiveDeferredMessagesAsyncInternal(
+                        sequenceNumbers,
+                        timeout).ConfigureAwait(false);
+                },
+                (this, sequenceNumbers),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
-            return messages;
         }
 
         internal virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsyncInternal(
             long[] sequenceNumbers,
             TimeSpan timeout)
         {
-            var messages = new List<ServiceBusReceivedMessage>();
+            List<ServiceBusReceivedMessage> messages = null;
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.ReceiveBySequenceNumberOperation, timeout, null);
@@ -1208,10 +1280,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 if (response.StatusCode == AmqpResponseStatusCode.OK)
                 {
                     var amqpMapList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
-                    foreach (var entry in amqpMapList)
+                    // not using foreach for better performance
+                    for (var index = 0; index < amqpMapList.Count; index++)
                     {
+                        var entry = amqpMapList[index];
+                        // Getting the count of the underlying collection is good for performance/allocations to prevent the list from growing
+                        messages ??= amqpMapList is IReadOnlyCollection<AmqpMap> readOnlyList
+                            ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
+                            : new List<ServiceBusReceivedMessage>();
+
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
-                        var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
+                        var amqpMessage =
+                            AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
                         var message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
@@ -1235,7 +1315,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw; // will never be reached
             }
 
-            return messages;
+            return messages ?? EmptyList;
         }
 
         /// <summary>
@@ -1317,12 +1397,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task OpenLinkAsync(CancellationToken cancellationToken)
         {
-            ReceivingAmqpLink link = null;
-            await _retryPolicy.RunOperation(
-               async (timeout) =>
-               link = await _receiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
-               _connectionScope,
-               cancellationToken).ConfigureAwait(false);
+            _ = await _retryPolicy.RunOperation(
+                static async (receiveLink, timeout, _) =>
+                    await receiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
+                _receiveLink,
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
         }
 
         private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>

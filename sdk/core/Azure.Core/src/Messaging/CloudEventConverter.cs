@@ -97,13 +97,13 @@ namespace Azure.Messaging
                 {
                     if (!skipValidation)
                     {
-                        cloudEvent.ExtensionAttributes.Add(property.Name, GetObject(property.Value));
+                        cloudEvent.ExtensionAttributes.Add(property.Name, GetObject(property.Value)!);
                     }
                     else
                     {
                         // This aspect of skipValidation would not be supported for converters that live in a different
                         // package since CloudEventExtensionAttributes is internal.
-                        ((CloudEventExtensionAttributes<string, object?>)cloudEvent.ExtensionAttributes).AddWithoutValidation(property.Name, GetObject(property.Value));
+                        ((CloudEventExtensionAttributes<string, object>)cloudEvent.ExtensionAttributes).AddWithoutValidation(property.Name, GetObject(property.Value)!);
                     }
                 }
             }
@@ -213,7 +213,7 @@ namespace Azure.Messaging
                 writer.WritePropertyName(CloudEventConstants.Subject);
                 writer.WriteStringValue(value.Subject);
             }
-            foreach (KeyValuePair<string, object?> item in value.ExtensionAttributes)
+            foreach (KeyValuePair<string, object> item in value.ExtensionAttributes)
             {
                 writer.WritePropertyName(item.Key);
                 WriteObjectValue(writer, item.Value);

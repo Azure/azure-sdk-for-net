@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteCircuitPeeringsCreateOrUpdateOperation : Operation<ExpressRouteCircuitPeering>, IOperationSource<ExpressRouteCircuitPeering>
     {
         private readonly ArmOperationHelpers<ExpressRouteCircuitPeering> _operation;
+
+        /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringsCreateOrUpdateOperation for mocking. </summary>
+        protected ExpressRouteCircuitPeeringsCreateOrUpdateOperation()
+        {
+        }
+
         internal ExpressRouteCircuitPeeringsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ExpressRouteCircuitPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCircuitPeeringsCreateOrUpdateOperation");

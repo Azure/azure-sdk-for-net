@@ -5,6 +5,7 @@ using System;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
@@ -21,6 +22,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             {
                 TrackLastEnqueuedEventProperties = false,
                 MaximumWaitTime = TimeSpan.FromMinutes(1),
+                LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
                 PrefetchCount = 300,
                 DefaultStartingPosition = EventPosition.Earliest,
             };
@@ -131,12 +133,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         }
 
         /// <summary>
+        /// Gets or sets a value indication whether a single-dispatch trigger bindings are enabled.
+        /// </summary>
+        internal bool IsSingleDispatchEnabled { get; set; }
+
+        /// <summary>
         /// Gets or sets the Azure Blobs container name that the event processor uses to coordinate load balancing listening on an event hub.
         /// </summary>
         internal string CheckpointContainer { get; set; } =  "azure-webjobs-eventhub";
 
         internal Action<ExceptionReceivedEventArgs> ExceptionHandler { get; set; }
 
+        /// <summary>
+        /// Returns a string representation of this <see cref="EventHubOptions"/> instance.
+        /// </summary>
+        /// <returns>A string representation of this <see cref="EventHubOptions"/> instance.</returns>
         string IOptionsFormatter.Format()
         {
             JObject options = new JObject
@@ -175,8 +186,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private JObject ConstructInitialOffsetOptions() =>
             new JObject
                 {
-                    { nameof(InitialOffsetOptions.Type), InitialOffsetOptions.Type },
-                    { nameof(InitialOffsetOptions.EnqueuedTimeUTC), InitialOffsetOptions.EnqueuedTimeUTC },
+                    { nameof(InitialOffsetOptions.Type), InitialOffsetOptions.Type.ToString() },
+                    { nameof(InitialOffsetOptions.EnqueuedTimeUtc), InitialOffsetOptions.EnqueuedTimeUtc },
                 };
     }
 }

@@ -23,11 +23,11 @@ dotnet add package Azure.Security.KeyVault.Administration --version 4.0.0-beta.4
 See the final two steps in the next section for details on creating the Key Vault with the Azure CLI.
 
 ### Authenticate the client
-In order to control permissions to the Key Vault service, you'll need to create an instance of the [KeyVaultAccessControlClient][rbac_client] class. 
-You need a **vault URL**, which you may see as "DNS Name" in the portal,  and **client secret credentials (client id, client secret, tenant id)** 
+In order to control permissions to the Key Vault service, you'll need to create an instance of the [KeyVaultAccessControlClient][rbac_client] class.
+You need a **vault URL**, which you may see as "DNS Name" in the portal,  and **client secret credentials (client id, client secret, tenant id)**
 to instantiate a client object.
 
-Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with 
+Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with
 [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
@@ -60,7 +60,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
     ```
     "<your-service-principal-object-id>"
     ```
-* Use the returned credentials above to set  **AZURE_CLIENT_ID** (appId), **AZURE_CLIENT_SECRET** (password), and **AZURE_TENANT_ID** (tenant) 
+* Use the returned credentials above to set  **AZURE_CLIENT_ID** (appId), **AZURE_CLIENT_SECRET** (password), and **AZURE_TENANT_ID** (tenant)
 environment variables. The following example shows a way to do this in Powershell:
     ```PowerShell
     $Env:AZURE_CLIENT_ID="generated-app-ID"
@@ -68,11 +68,12 @@ environment variables. The following example shows a way to do this in Powershel
     $Env:AZURE_TENANT_ID="tenant-ID"
     ```
 
-* Create the Managed HSM and grant the above mentioned application authorization to perform administrative operations on the Managed HSM 
+* Create the Managed HSM and grant the above mentioned service principal authorization to perform administrative operations on the Managed HSM
 (replace `<your-resource-group-name>` and `<your-key-vault-name>` with your own, unique names and `<your-service-principal-object-id>` with the value from above):
     ```PowerShell
     az keyvault create --hsm-name <your-key-vault-name> --resource-group <your-resource-group-name> --administrators <your-service-principal-object-id> --location <your-azure-location>
     ```
+  This service principal is automatically added to the "Managed HSM Administrators" [built-in role][built_in_roles].
 
 * Use the above mentioned Azure Key Vault name to retrieve details of your Vault which also contains your Azure Key Vault URL:
     ```PowerShell
@@ -80,15 +81,15 @@ environment variables. The following example shows a way to do this in Powershel
     ```
 
 #### Activate your managed HSM
-All data plane commands are disabled until the HSM is activated. You will not be able to create keys or assign roles. 
+All data plane commands are disabled until the HSM is activated. You will not be able to create keys or assign roles.
 Only the designated administrators that were assigned during the create command can activate the HSM. To activate the HSM you must download the security domain.
 
 To activate your HSM you need:
 - Minimum 3 RSA key-pairs (maximum 10)
 - Specify minimum number of keys required to decrypt the security domain (quorum)
 
-To activate the HSM you send at least 3 (maximum 10) RSA public keys to the HSM. The HSM encrypts the security domain with these keys and sends it back. 
-Once this security domain is successfully downloaded, your HSM is ready to use. 
+To activate the HSM you send at least 3 (maximum 10) RSA public keys to the HSM. The HSM encrypts the security domain with these keys and sends it back.
+Once this security domain is successfully downloaded, your HSM is ready to use.
 You also need to specify quorum, which is the minimum number of private keys required to decrypt the security domain.
 
 The example below shows how to use openssl to generate 3 self signed certificate.
@@ -99,15 +100,27 @@ openssl req -newkey rsa:2048 -nodes -keyout cert_1.key -x509 -days 365 -out cert
 openssl req -newkey rsa:2048 -nodes -keyout cert_2.key -x509 -days 365 -out cert_2.cer
 ```
 
-Use the `az keyvault security-domain download` command to download the security domain and activate your managed HSM. 
+Use the `az keyvault security-domain download` command to download the security domain and activate your managed HSM.
 The example below, uses 3 RSA key pairs (only public keys are needed for this command) and sets the quorum to 2.
 
 ```PowerShell
 az keyvault security-domain download --hsm-name <your-key-vault-name> --sd-wrapping-keys ./certs/cert_0.cer ./certs/cert_1.cer ./certs/cert_2.cer --sd-quorum 2 --security-domain-file ContosoMHSM-SD.json
 ```
 
+#### Controlling access to your managed HSM
+The designated administrators assigned during creation are automatically added to the "Managed HSM Administrators" [built-in role][built_in_roles],
+who are able to download a security domain and [manage roles for data plane access][access_control], among other limited permissions.
+
+To perform other actions on keys, you need to assign principals to other roles such as "Managed HSM Crypto User", which can perform non-destructive key operations:
+
+```PowerShell
+az keyvault role assignment create --hsm-name <your-key-vault-name> --role "Managed HSM Crypto User" --scope / --assignee-object-id <principal-or-user-object-ID> --assignee-principal-type <principal-type>
+```
+
+Please read [best practices][best_practices] for properly securing your managed HSM.
+
 #### Create KeyVaultAccessControlClient
-Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url** 
+Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url**
 with the above returned URI, you can create the [KeyVaultAccessControlClient][rbac_client]:
 
 ```C# Snippet:HelloCreateKeyVaultAccessControlClient
@@ -115,7 +128,7 @@ KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(key
 ```
 
 #### Create KeyVaultBackupClient
-Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url** 
+Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZURE_TENANT_ID** environment variables and replaced **your-vault-url**
 with the above returned URI, you can create the [KeyVaultBackupClient][backup_client]:
 
 ```C# Snippet:HelloCreateKeyVaultBackupClient
@@ -125,7 +138,7 @@ KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new
 ## Key concepts
 
 ### KeyVaultRoleDefinition
-A `KeyVaultRoleDefinition` is a collection of permissions. A role definition defines the operations that can be performed, such as read, write, 
+A `KeyVaultRoleDefinition` is a collection of permissions. A role definition defines the operations that can be performed, such as read, write,
 and delete. It can also define the operations that are excluded from allowed operations.
 
 KeyVaultRoleDefinitions can be listed and specified as part of a `KeyVaultRoleAssignment`.
@@ -153,7 +166,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) | 
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
 [Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
@@ -248,9 +261,12 @@ or contact opencode@microsoft.com with any
 additional questions or comments.
 
 <!-- LINKS -->
+[access_control]: https://docs.microsoft.com/azure/key-vault/managed-hsm/access-control
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/
+[best_practices]: https://docs.microsoft.com/azure/key-vault/managed-hsm/best-practices
+[built_in_roles]: https://docs.microsoft.com/azure/key-vault/managed-hsm/built-in-roles
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [rbac_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultAccessControlClient.cs
 [backup_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Administration/src/KeyVaultBackupClient.cs

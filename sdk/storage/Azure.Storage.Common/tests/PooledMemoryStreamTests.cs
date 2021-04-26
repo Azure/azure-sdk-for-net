@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.Storage.Shared;
 using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
@@ -56,6 +57,7 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
+        [LiveOnly]
         public void StreamCanHoldLongData()
         {
             const long dataSize = (long)int.MaxValue + Constants.MB;
@@ -111,11 +113,11 @@ namespace Azure.Storage.Tests
             return buffer;
         }
 
-        private static void AssertSequenceEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)
+        public static void AssertSequenceEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)
         {
             Assert.AreEqual(expected.Count(), actual.Count(), "Actual sequence length does not match expected sequence length");
-            (int index, T expected, T actual)[] firstErrors = expected.Zip(actual, (e, a) => (expected: e, actual: a)).Select((x, i) => (index: i, x.expected, x.actual)).Where(x => !x.expected.Equals(x.actual)).Take(5).ToArray();
-            Assert.IsFalse(firstErrors.Any(), $"Actual sequence does not match expected sequence at locations\n{string.Join("\n", firstErrors.Select(e => $"{e.index} => expected = {e.expected}, actual = {e.actual}"))}");
+            (int Index, T Expected, T Actual)[] firstErrors = expected.Zip(actual, (e, a) => (Expected: e, Actual: a)).Select((x, i) => (Index: i, x.Expected, x.Actual)).Where(x => !x.Expected.Equals(x.Actual)).Take(5).ToArray();
+            Assert.IsFalse(firstErrors.Any(), $"Actual sequence does not match expected sequence at locations\n{string.Join("\n", firstErrors.Select(e => $"{e.Index} => expected = {e.Expected}, actual = {e.Actual}"))}");
         }
     }
 }

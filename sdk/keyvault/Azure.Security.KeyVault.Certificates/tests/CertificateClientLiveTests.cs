@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
+using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -14,8 +15,11 @@ using Org.BouncyCastle.X509;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -27,6 +31,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public partial class CertificateClientLiveTests : CertificatesTestBase
     {
+        private static MethodInfo s_clearCacheMethod;
+
         public CertificateClientLiveTests(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
@@ -44,6 +50,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Client = GetClient();
 
                 ChallengeBasedAuthenticationPolicy.ClearCache();
+
+                // Make sure the shared source copy of ChallengeBasedAuthenticationPolicy is cleared as well for Keys.
+                if (s_clearCacheMethod is null)
+                {
+                    s_clearCacheMethod = typeof(CryptographyClient).Assembly.GetType("Azure.Security.KeyVault.ChallengeBasedAuthenticationPolicy", true, false)
+                        .GetMethod(nameof(ChallengeBasedAuthenticationPolicy.ClearCache), BindingFlags.Static | BindingFlags.NonPublic)
+                        ?? throw new NotSupportedException($"{nameof(ChallengeBasedAuthenticationPolicy)}.{nameof(ChallengeBasedAuthenticationPolicy.ClearCache)} not found in {typeof(CryptographyClient).Assembly}");
+                }
+
+                s_clearCacheMethod.Invoke(null, null);
             }
         }
 
@@ -107,7 +123,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
 
             OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
-                () => WaitForCompletion(operation),
+                async () => await WaitForCompletion(operation),
                 $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
 
             Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
@@ -139,7 +155,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
 
             OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
-                () => WaitForCompletion(operation),
+                async () => await WaitForCompletion(operation),
                 $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
             Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
 
@@ -162,7 +178,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await operation.DeleteAsync();
 
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => WaitForCompletion(operation));
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await WaitForCompletion(operation));
             Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);
@@ -192,7 +208,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => WaitForCompletion(operation));
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await WaitForCompletion(operation));
             Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);
@@ -225,8 +241,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
                 RegisterForCleanup(certName);
 
-                using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-                TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+                using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+                TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 2);
 
                 while (!operation.HasCompleted)
                 {
@@ -318,8 +334,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = new CertificateOperation(Client, certName);
 
             // Need to call the real async wait method or the sync version of this test fails because it's using the instrumented Client directly.
-            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 2);
 
             await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
 
@@ -431,7 +447,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             byte[] certificateBytes = Encoding.ASCII.GetBytes(PemCertificateWithV3Extensions);
 
             #region Snippet:CertificateClientLiveTests_VerifyImportCertificatePem
-            //@@byte[] certificateBytes = File.ReadAllBytes("certificate.pem");
+#if SNIPPET
+            byte[] certificateBytes = File.ReadAllBytes("certificate.pem");
+#endif
 
             ImportCertificateOptions options = new ImportCertificateOptions(certificateName, certificateBytes)
             {
@@ -848,6 +866,139 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name);
             Assert.IsFalse(x509certificate.HasPrivateKey);
         }
+
+        [Test]
+        public async Task DownloadECDsaCertificateSignRemoteVerifyLocal([EnumValues] CertificateContentType contentType, [EnumValues] CertificateKeyCurveName keyCurveName)
+        {
+#if NET461
+            Assert.Ignore("ECC is not supported before .NET Framework 4.7");
+#endif
+            string name = Recording.GenerateId();
+
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                IssuerName = WellKnownIssuerNames.Self,
+                Subject = "CN=default",
+                KeyType = CertificateKeyType.Ec,
+                KeyCurveName = keyCurveName,
+                Exportable = true,
+                KeyUsage =
+                {
+                    CertificateKeyUsage.DigitalSignature,
+                },
+                ContentType = contentType,
+            };
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
+            RegisterForCleanup(name);
+
+            await WaitForCompletion(operation, TimeSpan.FromSeconds(5));
+
+            // Sign data remotely.
+            byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));
+
+            CryptographyClient cryptoClient = GetCryptographyClient(operation.Value.KeyId);
+            SignResult result = await cryptoClient.SignDataAsync(keyCurveName.GetSignatureAlgorithm(), plaintext);
+
+            // Download the certificate and verify data locally.
+            X509Certificate2 certificate = null;
+            try
+            {
+                certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version);
+                using ECDsa publicKey = certificate.GetECDsaPublicKey();
+
+                Assert.IsTrue(publicKey.VerifyData(plaintext, result.Signature, keyCurveName.GetHashAlgorithmName()));
+            }
+            catch (Exception ex) when (IsExpectedP256KException(ex, keyCurveName))
+            {
+                Assert.Ignore("The curve is not supported by the current platform");
+            }
+            finally
+            {
+                certificate?.Dispose();
+            }
+        }
+
+        [Test]
+        public async Task DownloadECDsaCertificateSignLocalVerifyRemote([EnumValues] CertificateContentType contentType, [EnumValues] CertificateKeyCurveName keyCurveName)
+        {
+#if NET461
+            Assert.Ignore("ECC is not supported before .NET Framework 4.7");
+#endif
+            string name = Recording.GenerateId();
+
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                IssuerName = WellKnownIssuerNames.Self,
+                Subject = "CN=default",
+                KeyType = CertificateKeyType.Ec,
+                KeyCurveName = keyCurveName,
+                Exportable = true,
+                KeyUsage =
+                {
+                    CertificateKeyUsage.DigitalSignature,
+                },
+                ContentType = contentType,
+            };
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
+            RegisterForCleanup(name);
+
+            await WaitForCompletion(operation, TimeSpan.FromSeconds(5));
+
+            // Download the certificate and sign data locally.
+            byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));
+
+            X509Certificate2 certificate = null;
+            try
+            {
+                certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version);
+                using ECDsa privateKey = certificate.GetECDsaPrivateKey();
+
+                byte[] signature = privateKey.SignData(plaintext, keyCurveName.GetHashAlgorithmName());
+
+                // Verify data remotely.
+                CryptographyClient cryptoClient = GetCryptographyClient(operation.Value.KeyId);
+                VerifyResult result = await cryptoClient.VerifyDataAsync(keyCurveName.GetSignatureAlgorithm(), plaintext, signature);
+
+                Assert.IsTrue(result.IsValid);
+            }
+            catch (Exception ex) when (IsExpectedP256KException(ex, keyCurveName))
+            {
+                Assert.Ignore("The curve is not supported by the current platform");
+            }
+            finally
+            {
+                certificate?.Dispose();
+            }
+        }
+
+        public CryptographyClient GetCryptographyClient(Uri keyId) => InstrumentClient(
+                new CryptographyClient(
+                    keyId,
+                    TestEnvironment.Credential,
+                    InstrumentClientOptions(
+                        new CryptographyClientOptions
+                        {
+                            Diagnostics =
+                            {
+                                IsLoggingContentEnabled = Debugger.IsAttached || Mode == RecordedTestMode.Live,
+                                LoggedHeaderNames =
+                                {
+                                    "x-ms-request-id",
+                                },
+                            },
+                        }
+                    )
+                )
+            );
+
+        private static bool IsExpectedP256KException(Exception ex, CertificateKeyCurveName keyCurveName) =>
+            // OpenSSL-based implementations do not support P256K.
+            // TODO: Remove this entire check when https://github.com/Azure/azure-sdk-for-net/issues/20244 is resolved.
+            (ex is CryptographicException || ex is TargetInvocationException tiex && tiex.InnerException is ArgumentException {  ParamName: "privateKey" }) &&
+            !RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
+            keyCurveName == CertificateKeyCurveName.P256K;
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy
         {

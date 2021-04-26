@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventGrid
                     }
                 }
             }
-            _data = JsonSerializer.SerializeToUtf8Bytes(_cloudEvents, typeof(List<CloudEvent>));
+            _data = JsonSerializer.SerializeToUtf8Bytes(_cloudEvents, typeof(IEnumerable<CloudEvent>));
         }
     }
 }

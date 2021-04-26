@@ -6,6 +6,6 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 azure-arm: true
 title: communication
-input-file:  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be39f5abd3dc4cf6db384f688e0dd18dd907d04b/specification/communication/resource-manager/Microsoft.Communication/preview/2020-08-20-preview/CommunicationService.json
+input-file:  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c16cf9c92d5c28983a8bbeb56bc02674cb2f77ec/specification/communication/resource-manager/Microsoft.Communication/stable/2020-08-20/CommunicationService.json
 
 ```

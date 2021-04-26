@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #endregion
 
             #region Snippet:CreateDatasetClient
-            DatasetClient client = new DatasetClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+            DatasetClient client = new DatasetClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CreateDataset

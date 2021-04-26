@@ -30,12 +30,12 @@ namespace Azure.AI.AnomalyDetector.Tests
 
             if (useTokenCredential)
             {
-                client = new AnomalyDetectorClient(endpoint.AbsoluteUri, TestEnvironment.Credential, options);
+                client = new AnomalyDetectorClient(endpoint, TestEnvironment.Credential, options);
             }
             else
             {
                 var credential = new AzureKeyCredential(apiKey ?? TestEnvironment.ApiKey);
-                client = new AnomalyDetectorClient(endpoint.AbsoluteUri, credential, options);
+                client = new AnomalyDetectorClient(endpoint, credential, options);
             }
 
             return skipInstrumenting ? client : InstrumentClient(client);

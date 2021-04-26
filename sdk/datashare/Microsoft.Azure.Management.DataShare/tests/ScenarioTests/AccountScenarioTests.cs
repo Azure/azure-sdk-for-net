@@ -10,7 +10,8 @@ namespace DataShare.Tests.ScenarioTests
 
     public class AccountScenarioTests : ScenarioTestBase<AccountScenarioTests>
     {
-        public Account ExpectedAccount = new Account(new Identity(), location: ScenarioTestBase<AccountScenarioTests>.AccountLocation);
+        private const string shareName = "sdktestingshare";
+        public Account ExpectedAccount = new Account(identity, "DataShareId", shareName, default(SystemData), "Microsoft.DataShare", ScenarioTestBase<DataShareE2EScenarioTests>.AccountLocation);
 
         [Fact]
         public async Task AccountCrud()
@@ -37,7 +38,7 @@ namespace DataShare.Tests.ScenarioTests
             AzureOperationResponse<Account> createResponse =
                 await client.Accounts.CreateWithHttpMessagesAsync(resourceGroupName, accountName, expectedAccount);
             AccountScenarioTests.ValidateAccount(createResponse.Body, accountName);
-            Assert.Equal(HttpStatusCode.Created, createResponse.Response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, createResponse.Response.StatusCode);
         }
 
         private static void ValidateAccount(Account actualAccount, string expectedAccountName)

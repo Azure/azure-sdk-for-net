@@ -11,13 +11,7 @@ EventGridPublisherClient client = new EventGridPublisherClient(
     new Uri(topicEndpoint),
     new AzureKeyCredential(topicAccessKey));
 ```
-`EventGridPublisherClient` also accepts a set of configuring options through `EventGridPublisherClientOptions`. For example, specifying a custom serializer used to serialize the event data to JSON:
 
-```C# Snippet:CreateClientWithOptions
-EventGridPublisherClient client = new EventGridPublisherClient(
-    new Uri(topicEndpoint),
-    new AzureKeyCredential(topicAccessKey));
-```
 Event Grid also supports authenticating with a shared access signature which allows for providing access to a resource that expires by a certain time without sharing your access key. 
 Generally, the workflow would be that one application would generate the SAS string and hand off the string to another application that would consume the string.
 Generate the SAS:
@@ -44,14 +38,29 @@ Following that, invoke `SendEvents` or `SendEventsAsync` to publish the events t
 Note on `EventGridEvent`: each `EventGridEvent` has a set of required, non-nullable properties, including event data. `EventTime` and `Id` are also required properties that are set by default, but can also be manually set if needed.
 
 ```C# Snippet:SendEGEventsToTopic
+// Example of a custom ObjectSerializer used to serialize the event payload to JSON
+var myCustomDataSerializer = new JsonObjectSerializer(
+    new JsonSerializerOptions()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    });
+
 // Add EventGridEvents to a list to publish to the topic
 List<EventGridEvent> eventsList = new List<EventGridEvent>
 {
+    // EventGridEvent with custom model serialized to JSON
     new EventGridEvent(
         "ExampleEventSubject",
         "Example.EventType",
         "1.0",
-        "This is the event data")
+        new CustomModel() { A = 5, B = true }),
+
+    // EventGridEvent with custom model serialized to JSON using a custom serializer
+    new EventGridEvent(
+        "ExampleEventSubject",
+        "Example.EventType",
+        "1.0",
+        myCustomDataSerializer.Serialize(new CustomModel() { A = 5, B = true })),
 };
 
 // Send the events

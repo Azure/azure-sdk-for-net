@@ -24,22 +24,22 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Time when the operation was created on.
         /// </summary>
-        public DateTimeOffset CreatedOn => _createdOn;
+        public virtual DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
         /// Time when the operation will expire.
         /// </summary>
-        public DateTimeOffset? ExpiresOn => _expiresOn;
+        public virtual DateTimeOffset? ExpiresOn => _expiresOn;
 
         /// <summary>
         /// Time when the operation was last modified on
         /// </summary>
-        public DateTimeOffset LastModified => _lastModified;
+        public virtual DateTimeOffset LastModified => _lastModified;
 
         /// <summary>
         /// Gets the status of the operation.
         /// </summary>
-        public TextAnalyticsOperationStatus Status => _status;
+        public virtual TextAnalyticsOperationStatus Status => _status;
 
         /// <summary>
         /// Gets the final result of the long-running operation asynchronously.
@@ -101,11 +101,6 @@ namespace Azure.AI.TextAnalytics
         private readonly bool? _showStats;
 
         /// <summary>
-        /// Provides the api version to use when doing pagination.
-        /// </summary>
-        private readonly string _apiVersion;
-
-        /// <summary>
         /// Time when the operation will expire.
         /// </summary>
         private DateTimeOffset? _expiresOn;
@@ -144,21 +139,27 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Text Analytics Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
-        /// <param name="apiversion">The specific api version to use.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="idToIndexMap"></param>
         /// <param name="showStats"></param>
-        internal AnalyzeHealthcareEntitiesOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string apiversion, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
+        internal AnalyzeHealthcareEntitiesOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
-            _apiVersion = apiversion;
             _idToIndexMap = idToIndexMap;
             _showStats = showStats;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
             Id = operationLocation.Split('/').Last();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesOperation"/> class. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        protected AnalyzeHealthcareEntitiesOperation()
+        {
         }
 
         /// <summary>
@@ -333,7 +334,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(_apiVersion, nextLink, _showStats).ConfigureAwait(false);
+                    Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(nextLink, _showStats).ConfigureAwait(false);
 
                     AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
@@ -362,7 +363,7 @@ namespace Azure.AI.TextAnalytics
                 //diagnostics scope?
                 try
                 {
-                    Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(_apiVersion, nextLink, _showStats);
+                    Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(nextLink, _showStats);
 
                     AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
                     return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());

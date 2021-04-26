@@ -4,6 +4,7 @@
     <UserSecretsId>67ca5d37-051b-4ab1-b013-c74a2d4edb76</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Messaging.EventGrid" Version="4.1.0" />
     <PackageReference Include="Azure.Messaging.EventHubs" Version="5.2.0" />
     <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.2.0" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.6.0" />
@@ -12,8 +13,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\sdk\eventgrid\Azure.Messaging.EventGrid\src\Azure.Messaging.EventGrid.csproj" />
   </ItemGroup>
 </Project>

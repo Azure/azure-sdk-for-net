@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class PublicIPPrefixesCreateOrUpdateOperation : Operation<PublicIPPrefix>, IOperationSource<PublicIPPrefix>
     {
         private readonly ArmOperationHelpers<PublicIPPrefix> _operation;
+
+        /// <summary> Initializes a new instance of PublicIPPrefixesCreateOrUpdateOperation for mocking. </summary>
+        protected PublicIPPrefixesCreateOrUpdateOperation()
+        {
+        }
+
         internal PublicIPPrefixesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<PublicIPPrefix>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PublicIPPrefixesCreateOrUpdateOperation");

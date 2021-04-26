@@ -434,7 +434,7 @@ namespace Storage.Tests
                     t => StringComparer.OrdinalIgnoreCase.Equals(t.Name, accountName2));
                 StorageManagementTestUtilities.VerifyAccountProperties(account2, true);
 
-                while(accounts.NextPageLink != null)
+                while (accounts.NextPageLink != null)
                 {
                     accounts = storageMgmtClient.StorageAccounts.ListNext(accounts.NextPageLink);
                 }
@@ -1332,7 +1332,7 @@ namespace Storage.Tests
 
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
                 parameters.Location = "centraluseuap";
-                parameters.Identity = new Identity() { Type = IdentityType.SystemAssigned};
+                parameters.Identity = new Identity() { Type = IdentityType.SystemAssigned };
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
@@ -1498,7 +1498,7 @@ namespace Storage.Tests
 
                 // Create storage account with Vnet
                 string accountName = TestUtilities.GenerateName("sto");
-                
+
                 var parameters = new StorageAccountCreateParameters
                 {
                     Location = StorageManagementTestUtilities.DefaultLocation,
@@ -2488,7 +2488,7 @@ namespace Storage.Tests
             foreach (BlobInventoryPolicyRule inputRule in inputPolicy.Rules)
             {
                 bool ruleFound = false;
-                foreach(BlobInventoryPolicyRule outputRule in outputPolicy.Rules)
+                foreach (BlobInventoryPolicyRule outputRule in outputPolicy.Rules)
                 {
                     if (inputRule.Name == outputRule.Name)
                     {
@@ -2579,6 +2579,58 @@ namespace Storage.Tests
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
                 Assert.False(account.AllowSharedKeyAccess);
+            }
+        }
+
+
+        [Fact]
+        public void StorageAccountSASKeyPolicy()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardGRS },
+                    Kind = Kind.Storage,
+                    Location = "centraluseuap",
+                    KeyPolicy = new KeyPolicy(2),
+                    SasPolicy = new SasPolicy("2.02:03:59")
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.Equal(2, account.KeyPolicy.KeyExpirationPeriodInDays);
+                Assert.Equal("2.02:03:59", account.SasPolicy.SasExpirationPeriod);
+
+                // Update storage account type
+                var updateParameters = new StorageAccountUpdateParameters
+                {
+                    Kind = Kind.StorageV2,
+                    EnableHttpsTrafficOnly = true,
+                    SasPolicy = new SasPolicy("0.02:03:59"),
+                    KeyPolicy = new KeyPolicy(9)
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                Assert.Equal(9, account.KeyPolicy.KeyExpirationPeriodInDays);
+                Assert.Equal("0.02:03:59", account.SasPolicy.SasExpirationPeriod);
+                Assert.NotNull(account.KeyCreationTime.Key1);
+                Assert.NotNull(account.KeyCreationTime.Key2);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.Equal(9, account.KeyPolicy.KeyExpirationPeriodInDays);
+                Assert.Equal("0.02:03:59", account.SasPolicy.SasExpirationPeriod);
+                Assert.NotNull(account.KeyCreationTime.Key1);
+                Assert.NotNull(account.KeyCreationTime.Key2);
             }
         }
     }

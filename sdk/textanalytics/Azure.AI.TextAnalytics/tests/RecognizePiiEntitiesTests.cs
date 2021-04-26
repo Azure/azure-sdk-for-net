@@ -110,7 +110,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             PiiEntityCollection originalEntities = await client.RecognizePiiEntitiesAsync(EnglishDocument1);
 
-            List<PiiEntityCategory> piiCategories = new ();
+            List<PiiEntityCategory> piiCategories = new();
             foreach (var entity in originalEntities)
             {
                 piiCategories.Add(entity.Category);

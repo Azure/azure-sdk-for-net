@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
@@ -19,11 +20,11 @@ namespace Azure.Storage.Files.Shares.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void FileSasBuilder_ToSasQueryParameters_FilePathTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var shareName = GetNewShareName();
             var filePath = GetNewDirectoryName();
             ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeVersion: true, includeFilePath: true, constants, shareName, filePath);
@@ -47,11 +48,11 @@ namespace Azure.Storage.Files.Shares.Tests
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
         public void FileSasBuilder_ToSasQueryParameters_NoVersionTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var shareName = GetNewShareName();
             var filePath = GetNewDirectoryName();
             ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeVersion: false, includeFilePath: false, constants, shareName, filePath);
@@ -75,11 +76,11 @@ namespace Azure.Storage.Files.Shares.Tests
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
         public void FileSasBuilder_NullSharedKeyCredentialTest()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var shareName = GetNewShareName();
             var filePath = GetNewDirectoryName();
             ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeVersion: true, includeFilePath: true, constants, shareName, filePath);
@@ -88,11 +89,11 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.Throws<ArgumentNullException>(() => fileSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
         }
 
-        [Test]
+        [RecordedTest]
         public void FileSasBuilder_IdentifierTest()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string shareName = GetNewShareName();
             string resource = "s";
             ShareSasBuilder sasBuilder = new ShareSasBuilder
@@ -114,7 +115,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("FTPUCALXDWR")]
         [TestCase("rwdxlacuptf")]
         public async Task AccountPermissionsRawPermissions(string permissionsString)
@@ -142,7 +143,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await sasShareClient.GetPropertiesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AccountPermissionsRawPermissions_InvalidPermission()
         {
             // Arrange
@@ -162,7 +163,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 new ArgumentException("e is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("LDWCR")]
         [TestCase("rcwdl")]
         public async Task SharePermissionsRawPermissions(string permissionsString)
@@ -194,7 +195,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await sasShareClient.GetRootDirectoryClient().GetPropertiesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SharePermissionsRawPermissions_Invalid()
         {
             // Arrange
@@ -214,7 +215,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 new ArgumentException("s is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         public void ShareUriBuilder_LocalDockerUrl_PortTest()
         {
             // Arrange
@@ -240,7 +241,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void ShareUriBuilder_CustomUri_AccountShareFileTest()
         {
             // Arrange

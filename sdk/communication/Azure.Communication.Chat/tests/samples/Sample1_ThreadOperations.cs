@@ -5,12 +5,11 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.samples
 {
-    public partial class Sample1_ThreadOperations : SamplesBase<ChatTestEnvironment>
+    public partial class Sample1_ThreadOperations : ChatSampleBase
     {
         // This sample demonstrates the operations that can be performed on a thread: create, get, getThreads, update and delete.
         [Test]
@@ -30,7 +29,7 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateChatClient
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-            var chatParticipant = new ChatParticipant(communicationIdentifier: kimberly)
+            var chatParticipant = new ChatParticipant(identifier: kimberly)
             {
                 DisplayName = "Kim"
             };
@@ -40,14 +39,14 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetThread
-            ChatThread chatThread = await chatClient.GetChatThreadAsync(threadId);
+            ChatThreadProperties chatThread = await chatThreadClient.GetPropertiesAsync();
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetThread
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
-            AsyncPageable<ChatThreadInfo> chatThreadsInfo = chatClient.GetChatThreadsInfoAsync();
-            await foreach (ChatThreadInfo chatThreadInfo in chatThreadsInfo)
+            AsyncPageable<ChatThreadItem> chatThreadItems = chatClient.GetChatThreadsAsync();
+            await foreach (ChatThreadItem chatThreadItem in chatThreadItems)
             {
-                Console.WriteLine($"{ chatThreadInfo.Id}");
+                Console.WriteLine($"{ chatThreadItem.Id}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
 

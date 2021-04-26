@@ -13,69 +13,54 @@ namespace Azure.Security.KeyVault
     internal class ChallengeBasedAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
     {
         private static ConcurrentDictionary<string, AuthorityScope> _scopeCache = new ConcurrentDictionary<string, AuthorityScope>();
+        private const string KeyVaultStashedContentKey = "KeyVaultContent";
         private AuthorityScope _scope;
 
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential) : base(credential, Array.Empty<string>())
         { }
 
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            PreProcessAsync(message, pipeline, false).EnsureCompleted();
-            base.Process(message, pipeline);
-        }
-
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            await PreProcessAsync(message, pipeline, true).ConfigureAwait(false);
-            await base.ProcessAsync(message, pipeline).ConfigureAwait(false);
-        }
-
-        protected async Task PreProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequestOnChallengeAsync(HttpMessage, bool)" />
+        protected override async Task AuthorizeRequestAsync(HttpMessage message, bool async)
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            // if this policy doesn't have _scope cached try to get it from the static challenge cache.
+            // If this policy doesn't have _scope cached try to get it from the static challenge cache.
+            if (_scope == null)
+            {
+                string authority = GetRequestAuthority(message.Request);
+                _scopeCache.TryGetValue(authority, out _scope);
+            }
+
             if (_scope != null)
             {
+                // We fetched the scope from the cache, but we have not initialized the Scopes in the base yet.
+                var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
+                await SetAuthorizationHeader(message, context, async).ConfigureAwait(false);
                 return;
             }
 
-            string authority = GetRequestAuthority(message.Request);
-            _scopeCache.TryGetValue(authority, out _scope);
+            // The body is removed from the initial request because Key Vault supports other authentication schemes which also protect the body of the request.
+            // As a result, before we know the auth scheme we need to avoid sending an unprotected body to Key Vault.
+            // We don't currently support this enhanced auth scheme in the SDK but we still don't want to send any unprotected data to vaults which require it.
 
-            if (_scope == null)
+            // Do not overwrite previous contents if retrying after initial request failed (e.g. timeout).
+            if (!message.TryGetProperty(KeyVaultStashedContentKey, out _))
             {
-                // The body is removed from the initial request because Key Vault supports other authentication schemes which also protect the body of the request.
-                // As a result, before we know the auth scheme we need to avoid sending an unprotected body to Key Vault.
-                // We don't currently support this enhanced auth scheme in the SDK but we still don't want to send any unprotected data to vaults which require it.
-
-                RequestContent originalContent = message.Request.Content;
+                message.SetProperty(KeyVaultStashedContentKey, message.Request.Content);
                 message.Request.Content = null;
-
-                if (async)
-                {
-                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-                }
-                else
-                {
-                    ProcessNext(message, pipeline);
-                }
-
-                // set the content to the original content.
-                message.Request.Content = originalContent;
-            }
-            else
-            {
-                // We fetched the scope from the cache, but we have not initialized the Scopes in the base yet.
-                Scopes = _scope.Scopes;
             }
         }
 
-        protected override bool TryGetTokenRequestContextFromChallenge(HttpMessage message, out TokenRequestContext context)
+        protected override async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message, bool async)
         {
+            if (message.Request.Content == null && message.TryGetProperty(KeyVaultStashedContentKey, out var content))
+            {
+                message.Request.Content = content as RequestContent;
+            }
+
             string authority = GetRequestAuthority(message.Request);
             string scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "resource");
             if (scope != null)
@@ -100,7 +85,8 @@ namespace Azure.Security.KeyVault
                 _scopeCache[authority] = _scope;
             }
 
-            context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
+            var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
+            await SetAuthorizationHeader(message, context, async).ConfigureAwait(false);
             return true;
         }
 

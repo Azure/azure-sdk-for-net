@@ -1,7 +1,47 @@
 # Release History
 
-## 5.4.0-beta.1 (Unreleased)
+## 5.5.0-beta.1 (Unreleased)
 
+
+## 5.4.0 (2021-04-05)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Changes
+
+#### New Features
+
+- The `EventProcessorClient` now supports shared key and shared access signature authentication using the `AzureNamedKeyCredential` and `AzureSasCredential` types in addition to the connection string.  Use of the credential allows the shared key or SAS to be updated without the need to create a new processor.
+
+- Multiple enhancements were made to the AMQP transport paths for reading events to reduce memory allocations and increase performance.  (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
+
+#### Key Bug Fixes
+
+- The AMQP library used for transport has been updated, fixing several issues including a potential unobserved   `ObjectDisposedException` that could cause the host process to crash.  _(see: [release notes](https://github.com/Azure/azure-amqp/releases/tag/v2.4.13))_
+
+## 5.4.0-beta.1 (2021-03-17)
+
+### Changes
+
+- Updating package bindings for `Azure.Messaging.EventHubs` to synchronize on v5.4.0-beta.1.
+
+## 5.3.1 (2021-03-09)
+
+### Changes
+
+#### Key Bug Fixes
+
+- Fixed an issue where long-lived credentials (more than 49 days) were overflowing refresh timer limits and being rejected.
+
+- Added detection and recovery for a race condition that occurred when the Event Hubs service closed a connection or link after the client had validated its state and was performing an operation; this will now be properly retried with a fresh connection/link.
+
+- Extended retry scenarios to include generic I/O exceptions, as they are typically transient network failures.
+
+- Extended retry scenarios to include authorization failures, as the Event Hubs services do not differentiate between authentication and authorization, callers cannot reason about whether an `Unauthorized` return from an operation indicates that the call will never succeed or may trigger a credential renewal that may allow success.
 
 ## 5.3.0 (2021-02-09)
 

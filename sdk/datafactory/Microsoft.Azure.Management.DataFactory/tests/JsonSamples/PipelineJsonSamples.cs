@@ -114,6 +114,64 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string MongoDbV2SinkCopyActivity = @"
+{
+  ""name"": ""ExampleCopyActivity"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""MongoDbAtlasSource"",
+            ""filter"": {
+                ""value"": ""@dataset().MyFilter""
+             },
+            ""cursorMethods"": {
+                ""project"": {
+                  ""value"": ""@dataset().MyProject"",
+                  ""type"": ""Expression""
+                },
+                ""sort"": ""{ age : 1 }"",
+                ""skip"": ""3"",
+                ""limit"": ""3""
+              },
+             ""batchSize"": ""5""
+          },
+          ""sink"": {
+            ""type"": ""MongoDbV2Sink"",
+            ""writeBehavior"": ""upsert"",
+            ""writeBatchSize"": ""5000""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+       }
+    ],
+    ""parameters"": {
+        ""MyFilter"": {
+          ""type"": ""String""
+        },
+        ""MyProject"": {
+          ""type"": ""String""
+        }
+      }
+}
+}
+";
+
+        [JsonSample]
         public const string CopyActivity = @"
 {
   ""name"": ""MyPipeline"",
@@ -2366,10 +2424,13 @@ namespace DataFactory.Tests.JsonSamples
                 ""type"": ""AzureMLExecutePipeline"",
                 ""typeProperties"": {
                     ""mlPipelineId"": ""93b9ccc4-0000-0000-8968-43a0a0fe0c44"",
+                    ""mlPipelineEndpointId"": ""mymlPipelineEndpointId"",
+                    ""version"": ""myversion"",
                     ""experimentName"": ""myExperimentName"",
                     ""mlPipelineParameters"": {
                         ""param_name"": ""param_value""
-                    }
+                    },
+                    ""dataPathAssignments"": ""mydataPathAssignments""
                 },
                 ""linkedServiceName"": {
                     ""referenceName"": ""MyAzureMLServiceLinkedService"",
@@ -6511,6 +6572,126 @@ namespace DataFactory.Tests.JsonSamples
               ""prefix"": ""fakeprefix"",
               ""wildcardFileName"": ""*.csv"",
               ""wildcardFolderPath"": ""A*"",
+              ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
+              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""skipLineCount"": 10,
+              ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
+            }
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""quoteAllText"": true,
+              ""fileExtension"": "".csv""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
+        public const string CopyActivity_DelimitedText_AmazonS3Compatible = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AmazonS3CompatibleReadSettings"",
+              ""recursive"": true,
+              ""wildcardFolderPath"": ""A*"",
+              ""wildcardFileName"": ""*.csv"",
+              ""prefix"": ""fakeprefix"",
+              ""fileListPath"": ""fileListPath"",
+              ""enablePartitionDiscovery"": true,
+              ""partitionRootPath"": ""partitionRootPath"",
+              ""deleteFilesAfterCompletion"": true,
+              ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
+              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""skipLineCount"": 10,
+              ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
+            }
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""quoteAllText"": true,
+              ""fileExtension"": "".csv""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
+        public const string CopyActivity_DelimitedText_OracleCloudStorage = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""OracleCloudStorageReadSettings"",
+              ""recursive"": true,
+              ""wildcardFolderPath"": ""A*"",
+              ""wildcardFileName"": ""*.csv"",
+              ""prefix"": ""fakeprefix"",
+              ""fileListPath"": ""fileListPath"",
+              ""enablePartitionDiscovery"": true,
+              ""partitionRootPath"": ""partitionRootPath"",
+              ""deleteFilesAfterCompletion"": true,
               ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
               ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
             },

@@ -65,7 +65,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureSqlDatabaseLinkedService(object connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), AzureKeyVaultSecretReference password = default(AzureKeyVaultSecretReference), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), object encryptedCredential = default(object))
+        /// <param name="alwaysEncryptedSettings">Sql always encrypted
+        /// properties.</param>
+        public AzureSqlDatabaseLinkedService(object connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), AzureKeyVaultSecretReference password = default(AzureKeyVaultSecretReference), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object azureCloudType = default(object), object encryptedCredential = default(object), SqlAlwaysEncryptedProperties alwaysEncryptedSettings = default(SqlAlwaysEncryptedProperties))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
@@ -75,6 +77,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Tenant = tenant;
             AzureCloudType = azureCloudType;
             EncryptedCredential = encryptedCredential;
+            AlwaysEncryptedSettings = alwaysEncryptedSettings;
             CustomInit();
         }
 
@@ -139,6 +142,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object EncryptedCredential { get; set; }
 
         /// <summary>
+        /// Gets or sets sql always encrypted properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.alwaysEncryptedSettings")]
+        public SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -154,6 +163,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Password != null)
             {
                 Password.Validate();
+            }
+            if (AlwaysEncryptedSettings != null)
+            {
+                AlwaysEncryptedSettings.Validate();
             }
         }
     }

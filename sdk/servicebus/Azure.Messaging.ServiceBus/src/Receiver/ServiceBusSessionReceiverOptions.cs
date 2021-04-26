@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -17,6 +18,9 @@ namespace Azure.Messaging.ServiceBus
         /// whether the receiver is actively receiving, intended to help maximize throughput by allowing the receiver to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A negative value is attempted to be set for the property.
+        /// </exception>
         public int PrefetchCount
         {
             get
@@ -35,15 +39,6 @@ namespace Azure.Messaging.ServiceBus
         /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
         public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
-
-        /// <summary>
-        /// Gets or sets the transaction group associated with the receiver. This is an
-        /// arbitrary string that is used to all senders, receivers, and processors that you
-        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
-        /// If your transactions only involves a single queue, topic, or subscription, this property
-        /// should not be set.
-        /// </summary>
-        public string TransactionGroup { get; set; }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -78,7 +73,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
-                TransactionGroup = TransactionGroup
             };
     }
 }

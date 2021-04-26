@@ -39,7 +39,7 @@ namespace Azure.Data.Tables.Tests
             try
             {
                 TableItem table = await CosmosThrottleWrapper(async () => await service.CreateTableIfNotExistsAsync(newTableName).ConfigureAwait(false));
-                Assert.That(table.TableName, Is.EqualTo(newTableName));
+                Assert.That(table.Name, Is.EqualTo(newTableName));
             }
             finally
             {
@@ -50,6 +50,44 @@ namespace Azure.Data.Tables.Tests
 
         [RecordedTest]
         public void ValidateAccountSasCredentialsWithPermissions()
+        {
+            // Create a SharedKeyCredential that we can use to sign the SAS token
+
+            var credential = new TableSharedKeyCredential(TestEnvironment.StorageAccountName, TestEnvironment.PrimaryStorageAccountKey);
+
+            // Build a shared access signature with only Delete permissions and access to all service resource types.
+
+            TableAccountSasBuilder sasDelete = service.GetSasBuilder(TableAccountSasPermissions.Delete, TableAccountSasResourceTypes.All, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            string tokenDelete = sasDelete.Sign(credential);
+
+            // Build a shared access signature with the Write and Delete permissions and access to all service resource types.
+
+            TableAccountSasBuilder sasWriteDelete = service.GetSasBuilder(TableAccountSasPermissions.Write, TableAccountSasResourceTypes.All, new DateTime(2040, 1, 1, 1, 1, 0, DateTimeKind.Utc));
+            string tokenWriteDelete = sasWriteDelete.Sign(credential);
+
+            // Create the TableServiceClients using the SAS URIs.
+            // Intentionally double add the Sas to the endpoint and the cred to validate de-duping
+            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TableClientOptions())));
+
+            // Validate that we are unable to create a table using the SAS URI with only Delete permissions.
+
+            var sasTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sasAuthedServiceDelete.CreateTableAsync(sasTableName).ConfigureAwait(false));
+            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+
+            // Validate that we are able to create a table using the SAS URI with Write and Delete permissions.
+
+            Assert.That(async () => await sasAuthedServiceWriteDelete.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+
+            // Validate that we are able to delete a table using the SAS URI with only Delete permissions.
+
+            Assert.That(async () => await sasAuthedServiceDelete.DeleteTableAsync(sasTableName).ConfigureAwait(false), Throws.Nothing);
+        }
+
+        [RecordedTest]
+        public void ValidateAccountSasCredentialsWithPermissionsWithSasDuplicatedInUri()
         {
             // Create a SharedKeyCredential that we can use to sign the SAS token
 
@@ -78,14 +116,16 @@ namespace Azure.Data.Tables.Tests
             };
 
             // Create the TableServiceClients using the SAS URIs.
-
-            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TableClientOptions())));
-            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TableClientOptions())));
+            // Intentionally double add the Sas to the endpoint and the cred to validate de-duping
+            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TableClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with only Delete permissions.
 
             var sasTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-            Assert.That(async () => await sasAuthedServiceDelete.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sasAuthedServiceDelete.CreateTableAsync(sasTableName).ConfigureAwait(false));
+            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
 
             // Validate that we are able to create a table using the SAS URI with Write and Delete permissions.
 
@@ -133,7 +173,9 @@ namespace Azure.Data.Tables.Tests
             // Validate that we are unable to create a table using the SAS URI with access to Service resource types.
 
             var sasTableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
-            Assert.That(async () => await sasAuthedServiceClientService.CreateTableAsync(sasTableName).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sasAuthedServiceClientService.CreateTableAsync(sasTableName).ConfigureAwait(false));
+            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationResourceTypeMismatch.ToString()));
 
             // Validate that we are able to create a table using the SAS URI with access to Service and Container resource types.
 
@@ -186,7 +228,7 @@ namespace Azure.Data.Tables.Tests
                     {
                         Assert.That(page.Values.Count, Is.EqualTo(createdTables.Count));
                     }
-                    Assert.That(page.Values.All(r => createdTables.Contains(r.TableName)));
+                    Assert.That(page.Values.All(r => createdTables.Contains(r.Name)));
                 }
             }
 
@@ -223,7 +265,14 @@ namespace Azure.Data.Tables.Tests
                 var tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{tableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
-                Assert.That(() => tableResponses.Select(r => r.TableName), Contains.Item(tableName));
+                Assert.AreEqual(tableName, tableResponses.Select(r => r.Name).SingleOrDefault());
+
+                // Query with a filter.
+
+                tableResponses = (await service.GetTablesAsync(filter: t => t.Name == tableName).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+
+                Assert.That(() => tableResponses, Is.Not.Empty);
+                Assert.AreEqual(tableName, tableResponses.Select(r => r.Name).SingleOrDefault());
             }
             finally
             {

@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the DiskEncryptionKeyInfo class.
         /// </summary>
-        /// <param name="secretIdentifier">The secret url / identifier.</param>
-        /// <param name="keyVaultResourceArmId">The KeyVault resource ARM id
+        /// <param name="secretIdentifier">The secret url / identifier.</param>
+        /// <param name="keyVaultResourceArmId">The KeyVault resource ARM id
         /// for secret.</param>
         public DiskEncryptionKeyInfo(string secretIdentifier = default(string), string keyVaultResourceArmId = default(string))
         {
@@ -46,13 +46,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the secret url / identifier.
+        /// Gets or sets the secret url / identifier.
         /// </summary>
         [JsonProperty(PropertyName = "secretIdentifier")]
         public string SecretIdentifier { get; set; }
 
         /// <summary>
-        /// Gets or sets the KeyVault resource ARM id for secret.
+        /// Gets or sets the KeyVault resource ARM id for secret.
         /// </summary>
         [JsonProperty(PropertyName = "keyVaultResourceArmId")]
         public string KeyVaultResourceArmId { get; set; }

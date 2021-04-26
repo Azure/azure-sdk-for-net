@@ -2,15 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Security.Cryptography.X509Certificates;
 using Azure.Core;
-using System.Text.Json.Serialization;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
-    [JsonConverter(typeof(AttestationResultConverter))]
+    [CodeGenModel("AttestationResult")]
     public partial class AttestationResult
     {
         internal AttestationResult()
@@ -22,7 +18,7 @@ namespace Azure.Security.Attestation.Models
         /// </summary>
         public DateTimeOffset IssuedAt
         {
-            get => DateTimeOffset.FromUnixTimeSeconds(InternalIat);
+            get => DateTimeOffset.FromUnixTimeSeconds((long)InternalIat.Value);
         }
 
         /// <summary>
@@ -30,7 +26,7 @@ namespace Azure.Security.Attestation.Models
         /// </summary>
         public DateTimeOffset Expiration
         {
-            get => DateTimeOffset.FromUnixTimeSeconds(InternalExp);
+            get => DateTimeOffset.FromUnixTimeSeconds((long)InternalExp.Value);
         }
 
         /// <summary>
@@ -38,7 +34,7 @@ namespace Azure.Security.Attestation.Models
         /// </summary>
         public DateTimeOffset NotBefore
         {
-            get => DateTimeOffset.FromUnixTimeSeconds(InternalNbf);
+            get => DateTimeOffset.FromUnixTimeSeconds((long)InternalNbf.Value);
         }
 
         /// <summary>
@@ -72,12 +68,12 @@ namespace Azure.Security.Attestation.Models
         internal string InternalIss { get; }
 
         [CodeGenMember("Iat")]
-        internal long InternalIat { get; }
+        internal double? InternalIat { get; }
         [CodeGenMember("Nbf")]
-        internal long InternalNbf { get; }
+        internal double? InternalNbf { get; }
 
         [CodeGenMember("Exp")]
-        internal long InternalExp { get; }
+        internal double? InternalExp { get; }
 
         [CodeGenMember("PolicySigner")]
         internal JsonWebKey InternalPolicySigner { get; }

@@ -45,11 +45,15 @@
       },
       "defaultValue": [
         {
-          "name": "timeseriesinsights.id",
+          "name": "building",
           "type": "string"
         },
         {
-          "name": "id",
+          "name": "floor",
+          "type": "string"
+        },
+        {
+          "name": "room",
           "type": "string"
         }
       ]
@@ -89,7 +93,8 @@
   "variables": {
     "rbacOwnerRoleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635', subscription().subscriptionId)]",
     "storageAccountName": "[concat('tsi', uniqueString(resourceGroup().id))]",
-    "eventSourceResourceId": "[resourceId(parameters('resourceGroup'), 'Microsoft.Devices/IotHubs', parameters('iotHubName'))]"
+    "eventSourceResourceId": "[resourceId(parameters('resourceGroup'), 'Microsoft.Devices/IotHubs', parameters('iotHubName'))]",
+    "hubKeysId": "[resourceId('Microsoft.Devices/IotHubs/Iothubkeys', parameters('iotHubName'), 'iothubowner')]"
   },
   "resources": [
     {
@@ -194,6 +199,17 @@
     "TIMESERIESINSIGHTS_URL": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.TimeSeriesInsights/environments', parameters('environmentName'))).dataAccessFqdn]"
+    },
+    "IOTHUB_CONNECTION_STRING": {
+      "type": "string",
+      "value": "[format('HostName={0}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey={1}', parameters('iotHubName'), listkeys(variables('hubKeysId'), '2019-11-04').primaryKey)]"
+    }
+  },
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.3.1.62928",
+      "templateHash": "62977174382774977"
     }
   }
 }
