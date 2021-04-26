@@ -35,7 +35,11 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var dataFeed = new DataFeed();
 
-            dataFeed.Name = "Sample data feed";
+#if SNIPPET
+            dataFeed.Name = "<dataFeedName>";
+#else
+            dataFeed.Name = GetUniqueName();
+#endif
             dataFeed.DataSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
             dataFeed.Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
