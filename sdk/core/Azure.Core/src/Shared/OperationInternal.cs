@@ -11,6 +11,8 @@ namespace Azure.Core
 {
     internal class OperationInternal<TResult>
     {
+        private const string RetryAfterHeaderName = "Retry-After";
+
         private readonly IOperation<TResult> _operation;
 
         private TResult _value;
@@ -74,8 +76,24 @@ namespace Azure.Core
         public Response UpdateStatus(CancellationToken cancellationToken) =>
             UpdateStatusAsync(async: false, cancellationToken).EnsureCompleted();
 
-        public async ValueTask<Response<TResult>> WaitForCompletionAsync(CancellationToken cancellationToken) =>
-            await WaitForCompletionAsync(DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
+        public async ValueTask<Response<TResult>> WaitForCompletionAsync(CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                Response response = await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+
+                if (HasCompleted)
+                {
+                    return Response.FromValue(Value, response);
+                }
+
+                var pollingInterval = response.Headers.TryGetValue(RetryAfterHeaderName, out string retryAfterValue)
+                    && int.TryParse(retryAfterValue, out int delayInSeconds)
+                    ? TimeSpan.FromSeconds(delayInSeconds) : DefaultPollingInterval;
+
+                await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
+            }
+        }
 
         public async ValueTask<Response<TResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
