@@ -97,7 +97,7 @@ namespace Azure.Security.KeyVault
             {
                 if (_scopeCache.TryGetValue(authority, out _scope))
                 {
-                    return default;
+                    return false;
                 }
             }
             else

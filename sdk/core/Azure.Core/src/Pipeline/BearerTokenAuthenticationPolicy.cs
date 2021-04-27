@@ -23,19 +23,21 @@ namespace Azure.Core.Pipeline
         /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
-        /// <param name="scope">The scope to authenticate for.</param>
+        /// <param name="scope">The scope to be included in acquired tokens.</param>
         public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope }) { }
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
-        /// <param name="scopes">_scopes to authenticate for.</param>
+        /// <param name="scopes">Scopes to be included in acquired tokens.</param>
+        /// <exception cref="ArgumentNullException">When <paramref name="credential"/> or <paramref name="scopes"/> is null.</exception>
         public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
             : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
         { }
 
-        internal BearerTokenAuthenticationPolicy(TokenCredential credential,
+        internal BearerTokenAuthenticationPolicy(
+            TokenCredential credential,
             IEnumerable<string> scopes,
             TimeSpan tokenRefreshOffset,
             TimeSpan tokenRefreshRetryDelay)
@@ -340,7 +342,8 @@ namespace Azure.Core.Pipeline
                 (context.Scopes != null && !context.Scopes.AsSpan().SequenceEqual(_currentContext.Value.Scopes.AsSpan())) ||
                 (context.Claims != null && !string.Equals(context.Claims, _currentContext.Value.Claims));
 
-            private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs,
+            private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(
+                TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs,
                 HeaderValueInfo info,
                 TokenRequestContext context,
                 bool async)
