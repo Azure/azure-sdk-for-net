@@ -27,11 +27,11 @@ In order to interact with the Azure Time Series Insights service, you will need 
 
 The main concepts of Time Series Insights client include:
 
-Time Series Insights instances client can be used to perform operations such as creating, listing, replacing and deleting Time Series instances.
-Types client can be used to perform operations such as creating, listing, replacing and deleting Time Series types.
-Hierarchies client can be used to perform operations such as creating, listing, replacing and deleting Time Series hierarchies.
-Model Settings client can be used to perform operations such as getting and updating Time Series Model configuration settings.
-Query client can be used to query for events, series and aggregate series on Time Series Insights.
+Instances client: To perform operations such as creating, listing, replacing and deleting Time Series instances.
+Types client: To perform operations such as creating, listing, replacing and deleting Time Series types.
+Hierarchies client: To perform operations such as creating, listing, replacing and deleting Time Series hierarchies.
+Model Settings client: To perform operations such as getting and updating Time Series Model configuration settings.
+Query client: To query for events, series and aggregate series on Time Series Insights.
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
