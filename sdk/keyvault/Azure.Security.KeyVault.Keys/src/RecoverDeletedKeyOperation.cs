@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -22,11 +21,14 @@ namespace Azure.Security.KeyVault.Keys
         internal RecoverDeletedKeyOperation(KeyVaultPipeline pipeline, Response<KeyVaultKey> response)
         {
             _pipeline = pipeline;
-            _operationInternal = new(nameof(RecoverDeletedKeyOperation), pipeline.Diagnostics, this, s_defaultPollingInterval)
+            _operationInternal = new(pipeline.Diagnostics, this)
             {
+                DefaultPollingInterval = s_defaultPollingInterval,
                 RawResponse = response.GetRawResponse(),
                 Value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.")
             };
+
+            _operationInternal.ScopeAttributes.Add("secret", Value.Name);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoverDeletedKeyOperation" /> for mocking. </summary>
@@ -75,29 +77,24 @@ namespace Azure.Security.KeyVault.Keys
         Response IOperation<KeyVaultKey>.GetResponse(CancellationToken cancellationToken) =>
             _pipeline.GetResponse(RequestMethod.Get, cancellationToken, KeyClient.KeysPath, Value.Name, "/", Value.Properties.Version);
 
-        CompletionStatus IOperation<KeyVaultKey>.UpdateState(Response response)
+        OperationState<KeyVaultKey> IOperation<KeyVaultKey>.UpdateState(Response response)
         {
+            var state = new OperationState<KeyVaultKey>();
+
             switch (response.Status)
             {
                 case 200:
                 case 403: // Access denied but proof the key was recovered.
-                    return CompletionStatus.Succeeded;
+                    state.Succeeded = true;
+                    state.Value = Value;
+                    return state;
 
                 case 404:
-                    return CompletionStatus.Pending;
+                    return state;
 
                 default:
                     throw _pipeline.Diagnostics.CreateRequestFailedException(response);
             }
-        }
-
-        KeyVaultKey IOperation<KeyVaultKey>.ParseResponse(Response response) => Value;
-
-        RequestFailedException IOperation<KeyVaultKey>.GetOperationFailedException(Response response) => null;
-
-        void IOperation<KeyVaultKey>.AddAttributes(DiagnosticScope scope)
-        {
-            scope.AddAttribute("secret", Value.Name);
         }
     }
 }
