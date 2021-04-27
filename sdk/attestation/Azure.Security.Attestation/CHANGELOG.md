@@ -1,11 +1,14 @@
 # Release History
+
 ## 1.0.0-beta.3 (Unreleased)
+
 ### Changed
+
 - Hopefully the final changes for Azure Attestation Service for .Net. Mostly code cleanups, but significant improvements to the `AttestationToken` class.
 
 ### Breaking change
 
-- Clients no longer need to instantiate `SecuredAttestationToken` or `UnsecuredAttestationToken` objects to validate the token hash. All of the functionality associated with `SecuredAttestationToken` and `UnsecuredAttestationToken` has been folded into the `AttestationToken` class. 
+- Clients no longer need to instantiate `SecuredAttestationToken` or `UnsecuredAttestationToken` objects to validate the token hash. All of the functionality associated with `SecuredAttestationToken` and `UnsecuredAttestationToken` has been folded into the `AttestationToken` class.
 As a result, the `SecuredAttestationToken` and `UnsecuredAttestationToken` types have been removed.
 
 ```C# Snippet:VerifySigningHash
@@ -27,9 +30,11 @@ Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash
 - The JSON Web Token associated properties in the `AttestationToken` class have been converted to nullable types to allow the AttestationToken class to express JSON Web Signature objects.
 - The token validation related properties in the `AttestationClientOptions` class (validateAttestationTokens, validationCallback) have been moved into the new `TokenValidationOptions` class.
 - The `TokenValidationOptions` class contains a number of options to tweak the JSON Web Token validation process, modeled extremely loosely after constructs in [Nimbus JWT](https://connect2id.com/products/nimbus-jose-jwt) and [PyJWT](https://pypi.org/project/PyJWT/).
+- The validationCallback in the `TokenValidationOptions` object has been moved to a `TokenValidated` event on the `TokenValidationOptions` class. The `TokenValidated` event derives from the [SyncAsyncEventHandler](https://docs.microsoft.com/dotnet/api/azure.core.syncasynceventhandler-1) class, enabling both synchronous and asynchronous event handlers.
+- The `TokenBody` and `TokenHeader` properties have been removed from the [AttestationToken](https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationtoken) object since they were redundant.
 - The `TokenSigningKey` type has been renamed `AttestationTokenSigningKey`.
 - The `PolicyResult` type has been renamed `PolicyModificationResult`.
-- The constructor for the `AttestationToken` class has been changed from taking an `object` to taking a `BinaryData`. This allows callers to use their preferred serialization 
+- The constructor for the `AttestationToken` class has been changed from taking an `object` to taking a `BinaryData`. This allows callers to use their preferred serialization
 mechanism. The constructor for `AttestationToken` will ensure that the `body` parameter is in fact a serialized JSON object to ensure it is compatable wih the JSON Web Signature encoding algorithms.
 - The inputs to the AttestSgxEnclave and AttestOpenEnclave APIs have been restructured
 to reduce the number of parameters passed into the API.
@@ -48,7 +53,7 @@ to reduce the number of parameters passed into the API.
 
 ### Breaking Change
 
-- It is no longer necessary to manually Base64Url encode the AttestationPolicy property in the StoredAttestationPolicy model. 
+- It is no longer necessary to manually Base64Url encode the AttestationPolicy property in the StoredAttestationPolicy model.
 This dramatically simplifies the user experience for interacting with the saved attestation policies - developers can treat attestation policies as string values.
 - The `SecuredAttestationToken` and `UnsecuredAttestationToken` parameters have been removed from the APIs which took them. Instead those APIs directly take the underlying type.
 
