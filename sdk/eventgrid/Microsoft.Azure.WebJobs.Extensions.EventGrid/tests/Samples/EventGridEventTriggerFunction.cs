@@ -8,10 +8,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Azure.Extensions.WebJobs.Sample
 {
-    #region Snippet:EventGridTriggerFunction
-    public static class EventGridTriggerFunction
+    #region Snippet:EventGridEventTriggerFunction
+    public static class EventGridEventTriggerFunction
     {
-        [FunctionName("EventGridTriggerFunction")]
+        [FunctionName("EventGridEventTriggerFunction")]
         public static void Run(
             ILogger logger,
             [EventGridTrigger] EventGridEvent e)

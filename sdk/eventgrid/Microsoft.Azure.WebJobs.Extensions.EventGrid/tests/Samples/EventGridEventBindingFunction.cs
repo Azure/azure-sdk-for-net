@@ -11,10 +11,10 @@ using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 
 namespace Azure.Extensions.WebJobs.Sample
 {
-    #region Snippet:EventGridBindingFunction
-    public static class EventGridBindingFunction
+    #region Snippet:EventGridEventBindingFunction
+    public static class EventGridEventBindingFunction
     {
-        [FunctionName("EventGridBindingFunction")]
+        [FunctionName("EventGridEventBindingFunction")]
         public static async Task<IActionResult> RunAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             [EventGrid(TopicEndpointUri = "EventGridEndpoint", TopicKeySetting = "EventGridKey")] IAsyncCollector<EventGridEvent> eventCollector)
