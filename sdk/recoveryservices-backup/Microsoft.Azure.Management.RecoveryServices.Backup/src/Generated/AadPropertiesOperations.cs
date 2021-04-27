@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     using System.Threading.Tasks;
 
     /// <summary>
-    /// AadPropertiesOperations operations. 
+    /// AadPropertiesOperations operations.
     /// </summary>
     internal partial class AadPropertiesOperations : IServiceOperations<RecoveryServicesBackupClient>, IAadPropertiesOperations
     {

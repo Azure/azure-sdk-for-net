@@ -31,12 +31,14 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="columnCount">The number of columns in this table.</param>
         /// <param name="rowCount">The number of rows in this table.</param>
         /// <param name="cells">A list of cells contained in this table.</param>
-        internal FormTable(int pageNumber, int columnCount, int rowCount, IReadOnlyList<FormTableCell> cells)
+        /// <param name="boundingBox">The quadrilateral bounding box that outlines the table.</param>
+        internal FormTable(int pageNumber, int columnCount, int rowCount, IReadOnlyList<FormTableCell> cells, FieldBoundingBox boundingBox)
         {
             PageNumber = pageNumber;
             ColumnCount = columnCount;
             RowCount = rowCount;
             Cells = cells;
+            BoundingBox = boundingBox;
         }
 
         /// <summary>

@@ -20,10 +20,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            Uri formUri = FormRecognizerTestEnvironment.CreateUri("Invoice_1.pdf");
-
             #region Snippet:FormRecognizerSampleRecognizeContentFromUri
-            //@@ Uri formUri = <formUri>;
+#if SNIPPET
+            Uri formUri = <formUri>;
+#else
+            Uri formUri = FormRecognizerTestEnvironment.CreateUri("Invoice_1.pdf");
+#endif
 
             Response<FormPageCollection> response = await client.StartRecognizeContentFromUriAsync(formUri).WaitForCompletionAsync();
             FormPageCollection formPages = response.Value;
@@ -36,6 +38,16 @@ namespace Azure.AI.FormRecognizer.Samples
                 {
                     FormLine line = page.Lines[i];
                     Console.WriteLine($"  Line {i} has {line.Words.Count} {(line.Words.Count == 1 ? "word" : "words")}, and text: '{line.Text}'.");
+
+                    if (line.Appearance != null)
+                    {
+                        // Check the style and style confidence to see if text is handwritten.
+                        // Note that value '0.8' is used as an example.
+                        if (line.Appearance.Style.Name == TextStyleName.Handwriting && line.Appearance.Style.Confidence > 0.8)
+                        {
+                            Console.WriteLine("The text is handwritten");
+                        }
+                    }
 
                     Console.WriteLine("    Its bounding box is:");
                     Console.WriteLine($"    Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");

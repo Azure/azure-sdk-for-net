@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        internal JobMetadata(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdateDateTime, JobStatus status)
+        internal JobMetadata(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status)
         {
             if (jobId == null)
             {
@@ -34,15 +34,13 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of JobMetadata. </summary>
         /// <param name="createdDateTime"> . </param>
-        /// <param name="displayName"> . </param>
         /// <param name="expirationDateTime"> . </param>
         /// <param name="jobId"> . </param>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        internal JobMetadata(DateTimeOffset createdDateTime, string displayName, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdateDateTime, JobStatus status)
+        internal JobMetadata(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status)
         {
             CreatedDateTime = createdDateTime;
-            DisplayName = displayName;
             ExpirationDateTime = expirationDateTime;
             JobId = jobId;
             LastUpdateDateTime = lastUpdateDateTime;
@@ -50,9 +48,8 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         public DateTimeOffset CreatedDateTime { get; }
-        public string DisplayName { get; }
         public DateTimeOffset? ExpirationDateTime { get; }
         public DateTimeOffset LastUpdateDateTime { get; }
-        public JobStatus Status { get; }
+        public TextAnalyticsOperationStatus Status { get; }
     }
 }

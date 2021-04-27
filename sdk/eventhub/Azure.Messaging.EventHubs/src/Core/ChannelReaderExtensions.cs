@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         public static async IAsyncEnumerable<T> EnumerateChannel<T>(this ChannelReader<T> reader,
                                                                     TimeSpan? maximumWaitTime,
-                                                                    [EnumeratorCancellation]CancellationToken cancellationToken)
+                                                                    [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(reader, nameof(reader));
 

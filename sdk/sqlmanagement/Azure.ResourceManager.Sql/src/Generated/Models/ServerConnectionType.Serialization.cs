@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class ServerConnectionTypeExtensions
+    internal static partial class ServerConnectionTypeExtensions
     {
         public static string ToSerialString(this ServerConnectionType value) => value switch
         {

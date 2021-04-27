@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobVersionListResult
+    internal partial class JobVersionListResult
     {
         internal static JobVersionListResult DeserializeJobVersionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Resource>> value = default;
+            Optional<IReadOnlyList<JobVersion>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Resource> array = new List<Resource>();
+                    List<JobVersion> array = new List<JobVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Resource.DeserializeResource(item));
+                        array.Add(JobVersion.DeserializeJobVersion(item));
                     }
                     value = array;
                     continue;

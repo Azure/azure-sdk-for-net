@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<CachingTypes> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<StorageAccountTypes> storageAccountType = default;
-            Optional<SubResource> diskEncryptionSet = default;
+            Optional<DiskEncryptionSetParameters> diskEncryptionSet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("snapshot"))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskEncryptionSet = SubResource.DeserializeSubResource(property.Value);
+                    diskEncryptionSet = DiskEncryptionSetParameters.DeserializeDiskEncryptionSetParameters(property.Value);
                     continue;
                 }
             }

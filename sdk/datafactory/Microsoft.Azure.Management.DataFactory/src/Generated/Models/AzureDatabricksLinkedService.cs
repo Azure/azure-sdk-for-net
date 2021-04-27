@@ -40,10 +40,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="domain">&lt;REGION&gt;.azuredatabricks.net, domain
         /// name of your Databricks deployment. Type: string (or Expression
         /// with resultType string).</param>
-        /// <param name="accessToken">Access token for databricks REST API.
-        /// Refer to
-        /// https://docs.azuredatabricks.net/api/latest/authentication.html.
-        /// Type: string (or Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -51,6 +47,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the linked service.</param>
+        /// <param name="accessToken">Access token for databricks REST API.
+        /// Refer to
+        /// https://docs.azuredatabricks.net/api/latest/authentication.html.
+        /// Type: string (or Expression with resultType string).</param>
+        /// <param name="authentication">Required to specify MSI, if using
+        /// Workspace resource id for databricks REST API. Type: string (or
+        /// Expression with resultType string).</param>
+        /// <param name="workspaceResourceId">Workspace resource id for
+        /// databricks REST API. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="existingClusterId">The id of an existing interactive
         /// cluster that will be used for all runs of this activity. Type:
         /// string (or Expression with resultType string).</param>
@@ -102,11 +108,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureDatabricksLinkedService(object domain, SecretBase accessToken, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object existingClusterId = default(object), object instancePoolId = default(object), object newClusterVersion = default(object), object newClusterNumOfWorker = default(object), object newClusterNodeType = default(object), IDictionary<string, object> newClusterSparkConf = default(IDictionary<string, object>), IDictionary<string, object> newClusterSparkEnvVars = default(IDictionary<string, object>), IDictionary<string, object> newClusterCustomTags = default(IDictionary<string, object>), object newClusterLogDestination = default(object), object newClusterDriverNodeType = default(object), object newClusterInitScripts = default(object), object newClusterEnableElasticDisk = default(object), object encryptedCredential = default(object))
+        /// <param name="policyId">The policy id for limiting the ability to
+        /// configure clusters based on a user defined set of rules. Type:
+        /// string (or Expression with resultType string).</param>
+        public AzureDatabricksLinkedService(object domain, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), SecretBase accessToken = default(SecretBase), object authentication = default(object), object workspaceResourceId = default(object), object existingClusterId = default(object), object instancePoolId = default(object), object newClusterVersion = default(object), object newClusterNumOfWorker = default(object), object newClusterNodeType = default(object), IDictionary<string, object> newClusterSparkConf = default(IDictionary<string, object>), IDictionary<string, object> newClusterSparkEnvVars = default(IDictionary<string, object>), IDictionary<string, object> newClusterCustomTags = default(IDictionary<string, object>), object newClusterLogDestination = default(object), object newClusterDriverNodeType = default(object), object newClusterInitScripts = default(object), object newClusterEnableElasticDisk = default(object), object encryptedCredential = default(object), object policyId = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Domain = domain;
             AccessToken = accessToken;
+            Authentication = authentication;
+            WorkspaceResourceId = workspaceResourceId;
             ExistingClusterId = existingClusterId;
             InstancePoolId = instancePoolId;
             NewClusterVersion = newClusterVersion;
@@ -120,6 +131,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             NewClusterInitScripts = newClusterInitScripts;
             NewClusterEnableElasticDisk = newClusterEnableElasticDisk;
             EncryptedCredential = encryptedCredential;
+            PolicyId = policyId;
             CustomInit();
         }
 
@@ -143,6 +155,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.accessToken")]
         public SecretBase AccessToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets required to specify MSI, if using Workspace resource
+        /// id for databricks REST API. Type: string (or Expression with
+        /// resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.authentication")]
+        public object Authentication { get; set; }
+
+        /// <summary>
+        /// Gets or sets workspace resource id for databricks REST API. Type:
+        /// string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.workspaceResourceId")]
+        public object WorkspaceResourceId { get; set; }
 
         /// <summary>
         /// Gets or sets the id of an existing interactive cluster that will be
@@ -255,6 +282,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object EncryptedCredential { get; set; }
 
         /// <summary>
+        /// Gets or sets the policy id for limiting the ability to configure
+        /// clusters based on a user defined set of rules. Type: string (or
+        /// Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.policyId")]
+        public object PolicyId { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -266,10 +301,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Domain == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Domain");
-            }
-            if (AccessToken == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AccessToken");
             }
         }
     }

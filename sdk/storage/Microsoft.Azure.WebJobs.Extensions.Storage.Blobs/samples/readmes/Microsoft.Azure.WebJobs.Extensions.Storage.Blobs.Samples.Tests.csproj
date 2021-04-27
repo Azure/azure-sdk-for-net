@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureStorageWebjobsExtensionSharedTestSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <None Include="$(AzureStorageSharedTestSources)\azurite_cert.pem" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.Azure.WebJobs.Extensions.Storage.Common\tests\Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests.csproj" />
+    <ProjectReference Include="..\..\src\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.csproj" />
+  </ItemGroup>
+</Project>

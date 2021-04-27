@@ -37,15 +37,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         private const string TestQueueNameEtag = TestArtifactsPrefix + "etag2equeue%rnd%";
         private const string DoneQueueName = TestArtifactsPrefix + "donequeue%rnd%";
 
-        private const string BadMessageQueue1 = TestArtifactsPrefix + "-badmessage1-%rnd%";
-        private const string BadMessageQueue2 = TestArtifactsPrefix + "-badmessage2-%rnd%";
+        private const string BadMessageQueue = TestArtifactsPrefix + "-badmessage-%rnd%";
 
-        private static int _badMessage1Calls;
-        private static int _badMessage2Calls;
+        private static int _badMessageCalls;
 
         private static EventWaitHandle _startWaitHandle;
         private static EventWaitHandle _functionChainWaitHandle;
         private QueueServiceClient _queueServiceClient;
+        private QueueServiceClient _queueServiceClientWithoutEncoding;
         private BlobServiceClient _blobServiceClient;
         private RandomNameResolver _resolver;
 
@@ -59,6 +58,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         {
             _fixture = new AzureStorageEndToEndTests.TestFixture(TestEnvironment);
             _queueServiceClient = _fixture.QueueServiceClient;
+            _queueServiceClientWithoutEncoding = _fixture.QueueServiceClientWithoutEncoding;
             _blobServiceClient = _fixture.BlobServiceClient;
         }
 
@@ -138,28 +138,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             _functionChainWaitHandle.Set();
         }
 
-        /// <summary>
-        /// We'll insert a bad message. It should get here okay. It will
-        /// then pass it on to the next trigger.
-        /// </summary>
-        public static void BadMessage_CloudQueueMessage(
-            [QueueTrigger(BadMessageQueue1)] QueueMessage badMessageIn,
-            [Queue(BadMessageQueue2)] out string badMessageOut,
-#pragma warning disable CS0618 // Type or member is obsolete
-            TraceWriter log)
-#pragma warning restore CS0618 // Type or member is obsolete
-        {
-            _badMessage1Calls++;
-            badMessageOut = badMessageIn.MessageText;
-        }
-
         public static void BadMessage_String(
-            [QueueTrigger(BadMessageQueue2)] string message,
+            [QueueTrigger(BadMessageQueue)] string message,
 #pragma warning disable CS0618 // Type or member is obsolete
             TraceWriter log)
 #pragma warning restore CS0618 // Type or member is obsolete
         {
-            _badMessage2Calls++;
+            _badMessageCalls++;
         }
 
         // Uncomment the Fact attribute to run
@@ -220,14 +205,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         }
 
         [Test]
-        [Ignore("TODO (kasobol-msft) revisit this test when base64/BinaryData is supported in SDK")]
         public async Task BadQueueMessageE2ETests()
         {
             // This test ensures that the host does not crash on a bad message (it previously did)
             // Insert a bad message into a queue that should:
-            // - trigger BadMessage_CloudQueueMessage, which will put it into a second queue that will
             // - trigger BadMessage_String, which should fail
-            // - BadMessage_String should fail repeatedly until it is moved to the poison queue
+            // - BadMessage_String should be transfered to poison queue.
             // The test will watch that poison queue to know when to complete
 
             // Reinitialize the name resolver to avoid conflicts
@@ -254,14 +237,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             // - use a GUID as the content, which is not a valid base64 string
             // - pass 'true', to indicate that it is a base64 string
             string messageContent = Guid.NewGuid().ToString();
-            // var message = new CloudQueueMessage(messageContent, true); // TODO (kasobol-msft) check this base64 thing
 
-            var queue = _queueServiceClient.GetQueueClient(_resolver.ResolveInString(BadMessageQueue1));
+            var queue = _queueServiceClientWithoutEncoding.GetQueueClient(_resolver.ResolveInString(BadMessageQueue));
             await queue.CreateIfNotExistsAsync();
             await queue.ClearMessagesAsync();
 
-            // the poison queue will end up off of the second queue
-            var poisonQueue = _queueServiceClient.GetQueueClient(_resolver.ResolveInString(BadMessageQueue2) + "-poison");
+            var poisonQueue = _queueServiceClientWithoutEncoding.GetQueueClient(_resolver.ResolveInString(BadMessageQueue) + "-poison");
             await poisonQueue.DeleteIfExistsAsync();
 
             await queue.SendMessageAsync(messageContent);
@@ -272,22 +253,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 bool done = false;
                 if (await poisonQueue.ExistsAsync())
                 {
-                    poisonMessage = (await poisonQueue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
+                    poisonMessage = await poisonQueue.ReceiveMessageAsync();
                     done = poisonMessage != null;
-
-                    if (done)
-                    {
-                        // Sleep briefly, then make sure the other message has been deleted.
-                        // If so, trying to delete it again will throw an error.
-                        Thread.Sleep(1000);
-
-                        // The message is in the second queue
-                        var queue2 = _queueServiceClient.GetQueueClient(_resolver.ResolveInString(BadMessageQueue2));
-
-                        RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
-                            () => queue2.DeleteMessageAsync(_lastMessageId, _lastMessagePopReceipt));
-                        Assert.AreEqual("MessageNotFound", ex.ErrorCode);
-                    }
                 }
                 var logs = loggerProvider.GetAllLogMessages();
                 return done;
@@ -300,8 +267,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.AreEqual(messageContent, poisonMessage.MessageText);
 
             // Make sure the functions were called correctly
-            Assert.AreEqual(1, _badMessage1Calls);
-            Assert.AreEqual(0, _badMessage2Calls);
+            Assert.AreEqual(0, _badMessageCalls);
 
             // Validate Logger
             var loggerErrors = loggerProvider.GetAllLogMessages().Where(l => l.Level == Microsoft.Extensions.Logging.LogLevel.Error);
@@ -376,10 +342,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
                 var queueOptions = new QueueClientOptions() { MessageEncoding = QueueMessageEncoding.Base64 };
                 this.QueueServiceClient = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString, queueOptions);
+                this.QueueServiceClientWithoutEncoding = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
                 this.BlobServiceClient = new BlobServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
             }
 
             public QueueServiceClient QueueServiceClient
+            {
+                get;
+                private set;
+            }
+
+            public QueueServiceClient QueueServiceClientWithoutEncoding
             {
                 get;
                 private set;

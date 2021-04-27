@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v3.1/models/landmarks/analyze?language=pt",
-      "EncodedRequestUri": "L3Zpc2lvbi92My4xL21vZGVscy9sYW5kbWFya3MvYW5hbHl6ZT9sYW5ndWFnZT1wdA==",
+      "RequestUri": "/vision/v3.2/models/landmarks/analyze?language=pt&model-version=latest",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4yL21vZGVscy9sYW5kbWFya3MvYW5hbHl6ZT9sYW5ndWFnZT1wdCZtb2RlbC12ZXJzaW9uPWxhdGVzdA==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/spaceneedle.jpg\"\r\n}",
       "RequestHeaders": {
@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.29220.03",
+          "FxVersion/4.8.4300.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/6.0.0.0"
+          "OSVersion/10.0.19042.0",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -27,28 +27,28 @@
           "CognitiveServices.ComputerVision.Landmarks=1,CognitiveServices.ComputerVision.Transaction=1"
         ],
         "x-envoy-upstream-service-time": [
-          "466"
+          "296"
         ],
         "apim-request-id": [
-          "51ce2be1-bc76-4d60-933c-cd66970c0539"
+          "5749ea64-f2ff-492d-89ca-84b1445bcdd2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "X-Content-Type-Options": [
+        "x-content-type-options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 30 Sep 2020 21:51:10 GMT"
+          "Wed, 24 Mar 2021 06:44:20 GMT"
         ],
         "Content-Length": [
-          "192"
+          "220"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"result\": {\r\n    \"landmarks\": [\r\n      {\r\n        \"name\": \"Obelisco Espacial\",\r\n        \"confidence\": 0.99991011619567871\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"51ce2be1-bc76-4d60-933c-cd66970c0539\",\r\n  \"metadata\": {\r\n    \"height\": 479,\r\n    \"width\": 243,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"result\": {\r\n    \"landmarks\": [\r\n      {\r\n        \"name\": \"Obelisco Espacial\",\r\n        \"confidence\": 0.99991011619567871\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"5749ea64-f2ff-492d-89ca-84b1445bcdd2\",\r\n  \"metadata\": {\r\n    \"height\": 479,\r\n    \"width\": 243,\r\n    \"format\": \"Jpeg\"\r\n  },\r\n  \"modelVersion\": \"2021-04-01\"\r\n}",
       "StatusCode": 200
     }
   ],

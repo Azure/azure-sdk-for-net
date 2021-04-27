@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> The UpdateChatMessageRequest. </summary>
+    /// <summary> Request payload for updating a chat message. </summary>
     internal partial class UpdateChatMessageRequest
     {
         /// <summary> Initializes a new instance of UpdateChatMessageRequest. </summary>
@@ -17,7 +17,5 @@ namespace Azure.Communication.Chat
 
         /// <summary> Chat message content. </summary>
         public string Content { get; set; }
-        /// <summary> The chat message priority. </summary>
-        public ChatMessagePriority? Priority { get; set; }
     }
 }

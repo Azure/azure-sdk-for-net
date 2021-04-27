@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.DigitalTwins.Core.Serialization;
 
@@ -22,7 +20,7 @@ namespace Azure.DigitalTwins.Core
     /// <example>
     /// Here's an example of  how to use the BasicDigitalTwin helper class to serialize and create a digital twin.
     ///
-    /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicTwin">
+    /// <code snippet="Snippet:DigitalTwinsSampleCreateBasicTwin" language="csharp">
     /// // Create digital twin with component payload using the BasicDigitalTwin serialization helper
     ///
     /// var basicTwin = new BasicDigitalTwin
@@ -57,7 +55,7 @@ namespace Azure.DigitalTwins.Core
     ///
     /// Here's an example of  how to use the BasicDigitalTwin helper class to get and deserialize a digital twin.
     ///
-    /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin">
+    /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin" language="csharp">
     /// Response&lt;BasicDigitalTwin&gt; getBasicDtResponse = await client.GetDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId);
     /// BasicDigitalTwin basicDt = getBasicDtResponse.Value;
     ///
@@ -99,9 +97,32 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// This field will contain properties and components as defined in the contents section of the DTDL definition of the twin.
         /// </summary>
+        /// <remarks>
+        /// If the property is a component, use the <see cref="BasicDigitalTwinComponent"/> class to deserialize the payload.
+        /// </remarks>
+        /// <example>
+        /// <code snippet="Snippet:DigitalTwinsSampleGetBasicDigitalTwin" language="csharp">
+        /// Response&lt;BasicDigitalTwin&gt; getBasicDtResponse = await client.GetDigitalTwinAsync&lt;BasicDigitalTwin&gt;(basicDtId);
+        /// BasicDigitalTwin basicDt = getBasicDtResponse.Value;
+        ///
+        /// // Must cast Component1 as a JsonElement and get its raw text in order to deserialize it as a dictionary
+        /// string component1RawText = ((JsonElement)basicDt.Contents[&quot;Component1&quot;]).GetRawText();
+        /// var component1 = JsonSerializer.Deserialize&lt;BasicDigitalTwinComponent&gt;(component1RawText);
+        ///
+        /// Console.WriteLine($&quot;Retrieved and deserialized digital twin {basicDt.Id}:\n\t&quot; +
+        ///     $&quot;ETag: {basicDt.ETag}\n\t&quot; +
+        ///     $&quot;ModelId: {basicDt.Metadata.ModelId}\n\t&quot; +
+        ///     $&quot;Prop1: {basicDt.Contents[&quot;Prop1&quot;]} and last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop1&quot;].LastUpdatedOn}\n\t&quot; +
+        ///     $&quot;Prop2: {basicDt.Contents[&quot;Prop2&quot;]} and last updated on {basicDt.Metadata.PropertyMetadata[&quot;Prop2&quot;].LastUpdatedOn}\n\t&quot; +
+        ///     $&quot;Component1.Prop1: {component1.Contents[&quot;ComponentProp1&quot;]} and  last updated on: {component1.Metadata[&quot;ComponentProp1&quot;].LastUpdatedOn}\n\t&quot; +
+        ///     $&quot;Component1.Prop2: {component1.Contents[&quot;ComponentProp2&quot;]} and last updated on: {component1.Metadata[&quot;ComponentProp2&quot;].LastUpdatedOn}&quot;);
+        /// </code>
+        /// </example>
 #pragma warning disable CA2227 // Collection properties should be readonly
+
         [JsonExtensionData]
         public IDictionary<string, object> Contents { get; set; } = new Dictionary<string, object>();
+
 #pragma warning restore CA2227 // Collection properties should be readonly
     }
 }

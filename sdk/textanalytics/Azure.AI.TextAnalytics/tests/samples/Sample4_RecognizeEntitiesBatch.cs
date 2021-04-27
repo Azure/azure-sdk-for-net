@@ -57,7 +57,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 new TextDocumentInput("4", string.Empty)
             };
 
-            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
+            var options = new RecognizeEntitiesOptions { IncludeStatistics = true };
             Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(documents, options);
             RecognizeEntitiesResultCollection entitiesInDocuments = response.Value;
 
@@ -85,6 +85,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     {
                         Console.WriteLine($"    Text: {entity.Text}");
                         Console.WriteLine($"    Offset: {entity.Offset}");
+                        Console.WriteLine($"    Length: {entity.Length}");
                         Console.WriteLine($"    Category: {entity.Category}");
                         if (!string.IsNullOrEmpty(entity.SubCategory))
                             Console.WriteLine($"    SubCategory: {entity.SubCategory}");

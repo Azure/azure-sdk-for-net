@@ -21,6 +21,8 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
 To recognize invoices from a URI, use the `StartRecognizeInvoicesFromUriAsync` method.
 
+For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/invoicefields).
+
 ```C# Snippet:FormRecognizerSampleRecognizeInvoicesUri
     Uri invoiceUri = <invoiceUri>;
     var options = new RecognizeInvoicesOptions() { Locale = "en-US" };
@@ -29,7 +31,7 @@ To recognize invoices from a URI, use the `StartRecognizeInvoicesFromUriAsync` m
     Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
     RecognizedFormCollection invoices = operationResponse.Value;
 
-    // To see the list of the supported fields returned by service and its corresponding types, consult:
+    // To see the list of all the supported fields returned by service and its corresponding types, consult:
     // https://aka.ms/formrecognizer/invoicefields
 
     RecognizedForm invoice = invoices.Single();
@@ -43,39 +45,12 @@ To recognize invoices from a URI, use the `StartRecognizeInvoicesFromUriAsync` m
         }
     }
 
-    if (invoice.Fields.TryGetValue("InvoiceDate", out FormField invoiceDateField))
-    {
-        if (invoiceDateField.Value.ValueType == FieldValueType.Date)
-        {
-            DateTime invoiceDate = invoiceDateField.Value.AsDate();
-            Console.WriteLine($"Invoice Date: '{invoiceDate}', with confidence {invoiceDateField.Confidence}");
-        }
-    }
-
-    if (invoice.Fields.TryGetValue("DueDate", out FormField dueDateField))
-    {
-        if (dueDateField.Value.ValueType == FieldValueType.Date)
-        {
-            DateTime dueDate = dueDateField.Value.AsDate();
-            Console.WriteLine($"Due Date: '{dueDate}', with confidence {dueDateField.Confidence}");
-        }
-    }
-
     if (invoice.Fields.TryGetValue("VendorName", out FormField vendorNameField))
     {
         if (vendorNameField.Value.ValueType == FieldValueType.String)
         {
             string vendorName = vendorNameField.Value.AsString();
             Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
-        }
-    }
-
-    if (invoice.Fields.TryGetValue("VendorAddress", out FormField vendorAddressField))
-    {
-        if (vendorAddressField.Value.ValueType == FieldValueType.String)
-        {
-            string vendorAddress = vendorAddressField.Value.AsString();
-            Console.WriteLine($"Vendor Address: '{vendorAddress}', with confidence {vendorAddressField.Confidence}");
         }
     }
 
@@ -88,21 +63,77 @@ To recognize invoices from a URI, use the `StartRecognizeInvoicesFromUriAsync` m
         }
     }
 
-    if (invoice.Fields.TryGetValue("CustomerAddress", out FormField customerAddressField))
+    if (invoice.Fields.TryGetValue("Items", out FormField itemsField))
     {
-        if (customerAddressField.Value.ValueType == FieldValueType.String)
+        if (itemsField.Value.ValueType == FieldValueType.List)
         {
-            string customerAddress = customerAddressField.Value.AsString();
-            Console.WriteLine($"Customer Address: '{customerAddress}', with confidence {customerAddressField.Confidence}");
+            foreach (FormField itemField in itemsField.Value.AsList())
+            {
+                Console.WriteLine("Item:");
+
+                if (itemField.Value.ValueType == FieldValueType.Dictionary)
+                {
+                    IReadOnlyDictionary<string, FormField> itemFields = itemField.Value.AsDictionary();
+
+                    if (itemFields.TryGetValue("Description", out FormField itemDescriptionField))
+                    {
+                        if (itemDescriptionField.Value.ValueType == FieldValueType.String)
+                        {
+                            string itemDescription = itemDescriptionField.Value.AsString();
+
+                            Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
+                        }
+                    }
+
+                    if (itemFields.TryGetValue("UnitPrice", out FormField itemUnitPriceField))
+                    {
+                        if (itemUnitPriceField.Value.ValueType == FieldValueType.Float)
+                        {
+                            float itemUnitPrice = itemUnitPriceField.Value.AsFloat();
+
+                            Console.WriteLine($"  UnitPrice: '{itemUnitPrice}', with confidence {itemUnitPriceField.Confidence}");
+                        }
+                    }
+
+                    if (itemFields.TryGetValue("Quantity", out FormField itemQuantityField))
+                    {
+                        if (itemQuantityField.Value.ValueType == FieldValueType.Float)
+                        {
+                            float quantityAmount = itemQuantityField.Value.AsFloat();
+
+                            Console.WriteLine($"  Quantity: '{quantityAmount}', with confidence {itemQuantityField.Confidence}");
+                        }
+                    }
+
+                    if (itemFields.TryGetValue("Amount", out FormField itemAmountField))
+                    {
+                        if (itemAmountField.Value.ValueType == FieldValueType.Float)
+                        {
+                            float itemAmount = itemAmountField.Value.AsFloat();
+
+                            Console.WriteLine($"  Amount: '{itemAmount}', with confidence {itemAmountField.Confidence}");
+                        }
+                    }
+                }
+            }
         }
     }
 
-    if (invoice.Fields.TryGetValue("CustomerAddressRecipient", out FormField customerAddressRecipientField))
+    if (invoice.Fields.TryGetValue("SubTotal", out FormField subTotalField))
     {
-        if (customerAddressRecipientField.Value.ValueType == FieldValueType.String)
+        if (subTotalField.Value.ValueType == FieldValueType.Float)
         {
-            string customerAddressRecipient = customerAddressRecipientField.Value.AsString();
-            Console.WriteLine($"Customer address recipient: '{customerAddressRecipient}', with confidence {customerAddressRecipientField.Confidence}");
+            float subTotal = subTotalField.Value.AsFloat();
+            Console.WriteLine($"Sub Total: '{subTotal}', with confidence {subTotalField.Confidence}");
+        }
+    }
+
+    if (invoice.Fields.TryGetValue("TotalTax", out FormField totalTaxField))
+    {
+        if (totalTaxField.Value.ValueType == FieldValueType.Float)
+        {
+            float totalTax = totalTaxField.Value.AsFloat();
+            Console.WriteLine($"Total Tax: '{totalTax}', with confidence {totalTaxField.Confidence}");
         }
     }
 
@@ -121,6 +152,8 @@ To recognize invoices from a URI, use the `StartRecognizeInvoicesFromUriAsync` m
 
 To recognize invoices from a given file, use the `StartRecognizeInvoicesAsync` method.
 
+For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/invoicefields).
+
 ```C# Snippet:FormRecognizerSampleRecognizeInvoicesFileStream
 string invoicePath = "<invoicePath>";
 
@@ -131,7 +164,7 @@ RecognizeInvoicesOperation operation = await client.StartRecognizeInvoicesAsync(
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
 RecognizedFormCollection invoices = operationResponse.Value;
 
-// To see the list of the supported fields returned by service and its corresponding types, consult:
+// To see the list of all the supported fields returned by service and its corresponding types, consult:
 // https://aka.ms/formrecognizer/invoicefields
 
 RecognizedForm invoice = invoices.Single();
@@ -151,6 +184,97 @@ if (invoice.Fields.TryGetValue("CustomerName", out FormField customerNameField))
     {
         string customerName = customerNameField.Value.AsString();
         Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
+    }
+}
+
+if (invoice.Fields.TryGetValue("Items", out FormField itemsField))
+{
+    if (itemsField.Value.ValueType == FieldValueType.List)
+    {
+        foreach (FormField itemField in itemsField.Value.AsList())
+        {
+            Console.WriteLine("Item:");
+
+            if (itemField.Value.ValueType == FieldValueType.Dictionary)
+            {
+                IReadOnlyDictionary<string, FormField> itemFields = itemField.Value.AsDictionary();
+
+                if (itemFields.TryGetValue("Description", out FormField itemDescriptionField))
+                {
+                    if (itemDescriptionField.Value.ValueType == FieldValueType.String)
+                    {
+                        string itemDescription = itemDescriptionField.Value.AsString();
+
+                        Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
+                    }
+                }
+
+                if (itemFields.TryGetValue("Quantity", out FormField itemQuantityField))
+                {
+                    if (itemQuantityField.Value.ValueType == FieldValueType.Float)
+                    {
+                        float quantityAmount = itemQuantityField.Value.AsFloat();
+
+                        Console.WriteLine($"  Quantity: '{quantityAmount}', with confidence {itemQuantityField.Confidence}");
+                    }
+                }
+
+                if (itemFields.TryGetValue("UnitPrice", out FormField itemUnitPriceField))
+                {
+                    if (itemUnitPriceField.Value.ValueType == FieldValueType.Float)
+                    {
+                        float itemUnitPrice = itemUnitPriceField.Value.AsFloat();
+
+                        Console.WriteLine($"  UnitPrice: '{itemUnitPrice}', with confidence {itemUnitPriceField.Confidence}");
+                    }
+                }
+
+                if (itemFields.TryGetValue("Tax", out FormField itemTaxPriceField))
+                {
+                    if (itemTaxPriceField.Value.ValueType == FieldValueType.Float)
+                    {
+                        try
+                        {
+                            float itemTax = itemTaxPriceField.Value.AsFloat();
+                            Console.WriteLine($"  Tax: '{itemTax}', with confidence {itemTaxPriceField.Confidence}");
+                        }
+                        catch
+                        {
+                            string itemTaxText = itemTaxPriceField.ValueData.Text;
+                            Console.WriteLine($"  Tax: '{itemTaxText}', with confidence {itemTaxPriceField.Confidence}");
+                        }
+                    }
+                }
+
+                if (itemFields.TryGetValue("Amount", out FormField itemAmountField))
+                {
+                    if (itemAmountField.Value.ValueType == FieldValueType.Float)
+                    {
+                        float itemAmount = itemAmountField.Value.AsFloat();
+
+                        Console.WriteLine($"  Amount: '{itemAmount}', with confidence {itemAmountField.Confidence}");
+                    }
+                }
+            }
+        }
+    }
+}
+
+if (invoice.Fields.TryGetValue("SubTotal", out FormField subTotalField))
+{
+    if (subTotalField.Value.ValueType == FieldValueType.Float)
+    {
+        float subTotal = subTotalField.Value.AsFloat();
+        Console.WriteLine($"Sub Total: '{subTotal}', with confidence {subTotalField.Confidence}");
+    }
+}
+
+if (invoice.Fields.TryGetValue("TotalTax", out FormField totalTaxField))
+{
+    if (totalTaxField.Value.ValueType == FieldValueType.Float)
+    {
+        float totalTax = totalTaxField.Value.AsFloat();
+        Console.WriteLine($"Total Tax: '{totalTax}', with confidence {totalTaxField.Confidence}");
     }
 }
 

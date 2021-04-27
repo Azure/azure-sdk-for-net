@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(TriggerResourceConverter))]
     public partial class TriggerResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -56,6 +59,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new TriggerResource(id.Value, name.Value, type.Value, etag.Value, properties);
+        }
+
+        internal partial class TriggerResourceConverter : JsonConverter<TriggerResource>
+        {
+            public override void Write(Utf8JsonWriter writer, TriggerResource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override TriggerResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeTriggerResource(document.RootElement);
+            }
         }
     }
 }

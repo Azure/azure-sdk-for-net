@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> JSON format file pattern. A property of JsonFormat. </summary>
-    internal readonly partial struct JsonFormatFilePattern : IEquatable<JsonFormatFilePattern>
+    public readonly partial struct JsonFormatFilePattern : IEquatable<JsonFormatFilePattern>
     {
         private readonly string _value;
 

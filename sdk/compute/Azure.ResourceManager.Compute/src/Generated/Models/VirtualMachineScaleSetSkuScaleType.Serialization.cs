@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal static class VirtualMachineScaleSetSkuScaleTypeExtensions
+    internal static partial class VirtualMachineScaleSetSkuScaleTypeExtensions
     {
         public static string ToSerialString(this VirtualMachineScaleSetSkuScaleType value) => value switch
         {

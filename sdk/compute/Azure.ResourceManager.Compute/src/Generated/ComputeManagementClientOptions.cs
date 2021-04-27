@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Client options for Compute. </summary>
-    public class ComputeManagementClientOptions : ClientOptions
+    public partial class ComputeManagementClientOptions : ClientOptions
     {
     }
 }

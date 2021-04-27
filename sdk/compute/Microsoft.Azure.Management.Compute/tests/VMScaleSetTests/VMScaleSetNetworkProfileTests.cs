@@ -156,7 +156,7 @@ namespace Compute.Tests
                     // This is because NRP is still deploying to other regions and is not available worldwide.
                     // Before changing the default location, we have to save it to be reset it at the end of the test.
                     // Since ComputeManagementTestUtilities.DefaultLocation is a static variable and can affect other tests if it is not reset.
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                     EnsureClientsInitialized(context);
 
                     ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -225,7 +225,7 @@ namespace Compute.Tests
                     // This is because NRP is still deploying to other regions and is not available worldwide.
                     // Before changing the default location, we have to save it to be reset it at the end of the test.
                     // Since ComputeManagementTestUtilities.DefaultLocation is a static variable and can affect other tests if it is not reset.
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                     EnsureClientsInitialized(context);
 
                     ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);

@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// RedisEnterprise cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -48,6 +48,6 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<PrivateLinkResource>>> ListByRedisEnterpriseCacheWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<PrivateLinkResource>>> ListByClusterWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

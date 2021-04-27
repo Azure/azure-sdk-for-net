@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class DeploymentsWhatIfAtSubscriptionScopeHeaders
+    internal partial class DeploymentsWhatIfAtSubscriptionScopeHeaders
     {
         private readonly Response _response;
         public DeploymentsWhatIfAtSubscriptionScopeHeaders(Response response)

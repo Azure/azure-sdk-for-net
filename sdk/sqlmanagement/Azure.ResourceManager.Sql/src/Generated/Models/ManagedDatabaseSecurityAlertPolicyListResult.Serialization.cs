@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedDatabaseSecurityAlertPolicyListResult
+    internal partial class ManagedDatabaseSecurityAlertPolicyListResult
     {
         internal static ManagedDatabaseSecurityAlertPolicyListResult DeserializeManagedDatabaseSecurityAlertPolicyListResult(JsonElement element)
         {

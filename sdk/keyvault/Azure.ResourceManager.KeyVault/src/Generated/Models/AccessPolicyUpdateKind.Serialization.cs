@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    internal static class AccessPolicyUpdateKindExtensions
+    internal static partial class AccessPolicyUpdateKindExtensions
     {
         public static string ToSerialString(this AccessPolicyUpdateKind value) => value switch
         {

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> WebHook activity. </summary>
-    public partial class WebHookActivity : Activity
+    public partial class WebHookActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of WebHookActivity. </summary>
         /// <param name="name"> Activity name. </param>
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="headers"> Represents the headers that will be sent to the request. For example, to set the language and type on a request: &quot;headers&quot; : { &quot;Accept-Language&quot;: &quot;en-us&quot;, &quot;Content-Type&quot;: &quot;application/json&quot; }. Type: string (or Expression with resultType string). </param>
         /// <param name="body"> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </param>
         /// <param name="authentication"> Authentication method used for calling the endpoint. </param>
-        /// <param name="reportStatusOnCallBack"> When set to true, statusCode, output and error in callback request body will be consumed by activity. The activity can be marked as failed by setting statusCode &gt;= 400 in callback request. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="reportStatusOnCallBack"> When set to true, statusCode, output and error in callback request body will be consumed by activity. The activity can be marked as failed by setting statusCode &gt;= 400 in callback request. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         internal WebHookActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, WebHookActivityMethod method, object url, string timeout, object headers, object body, WebActivityAuthentication authentication, object reportStatusOnCallBack) : base(name, type, description, dependsOn, userProperties, additionalProperties)
         {
             Method = method;
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Body { get; set; }
         /// <summary> Authentication method used for calling the endpoint. </summary>
         public WebActivityAuthentication Authentication { get; set; }
-        /// <summary> When set to true, statusCode, output and error in callback request body will be consumed by activity. The activity can be marked as failed by setting statusCode &gt;= 400 in callback request. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary> When set to true, statusCode, output and error in callback request body will be consumed by activity. The activity can be marked as failed by setting statusCode &gt;= 400 in callback request. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public object ReportStatusOnCallBack { get; set; }
     }
 }

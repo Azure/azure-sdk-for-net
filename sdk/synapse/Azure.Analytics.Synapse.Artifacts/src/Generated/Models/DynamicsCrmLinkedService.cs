@@ -38,10 +38,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="username"> User name to access the Dynamics CRM instance. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password to access the Dynamics CRM instance. </param>
         /// <param name="servicePrincipalId"> The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalCredentialType"> A string from ServicePrincipalCredentialEnum or an expression. </param>
         /// <param name="servicePrincipalCredential"> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is &apos;ServicePrincipalKey&apos;, servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is &apos;ServicePrincipalCert&apos;, servicePrincipalCredential can only be AzureKeyVaultSecretReference. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal DynamicsCrmLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, DynamicsDeploymentType deploymentType, object hostName, object port, object serviceUri, object organizationName, DynamicsAuthenticationType authenticationType, object username, SecretBase password, object servicePrincipalId, DynamicsServicePrincipalCredentialType? servicePrincipalCredentialType, SecretBase servicePrincipalCredential, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal DynamicsCrmLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, DynamicsDeploymentType deploymentType, object hostName, object port, object serviceUri, object organizationName, DynamicsAuthenticationType authenticationType, object username, SecretBase password, object servicePrincipalId, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             DeploymentType = deploymentType;
             HostName = hostName;
@@ -76,8 +76,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SecretBase Password { get; set; }
         /// <summary> The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string). </summary>
         public object ServicePrincipalId { get; set; }
-        /// <summary> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </summary>
-        public DynamicsServicePrincipalCredentialType? ServicePrincipalCredentialType { get; set; }
+        /// <summary> A string from ServicePrincipalCredentialEnum or an expression. </summary>
+        public object ServicePrincipalCredentialType { get; set; }
         /// <summary> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is &apos;ServicePrincipalKey&apos;, servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is &apos;ServicePrincipalCert&apos;, servicePrincipalCredential can only be AzureKeyVaultSecretReference. </summary>
         public SecretBase ServicePrincipalCredential { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure;
+using Azure.Core.TestFramework;
 using Azure.Messaging.EventGrid;
 using Azure.Messaging.EventGrid.Tests;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanPublishCloudEvent()
         {
             EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
@@ -45,6 +46,29 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests
             }
 
             await client.SendCloudEventsAsync(eventsList);
+        }
+
+        [RecordedTest]
+        public async Task CanPublishSingleCloudEvent()
+        {
+            EventGridPublisherClientOptions options = InstrumentClientOptions(new EventGridPublisherClientOptions());
+            EventGridPublisherClient client = InstrumentClient(
+                new EventGridPublisherClient(
+                    new Uri(TestEnvironment.CloudEventTopicHost),
+                    new AzureKeyCredential(TestEnvironment.CloudEventTopicKey),
+                    options));
+
+            CloudEvent cloudEvent =
+                new CloudEvent(
+                    "record",
+                    new Uri("http://localHost"),
+                    Recording.Random.NewGuid().ToString(),
+                    Recording.Now.DateTime)
+                {
+                    Data = new TestPayload("name", 0)
+                };
+
+            await client.SendCloudEventAsync(cloudEvent);
         }
 
         private class TestPayload

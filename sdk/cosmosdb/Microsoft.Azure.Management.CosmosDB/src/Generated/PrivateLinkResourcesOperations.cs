@@ -113,6 +113,17 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -132,7 +143,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2019-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -141,7 +151,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByDatabaseAccount", tracingParameters);
@@ -153,9 +162,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -348,6 +357,17 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (accountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
@@ -371,7 +391,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "groupName");
             }
-            string apiVersion = "2019-08-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -380,7 +399,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("groupName", groupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -394,9 +412,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{groupName}", System.Uri.EscapeDataString(groupName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class InstancePoolListResult
+    internal partial class InstancePoolListResult
     {
         internal static InstancePoolListResult DeserializeInstancePoolListResult(JsonElement element)
         {

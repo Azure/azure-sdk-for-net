@@ -13,7 +13,7 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> KeyVault service management client. </summary>
-    public class KeyVaultManagementClient
+    public partial class KeyVaultManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

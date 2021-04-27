@@ -63,9 +63,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dataIntegrationUnits"> Maximum number of data integration units that can be used to perform this data movement. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="enableSkipIncompatibleRow"> Whether to skip incompatible row. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="redirectIncompatibleRowSettings"> Redirect incompatible row settings when EnableSkipIncompatibleRow is true. </param>
+        /// <param name="logStorageSettings"> (Deprecated. Please use LogSettings) Log storage settings customer need to provide when enabling session log. </param>
+        /// <param name="logSettings"> Log settings customer needs provide when enabling log. </param>
         /// <param name="preserveRules"> Preserve Rules. </param>
         /// <param name="preserve"> Preserve rules. </param>
-        internal CopyActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<DatasetReference> inputs, IList<DatasetReference> outputs, CopySource source, CopySink sink, object translator, object enableStaging, StagingSettings stagingSettings, object parallelCopies, object dataIntegrationUnits, object enableSkipIncompatibleRow, RedirectIncompatibleRowSettings redirectIncompatibleRowSettings, IList<object> preserveRules, IList<object> preserve) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="validateDataConsistency"> Whether to enable Data Consistency validation. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="skipErrorFile"> Specify the fault tolerance for data consistency. </param>
+        internal CopyActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<DatasetReference> inputs, IList<DatasetReference> outputs, CopySource source, CopySink sink, object translator, object enableStaging, StagingSettings stagingSettings, object parallelCopies, object dataIntegrationUnits, object enableSkipIncompatibleRow, RedirectIncompatibleRowSettings redirectIncompatibleRowSettings, LogStorageSettings logStorageSettings, LogSettings logSettings, IList<object> preserveRules, IList<object> preserve, object validateDataConsistency, SkipErrorFile skipErrorFile) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Inputs = inputs;
             Outputs = outputs;
@@ -78,8 +82,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DataIntegrationUnits = dataIntegrationUnits;
             EnableSkipIncompatibleRow = enableSkipIncompatibleRow;
             RedirectIncompatibleRowSettings = redirectIncompatibleRowSettings;
+            LogStorageSettings = logStorageSettings;
+            LogSettings = logSettings;
             PreserveRules = preserveRules;
             Preserve = preserve;
+            ValidateDataConsistency = validateDataConsistency;
+            SkipErrorFile = skipErrorFile;
             Type = type ?? "Copy";
         }
 
@@ -105,9 +113,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object EnableSkipIncompatibleRow { get; set; }
         /// <summary> Redirect incompatible row settings when EnableSkipIncompatibleRow is true. </summary>
         public RedirectIncompatibleRowSettings RedirectIncompatibleRowSettings { get; set; }
+        /// <summary> (Deprecated. Please use LogSettings) Log storage settings customer need to provide when enabling session log. </summary>
+        public LogStorageSettings LogStorageSettings { get; set; }
+        /// <summary> Log settings customer needs provide when enabling log. </summary>
+        public LogSettings LogSettings { get; set; }
         /// <summary> Preserve Rules. </summary>
         public IList<object> PreserveRules { get; }
         /// <summary> Preserve rules. </summary>
         public IList<object> Preserve { get; }
+        /// <summary> Whether to enable Data Consistency validation. Type: boolean (or Expression with resultType boolean). </summary>
+        public object ValidateDataConsistency { get; set; }
+        /// <summary> Specify the fault tolerance for data consistency. </summary>
+        public SkipErrorFile SkipErrorFile { get; set; }
     }
 }

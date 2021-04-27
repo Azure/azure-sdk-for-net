@@ -52,8 +52,11 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Succeeded', 'Failed'</param>
         /// <param name="publicKey">The public key of the service, used to
         /// encrypt secrets sent to the service</param>
+        /// <param name="virtualNicId">The ID of the
+        /// Microsoft.Network/networkInterfaces resource which the service
+        /// have</param>
         /// <param name="sku">Service SKU</param>
-        public DataMigrationService(string location, string virtualSubnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string kind = default(string), string provisioningState = default(string), string publicKey = default(string), ServiceSku sku = default(ServiceSku))
+        public DataMigrationService(string location, string virtualSubnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string kind = default(string), string provisioningState = default(string), string publicKey = default(string), string virtualNicId = default(string), ServiceSku sku = default(ServiceSku))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
@@ -61,6 +64,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
             ProvisioningState = provisioningState;
             PublicKey = publicKey;
             VirtualSubnetId = virtualSubnetId;
+            VirtualNicId = virtualNicId;
             Sku = sku;
             CustomInit();
         }
@@ -105,6 +109,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualSubnetId")]
         public string VirtualSubnetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the Microsoft.Network/networkInterfaces
+        /// resource which the service have
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualNicId")]
+        public string VirtualNicId { get; set; }
 
         /// <summary>
         /// Gets or sets service SKU

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static GalleryImageVersionStorageProfile DeserializeGalleryImageVersionStorageProfile(JsonElement element)
         {
             Optional<GalleryArtifactVersionSource> source = default;
-            Optional<GalleryDiskImage> osDiskImage = default;
+            Optional<GalleryOSDiskImage> osDiskImage = default;
             Optional<IList<GalleryDataDiskImage>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osDiskImage = GalleryDiskImage.DeserializeGalleryDiskImage(property.Value);
+                    osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"))

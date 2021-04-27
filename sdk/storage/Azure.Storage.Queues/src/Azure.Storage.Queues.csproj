@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Queues client library</AssemblyTitle>
-    <Version>12.6.1</Version>
-    <ApiCompatVersion>12.5.0</ApiCompatVersion>
+    <Version>12.7.0-beta.4</Version>
+    <ApiCompatVersion>12.6.0</ApiCompatVersion>
     <DefineConstants>QueueSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Queues;Microsoft;Azure;Queues;Queue;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
     <Description>
@@ -16,6 +16,8 @@
       Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
       REST API Reference for Queue Service - https://docs.microsoft.com/en-us/rest/api/storageservices/queue-service-rest-api
     </Description>
+    <!-- https://github.com/Azure/azure-sdk-for-net/issues/19222 -->
+    <NoWarn>$(NoWarn);IDT002;IDT003</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Memory.Data" />
@@ -36,6 +38,7 @@
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" Link="Shared\ClientsideEncryption\%(RecursiveDir)\%(Filename)%(Extension)" />
@@ -48,6 +51,8 @@
     <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)StorageClientConfiguration.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)StorageClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientOptions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)StorageCollectionEnumerator.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
@@ -56,6 +61,7 @@
     <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyCredentialInternals.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyPipelinePolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)StorageResponseClassifier.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedSources)StorageServerTimeoutPolicy.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />

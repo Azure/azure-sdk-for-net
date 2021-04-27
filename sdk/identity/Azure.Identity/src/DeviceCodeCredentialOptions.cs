@@ -35,9 +35,9 @@ namespace Azure.Identity
         public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
 
         /// <summary>
-        /// Specifies the <see cref="TokenCache"/> to be used by the credential.
+        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If not options are specified, the token cache will not be persisted.
         /// </summary>
-        public TokenCache TokenCache { get; set; }
+        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
 
         /// <summary>
         /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication.

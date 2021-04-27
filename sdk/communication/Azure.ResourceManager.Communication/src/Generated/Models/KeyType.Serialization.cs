@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    internal static class KeyTypeExtensions
+    internal static partial class KeyTypeExtensions
     {
         public static string ToSerialString(this KeyType value) => value switch
         {

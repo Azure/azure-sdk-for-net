@@ -12,7 +12,8 @@ stages:
       - deployment: SignPackage
         environment: esrp
         pool:
-          vmImage: windows-2019
+          name: azsdk-pool-mms-win-2019-general
+          vmImage: MMS2019
 
         strategy:
           runOnce:
@@ -48,22 +49,20 @@ stages:
             environment: github
 
             pool:
-              vmImage: windows-2019
+              name: azsdk-pool-mms-win-2019-general
+              vmImage: MMS2019
 
             strategy:
               runOnce:
                 deploy:
                   steps:
                     - checkout: self
-                    - ${{if eq(parameters.TestPipeline, 'true')}}:
-                      - task: PowerShell@2
-                        displayName: Prep template pipeline for release
-                        condition: succeeded()
-                        inputs:
-                          pwsh: true
-                          workingDirectory: $(Build.SourcesDirectory)
-                          filePath: eng/scripts/SetTestPipelineVersion.ps1
-                          arguments: '-BuildID $(Build.BuildId)'
+                    - template: /eng/common/pipelines/templates/steps/retain-run.yml
+                    - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
+                      parameters:
+                        PackageName: "Azure.Template"
+                        ServiceDirectory: "template"
+                        TestPipeline: ${{ parameters.TestPipeline }}
                     - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
                       parameters:
                         PackageName: ${{artifact.name}}
@@ -84,7 +83,8 @@ stages:
               dependsOn: TagRepository
 
               pool:
-                vmImage: ubuntu-18.04
+                name: azsdk-pool-mms-ubuntu-1804-general
+                vmImage: MMSUbuntu18.04
 
               strategy:
                 runOnce:
@@ -113,7 +113,8 @@ stages:
               dependsOn: PublishPackage
 
               pool:
-                vmImage: windows-2019
+                name: azsdk-pool-mms-win-2019-general
+                vmImage: MMS2019
 
               strategy:
                 runOnce:
@@ -139,10 +140,11 @@ stages:
               dependsOn: PublishPackage
 
               variables:
-                CIConfigs: "{'targets':[{'path_to_config':'bundlepackages/azure-dotnet-preview.csv','Mode':'Preview','content_folder':'api/overview/azure/preview'},{'path_to_config':'bundlepackages/azure-dotnet.csv','mode':'Latest','content_folder':'api/overview/azure/latest'}]}"
+                CIConfigs: "{'targets':[{'path_to_config':'bundlepackages/azure-dotnet-preview.csv','Mode':'Preview','content_folder':'api/overview/azure', 'suffix':'-pre'},{'path_to_config':'bundlepackages/azure-dotnet.csv','mode':'Latest','content_folder':'api/overview/azure'}]}"
 
               pool:
-                vmImage: windows-2019
+                name: azsdk-pool-mms-win-2019-general
+                vmImage: MMS2019
 
               strategy:
                 runOnce:
@@ -165,7 +167,7 @@ stages:
                           PRBranchName: onboarding-${{artifact.name}}-$(Build.BuildId)
                           ArtifactName: ${{artifact.name}}
                           Language: '.net'
-                          DocRepoDestinationPath: 'api/overview/azure/' 
+                          DocRepoDestinationPath: 'api/overview/azure/'
                           GHReviewersVariable: 'OwningGHUser'
                           CIConfigs: $(CIConfigs)
                           OnboardingBranch: 'onboarding'
@@ -179,7 +181,8 @@ stages:
               dependsOn: PublishPackage
 
               pool:
-                vmImage: windows-2019
+                name: azsdk-pool-mms-win-2019-general
+                vmImage: MMS2019
 
               strategy:
                 runOnce:
@@ -204,7 +207,8 @@ stages:
               dependsOn: PublishPackage
 
               pool:
-                vmImage: windows-2019
+                name: azsdk-pool-mms-win-2019-general
+                vmImage: MMS2019
 
               strategy:
                 runOnce:
@@ -212,7 +216,7 @@ stages:
                     steps:
                       - checkout: self
                       - pwsh: |
-                          eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -PackageDirName '${{artifact.directoryName}}'
+                          eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}'
                         displayName: Increment package version
                       - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
                         parameters:
@@ -223,16 +227,27 @@ stages:
                           PRLabels: "auto-merge"
                           CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
+  - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+    - stage: SmokeTest_Release_Packages
+      displayName: Smoke Test Release Packages
+      jobs:
+        - template: /eng/pipelines/templates/jobs/smoke.tests.yml
+          parameters:
+            Daily: false
+            Artifacts: ${{ parameters.Artifacts }}
+            ArtifactName: ${{ parameters.ArtifactName }}
+
   - stage: Integration
     dependsOn: Signing
     jobs:
     - job: PublishPackages
-      condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
+      condition: and(eq(variables['SetDevVersion'], 'true'), eq(variables['System.TeamProject'], 'internal'))
       displayName: Publish package to daily feed
       variables:
         BlobFeedUrl: 'https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json'
       pool:
-        vmImage: windows-2019
+        name: azsdk-pool-mms-win-2019-general
+        vmImage: MMS2019
       steps:
       - checkout: none
       - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools

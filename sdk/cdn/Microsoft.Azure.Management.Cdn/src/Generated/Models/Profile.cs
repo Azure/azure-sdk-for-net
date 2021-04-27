@@ -47,12 +47,14 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'Disabled'</param>
         /// <param name="provisioningState">Provisioning status of the
         /// profile.</param>
-        public Profile(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string resourceState = default(string), string provisioningState = default(string))
-            : base(location, id, name, type, tags)
+        /// <param name="frontdoorId">The Id of the frontdoor.</param>
+        public Profile(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string resourceState = default(string), string provisioningState = default(string), string frontdoorId = default(string))
+            : base(location, id, name, type, systemData, tags)
         {
             Sku = sku;
             ResourceState = resourceState;
             ProvisioningState = provisioningState;
+            FrontdoorId = frontdoorId;
             CustomInit();
         }
 
@@ -80,6 +82,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets the Id of the frontdoor.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.frontdoorId")]
+        public string FrontdoorId { get; private set; }
 
         /// <summary>
         /// Validate the object.

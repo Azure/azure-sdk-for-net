@@ -12,7 +12,9 @@ namespace Azure
     /// <typeparam name="T">The type of returned value.</typeparam>
     [DebuggerTypeProxy(typeof(ResponseDebugView<>))]
 #pragma warning disable SA1649 // File name should match first type name
+#pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Response<T>
+#pragma warning restore AZC0012 // Avoid single word type names
 #pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>

@@ -1,0 +1,98 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/896215099/create?api-version=7.2",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "traceparent": "00-fd3568746234e948982b60b0d4b2b0b9-5d748b1d2cc9e048-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Keys/4.2.0-alpha.20210219.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "9854b6d0b298b90b5225581d3839464e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-request-id": "cc3e6ad2-7352-11eb-bcb9-0242ac120006",
+        "x-ms-server-latency": "1"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/896215099/create?api-version=7.2",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "49",
+        "Content-Type": "application/json",
+        "traceparent": "00-fd3568746234e948982b60b0d4b2b0b9-5d748b1d2cc9e048-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Keys/4.2.0-alpha.20210219.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "9854b6d0b298b90b5225581d3839464e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kty": "RSA",
+        "key_size": 2048,
+        "public_exponent": 3
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "708",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-keyvault-network-info": "addr=67.171.12.239",
+        "x-ms-keyvault-region": "southcentralus",
+        "x-ms-request-id": "cc7e7578-7352-11eb-bcb9-0242ac120006",
+        "x-ms-server-latency": "1584"
+      },
+      "ResponseBody": {
+        "attributes": {
+          "created": 1613808502,
+          "enabled": true,
+          "exportable": false,
+          "recoverableDays": 90,
+          "recoveryLevel": "Recoverable\u002BPurgeable",
+          "updated": 1613808502
+        },
+        "key": {
+          "e": "Aw",
+          "key_ops": [
+            "wrapKey",
+            "decrypt",
+            "encrypt",
+            "unwrapKey",
+            "sign",
+            "verify"
+          ],
+          "kid": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/896215099/946cfb6172fe052792700232c5769c03",
+          "kty": "RSA-HSM",
+          "n": "kjImSy5GEiqNLeTyA4BgBYd1Gssg9Y-IEpACcPh11ZvbvaVszT15ePcDsBj7UfsoLTJJ2b8ACc0YPbezWyO1Q0_a_meqrz0SijAGMx9S4Az7q023piTb4-pp7o9sRyLt9jJ2buEDm2yHvz0L_vn53Gfk5FD3dXThFZnYnV7WxU6zTlMVg-vL5KC1_MacALhwsYTR6E5YGwrjB64sJzqCKw0OEvg5uU3m9wMuZaayn9HTq58yvcKXfnFLpGcntYR6nEoHKYNR65Z8fo5glheN3v2RXzIrX6V4-hPR7wwgtVoosybJ0yUHuzlCJSqQjVVHTduOxalqvbMGp_atOO8mzw"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_MANAGEDHSM_URL": "https://heathskeyvaulthsm.managedhsm.azure.net/",
+    "RandomSeed": "1646831272"
+  }
+}

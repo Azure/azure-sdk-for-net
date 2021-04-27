@@ -52,7 +52,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 new TextDocumentInput("4", string.Empty)
             };
 
-            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
+            var options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
             Response<RecognizeLinkedEntitiesResultCollection> response = await client.RecognizeLinkedEntitiesBatchAsync(documents, options);
             RecognizeLinkedEntitiesResultCollection entitiesInDocuments = response.Value;
 
@@ -86,6 +86,7 @@ namespace Azure.AI.TextAnalytics.Samples
                         {
                             Console.WriteLine($"    Match Text: {match.Text}");
                             Console.WriteLine($"    Offset: {match.Offset}");
+                            Console.WriteLine($"    Length: {match.Length}");
                             Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
                         }
                         Console.WriteLine("");

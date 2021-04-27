@@ -41,7 +41,7 @@ namespace AzureRedisEnterpriseCache.Tests
 
         public void TryCreateResourceGroup(string resourceGroupName, string location)
         {
-            ResourceGroup result = _client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = location });
+            _client.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup { Location = location });
             var newlyCreatedGroup = _client.ResourceGroups.Get(resourceGroupName);
             ThrowIfTrue(newlyCreatedGroup == null, "_client.ResourceGroups.Get returned null.");
             ThrowIfTrue(!resourceGroupName.Equals(newlyCreatedGroup.Name), string.Format("resourceGroupName is not equal to {0}", resourceGroupName));
@@ -55,18 +55,18 @@ namespace AzureRedisEnterpriseCache.Tests
         public void TryCreatingCache(string resourceGroupName, string cacheName, string location)
         {
             var redisEnterpriseClient = RedisEnterpriseCacheManagementTestUtilities.GetRedisEnterpriseManagementClient(_testBase, _context);
-            var createResponse = redisEnterpriseClient.RedisEnterprise.Create(resourceGroupName: resourceGroupName, clusterName: cacheName,
-                                    parameters: new Cluster
-                                    {
-                                        Location = location,
-                                        Sku = new Microsoft.Azure.Management.RedisEnterprise.Models.Sku()
-                                        {
-                                            Name = SkuName.EnterpriseE20,
-                                            Capacity = 2
-                                        }
-                                    });
+            redisEnterpriseClient.RedisEnterprise.Create(resourceGroupName: resourceGroupName, clusterName: cacheName,
+                parameters: new Cluster
+                {
+                    Location = location,
+                    Sku = new Microsoft.Azure.Management.RedisEnterprise.Models.Sku()
+                    {
+                        Name = SkuName.EnterpriseE20,
+                        Capacity = 2
+                    }
+                });
 
-            Cluster response = redisEnterpriseClient.RedisEnterprise.GetMethod(resourceGroupName: resourceGroupName, clusterName: cacheName);
+            Cluster response = redisEnterpriseClient.RedisEnterprise.Get(resourceGroupName: resourceGroupName, clusterName: cacheName);
             ThrowIfTrue(!response.Id.Contains(cacheName), "Cache name not found inside Id.");
             ThrowIfTrue(!response.Name.Equals(cacheName), string.Format("Cache name is not equal to {0}", cacheName));
             ThrowIfTrue(!response.HostName.Contains(cacheName), "Cache name not found inside host name.");
@@ -75,7 +75,7 @@ namespace AzureRedisEnterpriseCache.Tests
             for (int i = 0; i < 60; i++)
             {
                 TestUtilities.Wait(new TimeSpan(0, 0, 30));
-                Cluster responseGet = redisEnterpriseClient.RedisEnterprise.GetMethod(resourceGroupName: resourceGroupName, clusterName: cacheName);
+                Cluster responseGet = redisEnterpriseClient.RedisEnterprise.Get(resourceGroupName: resourceGroupName, clusterName: cacheName);
                 if ("succeeded".Equals(responseGet.ProvisioningState, StringComparison.OrdinalIgnoreCase))
                 {
                     break;

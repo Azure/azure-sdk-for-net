@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/653891731/create?api-version=7.1",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/keys/653891731/create?api-version=7.2",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "traceparent": "00-2899a45ffc63a146b0b7aa05d2f8191a-737cc47a71c0fe4d-00",
+        "traceparent": "00-d4454475fbc80141ab66ae287d6fea74-3082b19a4de7ad45-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.1.0-dev.20200729.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Security.KeyVault.Keys/4.2.0-alpha.20210219.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "af4762a07474ce57fda8070d984e41f7",
         "x-ms-return-client-request-id": "true"
@@ -20,17 +20,16 @@
         "Cache-Control": "no-cache",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 29 Jul 2020 22:46:08 GMT",
+        "Date": "Sat, 20 Feb 2021 07:45:28 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://vault.azure.net\u0022",
-        "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.1.10.0",
-        "x-ms-request-id": "2c9a99be-689c-48da-8834-51ca8e0df065",
+        "x-ms-keyvault-service-version": "1.2.164.2",
+        "x-ms-request-id": "fda443b8-8db6-4a51-85ee-eab495c542d2",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -41,17 +40,17 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/653891731/create?api-version=7.1",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/keys/653891731/create?api-version=7.2",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "12",
         "Content-Type": "application/json",
-        "traceparent": "00-2899a45ffc63a146b0b7aa05d2f8191a-737cc47a71c0fe4d-00",
+        "traceparent": "00-d4454475fbc80141ab66ae287d6fea74-3082b19a4de7ad45-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.1.0-dev.20200729.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Security.KeyVault.Keys/4.2.0-alpha.20210219.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "af4762a07474ce57fda8070d984e41f7",
         "x-ms-return-client-request-id": "true"
@@ -62,52 +61,51 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "384",
+        "Content-Length": "390",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 29 Jul 2020 22:46:08 GMT",
+        "Date": "Sat, 20 Feb 2021 07:45:29 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.1.10.0",
-        "x-ms-request-id": "85cad4dc-d993-486d-9657-050f531b7dd7",
+        "x-ms-keyvault-service-version": "1.2.164.2",
+        "x-ms-request-id": "7ab4061e-40a6-4b14-a25a-921a20e516a0",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "key": {
-          "kid": "https://heathskv.vault.azure.net/keys/653891731/cbe3144d88b740699f80f4e7a738ff81",
+          "kid": "https://heathskeyvault.vault.azure.net/keys/653891731/a7e9bdd94b8c4c218250a79d0917e895",
           "kty": "EC",
           "key_ops": [
             "sign",
             "verify"
           ],
           "crv": "P-256",
-          "x": "-8kzpvM1O32k1Pe_HhOyio5PjSM-FfRpkYj-Aip-v2Q",
-          "y": "U1reijQ1nOZKidhF7rwpmXu4J1dBdTqkxHws83-M2_E"
+          "x": "WGlTicSKVZpQny9ehB0XoP2YP2beG0w1pMV6pR9QXdA",
+          "y": "mlmPC33I9ROh3eVuC52jE_oX9PCBZEPLHwk7UJnoWMA"
         },
         "attributes": {
           "enabled": true,
-          "created": 1596062768,
-          "updated": 1596062768,
+          "created": 1613807129,
+          "updated": 1613807129,
           "recoveryLevel": "Recoverable\u002BPurgeable",
           "recoverableDays": 90
         }
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/653891731/?api-version=7.1",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/keys/653891731/?api-version=7.2",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "traceparent": "00-7e67264ad856f640993d61e3e8a88641-47f41cad2460d648-00",
+        "traceparent": "00-68318f487a5ac045bb888894c21c1c46-1b10d6eb70901d4e-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Keys/4.1.0-dev.20200729.1",
-          "(.NET Core 4.6.29017.01; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Security.KeyVault.Keys/4.2.0-alpha.20210219.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "32b6e0d6d9d8c5f8450f3f4305d06d1b",
         "x-ms-return-client-request-id": "true"
@@ -116,36 +114,35 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "384",
+        "Content-Length": "390",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 29 Jul 2020 22:46:08 GMT",
+        "Date": "Sat, 20 Feb 2021 07:45:29 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
-        "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.1.10.0",
-        "x-ms-request-id": "1646de50-3428-48b1-8ea6-94b820f04bb6",
+        "x-ms-keyvault-service-version": "1.2.164.2",
+        "x-ms-request-id": "4d42abfc-a8fe-4076-952f-2c44b0cd1625",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "key": {
-          "kid": "https://heathskv.vault.azure.net/keys/653891731/cbe3144d88b740699f80f4e7a738ff81",
+          "kid": "https://heathskeyvault.vault.azure.net/keys/653891731/a7e9bdd94b8c4c218250a79d0917e895",
           "kty": "EC",
           "key_ops": [
             "sign",
             "verify"
           ],
           "crv": "P-256",
-          "x": "-8kzpvM1O32k1Pe_HhOyio5PjSM-FfRpkYj-Aip-v2Q",
-          "y": "U1reijQ1nOZKidhF7rwpmXu4J1dBdTqkxHws83-M2_E"
+          "x": "WGlTicSKVZpQny9ehB0XoP2YP2beG0w1pMV6pR9QXdA",
+          "y": "mlmPC33I9ROh3eVuC52jE_oX9PCBZEPLHwk7UJnoWMA"
         },
         "attributes": {
           "enabled": true,
-          "created": 1596062768,
-          "updated": 1596062768,
+          "created": 1613807129,
+          "updated": 1613807129,
           "recoveryLevel": "Recoverable\u002BPurgeable",
           "recoverableDays": 90
         }
@@ -153,7 +150,7 @@
     }
   ],
   "Variables": {
-    "AZURE_KEYVAULT_URL": "https://heathskv.vault.azure.net",
+    "AZURE_KEYVAULT_URL": "https://heathskeyvault.vault.azure.net/",
     "RandomSeed": "529895790"
   }
 }

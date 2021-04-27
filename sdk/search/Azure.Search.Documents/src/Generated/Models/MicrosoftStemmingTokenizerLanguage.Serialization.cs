@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    internal static class MicrosoftStemmingTokenizerLanguageExtensions
+    internal static partial class MicrosoftStemmingTokenizerLanguageExtensions
     {
         public static string ToSerialString(this MicrosoftStemmingTokenizerLanguage value) => value switch
         {

@@ -36,7 +36,7 @@ namespace Azure.MixedReality.Authentication
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateGetTokenRequest(string accountId, MixedRealityTokenRequestOptions tokenRequestOptions)
+        internal HttpMessage CreateGetTokenRequest(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,14 +63,8 @@ namespace Azure.MixedReality.Authentication
         /// <param name="accountId"> The Mixed Reality account identifier. </param>
         /// <param name="tokenRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders>> GetTokenAsync(string accountId, MixedRealityTokenRequestOptions tokenRequestOptions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders>> GetTokenAsync(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (accountId == null)
-            {
-                throw new ArgumentNullException(nameof(accountId));
-            }
-
             using var message = CreateGetTokenRequest(accountId, tokenRequestOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new MixedRealityStsGetTokenHeaders(message.Response);
@@ -92,14 +86,8 @@ namespace Azure.MixedReality.Authentication
         /// <param name="accountId"> The Mixed Reality account identifier. </param>
         /// <param name="tokenRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountId"/> is null. </exception>
-        public ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders> GetToken(string accountId, MixedRealityTokenRequestOptions tokenRequestOptions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders> GetToken(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (accountId == null)
-            {
-                throw new ArgumentNullException(nameof(accountId));
-            }
-
             using var message = CreateGetTokenRequest(accountId, tokenRequestOptions);
             _pipeline.Send(message, cancellationToken);
             var headers = new MixedRealityStsGetTokenHeaders(message.Response);

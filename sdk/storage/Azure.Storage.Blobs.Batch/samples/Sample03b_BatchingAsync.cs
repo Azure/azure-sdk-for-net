@@ -37,9 +37,9 @@ namespace Azure.Storage.Blobs.Samples
                 BlobClient foo = container.GetBlobClient("foo");
                 BlobClient bar = container.GetBlobClient("bar");
                 BlobClient baz = container.GetBlobClient("baz");
-                await foo.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
-                await bar.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
-                await baz.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
+                await foo.UploadAsync(BinaryData.FromString("Foo!"));
+                await bar.UploadAsync(BinaryData.FromString("Bar!"));
+                await baz.UploadAsync(BinaryData.FromString("Baz!"));
 
                 // Delete all three blobs at once
                 BlobBatchClient batch = service.GetBlobBatchClient();
@@ -71,9 +71,9 @@ namespace Azure.Storage.Blobs.Samples
                 BlobClient foo = container.GetBlobClient("foo");
                 BlobClient bar = container.GetBlobClient("bar");
                 BlobClient baz = container.GetBlobClient("baz");
-                await foo.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
-                await bar.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
-                await baz.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
+                await foo.UploadAsync(BinaryData.FromString("Foo!"));
+                await bar.UploadAsync(BinaryData.FromString("Bar!"));
+                await baz.UploadAsync(BinaryData.FromString("Baz!"));
 
                 // Set the access tier for all three blobs at once
                 BlobBatchClient batch = service.GetBlobBatchClient();
@@ -106,9 +106,9 @@ namespace Azure.Storage.Blobs.Samples
                 BlobClient foo = container.GetBlobClient("foo");
                 BlobClient bar = container.GetBlobClient("bar");
                 BlobClient baz = container.GetBlobClient("baz");
-                await foo.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
-                await bar.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
-                await baz.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
+                await foo.UploadAsync(BinaryData.FromString("Foo!"));
+                await bar.UploadAsync(BinaryData.FromString("Bar!"));
+                await baz.UploadAsync(BinaryData.FromString("Baz!"));
 
                 // Create a batch with three deletes
                 BlobBatchClient batchClient = service.GetBlobBatchClient();
@@ -149,7 +149,7 @@ namespace Azure.Storage.Blobs.Samples
             {
                 // Create a blob named "valid"
                 BlobClient valid = container.GetBlobClient("valid");
-                await valid.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("Valid!")));
+                await valid.UploadAsync(BinaryData.FromString("Valid!"));
 
                 // Get a reference to a blob named "invalid", but never create it
                 BlobClient invalid = container.GetBlobClient("invalid");

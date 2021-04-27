@@ -33,24 +33,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="status">The overall success or failure status of the
         /// operation. It remains "InProgress" until the operation completes.
-        /// At that point it will become "Failed", "Succeeded", or
-        /// "CompletedWithWarnings.". Possible values include: 'InProgress',
-        /// 'Failed', 'Succeeded', 'CompletedWithWarnings'</param>
+        /// At that point it will become "Unknown", "Failed", "Succeeded", or
+        /// "CompletedWithWarnings.". Possible values include: 'Unknown',
+        /// 'InProgress', 'Failed', 'Succeeded',
+        /// 'CompletedWithWarnings'</param>
         /// <param name="installationActivityId">The activity ID of the
         /// operation that produced this result. It is used to correlate across
         /// CRP and extension logs.</param>
         /// <param name="maintenanceWindowExceeded">Describes whether the
         /// operation ran out of time before it completed all its intended
         /// actions</param>
-        /// <param name="rebootStatus">The reboot status of the machine after
-        /// the patch operation. It will be in "NotNeeded" status if reboot is
-        /// not needed after the patch operation. "Required" will be the status
-        /// once the patch is applied and machine is required to reboot.
-        /// "Started" will be the reboot status when the machine has started to
-        /// reboot. "Failed" will be the status if the machine is failed to
-        /// reboot. "Completed" will be the status once the machine is rebooted
-        /// successfully. Possible values include: 'NotNeeded', 'Required',
-        /// 'Started', 'Failed', 'Completed'</param>
         /// <param name="notSelectedPatchCount">The number of all available
         /// patches but not going to be installed because it didn't match a
         /// classification or inclusion list entry.</param>
@@ -68,17 +60,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// began.</param>
         /// <param name="lastModifiedTime">The UTC timestamp when the operation
         /// began.</param>
-        /// <param name="startedBy">The person or system account that started
-        /// the operation</param>
         /// <param name="error">The errors that were encountered during
         /// execution of the operation. The details array contains the list of
         /// them.</param>
-        public LastPatchInstallationSummary(string status = default(string), string installationActivityId = default(string), bool? maintenanceWindowExceeded = default(bool?), string rebootStatus = default(string), int? notSelectedPatchCount = default(int?), int? excludedPatchCount = default(int?), int? pendingPatchCount = default(int?), int? installedPatchCount = default(int?), int? failedPatchCount = default(int?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string startedBy = default(string), ApiError error = default(ApiError))
+        public LastPatchInstallationSummary(string status = default(string), string installationActivityId = default(string), bool? maintenanceWindowExceeded = default(bool?), int? notSelectedPatchCount = default(int?), int? excludedPatchCount = default(int?), int? pendingPatchCount = default(int?), int? installedPatchCount = default(int?), int? failedPatchCount = default(int?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), ApiError error = default(ApiError))
         {
             Status = status;
             InstallationActivityId = installationActivityId;
             MaintenanceWindowExceeded = maintenanceWindowExceeded;
-            RebootStatus = rebootStatus;
             NotSelectedPatchCount = notSelectedPatchCount;
             ExcludedPatchCount = excludedPatchCount;
             PendingPatchCount = pendingPatchCount;
@@ -86,7 +75,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             FailedPatchCount = failedPatchCount;
             StartTime = startTime;
             LastModifiedTime = lastModifiedTime;
-            StartedBy = startedBy;
             Error = error;
             CustomInit();
         }
@@ -99,9 +87,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets the overall success or failure status of the operation. It
         /// remains "InProgress" until the operation completes. At that point
-        /// it will become "Failed", "Succeeded", or "CompletedWithWarnings.".
-        /// Possible values include: 'InProgress', 'Failed', 'Succeeded',
-        /// 'CompletedWithWarnings'
+        /// it will become "Unknown", "Failed", "Succeeded", or
+        /// "CompletedWithWarnings.". Possible values include: 'Unknown',
+        /// 'InProgress', 'Failed', 'Succeeded', 'CompletedWithWarnings'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }
@@ -119,20 +107,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "maintenanceWindowExceeded")]
         public bool? MaintenanceWindowExceeded { get; private set; }
-
-        /// <summary>
-        /// Gets the reboot status of the machine after the patch operation. It
-        /// will be in "NotNeeded" status if reboot is not needed after the
-        /// patch operation. "Required" will be the status once the patch is
-        /// applied and machine is required to reboot. "Started" will be the
-        /// reboot status when the machine has started to reboot. "Failed" will
-        /// be the status if the machine is failed to reboot. "Completed" will
-        /// be the status once the machine is rebooted successfully. Possible
-        /// values include: 'NotNeeded', 'Required', 'Started', 'Failed',
-        /// 'Completed'
-        /// </summary>
-        [JsonProperty(PropertyName = "rebootStatus")]
-        public string RebootStatus { get; private set; }
 
         /// <summary>
         /// Gets the number of all available patches but not going to be
@@ -179,12 +153,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedTime")]
         public System.DateTime? LastModifiedTime { get; private set; }
-
-        /// <summary>
-        /// Gets the person or system account that started the operation
-        /// </summary>
-        [JsonProperty(PropertyName = "startedBy")]
-        public string StartedBy { get; private set; }
 
         /// <summary>
         /// Gets the errors that were encountered during execution of the

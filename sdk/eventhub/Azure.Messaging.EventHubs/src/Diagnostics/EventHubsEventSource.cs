@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Consumer;

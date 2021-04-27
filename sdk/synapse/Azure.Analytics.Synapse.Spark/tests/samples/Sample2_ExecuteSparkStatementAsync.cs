@@ -4,17 +4,19 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Spark;
 using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Samples
+namespace Azure.Analytics.Synapse.Spark.Samples
 {
     /// <summary>
     /// This sample demonstrates how to submit Spark job in Azure Synapse Analytics using asynchronous methods of <see cref="SparkSessionClient"/>.
     /// </summary>
-    public partial class Sample2_ExecuteSparkStatementAsync : SampleFixture
+    public partial class Sample2_ExecuteSparkStatementAsync : SamplesBase<SynapseTestEnvironment>
     {
         [Test]
         public async Task ExecuteSparkStatementSync()
@@ -67,7 +69,7 @@ namespace Azure.Analytics.Synapse.Samples
 
             #region Snippet:CancelSparkStatementAsync
             SparkStatementCancellationResult cancellationResult = client.CancelSparkStatement(sessionCreated.Id, statementCreated.Id);
-            Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Msg}");
+            Debug.WriteLine($"Statement is cancelled with message {cancellationResult.Message}");
             #endregion
 
             #region Snippet:CancelSparkSessionAsync

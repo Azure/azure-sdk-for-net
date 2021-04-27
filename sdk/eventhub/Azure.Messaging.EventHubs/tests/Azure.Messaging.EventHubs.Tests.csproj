@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Azure.Management.EventHub" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
@@ -33,5 +34,4 @@
 
   <!-- Import Event Hubs shared source -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Testing.projitems" Label="Testing" />
-
 </Project>

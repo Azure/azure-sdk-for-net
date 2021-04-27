@@ -17,9 +17,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetDataFeedIngestionProgress()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetDataFeedIngestionProgress(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             DataFeedIngestionProgress progress = await adminClient.GetDataFeedIngestionProgressAsync(DataFeedId);
 
@@ -31,9 +33,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task RefreshDataIngestion()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RefreshDataIngestion(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             var startTime = DateTimeOffset.Parse("2020-09-01T00:00:00Z");
             var endTime = DateTimeOffset.Parse("2020-09-02T00:00:00Z");
@@ -44,9 +48,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetDataFeedIngestionStatuses()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetDataFeedIngestionStatuses(bool useTokenCredential)
         {
-            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
+            MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
             var options = new GetDataFeedIngestionStatusesOptions(SamplingStartTime, SamplingEndTime);
 

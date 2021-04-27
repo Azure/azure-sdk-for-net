@@ -24,20 +24,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public DimensionKey()
         {
-            Dimension = new Dictionary<string, string>();
+            Dimension = new ChangeTrackingDictionary<string, string>();
         }
 
         internal DimensionKey(IEnumerable<KeyValuePair<string, string>> dimension)
         {
-            Dimension = new Dictionary<string, string>();
-
-            if (dimension != default)
-            {
-                foreach (KeyValuePair<string, string> kvp in dimension)
-                {
-                    Dimension.Add(kvp);
-                }
-            }
+            Dimension = dimension.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
         internal IDictionary<string, string> Dimension { get; }

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Workload classifier operations for a data warehouse. </summary>
-    public partial class WorkloadClassifier : Resource
+    public partial class WorkloadClassifier : ProxyResource
     {
         /// <summary> Initializes a new instance of WorkloadClassifier. </summary>
         public WorkloadClassifier()

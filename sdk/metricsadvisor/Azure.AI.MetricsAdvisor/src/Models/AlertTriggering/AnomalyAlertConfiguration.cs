@@ -18,20 +18,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="AnomalyAlertConfiguration"/> class.
         /// </summary>
-        /// <param name="name">A custom name for this <see cref="AnomalyAlertConfiguration"/> to be displayed on fired alerts.</param>
-        /// <param name="idsOfHooksToAlert">The unique identifiers of the <see cref="NotificationHook"/>s that must be notified when an alert is detected by this configuration.</param>
-        /// <param name="metricAlertConfigurations">The configurations that define which anomalies are eligible for triggering an alert.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/>, <paramref name="idsOfHooksToAlert"/>, or <paramref name="metricAlertConfigurations"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
-        public AnomalyAlertConfiguration(string name, IList<string> idsOfHooksToAlert, IList<MetricAnomalyAlertConfiguration> metricAlertConfigurations)
+        public AnomalyAlertConfiguration()
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(idsOfHooksToAlert, nameof(idsOfHooksToAlert));
-            Argument.AssertNotNull(metricAlertConfigurations, nameof(metricAlertConfigurations));
-
-            Name = name;
-            IdsOfHooksToAlert = idsOfHooksToAlert;
-            MetricAlertConfigurations = metricAlertConfigurations;
+            IdsOfHooksToAlert = new ChangeTrackingList<string>();
+            MetricAlertConfigurations = new ChangeTrackingList<MetricAnomalyAlertConfiguration>();
+            SplitAlertByDimensions = new ChangeTrackingList<string>();
         }
 
         /// <summary>
@@ -43,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// A custom name for this <see cref="AnomalyAlertConfiguration"/> to be displayed on fired alerts.
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The unique identifiers of the <see cref="NotificationHook"/>s that must be notified when an alert is
@@ -70,6 +61,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </summary>
         public string Description { get; set; }
 
+        // TODO: expose it as part of 1.0.0-beta.4
+        internal IList<string> SplitAlertByDimensions { get; }
+
         /// <summary>
         /// Create a patch model from the current <see cref="AnomalyAlertConfiguration"/>
         /// </summary>
@@ -78,7 +72,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             return new AnomalyAlertingConfigurationPatch()
             {
-                CrossMetricsOperator = CrossMetricsOperator.HasValue ? new AnomalyAlertingConfigurationPatchCrossMetricsOperator(CrossMetricsOperator.Value.ToString()) : default(AnomalyAlertingConfigurationPatchCrossMetricsOperator?),
+                CrossMetricsOperator = CrossMetricsOperator,
                 Description = Description,
                 Name = Name,
                 HookIds = IdsOfHooksToAlert.Select(h => new Guid(h)).ToList(),

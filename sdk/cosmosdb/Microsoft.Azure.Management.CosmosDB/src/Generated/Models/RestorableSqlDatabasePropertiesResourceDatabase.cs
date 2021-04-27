@@ -14,6 +14,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Cosmos DB SQL database resource object
+    /// </summary>
     public partial class RestorableSqlDatabasePropertiesResourceDatabase
     {
         /// <summary>
@@ -42,7 +45,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// addressable path of the users resource.</param>
         /// <param name="_self">A system generated property that specifies the
         /// addressable path of the database resource.</param>
-        public RestorableSqlDatabasePropertiesResourceDatabase(string id, string _rid = default(string), object _ts = default(object), string _etag = default(string), string _colls = default(string), string _users = default(string), string _self = default(string))
+        public RestorableSqlDatabasePropertiesResourceDatabase(string id, string _rid = default(string), double? _ts = default(double?), string _etag = default(string), string _colls = default(string), string _users = default(string), string _self = default(string))
         {
             Id = id;
             this._rid = _rid;
@@ -76,7 +79,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// timestamp of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "_ts")]
-        public object _ts { get; private set; }
+        public double? _ts { get; private set; }
 
         /// <summary>
         /// Gets a system generated property representing the resource etag

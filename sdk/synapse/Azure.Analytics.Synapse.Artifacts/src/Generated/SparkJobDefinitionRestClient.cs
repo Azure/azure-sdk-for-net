@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 {
     internal partial class SparkJobDefinitionRestClient
     {
-        private string endpoint;
+        private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SparkJobDefinitionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
+        public SparkJobDefinitionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
         {
             if (endpoint == null)
             {
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/sparkJobDefinitions", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/sparkJobDefinitions/", false);
             uri.AppendPath(sparkJobDefinitionName, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -129,7 +129,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="ifMatch"> ETag of the Spark Job Definition entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> or <paramref name="sparkJobDefinition"/> is null. </exception>
-        public async Task<Response<SparkJobDefinitionResource>> CreateOrUpdateSparkJobDefinitionAsync(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateSparkJobDefinitionAsync(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionName == null)
             {
@@ -145,12 +145,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        SparkJobDefinitionResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -162,7 +158,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="ifMatch"> ETag of the Spark Job Definition entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sparkJobDefinitionName"/> or <paramref name="sparkJobDefinition"/> is null. </exception>
-        public Response<SparkJobDefinitionResource> CreateOrUpdateSparkJobDefinition(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateSparkJobDefinition(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (sparkJobDefinitionName == null)
             {
@@ -178,12 +174,8 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        SparkJobDefinitionResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -195,7 +187,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/sparkJobDefinitions/", false);
             uri.AppendPath(sparkJobDefinitionName, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -232,7 +224,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
-                    return Response.FromValue<SparkJobDefinitionResource>(null, message.Response);
+                    return Response.FromValue((SparkJobDefinitionResource)null, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -262,7 +254,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
-                    return Response.FromValue<SparkJobDefinitionResource>(null, message.Response);
+                    return Response.FromValue((SparkJobDefinitionResource)null, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -274,7 +266,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/sparkJobDefinitions/", false);
             uri.AppendPath(sparkJobDefinitionName, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -299,6 +291,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -322,6 +315,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -335,7 +329,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/sparkJobDefinitions/", false);
             uri.AppendPath(sparkJobDefinitionName, true);
             uri.AppendPath("/execute", false);
@@ -397,7 +391,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request0 = message.Request;
             request0.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/sparkJobDefinitions/", false);
             uri.AppendPath(sparkJobDefinitionName, true);
             uri.AppendPath("/rename", false);
@@ -473,7 +467,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/debugSparkJobDefinition", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -537,7 +531,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

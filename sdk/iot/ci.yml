@@ -4,6 +4,7 @@ trigger:
   branches:
     include:
     - master
+    - main
   paths:
     include:
     - sdk/iot/
@@ -12,6 +13,7 @@ pr:
   branches:
     include:
     - master
+    - main
   paths:
     include:
     - sdk/iot/
@@ -22,6 +24,6 @@ extends:
     ServiceDirectory: iot
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Iot.Hub.Service
-      safeName: AzureIotHubService
+    - name: Azure.IoT.Hub.Service
+      safeName: AzureIoTHubService
       

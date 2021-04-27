@@ -11,21 +11,26 @@ namespace Azure.AI.TextAnalytics
     /// JobManifestTasks.
     /// </summary>
     [CodeGenModel("JobManifestTasks")]
-    public partial class JobManifestTasks
+    internal partial class JobManifestTasks
     {
         /// <summary>
         /// EntityRecognitionTasks
         /// </summary>
-        public IList<EntitiesTask> EntityRecognitionTasks { get; internal set; }
+        internal IList<EntitiesTask> EntityRecognitionTasks { get; set; }
 
         /// <summary>
         /// EntityRecognitionPiiTasks
         /// </summary>
-        public IList<PiiTask> EntityRecognitionPiiTasks { get; internal set; }
+        internal IList<PiiTask> EntityRecognitionPiiTasks { get; set; }
 
         /// <summary>
         /// KeyPhraseExtractionTasks
         /// </summary>
-        public IList<KeyPhrasesTask> KeyPhraseExtractionTasks { get; internal set; }
+        internal IList<KeyPhrasesTask> KeyPhraseExtractionTasks { get; set; }
+
+        /// <summary>
+        /// EntityLinkingTasks
+        /// </summary>
+        internal IList<EntityLinkingTask> EntityLinkingTasks { get; set; }
     }
 }

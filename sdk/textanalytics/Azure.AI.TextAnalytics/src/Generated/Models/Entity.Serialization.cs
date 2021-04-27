@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class Entity
+    internal partial class Entity
     {
         internal static Entity DeserializeEntity(JsonElement element)
         {

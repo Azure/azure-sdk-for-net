@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents a recommended elastic pool. </summary>
-    public partial class RecommendedElasticPool : Resource
+    public partial class RecommendedElasticPool : ProxyResource
     {
         /// <summary> Initializes a new instance of RecommendedElasticPool. </summary>
         public RecommendedElasticPool()

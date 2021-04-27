@@ -47,11 +47,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         /// <returns>A <see cref="DisposableNotificationHook"/> instance from which the ID of the created hook can be obtained.</returns>
         public static async Task<DisposableNotificationHook> CreateHookAsync(MetricsAdvisorAdministrationClient adminClient, NotificationHook hook)
         {
-            string hookId = await adminClient.CreateHookAsync(hook);
+            NotificationHook createdHook = await adminClient.CreateHookAsync(hook);
 
-            Assert.That(hookId, Is.Not.Null.And.Not.Empty);
+            Assert.That(createdHook, Is.Not.Null);
+            Assert.That(createdHook.Id, Is.Not.Null.And.Not.Empty);
 
-            return new DisposableNotificationHook(adminClient, hookId);
+            return new DisposableNotificationHook(adminClient, createdHook.Id);
         }
 
         /// <summary>

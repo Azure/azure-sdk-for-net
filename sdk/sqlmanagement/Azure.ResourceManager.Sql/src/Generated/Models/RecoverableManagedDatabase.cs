@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A recoverable managed database resource. </summary>
-    public partial class RecoverableManagedDatabase : Resource
+    public partial class RecoverableManagedDatabase : ProxyResource
     {
         /// <summary> Initializes a new instance of RecoverableManagedDatabase. </summary>
         public RecoverableManagedDatabase()

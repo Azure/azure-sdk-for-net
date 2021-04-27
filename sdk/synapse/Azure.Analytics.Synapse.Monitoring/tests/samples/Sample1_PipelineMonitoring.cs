@@ -5,18 +5,21 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Azure.Core.TestFramework;
+using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Monitoring;
 using Azure.Analytics.Synapse.Monitoring.Models;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Synapse.Samples
+namespace Azure.Analytics.Synapse.Monitoring.Samples
 {
     /// <summary>
     /// This sample demonstrates how to monitor pipeline runs using synchronous methods of <see cref="MonitoringClient"/>.
     /// </summary>
-    public partial class Sample1_PipelineMonitoring : SampleFixture
+    public partial class Sample1_PipelineMonitoring : SamplesBase<SynapseTestEnvironment>
     {
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18832 - Fails on nightly lane due to unreproducable NRE")]
         [Test]
         public void MonitorPipelineRuns()
         {

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListPrivateEndpointConnection API service call. </summary>
-    public partial class PrivateEndpointConnectionListResult
+    internal partial class PrivateEndpointConnectionListResult
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResult. </summary>
         internal PrivateEndpointConnectionListResult()

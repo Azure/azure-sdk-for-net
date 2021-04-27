@@ -1,25 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
+using Azure.Communication.Tests;
 
 namespace Azure.Communication.Chat.Tests
 {
     /// <summary>
     /// A helper class used to retrieve information to be used for tests.
     /// </summary>
-    public class ChatTestEnvironment: TestEnvironment
+    public class ChatTestEnvironment : CommunicationTestEnvironment
     {
-        /// <summary>The name of the environment variable from which the Azure Communicion Service resource's connection string will be extracted for the live tests.</summary>
-        internal const string ConnectionStringEnvironmentVariableName = "COMMUNICATION_CONNECTION_STRING";
-
-        public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);
-
-        public string ChatApiUrl()
-        {
-            var url = ConnectionString.Replace("endpoint=", "");
-            var len = url.IndexOf("/;accesskey=");
-            return url.Substring(0, len);
-        }
+        // please find the allowed package value in tests.yml
+        private const string ChatTestPackagesEnabled = "chat";
+        public override string ExpectedTestPackagesEnabled { get { return ChatTestPackagesEnabled; } }
     }
 }

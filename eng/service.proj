@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.Build.Traversal">
   <PropertyGroup>
+    <SDKType Condition="'$(SDKType)' == ''">all</SDKType>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == '' and '$(Scope)' != ''">$(Scope)</ServiceDirectory>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == ''">*</ServiceDirectory>
     <IncludeTests Condition="'$(IncludeTests)' == ''">true</IncludeTests>
@@ -9,9 +10,6 @@
     <IncludeStress Condition="'$(IncludeStress)' == ''">true</IncludeStress>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
-    <TraversalGlobalProperties>
-      CodeCoverageDirectory=$([System.IO.Path]::GetFullPath("$(CodeCoverageDirectory)", "$(MSBuildThisFileDirectory)..\sdk"));
-    </TraversalGlobalProperties>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,6 +30,12 @@
 
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
 
+  <!-- Remove all projects except the ones included by the SDKType filter -->
+  <ItemGroup Condition="'$(SDKType)' != 'all'">
+    <ProjectsToRemove Include="@(ProjectReference)" Exclude="@(ProjectsToIncludeBySDKType)" />
+    <ProjectReference Remove="@(ProjectsToRemove)" />
+  </ItemGroup>
+
   <Target Name="CheckProjects" AfterTargets="Build">
     <!-- If scope is set this likely came from a call to build.proj and in cases where there is only mgmt projects we don't want to error so skip this extra check -->
     <Error Condition="'$(Scope)' == '' and '@(ProjectReference)' == ''"
@@ -44,5 +48,10 @@
              BuildInParallel="$(BuildInParallel)"
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />
+  </Target>
+
+  <Target Name="FinalBuildReferencesOutput" BeforeTargets="Build" Condition="'$(SDKType)' != 'all'">
+    <Message Text="Final Build References:" Importance="high"/>
+    <Message Text="  %(ProjectReference.Identity)" Importance="high"/>
   </Target>
 </Project>

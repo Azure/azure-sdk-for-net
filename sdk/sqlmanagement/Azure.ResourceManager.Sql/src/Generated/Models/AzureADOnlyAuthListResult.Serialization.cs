@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class AzureADOnlyAuthListResult
+    internal partial class AzureADOnlyAuthListResult
     {
         internal static AzureADOnlyAuthListResult DeserializeAzureADOnlyAuthListResult(JsonElement element)
         {

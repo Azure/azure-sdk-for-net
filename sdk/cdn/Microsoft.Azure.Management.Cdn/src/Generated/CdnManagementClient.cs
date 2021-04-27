@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Cdn
 
         /// <summary>
         /// Version of the API to be used with the client request. Current version is
-        /// 2017-04-02.
+        /// 2020-09-01.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -116,6 +116,66 @@ namespace Microsoft.Azure.Management.Cdn
         /// Gets the IEdgeNodesOperations.
         /// </summary>
         public virtual IEdgeNodesOperations EdgeNodes { get; private set; }
+
+        /// <summary>
+        /// Gets the IAFDProfilesOperations.
+        /// </summary>
+        public virtual IAFDProfilesOperations AFDProfiles { get; private set; }
+
+        /// <summary>
+        /// Gets the IAFDCustomDomainsOperations.
+        /// </summary>
+        public virtual IAFDCustomDomainsOperations AFDCustomDomains { get; private set; }
+
+        /// <summary>
+        /// Gets the IAFDEndpointsOperations.
+        /// </summary>
+        public virtual IAFDEndpointsOperations AFDEndpoints { get; private set; }
+
+        /// <summary>
+        /// Gets the IAFDOriginGroupsOperations.
+        /// </summary>
+        public virtual IAFDOriginGroupsOperations AFDOriginGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IAFDOriginsOperations.
+        /// </summary>
+        public virtual IAFDOriginsOperations AFDOrigins { get; private set; }
+
+        /// <summary>
+        /// Gets the IRoutesOperations.
+        /// </summary>
+        public virtual IRoutesOperations Routes { get; private set; }
+
+        /// <summary>
+        /// Gets the IRuleSetsOperations.
+        /// </summary>
+        public virtual IRuleSetsOperations RuleSets { get; private set; }
+
+        /// <summary>
+        /// Gets the IRulesOperations.
+        /// </summary>
+        public virtual IRulesOperations Rules { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityPoliciesOperations.
+        /// </summary>
+        public virtual ISecurityPoliciesOperations SecurityPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecretsOperations.
+        /// </summary>
+        public virtual ISecretsOperations Secrets { get; private set; }
+
+        /// <summary>
+        /// Gets the IValidateOperations.
+        /// </summary>
+        public virtual IValidateOperations Validate { get; private set; }
+
+        /// <summary>
+        /// Gets the ILogAnalyticsOperations.
+        /// </summary>
+        public virtual ILogAnalyticsOperations LogAnalytics { get; private set; }
 
         /// <summary>
         /// Gets the IPoliciesOperations.
@@ -376,10 +436,22 @@ namespace Microsoft.Azure.Management.Cdn
             ResourceUsage = new ResourceUsageOperations(this);
             Operations = new Operations(this);
             EdgeNodes = new EdgeNodesOperations(this);
+            AFDProfiles = new AFDProfilesOperations(this);
+            AFDCustomDomains = new AFDCustomDomainsOperations(this);
+            AFDEndpoints = new AFDEndpointsOperations(this);
+            AFDOriginGroups = new AFDOriginGroupsOperations(this);
+            AFDOrigins = new AFDOriginsOperations(this);
+            Routes = new RoutesOperations(this);
+            RuleSets = new RuleSetsOperations(this);
+            Rules = new RulesOperations(this);
+            SecurityPolicies = new SecurityPoliciesOperations(this);
+            Secrets = new SecretsOperations(this);
+            Validate = new ValidateOperations(this);
+            LogAnalytics = new LogAnalyticsOperations(this);
             Policies = new PoliciesOperations(this);
             ManagedRuleSets = new ManagedRuleSetsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-04-15";
+            ApiVersion = "2020-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -415,6 +487,10 @@ namespace Microsoft.Azure.Management.Cdn
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeliveryRuleAction>("name"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CustomDomainHttpsParameters>("certificateSource"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CustomDomainHttpsParameters>("certificateSource"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SecurityPolicyParameters>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SecurityPolicyParameters>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SecretParameters>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SecretParameters>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

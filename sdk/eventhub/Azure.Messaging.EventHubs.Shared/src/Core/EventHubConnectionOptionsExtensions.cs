@@ -22,7 +22,8 @@ namespace Azure.Messaging.EventHubs.Core
             new EventHubConnectionOptions
             {
                 TransportType = instance.TransportType,
-                Proxy = instance.Proxy
+                Proxy = instance.Proxy,
+                CustomEndpointAddress = instance.CustomEndpointAddress
             };
     }
 }

@@ -1,0 +1,73 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/glossaries/formats",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-347d2daa12f73f44995663250c89f08f-c016ef24c9bc3148-00",
+        "User-Agent": "azsdk-net-AI.DocumentTranslation/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "4110c7dfe312faf50d86e60d2f0bbd9c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Age": "0",
+        "apim-request-id": "19c4cb5e-fed0-45da-8f97-6ba3d5abe09d",
+        "Cache-Control": [
+          "public",
+          "max-age=1"
+        ],
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 22:09:37 GMT",
+        "ETag": "\u0022E45B28E0479C2E4442005F96664ED8DE0001CBFEE34F87F4E4C6D25064CECB2F\u0022",
+        "Retry-After": "1",
+        "Set-Cookie": [
+          "ARRAffinity=5dd610bbbfcdcce1e8b7e036dad4b7c92b91df5adc2f4b536e67d2a5eff0940e;Path=/;HttpOnly;Secure;Domain=doctrans.westus.microsofttranslator.com",
+          "ARRAffinitySameSite=5dd610bbbfcdcce1e8b7e036dad4b7c92b91df5adc2f4b536e67d2a5eff0940e;Path=/;HttpOnly;SameSite=None;Secure;Domain=doctrans.westus.microsofttranslator.com"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "X-RequestId": "20fcba91-f481-4931-9f8c-16efbfba6560"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "format": "XLIFF",
+            "fileExtensions": [
+              ".xlf"
+            ],
+            "contentTypes": [
+              "application/xliff\u002Bxml"
+            ],
+            "defaultVersion": "1.2",
+            "versions": [
+              "1.0",
+              "1.1",
+              "1.2"
+            ]
+          },
+          {
+            "format": "TSV",
+            "fileExtensions": [
+              ".tsv",
+              ".tab"
+            ],
+            "contentTypes": [
+              "text/tab-separated-values"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DOCUMENT_TRANSLATION_API_KEY": "Sanitized",
+    "DOCUMENT_TRANSLATION_ENDPOINT": "https://mariaridoctrans29-doctranslation.cognitiveservices.azure.com",
+    "RandomSeed": "1032706159"
+  }
+}

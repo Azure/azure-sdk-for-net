@@ -38,8 +38,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// class.
         /// </summary>
         /// <param name="name">Activity name.</param>
-        /// <param name="mlPipelineId">ID of the published Azure ML pipeline.
-        /// Type: string (or Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
@@ -47,6 +45,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="userProperties">Activity user properties.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
+        /// <param name="mlPipelineId">ID of the published Azure ML pipeline.
+        /// Type: string (or Expression with resultType string).</param>
+        /// <param name="mlPipelineEndpointId">ID of the published Azure ML
+        /// pipeline endpoint. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="version">Version of the published Azure ML pipeline
+        /// endpoint. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="experimentName">Run history experiment name of the
         /// pipeline run. This information will be passed in the ExperimentName
         /// property of the published pipeline execution request. Type: string
@@ -57,6 +63,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// will be passed in the ParameterAssignments property of the
         /// published pipeline execution request. Type: object with key value
         /// pairs (or Expression with resultType object).</param>
+        /// <param name="dataPathAssignments">Dictionary used for changing data
+        /// path assignments without retraining. Values will be passed in the
+        /// dataPathAssignments property of the published pipeline execution
+        /// request. Type: object with key value pairs (or Expression with
+        /// resultType object).</param>
         /// <param name="mlParentRunId">The parent Azure ML Service pipeline
         /// run id. This information will be passed in the ParentRunId property
         /// of the published pipeline execution request. Type: string (or
@@ -66,12 +77,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// will be passed in the continueOnStepFailure property of the
         /// published pipeline execution request. Type: boolean (or Expression
         /// with resultType boolean).</param>
-        public AzureMLExecutePipelineActivity(string name, object mlPipelineId, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object experimentName = default(object), object mlPipelineParameters = default(object), object mlParentRunId = default(object), object continueOnStepFailure = default(object))
+        public AzureMLExecutePipelineActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object mlPipelineId = default(object), object mlPipelineEndpointId = default(object), object version = default(object), object experimentName = default(object), object mlPipelineParameters = default(object), object dataPathAssignments = default(object), object mlParentRunId = default(object), object continueOnStepFailure = default(object))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             MlPipelineId = mlPipelineId;
+            MlPipelineEndpointId = mlPipelineEndpointId;
+            Version = version;
             ExperimentName = experimentName;
             MlPipelineParameters = mlPipelineParameters;
+            DataPathAssignments = dataPathAssignments;
             MlParentRunId = mlParentRunId;
             ContinueOnStepFailure = continueOnStepFailure;
             CustomInit();
@@ -88,6 +102,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.mlPipelineId")]
         public object MlPipelineId { get; set; }
+
+        /// <summary>
+        /// Gets or sets ID of the published Azure ML pipeline endpoint. Type:
+        /// string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.mlPipelineEndpointId")]
+        public object MlPipelineEndpointId { get; set; }
+
+        /// <summary>
+        /// Gets or sets version of the published Azure ML pipeline endpoint.
+        /// Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.version")]
+        public object Version { get; set; }
 
         /// <summary>
         /// Gets or sets run history experiment name of the pipeline run. This
@@ -108,6 +136,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.mlPipelineParameters")]
         public object MlPipelineParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets dictionary used for changing data path assignments
+        /// without retraining. Values will be passed in the
+        /// dataPathAssignments property of the published pipeline execution
+        /// request. Type: object with key value pairs (or Expression with
+        /// resultType object).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.dataPathAssignments")]
+        public object DataPathAssignments { get; set; }
 
         /// <summary>
         /// Gets or sets the parent Azure ML Service pipeline run id. This
@@ -136,10 +174,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (MlPipelineId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MlPipelineId");
-            }
         }
     }
 }

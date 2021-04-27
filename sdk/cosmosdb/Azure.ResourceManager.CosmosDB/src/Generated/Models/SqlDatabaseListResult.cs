@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The List operation response, that contains the SQL databases and their properties. </summary>
-    public partial class SqlDatabaseListResult
+    internal partial class SqlDatabaseListResult
     {
         /// <summary> Initializes a new instance of SqlDatabaseListResult. </summary>
         internal SqlDatabaseListResult()

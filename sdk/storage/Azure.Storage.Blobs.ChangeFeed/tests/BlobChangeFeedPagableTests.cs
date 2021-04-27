@@ -4,19 +4,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class BlobChangeFeedPagableTests : ChangeFeedTestBase
     {
-        public BlobChangeFeedPagableTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlobChangeFeedPagableTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public void Test()
         {

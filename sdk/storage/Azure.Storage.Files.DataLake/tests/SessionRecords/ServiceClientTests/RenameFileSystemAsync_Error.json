@@ -1,0 +1,46 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://631xscnapsn4prde17h.blob.preprod.core.windows.net/test-filesystem-3cd9e43f-1e7b-5fcd-e36b-2b9a482823cd?restype=container\u0026comp=rename",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-06f79508f653a7409dace1b5be10f880-4df10869f2707c4a-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.DataLake/12.6.0-alpha.20201123.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-client-request-id": "5787b6a6-e2fc-d7da-d583-a57c4abf5a30",
+        "x-ms-date": "Mon, 23 Nov 2020 22:18:10 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-source-container-name": "test-filesystem-89e2a2f5-76e8-a25a-58d4-2510ad9cb610",
+         "x-ms-version": "2020-08-04"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "226",
+        "Content-Type": "application/xml",
+        "Date": "Mon, 23 Nov 2020 22:18:10 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "5787b6a6-e2fc-d7da-d583-a57c4abf5a30",
+        "x-ms-error-code": "ContainerNotFound",
+        "x-ms-request-id": "1eb593a5-201e-0010-30e6-c1d7af000000",
+         "x-ms-version": "2020-08-04"
+      },
+      "ResponseBody": [
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
+        "\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",
+        "RequestId:1eb593a5-201e-0010-30e6-c1d7af000000\n",
+        "Time:2020-11-23T22:18:10.5203434Z\u003C/Message\u003E\u003C/Error\u003E"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "936979506",
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\n631xscnapsn4prde17h\nU2FuaXRpemVk\nhttps://631xscnapsn4prde17h.blob.preprod.core.windows.net\nhttps://631xscnapsn4prde17h.file.preprod.core.windows.net\nhttps://631xscnapsn4prde17h.queue.preprod.core.windows.net\nhttps://631xscnapsn4prde17h.table.preprod.core.windows.net\n\n\n\n\nhttps://631xscnapsn4prde17h-secondary.blob.preprod.core.windows.net\nhttps://631xscnapsn4prde17h-secondary.file.preprod.core.windows.net\nhttps://631xscnapsn4prde17h-secondary.queue.preprod.core.windows.net\nhttps://631xscnapsn4prde17h-secondary.table.preprod.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://631xscnapsn4prde17h.blob.preprod.core.windows.net/;QueueEndpoint=https://631xscnapsn4prde17h.queue.preprod.core.windows.net/;FileEndpoint=https://631xscnapsn4prde17h.file.preprod.core.windows.net/;BlobSecondaryEndpoint=https://631xscnapsn4prde17h-secondary.blob.preprod.core.windows.net/;QueueSecondaryEndpoint=https://631xscnapsn4prde17h-secondary.queue.preprod.core.windows.net/;FileSecondaryEndpoint=https://631xscnapsn4prde17h-secondary.file.preprod.core.windows.net/;AccountName=631xscnapsn4prde17h;AccountKey=Sanitized\n"
+  }
+}

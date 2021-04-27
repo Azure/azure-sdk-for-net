@@ -244,6 +244,13 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>If not specified, an ownership interval of 30 seconds will be assumed.</value>
         ///
+        /// <remarks>
+        ///   As a general guideline, it is advised that this value be greater than the configured
+        ///   <see cref="LoadBalancingUpdateInterval" /> by at least a factor of two. It is recommended that
+        ///   this be a factor of three or more, unless there are application scenarios that require more
+        ///   aggressive ownership expiration.
+        /// </remarks>
+        ///
         public TimeSpan PartitionOwnershipExpirationInterval
         {
             get => _partitionOwnershipExpirationInterval;

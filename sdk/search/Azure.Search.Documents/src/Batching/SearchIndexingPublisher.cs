@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Batching
         /// <summary>
         /// The sender, which we mostly use for raising events.
         /// </summary>
-        private SearchIndexingBufferedSender<T> _sender;
+        private readonly SearchIndexingBufferedSender<T> _sender;
 
         /// <summary>
         /// Creates a new SearchIndexingPublisher which immediately starts
@@ -100,7 +100,7 @@ namespace Azure.Search.Documents.Batching
             // Raise notifications
             foreach (IndexDocumentsAction<T> document in documents)
             {
-                await _sender.RaiseActionAddedAsync(document, cancellationToken).ConfigureAwait(false);
+                await _sender.OnActionAddedAsync(document, cancellationToken).ConfigureAwait(false);
             }
 
             // Add all of the documents and possibly auto flush
@@ -121,8 +121,10 @@ namespace Azure.Search.Documents.Batching
             // Notify the action is being sent
             foreach (PublisherAction<IndexDocumentsAction<T>> action in batch)
             {
-                await _sender.RaiseActionSentAsync(action.Document, cancellationToken).ConfigureAwait(false);
+                await _sender.OnActionSentAsync(action.Document, cancellationToken).ConfigureAwait(false);
             }
+
+            AzureSearchDocumentsEventSource.Instance.BatchSubmitted($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, batch.Count);
 
             // Send the request to the service
             Response<IndexDocumentsResult> response = null;
@@ -136,15 +138,20 @@ namespace Azure.Search.Documents.Batching
             // Handle batch level failures
             catch (RequestFailedException ex) when (ex.Status == 413) // Payload Too Large
             {
+                AzureSearchDocumentsEventSource.Instance.BatchActionPayloadTooLarge($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, BatchActionCount);
+
+                int oldBatchActionCount = BatchActionCount;
+
                 // Split the batch and try with smaller payloads
-                int half = (int)Math.Floor((double)batch.Count / 2.0);
-                var smaller = new List<PublisherAction<IndexDocumentsAction<T>>>(batch.Take(half));
-                foreach (PublisherAction<IndexDocumentsAction<T>> action in batch.Skip(half))
-                {
-                    // Add the second half to the retry queue without
-                    // counting this as a retry attempt
-                    _ = EnqueueRetry(action, skipIncrement: true);
-                }
+                // Update 'BatchActionCount' so future submissions can avoid this error.
+                BatchActionCount = (int)Math.Floor((double)batch.Count / 2.0);
+
+                AzureSearchDocumentsEventSource.Instance.BatchActionCountUpdated($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, oldBatchActionCount, BatchActionCount);
+
+                var smaller = new List<PublisherAction<IndexDocumentsAction<T>>>(batch.Take(BatchActionCount));
+
+                // Add the second half to the retry queue without counting this as a retry attempt
+                EnqueueRetry(batch.Skip(BatchActionCount));
 
                 // Try resubmitting with just the smaller half
                 await SubmitBatchAsync(smaller, cancellationToken).ConfigureAwait(false);
@@ -173,7 +180,7 @@ namespace Azure.Search.Documents.Batching
                 Debug.Assert(action.Key == result.Key);
                 if (result.Succeeded)
                 {
-                    await _sender.RaiseActionCompletedAsync(
+                    await _sender.OnActionCompletedAsync(
                         action.Document,
                         result,
                         cancellationToken)
@@ -190,7 +197,7 @@ namespace Azure.Search.Documents.Batching
                 }
                 else
                 {
-                    await _sender.RaiseActionFailedAsync(
+                    await _sender.OnActionFailedAsync(
                         action.Document,
                         result,
                         exception: null,
@@ -200,6 +207,9 @@ namespace Azure.Search.Documents.Batching
             }
             return throttled;
         }
+
+        /// <inheritdoc />
+        protected override Uri GetEndpoint() => _sender.Endpoint;
 
         /// <summary>
         /// Attempt to add an item to the retry queue or raise a failure
@@ -218,7 +228,7 @@ namespace Azure.Search.Documents.Batching
         {
             if (!EnqueueRetry(action))
             {
-                await _sender.RaiseActionFailedAsync(
+                await _sender.OnActionFailedAsync(
                     action.Document,
                     result,
                     exception,
@@ -233,7 +243,7 @@ namespace Azure.Search.Documents.Batching
         /// <param name="actions">The batch of actions.</param>
         /// <param name="results">The results.</param>
         /// <returns>Actions paired with their result.</returns>
-        private static IEnumerable<(PublisherAction<IndexDocumentsAction<T>>, IndexingResult)> AssociateResults(
+        private static IEnumerable<(PublisherAction<IndexDocumentsAction<T>> Action, IndexingResult Result)> AssociateResults(
             IList<PublisherAction<IndexDocumentsAction<T>>> actions,
             IReadOnlyList<IndexingResult> results)
         {

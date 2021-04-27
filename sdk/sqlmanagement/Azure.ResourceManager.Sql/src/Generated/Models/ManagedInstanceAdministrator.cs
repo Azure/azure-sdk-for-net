@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An Azure SQL managed instance administrator. </summary>
-    public partial class ManagedInstanceAdministrator : Resource
+    public partial class ManagedInstanceAdministrator : ProxyResource
     {
         /// <summary> Initializes a new instance of ManagedInstanceAdministrator. </summary>
         public ManagedInstanceAdministrator()

@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return vmScaleSet;
         }
 
-        public async Task<(VirtualMachineScaleSet, VirtualMachineScaleSet)> CreateVMScaleSet_NoAsyncTracking(
+        public async Task<(VirtualMachineScaleSet Response, VirtualMachineScaleSet Input)> CreateVMScaleSet_NoAsyncTracking(
             string rgName,
             string vmssName,
             StorageAccount storageAccount,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute.Tests
                                                                                      automaticRepairsPolicy: automaticRepairsPolicy);
 
                 var getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmssName);
-                return (getResponse, createOrUpdateResponse.Item2);
+                return (getResponse, createOrUpdateResponse.InputScaleSet);
             }
             catch
             {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var patchResponse = await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartUpdateAsync(rgName, vmssName, inputVMScaleSet));
         }
 
-        private async Task<(VirtualMachineScaleSet, VirtualMachineScaleSet)> CreateVMScaleSetAndGetOperationResponse(
+        private async Task<(VirtualMachineScaleSet ResponseScaleSet, VirtualMachineScaleSet InputScaleSet)> CreateVMScaleSetAndGetOperationResponse(
             string rgName,
             string vmssName,
             StorageAccount storageAccount,

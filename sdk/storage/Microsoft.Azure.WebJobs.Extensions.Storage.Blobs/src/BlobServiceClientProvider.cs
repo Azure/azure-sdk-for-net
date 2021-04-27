@@ -14,15 +14,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
     {
         public BlobServiceClientProvider(IConfiguration configuration, AzureComponentFactory componentFactory, AzureEventSourceLogForwarder logForwarder)
             : base(configuration, componentFactory, logForwarder) {}
-
-        protected override BlobServiceClient CreateClientFromConnectionString(string connectionString, BlobClientOptions options)
-        {
-            return new BlobServiceClient(connectionString, options);
-        }
-
-        protected override BlobServiceClient CreateClientFromTokenCredential(Uri endpointUri, TokenCredential tokenCredential, BlobClientOptions options)
-        {
-            return new BlobServiceClient(endpointUri, tokenCredential, options);
-        }
     }
 }

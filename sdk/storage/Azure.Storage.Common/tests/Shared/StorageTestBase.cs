@@ -3,16 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Sas;
@@ -23,7 +20,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
 {
-    public abstract class StorageTestBase : RecordedTestBase
+    public abstract partial class StorageTestBase<TEnvironment> : RecordedTestBase<TEnvironment> where TEnvironment : StorageTestEnvironment, new()
     {
         static StorageTestBase()
         {
@@ -36,10 +33,9 @@ namespace Azure.Storage.Test.Shared
         }
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(async, mode)
         {
             Sanitizer = new StorageRecordedTestSanitizer();
-            Matcher = new StorageRecordMatcher();
         }
 
         /// <summary>
@@ -182,13 +178,6 @@ namespace Azure.Storage.Test.Shared
         }
 
         public DateTimeOffset GetUtcNow() => Recording.UtcNow;
-
-        protected HttpPipelineTransport GetTransport() =>
-            new HttpClientTransport(
-                new HttpClient()
-                {
-                    Timeout = TestConstants.HttpTimeoutDuration
-                });
 
         public byte[] GetRandomBuffer(long size)
             => TestHelper.GetRandomBuffer(size, Recording.Random);
