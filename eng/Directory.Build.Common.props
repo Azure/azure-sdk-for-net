@@ -180,7 +180,7 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
-    <RunSettingsFilePath>$(RepoEngPath)\nunit.runsettings</RunSettingsFilePath>
+    <RunSettingsFilePath Condition="'$(AZURE_SKIP_DEFAULT_RUN_SETTINGS)' != 'true'">$(RepoEngPath)\nunit.runsettings</RunSettingsFilePath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
