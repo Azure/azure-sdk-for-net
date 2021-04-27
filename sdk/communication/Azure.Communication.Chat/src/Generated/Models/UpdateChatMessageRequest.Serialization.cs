@@ -20,6 +20,17 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("content");
                 writer.WriteStringValue(Content);
             }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+                writer.WriteStartObject();
+                foreach (var item in Properties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
         }
     }
