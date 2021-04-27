@@ -97,13 +97,13 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                     VerifyRestorePointDetails(createdRP, rpName, osDisk, 1,
                         expectedExcludeDiskId: dataDiskId, expectedVmSize: vmSize);
 
-                    // get RPC without $expand=restorePoints
+                    // get the first RPC without $expand=restorePoints
                     RestorePointCollection returnedRpc = GetRpc(rgName, rpcName);
-                    VerifyRestorePointCollection(returnedRpc, rpcName, location, vmId, originalTags);
+                    VerifyRestorePointCollection(returnedRpc, rpcName, location, vmId, newTags);
 
-                    // get RPC with $expand=restorePoints
+                    // get first RPC with $expand=restorePoints
                     returnedRpc = GetRpc(rgName, rpcName, RestorePointCollectionExpandOptions.RestorePoints);
-                    VerifyRestorePointCollection(returnedRpc, rpcName, location, vmId, originalTags, expectedCountOfContainedRestorePoints: 1);
+                    VerifyRestorePointCollection(returnedRpc, rpcName, location, vmId, newTags, expectedCountOfContainedRestorePoints: 1);
 
                     // verify the restore point returned from GET RPC with $expand=restorePoints
                     VerifyRestorePointDetails(returnedRpc.RestorePoints[0], rpName, osDisk, 1,
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         // Verify the properties of the restorePointCollection.
         // If verifying result of GET RPC with $expand=restorePoints, verify that the returned rpc contains the expected number of restore points
         private void VerifyRestorePointCollection(RestorePointCollection rpc, string expctedRpcName,
-            string expectedLocation, string expectdSourceVmId, Dictionary<string, string> expectedTags,
+            string expectedLocation, string expectedSourceVmId, Dictionary<string, string> expectedTags,
             int expectedCountOfContainedRestorePoints = 0)
         {
             Assert.NotNull(rpc);
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             Assert.Equal(expctedRpcName, rpc.Name);
             Assert.Equal(expectedLocation, rpc.Location, ignoreCase: true);
             Assert.Equal("Microsoft.Compute/restorePointCollections", rpc.Type);
-            Assert.Equal(expectdSourceVmId, rpc.Source.Id, ignoreCase: true);
+            Assert.Equal(expectedSourceVmId, rpc.Source.Id, ignoreCase: true);
             Assert.Equal(expectedLocation, rpc.Source.Location, ignoreCase: true);
             // Verify the tags on the rpc
             foreach ((string expectedTag, string value) in expectedTags)
