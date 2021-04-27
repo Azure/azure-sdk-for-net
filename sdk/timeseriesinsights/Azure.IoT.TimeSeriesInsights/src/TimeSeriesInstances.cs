@@ -15,19 +15,19 @@ namespace Azure.IoT.TimeSeriesInsights
     /// Time Series Insights instances client that can be used to perform operations such as creating, listing, replacing and deleting
     /// Time Series instances.
     /// </summary>
-    public class InstancesClient
+    public class TimeSeriesInstances
     {
         private readonly TimeSeriesInstancesRestClient _instancesRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of InstancesClient. This constructor should only be used for mocking purposes.
+        /// Initializes a new instance of TimeSeriesInstances. This constructor should only be used for mocking purposes.
         /// </summary>
-        protected InstancesClient()
+        protected TimeSeriesInstances()
         {
         }
 
-        internal InstancesClient(TimeSeriesInstancesRestClient instancesRestClient, ClientDiagnostics clientDiagnostics)
+        internal TimeSeriesInstances(TimeSeriesInstancesRestClient instancesRestClient, ClientDiagnostics clientDiagnostics)
         {
             Argument.AssertNotNull(instancesRestClient, nameof(instancesRestClient));
             Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));

@@ -11,19 +11,19 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary>
     /// Query client that can be used to query for events, series and aggregate series on Time Series Insights.
     /// </summary>
-    public class QueryClient
+    public class TimeSeriesQuery
     {
         private readonly QueryRestClient _queryRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of QueryClient. This constructor should only be used for mocking purposes.
+        /// Initializes a new instance of TimeSeriesQuery. This constructor should only be used for mocking purposes.
         /// </summary>
-        protected QueryClient()
+        protected TimeSeriesQuery()
         {
         }
 
-        internal QueryClient(QueryRestClient queryRestClient, ClientDiagnostics clientDiagnostics)
+        internal TimeSeriesQuery(QueryRestClient queryRestClient, ClientDiagnostics clientDiagnostics)
         {
             Argument.AssertNotNull(queryRestClient, nameof(queryRestClient));
             Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));

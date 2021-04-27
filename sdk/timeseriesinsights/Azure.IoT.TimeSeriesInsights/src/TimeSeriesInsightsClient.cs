@@ -34,12 +34,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary>
         /// Instances client to perform various Time Series Insights instances operations.
         /// </summary>
-        public virtual InstancesClient Instances { get; private set; }
+        public virtual TimeSeriesInstances Instances { get; private set; }
 
         /// <summary>
         /// Types client to perform various Time Series Insights types operations.
         /// </summary>
-        public virtual TypesClient Types { get; private set; }
+        public virtual TimeSeriesTypes Types { get; private set; }
 
         /// <summary>
         /// Hierarchies client to perform various Time Series Insights hierarchies operations.
@@ -49,7 +49,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary>
         /// Query client that can be used to perform query operations on Time Series Insights.
         /// </summary>
-        public virtual QueryClient Query { get; private set; }
+        public virtual TimeSeriesQuery Query { get; private set; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="TimeSeriesInsightsClient"/> class.
@@ -113,10 +113,10 @@ namespace Azure.IoT.TimeSeriesInsights
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
 
             ModelSettings = new ModelSettingsClient(_modelSettingsRestClient, _clientDiagnostics);
-            Instances = new InstancesClient(_timeSeriesInstancesRestClient, _clientDiagnostics);
-            Types = new TypesClient(_timeSeriesTypesRestClient, _clientDiagnostics);
+            Instances = new TimeSeriesInstances(_timeSeriesInstancesRestClient, _clientDiagnostics);
+            Types = new TimeSeriesTypes(_timeSeriesTypesRestClient, _clientDiagnostics);
             Hierarchies = new HierarchiesClient(_timeSeriesHierarchiesRestClient, _clientDiagnostics);
-            Query = new QueryClient(_queryRestClient, _clientDiagnostics);
+            Query = new TimeSeriesQuery(_queryRestClient, _clientDiagnostics);
         }
 
         /// <summary>
