@@ -124,7 +124,7 @@ namespace Azure.Monitor.Query
 
             if (options?.Timeout != null)
             {
-                message.SetProperty("NetworkTimeoutOverride", options.Timeout);
+                message.NetworkTimeout = options.Timeout;
             }
 
             if (async)

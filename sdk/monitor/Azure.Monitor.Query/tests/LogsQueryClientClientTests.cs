@@ -13,12 +13,12 @@ namespace Azure.Monitor.Query.Tests
         public void CanSetServiceTimeout_Mocked()
         {
             string preferHeader = null;
-            object networkOverride = default;
+            TimeSpan? networkOverride = default;
 
             var mockTransport = MockTransport.FromMessageCallback(message =>
             {
                 Assert.True(message.Request.Headers.TryGetValue("prefer", out preferHeader));
-                Assert.True(message.TryGetProperty("NetworkTimeoutOverride", out networkOverride));
+                networkOverride = message.NetworkTimeout;
 
                 return new MockResponse(500);
             });
