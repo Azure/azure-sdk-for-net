@@ -19,7 +19,7 @@ Set-StrictMode -Version 1
 
 function LogError([string]$message) {
     if ($env:TF_BUILD) {
-        Write-Host ("`n$message" -replace "`n","`n##vso[task.logissue type=error]")
+        Write-Host ("`n$message" -replace "`n","%0D%0A##vso[task.logissue type=error]")
     }
     Write-Host -f Red "error: $message"
     $script:errors += $message
