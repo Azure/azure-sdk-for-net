@@ -8,7 +8,7 @@ namespace Azure.IoT.TimeSeriesInsights
 {
     internal class QueryHelper
     {
-        public static TimeSeriesPoint[] CreateQueryResponse(QueryResultPage value)
+        internal static TimeSeriesPoint[] CreateQueryResponse(QueryResultPage value)
         {
             var result = new List<TimeSeriesPoint>();
 
