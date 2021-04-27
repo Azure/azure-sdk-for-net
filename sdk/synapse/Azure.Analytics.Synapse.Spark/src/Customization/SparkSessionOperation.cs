@@ -28,8 +28,9 @@ namespace Azure.Analytics.Synapse.Spark
         {
             _client = client;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(nameof(SparkSessionOperation), diagnostics, this, s_defaultPollingInterval)
+            _operationInternal = new(diagnostics, this)
             {
+                DefaultPollingInterval = s_defaultPollingInterval,
                 RawResponse = response.GetRawResponse()
             };
         }
@@ -103,23 +104,25 @@ namespace Azure.Analytics.Synapse.Spark
         Response<SparkSession> IOperation<SparkSession, SparkSession>.GetResponse(CancellationToken cancellationToken) =>
             _client.RestClient.GetSparkSession(_value.Id, true, cancellationToken);
 
-        CompletionStatus IOperation<SparkSession, SparkSession>.UpdateState(Response<SparkSession> response)
+        OperationState<SparkSession> IOperation<SparkSession, SparkSession>.UpdateState(Response<SparkSession> response)
         {
+            var state = new OperationState<SparkSession>();
+
             if (IsJobComplete(response.Value.Result.ToString(), response.Value.State))
             {
-                return StringComparer.OrdinalIgnoreCase.Equals("error", response?.Value?.State)
-                    ? CompletionStatus.Failed : CompletionStatus.Succeeded;
+                if (StringComparer.OrdinalIgnoreCase.Equals("error", response?.Value?.State))
+                {
+                    state.Succeeded = false;
+                    state.OperationFailedException = new RequestFailedException("SparkBatchOperation ended in state error");
+                }
+                else
+                {
+                    state.Succeeded = true;
+                    state.Value = _value;
+                }
             }
 
-            return CompletionStatus.Pending;
+            return state;
         }
-
-        SparkSession IOperation<SparkSession, SparkSession>.ParseResponse(Response<SparkSession> response) => _value;
-
-        RequestFailedException IOperation<SparkSession, SparkSession>.GetOperationFailedException(Response<SparkSession> response) =>
-            new RequestFailedException("SparkBatchOperation ended in state error");
-
-        void IOperation<SparkSession, SparkSession>.AddAttributes(DiagnosticScope scope)
-        { }
     }
 }
