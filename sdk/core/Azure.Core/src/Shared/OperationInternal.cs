@@ -13,6 +13,8 @@ namespace Azure.Core
     {
         private const string RetryAfterHeaderName = "Retry-After";
 
+        private readonly object SetStateLock = new object();
+
         private readonly IOperation<TResult> _operation;
 
         private TResult _value;
@@ -55,6 +57,11 @@ namespace Azure.Core
             }
             set
             {
+                if (value is null)
+                {
+                    throw new ArgumentNullException(nameof(Value));
+                }
+
                 _value = value;
                 HasValue = true;
             }
@@ -110,26 +117,24 @@ namespace Azure.Core
             }
         }
 
-        protected virtual async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{OperationTypeName}.UpdateStatus");
+            Response response = async
+                ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
+                : _operation.GetResponse(cancellationToken);
 
-            foreach (KeyValuePair<string, string> attribute in ScopeAttributes)
+            var state = _operation.UpdateState(response);
+
+            SetState(state, response);
+
+            return response;
+        }
+
+        protected void SetState(OperationState<TResult> state, Response response)
+        {
+            lock (SetStateLock)
             {
-                scope.AddAttribute(attribute.Key, attribute.Value);
-            }
-
-            scope.Start();
-
-            try
-            {
-                Response response = async
-                    ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
-                    : _operation.GetResponse(cancellationToken);
-
                 RawResponse = response;
-
-                var state = _operation.UpdateState(response);
 
                 if (state.Succeeded == true)
                 {
@@ -143,8 +148,23 @@ namespace Azure.Core
 
                     throw OperationFailedException;
                 }
+            }
+        }
 
-                return response;
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{OperationTypeName}.UpdateStatus");
+
+            foreach (KeyValuePair<string, string> attribute in ScopeAttributes)
+            {
+                scope.AddAttribute(attribute.Key, attribute.Value);
+            }
+
+            scope.Start();
+
+            try
+            {
+                return await UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
             }
             catch (RequestFailedException e)
             {
@@ -172,54 +192,18 @@ namespace Azure.Core
             OperationTypeName = operation.GetType().Name;
         }
 
-        protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{OperationTypeName}.UpdateStatus");
+            Response<TResponseType> response = async
+                ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
+                : _operation.GetResponse(cancellationToken);
 
-            foreach (KeyValuePair<string, string> attribute in ScopeAttributes)
-            {
-                scope.AddAttribute(attribute.Key, attribute.Value);
-            }
+            var state = _operation.UpdateState(response);
+            var rawResponse = response.GetRawResponse();
 
-            scope.Start();
+            SetState(state, rawResponse);
 
-            try
-            {
-                Response<TResponseType> response = async
-                    ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
-                    : _operation.GetResponse(cancellationToken);
-
-                Response rawResponse = response.GetRawResponse();
-                RawResponse = rawResponse;
-
-                var state = _operation.UpdateState(response);
-
-                if (state.Succeeded == true)
-                {
-                    Value = state.Value;
-                    HasCompleted = true;
-                }
-                else if (state.Succeeded == false)
-                {
-                    OperationFailedException = state.OperationFailedException;
-                    HasCompleted = true;
-
-                    throw OperationFailedException;
-                }
-
-                return rawResponse;
-            }
-            catch (RequestFailedException e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-            catch (Exception e)
-            {
-                var requestFailedException = new RequestFailedException("Unexpected failure.", e);
-                scope.Failed(requestFailedException);
-                throw requestFailedException;
-            }
+            return rawResponse;
         }
     }
 
