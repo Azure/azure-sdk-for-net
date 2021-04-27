@@ -197,12 +197,11 @@ namespace Azure.Identity.Tests
         [Test]
         public void DisableAutomaticAuthenticationException()
         {
-            IdentityTestEnvironment testEnvironment = new IdentityTestEnvironment();
             var expectedCode = Guid.NewGuid().ToString();
 
             var cred = InstrumentClient(new DeviceCodeCredential(new DeviceCodeCredentialOptions { DisableAutomaticAuthentication = true, DeviceCodeCallback = (code, cancelToken) => VerifyDeviceCode(code, expectedCode) }));
 
-            var expTokenRequestContext = new TokenRequestContext(new string[] { testEnvironment.KeyvaultScope }, Guid.NewGuid().ToString());
+            var expTokenRequestContext = new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }, Guid.NewGuid().ToString());
 
             var ex = Assert.ThrowsAsync<AuthenticationRequiredException>(async () => await cred.GetTokenAsync(expTokenRequestContext));
 
