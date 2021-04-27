@@ -15,4 +15,7 @@ steps:
       arguments: >
         -AgentImage "${{ parameters.AgentImage }}"
 
+  # Print agent metadata (https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service)
+  - pwsh: Invoke-RestMethod -Headers @{"Metadata"="true"} -Method GET -Proxy $Null -Uri "http://169.254.169.254/metadata/instance?api-version=2020-09-01" | ConvertTo-Json -Depth 64
+
   - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
