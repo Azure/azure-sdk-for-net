@@ -66,6 +66,7 @@
     <PowerShellExe Condition="'$(PowerShellExe)' == ''">pwsh</PowerShellExe>
     <InheritDocEnabled Condition="'$(InheritDocEnabled)'=='' and '$(DesignTimeBuild)'!='true' and '$(BuildingForLiveUnitTesting)'!='true' and '$(IsShippingClientLibrary)' == true">true</InheritDocEnabled>
     <InheritDocTrimLevel>private</InheritDocTrimLevel>
+    <GenerateAPIListing Condition="'$(GenerateAPIListing)' == '' AND '$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
