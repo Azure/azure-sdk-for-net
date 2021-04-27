@@ -18,30 +18,22 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// A Media Services account.
+    /// A Media Services account update.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class MediaService : TrackedResource
+    public partial class MediaServiceUpdate
     {
         /// <summary>
-        /// Initializes a new instance of the MediaService class.
+        /// Initializes a new instance of the MediaServiceUpdate class.
         /// </summary>
-        public MediaService()
+        public MediaServiceUpdate()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MediaService class.
+        /// Initializes a new instance of the MediaServiceUpdate class.
         /// </summary>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
-        /// <param name="id">Fully qualified resource ID for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. E.g.
-        /// "Microsoft.Compute/virtualMachines" or
-        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="mediaServiceId">The Media Services account ID.</param>
         /// <param name="storageAccounts">The storage accounts for this
@@ -53,18 +45,15 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Services account.</param>
         /// <param name="identity">The Managed Identity for the Media Services
         /// account.</param>
-        /// <param name="systemData">The system metadata relating to this
-        /// resource.</param>
-        public MediaService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid mediaServiceId = default(System.Guid), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), StorageAuthentication? storageAuthentication = default(StorageAuthentication?), AccountEncryption encryption = default(AccountEncryption), KeyDelivery keyDelivery = default(KeyDelivery), MediaServiceIdentity identity = default(MediaServiceIdentity), SystemData systemData = default(SystemData))
-            : base(location, id, name, type, tags)
+        public MediaServiceUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid mediaServiceId = default(System.Guid), IList<StorageAccount> storageAccounts = default(IList<StorageAccount>), StorageAuthentication? storageAuthentication = default(StorageAuthentication?), AccountEncryption encryption = default(AccountEncryption), KeyDelivery keyDelivery = default(KeyDelivery), MediaServiceIdentity identity = default(MediaServiceIdentity))
         {
+            Tags = tags;
             MediaServiceId = mediaServiceId;
             StorageAccounts = storageAccounts;
             StorageAuthentication = storageAuthentication;
             Encryption = encryption;
             KeyDelivery = keyDelivery;
             Identity = identity;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -72,6 +61,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets the Media Services account ID.
@@ -111,20 +106,13 @@ namespace Microsoft.Azure.Management.Media.Models
         public MediaServiceIdentity Identity { get; set; }
 
         /// <summary>
-        /// Gets the system metadata relating to this resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (StorageAccounts != null)
             {
                 foreach (var element in StorageAccounts)
