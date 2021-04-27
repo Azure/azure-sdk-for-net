@@ -20,16 +20,8 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class BearerTokenChallengeAuthenticationPolicy : HttpPipelinePolicy
     {
-        /// <summary>
-        /// The scopes currently configured for token requests to the credential
-        /// </summary>
-        protected ReadOnlyCollection<string> Scopes => _readOnlyScopes ??= Array.AsReadOnly(_scopes);
-
         private string[] _scopes;
-        private ReadOnlyCollection<string>? _readOnlyScopes;
-
         private readonly AccessTokenCache _accessTokenCache;
-        private readonly ValueTask<bool> _falseValueTask = new(Task.FromResult(false));
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenChallengeAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
@@ -47,7 +39,10 @@ namespace Azure.Core.Pipeline
             : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
         { }
 
-        internal BearerTokenChallengeAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay)
+        internal BearerTokenChallengeAuthenticationPolicy(TokenCredential credential,
+            IEnumerable<string> scopes,
+            TimeSpan tokenRefreshOffset,
+            TimeSpan tokenRefreshRetryDelay)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
@@ -69,16 +64,30 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Executes before <see cref="ProcessAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> or <see cref="Process(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> is called.
-        /// Implementers of this method are expected to call <see cref="SetAuthorizationHeader(HttpMessage, TokenRequestContext, bool)"/> if authorization is required for requests not related to handling a challenge response.
+        /// Executes before <see cref="ProcessAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> or
+        /// <see cref="Process(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> is called.
+        /// Implementers of this method are expected to call <see cref="SetAuthorizationHeader"/> or <see cref="SetAuthorizationHeaderAsync"/>
+        /// if authorization is required for requests not related to handling a challenge response.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
-        /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        protected virtual ValueTask AuthorizeRequestAsync(HttpMessage message, bool async)
+        protected virtual ValueTask AuthorizeRequestAsync(HttpMessage message)
         {
             var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
-            return SetAuthorizationHeader(message, context, async);
+            return SetAuthorizationHeaderAsync(message, context);
+        }
+
+        /// <summary>
+        /// Executes before <see cref="ProcessAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> or
+        /// <see cref="Process(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> is called.
+        /// Implementers of this method are expected to call <see cref="SetAuthorizationHeader"/> or <see cref="SetAuthorizationHeaderAsync"/>
+        /// if authorization is required for requests not related to handling a challenge response.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
+        protected virtual void AuthorizeRequest(HttpMessage message)
+        {
+            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+            SetAuthorizationHeader(message, context);
         }
 
         /// <summary>
@@ -86,11 +95,21 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
-        /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
         /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
-        protected virtual ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message, bool async)
+        protected virtual ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
         {
-            return _falseValueTask;
+            return default;
+        }
+
+        /// <summary>
+        /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
+        /// </summary>
+        /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
+        /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
+        /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
+        protected virtual bool AuthorizeRequestOnChallenge(HttpMessage message)
+        {
+            return false;
         }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
@@ -102,12 +121,12 @@ namespace Azure.Core.Pipeline
 
             if (async)
             {
-                await AuthorizeRequestAsync(message, true).ConfigureAwait(false);
+                await AuthorizeRequestAsync(message).ConfigureAwait(false);
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
             else
             {
-                AuthorizeRequestAsync(message, false).EnsureCompleted();
+                AuthorizeRequest(message);
                 ProcessNext(message, pipeline);
             }
 
@@ -117,13 +136,16 @@ namespace Azure.Core.Pipeline
                 // Attempt to get the TokenRequestContext based on the challenge.
                 // If we fail to get the context, the challenge was not present or invalid.
                 // If we succeed in getting the context, authenticate the request and pass it up the policy chain.
-                if (await AuthorizeRequestOnChallengeAsync(message, async).ConfigureAwait(false))
+                if (async)
                 {
-                    if (async)
+                    if (await AuthorizeRequestOnChallengeAsync((message)).ConfigureAwait(false))
                     {
                         await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
                     }
-                    else
+                }
+                else
+                {
+                    if (AuthorizeRequestOnChallenge(message))
                     {
                         ProcessNext(message, pipeline);
                     }
@@ -136,19 +158,20 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> with the <see cref="Request"/> to be authorized.</param>
         /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
-        /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
-        protected async ValueTask SetAuthorizationHeader(HttpMessage message, TokenRequestContext context, bool async)
+        protected async ValueTask SetAuthorizationHeaderAsync(HttpMessage message, TokenRequestContext context)
         {
-            string headerValue;
-            if (async)
-            {
-                headerValue = await _accessTokenCache.GetHeaderValueAsync(message, context, async).ConfigureAwait(false);
-            }
-            else
-            {
-                headerValue = _accessTokenCache.GetHeaderValueAsync(message, context, async).EnsureCompleted();
-            }
+            string headerValue = await _accessTokenCache.GetHeaderValueAsync(message, context, true).ConfigureAwait(false);
+            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
+        }
 
+        /// <summary>
+        /// Sets the Authorization header on the <see cref="Request"/>.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> with the <see cref="Request"/> to be authorized.</param>
+        /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
+        protected void SetAuthorizationHeader(HttpMessage message, TokenRequestContext context)
+        {
+            string headerValue = _accessTokenCache.GetHeaderValueAsync(message, context, false).EnsureCompleted();
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
         }
 
@@ -265,7 +288,8 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            private (TaskCompletionSource<HeaderValueInfo> InfoTcs, TaskCompletionSource<HeaderValueInfo>? BackgroundUpdateTcs, bool GetTokenFromCredential) GetTaskCompletionSources(TokenRequestContext context)
+            private (TaskCompletionSource<HeaderValueInfo> InfoTcs, TaskCompletionSource<HeaderValueInfo>? BackgroundUpdateTcs, bool GetTokenFromCredential)
+                GetTaskCompletionSources(TokenRequestContext context)
             {
                 lock (_syncObj)
                 {
@@ -287,7 +311,9 @@ namespace Azure.Core.Pipeline
 
                     DateTimeOffset now = DateTimeOffset.UtcNow;
                     // Access token has been successfully acquired in background and it is not expired yet, use it instead of current one
-                    if (_backgroundUpdateTcs != null && _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion && _backgroundUpdateTcs.Task.Result.ExpiresOn > now)
+                    if (_backgroundUpdateTcs != null &&
+                        _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion &&
+                        _backgroundUpdateTcs.Task.Result.ExpiresOn > now)
                     {
                         _infoTcs = _backgroundUpdateTcs;
                         _backgroundUpdateTcs = default;
@@ -318,7 +344,10 @@ namespace Azure.Core.Pipeline
                 (context.Scopes != null && !context.Scopes.AsSpan().SequenceEqual(_currentContext.Value.Scopes.AsSpan())) ||
                 (context.Claims != null && !string.Equals(context.Claims, _currentContext.Value.Claims));
 
-            private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs, HeaderValueInfo info, TokenRequestContext context, bool async)
+            private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs,
+                HeaderValueInfo info,
+                TokenRequestContext context,
+                bool async)
             {
                 var cts = new CancellationTokenSource(_tokenRefreshRetryDelay);
                 try

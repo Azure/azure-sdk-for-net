@@ -520,12 +520,14 @@ namespace Azure.Core.Pipeline
     {
         public BearerTokenChallengeAuthenticationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes) { }
         public BearerTokenChallengeAuthenticationPolicy(Azure.Core.TokenCredential credential, string scope) { }
-        protected System.Collections.ObjectModel.ReadOnlyCollection<string> Scopes { get { throw null; } }
-        protected virtual System.Threading.Tasks.ValueTask AuthorizeRequestAsync(Azure.Core.HttpMessage message, bool async) { throw null; }
-        protected virtual System.Threading.Tasks.ValueTask<bool> AuthorizeRequestOnChallengeAsync(Azure.Core.HttpMessage message, bool async) { throw null; }
+        protected virtual void AuthorizeRequest(Azure.Core.HttpMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask AuthorizeRequestAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual bool AuthorizeRequestOnChallenge(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual System.Threading.Tasks.ValueTask<bool> AuthorizeRequestOnChallengeAsync(Azure.Core.HttpMessage message) { throw null; }
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
-        protected System.Threading.Tasks.ValueTask SetAuthorizationHeader(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context, bool async) { throw null; }
+        protected void SetAuthorizationHeader(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { }
+        protected System.Threading.Tasks.ValueTask SetAuthorizationHeaderAsync(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { throw null; }
     }
     public partial class HttpClientTransport : Azure.Core.Pipeline.HttpPipelineTransport
     {

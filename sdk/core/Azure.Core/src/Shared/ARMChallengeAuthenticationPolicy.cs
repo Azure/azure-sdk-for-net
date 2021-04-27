@@ -16,12 +16,17 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal class ARMChallengeAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
     {
+        private readonly string[] _scopes;
+
         /// <summary>
         /// Creates a new instance of <see cref="ARMChallengeAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scope">The scope to authenticate for.</param>
-        public ARMChallengeAuthenticationPolicy(TokenCredential credential, string scope) : base(credential, new[] { scope }) { }
+        public ARMChallengeAuthenticationPolicy(TokenCredential credential, string scope) : base(credential, new[] { scope })
+        {
+            _scopes = new[] { scope };
+        }
 
         /// <summary>
         /// Creates a new instance of <see cref="ARMChallengeAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
@@ -29,10 +34,13 @@ namespace Azure.Core.Pipeline
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scopes">Scopes to authenticate for.</param>
         public ARMChallengeAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
-            : base(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30)) { }
+            : base(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
+        {
+            _scopes = scopes.ToArray();
+        }
 
         /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequestOnChallengeAsync" />
-        protected override async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message, bool async)
+        protected override async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
         {
             var challenge = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims");
             if (challenge == null)
@@ -41,8 +49,23 @@ namespace Azure.Core.Pipeline
             }
 
             string claimsChallenge = Base64Url.DecodeString(challenge);
-            var context = new TokenRequestContext(Scopes.ToArray(), message.Request.ClientRequestId, claimsChallenge);
-            await SetAuthorizationHeader(message, context, async);
+            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, claimsChallenge);
+            await SetAuthorizationHeaderAsync(message, context);
+            return true;
+        }
+
+        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequestOnChallengeAsync" />
+        protected override bool AuthorizeRequestOnChallenge(HttpMessage message)
+        {
+            var challenge = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "claims");
+            if (challenge == null)
+            {
+                return false;
+            }
+
+            string claimsChallenge = Base64Url.DecodeString(challenge);
+            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, claimsChallenge);
+            SetAuthorizationHeader(message, context);
             return true;
         }
     }
