@@ -17,11 +17,6 @@ namespace Azure.Data.AppConfiguration
         Key = 0x0001,
 
         /// <summary>
-        /// The primary identifier of a configuration setting.
-        /// </summary>
-        Key2 = 0x1001,
-
-        /// <summary>
         /// A label used to group configuration settings.
         /// </summary>
         Label = 0x0002,
