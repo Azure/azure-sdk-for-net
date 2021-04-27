@@ -50,6 +50,14 @@
              SkipNonexistentTargets="true" />
   </Target>
 
+  <Target Name="ExportApi">
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="ExportApi"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="false"
+             SkipNonexistentTargets="true" />
+  </Target>
+
   <Target Name="FinalBuildReferencesOutput" BeforeTargets="Build" Condition="'$(SDKType)' != 'all'">
     <Message Text="Final Build References:" Importance="high"/>
     <Message Text="  %(ProjectReference.Identity)" Importance="high"/>
