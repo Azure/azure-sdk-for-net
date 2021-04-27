@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
     /// A policy that sends an <see cref="AccessToken"/> provided by a <see cref="TokenCredential"/> as an Authentication header.
     /// Note: This class is currently in preview and is therefore subject to possible future breaking changes.
     /// </summary>
-    internal class ARMChallengeAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
+    internal class ARMChallengeAuthenticationPolicy : BearerTokenAuthenticationPolicy
     {
         private readonly string[] _scopes;
 

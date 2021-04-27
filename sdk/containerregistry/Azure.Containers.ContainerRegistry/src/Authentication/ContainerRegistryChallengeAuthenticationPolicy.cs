@@ -31,7 +31,7 @@ namespace Azure.Containers.ContainerRegistry
     /// Step 5: GET /api/v1/acr/repositories
     /// Request Header: { Bearer acrTokenAccess }
     /// </summary>
-    internal class ContainerRegistryChallengeAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
+    internal class ContainerRegistryChallengeAuthenticationPolicy : BearerTokenAuthenticationPolicy
     {
         private readonly IContainerRegistryAuthenticationClient _authenticationClient;
 

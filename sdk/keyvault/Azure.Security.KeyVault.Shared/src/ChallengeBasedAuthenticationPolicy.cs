@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault
 {
-    internal class ChallengeBasedAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
+    internal class ChallengeBasedAuthenticationPolicy : BearerTokenAuthenticationPolicy
     {
         private static ConcurrentDictionary<string, AuthorityScope> _scopeCache = new ConcurrentDictionary<string, AuthorityScope>();
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
@@ -19,11 +19,11 @@ namespace Azure.Security.KeyVault
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential) : base(credential, Array.Empty<string>())
         { }
 
-        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequestAsync" />
+        /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequestAsync" />
         protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
             => AuthorizeRequestInternal(message, true);
 
-        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequest" />
+        /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequest" />
         protected override void AuthorizeRequest(HttpMessage message)
             => AuthorizeRequestInternal(message, false).EnsureCompleted();
 
@@ -68,7 +68,7 @@ namespace Azure.Security.KeyVault
             }
         }
 
-        /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequestOnChallengeAsync" />
+        /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequestOnChallengeAsync" />
         protected override ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
             => AuthorizeRequestOnChallengeAsyncInternal(message, true);
 
