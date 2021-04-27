@@ -124,7 +124,7 @@ namespace Azure.AI.TextAnalytics
             Id = operationId;
             _serviceClient = client._serviceRestClient;
             _diagnostics = client._clientDiagnostics;
-            _operationInternal = new(nameof(AnalyzeHealthcareEntitiesOperation), _diagnostics, this);
+            _operationInternal = new(_diagnostics, this);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Azure.AI.TextAnalytics
             _diagnostics = diagnostics;
             _idToIndexMap = idToIndexMap;
             _showStats = showStats;
-            _operationInternal = new(nameof(AnalyzeHealthcareEntitiesOperation), _diagnostics, this);
+            _operationInternal = new(_diagnostics, this);
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
@@ -329,8 +329,10 @@ namespace Azure.AI.TextAnalytics
         Response<HealthcareJobState> IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>, HealthcareJobState>.GetResponse(CancellationToken cancellationToken) =>
             _serviceClient.HealthStatus(new Guid(Id), null, null, _showStats, cancellationToken);
 
-        CompletionStatus IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>, HealthcareJobState>.UpdateState(Response<HealthcareJobState> response)
+        OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>> IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>, HealthcareJobState>.UpdateState(Response<HealthcareJobState> response)
         {
+            var state = new OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>();
+
             _status = response.Value.Status;
             _createdOn = response.Value.CreatedDateTime;
             _expiresOn = response.Value.ExpirationDateTime;
@@ -342,35 +344,19 @@ namespace Azure.AI.TextAnalytics
                 var value = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(response.Value.Results, _idToIndexMap);
                 _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { value }, nextLink, response.GetRawResponse());
 
-                return CompletionStatus.Succeeded;
+                state.Succeeded = true;
             }
             else if (_status == TextAnalyticsOperationStatus.Failed || _status == TextAnalyticsOperationStatus.Cancelled)
             {
-                return CompletionStatus.Failed;
+                _requestFailedException = response.Value.Status == TextAnalyticsOperationStatus.Cancelled
+                    ? new RequestFailedException("The operation was canceled so no value is available.")
+                    : ClientCommon.CreateExceptionForFailedOperationAsync(async: false, _diagnostics, response.GetRawResponse(), response.Value.Errors).EnsureCompleted();
+
+                state.Succeeded = false;
+                state.OperationFailedException = _requestFailedException;
             }
 
-            return CompletionStatus.Pending;
+            return state;
         }
-
-        AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>, HealthcareJobState>.ParseResponse(Response<HealthcareJobState> response) => default;
-
-        RequestFailedException IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>, HealthcareJobState>.GetOperationFailedException(Response<HealthcareJobState> response)
-        {
-            var status = response.Value.Status;
-
-            if (status == TextAnalyticsOperationStatus.Cancelled)
-            {
-                _requestFailedException = new RequestFailedException("The operation was canceled so no value is available.");
-            }
-            else
-            {
-                _requestFailedException = ClientCommon.CreateExceptionForFailedOperationAsync(async: false, _diagnostics, response.GetRawResponse(), response.Value.Errors).EnsureCompleted();
-            }
-
-            return _requestFailedException;
-        }
-
-        void IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>, HealthcareJobState>.AddAttributes(DiagnosticScope scope)
-        { }
     }
 }
