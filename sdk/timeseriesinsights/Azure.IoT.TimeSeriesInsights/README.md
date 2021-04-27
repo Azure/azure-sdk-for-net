@@ -49,7 +49,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [samples for Time Series Insights](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples)
+You can familiarize yourself with different APIs using [samples for Time Series Insights](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples).
 
 ## Source code folder structure
 
