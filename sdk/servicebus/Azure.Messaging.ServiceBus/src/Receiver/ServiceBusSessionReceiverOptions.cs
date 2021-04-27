@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -17,6 +18,9 @@ namespace Azure.Messaging.ServiceBus
         /// whether the receiver is actively receiving, intended to help maximize throughput by allowing the receiver to receive
         /// from a local cache rather than waiting on a service request.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A negative value is attempted to be set for the property.
+        /// </exception>
         public int PrefetchCount
         {
             get
@@ -68,7 +72,7 @@ namespace Azure.Messaging.ServiceBus
             new ServiceBusReceiverOptions()
             {
                 ReceiveMode = ReceiveMode,
-                PrefetchCount = PrefetchCount
+                PrefetchCount = PrefetchCount,
             };
     }
 }

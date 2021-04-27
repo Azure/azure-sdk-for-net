@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of flow logs. </summary>
-    public partial class FlowLogListResult
+    internal partial class FlowLogListResult
     {
         /// <summary> Initializes a new instance of FlowLogListResult. </summary>
         internal FlowLogListResult()

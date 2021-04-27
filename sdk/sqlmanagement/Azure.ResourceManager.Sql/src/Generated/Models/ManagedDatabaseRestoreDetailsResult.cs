@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A managed database restore details. </summary>
-    public partial class ManagedDatabaseRestoreDetailsResult : Resource
+    public partial class ManagedDatabaseRestoreDetailsResult : ProxyResource
     {
         /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailsResult. </summary>
         public ManagedDatabaseRestoreDetailsResult()

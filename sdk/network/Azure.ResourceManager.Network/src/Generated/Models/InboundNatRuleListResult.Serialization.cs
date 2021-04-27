@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class InboundNatRuleListResult
+    internal partial class InboundNatRuleListResult
     {
         internal static InboundNatRuleListResult DeserializeInboundNatRuleListResult(JsonElement element)
         {

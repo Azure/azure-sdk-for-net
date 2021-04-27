@@ -16,10 +16,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
             : base(isAsync, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
+        public TimeSpan Timeout => TimeSpan.FromMinutes(5);
+
         [RecordedTest]
         public async Task BackupAndRestore()
         {
-            var source = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+            var source = new CancellationTokenSource(Timeout);
 
             UriBuilder builder = new UriBuilder(TestEnvironment.StorageUri);
             builder.Path = BlobContainerName;
@@ -53,7 +55,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [LiveOnly]
         public async Task BackupAndRestoreMultiPartFolderName()
         {
-            var source = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+            var source = new CancellationTokenSource(Timeout);
 
             UriBuilder builder = new UriBuilder(TestEnvironment.StorageUri);
             builder.Path = BlobContainerNameMultiPart;

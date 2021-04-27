@@ -3,6 +3,7 @@ trigger:
   branches:
     include:
     - master
+    - main
     - hotfix/*
     - release/*
   paths:
@@ -13,6 +14,7 @@ pr:
   branches:
     include:
     - master
+    - main
     - feature/*
     - hotfix/*
     - release/*
@@ -25,7 +27,6 @@ extends:
   parameters:
     ServiceDirectory: schemaregistry
     ArtifactName: packages
-    TestPipeline: true
     Artifacts:
     - name: Azure.Data.SchemaRegistry
       safeName: AzureDataSchemaRegistry

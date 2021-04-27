@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Result of the request to list SQL operations. </summary>
-    public partial class OperationListResult
+    internal partial class OperationListResult
     {
         /// <summary> Initializes a new instance of OperationListResult. </summary>
         internal OperationListResult()

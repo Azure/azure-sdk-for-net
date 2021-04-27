@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class DeploymentsWhatIfHeaders
+    internal partial class DeploymentsWhatIfHeaders
     {
         private readonly Response _response;
         public DeploymentsWhatIfHeaders(Response response)

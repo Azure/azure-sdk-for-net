@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncAgentLinkedDatabaseListResult
+    internal partial class SyncAgentLinkedDatabaseListResult
     {
         internal static SyncAgentLinkedDatabaseListResult DeserializeSyncAgentLinkedDatabaseListResult(JsonElement element)
         {

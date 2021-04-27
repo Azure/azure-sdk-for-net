@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class GremlinDatabaseGetPropertiesOptions : OptionsResource
     {
         /// <summary> Initializes a new instance of GremlinDatabaseGetPropertiesOptions. </summary>
-        internal GremlinDatabaseGetPropertiesOptions()
+        public GremlinDatabaseGetPropertiesOptions()
         {
         }
 

@@ -1,14 +1,31 @@
 trigger: none
 
+parameters:
+  - name: TestPackagesEnabled # by overriding this parameter, developers can control what tests to run
+    displayName: Test Enabled
+    type: string
+    default: all # run live/sample tests for all packages by default
+    values:
+      - all # run live/sample tests for all packages
+      - chat # run live/sample tests for chat package only
+      - identity # run live/sample tests for identity package only
+      - phonenumbers # run live/sample tests for phonenumber package only
+      - sms # run live/sample tests for sms package only
+
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: communication
+    Clouds: ACS_Public
+    CloudConfig:
+      ACS_Public:
+        SubscriptionConfiguration: $(sub-config-communication-services-cloud-test-resources)
     EnvVars:
-      AZURE_SUBSCRIPTION_ID: $(acs-subscription-id)
+      AZURE_TENANT_ID: $(COMMUNICATION_TENANT_ID)
+      AZURE_CLIENT_ID: $(COMMUNICATION_CLIENT_ID)
+      AZURE_CLIENT_SECRET: $(COMMUNICATION_CLIENT_SECRET)
       AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING: $(communication-livetest-connection-string)
       AZURE_PHONE_NUMBER: $(communication-livetest-phone-number)
-      AZURE_TENANT_ID: $(aad-azure-sdk-test-tenant-id)
-      AZURE_CLIENT_SECRET: $(aad-azure-sdk-test-client-secret)
-      AZURE_CLIENT_ID: $(aad-azure-sdk-test-client-id)
-      INCLUDE_PHONENUMBER_LIVE_TESTS: False
+      # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
+      SKIP_PHONENUMBER_LIVE_TESTS: TRUE
+      TEST_PACKAGES_ENABLED: ${{ parameters.TestPackagesEnabled }}

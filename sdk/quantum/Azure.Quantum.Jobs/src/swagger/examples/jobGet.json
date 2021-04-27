@@ -1,0 +1,35 @@
+{
+  "parameters": {
+    "jobId": "a0f7adb6-0378-11eb-9463-2816a847b9a3",
+    "resourceGroupName": "quantumResourcegroup",
+    "subscriptionId": "00000000-0000-0000-0000-000000000000",
+    "workspaceName": "quantumworkspace1"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "name": "tabu-demo",
+        "id": "a0f7adb6-0378-11eb-9463-2816a847b9a3",
+        "beginExecutionTime": "2020-09-30T23:57:11.5659691Z",
+        "cancellationTime": null,
+        "containerUri": "https://storage.blob.core.windows.net/job-a0f7adb6-0378-11eb-9463-2816a847b9a3?sv=2019-02-02&sr=c&sig=mhbf4fluypvLtgXwN5a7iWMygL6b9ojM4EnCC%2F8BZBg%3D&se=2020-10-01T11%3A57%3A01Z&sp=rcw",
+        "creationTime": "2020-09-30T23:57:02.3737928+00:00",
+        "endExecutionTime": "2020-09-30T23:57:11.6180743Z",
+        "errorData": null,
+        "inputDataFormat": "microsoft.qio.v2",
+        "inputDataUri": "https://storage.blob.core.windows.net/job-a0f7adb6-0378-11eb-9463-2816a847b9a3/inputData?sv=2019-02-02&sr=b&sig=MtgxZEmrCv%2FmeQWFUe6%2Bx9tViSrhxSxYr6euGGHtWnw%3D&se=2020-10-01T11%3A57%3A01Z&sp=rcw",
+        "inputParams": {
+          "params": {
+            "sweeps": 300
+          }
+        },
+        "metadata": null,
+        "outputDataFormat": "microsoft.qio-results.v2",
+        "outputDataUri": "https://storage.blob.core.windows.net/job-a0f7adb6-0378-11eb-9463-2816a847b9a3/rawOutputData?sv=2019-02-02&sr=c&sig=mhbf4fluypvLtgXwN5a7iWMygL6b9ojM4EnCC%2F8BZBg%3D&se=2020-10-01T11%3A57%3A01Z&sp=rcw",
+        "providerId": "microsoft",
+        "status": "Succeeded",
+        "target": "microsoft.tabu.cpu"
+      }
+    }
+  }
+}

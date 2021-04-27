@@ -41,6 +41,10 @@ namespace Azure.AI.FormRecognizer.Models
         public IReadOnlyList<FieldValue_internal> ValueArray { get; }
         /// <summary> Dictionary of named field values. </summary>
         public IReadOnlyDictionary<string, FieldValue_internal> ValueObject { get; }
+        /// <summary> Gender value: M, F, or X. </summary>
+        public FieldValueGender? ValueGender { get; }
+        /// <summary> 3-letter country code (ISO 3166-1 alpha-3). </summary>
+        public string ValueCountry { get; }
         /// <summary> Text content of the extracted field. </summary>
         public string Text { get; }
         /// <summary> Bounding box of the field value, if appropriate. </summary>

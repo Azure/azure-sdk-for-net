@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The resource of an Azure Cosmos DB SQL container event
+    /// </summary>
     public partial class RestorableSqlContainerPropertiesResource
     {
         /// <summary>
@@ -33,12 +36,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="operationType">The operation type of this container
         /// event. Possible values include: 'Create', 'Replace', 'Delete',
         /// 'SystemOperation'</param>
-        /// <param name="eventTimestamp">The timestamp of this container
-        /// event.</param>
-        /// <param name="ownerId">The name of this restorable SQL
+        /// <param name="eventTimestamp">The when this container event
+        /// happened.</param>
+        /// <param name="ownerId">The name of this SQL container.</param>
+        /// <param name="ownerResourceId">The resource ID of this SQL
         /// container.</param>
-        /// <param name="ownerResourceId">The resource Id of this restorable
-        /// SQL container.</param>
+        /// <param name="container">Cosmos DB SQL container resource
+        /// object</param>
         public RestorableSqlContainerPropertiesResource(string _rid = default(string), string operationType = default(string), string eventTimestamp = default(string), string ownerId = default(string), string ownerResourceId = default(string), RestorableSqlContainerPropertiesResourceContainer container = default(RestorableSqlContainerPropertiesResourceContainer))
         {
             this._rid = _rid;
@@ -69,24 +73,25 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public string OperationType { get; private set; }
 
         /// <summary>
-        /// Gets the timestamp of this container event.
+        /// Gets the when this container event happened.
         /// </summary>
         [JsonProperty(PropertyName = "eventTimestamp")]
         public string EventTimestamp { get; private set; }
 
         /// <summary>
-        /// Gets the name of this restorable SQL container.
+        /// Gets the name of this SQL container.
         /// </summary>
         [JsonProperty(PropertyName = "ownerId")]
         public string OwnerId { get; private set; }
 
         /// <summary>
-        /// Gets the resource Id of this restorable SQL container.
+        /// Gets the resource ID of this SQL container.
         /// </summary>
         [JsonProperty(PropertyName = "ownerResourceId")]
         public string OwnerResourceId { get; private set; }
 
         /// <summary>
+        /// Gets or sets cosmos DB SQL container resource object
         /// </summary>
         [JsonProperty(PropertyName = "container")]
         public RestorableSqlContainerPropertiesResourceContainer Container { get; set; }

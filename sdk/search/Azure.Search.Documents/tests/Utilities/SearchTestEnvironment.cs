@@ -66,6 +66,11 @@ namespace Azure.Search.Documents.Tests
         public string SearchCognitiveKey => GetRecordedVariable(CognitiveKeyVariableName);
 
         /// <summary>
+        /// Gets the search service suffix.
+        /// </summary>
+        public string SearchEndpointSuffix => GetRecordedOptionalVariable("SEARCH_ENDPOINT_SUFFIX") ?? "search.windows.net";
+
+        /// <summary>
         /// Gets the optional Key Vault URL used for double-encrypted indexes.
         /// </summary>
         public string KeyVaultUrl => GetRecordedOptionalVariable("SEARCH_KEYVAULT_URL");

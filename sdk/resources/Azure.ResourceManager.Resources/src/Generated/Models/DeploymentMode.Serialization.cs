@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal static class DeploymentModeExtensions
+    internal static partial class DeploymentModeExtensions
     {
         public static string ToSerialString(this DeploymentMode value) => value switch
         {

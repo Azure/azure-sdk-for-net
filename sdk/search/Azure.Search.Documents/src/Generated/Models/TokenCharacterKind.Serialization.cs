@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    internal static class TokenCharacterKindExtensions
+    internal static partial class TokenCharacterKindExtensions
     {
         public static string ToSerialString(this TokenCharacterKind value) => value switch
         {

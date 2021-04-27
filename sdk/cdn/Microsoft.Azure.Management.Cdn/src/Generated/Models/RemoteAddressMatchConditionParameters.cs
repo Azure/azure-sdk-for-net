@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         /// <param name="operatorProperty">Describes operator to be matched.
         /// Possible values include: 'Any', 'IPMatch', 'GeoMatch'</param>
+        /// <param name="negateCondition">Describes if this is negate condition
+        /// or not</param>
         /// <param name="matchValues">Match values to match against. The
         /// operator will apply to each value in here with OR semantics. If any
         /// of them match the variable with the given operator this match
         /// condition is considered a match.</param>
-        /// <param name="negateCondition">Describes if this is negate condition
-        /// or not</param>
         /// <param name="transforms">List of transforms</param>
-        public RemoteAddressMatchConditionParameters(string operatorProperty, IList<string> matchValues, bool? negateCondition = default(bool?), IList<string> transforms = default(IList<string>))
+        public RemoteAddressMatchConditionParameters(string operatorProperty, bool? negateCondition = default(bool?), IList<string> matchValues = default(IList<string>), IList<string> transforms = default(IList<string>))
         {
             OperatorProperty = operatorProperty;
             NegateCondition = negateCondition;
@@ -108,10 +108,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
             if (OperatorProperty == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "OperatorProperty");
-            }
-            if (MatchValues == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MatchValues");
             }
         }
     }

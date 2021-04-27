@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="escapeChar"> The escape character. Type: string (or Expression with resultType string). </param>
         /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
-        internal DelimitedTextDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, DatasetLocation location, object columnDelimiter, object rowDelimiter, object encodingName, DelimitedTextCompressionCodec? compressionCodec, DatasetCompressionLevel? compressionLevel, object quoteChar, object escapeChar, object firstRowAsHeader, object nullValue) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DelimitedTextDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, DatasetLocation location, object columnDelimiter, object rowDelimiter, object encodingName, CompressionCodec? compressionCodec, object compressionLevel, object quoteChar, object escapeChar, object firstRowAsHeader, object nullValue) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             ColumnDelimiter = columnDelimiter;
@@ -69,9 +69,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object RowDelimiter { get; set; }
         /// <summary> The code page name of the preferred encoding. If miss, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </summary>
         public object EncodingName { get; set; }
-        public DelimitedTextCompressionCodec? CompressionCodec { get; set; }
+        public CompressionCodec? CompressionCodec { get; set; }
         /// <summary> The data compression method used for DelimitedText. </summary>
-        public DatasetCompressionLevel? CompressionLevel { get; set; }
+        public object CompressionLevel { get; set; }
         /// <summary> The quote character. Type: string (or Expression with resultType string). </summary>
         public object QuoteChar { get; set; }
         /// <summary> The escape character. Type: string (or Expression with resultType string). </summary>

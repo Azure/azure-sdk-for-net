@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for list ip configurations API service call. </summary>
-    public partial class NetworkInterfaceLoadBalancerListResult
+    internal partial class NetworkInterfaceLoadBalancerListResult
     {
         /// <summary> Initializes a new instance of NetworkInterfaceLoadBalancerListResult. </summary>
         internal NetworkInterfaceLoadBalancerListResult()

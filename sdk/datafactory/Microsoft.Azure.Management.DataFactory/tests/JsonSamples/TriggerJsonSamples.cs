@@ -292,5 +292,23 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
 
+        [JsonSample]
+        public const string CustomEventsTriggerSample = @"
+{
+  name: ""myDemoCustomEventsTrigger"",
+  properties: {
+    type: ""CustomEventsTrigger"",
+    typeProperties: {
+      subjectBeginsWith: ""B"",
+      subjectEndsWith: ""E"",
+      events:  [
+        ""Microsoft.Storage.BlobCreated""
+      ],
+      scope: ""demoScope""
+    } 
+  }
+}
+";
+
     }
 }

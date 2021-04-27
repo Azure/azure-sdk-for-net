@@ -32,26 +32,29 @@ namespace Azure.Core.Pipeline
         private HttpMessageSanitizer _sanitizer;
         private readonly string? _assemblyName;
 
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
+            if (!s_eventSource.IsEnabled())
+            {
+                ProcessNext(message, pipeline);
+                return;
+            }
+
+            ProcessAsync(message, pipeline, false).EnsureCompleted();
+        }
+
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            if (!s_eventSource.IsEnabled())
+            {
+                return ProcessNextAsync(message, pipeline);
+            }
+
+            return ProcessAsync(message, pipeline, true);
         }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            if (!s_eventSource.IsEnabled())
-            {
-                if (async)
-                {
-                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-                }
-                else
-                {
-                    ProcessNext(message, pipeline);
-                }
-                return;
-            }
-
             Request request = message.Request;
 
             s_eventSource.Request(request.ClientRequestId, request.Method.ToString(), FormatUri(request.Uri), FormatHeaders(request.Headers), _assemblyName);
@@ -126,11 +129,6 @@ namespace Azure.Core.Pipeline
         private string FormatUri(RequestUriBuilder requestUri)
         {
             return _sanitizer.SanitizeUrl(requestUri.ToString());
-        }
-
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
         private string FormatHeaders(IEnumerable<HttpHeader> headers)

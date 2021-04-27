@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -27,11 +29,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the HyperVSiteDetails class.
+        /// </summary>
+        /// <param name="hyperVHosts">The list of Hyper-V hosts associated with
+        /// the fabric.</param>
+        public HyperVSiteDetails(IList<HyperVHostDetails> hyperVHosts = default(IList<HyperVHostDetails>))
+        {
+            HyperVHosts = hyperVHosts;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the list of Hyper-V hosts associated with the fabric.
+        /// </summary>
+        [JsonProperty(PropertyName = "hyperVHosts")]
+        public IList<HyperVHostDetails> HyperVHosts { get; set; }
 
     }
 }

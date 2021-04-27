@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class VirtualClusterListResult
+    internal partial class VirtualClusterListResult
     {
         internal static VirtualClusterListResult DeserializeVirtualClusterListResult(JsonElement element)
         {

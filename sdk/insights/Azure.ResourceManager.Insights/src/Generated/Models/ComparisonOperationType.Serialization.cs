@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    internal static class ComparisonOperationTypeExtensions
+    internal static partial class ComparisonOperationTypeExtensions
     {
         public static string ToSerialString(this ComparisonOperationType value) => value switch
         {

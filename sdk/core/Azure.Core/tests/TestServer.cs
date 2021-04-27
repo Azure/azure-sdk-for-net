@@ -25,14 +25,20 @@ namespace Azure.Core.Tests
         {
         }
 
-        public TestServer(RequestDelegate app)
+        public TestServer(RequestDelegate app, bool https = false)
         {
             _app = app;
             _host = new WebHostBuilder()
                 .UseKestrel(options =>
                 {
                     options.Limits.MaxRequestBodySize = null;
-                    options.Listen(new IPEndPoint(IPAddress.Loopback, 0));
+                    options.Listen(new IPEndPoint(IPAddress.Loopback, 0), listenOptions =>
+                    {
+                        if (https)
+                        {
+                            listenOptions.UseHttps();
+                        }
+                    });
                 })
                 .ConfigureServices(services =>
                 {

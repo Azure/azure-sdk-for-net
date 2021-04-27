@@ -41,7 +41,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         /// <param name="filterMode">The filtering mode. Effectively this can
         /// enabling or disabling the VM sizes in a particular set. Possible
-        /// values include: 'Exclude', 'Include'</param>
+        /// values include: 'Exclude', 'Include', 'Recommend',
+        /// 'Default'</param>
         /// <param name="regions">The list of regions under the effect of the
         /// filter.</param>
         /// <param name="clusterFlavors">The list of cluster flavors under the
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <summary>
         /// Gets or sets the filtering mode. Effectively this can enabling or
         /// disabling the VM sizes in a particular set. Possible values
-        /// include: 'Exclude', 'Include'
+        /// include: 'Exclude', 'Include', 'Recommend', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "filterMode")]
         public string FilterMode { get; set; }

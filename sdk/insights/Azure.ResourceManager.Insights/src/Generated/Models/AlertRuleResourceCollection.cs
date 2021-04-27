@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Insights.Models
 {
     /// <summary> Represents a collection of alert rule resources. </summary>
-    public partial class AlertRuleResourceCollection
+    internal partial class AlertRuleResourceCollection
     {
         /// <summary> Initializes a new instance of AlertRuleResourceCollection. </summary>
         internal AlertRuleResourceCollection()

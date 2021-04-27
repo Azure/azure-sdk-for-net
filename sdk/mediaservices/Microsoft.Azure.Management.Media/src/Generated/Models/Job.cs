@@ -37,12 +37,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="input">The inputs for the Job.</param>
         /// <param name="outputs">The outputs for the Job.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="created">The UTC date and time when the customer has
         /// created the Job, in 'YYYY-MM-DDThh:mm:ssZ' format.</param>
         /// <param name="state">The current state of the job. Possible values
@@ -62,7 +62,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// began processing.</param>
         /// <param name="endTime">The UTC date and time at which this Job
         /// finished processing.</param>
-        public Job(JobInput input, IList<JobOutput> outputs, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), JobState state = default(JobState), string description = default(string), System.DateTime lastModified = default(System.DateTime), Priority? priority = default(Priority?), IDictionary<string, string> correlationData = default(IDictionary<string, string>), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public Job(JobInput input, IList<JobOutput> outputs, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), JobState state = default(JobState), string description = default(string), System.DateTime lastModified = default(System.DateTime), Priority? priority = default(Priority?), IDictionary<string, string> correlationData = default(IDictionary<string, string>), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Created = created;
@@ -75,6 +77,7 @@ namespace Microsoft.Azure.Management.Media.Models
             CorrelationData = correlationData;
             StartTime = startTime;
             EndTime = endTime;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -150,6 +153,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.endTime")]
         public System.DateTime? EndTime { get; private set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

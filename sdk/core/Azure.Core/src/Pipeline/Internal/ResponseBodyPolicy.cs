@@ -25,22 +25,25 @@ namespace Azure.Core.Pipeline
             _networkTimeout = networkTimeout;
         }
 
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
-        }
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
+            ProcessAsync(message, pipeline, true);
 
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
             ProcessAsync(message, pipeline, false).EnsureCompleted();
-        }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             CancellationToken oldToken = message.CancellationToken;
             using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
-            cts.CancelAfter(_networkTimeout);
+            var networkTimeout = _networkTimeout;
+
+            if (message.NetworkTimeout is TimeSpan networkTimeoutOverride)
+            {
+                networkTimeout = networkTimeoutOverride;
+            }
+
+            cts.CancelAfter(networkTimeout);
             try
             {
                 message.CancellationToken = cts.Token;
@@ -67,7 +70,7 @@ namespace Azure.Core.Pipeline
 
             if (message.BufferResponse)
             {
-                if (_networkTimeout != Timeout.InfiniteTimeSpan)
+                if (networkTimeout != Timeout.InfiniteTimeSpan)
                 {
                     cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
                 }
@@ -95,9 +98,9 @@ namespace Azure.Core.Pipeline
                     throw;
                 }
             }
-            else if (_networkTimeout != Timeout.InfiniteTimeSpan)
+            else if (networkTimeout != Timeout.InfiniteTimeSpan)
             {
-                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, _networkTimeout);
+                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
             }
         }
 

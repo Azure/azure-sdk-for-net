@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A group of job targets. </summary>
-    public partial class JobTargetGroup : Resource
+    public partial class JobTargetGroup : ProxyResource
     {
         /// <summary> Initializes a new instance of JobTargetGroup. </summary>
         public JobTargetGroup()

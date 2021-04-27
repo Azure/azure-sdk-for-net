@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     internal partial class RestoreOperationParameters
     {
         /// <summary> Initializes a new instance of RestoreOperationParameters. </summary>
-        /// <param name="sasTokenParameters"> . </param>
+        /// <param name="sasTokenParameters"> SAS token parameter object containing Azure storage resourceUri and token. </param>
         /// <param name="folderToRestore"> The Folder name of the blob where the previous successful full backup was stored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasTokenParameters"/> or <paramref name="folderToRestore"/> is null. </exception>
         public RestoreOperationParameters(SASTokenParameter sasTokenParameters, string folderToRestore)
@@ -31,6 +31,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             FolderToRestore = folderToRestore;
         }
 
+        /// <summary> SAS token parameter object containing Azure storage resourceUri and token. </summary>
         public SASTokenParameter SasTokenParameters { get; }
         /// <summary> The Folder name of the blob where the previous successful full backup was stored. </summary>
         public string FolderToRestore { get; }

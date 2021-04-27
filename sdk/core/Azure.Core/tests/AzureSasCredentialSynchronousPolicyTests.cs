@@ -73,5 +73,24 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("?foo=bar&sig=test_signature_value", transport.Requests[0].Uri.Query);
         }
+
+        [TestCase("sig=test_signature_value")]
+        [TestCase("?sig=test_signature_value")]
+        public async Task IgnoreDuplicateSas(string signatureValue)
+        {
+            var transport = new MockTransport(new MockResponse(200), new MockResponse(200));
+            var sasPolicy = new AzureSasCredentialSynchronousPolicy(new AzureSasCredential(signatureValue));
+            string query = $"?{signatureValue}";
+
+            using (Request request = transport.CreateRequest())
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Query = query;
+                var pipeline = new HttpPipeline(transport, new[] { sasPolicy });
+                await pipeline.SendRequestAsync(request, CancellationToken.None);
+            }
+
+            Assert.AreEqual(query, transport.Requests[0].Uri.Query);
+        }
     }
 }

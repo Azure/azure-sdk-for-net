@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class TableInsertEntityHeaders
+    internal partial class TableInsertEntityHeaders
     {
         private readonly Response _response;
         public TableInsertEntityHeaders(Response response)

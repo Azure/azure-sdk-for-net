@@ -1,24 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure;
+using System;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.Cdn;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Management.Cdn;
-using Microsoft.Azure.Management.Cdn.Models;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Cdn.Tests.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using Xunit;
-using System.Threading;
-using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Cdn.Tests.Helpers
 {
@@ -82,9 +74,12 @@ namespace Cdn.Tests.Helpers
             return Handler;
         }
 
-        public static string CreateResourceGroup(ResourceManagementClient resourcesClient)
+        public static string CreateResourceGroup(ResourceManagementClient resourcesClient, string testPrefix = null)
         {
-            const string testPrefix = "cdnResourceGroup";
+            if(testPrefix == null)
+            {
+                testPrefix = "cdnResourceGroup";
+            }
             var rgname = TestUtilities.GenerateName(testPrefix);
 
             if (!IsTestTenant)
@@ -108,10 +103,19 @@ namespace Cdn.Tests.Helpers
             }
         }
 
+        public static Task DeleteResourceGroupAsync(ResourceManagementClient resourcesClient, string resourceGroupName)
+        {
+            if (!IsTestTenant)
+            {
+                return resourcesClient.ResourceGroups.DeleteAsync(resourceGroupName);
+            }
+            return Task.CompletedTask;
+        }
+
         public static void WaitIfNotInPlaybackMode(int minutesToWait = 1)
         {
             if (HttpMockServer.Mode != HttpRecorderMode.Playback)
-            { 
+            {
                 Thread.Sleep(TimeSpan.FromMinutes(minutesToWait));
             }
         }

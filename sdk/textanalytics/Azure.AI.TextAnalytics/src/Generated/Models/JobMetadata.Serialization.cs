@@ -17,21 +17,15 @@ namespace Azure.AI.TextAnalytics.Models
         internal static JobMetadata DeserializeJobMetadata(JsonElement element)
         {
             DateTimeOffset createdDateTime = default;
-            Optional<string> displayName = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             string jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
-            JobStatus status = default;
+            TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdDateTime"))
                 {
                     createdDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("displayName"))
-                {
-                    displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("expirationDateTime"))
@@ -56,11 +50,11 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new JobStatus(property.Value.GetString());
+                    status = new TextAnalyticsOperationStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new JobMetadata(createdDateTime, displayName.Value, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status);
+            return new JobMetadata(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status);
         }
     }
 }

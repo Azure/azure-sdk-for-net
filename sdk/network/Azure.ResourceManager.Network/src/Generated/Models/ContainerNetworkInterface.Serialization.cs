@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> etag = default;
             Optional<string> id = default;
             Optional<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfiguration = default;
-            Optional<SubResource> container = default;
+            Optional<Container> container = default;
             Optional<IReadOnlyList<ContainerNetworkInterfaceIpConfiguration>> ipConfigurations = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            container = DeserializeSubResource(property0.Value);
+                            container = Container.DeserializeContainer(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"))

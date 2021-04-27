@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class SecurityAlertPolicyEmailAccountAdminsExtensions
+    internal static partial class SecurityAlertPolicyEmailAccountAdminsExtensions
     {
         public static string ToSerialString(this SecurityAlertPolicyEmailAccountAdmins value) => value switch
         {

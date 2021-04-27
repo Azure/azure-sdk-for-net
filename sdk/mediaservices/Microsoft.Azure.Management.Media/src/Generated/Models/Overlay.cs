@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="inputLabel">The label of the job input which is to be
         /// used as an overlay. The Input must specify exactly one file. You
-        /// can specify an image file in JPG or PNG formats, or an audio file
-        /// (such as a WAV, MP3, WMA or M4A file), or a video file. See
-        /// https://aka.ms/mesformats for the complete list of supported audio
-        /// and video file formats.</param>
+        /// can specify an image file in JPG, PNG, GIF or BMP format, or an
+        /// audio file (such as a WAV, MP3, WMA or M4A file), or a video file.
+        /// See https://aka.ms/mesformats for the complete list of supported
+        /// audio and video file formats.</param>
         /// <param name="start">The start position, with reference to the input
         /// video, at which the overlay starts. The value should be in ISO 8601
         /// format. For example, PT05S to start the overlay at 5 seconds into
@@ -79,8 +79,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Gets or sets the label of the job input which is to be used as an
         /// overlay. The Input must specify exactly one file. You can specify
-        /// an image file in JPG or PNG formats, or an audio file (such as a
-        /// WAV, MP3, WMA or M4A file), or a video file. See
+        /// an image file in JPG, PNG, GIF or BMP format, or an audio file
+        /// (such as a WAV, MP3, WMA or M4A file), or a video file. See
         /// https://aka.ms/mesformats for the complete list of supported audio
         /// and video file formats.
         /// </summary>

@@ -3,14 +3,15 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Artifacts.Models;
-using Azure.Analytics.Synapse.Samples;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {
-    public partial class Sample5_HelloWorldDataset : SampleFixture
+    public partial class Sample5_HelloWorldDataset : SamplesBase<SynapseTestEnvironment>
     {
         [Test]
         public async Task DatasetSample()

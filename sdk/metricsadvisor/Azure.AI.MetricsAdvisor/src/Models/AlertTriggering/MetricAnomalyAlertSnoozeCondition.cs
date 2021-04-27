@@ -28,12 +28,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// Defines the set of time series to which this <see cref="MetricAnomalyAlertSnoozeCondition"/>
         /// applies.
         /// </summary>
-        public SnoozeScope SnoozeScope { get; }
+        public SnoozeScope SnoozeScope { get; set; }
 
         /// <summary>
         /// The number of data points to be ingested before alerts are enabled again.
         /// </summary>
-        public int AutoSnooze { get; }
+        public int AutoSnooze { get; set; }
 
         /// <summary>
         /// If <c>true</c>, snoozing will stop as soon as a data point that's not an anomaly is found.
@@ -41,6 +41,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// have been ingested.
         /// </summary>
         [CodeGenMember("OnlyForSuccessive")]
-        public bool IsOnlyForSuccessive { get; }
+        public bool IsOnlyForSuccessive { get; set; }
     }
 }

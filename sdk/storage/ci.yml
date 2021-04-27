@@ -4,6 +4,7 @@ trigger:
   branches:
     include:
     - master
+    - main
     - hotfix/*
     - release/*
   paths:
@@ -14,6 +15,7 @@ pr:
   branches:
     include:
     - master
+    - main
     - feature/*
     - hotfix/*
     - release/*
@@ -25,8 +27,6 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: storage
-    LinuxPool: azsdk-pool-mms-ubuntu-1804-general
-    WindowsPool: azsdk-pool-mms-win-2019-general
     ArtifactName: packages
     Artifacts:
     - name: Azure.Storage.Blobs

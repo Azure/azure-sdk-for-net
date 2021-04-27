@@ -15,5 +15,4 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
 </Project>

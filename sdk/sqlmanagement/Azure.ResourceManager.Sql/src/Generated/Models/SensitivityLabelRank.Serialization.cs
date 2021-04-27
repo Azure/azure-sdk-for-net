@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class SensitivityLabelRankExtensions
+    internal static partial class SensitivityLabelRankExtensions
     {
         public static string ToSerialString(this SensitivityLabelRank value) => value switch
         {

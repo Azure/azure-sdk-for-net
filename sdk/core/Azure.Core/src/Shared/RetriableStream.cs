@@ -53,8 +53,7 @@ namespace Azure.Core.Pipeline
 
             private readonly int _maxRetries;
 
-            private readonly long _length;
-            private readonly ExceptionDispatchInfo _lengthException;
+            private readonly long? _length;
 
             private Stream _currentStream;
 
@@ -66,13 +65,16 @@ namespace Azure.Core.Pipeline
 
             public RetriableStreamImpl(Stream initialStream, Func<long, Stream> streamFactory, Func<long, ValueTask<Stream>> asyncStreamFactory, ResponseClassifier responseClassifier, int maxRetries)
             {
-                try
+                if (initialStream.CanSeek)
                 {
-                    _length = EnsureStream(initialStream).Length;
-                }
-                catch (Exception ex)
-                {
-                    _lengthException = ExceptionDispatchInfo.Capture(ex);
+                    try
+                    {
+                        _length = EnsureStream(initialStream).Length;
+                    }
+                    catch
+                    {
+                        // ignore
+                    }
                 }
 
                 _currentStream = EnsureStream(initialStream);
@@ -152,14 +154,7 @@ namespace Azure.Core.Pipeline
 
             public override bool CanRead => _currentStream.CanRead;
             public override bool CanSeek { get; }
-            public override long Length
-            {
-                get
-                {
-                    _lengthException?.Throw();
-                    return _length;
-                }
-            }
+            public override long Length => _length ?? throw new NotSupportedException();
 
             public override long Position
             {

@@ -2,7 +2,7 @@
 
 This guide is intended to assist in the migration to version 7 of the Service Bus client library [`Azure.Messaging.ServiceBus`](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) from version 4 of [`Microsoft.Azure.ServiceBus`](https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/). It will focus on side-by-side comparisons for similar operations between the two packages. 
 
-Familiarity with the `Microsoft.Azure.ServiceBus` library is assumed. For those new to the Service Bus client library for .NET, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/README.md) and [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples) for the `Azure.Messaging.ServiceBus` library rather than this guide.
+We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. If not, please refer to the [README for Azure.Messaging.ServiceBus](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/README.md) and [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples) rather than this guide.
 
 ## Table of contents
 
@@ -14,20 +14,35 @@ Familiarity with the `Microsoft.Azure.ServiceBus` library is assumed. For those 
   - [Sending messages](#sending-messages)
   - [Receiving messages](#receiving-messages)
   - [Working with sessions](#working-with-sessions)
+  - [Cross-entity transactions](#cross-entity-transactions)
 - [Known gaps](#known-gaps-from-previous-library)
 - [Additional samples](#additional-samples)
 
 ## Migration benefits
 
-A natural question to ask when considering whether or not to adopt a new version or library is what the benefits of doing so would be. As Azure has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and to understand the gaps that the .NET client libraries have.
+As Azure has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and to understand the gaps that the .NET client libraries have.
 
 There were several areas of consistent feedback expressed across the Azure client library ecosystem. One of the most important is that the client libraries for different Azure services have not had a consistent approach to organization, naming, and API structure. Additionally, many developers have felt that the learning curve was difficult, and the APIs did not offer a good, approachable, and consistent onboarding story for those learning Azure or exploring a specific Azure service.
 
-To try and improve the development experience across Azure services, including Service Bus, a set of uniform [design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) was created for all languages to drive a consistent experience with established API patterns for all services. A set of [.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic feel that mirrors that of the .NET base class libraries. Further details are available in the guidelines for those interested.
-
-The new Service Bus library `Azure.Messaging.ServiceBus` provides the ability to share in some of the cross-service improvements made to the Azure development experience, such as using the new `Azure.Identity` library to share a single authentication between clients and a unified diagnostics pipeline offering a common view of the activities across each of the client libraries. 
+To improve the development experience across Azure services, including Service Bus, a set of uniform [design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) was created for all languages to drive a consistent experience with established API patterns for all services. A set of [.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic feel that mirrors that of the .NET base class libraries. The new `Azure.Messaging.ServiceBus` library follows these guidelines.
 
 While we believe that there is significant benefit to adopting the new Service Bus library `Azure.Messaging.ServiceBus`, it is important to be aware that the previous two versions `WindowsAzure.ServiceBus` and `Microsoft.Azure.ServiceBus` have not been officially deprecated. They will continue to be supported with security and bug fixes as well as receiving some minor refinements. However, in the near future they will not be under active development and new features are unlikely to be added to them.
+
+### Cross Service SDK improvements
+
+The modern Service Bus client library also provides the ability to share in some of the cross-service improvements made to the Azure development experience, such as
+
+- Using the new Azure.Identity library to share a single authentication approach between clients
+- A unified logging and diagnostics pipeline offering a common view of the activities across each of the client libraries
+
+### New features
+
+We have a variety of new features in the version 7 of the Service Bus library.
+- Ability to create a batch of messages with the smarter `ServiceBusSender.CreateMessageBatch()` and `ServiceBusMessageBatch.TryAddMessage()` APIs. This will help you manage the messages to be sent in the most optimal way.
+- Ability to process messages continuously from a given set of sessions. Previously, when registering a session message handler, it was not possible to restrict to a specific session or a specific set of sessions. This is now possible when using the `ServiceBusSessionProcessor`.
+- Azure Service Bus follows the AMQP protocol and as such the Service Bus message is converted to an AMQP message when sent to the service. In the new library, you now have the ability to write and read the entire AMQP message along with its header, footer, properties, and annotations instead of just the properties that were exposed before. This is helpful if you are an advanced user and want to make use of the full might of AMQP message format.
+- The APIs to schedule the sending of a message at a later time and the ones to cancel such scheduled messages now work for batches of messages as well.
+
 
 ## General changes
 
@@ -270,7 +285,7 @@ Previously, in `Microsoft.Azure.ServiceBus`, you had the below options to receiv
 
 While the first option is similar to what you would do in a non-session scenario, the second that allows you finer-grained control is very different from any other pattern used in the library.
 
-Now in `Azure.Messaging.ServiceBus`, we simplfify this by giving session variants of the same methods and classes that are available when working with queues/subscriptions that do not have sessions enabled.
+Now in `Azure.Messaging.ServiceBus`, we simplify this by giving session variants of the same methods and classes that are available when working with queues/subscriptions that do not have sessions enabled.
 
 The below code snippet shows you the session variation of the `ServiceBusProcessor`.
 
@@ -353,12 +368,37 @@ ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync()
 Console.WriteLine(receivedMessage.SessionId);
 ```
 
+### Cross-Entity transactions
+
+Previously, in `Microsoft.Azure.ServiceBus`, when performing a transaction that spanned multiple queues, topics, or subscriptions you would need to use the "Send-Via" option
+in the `MessageSender`. 
+
+Now in `Azure.Messaging.ServiceBus`, there is an `EnableCrossEntityTransactions` property on the `ServiceBusClientOptions`. When setting this property to `true`, the first operation that occurs using any senders or receivers created from the client implicitly becomes the send-via entity. Because of this, subsequent operations must either be by senders, or if they are by receivers, the receiver must be receiving from the send-via entity. For this reason, it probably makes more sense to have your first operation be a receive rather than a send when setting this property.
+
+The below code snippet shows you how to perform cross-entity transactions.
+
+```C# Snippet:ServiceBusTransactionGroup
+var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
+await using var client = new ServiceBusClient(connectionString, options);
+
+ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
+ServiceBusSender senderB = client.CreateSender("queueB");
+ServiceBusSender senderC = client.CreateSender("topicC");
+
+ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
+
+using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+{
+    await receiverA.CompleteMessageAsync(receivedMessage);
+    await senderB.SendMessageAsync(new ServiceBusMessage());
+    await senderC.SendMessageAsync(new ServiceBusMessage());
+    ts.Complete();
+}
+```
+
 ## Known Gaps from Previous Library
 There are a few features that are yet to be implemented in `Azure.Messaging.ServiceBus`, but were present in the previous library `Microsoft.Azure.ServiceBus`. The plan is to add these features in upcoming releases (unless otherwise noted), but they will not be available in the version 7.0.0:
-- **Cross entity transactions** - In the previous library, Microsoft.Azure.ServiceBus, transactions could work across multiple entities by leveraging the [`viaEntityPath`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/Core/MessageSender.cs#L118) parameter of the `MessageSender` constructor. The service is planning to make backward compatible updates that would make it possible to do cross-entity transactions without specificing a "via" entity. The new library plans to take advantage of this new feature and therefore, the cross entity transactions feature will be available in the upcoming release instead of the current version 7.0.0. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/17355.
 - **Plugins** - In the previous library, Microsoft.Azure.ServiceBus, users could [register plugins](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/QueueClient.cs#L527) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. This feature is not yet supported in the new library but will be added in an upcoming release. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/12943.
-- **AMQP Body Sections** - In the previous library, Microsoft.Azure.ServiceBus, it was possible to read the message body even if it was not stored in the [AMQP data section](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data) by using the [`GetBody<T>`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/Extensions/MessageInterOpExtensions.cs#L76) extension method. In the new library, we currently do not expose a way to get the message body if it is not populated in the AMQP data section. We will add support for both setting and retrieving the message body in any of the AMQP body sections in an upcoming release. This includes the [data](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data), [sequence](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-amqp-sequence), [value](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-amqp-value) body sections. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/17356.
-- **Max receive wait time for Processor** - In the previous library, Microsoft.Azure.ServiceBus, it was possible to configure the maximum amount of time each receive call would wait when receiving a message using the message pump (this is known as the Processor in the new library). This was not included in the GA release of the new library as we were not certain that this configuration option would be needed for users of the processor. Feedback for this feature request can be submitted and tracked via https://github.com/Azure/azure-sdk-for-net/issues/16773.
 
 ## Additional samples
 

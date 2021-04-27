@@ -35,6 +35,7 @@ try
     {
         Console.WriteLine($"  Text: {entity.Text}");
         Console.WriteLine($"  Offset: {entity.Offset}");
+        Console.WriteLine($"  Length: {entity.Length}");
         Console.WriteLine($"  Category: {entity.Category}");
         if (!string.IsNullOrEmpty(entity.SubCategory))
             Console.WriteLine($"  SubCategory: {entity.SubCategory}");
@@ -107,6 +108,7 @@ foreach (RecognizeEntitiesResult entitiesInDocument in entititesPerDocuments)
         {
             Console.WriteLine($"    Text: {entity.Text}");
             Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    Length: {entity.Length}");
             Console.WriteLine($"    Category: {entity.Category}");
             if (!string.IsNullOrEmpty(entity.SubCategory))
                 Console.WriteLine($"    SubCategory: {entity.SubCategory}");
@@ -156,7 +158,7 @@ var documents = new List<TextDocumentInput>
     new TextDocumentInput("4", string.Empty)
 };
 
-var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
+var options = new RecognizeEntitiesOptions { IncludeStatistics = true };
 Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(documents, options);
 RecognizeEntitiesResultCollection entitiesInDocuments = response.Value;
 
@@ -184,6 +186,7 @@ foreach (RecognizeEntitiesResult entitiesInDocument in entitiesInDocuments)
         {
             Console.WriteLine($"    Text: {entity.Text}");
             Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    Length: {entity.Length}");
             Console.WriteLine($"    Category: {entity.Category}");
             if (!string.IsNullOrEmpty(entity.SubCategory))
                 Console.WriteLine($"    SubCategory: {entity.SubCategory}");

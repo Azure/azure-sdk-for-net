@@ -131,6 +131,14 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CreateCustomFormModelOperation"/> class. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        protected CreateCustomFormModelOperation()
+        {
+        }
+
+        /// <summary>
         /// Calls the server to get updated status of the long-running operation.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>

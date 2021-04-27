@@ -68,7 +68,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// of inflight receive and message handling operations to finish and unregisters future receives on the message handler which previously 
         /// registered. 
         /// </summary>
-        /// <param name="inflightMessageHandlerTasksWaitTimeout"> is the waitTimeout for inflight message handling tasks.</param>
+        /// <param name="inflightMessageHandlerTasksWaitTimeout"> is the maximum waitTimeout for inflight message handling tasks.</param>
         Task UnregisterMessageHandlerAsync(TimeSpan inflightMessageHandlerTasksWaitTimeout);
 
         /// <summary>

@@ -44,13 +44,15 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// migration behavior</param>
         /// <param name="targetSetting">Target settings to tune target endpoint
         /// migration behavior</param>
-        public MigrateMySqlAzureDbForMySqlSyncDatabaseInput(string name = default(string), string targetDatabaseName = default(string), IDictionary<string, string> migrationSetting = default(IDictionary<string, string>), IDictionary<string, string> sourceSetting = default(IDictionary<string, string>), IDictionary<string, string> targetSetting = default(IDictionary<string, string>))
+        /// <param name="tableMap">Mapping of source to target tables</param>
+        public MigrateMySqlAzureDbForMySqlSyncDatabaseInput(string name = default(string), string targetDatabaseName = default(string), IDictionary<string, string> migrationSetting = default(IDictionary<string, string>), IDictionary<string, string> sourceSetting = default(IDictionary<string, string>), IDictionary<string, string> targetSetting = default(IDictionary<string, string>), IDictionary<string, string> tableMap = default(IDictionary<string, string>))
         {
             Name = name;
             TargetDatabaseName = targetDatabaseName;
             MigrationSetting = migrationSetting;
             SourceSetting = sourceSetting;
             TargetSetting = targetSetting;
+            TableMap = tableMap;
             CustomInit();
         }
 
@@ -91,6 +93,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetSetting")]
         public IDictionary<string, string> TargetSetting { get; set; }
+
+        /// <summary>
+        /// Gets or sets mapping of source to target tables
+        /// </summary>
+        [JsonProperty(PropertyName = "tableMap")]
+        public IDictionary<string, string> TableMap { get; set; }
 
     }
 }

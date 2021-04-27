@@ -19,7 +19,7 @@ namespace CosmosDB.Tests.ScenarioTests
         const string eastus2 = "eastus2";
         const string westus2 = "westus2";
         const string resourceGroupName = "pitr-stage-rg";
-        const string restoreTimestamp = "2020-12-16T00:00:00+0000";
+        const string restoreTimestamp = "2021-03-01T00:00:00+0000";
         // const string sourceDatabaseAccountName = "pitr-sql-stage-source";
 
         [Fact]
@@ -32,7 +32,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 // Create client
                 CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler);
 
-                await RestoreDatabaseAccountFeedTestHelperAsync(cosmosDBManagementClient, "pitr-sql-stage-source", westus2, ApiType.Sql, 3);
+                await RestoreDatabaseAccountFeedTestHelperAsync(cosmosDBManagementClient, "pitr-sql-stage-source", westus2, ApiType.Sql, 2);
                 await RestoreDatabaseAccountFeedTestHelperAsync(cosmosDBManagementClient, "pitr-mongo32-stage-source", eastus2, ApiType.MongoDB, 2);
                 await RestoreDatabaseAccountFeedTestHelperAsync(cosmosDBManagementClient, "pitr-mongo36-stage-source", eastus2, ApiType.MongoDB, 2);
             }
@@ -55,7 +55,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
             ValidateRestorableDatabaseAccount(restorableDatabaseAccount, sourceDatabaseAccount, sourceApiType, expectedRestorableLocationCount);
 
-            List<RestorableDatabaseAccountGetResult> restorableAccountsFromRegionalFeed = 
+            List<RestorableDatabaseAccountGetResult> restorableAccountsFromRegionalFeed =
                 (await cosmosDBManagementClient.RestorableDatabaseAccounts.ListByLocationAsync(sourceARMLocation)).ToList();
 
             restorableDatabaseAccount = restorableAccountsFromRegionalFeed.
@@ -63,7 +63,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
             ValidateRestorableDatabaseAccount(restorableDatabaseAccount, sourceDatabaseAccount, sourceApiType, expectedRestorableLocationCount);
 
-            restorableDatabaseAccount = 
+            restorableDatabaseAccount =
                 await cosmosDBManagementClient.RestorableDatabaseAccounts.GetByLocationAsync(sourceARMLocation, sourceDatabaseAccount.InstanceId);
 
             ValidateRestorableDatabaseAccount(restorableDatabaseAccount, sourceDatabaseAccount, sourceApiType, expectedRestorableLocationCount);
@@ -127,7 +127,7 @@ namespace CosmosDB.Tests.ScenarioTests
                     Properties = databaseAccountCreateUpdateProperties
                 };
 
-                DatabaseAccountGetResults restoredDatabaseAccount = 
+                DatabaseAccountGetResults restoredDatabaseAccount =
                     (await cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(
                         resourceGroupName, restoredatabaseAccountName, databaseAccountCreateUpdateParameters)).Body;
 

@@ -46,9 +46,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='sourceControlConfigurationName'>
         /// Name of the Source Control Configuration.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to be used with the HTTP request.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -64,7 +61,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SourceControlConfiguration>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SourceControlConfiguration>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create a new Kubernetes Source Control Configuration.
         /// </summary>
@@ -88,9 +85,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='sourceControlConfigurationName'>
         /// Name of the Source Control Configuration.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to be used with the HTTP request.
-        /// </param>
         /// <param name='sourceControlConfiguration'>
         /// Properties necessary to Create KubernetesConfiguration.
         /// </param>
@@ -109,7 +103,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SourceControlConfiguration>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, SourceControlConfiguration sourceControlConfiguration, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SourceControlConfiguration>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, SourceControlConfiguration sourceControlConfiguration, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// This will delete the YAML file used to set up the Source control
         /// configuration, thus stopping future sync from the source repo.
@@ -134,9 +128,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='sourceControlConfigurationName'>
         /// Name of the Source Control Configuration.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to be used with the HTTP request.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -149,7 +140,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all Source Control Configurations.
         /// </summary>
@@ -170,9 +161,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to be used with the HTTP request.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -188,7 +176,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SourceControlConfiguration>>> ListWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SourceControlConfiguration>>> ListWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// This will delete the YAML file used to set up the Source control
         /// configuration, thus stopping future sync from the source repo.
@@ -213,9 +201,6 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='sourceControlConfigurationName'>
         /// Name of the Source Control Configuration.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to be used with the HTTP request.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -228,7 +213,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all Source Control Configurations.
         /// </summary>

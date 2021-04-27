@@ -84,5 +84,15 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// </summary>
         IOperations Operations { get; }
 
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
     }
 }

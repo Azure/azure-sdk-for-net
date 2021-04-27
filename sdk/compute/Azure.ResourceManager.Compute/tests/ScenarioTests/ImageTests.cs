@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Tests
             };
             // Create the VM, whose OS disk will be used in creating the image
             var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imageRef, addDataDiskToVM);
-            var createdVM = returnTwoVM.Item1;
+            var createdVM = returnTwoVM.Response;
             int expectedDiskLunWithDiskEncryptionSet = createdVM.StorageProfile.DataDisks[0].Lun;
             // Create the Image
             var imageInput = new Image(m_location)

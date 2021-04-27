@@ -51,7 +51,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="managedVirtualNetworkSettings"> Managed Virtual Network Settings. </param>
         /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>
         /// <param name="purviewConfiguration"> Purview Configuration. </param>
-        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration) : base(id, name, type, tags, location)
+        /// <param name="adlaResourceId"> The ADLA resource ID. </param>
+        internal Workspace(string id, string name, string type, IDictionary<string, string> tags, string location, ManagedIdentity identity, DataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<PrivateEndpointConnection> privateEndpointConnections, EncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, object> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, string adlaResourceId) : base(id, name, type, tags, location)
         {
             Identity = identity;
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -69,6 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ManagedVirtualNetworkSettings = managedVirtualNetworkSettings;
             WorkspaceRepositoryConfiguration = workspaceRepositoryConfiguration;
             PurviewConfiguration = purviewConfiguration;
+            AdlaResourceId = adlaResourceId;
         }
 
         /// <summary> Identity of the workspace. </summary>
@@ -103,5 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public WorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get; set; }
         /// <summary> Purview Configuration. </summary>
         public PurviewConfiguration PurviewConfiguration { get; set; }
+        /// <summary> The ADLA resource ID. </summary>
+        public string AdlaResourceId { get; }
     }
 }

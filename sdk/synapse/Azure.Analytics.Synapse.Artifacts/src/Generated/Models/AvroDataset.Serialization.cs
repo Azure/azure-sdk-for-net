@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(AvroDatasetConverter))]
     public partial class AvroDataset : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -71,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AvroCompressionCodec))
             {
                 writer.WritePropertyName("avroCompressionCodec");
-                writer.WriteStringValue(AvroCompressionCodec.Value.ToString());
+                writer.WriteObjectValue(AvroCompressionCodec);
             }
             if (Optional.IsDefined(AvroCompressionLevel))
             {
@@ -98,7 +101,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<object>> annotations = default;
             Optional<DatasetFolder> folder = default;
             Optional<DatasetLocation> location = default;
-            Optional<AvroCompressionCodec> avroCompressionCodec = default;
+            Optional<object> avroCompressionCodec = default;
             Optional<int> avroCompressionLevel = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -205,7 +208,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            avroCompressionCodec = new AvroCompressionCodec(property0.Value.GetString());
+                            avroCompressionCodec = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("avroCompressionLevel"))
@@ -224,7 +227,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AvroDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, Optional.ToNullable(avroCompressionCodec), Optional.ToNullable(avroCompressionLevel));
+            return new AvroDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, avroCompressionCodec.Value, Optional.ToNullable(avroCompressionLevel));
+        }
+
+        internal partial class AvroDatasetConverter : JsonConverter<AvroDataset>
+        {
+            public override void Write(Utf8JsonWriter writer, AvroDataset model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AvroDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAvroDataset(document.RootElement);
+            }
         }
     }
 }

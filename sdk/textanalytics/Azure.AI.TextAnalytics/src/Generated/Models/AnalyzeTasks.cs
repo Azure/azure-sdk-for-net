@@ -8,10 +8,10 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasks. </summary>
-    public partial class AnalyzeTasks
+    internal partial class AnalyzeTasks
     {
         /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
         /// <param name="completed"> . </param>
@@ -27,6 +27,7 @@ namespace Azure.AI.TextAnalytics
             EntityRecognitionTasks = new ChangeTrackingList<EntityRecognitionTasksItem>();
             EntityRecognitionPiiTasks = new ChangeTrackingList<EntityRecognitionPiiTasksItem>();
             KeyPhraseExtractionTasks = new ChangeTrackingList<KeyPhraseExtractionTasksItem>();
+            EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTasksItem>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeTasks. </summary>
@@ -38,7 +39,8 @@ namespace Azure.AI.TextAnalytics
         /// <param name="entityRecognitionTasks"> . </param>
         /// <param name="entityRecognitionPiiTasks"> . </param>
         /// <param name="keyPhraseExtractionTasks"> . </param>
-        internal AnalyzeTasks(TasksStateTasksDetails details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks)
+        /// <param name="entityLinkingTasks"> . </param>
+        internal AnalyzeTasks(TasksStateTasksDetails details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks)
         {
             Details = details;
             Completed = completed;
@@ -48,6 +50,17 @@ namespace Azure.AI.TextAnalytics
             EntityRecognitionTasks = entityRecognitionTasks;
             EntityRecognitionPiiTasks = entityRecognitionPiiTasks;
             KeyPhraseExtractionTasks = keyPhraseExtractionTasks;
+            EntityLinkingTasks = entityLinkingTasks;
         }
+
+        public TasksStateTasksDetails Details { get; }
+        public int Completed { get; }
+        public int Failed { get; }
+        public int InProgress { get; }
+        public int Total { get; }
+        public IReadOnlyList<EntityRecognitionTasksItem> EntityRecognitionTasks { get; }
+        public IReadOnlyList<EntityRecognitionPiiTasksItem> EntityRecognitionPiiTasks { get; }
+        public IReadOnlyList<KeyPhraseExtractionTasksItem> KeyPhraseExtractionTasks { get; }
+        public IReadOnlyList<EntityLinkingTasksItem> EntityLinkingTasks { get; }
     }
 }

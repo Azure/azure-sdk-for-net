@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal static class AliasPatternTypeExtensions
+    internal static partial class AliasPatternTypeExtensions
     {
         public static string ToSerialString(this AliasPatternType value) => value switch
         {

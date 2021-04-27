@@ -91,8 +91,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var seriesToFilter = new List<DimensionKey>();
-            var options = new GetMetricSeriesDataOptions(seriesToFilter, default, default);
+            var options = new GetMetricSeriesDataOptions(default, default);
 
             Assert.That(() => client.GetMetricSeriesDataAsync(null, options), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => client.GetMetricSeriesDataAsync("", options), Throws.InstanceOf<ArgumentException>());
@@ -110,8 +109,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var seriesToFilter = new List<DimensionKey>();
-            var options = new GetMetricSeriesDataOptions(seriesToFilter, default, default);
+            var options = new GetMetricSeriesDataOptions(default, default);
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();

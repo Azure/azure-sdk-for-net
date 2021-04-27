@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class SecurityRulesCreateOrUpdateOperation : Operation<SecurityRule>, IOperationSource<SecurityRule>
     {
         private readonly ArmOperationHelpers<SecurityRule> _operation;
+
+        /// <summary> Initializes a new instance of SecurityRulesCreateOrUpdateOperation for mocking. </summary>
+        protected SecurityRulesCreateOrUpdateOperation()
+        {
+        }
+
         internal SecurityRulesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<SecurityRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecurityRulesCreateOrUpdateOperation");

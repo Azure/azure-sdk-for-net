@@ -1,7 +1,55 @@
 # Release History
 
-## 5.0.0-beta.2 (Unreleased)
+## 5.0.0-beta.4 (Unreleased)
 
+- Fixed bug where custom implementations of `IQueueProcessorFactory` could overwrite each other settings.
+
+## 5.0.0-beta.3 (2021-03-09)
+
+### Breaking Changes
+
+- The configuration section name for URI configuration was changed from `endpoint` to `serviceUri` to be consistent with other clients.
+
+In case of JSON, from:
+```json
+{
+    "MyConnection": {
+        "endpoint": "https://<my_account>.blob.core.windows.net"
+    }
+}
+```
+
+To
+```json
+{
+    "MyConnection": {
+        "serviceUri": "https://<my_account>.blob.core.windows.net"
+    }
+}
+```
+
+Or using environment variables, from:
+```
+MyConnection__endpoint=https://<my_account>.blob.core.windows.net
+```
+To
+```
+MyConnection__serviceUri=https://<my_account>.blob.core.windows.net
+```
+
+
+## 5.0.0-beta.2 (2021-02-09)
+
+### Major changes and features 
+- This version Base64-encodes/decodes queue messages by default. This reverses the breaking change in 5.0.0-beta1, and preserves compability with previous major versions. This behavior can be changed by setting `QueuesOptions.MessageEncoding`. For example, to configure Azure Functions to perform no base64 encoding/decoding, specify the following in host.json
+
+```
+  "extensions": {
+    "queues": {
+      "messageEncoding": "none"
+    }
+  }
+```
 
 ## 5.0.0-beta.1 (2020-11-10)
 

@@ -87,9 +87,24 @@ namespace Microsoft.Azure.Management.EventGrid
         public virtual IDomainTopicsOperations DomainTopics { get; private set; }
 
         /// <summary>
+        /// Gets the IEventChannelsOperations.
+        /// </summary>
+        public virtual IEventChannelsOperations EventChannels { get; private set; }
+
+        /// <summary>
         /// Gets the IEventSubscriptionsOperations.
         /// </summary>
         public virtual IEventSubscriptionsOperations EventSubscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the ISystemTopicEventSubscriptionsOperations.
+        /// </summary>
+        public virtual ISystemTopicEventSubscriptionsOperations SystemTopicEventSubscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerTopicEventSubscriptionsOperations.
+        /// </summary>
+        public virtual IPartnerTopicEventSubscriptionsOperations PartnerTopicEventSubscriptions { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -97,9 +112,19 @@ namespace Microsoft.Azure.Management.EventGrid
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the ITopicsOperations.
+        /// Gets the IPartnerNamespacesOperations.
         /// </summary>
-        public virtual ITopicsOperations Topics { get; private set; }
+        public virtual IPartnerNamespacesOperations PartnerNamespaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerRegistrationsOperations.
+        /// </summary>
+        public virtual IPartnerRegistrationsOperations PartnerRegistrations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerTopicsOperations.
+        /// </summary>
+        public virtual IPartnerTopicsOperations PartnerTopics { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
@@ -110,6 +135,21 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the ISystemTopicsOperations.
+        /// </summary>
+        public virtual ISystemTopicsOperations SystemTopics { get; private set; }
+
+        /// <summary>
+        /// Gets the ITopicsOperations.
+        /// </summary>
+        public virtual ITopicsOperations Topics { get; private set; }
+
+        /// <summary>
+        /// Gets the IExtensionTopicsOperations.
+        /// </summary>
+        public virtual IExtensionTopicsOperations ExtensionTopics { get; private set; }
 
         /// <summary>
         /// Gets the ITopicTypesOperations.
@@ -359,14 +399,22 @@ namespace Microsoft.Azure.Management.EventGrid
         {
             Domains = new DomainsOperations(this);
             DomainTopics = new DomainTopicsOperations(this);
+            EventChannels = new EventChannelsOperations(this);
             EventSubscriptions = new EventSubscriptionsOperations(this);
+            SystemTopicEventSubscriptions = new SystemTopicEventSubscriptionsOperations(this);
+            PartnerTopicEventSubscriptions = new PartnerTopicEventSubscriptionsOperations(this);
             Operations = new Operations(this);
-            Topics = new TopicsOperations(this);
+            PartnerNamespaces = new PartnerNamespacesOperations(this);
+            PartnerRegistrations = new PartnerRegistrationsOperations(this);
+            PartnerTopics = new PartnerTopicsOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            SystemTopics = new SystemTopicsOperations(this);
+            Topics = new TopicsOperations(this);
+            ExtensionTopics = new ExtensionTopicsOperations(this);
             TopicTypes = new TopicTypesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-06-01";
+            ApiVersion = "2020-10-15-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -398,12 +446,14 @@ namespace Microsoft.Azure.Management.EventGrid
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EventSubscriptionDestination>("endpointType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSubscriptionDestination>("endpointType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AdvancedFilter>("operatorType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AdvancedFilter>("operatorType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EventSubscriptionDestination>("endpointType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSubscriptionDestination>("endpointType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeadLetterDestination>("endpointType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeadLetterDestination>("endpointType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeliveryAttributeMapping>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeliveryAttributeMapping>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

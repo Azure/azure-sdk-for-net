@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Sql
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal ManagedDatabaseSensitivityLabelsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of ManagedDatabaseSensitivityLabelsOperations for mocking. </summary>
         protected ManagedDatabaseSensitivityLabelsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of ManagedDatabaseSensitivityLabelsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

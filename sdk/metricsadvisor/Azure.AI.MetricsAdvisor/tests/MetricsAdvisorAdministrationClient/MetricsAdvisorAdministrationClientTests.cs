@@ -3,7 +3,9 @@
 
 using System;
 using Azure.AI.MetricsAdvisor.Administration;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
@@ -18,13 +20,18 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public void ConstructorValidatesArguments()
         {
             var endpoint = new Uri("http://notreal.azure.com");
-            var credential = new MetricsAdvisorKeyCredential("fakeSubscriptionKey", "fakeApiKey");
+            var keyCredential = new MetricsAdvisorKeyCredential("fakeSubscriptionKey", "fakeApiKey");
+            var tokenCredential = new DefaultAzureCredential();
             var options = new MetricsAdvisorClientsOptions();
 
-            Assert.That(() => new MetricsAdvisorAdministrationClient(null, credential), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => new MetricsAdvisorAdministrationClient(endpoint, null), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => new MetricsAdvisorAdministrationClient(null, credential, options), Throws.InstanceOf<ArgumentNullException>());
-            Assert.That(() => new MetricsAdvisorAdministrationClient(endpoint, null, options), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => new MetricsAdvisorAdministrationClient(null, keyCredential), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => new MetricsAdvisorAdministrationClient(endpoint, default(MetricsAdvisorKeyCredential)), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => new MetricsAdvisorAdministrationClient(null, keyCredential, options), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => new MetricsAdvisorAdministrationClient(endpoint, default(MetricsAdvisorKeyCredential), options), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => new MetricsAdvisorAdministrationClient(null, tokenCredential), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => new MetricsAdvisorAdministrationClient(endpoint, default(TokenCredential)), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => new MetricsAdvisorAdministrationClient(null, tokenCredential, options), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => new MetricsAdvisorAdministrationClient(endpoint, default(TokenCredential), options), Throws.InstanceOf<ArgumentNullException>());
         }
 
         [Test]
@@ -32,8 +39,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var endpoint = new Uri("http://notreal.azure.com");
             var credential = new MetricsAdvisorKeyCredential("fakeSubscriptionKey", "fakeApiKey");
+            var tokenCredential = new DefaultAzureCredential();
 
             Assert.That(() => new MetricsAdvisorAdministrationClient(endpoint, credential, null), Throws.Nothing);
+            Assert.That(() => new MetricsAdvisorAdministrationClient(endpoint, tokenCredential, null), Throws.Nothing);
         }
     }
 }

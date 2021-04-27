@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal static class DefaultConsistencyLevelExtensions
+    internal static partial class DefaultConsistencyLevelExtensions
     {
         public static string ToSerialString(this DefaultConsistencyLevel value) => value switch
         {

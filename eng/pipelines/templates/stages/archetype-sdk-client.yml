@@ -17,7 +17,7 @@ parameters:
   default: packages
 - name: SDKType
   type: string
-  default: client
+  default: all
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -33,27 +33,56 @@ parameters:
 - name: TestSetupSteps
   type: stepList
   default: []
-- name: WindowsPool
-  type: string
-  default: azsdk-pool-mms-win-2019-general
-- name: LinuxPool
-  type: string
-  default: azsdk-pool-mms-ubuntu-1804-general
+- name: TestTimeoutInMinutes
+  type: number
+  default: 60
+- name: MatrixConfigs
+  type: object
+  default:
+    - Name: NET_ci_test_base
+      Path: eng/pipelines/templates/stages/platform-matrix.json
+      Selection: sparse
+      NonSparseParameters: AdditionalTestArguments
+      GenerateVMJobs: true
+- name: AdditionalMatrixConfigs
+  type: object
+  default: []
+- name: MatrixFilters
+  type: object
+  default: []
+- name: MatrixReplace
+  type: object
+  default: []
+
+variables:
+  - template: ../variables/globals.yml
 
 stages:
   - stage: Build
     jobs:
-    - template: ../jobs/archetype-sdk-client.yml
+    - template: /eng/pipelines/templates/jobs/ci.yml
       parameters:
         SDKType: ${{ parameters.SDKType }}
         ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         Artifacts: ${{ parameters.Artifacts }}
-        TestPipeline: ${{ parameters.TestPipeline }}
+        ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+          TestPipeline: true
         ArtifactName: packages
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
-        WindowsPool: ${{ parameters.WindowsPool }}
-        LinuxPool: ${{ parameters.LinuxPool }}
+        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+        MatrixConfigs:
+          - ${{ each config in parameters.MatrixConfigs }}:
+            -  ${{ config }}
+          - ${{ each config in parameters.AdditionalMatrixConfigs }}:
+            -  ${{ config }}
+        MatrixFilters: ${{ parameters.MatrixFilters }}
+        MatrixReplace:
+          # Temporarily replace macOS agents with ubuntu agents because of ongoing pool capacity issues
+          - Pool=Azure.Pipelines/azsdk-pool-mms-ubuntu-1804-general
+          - OsVmImage=macOS-10.15/MMSUbuntu18.04
+          - ${{ each replacement in parameters.MatrixReplace }}:
+            - ${{ replacement }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
@@ -63,7 +92,8 @@ stages:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         DependsOn: Build
         Artifacts: ${{ parameters.Artifacts }}
-        TestPipeline: ${{ parameters.TestPipeline }}
+        ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+          TestPipeline: true
         ArtifactName: packages
         TargetDocRepoOwner: ${{ parameters.TargetDocRepoOwner }}
         TargetDocRepoName: ${{ parameters.TargetDocRepoName }}

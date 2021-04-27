@@ -11,7 +11,9 @@ namespace Azure
     /// zero or more <see cref="Page{T}"/>s of values.
     /// </summary>
     /// <typeparam name="T">The type of values.</typeparam>
+#pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Page<T>
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
         /// Gets the values in this <see cref="Page{T}"/>.

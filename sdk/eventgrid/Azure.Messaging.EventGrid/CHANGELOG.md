@@ -1,6 +1,38 @@
 # Release History
-## 4.0.0-beta.5 (Unreleased)
 
+## 4.2.0-beta.1 (Unreleased)
+
+
+## 4.1.0 (2021-03-23)
+
+### New Features
+- Added new Azure Communication Services system events.
+
+### Fixed
+- Fixed system mapping for `AcsChatParticipantAddedToThread` and `AcsChatParticipantRemovedFromThread`.
+
+## 4.0.0 (2021-03-09)
+
+### New Features
+- Added single send overloads to allow sending a single event for each event type.
+
+### Breaking Changes
+- Moved `CloudEvent` into `Azure.Core` package.
+- Changed custom events to be represented as `BinaryData` rather than `object`.
+- Removed `Serializer` option from `EventGridPublisherOptions` as serialization can be customized through `BinaryData`.
+
+## 4.0.0-beta.5 (2021-02-09)
+
+### New Features
+- Added `TryGetSystemEventData` that attempts to deserialize event data into a known system event.
+- Added `EventGridSasBuilder` for constructing SAS tokens.
+- Added `SystemEventNames` that contain the names that will be stamped into the event Type for system events.
+
+### Breaking Changes
+- Updated `GetData` method to always return `BinaryData` instead of `object`. It no longer deserializes system events.
+- Removed the `CloudEvent` constructor overload that took `BinaryData` and replaced with an overload that accepts `ReadOnlyMemory<byte>`
+- Replaced use of `EventGridSasCredential` with `AzureSasCredential`.
+- Removed `GenerateSharedAccessSignature` in favor of `EventGridSasBuilder`.
 
 ## 4.0.0-beta.4 (2020-11-10)
 

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// <summary>
         /// Initializes a new instance of the ExportClusterParameters class.
         /// </summary>
-        /// <param name="sasUri">SAS Uri for the target directory to export
+        /// <param name="sasUri">SAS URI for the target directory to export
         /// to</param>
         public ExportClusterParameters(string sasUri)
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SAS Uri for the target directory to export to
+        /// Gets or sets SAS URI for the target directory to export to
         /// </summary>
         [JsonProperty(PropertyName = "sasUri")]
         public string SasUri { get; set; }

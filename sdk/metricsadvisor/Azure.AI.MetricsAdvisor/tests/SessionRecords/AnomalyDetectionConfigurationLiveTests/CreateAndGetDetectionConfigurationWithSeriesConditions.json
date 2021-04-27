@@ -8,8 +8,11 @@
         "Content-Length": "719",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8f5a41af0d23224997c0d5e5ef0ce5d4-0e39c9372137524a-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201215.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-e0c1796131348a47b126d39219c0e100-8df6a5733fba494a-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210205.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "c386218ff1b7ed8e80936ccca61372fe",
         "x-ms-return-client-request-id": "true"
@@ -17,25 +20,28 @@
       "RequestBody": "{\u0022name\u0022:\u0022config0dbZeJSe\u0022,\u0022metricId\u0022:\u002227e3015f-04fd-44ba-a20b-bc529a0aebae\u0022,\u0022wholeMetricConfiguration\u0022:{\u0022hardThresholdCondition\u0022:{\u0022lowerBound\u0022:10,\u0022upperBound\u0022:20,\u0022anomalyDetectorDirection\u0022:\u0022Both\u0022,\u0022suppressCondition\u0022:{\u0022minNumber\u0022:1,\u0022minRatio\u0022:2}}},\u0022seriesOverrideConfigurations\u0022:[{\u0022series\u0022:{\u0022dimension\u0022:{\u0022city\u0022:\u0022Delhi\u0022,\u0022category\u0022:\u0022Handmade\u0022}},\u0022smartDetectionCondition\u0022:{\u0022sensitivity\u0022:30,\u0022anomalyDetectorDirection\u0022:\u0022Both\u0022,\u0022suppressCondition\u0022:{\u0022minNumber\u0022:3,\u0022minRatio\u0022:4}}},{\u0022series\u0022:{\u0022dimension\u0022:{\u0022city\u0022:\u0022Koltaka\u0022,\u0022category\u0022:\u0022Grocery \u0026 Gourmet Food\u0022}},\u0022changeThresholdCondition\u0022:{\u0022changePercentage\u0022:40,\u0022shiftPoint\u0022:12,\u0022withinRange\u0022:false,\u0022anomalyDetectorDirection\u0022:\u0022Up\u0022,\u0022suppressCondition\u0022:{\u0022minNumber\u0022:5,\u0022minRatio\u0022:6}}}]}",
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "6732feb3-e803-4b54-a79c-46d9bd726766",
+        "apim-request-id": "b6e0337b-60fb-4477-af79-af0272b56a69",
         "Content-Length": "0",
-        "Date": "Wed, 16 Dec 2020 18:41:43 GMT",
-        "Location": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/c46413c0-3ff5-42f1-81e7-e6926459ba4b",
+        "Date": "Fri, 05 Feb 2021 17:53:17 GMT",
+        "Location": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/fb5b5bf2-8818-4c41-a698-f372ff1bff87",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "208",
-        "x-request-id": "6732feb3-e803-4b54-a79c-46d9bd726766"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "177",
+        "X-Request-ID": "b6e0337b-60fb-4477-af79-af0272b56a69"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/c46413c0-3ff5-42f1-81e7-e6926459ba4b",
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/fb5b5bf2-8818-4c41-a698-f372ff1bff87",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-25c62de64cc0f54780a9d3bde6454881-06a76ee0a1f06443-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201215.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-e0c1796131348a47b126d39219c0e100-f078ca1992cef240-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210205.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "1d1bb5332930da790246cc2a904d34b8",
         "x-ms-return-client-request-id": "true"
@@ -43,17 +49,17 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2bec307d-12c2-4c00-a161-076db26f1ef6",
+        "apim-request-id": "cde98562-85c4-4a01-94f9-0869a728e4a5",
         "Content-Length": "865",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 16 Dec 2020 18:41:43 GMT",
+        "Date": "Fri, 05 Feb 2021 17:53:17 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "91",
-        "x-request-id": "2bec307d-12c2-4c00-a161-076db26f1ef6"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "89",
+        "X-Request-ID": "cde98562-85c4-4a01-94f9-0869a728e4a5"
       },
       "ResponseBody": {
-        "anomalyDetectionConfigurationId": "c46413c0-3ff5-42f1-81e7-e6926459ba4b",
+        "anomalyDetectionConfigurationId": "fb5b5bf2-8818-4c41-a698-f372ff1bff87",
         "name": "config0dbZeJSe",
         "description": "",
         "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
@@ -108,27 +114,112 @@
       }
     },
     {
-      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/c46413c0-3ff5-42f1-81e7-e6926459ba4b",
-      "RequestMethod": "DELETE",
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/fb5b5bf2-8818-4c41-a698-f372ff1bff87",
+      "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c10a2ba96c25ac46a38efe90f0299eaa-eb209669e9c88344-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201215.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-2b881f0c99efd5448f36b5e1cb2ddc2b-56003f09369e444d-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210205.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "ed85cf0a6bed47aaf929d5ea546b7c39",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6a45e763-e99a-4279-a105-a23622d7447e",
+        "Content-Length": "865",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 05 Feb 2021 17:53:17 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "94",
+        "X-Request-ID": "6a45e763-e99a-4279-a105-a23622d7447e"
+      },
+      "ResponseBody": {
+        "anomalyDetectionConfigurationId": "fb5b5bf2-8818-4c41-a698-f372ff1bff87",
+        "name": "config0dbZeJSe",
+        "description": "",
+        "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+        "wholeMetricConfiguration": {
+          "hardThresholdCondition": {
+            "lowerBound": 10.0,
+            "upperBound": 20.0,
+            "anomalyDetectorDirection": "Both",
+            "suppressCondition": {
+              "minNumber": 1,
+              "minRatio": 2.0
+            }
+          }
+        },
+        "dimensionGroupOverrideConfigurations": [],
+        "seriesOverrideConfigurations": [
+          {
+            "series": {
+              "dimension": {
+                "city": "Delhi",
+                "category": "Handmade"
+              }
+            },
+            "smartDetectionCondition": {
+              "sensitivity": 30.0,
+              "anomalyDetectorDirection": "Both",
+              "suppressCondition": {
+                "minNumber": 3,
+                "minRatio": 4.0
+              }
+            }
+          },
+          {
+            "series": {
+              "dimension": {
+                "city": "Koltaka",
+                "category": "Grocery \u0026 Gourmet Food"
+              }
+            },
+            "changeThresholdCondition": {
+              "changePercentage": 40.0,
+              "shiftPoint": 12,
+              "anomalyDetectorDirection": "Up",
+              "withinRange": false,
+              "suppressCondition": {
+                "minNumber": 5,
+                "minRatio": 6.0
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/enrichment/anomalyDetection/configurations/fb5b5bf2-8818-4c41-a698-f372ff1bff87",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-9b23c9d14f502849873644db4dc213b5-f9fd41e3b194584c-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210205.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "8695fe6bf483657ea7acc07125635c32",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "b99f02e8-63c7-4276-b89c-90567b5f1182",
+        "apim-request-id": "4d4fe126-3078-46ea-94db-f51be2b6d10d",
         "Content-Length": "0",
-        "Date": "Wed, 16 Dec 2020 18:41:43 GMT",
+        "Date": "Fri, 05 Feb 2021 17:53:17 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "93",
-        "x-request-id": "b99f02e8-63c7-4276-b89c-90567b5f1182"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "144",
+        "X-Request-ID": "4d4fe126-3078-46ea-94db-f51be2b6d10d"
       },
       "ResponseBody": []
     }

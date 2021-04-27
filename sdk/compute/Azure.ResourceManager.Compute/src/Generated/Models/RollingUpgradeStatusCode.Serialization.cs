@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal static class RollingUpgradeStatusCodeExtensions
+    internal static partial class RollingUpgradeStatusCodeExtensions
     {
         public static string ToSerialString(this RollingUpgradeStatusCode value) => value switch
         {

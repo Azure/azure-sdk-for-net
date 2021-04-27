@@ -1,7 +1,40 @@
 # Release History
 
-## 3.1.0-beta.2 (Unreleased)
+## 3.1.0-beta.5 (Unreleased)
 
+### New Features
+- Updated the `FormRecognizerModelFactory` class to support missing model types for mocking.
+
+## 3.0.1 (2021-04-09)
+
+### Key Bug Fixes
+- Updated dependency versions.
+
+## 3.1.0-beta.4 (2021-04-06)
+
+### New Features
+- Added support for pre-built passports and US driver licenses recognition with the `StartRecognizeIdDocuments` API.
+- Expanded the set of document languages that can be provided to the `StartRecognizeContent` API.
+- Added property `Pages` to `RecognizeBusinessCardsOptions`, `RecognizeCustomFormsOptions`, `RecognizeInvoicesOptions`, and `RecognizeReceiptsOptions` to specify the page numbers to recognize.
+- Added property `ReadingOrder` to `RecognizeContentOptions` to specify the order in which recognized text lines are returned.
+
+### Breaking changes
+- The client defaults to the latest supported service version, which currently is `2.1-preview.3`.
+- `StartRecognizeCustomForms` now throws a `RequestFailedException` when an invalid file is passed.
+
+## 3.1.0-beta.3 (2021-03-09)
+
+### New Features
+- Added protected constructors for mocking to `Operation` types, such as `TrainingOperation` and `RecognizeContentOperation`.
+
+## 3.1.0-beta.2 (2021-02-09)
+### Breaking changes
+- Renamed the model `Appearance` to `TextAppearance`.
+- Renamed the model `Style` to `TextStyle`.
+- Renamed the extensible enum `TextStyle` to `TextStyleName`.
+- Changed object type for property `Pages` under `RecognizeContentOptions` from `IEnumerable` to `IList`.
+- Changed model type of `Locale` from `string` to `FormRecognizerLocale` in `RecognizeBusinessCardsOptions`, `RecognizeInvoicesOptions`, and `RecognizeReceiptsOptions`.
+- Changed model type of `Language` from `string` to `FormRecognizerLanguage` in `RecognizeContentOptions`.
 
 ## 3.1.0-beta.1 (2020-11-23)
 

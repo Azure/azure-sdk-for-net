@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A stored credential that can be used by a job to connect to target databases. </summary>
-    public partial class JobCredential : Resource
+    public partial class JobCredential : ProxyResource
     {
         /// <summary> Initializes a new instance of JobCredential. </summary>
         public JobCredential()

@@ -5,68 +5,54 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "159",
+        "Content-Length": "140",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-a4c3a3e0dbe0e240a5310209be02ea9e-edada22af6fad94b-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210201.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-api-key": "Sanitized",
         "x-ms-client-request-id": "a43b88837f2bec9b7397676edec0364e",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "{\u0022activeSince\u0022:\u00222020-10-01T00:00:00Z\u0022,\u0022dimensionFilter\u0022:{\u0022city\u0022:[\u0022Belo Horizonte\u0022,\u0022Los Angeles\u0022,\u0022Osaka\u0022],\u0022category\u0022:[\u0022__SUM__\u0022,\u0022Shoes Handbags \u0026 Sunglasses\u0022]}}",
+      "RequestBody": {
+        "activeSince": "2020-10-01T00:00:00Z",
+        "dimensionFilter": {
+          "city": [
+            "Belo Horizonte",
+            "Chennai",
+            "Hong Kong"
+          ],
+          "category": [
+            "__SUM__",
+            "Outdoors"
+          ]
+        }
+      },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c090ea8e-058e-42e8-bd53-792caec6cd91",
-        "Content-Length": "730",
+        "apim-request-id": "010e339b-23e8-4dba-988a-f9ea93f73b6d",
+        "Content-Length": "240",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 15 Dec 2020 01:35:50 GMT",
+        "Date": "Mon, 01 Feb 2021 17:31:07 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "123",
-        "x-request-id": "c090ea8e-058e-42e8-bd53-792caec6cd91"
+        "x-envoy-upstream-service-time": "623",
+        "x-request-id": "010e339b-23e8-4dba-988a-f9ea93f73b6d"
       },
       "ResponseBody": {
         "value": [
           {
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "dimension": {
-              "city": "Osaka",
-              "category": "Shoes Handbags \u0026 Sunglasses"
+              "city": "Chennai",
+              "category": "Outdoors"
             }
           },
           {
             "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
             "dimension": {
-              "city": "Los Angeles",
-              "category": "Shoes Handbags \u0026 Sunglasses"
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "dimension": {
-              "city": "Belo Horizonte",
-              "category": "Shoes Handbags \u0026 Sunglasses"
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "dimension": {
-              "city": "Osaka",
-              "category": "__SUM__"
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "dimension": {
-              "city": "Belo Horizonte",
-              "category": "__SUM__"
-            }
-          },
-          {
-            "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
-            "dimension": {
-              "city": "Los Angeles",
-              "category": "__SUM__"
+              "city": "Hong Kong",
+              "category": "Outdoors"
             }
           }
         ],

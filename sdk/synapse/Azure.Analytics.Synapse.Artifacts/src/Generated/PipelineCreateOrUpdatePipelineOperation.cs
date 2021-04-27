@@ -20,6 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts
     public partial class PipelineCreateOrUpdatePipelineOperation : Operation<PipelineResource>, IOperationSource<PipelineResource>
     {
         private readonly ArmOperationHelpers<PipelineResource> _operation;
+
+        /// <summary> Initializes a new instance of PipelineCreateOrUpdatePipelineOperation for mocking. </summary>
+        protected PipelineCreateOrUpdatePipelineOperation()
+        {
+        }
+
         internal PipelineCreateOrUpdatePipelineOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<PipelineResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PipelineCreateOrUpdatePipelineOperation");
