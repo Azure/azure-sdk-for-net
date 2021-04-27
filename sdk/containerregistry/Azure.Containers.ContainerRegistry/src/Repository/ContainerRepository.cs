@@ -54,21 +54,17 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Create a new <see cref="RegistryArtifact"/> object for the specified artifact.
         /// </summary>
-        /// <param name="repositoryName"> The name of the repository to reference. </param>
         /// <param name="tagOrDigest"> Either a tag or a digest that uniquely identifies the artifact. </param>
         /// <returns> A new <see cref="RegistryArtifact"/> for the desired repository. </returns>
-        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
         /// <exception cref="ArgumentNullException"> Thrown when <paramref name="tagOrDigest"/> is null. </exception>
         /// <exception cref="ArgumentException"> Thrown when <paramref name="tagOrDigest"/> is empty. </exception>
-        public virtual RegistryArtifact GetArtifact(string repositoryName, string tagOrDigest)
+        public virtual RegistryArtifact GetArtifact(string tagOrDigest)
         {
-            Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
             Argument.AssertNotNullOrEmpty(tagOrDigest, nameof(tagOrDigest));
 
             return new RegistryArtifact(
                 _registryUri,
-                repositoryName,
+                _name,
                 tagOrDigest,
                 _clientDiagnostics,
                 _restClient);
