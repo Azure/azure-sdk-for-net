@@ -126,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     }
                     await _client.SendEventsAsync(egEvents, cancellationToken).ConfigureAwait(false);
                 }
-                else
+                else if (firstEvent is CloudEvent)
                 {
                     List<CloudEvent> cloudEvents = new();
                     foreach (object evt in events)
@@ -134,6 +134,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                         cloudEvents.Add((CloudEvent) evt);
                     }
                     await _client.SendEventsAsync(cloudEvents, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    throw new InvalidOperationException(
+                        $"{firstEvent?.GetType().ToString()} is not a valid event type.");
                 }
             }
         }

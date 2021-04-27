@@ -231,21 +231,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         public async Task OutputBindingParamsTests(string functionName, string expectedCollection)
         {
             List<EventGridEvent> egOutput = new List<EventGridEvent>();
-            List<CloudEvent> cloudOutput = new List<CloudEvent>();
 
             Func<EventGridAttribute, IAsyncCollector<object>> objectEventConverter = (attr =>
             {
                 var mockClient = new Mock<EventGridPublisherClient>();
-                mockClient.Setup(x => x.SendEventsAsync(It.IsAny<IEnumerable<CloudEvent>>(), It.IsAny<CancellationToken>()))
-                    .Returns((IEnumerable<CloudEvent> events, CancellationToken cancel) =>
-                    {
-                        foreach (CloudEvent eve in events)
-                        {
-                            cloudOutput.Add(eve);
-                        }
-
-                        return Task.FromResult<Response>(new MockResponse(200));
-                    });
                 mockClient.Setup(x => x.SendEventsAsync(It.IsAny<IEnumerable<EventGridEvent>>(), It.IsAny<CancellationToken>()))
                     .Returns((IEnumerable<EventGridEvent> events, CancellationToken cancel) =>
                     {
@@ -347,7 +336,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         public async Task OutputCloudEventBindingParamsTests(string functionName, string expectedCollection)
         {
             List<CloudEvent> cloudEvents = new List<CloudEvent>();
-            List<EventGridEvent> egEvents = new List<EventGridEvent>();
 
             Func<EventGridAttribute, IAsyncCollector<object>> eventConverter = (attr =>
             {
@@ -358,16 +346,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                         foreach (CloudEvent eve in events)
                         {
                             cloudEvents.Add(eve);
-                        }
-
-                        return Task.FromResult<Response>(new MockResponse(200));
-                    });
-                mockClient.Setup(x => x.SendEventsAsync(It.IsAny<IEnumerable<EventGridEvent>>(), It.IsAny<CancellationToken>()))
-                    .Returns((IEnumerable<EventGridEvent> events, CancellationToken cancel) =>
-                    {
-                        foreach (EventGridEvent eve in events)
-                        {
-                            egEvents.Add(eve);
                         }
 
                         return Task.FromResult<Response>(new MockResponse(200));
@@ -396,6 +374,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 Assert.True(expectedEvents.Remove(eve.Data.ToObjectFromJson<string>()));
             }
             Assert.AreEqual(0, expectedEvents.Count);
+        }
+
+        [Test]
+        public void InvalidOutputEvent()
+        {
+            Func<EventGridAttribute, IAsyncCollector<object>> eventConverter = (attr =>
+            {
+                var mockClient = new Mock<EventGridPublisherClient>();
+                return new EventGridAsyncCollector(mockClient.Object);
+            });
+
+            ILoggerFactory loggerFactory = new LoggerFactory();
+            loggerFactory.AddProvider(new TestLoggerProvider());
+            // use moq eventgridclient for test extension
+            var customExtension = new EventGridExtensionConfigProvider(eventConverter, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
+
+            var configuration = new Dictionary<string, string>
+                {
+                    { "eventGridUri" , "https://pccode.westus2-1.eventgrid.azure.net/api/events" },
+                    { "eventgridKey" , "thisismagic" }
+                };
+
+            var host = TestHelpers.NewHost<OutputCloudEventBindingParams>(customExtension, configuration: configuration);
+            Assert.That(
+                async () => await host.GetJobHost().CallAsync($"OutputCloudEventBindingParams.InvalidEvent"),
+                Throws.InstanceOf<FunctionInvocationException>().And.InnerException.InnerException.InstanceOf<InvalidOperationException>()
+                    .And.InnerException.InnerException.Message.Contains(nameof(TestEvent)));
         }
 
         public class CloudEventParams
@@ -654,6 +659,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 single = new CloudEvent("", "", "0");
             }
 
+            public void InvalidEvent([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out TestEvent single)
+            {
+                single = new();
+            }
+
             public void SingleEventString([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out string single)
             {
                 single = @"
@@ -746,5 +756,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 }
             }
         }
+    }
+
+    #pragma warning disable SA1402
+    public class TestEvent
+    #pragma warning restore SA1402
+    {
     }
 }
