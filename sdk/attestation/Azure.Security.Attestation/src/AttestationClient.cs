@@ -170,7 +170,11 @@ namespace Azure.Security.Attestation
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
                     if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
                     {
-                        throw new Azure.RequestFailedException("Attestation Token was rejected.");
+                        throw new AttestationTokenValidationFailedException("Attestation Token was rejected.")
+                        {
+                            Signers = signers,
+                            Token = attestationToken,
+                        };
                     }
                 }
 
@@ -258,7 +262,11 @@ namespace Azure.Security.Attestation
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
                     if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
                     {
-                        throw new Azure.RequestFailedException("Attestation Token was rejected.");
+                        throw new AttestationTokenValidationFailedException("Attestation Token was rejected.")
+                        {
+                            Signers = signers,
+                            Token = attestationToken,
+                        };
                     }
                 }
 

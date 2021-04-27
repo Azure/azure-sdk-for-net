@@ -328,7 +328,7 @@ namespace Azure.Security.Attestation.Tests
             {
                 // Collect quote and enclave held data from an SGX enclave.
 
-                Assert.ThrowsAsync(typeof(RequestFailedException), async () => await client.AttestOpenEnclaveAsync(
+                Assert.ThrowsAsync(typeof(AttestationTokenValidationFailedException), async () => await client.AttestOpenEnclaveAsync(
                     new AttestationRequest
                     {
                         Evidence = BinaryData.FromBytes(binaryReport),

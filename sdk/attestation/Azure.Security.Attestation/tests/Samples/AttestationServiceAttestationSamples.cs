@@ -166,6 +166,30 @@ namespace Azure.Security.Attestation.Tests.Samples
 
                 #endregion
             }
+
+            {
+                var runtimeDataList = Base64Url.Decode(_runtimeData).ToList();
+                runtimeDataList.Add(1);
+                binaryRuntimeData = runtimeDataList.ToArray();
+
+                #region Snippet:AttestSgxEnclaveWithException
+
+                try
+                {
+                    AttestationResponse<AttestationResult> attestationResult = client.AttestSgxEnclave(new AttestationRequest
+                    {
+                        Evidence = BinaryData.FromBytes(binaryQuote),
+                        RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
+                    });
+                }
+                catch (RequestFailedException ex)
+                    when (ex.ErrorCode == "InvalidParameter")
+                    {
+                    // Ignore invalid quote errors.
+                    }
+                #endregion
+
+            }
             return;
         }
 

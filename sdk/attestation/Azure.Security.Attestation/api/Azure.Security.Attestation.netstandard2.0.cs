@@ -175,6 +175,12 @@ namespace Azure.Security.Attestation
         public Azure.Security.Attestation.AttestationSigner Signer { get { throw null; } }
         public Azure.Security.Attestation.AttestationToken Token { get { throw null; } }
     }
+    public partial class AttestationTokenValidationFailedException : System.InvalidOperationException
+    {
+        public AttestationTokenValidationFailedException(string message) { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner> Signers { get { throw null; } }
+        public Azure.Security.Attestation.AttestationToken Token { get { throw null; } }
+    }
     public partial class AttestationTokenValidationOptions
     {
         public AttestationTokenValidationOptions() { }

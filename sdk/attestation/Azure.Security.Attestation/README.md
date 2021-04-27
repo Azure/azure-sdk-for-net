@@ -286,7 +286,6 @@ var encryptedData = SendTokenToRelyingParty(attestationResult.Token);
 
 Additional information on how to perform attestation token validation can be found in the [MAA Service Attestation Sample](https://github.com/gkostal/attestation/tree/d6a216cd6af5a509e20ac0a752197fdb242fabc3/sgx.attest.sample).
 
-
 ### Retrieve Token Certificates
 
 Use `GetSigningCertificatesAsync` to retrieve the certificates which can be used to validate the token returned from the attestation service.
@@ -299,7 +298,25 @@ IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningC
 
 ## Troubleshooting
 
-Troubleshooting information for the MAA service can be found [here](https://docs.microsoft.com/azure/attestation/troubleshoot-guide)
+Most Attestation service operations will throw a [RequestFailedException](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs) on failure with helpful ErrorCodes. Many of these errors are recoverable.
+
+```C# Snippet:AttestSgxEnclaveWithException
+try
+{
+    AttestationResponse<AttestationResult> attestationResult = client.AttestSgxEnclave(new AttestationRequest
+    {
+        Evidence = BinaryData.FromBytes(binaryQuote),
+        RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
+    });
+}
+catch (RequestFailedException ex)
+    when (ex.ErrorCode == "InvalidParameter")
+    {
+    // Ignore invalid quote errors.
+    }
+```
+
+Additional troubleshooting information for the MAA service can be found [here](https://docs.microsoft.com/azure/attestation/troubleshoot-guide)
 
 ## Next steps
 
