@@ -87,14 +87,14 @@ Assembly properties required for running unit tests.
 All Time Series Insights service operations will contain helpful error information in response [TimeSeriesOperationError](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/Generated/Models/TimeSeriesOperationError.cs). 
 For example, with the TimeSeriesInsightsSampleGetTypeById operation, iterate through response error to find out if a type does not exist.
 
-``` c#
+```C# Snippet:TimeSeriesInsightsSampleGetTypeById
 // Code snippet below shows getting a default Type using Id
 // The default type Id can be obtained programmatically by using the ModelSettings client.
 
 TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
 Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await client
     .Types
-    .GetByIdAsync(new string[] { "sampleType" })
+    .GetByIdAsync(new string[] { modelSettings.DefaultTypeId })
     .ConfigureAwait(false);
 
 // The response of calling the API contains a list of type or error objects corresponding by position to the input parameter array in the request.
