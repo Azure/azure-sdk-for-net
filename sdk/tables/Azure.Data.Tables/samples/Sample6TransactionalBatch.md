@@ -63,13 +63,13 @@ List<TableEntity> entityList = new List<TableEntity>{
 };
 
 // Create the batch.
-TableTransactionalBatch addEntitiesBatch = client.CreateTransactionalBatch(partitionKey);
+TableTransactionalBatch addEntitiesBatch = new TableTransactionalBatch(partitionKey);
 
 // Add the entities to be added to the batch.
 addEntitiesBatch.AddEntities(entityList);
 
 // Submit the batch.
-TableBatchResponse response = await addEntitiesBatch.SubmitBatchAsync().ConfigureAwait(false);
+TableBatchResponse response = await client.SubmitTransactionAsync(addEntitiesBatch).ConfigureAwait(false);
 
 foreach (TableEntity entity in entityList)
 {
@@ -84,7 +84,7 @@ This example assumes we already have added the entities from the previous add en
 
 ```C# Snippet:BatchMixed
 // Create a new batch.
-TableTransactionalBatch mixedBatch = client.CreateTransactionalBatch(partitionKey);
+TableTransactionalBatch mixedBatch = new TableTransactionalBatch(partitionKey);
 
 // Add an entity for deletion to the batch.
 mixedBatch.DeleteEntity(entityList[0].RowKey);
@@ -111,7 +111,7 @@ updateEntity["Brand"] = "Generic";
 mixedBatch.UpsertEntity(updateEntity, TableUpdateMode.Replace);
 
  // Submit the batch.
-await mixedBatch.SubmitBatchAsync().ConfigureAwait(false);
+await client.SubmitTransactionAsync(mixedBatch).ConfigureAwait(false);
 ```
 
 ## Deleting entities with a transactional batch
@@ -120,7 +120,7 @@ Let's clean up the rest of the entities remaining in the table with a batch dele
 
 ```C# Snippet:BatchDelete
 // Create a new batch.
-TableTransactionalBatch deleteEntitiesBatch = client.CreateTransactionalBatch(partitionKey);
+TableTransactionalBatch deleteEntitiesBatch = new TableTransactionalBatch(partitionKey);
 
 // Add the entities for deletion to the batch.
 foreach (TableEntity entity in entityList)
@@ -129,7 +129,7 @@ foreach (TableEntity entity in entityList)
 }
 
 // Submit the batch.
-await deleteEntitiesBatch.SubmitBatchAsync().ConfigureAwait(false);
+await client.SubmitTransactionAsync(deleteEntitiesBatch).ConfigureAwait(false);
 ```
 
 ---
