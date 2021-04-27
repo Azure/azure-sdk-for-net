@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault
 {
     internal class ChallengeBasedAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
     {
-        private static ConcurrentDictionary<string, AuthorityScope> _scopeCache = new();
+        private static ConcurrentDictionary<string, AuthorityScope> _scopeCache = new ConcurrentDictionary<string, AuthorityScope>();
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
         private AuthorityScope _scope;
 
