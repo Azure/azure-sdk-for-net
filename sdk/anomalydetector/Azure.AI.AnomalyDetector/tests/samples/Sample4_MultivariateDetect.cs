@@ -73,6 +73,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 throw new Exception(msg);
             }
         }
+        #region Snippet:TrainMultivariateModel
         private async Task<Guid?> trainAsync(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
         {
             try
@@ -92,7 +93,6 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 Response<Model> get_response = await client.GetMultivariateModelAsync(trained_model_id).ConfigureAwait(false);
                 ModelStatus? model_status = null;
                 int tryout_count = 0;
-                TimeSpan create_limit = new TimeSpan(0, 3, 0);
                 while (tryout_count < max_tryout & model_status != ModelStatus.Ready)
                 {
                     System.Threading.Thread.Sleep(10000);
@@ -123,6 +123,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 throw new Exception(e.Message);
             }
         }
+        #endregion
+
+        #region Snippet:DetectMultivariateAnomaly
         private async Task<DetectionResult> detectAsync(AnomalyDetectorClient client, string datasource, Guid model_id,DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
         {
             try
@@ -158,7 +161,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 throw new Exception(e.Message);
             }
         }
+        #endregion
 
+        #region Snippet:ExportMultivariateModel
         private async Task exportAsync(AnomalyDetectorClient client, Guid model_id, string model_path = "model.zip")
         {
             try
@@ -178,7 +183,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 throw new Exception(e.Message);
             }
         }
+        #endregion
 
+        #region Snippet:DeleteMultivariateModel
         private async Task deleteAsync(AnomalyDetectorClient client, Guid model_id)
         {
             await client.DeleteMultivariateModelAsync(model_id).ConfigureAwait(false);
@@ -200,5 +207,6 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             }
             return count;
         }
+        #endregion
     }
 }
