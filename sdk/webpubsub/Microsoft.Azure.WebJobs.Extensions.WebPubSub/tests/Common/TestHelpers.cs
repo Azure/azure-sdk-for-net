@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
         private sealed class FakeTypeLocator : ITypeLocator
         {
-            private Type _type;
+            private readonly Type _type;
 
             public FakeTypeLocator(Type type)
             {
@@ -89,8 +89,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             string userId = "testuser",
             byte[] payload = null)
         {
-            var context = new HttpRequestMessage();
-            context.Method = new HttpMethod(httpMethod);
+            var context = new HttpRequestMessage()
+            {
+                Method = new HttpMethod(httpMethod)
+            };
             context.Headers.Add(Constants.Headers.CloudEvents.Hub, hub);
             context.Headers.Add(Constants.Headers.CloudEvents.Type, GetFormedType(type, eventName));
             context.Headers.Add(Constants.Headers.CloudEvents.EventName, eventName);

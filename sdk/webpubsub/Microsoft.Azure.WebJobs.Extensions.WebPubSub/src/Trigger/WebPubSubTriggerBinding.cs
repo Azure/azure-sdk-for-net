@@ -105,8 +105,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             };
 
             contract.Add(parameterInfo.Name, parameterInfo.ParameterType);
+            SafeAddContract(() => contract.Add("ConnectionContext", parameterInfo.ParameterType));
+            SafeAddContract(() => contract.Add("Message", typeof(BinaryData)));
+            SafeAddContract(() => contract.Add("DataType", typeof(MessageDataType)));
+            SafeAddContract(() => contract.Add("Claims", typeof(IDictionary<string, string[]>)));
+            SafeAddContract(() => contract.Add("Query", typeof(IDictionary<string, string[]>)));
+            SafeAddContract(() => contract.Add("Reason", typeof(string)));
+            SafeAddContract(() => contract.Add("Subprotocols", typeof(string[])));
+            SafeAddContract(() => contract.Add("ClientCertificates", typeof(ClientCertificateInfo[])));
 
             return contract;
+        }
+
+        private static void SafeAddContract(Action addValue)
+        {
+            try
+            {
+                addValue();
+            }
+            catch
+            {
+                // ignore dup
+            }
         }
 
         /// <summary>

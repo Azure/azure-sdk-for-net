@@ -3,25 +3,22 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public abstract class WebPubSubOperation
     {
-        private WebPubSubOperationKind _operationKind;
-
-        public WebPubSubOperationKind OperationKind
+        public string OperationKind
         {
             get
             {
-                return (WebPubSubOperationKind)Enum.Parse(typeof(WebPubSubOperationKind), GetType().Name);
+                return GetType().Name;
             }
             set
             {
                 // used in type-less for deserialize.
-                _operationKind = value;
+                _ = value;
             }
         }
     }

@@ -20,9 +20,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         private const WebPubSubEventType TestType = WebPubSubEventType.System;
         private const string TestEvent = Constants.Events.ConnectedEvent;
 
-        private static HashSet<string> EmptySetting = new HashSet<string>();
-        private static HashSet<string> ValidAccessKeys = new HashSet<string>(new string[] { TestKey.AccessKey });
-        private static string[] ValidSignature = new string[] { TestKey.Signature };
+        private static readonly HashSet<string> EmptySetting = new();
+        private static readonly HashSet<string> ValidAccessKeys = new(new string[] { TestKey.AccessKey });
+        private static readonly string[] ValidSignature = new string[] { TestKey.Signature };
 
         [TestCase]
         public async Task TestProcessRequest_ValidRequest()
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual(expectedCode, response.StatusCode);
         }
 
-        private WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent)
+        private static WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent)
         {
             var funcName = $"{hub}.{type}.{eventName}".ToLower();
             var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance);

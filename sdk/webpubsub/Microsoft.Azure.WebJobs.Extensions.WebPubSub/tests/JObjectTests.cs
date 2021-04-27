@@ -26,13 +26,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         [TestCase(nameof(RevokeGroupPermission))]
         public void TestOutputConvert(string operationKind)
         {
+            WebPubSubConfigProvider.RegisterJsonConverter();
+
             var input = @"{ ""operationKind"":""{0}"",""userId"":""user"", ""group"":""group1"",""connectionId"":""connection"",""message"":""test"",""dataType"":""text"", ""reason"":""close""}";
 
             var replacedInput = input.Replace("{0}", operationKind);
 
             var jObject = JObject.Parse(replacedInput);
 
-            var converted = JsonConvert.DeserializeObject<WebPubSubOperation>(replacedInput, new WebPubSubOperationJsonConverter());
+            var converted = WebPubSubConfigProvider.ConvertToWebPubSubOperation(jObject);
 
             Assert.AreEqual(operationKind, converted.OperationKind.ToString());
         }

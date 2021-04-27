@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub

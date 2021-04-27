@@ -12,10 +12,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public string Group { get; set; }
 
-        [JsonConverter(typeof(BinaryDataJsonConverter))]
         public BinaryData Message { get; set; }
 
-        public MessageDataType DataType { get; set; }
+        public MessageDataType DataType { get; set; } = MessageDataType.Binary;
 
         public string[] Excluded { get; set; }
     }

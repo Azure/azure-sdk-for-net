@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class WebPubSubTriggerDispatcher : IWebPubSubTriggerDispatcher
     {
-        private Dictionary<string, WebPubSubListener> _listeners = new Dictionary<string, WebPubSubListener>(StringComparer.InvariantCultureIgnoreCase);
+        private readonly Dictionary<string, WebPubSubListener> _listeners = new(StringComparer.InvariantCultureIgnoreCase);
         private readonly ILogger _logger;
 
         public WebPubSubTriggerDispatcher(ILogger logger)
@@ -176,17 +176,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             context = new ConnectionContext();
             try
             {
-                context.ConnectionId = request.Headers.GetValues(Constants.Headers.CloudEvents.ConnectionId).FirstOrDefault();
-                context.Hub = request.Headers.GetValues(Constants.Headers.CloudEvents.Hub).FirstOrDefault();
-                context.EventType = Utilities.GetEventType(request.Headers.GetValues(Constants.Headers.CloudEvents.Type).FirstOrDefault());
-                context.EventName = request.Headers.GetValues(Constants.Headers.CloudEvents.EventName).FirstOrDefault();
-                context.Signature = request.Headers.GetValues(Constants.Headers.CloudEvents.Signature).FirstOrDefault();
+                context.ConnectionId = request.Headers.GetValues(Constants.Headers.CloudEvents.ConnectionId).SingleOrDefault();
+                context.Hub = request.Headers.GetValues(Constants.Headers.CloudEvents.Hub).SingleOrDefault();
+                context.EventType = Utilities.GetEventType(request.Headers.GetValues(Constants.Headers.CloudEvents.Type).SingleOrDefault());
+                context.EventName = request.Headers.GetValues(Constants.Headers.CloudEvents.EventName).SingleOrDefault();
+                context.Signature = request.Headers.GetValues(Constants.Headers.CloudEvents.Signature).SingleOrDefault();
                 context.Headers = request.Headers.ToDictionary(x => x.Key, v => new StringValues(v.Value.ToArray()), StringComparer.OrdinalIgnoreCase);
 
                 // UserId is optional, e.g. connect
                 if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.UserId, out var values))
                 {
-                    context.UserId = values.FirstOrDefault();
+                    context.UserId = values.SingleOrDefault();
                 }
             }
             catch (Exception)
@@ -206,18 +206,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     continue;
                 }
-                using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey)))
+                using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
+                var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionId));
+                var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
+                if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
                 {
-                    var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionId));
-                    var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
-                    if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        continue;
-                    }
+                    return true;
+                }
+                else
+                {
+                    continue;
                 }
             }
             return false;
@@ -277,7 +275,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 // ignore invalid response
             }
-            response = default(T);
+            response = default;
             return false;
         }
 
@@ -301,9 +299,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 return Utilities.BuildErrorResponse(error);
             }
-            else if (response is ErrorResponse)
+            else if (response is ErrorResponse errorResponse)
             {
-                return Utilities.BuildErrorResponse((ErrorResponse)response);
+                return Utilities.BuildErrorResponse(errorResponse);
             }
 
             if (requestType == RequestType.Connect)
@@ -312,9 +310,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     return Utilities.BuildResponse(converted.ToString());
                 }
-                else if (response is ConnectResponse)
+                else if (response is ConnectResponse connectResponse)
                 {
-                    return Utilities.BuildResponse((ConnectResponse)response);
+                    return Utilities.BuildResponse(connectResponse);
                 }
             }
 
@@ -324,9 +322,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     return Utilities.BuildResponse(msgResponse);
                 }
-                else if (response is MessageResponse)
+                else if (response is MessageResponse messageResponse)
                 {
-                    return Utilities.BuildResponse((MessageResponse)response);
+                    return Utilities.BuildResponse(messageResponse);
                 }
             }
 

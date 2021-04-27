@@ -13,5 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public string ConnectionId { get; set; }
 
         public WebPubSubPermission Permission { get; set; }
+
+        public string TargetName { get; set; }
     }
 }
