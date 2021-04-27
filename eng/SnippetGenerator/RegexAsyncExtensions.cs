@@ -10,7 +10,7 @@ namespace SnippetGenerator
 {
     internal static class RegexAsyncExtensions
     {
-        public static async Task<string> ReplaceAsync(this Regex regex, string input, Func<Match, ValueTask<string>> replacementFn)
+        public static async ValueTask<string> ReplaceAsync(this Regex regex, string input, Func<Match, ValueTask<string>> replacementFn)
         {
             var sb = new StringBuilder();
             var lastIndex = 0;
