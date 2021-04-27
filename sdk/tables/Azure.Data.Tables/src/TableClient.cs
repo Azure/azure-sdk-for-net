@@ -551,7 +551,8 @@ namespace Azure.Data.Tables
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
-        public virtual async Task<Response<T>> GetEntityAsync<T>(string partitionKey,
+        public virtual async Task<Response<T>> GetEntityAsync<T>(
+            string partitionKey,
             string rowKey,
             IEnumerable<string> select = null,
             CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
@@ -593,7 +594,8 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertEntityAsync<T>(T entity,
+        public virtual async Task<Response> UpsertEntityAsync<T>(
+            T entity,
             TableUpdateMode mode = TableUpdateMode.Merge,
             CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
@@ -701,7 +703,8 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpdateEntityAsync<T>(T entity,
+        public virtual async Task<Response> UpdateEntityAsync<T>(
+            T entity,
             ETag ifMatch,
             TableUpdateMode mode = TableUpdateMode.Merge,
             CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
@@ -827,7 +830,8 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of entity models serialized as type <typeparamref name="T"/>.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter,
+        public virtual AsyncPageable<T> QueryAsync<T>(
+            Expression<Func<T, bool>> filter,
             int? maxPerPage = null,
             IEnumerable<string> select = null,
             CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
@@ -864,7 +868,8 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Pageable{T}"/> containing a collection of entity models serialized as type <typeparamref name="T"/>.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter,
+        public virtual Pageable<T> Query<T>(
+            Expression<Func<T, bool>> filter,
             int? maxPerPage = null,
             IEnumerable<string> select = null,
             CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
@@ -901,7 +906,8 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of entity models serialized as type <typeparamref name="T"/>.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual AsyncPageable<T> QueryAsync<T>(string filter = null,
+        public virtual AsyncPageable<T> QueryAsync<T>(
+            string filter = null,
             int? maxPerPage = null,
             IEnumerable<string> select = null,
             CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
@@ -979,7 +985,8 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Pageable{T}"/> containing a collection of entity models serialized as type <typeparamref name="T"/>.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Pageable<T> Query<T>(string filter = null,
+        public virtual Pageable<T> Query<T>(
+            string filter = null,
             int? maxPerPage = null,
             IEnumerable<string> select = null,
             CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
@@ -1055,7 +1062,8 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> DeleteEntityAsync(string partitionKey,
+        public virtual async Task<Response> DeleteEntityAsync(
+            string partitionKey,
             string rowKey,
             ETag ifMatch = default,
             CancellationToken cancellationToken = default)
@@ -1219,7 +1227,8 @@ namespace Azure.Data.Tables
         /// <returns><see cref="Response{T}"/> containing a <see cref="TableBatchResponse"/>.</returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
-        public virtual async Task<Response<TableBatchResponse>> SubmitTransactionAsync(TableTransactionalBatch transactionalBatch,
+        public virtual async Task<Response<TableBatchResponse>> SubmitTransactionAsync(
+            TableTransactionalBatch transactionalBatch,
             CancellationToken cancellationToken = default) =>
             await SubmitBatchAsyncInternal(transactionalBatch, true, cancellationToken).ConfigureAwait(false);
 
@@ -1235,7 +1244,8 @@ namespace Azure.Data.Tables
         public virtual Response<TableBatchResponse> SubmitTransaction(TableTransactionalBatch transactionalBatch, CancellationToken cancellationToken = default) =>
             SubmitBatchAsyncInternal(transactionalBatch, false, cancellationToken).EnsureCompleted();
 
-        internal async Task<Response<TableBatchResponse>> SubmitBatchAsyncInternal(TableTransactionalBatch transactionalBatch,
+        internal async Task<Response<TableBatchResponse>> SubmitBatchAsyncInternal(
+            TableTransactionalBatch transactionalBatch,
             bool async,
             CancellationToken cancellationToken = default)
         {

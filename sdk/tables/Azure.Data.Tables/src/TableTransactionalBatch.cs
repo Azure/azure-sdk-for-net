@@ -20,7 +20,7 @@ namespace Azure.Data.Tables
         internal MultipartContent _batch;
         private Guid _batchGuid;
         private Guid _changesetGuid;
-        internal readonly ConcurrentDictionary<string, BatchItem> _requestLookup = new();
+        internal readonly Dictionary<string, BatchItem> _requestLookup = new();
         internal ConcurrentQueue<string> _requestMessages = new();
         internal List<BatchItem> _submittedMessageList;
         internal bool _submitted;
@@ -186,28 +186,28 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Removes the specified entity from the batch
+        /// Removes the specified entity from the batch.
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public bool RemoveEntity(ITableEntity entity)
-            => RemoveEntities(new[] { entity });
+        public bool RemoveEntityOperation(ITableEntity entity)
+            => RemoveEntityOperations(new[] { entity });
 
         /// <summary>
-        /// Removes the specified entity from the batch
+        /// Removes the specified entities from the batch.
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public bool RemoveEntities(IEnumerable<ITableEntity> entities)
+        public bool RemoveEntityOperations(IEnumerable<ITableEntity> entities)
         {
             try
             {
                 bool acquired = _batchLock.Wait(TimeSpan.FromSeconds(2));
                 if (!acquired)
                 {
-                    throw new Exception($"Unexpected error. Unable to {nameof(RemoveEntity)}");
+                    throw new Exception($"Unexpected error. Unable to {nameof(RemoveEntityOperation)}");
                 }
                 var itemsToRemove = new HashSet<string>(entities.Select(e => e.RowKey));
                 var newQueue = new ConcurrentQueue<string>();
@@ -219,7 +219,7 @@ namespace Azure.Data.Tables
                     }
                     else
                     {
-                        var isRemoved = _requestLookup.TryRemove(item, out _);
+                        var isRemoved = _requestLookup.Remove(item);
                         if (!isRemoved)
                         {
                             // There was some error removing the entities

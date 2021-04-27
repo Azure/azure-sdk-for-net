@@ -54,7 +54,7 @@ namespace Azure.Data.Tables.Tests
             var target = new TableTransactionalBatch(partition);
             target.AddEntities(entities);
 
-            target.RemoveEntity(entities[3]);
+            target.RemoveEntityOperation(entities[3]);
             entities.Remove(entities[3]);
 
             CollectionAssert.AreEqual(entities.Select(e => e.RowKey), target.GetEntities().Select(e => e.RowKey));

@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
@@ -15,7 +13,7 @@ namespace Azure.Data.Tables.Models
     {
         private readonly IDictionary<string, BatchItem> _requestLookup;
 
-        internal TableBatchResponse(ConcurrentDictionary<string, BatchItem> requestLookup)
+        internal TableBatchResponse(Dictionary<string, BatchItem> requestLookup)
         {
             _requestLookup = requestLookup;
         }

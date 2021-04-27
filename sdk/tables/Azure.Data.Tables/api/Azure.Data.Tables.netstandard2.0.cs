@@ -145,8 +145,8 @@ namespace Azure.Data.Tables
         public void ClearOperations() { }
         public virtual void DeleteEntity(string rowKey, Azure.ETag ifMatch = default(Azure.ETag)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.ITableEntity> GetEntities() { throw null; }
-        public bool RemoveEntities(System.Collections.Generic.IEnumerable<Azure.Data.Tables.ITableEntity> entities) { throw null; }
-        public bool RemoveEntity(Azure.Data.Tables.ITableEntity entity) { throw null; }
+        public bool RemoveEntityOperation(Azure.Data.Tables.ITableEntity entity) { throw null; }
+        public bool RemoveEntityOperations(System.Collections.Generic.IEnumerable<Azure.Data.Tables.ITableEntity> entities) { throw null; }
         public virtual bool TryGetFailedEntityFromException(Azure.RequestFailedException exception, out Azure.Data.Tables.ITableEntity failedEntity) { throw null; }
         public virtual void UpdateEntity(Azure.Data.Tables.ITableEntity entity, Azure.ETag ifMatch, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge) { }
         public virtual void UpsertEntity(Azure.Data.Tables.ITableEntity entity, Azure.Data.Tables.TableUpdateMode mode = Azure.Data.Tables.TableUpdateMode.Merge) { }
