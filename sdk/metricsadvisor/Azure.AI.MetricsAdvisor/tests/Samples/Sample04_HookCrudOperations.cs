@@ -24,7 +24,11 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
             #region Snippet:CreateHookAsync
-            string hookName = "Sample hook";
+#if SNIPPET
+            string hookName = "<hookName>";
+#else
+            string hookName = GetUniqueName();
+#endif
 
             var emailHook = new EmailNotificationHook()
             {

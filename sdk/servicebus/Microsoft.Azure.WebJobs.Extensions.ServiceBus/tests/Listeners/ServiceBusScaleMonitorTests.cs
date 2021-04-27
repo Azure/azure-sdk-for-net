@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             _serviceBusOptions = new ServiceBusOptions();
             _mockProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(new ServiceBusOptions()));
-            _mockClientFactory = new Mock<ServiceBusClientFactory>(configuration, Mock.Of<AzureComponentFactory>(), _mockProvider.Object);
+            _mockClientFactory = new Mock<ServiceBusClientFactory>(configuration, Mock.Of<AzureComponentFactory>(), _mockProvider.Object, new AzureEventSourceLogForwarder(new NullLoggerFactory()));
 
             _mockProvider
                 .Setup(p => p.CreateMessageProcessor(_client, _entityPath))

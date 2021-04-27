@@ -12,7 +12,7 @@ jobs:
         displayName: "Build & Package"
       - task: PowerShell@2
         displayName: "Verify generated code"
-        condition: and(succeeded(), ne(variables['System.TeamProject'],'internal'))
+        condition: and(succeeded(), ne(variables['System.TeamProject'],'internal'), not(contains(variables['System.PullRequest.TargetBranch'], 'feature/cplat')))
         inputs:
           filePath: "eng/scripts/Track1CodeCheck.ps1"
           pwsh: true
@@ -61,6 +61,8 @@ jobs:
           AgentImage: $(OSVmImage)
       - script: "echo $(system.pullrequest.pullrequestnumber), http://github.com/$(build.repository.id), http://github.com/$(build.repository.ID)"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          NuGetCacheKey: Test
       - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp $(RPScopeArgs)"
         displayName: "Build & Run Tests"
       - task: PublishTestResults@2
