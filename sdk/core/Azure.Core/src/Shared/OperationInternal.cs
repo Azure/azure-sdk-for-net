@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -10,28 +11,24 @@ namespace Azure.Core
 {
     internal class OperationInternal<TResult>
     {
-        private readonly TimeSpan _defaultPollingInterval;
-
         private readonly IOperation<TResult> _operation;
 
         private TResult _value;
 
-        public OperationInternal(string operationTypeName,
-            ClientDiagnostics clientDiagnostics,
-            IOperation<TResult> operation,
-            TimeSpan? defaultPollingInterval = null) : this(operationTypeName, clientDiagnostics, defaultPollingInterval)
+        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation) : this(clientDiagnostics)
         {
             _operation = operation;
+            OperationTypeName = operation.GetType().Name;
         }
 
-        protected OperationInternal(string operationTypeName,
-            ClientDiagnostics clientDiagnostics,
-            TimeSpan? defaultPollingInterval)
+        protected OperationInternal(ClientDiagnostics clientDiagnostics)
         {
-            OperationTypeName = operationTypeName;
             ClientDiagnostics = clientDiagnostics;
-            _defaultPollingInterval = defaultPollingInterval ?? TimeSpan.FromSeconds(1);
+            DefaultPollingInterval = TimeSpan.FromSeconds(1);
+            ScopeAttributes = new Dictionary<string, string>();
         }
+
+        public IDictionary<string, string> ScopeAttributes { get; }
 
         public bool HasValue { get; private set; }
 
@@ -63,7 +60,9 @@ namespace Azure.Core
 
         public Response RawResponse { get; set; }
 
-        protected string OperationTypeName { get; }
+        public string OperationTypeName { get; set; }
+
+        public TimeSpan DefaultPollingInterval { get; set; }
 
         protected ClientDiagnostics ClientDiagnostics { get; }
 
@@ -76,7 +75,7 @@ namespace Azure.Core
             UpdateStatusAsync(async: false, cancellationToken).EnsureCompleted();
 
         public async ValueTask<Response<TResult>> WaitForCompletionAsync(CancellationToken cancellationToken) =>
-            await WaitForCompletionAsync(_defaultPollingInterval, cancellationToken).ConfigureAwait(false);
+            await WaitForCompletionAsync(DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
 
         public async ValueTask<Response<TResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
@@ -97,7 +96,11 @@ namespace Azure.Core
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{OperationTypeName}.UpdateStatus");
 
-            _operation.AddAttributes(scope);
+            foreach (KeyValuePair<string, string> attribute in ScopeAttributes)
+            {
+                scope.AddAttribute(attribute.Key, attribute.Value);
+            }
+
             scope.Start();
 
             try
@@ -108,16 +111,16 @@ namespace Azure.Core
 
                 RawResponse = response;
 
-                var status = _operation.UpdateState(response);
+                var state = _operation.UpdateState(response);
 
-                if (status == CompletionStatus.Succeeded)
+                if (state.Succeeded == true)
                 {
-                    Value = _operation.ParseResponse(response);
+                    Value = state.Value;
                     HasCompleted = true;
                 }
-                else if (status == CompletionStatus.Failed)
+                else if (state.Succeeded == false)
                 {
-                    OperationFailedException = _operation.GetOperationFailedException(response);
+                    OperationFailedException = state.OperationFailedException;
                     HasCompleted = true;
 
                     throw OperationFailedException;
@@ -145,19 +148,21 @@ namespace Azure.Core
     {
         private readonly IOperation<TResult, TResponseType> _operation;
 
-        public OperationInternal(string operationTypeName,
-            ClientDiagnostics clientDiagnostics,
-            IOperation<TResult, TResponseType> operation,
-            TimeSpan? defaultPollingInterval = null) : base(operationTypeName, clientDiagnostics, defaultPollingInterval)
+        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult, TResponseType> operation) : base(clientDiagnostics)
         {
             _operation = operation;
+            OperationTypeName = operation.GetType().Name;
         }
 
         protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{OperationTypeName}.UpdateStatus");
 
-            _operation.AddAttributes(scope);
+            foreach (KeyValuePair<string, string> attribute in ScopeAttributes)
+            {
+                scope.AddAttribute(attribute.Key, attribute.Value);
+            }
+
             scope.Start();
 
             try
@@ -169,16 +174,16 @@ namespace Azure.Core
                 Response rawResponse = response.GetRawResponse();
                 RawResponse = rawResponse;
 
-                var status = _operation.UpdateState(response);
+                var state = _operation.UpdateState(response);
 
-                if (status == CompletionStatus.Succeeded)
+                if (state.Succeeded == true)
                 {
-                    Value = _operation.ParseResponse(response);
+                    Value = state.Value;
                     HasCompleted = true;
                 }
-                else if (status == CompletionStatus.Failed)
+                else if (state.Succeeded == false)
                 {
-                    OperationFailedException = _operation.GetOperationFailedException(response);
+                    OperationFailedException = state.OperationFailedException;
                     HasCompleted = true;
 
                     throw OperationFailedException;
@@ -206,13 +211,7 @@ namespace Azure.Core
 
         Response GetResponse(CancellationToken cancellationToken);
 
-        CompletionStatus UpdateState(Response response);
-
-        TResult ParseResponse(Response response);
-
-        RequestFailedException GetOperationFailedException(Response response);
-
-        void AddAttributes(DiagnosticScope scope);
+        OperationState<TResult> UpdateState(Response response);
     }
 
     internal interface IOperation<TResult, TResponseType>
@@ -221,19 +220,15 @@ namespace Azure.Core
 
         Response<TResponseType> GetResponse(CancellationToken cancellationToken);
 
-        CompletionStatus UpdateState(Response<TResponseType> response);
-
-        TResult ParseResponse(Response<TResponseType> response);
-
-        RequestFailedException GetOperationFailedException(Response<TResponseType> response);
-
-        void AddAttributes(DiagnosticScope scope);
+        OperationState<TResult> UpdateState(Response<TResponseType> response);
     }
 
-    internal enum CompletionStatus
+    internal struct OperationState<TResult>
     {
-        Pending,
-        Succeeded,
-        Failed
+        public bool? Succeeded { get; set; }
+
+        public TResult Value { get; set; }
+
+        public RequestFailedException OperationFailedException { get; set; }
     }
 }

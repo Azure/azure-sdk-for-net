@@ -62,7 +62,7 @@ namespace Azure.AI.FormRecognizer.Models
             Id = operationId;
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
-            _operationInternal = new(nameof(RecognizeContentOperation), _diagnostics, this);
+            _operationInternal = new(_diagnostics, this);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
-            _operationInternal = new(nameof(RecognizeContentOperation), _diagnostics, this);
+            _operationInternal = new(_diagnostics, this);
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
@@ -155,19 +155,29 @@ namespace Azure.AI.FormRecognizer.Models
         Response<AnalyzeOperationResult> IOperation<FormPageCollection, AnalyzeOperationResult>.GetResponse(CancellationToken cancellationToken) =>
             _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
 
-        CompletionStatus IOperation<FormPageCollection, AnalyzeOperationResult>.UpdateState(Response<AnalyzeOperationResult> response) =>
-            response.Value.Status switch
-            {
-                OperationStatus.Succeeded => CompletionStatus.Succeeded,
-                OperationStatus.Failed => CompletionStatus.Failed,
-                _ => CompletionStatus.Pending
-            };
-
-        FormPageCollection IOperation<FormPageCollection, AnalyzeOperationResult>.ParseResponse(Response<AnalyzeOperationResult> response)
+        OperationState<FormPageCollection> IOperation<FormPageCollection, AnalyzeOperationResult>.UpdateState(Response<AnalyzeOperationResult> response)
         {
-            var pageResults = response.Value.AnalyzeResult.PageResults;
-            var readResults = response.Value.AnalyzeResult.ReadResults;
+            var state = new OperationState<FormPageCollection>();
+            var status = response.Value.Status;
 
+            if (status == OperationStatus.Succeeded)
+            {
+                state.Succeeded = true;
+                state.Value = ConvertValue(response.Value.AnalyzeResult.PageResults, response.Value.AnalyzeResult.ReadResults);
+            }
+            else if (status == OperationStatus.Failed)
+            {
+                state.Succeeded = false;
+                state.OperationFailedException = ClientCommon
+                    .CreateExceptionForFailedOperationAsync(async: false, _diagnostics, response.GetRawResponse(), response.Value.AnalyzeResult.Errors)
+                    .EnsureCompleted();
+            }
+
+            return state;
+        }
+
+        private static FormPageCollection ConvertValue(IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults)
+        {
             Debug.Assert(pageResults.Count == readResults.Count);
 
             List<FormPage> pages = new List<FormPage>();
@@ -180,11 +190,5 @@ namespace Azure.AI.FormRecognizer.Models
 
             return new FormPageCollection(pages);
         }
-
-        RequestFailedException IOperation<FormPageCollection, AnalyzeOperationResult>.GetOperationFailedException(Response<AnalyzeOperationResult> response) =>
-            ClientCommon.CreateExceptionForFailedOperationAsync(async: false, _diagnostics, response.GetRawResponse(), response.Value.AnalyzeResult.Errors).EnsureCompleted();
-
-        void IOperation<FormPageCollection, AnalyzeOperationResult>.AddAttributes(DiagnosticScope scope)
-        { }
     }
 }
