@@ -34,9 +34,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\Policy.Tests.LivePolicyTests\" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.9.0" />
   </ItemGroup>
 </Project>

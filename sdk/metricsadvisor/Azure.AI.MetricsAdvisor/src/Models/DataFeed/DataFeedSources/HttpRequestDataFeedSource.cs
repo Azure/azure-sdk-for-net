@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             Parameter = parameter;
 
-            Url = new Uri(parameter.Url);
+            Url = parameter.Url == null ? null : new Uri(parameter.Url);
             HttpHeader = parameter.HttpHeader;
             HttpMethod = parameter.HttpMethod;
             Payload = parameter.Payload;

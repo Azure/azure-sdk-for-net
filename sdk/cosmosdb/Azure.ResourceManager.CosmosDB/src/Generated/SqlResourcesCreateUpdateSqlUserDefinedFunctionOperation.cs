@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class SqlResourcesCreateUpdateSqlUserDefinedFunctionOperation : Operation<SqlUserDefinedFunctionGetResults>, IOperationSource<SqlUserDefinedFunctionGetResults>
     {
         private readonly ArmOperationHelpers<SqlUserDefinedFunctionGetResults> _operation;
+
+        /// <summary> Initializes a new instance of SqlResourcesCreateUpdateSqlUserDefinedFunctionOperation for mocking. </summary>
+        protected SqlResourcesCreateUpdateSqlUserDefinedFunctionOperation()
+        {
+        }
+
         internal SqlResourcesCreateUpdateSqlUserDefinedFunctionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<SqlUserDefinedFunctionGetResults>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SqlResourcesCreateUpdateSqlUserDefinedFunctionOperation");

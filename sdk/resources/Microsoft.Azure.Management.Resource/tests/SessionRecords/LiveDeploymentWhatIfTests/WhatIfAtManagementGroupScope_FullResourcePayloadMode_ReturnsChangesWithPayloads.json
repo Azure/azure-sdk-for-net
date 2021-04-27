@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Resources/deployments/csmd5598/whatIf?api-version=2020-06-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL3Rlc3RNRy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50cy9jc21kNTU5OC93aGF0SWY/YXBpLXZlcnNpb249MjAyMC0wNi0wMQ==",
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/tag-mg-sdk/providers/Microsoft.Resources/deployments/csmd1387/whatIf?api-version=2020-10-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL3RhZy1tZy1zZGsvcHJvdmlkZXJzL01pY3Jvc29mdC5SZXNvdXJjZXMvZGVwbG95bWVudHMvY3NtZDEzODcvd2hhdElmP2FwaS12ZXJzaW9uPTIwMjAtMTAtMDE=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"whatIfSettings\": {\r\n      \"resultFormat\": \"FullResourcePayloads\"\r\n    },\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"storageAccountName\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"tagsa1\"\r\n        },\r\n        \"managementGroupName\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"tag-mg-sdk\"\r\n        },\r\n        \"subscriptionId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"a1bfa635-f2bf-42f1-86b5-848c674fc321\"\r\n        }\r\n      },\r\n      \"variables\": {},\r\n      \"resources\": [\r\n        {\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n          \"name\": \"policy2\",\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"properties\": {\r\n            \"policyType\": \"Custom\",\r\n            \"parameters\": {},\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"field\": \"location\",\r\n                \"equals\": \"northeurope\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n          \"name\": \"location-lock\",\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"dependsOn\": [\r\n            \"policy2\"\r\n          ],\r\n          \"properties\": {\r\n            \"scope\": \"[concat('/providers/Microsoft.Management/managementGroups/', parameters('managementGroupName'))]\",\r\n            \"policyDefinitionId\": \"[concat('/providers/Microsoft.Management/managementGroups/', parameters('managementGroupName'), '/providers/', 'Microsoft.Authorization/policyDefinitions/', 'policy2')]\"\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"sdktest-subnested\",\r\n          \"apiVersion\": \"2018-05-01\",\r\n          \"location\": \"West US\",\r\n          \"subscriptionId\": \"[parameters('subscriptionId')]\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n                  \"name\": \"rg-001\",\r\n                  \"apiVersion\": \"2018-05-01\",\r\n                  \"location\": \"East US\",\r\n                  \"properties\": {}\r\n                },\r\n                {\r\n                  \"type\": \"Microsoft.Resources/deployments\",\r\n                  \"name\": \"rg-nested\",\r\n                  \"apiVersion\": \"2017-05-10\",\r\n                  \"resourceGroup\": \"rg-001\",\r\n                  \"dependsOn\": [\r\n                    \"rg-001\"\r\n                  ],\r\n                  \"properties\": {\r\n                    \"template\": {\r\n                      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n                      \"contentVersion\": \"1.0.0.0\",\r\n                      \"parameters\": {},\r\n                      \"variables\": {},\r\n                      \"resources\": [\r\n                        {\r\n                          \"type\": \"Microsoft.Storage/storageAccounts\",\r\n                          \"name\": \"[parameters('storageAccountName')]\",\r\n                          \"apiVersion\": \"2015-06-15\",\r\n                          \"location\": \"East US\",\r\n                          \"properties\": {\r\n                            \"accountType\": \"Standard_LRS\"\r\n                          }\r\n                        }\r\n                      ]\r\n                    },\r\n                    \"mode\": \"Incremental\"\r\n                  }\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"parameters\": {\r\n      \"managementGroupName\": {\r\n        \"value\": \"testMG\"\r\n      },\r\n      \"subscriptionId\": {\r\n        \"value\": \"a93e8c5c-63cb-4635-933f-6d166ac25187\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"whatIfSettings\": {\r\n      \"resultFormat\": \"FullResourcePayloads\"\r\n    },\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"storageAccountName\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"tagsa1\"\r\n        },\r\n        \"managementGroupName\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"tag-mg-sdk\"\r\n        },\r\n        \"subscriptionId\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"a1bfa635-f2bf-42f1-86b5-848c674fc321\"\r\n        }\r\n      },\r\n      \"variables\": {},\r\n      \"resources\": [\r\n        {\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n          \"name\": \"policy2\",\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"properties\": {\r\n            \"policyType\": \"Custom\",\r\n            \"parameters\": {},\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"field\": \"location\",\r\n                \"equals\": \"northeurope\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n          \"name\": \"location-lock\",\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"dependsOn\": [\r\n            \"policy2\"\r\n          ],\r\n          \"properties\": {\r\n            \"scope\": \"[concat('/providers/Microsoft.Management/managementGroups/', parameters('managementGroupName'))]\",\r\n            \"policyDefinitionId\": \"[concat('/providers/Microsoft.Management/managementGroups/', parameters('managementGroupName'), '/providers/', 'Microsoft.Authorization/policyDefinitions/', 'policy2')]\"\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"sdktest-subnested\",\r\n          \"apiVersion\": \"2018-05-01\",\r\n          \"location\": \"West US\",\r\n          \"subscriptionId\": \"[parameters('subscriptionId')]\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n                  \"name\": \"rg-001\",\r\n                  \"apiVersion\": \"2018-05-01\",\r\n                  \"location\": \"East US\",\r\n                  \"properties\": {}\r\n                },\r\n                {\r\n                  \"type\": \"Microsoft.Resources/deployments\",\r\n                  \"name\": \"rg-nested\",\r\n                  \"apiVersion\": \"2017-05-10\",\r\n                  \"resourceGroup\": \"rg-001\",\r\n                  \"dependsOn\": [\r\n                    \"rg-001\"\r\n                  ],\r\n                  \"properties\": {\r\n                    \"template\": {\r\n                      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n                      \"contentVersion\": \"1.0.0.0\",\r\n                      \"parameters\": {},\r\n                      \"variables\": {},\r\n                      \"resources\": [\r\n                        {\r\n                          \"type\": \"Microsoft.Storage/storageAccounts\",\r\n                          \"name\": \"[parameters('storageAccountName')]\",\r\n                          \"apiVersion\": \"2015-06-15\",\r\n                          \"location\": \"East US\",\r\n                          \"properties\": {\r\n                            \"accountType\": \"Standard_LRS\"\r\n                          }\r\n                        }\r\n                      ]\r\n                    },\r\n                    \"mode\": \"Incremental\"\r\n                  }\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"parameters\": {\r\n      \"managementGroupName\": {\r\n        \"value\": \"testMG\"\r\n      },\r\n      \"subscriptionId\": {\r\n        \"value\": \"a1bfa635-f2bf-42f1-86b5-848c674fc321\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6b6331aa-e13d-4fe4-8b7b-2023f90cf3ae"
+          "eed8174a-9d0b-4ae1-bace-66c97305426b"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -33,7 +33,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/providers/Microsoft.Resources/operationResults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEVTVE1HLUNTTUQ1NTk4LTMyRkQ2QzQxOjJEQzJEQToyRDQyNTA6MkQ4NzhFOjJEOUFEMUZENENDOEI1Iiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-06-01"
+          "https://management.azure.com/providers/Microsoft.Resources/operationResults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEFHOjJETUc6MkRTREstQ1NNRDEzODctQTg1M0E0RTU6MkQyNDhBOjJENDQxQToyRDhEODI6MkQ4N0M2RDBCQTZGRDUiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2020-10-01"
         ],
         "Retry-After": [
           "15"
@@ -42,13 +42,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "32fd6c41-c2da-4250-878e-9ad1fd4cc8b5"
+          "a853a4e5-248a-441a-8d82-87c6d0ba6fd5"
         ],
         "x-ms-correlation-request-id": [
-          "32fd6c41-c2da-4250-878e-9ad1fd4cc8b5"
+          "a853a4e5-248a-441a-8d82-87c6d0ba6fd5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20200711T000159Z:32fd6c41-c2da-4250-878e-9ad1fd4cc8b5"
+          "WESTCENTRALUS:20201120T220302Z:a853a4e5-248a-441a-8d82-87c6d0ba6fd5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -57,7 +57,7 @@
           "nosniff"
         ],
         "Date": [
-          "Sat, 11 Jul 2020 00:01:59 GMT"
+          "Fri, 20 Nov 2020 22:03:01 GMT"
         ],
         "Expires": [
           "-1"
@@ -70,16 +70,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/providers/Microsoft.Resources/operationResults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEVTVE1HLUNTTUQ1NTk4LTMyRkQ2QzQxOjJEQzJEQToyRDQyNTA6MkQ4NzhFOjJEOUFEMUZENENDOEI1Iiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-06-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL29wZXJhdGlvblJlc3VsdHMvZXlKcWIySkpaQ0k2SWtSbGNHeHZlVzFsYm5SWGFHRjBTV1pLYjJJdFZFVlRWRTFITFVOVFRVUTFOVGs0TFRNeVJrUTJRelF4T2pKRVF6SkVRVG95UkRReU5UQTZNa1E0TnpoRk9qSkVPVUZFTVVaRU5FTkRPRUkxSWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTWlmUT9hcGktdmVyc2lvbj0yMDIwLTA2LTAx",
+      "RequestUri": "/providers/Microsoft.Resources/operationResults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEFHOjJETUc6MkRTREstQ1NNRDEzODctQTg1M0E0RTU6MkQyNDhBOjJENDQxQToyRDhEODI6MkQ4N0M2RDBCQTZGRDUiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2020-10-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL29wZXJhdGlvblJlc3VsdHMvZXlKcWIySkpaQ0k2SWtSbGNHeHZlVzFsYm5SWGFHRjBTV1pLYjJJdFZFRkhPakpFVFVjNk1rUlRSRXN0UTFOTlJERXpPRGN0UVRnMU0wRTBSVFU2TWtReU5EaEJPakpFTkRReFFUb3lSRGhFT0RJNk1rUTROME0yUkRCQ1FUWkdSRFVpTENKcWIySk1iMk5oZEdsdmJpSTZJbmRsYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAyMC0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -93,13 +93,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "250e77d9-ec08-461f-9233-6639e04c26aa"
+          "af4e1654-0105-40e3-85d2-bd5e830de0d0"
         ],
         "x-ms-correlation-request-id": [
-          "250e77d9-ec08-461f-9233-6639e04c26aa"
+          "af4e1654-0105-40e3-85d2-bd5e830de0d0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20200711T000214Z:250e77d9-ec08-461f-9233-6639e04c26aa"
+          "WESTCENTRALUS:20201120T220317Z:af4e1654-0105-40e3-85d2-bd5e830de0d0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -108,7 +108,7 @@
           "nosniff"
         ],
         "Date": [
-          "Sat, 11 Jul 2020 00:02:14 GMT"
+          "Fri, 20 Nov 2020 22:03:17 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -117,23 +117,23 @@
           "-1"
         ],
         "Content-Length": [
-          "1944"
+          "2015"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"changes\": [\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n          \"name\": \"location-lock\",\r\n          \"properties\": {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n            \"scope\": \"/providers/Microsoft.Management/managementGroups/testMG\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/policyAssignments\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n          \"name\": \"policy2\",\r\n          \"properties\": {\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"equals\": \"northeurope\",\r\n                \"field\": \"location\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            },\r\n            \"policyType\": \"Custom\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/subscriptions/a93e8c5c-63cb-4635-933f-6d166ac25187/resourceGroups/rg-001\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2018-05-01\",\r\n          \"id\": \"/subscriptions/a93e8c5c-63cb-4635-933f-6d166ac25187/resourceGroups/rg-001\",\r\n          \"location\": \"East US\",\r\n          \"name\": \"rg-001\",\r\n          \"type\": \"Microsoft.Resources/resourceGroups\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/subscriptions/a93e8c5c-63cb-4635-933f-6d166ac25187/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tagsa1\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2015-06-15\",\r\n          \"id\": \"/subscriptions/a93e8c5c-63cb-4635-933f-6d166ac25187/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tagsa1\",\r\n          \"location\": \"East US\",\r\n          \"name\": \"tagsa1\",\r\n          \"properties\": {\r\n            \"accountType\": \"Standard_LRS\"\r\n          },\r\n          \"type\": \"Microsoft.Storage/storageAccounts\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"correlationId\": \"a853a4e5-248a-441a-8d82-87c6d0ba6fd5\",\r\n    \"changes\": [\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Management/managementGroups/tag-mg-sdk/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg-sdk/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n          \"name\": \"location-lock\",\r\n          \"properties\": {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n            \"scope\": \"/providers/Microsoft.Management/managementGroups/testMG\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/policyAssignments\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Management/managementGroups/tag-mg-sdk/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg-sdk/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n          \"name\": \"policy2\",\r\n          \"properties\": {\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"equals\": \"northeurope\",\r\n                \"field\": \"location\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            },\r\n            \"policyType\": \"Custom\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/rg-001\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2018-05-01\",\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/rg-001\",\r\n          \"location\": \"East US\",\r\n          \"name\": \"rg-001\",\r\n          \"type\": \"Microsoft.Resources/resourceGroups\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tagsa1\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2015-06-15\",\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tagsa1\",\r\n          \"location\": \"East US\",\r\n          \"name\": \"tagsa1\",\r\n          \"properties\": {\r\n            \"accountType\": \"Standard_LRS\"\r\n          },\r\n          \"type\": \"Microsoft.Storage/storageAccounts\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Resources/operationResults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEVTVE1HLUNTTUQ1NTk4LTMyRkQ2QzQxOjJEQzJEQToyRDQyNTA6MkQ4NzhFOjJEOUFEMUZENENDOEI1Iiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMifQ?api-version=2020-06-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL29wZXJhdGlvblJlc3VsdHMvZXlKcWIySkpaQ0k2SWtSbGNHeHZlVzFsYm5SWGFHRjBTV1pLYjJJdFZFVlRWRTFITFVOVFRVUTFOVGs0TFRNeVJrUTJRelF4T2pKRVF6SkVRVG95UkRReU5UQTZNa1E0TnpoRk9qSkVPVUZFTVVaRU5FTkRPRUkxSWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTWlmUT9hcGktdmVyc2lvbj0yMDIwLTA2LTAx",
+      "RequestUri": "/providers/Microsoft.Resources/operationResults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEFHOjJETUc6MkRTREstQ1NNRDEzODctQTg1M0E0RTU6MkQyNDhBOjJENDQxQToyRDhEODI6MkQ4N0M2RDBCQTZGRDUiLCJqb2JMb2NhdGlvbiI6Indlc3R1cyJ9?api-version=2020-10-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL29wZXJhdGlvblJlc3VsdHMvZXlKcWIySkpaQ0k2SWtSbGNHeHZlVzFsYm5SWGFHRjBTV1pLYjJJdFZFRkhPakpFVFVjNk1rUlRSRXN0UTFOTlJERXpPRGN0UVRnMU0wRTBSVFU2TWtReU5EaEJPakpFTkRReFFUb3lSRGhFT0RJNk1rUTROME0yUkRCQ1FUWkdSRFVpTENKcWIySk1iMk5oZEdsdmJpSTZJbmRsYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAyMC0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.28928.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -147,13 +147,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "b2076af6-e337-4f29-ba43-9e869395a705"
+          "42e2cafd-51d9-40fb-a391-ba32aa6bbf42"
         ],
         "x-ms-correlation-request-id": [
-          "b2076af6-e337-4f29-ba43-9e869395a705"
+          "42e2cafd-51d9-40fb-a391-ba32aa6bbf42"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20200711T000215Z:b2076af6-e337-4f29-ba43-9e869395a705"
+          "WESTCENTRALUS:20201120T220318Z:42e2cafd-51d9-40fb-a391-ba32aa6bbf42"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -162,7 +162,7 @@
           "nosniff"
         ],
         "Date": [
-          "Sat, 11 Jul 2020 00:02:14 GMT"
+          "Fri, 20 Nov 2020 22:03:17 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -171,19 +171,19 @@
           "-1"
         ],
         "Content-Length": [
-          "1944"
+          "2015"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"changes\": [\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n          \"name\": \"location-lock\",\r\n          \"properties\": {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n            \"scope\": \"/providers/Microsoft.Management/managementGroups/testMG\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/policyAssignments\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n          \"name\": \"policy2\",\r\n          \"properties\": {\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"equals\": \"northeurope\",\r\n                \"field\": \"location\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            },\r\n            \"policyType\": \"Custom\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/subscriptions/a93e8c5c-63cb-4635-933f-6d166ac25187/resourceGroups/rg-001\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2018-05-01\",\r\n          \"id\": \"/subscriptions/a93e8c5c-63cb-4635-933f-6d166ac25187/resourceGroups/rg-001\",\r\n          \"location\": \"East US\",\r\n          \"name\": \"rg-001\",\r\n          \"type\": \"Microsoft.Resources/resourceGroups\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/subscriptions/a93e8c5c-63cb-4635-933f-6d166ac25187/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tagsa1\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2015-06-15\",\r\n          \"id\": \"/subscriptions/a93e8c5c-63cb-4635-933f-6d166ac25187/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tagsa1\",\r\n          \"location\": \"East US\",\r\n          \"name\": \"tagsa1\",\r\n          \"properties\": {\r\n            \"accountType\": \"Standard_LRS\"\r\n          },\r\n          \"type\": \"Microsoft.Storage/storageAccounts\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"correlationId\": \"a853a4e5-248a-441a-8d82-87c6d0ba6fd5\",\r\n    \"changes\": [\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Management/managementGroups/tag-mg-sdk/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg-sdk/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n          \"name\": \"location-lock\",\r\n          \"properties\": {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Management/managementGroups/testMG/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n            \"scope\": \"/providers/Microsoft.Management/managementGroups/testMG\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/policyAssignments\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/providers/Microsoft.Management/managementGroups/tag-mg-sdk/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg-sdk/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n          \"name\": \"policy2\",\r\n          \"properties\": {\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"equals\": \"northeurope\",\r\n                \"field\": \"location\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            },\r\n            \"policyType\": \"Custom\"\r\n          },\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/rg-001\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2018-05-01\",\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/rg-001\",\r\n          \"location\": \"East US\",\r\n          \"name\": \"rg-001\",\r\n          \"type\": \"Microsoft.Resources/resourceGroups\"\r\n        }\r\n      },\r\n      {\r\n        \"resourceId\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tagsa1\",\r\n        \"changeType\": \"Create\",\r\n        \"after\": {\r\n          \"apiVersion\": \"2015-06-15\",\r\n          \"id\": \"/subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tagsa1\",\r\n          \"location\": \"East US\",\r\n          \"name\": \"tagsa1\",\r\n          \"properties\": {\r\n            \"accountType\": \"Standard_LRS\"\r\n          },\r\n          \"type\": \"Microsoft.Storage/storageAccounts\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {
     "NewDeploymentName": [
-      "csmd5598"
+      "csmd1387"
     ]
   },
   "Variables": {
-    "SubscriptionId": "a93e8c5c-63cb-4635-933f-6d166ac25187"
+    "SubscriptionId": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
   }
 }

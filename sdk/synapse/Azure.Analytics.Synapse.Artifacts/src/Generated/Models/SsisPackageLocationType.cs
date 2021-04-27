@@ -25,6 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         private const string SsisdbValue = "SSISDB";
         private const string FileValue = "File";
         private const string InlinePackageValue = "InlinePackage";
+        private const string PackageStoreValue = "PackageStore";
 
         /// <summary> SSISDB. </summary>
         public static SsisPackageLocationType Ssisdb { get; } = new SsisPackageLocationType(SsisdbValue);
@@ -32,6 +33,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SsisPackageLocationType File { get; } = new SsisPackageLocationType(FileValue);
         /// <summary> InlinePackage. </summary>
         public static SsisPackageLocationType InlinePackage { get; } = new SsisPackageLocationType(InlinePackageValue);
+        /// <summary> PackageStore. </summary>
+        public static SsisPackageLocationType PackageStore { get; } = new SsisPackageLocationType(PackageStoreValue);
         /// <summary> Determines if two <see cref="SsisPackageLocationType"/> values are the same. </summary>
         public static bool operator ==(SsisPackageLocationType left, SsisPackageLocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SsisPackageLocationType"/> values are not the same. </summary>

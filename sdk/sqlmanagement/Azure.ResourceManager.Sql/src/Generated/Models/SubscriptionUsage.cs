@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Usage Metric of a Subscription in a Location. </summary>
-    public partial class SubscriptionUsage : Resource
+    public partial class SubscriptionUsage : ProxyResource
     {
         /// <summary> Initializes a new instance of SubscriptionUsage. </summary>
         public SubscriptionUsage()

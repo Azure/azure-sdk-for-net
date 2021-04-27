@@ -270,11 +270,12 @@ namespace Microsoft.Azure.EventHubs.Tests
         private static async Task<string> AquireManagementTokenAsync()
         {
             var token = s_managementToken;
+            var authority = new Uri(new Uri(TestUtility.AuthorityHost), TestUtility.EventHubsTenant).ToString();
 
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
                 var credential = new ClientCredential(TestUtility.EventHubsClient, TestUtility.EventHubsSecret);
-                var context = new AuthenticationContext($"{ TestUtility.AuthorityHost }{ TestUtility.EventHubsTenant }");
+                var context = new AuthenticationContext(authority);
                 var result = await context.AcquireTokenAsync(TestUtility.ServiceManagementUrl, credential).ConfigureAwait(false);
 
                 if ((String.IsNullOrEmpty(result?.AccessToken)))

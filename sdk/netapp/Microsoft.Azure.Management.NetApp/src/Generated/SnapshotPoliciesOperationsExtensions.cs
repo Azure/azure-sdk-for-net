@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Get volumes associated with snapshot policy
+            /// Get volumes for snapshot policy
             /// </summary>
             /// <remarks>
             /// Get volumes associated with snapshot policy
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Get volumes associated with snapshot policy
+            /// Get volumes for snapshot policy
             /// </summary>
             /// <remarks>
             /// Get volumes associated with snapshot policy
@@ -303,6 +303,58 @@ namespace Microsoft.Azure.Management.NetApp
             public static async Task<SnapshotPolicyVolumeList> ListVolumesAsync(this ISnapshotPoliciesOperations operations, string resourceGroupName, string accountName, string snapshotPolicyName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListVolumesWithHttpMessagesAsync(resourceGroupName, accountName, snapshotPolicyName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Patch a snapshot policy
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Snapshot policy object supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='snapshotPolicyName'>
+            /// The name of the snapshot policy target
+            /// </param>
+            public static SnapshotPolicy BeginUpdate(this ISnapshotPoliciesOperations operations, SnapshotPolicyPatch body, string resourceGroupName, string accountName, string snapshotPolicyName)
+            {
+                return operations.BeginUpdateAsync(body, resourceGroupName, accountName, snapshotPolicyName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Patch a snapshot policy
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Snapshot policy object supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='snapshotPolicyName'>
+            /// The name of the snapshot policy target
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SnapshotPolicy> BeginUpdateAsync(this ISnapshotPoliciesOperations operations, SnapshotPolicyPatch body, string resourceGroupName, string accountName, string snapshotPolicyName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(body, resourceGroupName, accountName, snapshotPolicyName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

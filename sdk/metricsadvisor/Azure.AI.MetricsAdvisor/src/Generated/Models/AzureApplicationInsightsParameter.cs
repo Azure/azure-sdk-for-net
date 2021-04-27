@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureApplicationInsightsParameter. </summary>
@@ -17,26 +15,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="applicationId"> Azure Application Insights ID. </param>
         /// <param name="apiKey"> API Key. </param>
         /// <param name="query"> Query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureCloud"/>, <paramref name="applicationId"/>, <paramref name="apiKey"/>, or <paramref name="query"/> is null. </exception>
         public AzureApplicationInsightsParameter(string azureCloud, string applicationId, string apiKey, string query)
         {
-            if (azureCloud == null)
-            {
-                throw new ArgumentNullException(nameof(azureCloud));
-            }
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (apiKey == null)
-            {
-                throw new ArgumentNullException(nameof(apiKey));
-            }
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
-
             AzureCloud = azureCloud;
             ApplicationId = applicationId;
             ApiKey = apiKey;

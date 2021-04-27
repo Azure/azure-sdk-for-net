@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(accountName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(updateParameters);
             request.Content = content;
@@ -228,8 +228,8 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(accountName, true);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(createUpdateParameters);
             request.Content = content;
@@ -775,8 +775,8 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/offlineRegion", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(regionParameterForOffline);
             request.Content = content;
@@ -865,8 +865,8 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/onlineRegion", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(regionParameterForOnline);
             request.Content = content;

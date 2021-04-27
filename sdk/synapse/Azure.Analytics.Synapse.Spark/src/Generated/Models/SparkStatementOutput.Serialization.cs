@@ -45,11 +45,21 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 if (property.NameEquals("ename"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        ename = null;
+                        continue;
+                    }
                     ename = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("evalue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        evalue = null;
+                        continue;
+                    }
                     evalue = property.Value.GetString();
                     continue;
                 }
@@ -57,7 +67,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        traceback = null;
                         continue;
                     }
                     List<string> array = new List<string>();

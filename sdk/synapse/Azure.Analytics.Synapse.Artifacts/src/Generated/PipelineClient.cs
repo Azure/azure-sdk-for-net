@@ -22,16 +22,40 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal PipelineRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of PipelineClient for mocking. </summary>
         protected PipelineClient()
         {
         }
+
+        /// <summary> Initializes a new instance of PipelineClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public PipelineClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+
+            options ??= new ArtifactsClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://dev.azuresynapse.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new PipelineRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+        }
+
         /// <summary> Initializes a new instance of PipelineClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal PipelineClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
+        internal PipelineClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
         {
             RestClient = new PipelineRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -298,6 +322,66 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 var originalResponse = RestClient.DeletePipeline(pipelineName, cancellationToken);
                 return new PipelineDeletePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeletePipelineRequest(pipelineName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="request"/> is null. </exception>
+        public virtual async Task<PipelineRenamePipelineOperation> StartRenamePipelineAsync(string pipelineName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (pipelineName == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartRenamePipeline");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.RenamePipelineAsync(pipelineName, request, cancellationToken).ConfigureAwait(false);
+                return new PipelineRenamePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenamePipelineRequest(pipelineName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a pipeline. </summary>
+        /// <param name="pipelineName"> The pipeline name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="request"/> is null. </exception>
+        public virtual PipelineRenamePipelineOperation StartRenamePipeline(string pipelineName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (pipelineName == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("PipelineClient.StartRenamePipeline");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.RenamePipeline(pipelineName, request, cancellationToken);
+                return new PipelineRenamePipelineOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenamePipelineRequest(pipelineName, request).Request, originalResponse);
             }
             catch (Exception e)
             {

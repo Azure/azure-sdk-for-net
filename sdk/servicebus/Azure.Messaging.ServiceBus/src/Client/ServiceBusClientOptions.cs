@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
         ///   use, specifying a proxy is an invalid option.
         /// </remarks>
         ///
-        public IWebProxy WebProxy { get; set; } = null;
+        public IWebProxy WebProxy { get; set; }
 
         /// <summary>
         /// The set of options to use for determining whether a failed operation should be retried and,
@@ -51,6 +51,16 @@ namespace Azure.Messaging.ServiceBus
                 _retryOptions = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a flag that indicates whether or not transactions may span multiple
+        /// Service Bus entities.
+        /// </summary>
+        ///<value>
+        /// <c>true</c>, when cross-entity transactions are enabled; <c>false</c> when
+        /// transactions are not being used or should be limited to a single entity.
+        ///</value>
+        public bool EnableCrossEntityTransactions { get; set; }
 
         /// <summary>
         /// The list of plugins for the client.
@@ -109,6 +119,7 @@ namespace Azure.Messaging.ServiceBus
                 TransportType = TransportType,
                 WebProxy = WebProxy,
                 RetryOptions = RetryOptions.Clone(),
+                EnableCrossEntityTransactions = EnableCrossEntityTransactions,
                 Plugins = new List<ServiceBusPlugin>(Plugins)
             };
     }

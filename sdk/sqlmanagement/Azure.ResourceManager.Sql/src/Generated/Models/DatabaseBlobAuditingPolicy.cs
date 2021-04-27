@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database blob auditing policy. </summary>
-    public partial class DatabaseBlobAuditingPolicy : Resource
+    public partial class DatabaseBlobAuditingPolicy : ProxyResource
     {
         /// <summary> Initializes a new instance of DatabaseBlobAuditingPolicy. </summary>
         public DatabaseBlobAuditingPolicy()

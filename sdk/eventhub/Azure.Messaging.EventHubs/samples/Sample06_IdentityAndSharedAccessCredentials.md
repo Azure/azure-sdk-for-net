@@ -12,17 +12,21 @@ Depending on the type of authorization that you wish to use, additional setup ma
 
 **Azure.Identity**  
 
-The `Azure.Identity` library is recommended for identity-based authentication across the different sources supported by the Azure platform for  [role-based access control (RBAC)](https://docs.microsoft.com/azure/role-based-access-control/overview).  This includes Azure Active Directory principals and Managed Identities.  To allow for the best developer experience, and one that supports promoting applications between environments without code changes, this sample will concentrate on the `DefaultAzureCredential`.  Please see the [Azure.Identity README](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity) for details on configuring your environment for `DefaultAzureCredential` integration.  
+The `Azure.Identity` library is recommended for identity-based authentication across the different sources supported by the Azure platform for  [role-based access control (RBAC)](https://docs.microsoft.com/azure/role-based-access-control/overview).  This includes Azure Active Directory principals and Managed Identities.  To allow for the best developer experience, and one that supports promoting applications between environments without code changes, this sample will concentrate on the `DefaultAzureCredential`.  Please see the [Azure.Identity README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#defaultazurecredential) for details on configuring your environment for `DefaultAzureCredential` integration. 
 
 **Role Assignments** 
 
-Once your environment is configured, you'll need to ensure that the principal that you've chosen has access to your Event Hubs resources in Azure.  To do so, they will be assigned the [Azure Event Hubs Data Owner](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-owner) role.  For those not familiar with role assignments, it is recommended to follow [these steps](https://docs.microsoft.com/azure/event-hubs/authenticate-managed-identity?tabs=latest#to-assign-azure-roles-using-the-azure-portal) in the Azure portal for the most intuitive experience.  
+Once your environment is configured, you'll need to ensure that the principal that you've chosen has access to your Event Hubs resources in Azure.  To do so, they will need to be assigned the appropriate role.  For those unfamiliar with role assignments, it is recommended to follow [these steps](https://docs.microsoft.com/azure/event-hubs/authenticate-managed-identity?tabs=latest#to-assign-azure-roles-using-the-azure-portal) in the Azure portal for the most intuitive experience.  Roles may also be assigned via the [Azure CLI](https://docs.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az_role_assignment_create) or [PowerShell](https://docs.microsoft.com/powershell/module/az.resources/new-azroleassignment), though these require more in-depth knowledge of the Azure platform and may be difficult for developers exploring Azure for the first time.  
 
-Roles may also be assigned via the [Azure CLI](https://docs.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az_role_assignment_create) or [PowerShell](https://docs.microsoft.com/powershell/module/az.resources/new-azroleassignment), though these require more in-depth knowledge of the Azure platform and may be difficult for developers exploring Azure for the first time.  
+The available role choices for Event Hubs are: 
+
+- [Azure Event Hubs Data Owner](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-owner) for full access to read and publish events.
+- [Azure Event Hubs Data Receiver](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-receiver) for the ability to read events but not publish them.
+- [Azure Event Hubs Data Sender](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-sender) for the ability to publish events but not read them.
 
 ### Event Hubs Shared Access Signature authorization
 
-Shared access signatures (SAS) is recommended over shared access keys, when RBAC cannot be used.  A shared access signature allows for granular and time-limited access to Event Hubs resources.  In order to use SAS-based authorization, a token needs to be generated and the associated Event Hubs resource needs to be configured to authorize its use.
+Shared access signatures (SAS) are recommended over shared access keys, when RBAC cannot be used.  A shared access signature allows for granular and time-limited access to Event Hubs resources.  In order to use SAS-based authorization, a token needs to be generated and the associated Event Hubs resource needs to be configured to authorize its use.
 
 The steps to to generate a SAS token can be found in the article "[Authenticate access to Event Hubs resources using shared access signatures (SAS)](https://docs.microsoft.com/azure/event-hubs/authenticate-shared-access-signature)", with details for some additional languages detailed in the article "[Generate SAS token](https://docs.microsoft.com/rest/api/eventhub/generate-sas-token)".   Information about configuring SAS authorization can be found in the article "[Authorizing access to Event Hubs resources using Shared Access Signatures](https://docs.microsoft.com/azure/event-hubs/authorize-access-shared-access-signature)".
 
@@ -45,7 +49,6 @@ TokenCredential credential = new DefaultAzureCredential();
 
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
-
 var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
 try
@@ -73,15 +76,71 @@ finally
 
 ## Publishing events with Shared Access Signature authorization
 
-**COMING SOON**
+```C# Snippet:EventHubs_Sample06_SharedAccessSignature
+var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
+
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
+
+try
+{
+    using var eventBatch = await producer.CreateBatchAsync();
+
+    for (var index = 0; index < 5; ++index)
+    {
+        var eventBody = new BinaryData($"Event #{ index }");
+        var eventData = new EventData(eventBody);
+
+        if (!eventBatch.TryAdd(eventData))
+        {
+            throw new Exception($"The event at { index } could not be added.");
+        }
+    }
+
+    await producer.SendAsync(eventBatch);
+}
+finally
+{
+    await producer.CloseAsync();
+}
+```
 
 ## Publishing events with Shared Access Key authorization
 
-**COMING SOON**
+```C# Snippet:EventHubs_Sample06_SharedAccessKey
+var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED KEY >>");
+
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
+
+try
+{
+    using var eventBatch = await producer.CreateBatchAsync();
+
+    for (var index = 0; index < 5; ++index)
+    {
+        var eventBody = new BinaryData($"Event #{ index }");
+        var eventData = new EventData(eventBody);
+
+        if (!eventBatch.TryAdd(eventData))
+        {
+            throw new Exception($"The event at { index } could not be added.");
+        }
+    }
+
+    await producer.SendAsync(eventBatch);
+}
+finally
+{
+    await producer.CloseAsync();
+}
+```
 
 ## Parsing a connection string for information
 
-In some scenarios, it may be preferable to derive token-based authorization from the components of a connection string rather than tracking them separately.  One common scenario for this approach is when your application uses different credentials locally and across the environments where it is hosted.  By using the fully qualified namespace and other values from the connection string, you may be able to reduce duplication and streamline your application's configuration.
+In some scenarios, it may be preferable to supplement token-based authorization with the components of a connection string rather than tracking them separately.  One common scenario for this approach is when your application uses different credentials locally and across the environments where it is hosted.  By using the fully qualified namespace and other values from the connection string, you may be able to reduce duplication and streamline your application's configuration.
 
 This example illustrates parsing the fully qualified namespace and, optionally, the Event Hub name from the connection string and using it with identity-based authorization.
 

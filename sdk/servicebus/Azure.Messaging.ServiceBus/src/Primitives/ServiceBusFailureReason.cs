@@ -69,11 +69,6 @@ namespace Azure.Messaging.ServiceBus
         SessionLockLost,
 
         /// <summary>
-        /// The user doesn't have access to the entity.
-        /// </summary>
-        Unauthorized,
-
-        /// <summary>
         /// An entity with the same name exists under the same namespace.
         /// </summary>
         MessagingEntityAlreadyExists

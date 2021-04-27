@@ -48,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         private readonly TimeSpan BackgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the consumer is associated with.  This is likely
@@ -128,7 +128,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString) : this(consumerGroup, connectionString, null, null)
@@ -152,7 +152,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -174,7 +174,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -222,26 +222,33 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the consumer with.</param>
-        /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        internal EventHubConsumerClient(string consumerGroup,
-                                        string fullyQualifiedNamespace,
-                                        string eventHubName,
-                                        EventHubsSharedAccessKeyCredential credential,
-                                        EventHubConsumerClientOptions clientOptions = default)
+        public EventHubConsumerClient(string consumerGroup,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      AzureNamedKeyCredential credential,
+                                      EventHubConsumerClientOptions clientOptions = default) : this(consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
+        }
 
-            clientOptions = clientOptions?.Clone() ?? new EventHubConsumerClientOptions();
-
-            OwnsConnection = true;
-            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
-            ConsumerGroup = consumerGroup;
-            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubConsumerClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the consumer with.</param>
+        /// <param name="credential">The shared access signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
+        ///
+        public EventHubConsumerClient(string consumerGroup,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      AzureSasCredential credential,
+                                      EventHubConsumerClientOptions clientOptions = default) : this(consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
+        {
         }
 
         /// <summary>
@@ -258,19 +265,8 @@ namespace Azure.Messaging.EventHubs.Consumer
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
                                       TokenCredential credential,
-                                      EventHubConsumerClientOptions clientOptions = default)
+                                      EventHubConsumerClientOptions clientOptions = default) : this(consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            clientOptions = clientOptions?.Clone() ?? new EventHubConsumerClientOptions();
-
-            OwnsConnection = true;
-            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
-            ConsumerGroup = consumerGroup;
-            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
         }
 
         /// <summary>
@@ -306,6 +302,35 @@ namespace Azure.Messaging.EventHubs.Consumer
         }
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubConsumerClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the consumer with.</param>
+        /// <param name="credential">The credential to use for authorization.  This may be of any type supported by the public constructors.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
+        ///
+        private EventHubConsumerClient(string consumerGroup,
+                                       string fullyQualifiedNamespace,
+                                       string eventHubName,
+                                       object credential,
+                                       EventHubConsumerClientOptions clientOptions = default)
+        {
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            clientOptions = clientOptions?.Clone() ?? new EventHubConsumerClientOptions();
+
+            OwnsConnection = true;
+            Connection = EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
+            ConsumerGroup = consumerGroup;
+            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+        }
+
+        /// <summary>
         ///   Retrieves information about the Event Hub that the connection is associated with, including
         ///   the number of partitions present and their identifiers.
         /// </summary>
@@ -336,7 +361,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         public virtual async Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
         {
-
             Argument.AssertNotClosed(IsClosed, nameof(EventHubConsumerClient));
             return await Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
         }
@@ -544,7 +568,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
-        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(ReadEventOptions, CancellationToken)"/>
         ///
         public virtual IAsyncEnumerable<PartitionEvent> ReadEventsAsync(CancellationToken cancellationToken = default) => ReadEventsAsync(null, cancellationToken);
@@ -575,7 +599,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
-        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
         ///
         public virtual IAsyncEnumerable<PartitionEvent> ReadEventsAsync(ReadEventOptions readOptions,
@@ -608,7 +632,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
-        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
         /// <seealso cref="ReadEventsAsync(ReadEventOptions, CancellationToken)"/>
         ///
@@ -738,7 +762,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             {
                 if (OwnsConnection)
                 {
-                    await Connection.CloseAsync().ConfigureAwait(false);
+                    await Connection.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -769,7 +793,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
+        public virtual async ValueTask DisposeAsync()
+        {
+            await CloseAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -1049,7 +1077,6 @@ namespace Azure.Messaging.EventHubs.Consumer
                     channel.Writer.TryComplete(activeException);
                     notifyException(activeException);
                 }
-
             }, cancellationToken);
 
         /// <summary>
@@ -1060,7 +1087,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <returns>A bounded channel, configured for 1:many read/write usage.</returns>
         ///
-        private Channel<PartitionEvent> CreateEventChannel(int capacity) =>
+        private static Channel<PartitionEvent> CreateEventChannel(int capacity) =>
             Channel.CreateBounded<PartitionEvent>(new BoundedChannelOptions(capacity)
             {
                 FullMode = BoundedChannelFullMode.Wait,

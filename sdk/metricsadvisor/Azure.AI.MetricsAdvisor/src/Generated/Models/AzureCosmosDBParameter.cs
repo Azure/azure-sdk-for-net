@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureCosmosDBParameter. </summary>
@@ -17,26 +15,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="sqlQuery"> Query script. </param>
         /// <param name="database"> Database name. </param>
         /// <param name="collectionId"> Collection id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/>, <paramref name="sqlQuery"/>, <paramref name="database"/>, or <paramref name="collectionId"/> is null. </exception>
         public AzureCosmosDBParameter(string connectionString, string sqlQuery, string database, string collectionId)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
-            if (sqlQuery == null)
-            {
-                throw new ArgumentNullException(nameof(sqlQuery));
-            }
-            if (database == null)
-            {
-                throw new ArgumentNullException(nameof(database));
-            }
-            if (collectionId == null)
-            {
-                throw new ArgumentNullException(nameof(collectionId));
-            }
-
             ConnectionString = connectionString;
             SqlQuery = sqlQuery;
             Database = database;

@@ -10,7 +10,6 @@ using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs
 {
-
 #pragma warning disable CA1200 // Avoid using cref tags with a prefix
     /// <summary>
     /// Attribute used to bind a parameter to an Azure Blob, causing the method to run when a blob is
@@ -39,6 +38,9 @@ namespace Microsoft.Azure.WebJobs
     {
         private readonly string _blobPath;
 
+        // LogsAndContainerScan is default kind as it does not require additional actions to set up a blob trigger
+        private BlobTriggerSource _blobTriggerSource = BlobTriggerSource.LogsAndContainerScan;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobTriggerAttribute"/> class.
         /// </summary>
@@ -65,6 +67,15 @@ namespace Microsoft.Azure.WebJobs
         public string BlobPath
         {
             get { return _blobPath; }
+        }
+
+        /// <summary>
+        /// Returns a bool value that indicates whether EventGrid is used.
+        /// </summary>
+        public BlobTriggerSource Source
+        {
+            get { return _blobTriggerSource; }
+            set { _blobTriggerSource = value; }
         }
     }
 }

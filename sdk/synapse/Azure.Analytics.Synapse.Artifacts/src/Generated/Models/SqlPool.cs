@@ -25,9 +25,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of SqlPool. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> SQL pool SKU. </param>
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="restorePointInTime"> Snapshot time to restore. </param>
         /// <param name="createMode"> What is this?. </param>
         /// <param name="creationDate"> Date the SQL pool was created. </param>
-        internal SqlPool(string id, string name, string type, IDictionary<string, string> tags, string location, Sku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, DateTimeOffset? restorePointInTime, string createMode, DateTimeOffset? creationDate) : base(id, name, type, tags, location)
+        internal SqlPool(string id, string name, string type, IDictionary<string, string> tags, string location, Sku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, string restorePointInTime, string createMode, DateTimeOffset? creationDate) : base(id, name, type, tags, location)
         {
             Sku = sku;
             MaxSizeBytes = maxSizeBytes;
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Resource status. </summary>
         public string Status { get; set; }
         /// <summary> Snapshot time to restore. </summary>
-        public DateTimeOffset? RestorePointInTime { get; set; }
+        public string RestorePointInTime { get; set; }
         /// <summary> What is this?. </summary>
         public string CreateMode { get; set; }
         /// <summary> Date the SQL pool was created. </summary>

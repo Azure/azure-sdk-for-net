@@ -8,7 +8,7 @@ param (
   $ExitOnError=1,
   $UploadLatest=1,
   $PublicArtifactLocation = "",
-  $RepoReplaceRegex = "(https://github.com/.*/(?:blob|tree)/)master"
+  $RepoReplaceRegex = ""
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -199,7 +199,7 @@ function Upload-Blobs
     LogDebug "Final Dest $($DocDest)/$($PkgName)/$($DocVersion)"
     LogDebug "Release Tag $($ReleaseTag)"
 
-    # Use the step to replace master link to release tag link 
+    # Use the step to replace default branch link to release tag link 
     if ($ReleaseTag) {
         foreach ($htmlFile in (Get-ChildItem $DocDir -include *.html -r)) 
         {
@@ -211,18 +211,20 @@ function Upload-Blobs
         }
     } 
     else {
-        LogWarning "Not able to do the master link replacement, since no release tag found for the release. Please manually check."
+        LogWarning "Not able to do the default branch link replacement, since no release tag found for the release. Please manually check."
     } 
    
     LogDebug "Uploading $($PkgName)/$($DocVersion) to $($DocDest)..."
     & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)$($SASKey)" --recursive=true --cache-control "max-age=300, must-revalidate"
-
+    
     LogDebug "Handling versioning files under $($DocDest)/$($PkgName)/versioning/"
     $versionsObj = (Update-Existing-Versions -PkgName $PkgName -PkgVersion $DocVersion -DocDest $DocDest)
-
-    # we can safely assume we have AT LEAST one version here. Reason being we just completed Update-Existing-Versions
-    $latestVersion = ($versionsObj.SortedVersionArray | Select-Object -First 1).RawVersion
-
+    $latestVersion = $versionsObj.LatestGAPackage 
+    if (!$latestVersion) {
+        $latestVersion = $versionsObj.LatestPreviewPackage 
+    }
+    LogDebug "Fetching the latest version $latestVersion"
+    
     if ($UploadLatest -and ($latestVersion -eq $DocVersion))
     {
         LogDebug "Uploading $($PkgName) to latest folder in $($DocDest)..."
@@ -230,13 +232,14 @@ function Upload-Blobs
     }
 }
 
-
-if ((Get-ChildItem -Path Function: | ? { $_.Name -eq $PublishGithubIODocsFn }).Count -gt 0)
+if ($PublishGithubIODocsFn -and (Test-Path "Function:$PublishGithubIODocsFn"))
 {
     &$PublishGithubIODocsFn -DocLocation $DocLocation -PublicArtifactLocation $PublicArtifactLocation
 }
 else
 {
-    LogWarning "The function '$PublishGithubIODocsFn' was not found."
+    LogWarning "The function for '$PublishGithubIODocsFn' was not found.`
+    Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
+    See https://github.com/Azure/azure-sdk-tools/blob/master/doc/common/common_engsys.md#code-structure"
 }
 

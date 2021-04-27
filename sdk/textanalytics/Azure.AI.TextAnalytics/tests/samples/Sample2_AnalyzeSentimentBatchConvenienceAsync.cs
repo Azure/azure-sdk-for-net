@@ -21,53 +21,71 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            string documentA = @"The food and service were unacceptable, but the concierge were nice.
+                                After talking to them about the quality of the food and the process
+                                to get room service they refunded the money we spent at the restaurant and
+                                gave us a voucher for nearby restaurants.";
+
+            string documentB = @"Nice rooms! I had a great unobstructed view of the Microsoft campus but bathrooms
+                                were old and the toilet was dirty when we arrived. It was close to bus stops and
+                                groceries stores.
+                                If you want to be close to campus I will recommend it, otherwise, might be
+                                better to stay in a cleaner one";
+
+            string documentC = @"The rooms were beautiful. The AC was good and quiet, which was key for us as outside
+                                it was 100F and our baby was getting uncomfortable because of the heat. The breakfast
+                                was good too with good options and good servicing times.
+                                The thing we didn't like was that the toilet in our bathroom was smelly.
+                                It could have been that the toilet was not cleaned before we arrived.";
+
+            string documentD = string.Empty;
+
             var documents = new List<string>
             {
-                "That was the best day of my life!",
-                "This food is very bad.",
-                "I'm not sure how I feel about this product.",
-                "Pike place market is my favorite Seattle attraction.",
+                documentA,
+                documentB,
+                documentC,
+                documentD
             };
 
-            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents);
+            Response<AnalyzeSentimentResultCollection> response = await client.AnalyzeSentimentBatchAsync(documents);
+            AnalyzeSentimentResultCollection sentimentPerDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{results.ModelVersion}\"");
+            Console.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{sentimentPerDocuments.ModelVersion}\"");
             Console.WriteLine("");
 
-            foreach (AnalyzeSentimentResult result in results)
+            foreach (AnalyzeSentimentResult sentimentInDocument in sentimentPerDocuments)
             {
-                Console.WriteLine($"On document {documents[i++]}");
+                Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
+                Console.WriteLine("");
 
-                if (result.HasError)
+                if (sentimentInDocument.HasError)
                 {
-                    Console.WriteLine($"    Document error: {result.Error.ErrorCode}.");
-                    Console.WriteLine($"    Message: {result.Error.Message}.");
+                    Console.WriteLine("  Error!");
+                    Console.WriteLine($"  Document error: {sentimentInDocument.Error.ErrorCode}.");
+                    Console.WriteLine($"  Message: {sentimentInDocument.Error.Message}");
                 }
                 else
                 {
-                    Console.WriteLine($"Document sentiment is {result.DocumentSentiment.Sentiment}, with confidence scores: ");
-                    Console.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive}.");
-                    Console.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral}.");
-                    Console.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative}.");
-
-                    Console.WriteLine($"    Sentence sentiment results:");
-
-                    foreach (SentenceSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
-                    {
-                        Console.WriteLine($"    For sentence: \"{sentenceSentiment.Text}\"");
-                        Console.WriteLine($"    Offset (in UTF-16 code units): {sentenceSentiment.Offset}");
-                        Console.WriteLine($"    Sentiment is {sentenceSentiment.Sentiment}, with confidence scores: ");
-                        Console.WriteLine($"        Positive confidence score: {sentenceSentiment.ConfidenceScores.Positive}.");
-                        Console.WriteLine($"        Neutral confidence score: {sentenceSentiment.ConfidenceScores.Neutral}.");
-                        Console.WriteLine($"        Negative confidence score: {sentenceSentiment.ConfidenceScores.Negative}.");
-                    }
-
-                    Console.WriteLine($"    Document statistics:");
-                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
-                    Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Console.WriteLine($"Document sentiment is {sentimentInDocument.DocumentSentiment.Sentiment}, with confidence scores: ");
+                    Console.WriteLine($"  Positive confidence score: {sentimentInDocument.DocumentSentiment.ConfidenceScores.Positive}.");
+                    Console.WriteLine($"  Neutral confidence score: {sentimentInDocument.DocumentSentiment.ConfidenceScores.Neutral}.");
+                    Console.WriteLine($"  Negative confidence score: {sentimentInDocument.DocumentSentiment.ConfidenceScores.Negative}.");
                     Console.WriteLine("");
+                    Console.WriteLine($"  Sentence sentiment results:");
+
+                    foreach (SentenceSentiment sentimentInSentence in sentimentInDocument.DocumentSentiment.Sentences)
+                    {
+                        Console.WriteLine($"  For sentence: \"{sentimentInSentence.Text}\"");
+                        Console.WriteLine($"  Sentiment is {sentimentInSentence.Sentiment}, with confidence scores: ");
+                        Console.WriteLine($"    Positive confidence score: {sentimentInSentence.ConfidenceScores.Positive}.");
+                        Console.WriteLine($"    Neutral confidence score: {sentimentInSentence.ConfidenceScores.Neutral}.");
+                        Console.WriteLine($"    Negative confidence score: {sentimentInSentence.ConfidenceScores.Negative}.");
+                        Console.WriteLine("");
+                    }
                 }
+                Console.WriteLine("");
             }
         }
     }

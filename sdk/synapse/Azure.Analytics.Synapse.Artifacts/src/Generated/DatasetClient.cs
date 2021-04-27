@@ -21,16 +21,40 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal DatasetRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of DatasetClient for mocking. </summary>
         protected DatasetClient()
         {
         }
+
+        /// <summary> Initializes a new instance of DatasetClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public DatasetClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+
+            options ??= new ArtifactsClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://dev.azuresynapse.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new DatasetRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+        }
+
         /// <summary> Initializes a new instance of DatasetClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal DatasetClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
+        internal DatasetClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
         {
             RestClient = new DatasetRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -253,6 +277,66 @@ namespace Azure.Analytics.Synapse.Artifacts
             {
                 var originalResponse = RestClient.DeleteDataset(datasetName, cancellationToken);
                 return new DatasetDeleteDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateDeleteDatasetRequest(datasetName).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="request"/> is null. </exception>
+        public virtual async Task<DatasetRenameDatasetOperation> StartRenameDatasetAsync(string datasetName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartRenameDataset");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.RenameDatasetAsync(datasetName, request, cancellationToken).ConfigureAwait(false);
+                return new DatasetRenameDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameDatasetRequest(datasetName, request).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renames a dataset. </summary>
+        /// <param name="datasetName"> The dataset name. </param>
+        /// <param name="request"> proposed new name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="request"/> is null. </exception>
+        public virtual DatasetRenameDatasetOperation StartRenameDataset(string datasetName, ArtifactRenameRequest request, CancellationToken cancellationToken = default)
+        {
+            if (datasetName == null)
+            {
+                throw new ArgumentNullException(nameof(datasetName));
+            }
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("DatasetClient.StartRenameDataset");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.RenameDataset(datasetName, request, cancellationToken);
+                return new DatasetRenameDatasetOperation(_clientDiagnostics, _pipeline, RestClient.CreateRenameDatasetRequest(datasetName, request).Request, originalResponse);
             }
             catch (Exception e)
             {

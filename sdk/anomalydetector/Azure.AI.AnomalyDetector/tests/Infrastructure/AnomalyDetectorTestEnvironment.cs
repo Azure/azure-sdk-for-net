@@ -10,10 +10,6 @@ namespace Azure.AI.AnomalyDetector.Tests
     /// </summary>
     public class AnomalyDetectorTestEnvironment: TestEnvironment
     {
-        public AnomalyDetectorTestEnvironment() : base("anomalydetector")
-        {
-        }
-
         /// <summary>The name of the environment variable from which the Anomaly Detector resource's endpoint will be extracted for the live tests.</summary>
         internal const string EndpointEnvironmentVariableName = "ANOMALY_DETECTOR_ENDPOINT";
 

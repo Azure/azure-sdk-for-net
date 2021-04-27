@@ -4,18 +4,18 @@
       "RequestUri": "https://login.microsoftonline.com/common/discovery/instance?api-version=1.1\u0026authorization_endpoint=https%3A%2F%2Flogin.microsoftonline.com%2Fc54fac88-3dd3-461f-a7c4-8a368e0340b3%2Foauth2%2Fv2.0%2Fauthorize",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "client-request-id": "0fe0d9b3-cbe5-4ddd-9c70-a5a0ccc6b408",
+        "client-request-id": "a984b227-155b-4857-8512-734a1befeb16",
         "return-client-request-id": "true",
-        "traceparent": "00-d6a455d25dd61043bd8ceb6062239bef-8dd127be5733524f-00",
+        "traceparent": "00-09b0e49971395c4398a8ff5aa033f05a-a1204d5572f0664b-00",
         "User-Agent": [
-          "azsdk-net-Identity/1.2.0-dev.20200716.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Identity/1.4.0-alpha.20210205.1",
+          "(.NET Core 3.1.11; Microsoft Windows 10.0.19042)"
         ],
         "x-app-name": "UnknownClient",
         "x-app-ver": "0.0.0.0",
-        "x-client-OS": "Microsoft Windows 10.0.18363 ",
+        "x-client-OS": "Microsoft Windows 10.0.19042",
         "x-client-SKU": "MSAL.NetCore",
-        "x-client-Ver": "4.16.1.0",
+        "x-client-Ver": "4.23.0.0",
         "x-ms-client-request-id": "bdc193d438381f612e03bbf6722b423c",
         "x-ms-return-client-request-id": "true"
       },
@@ -25,21 +25,20 @@
         "Access-Control-Allow-Methods": "GET, OPTIONS",
         "Access-Control-Allow-Origin": "*",
         "Cache-Control": "max-age=86400, private",
-        "client-request-id": "0fe0d9b3-cbe5-4ddd-9c70-a5a0ccc6b408",
+        "client-request-id": "a984b227-155b-4857-8512-734a1befeb16",
         "Content-Length": "980",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 16 Jul 2020 07:38:59 GMT",
+        "Date": "Fri, 05 Feb 2021 20:01:58 GMT",
         "P3P": "CP=\u0022DSP CUR OTPi IND OTRi ONL FIN\u0022",
         "Set-Cookie": [
-          "fpc=Au73AAbOEZ1MhRD-hUtg0ws; expires=Sat, 15-Aug-2020 07:38:59 GMT; path=/; secure; HttpOnly; SameSite=None",
-          "esctx=AQABAAAAAAAGV_bv21oQQ4ROqh0_1-tAAb8WAIHGo2ZUGWasYn60FRXnBcFb80hEVVRzYqw8arRLHqKhwguR8UIwO7bUmZTwG_oU4-B8fyzOGplwSdyG4o7JXzEuUhM7o_1fwRfuoLlAeKDOXQDLXmw3NhuzlhURH6AUY0IQxq2LCDdsStjnuhMkF-sse23mk9JWfHLehrAgAA; domain=.login.microsoftonline.com; path=/; secure; HttpOnly; SameSite=None",
-          "x-ms-gateway-slice=prod; path=/; SameSite=None; secure; HttpOnly",
-          "stsservicecookie=ests; path=/; SameSite=None; secure; HttpOnly"
+          "fpc=AoMWyVze9J1GhXPK92uLvfjoE88hCgAAACKbr9cOAAAASl0JjBQAAAAmm6_XDgAAAA; expires=Sun, 07-Mar-2021 20:01:59 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly",
+          "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ests-server": "2.1.10821.14 - WUS2 ProdSlices",
-        "x-ms-request-id": "f737ed69-e6f6-4318-a49f-0a78c53b0301"
+        "x-ms-ests-server": "2.1.11459.15 - EUS ProdSlices",
+        "x-ms-request-id": "5c345a1f-dfe7-4da5-9e9e-89814e300900"
       },
       "ResponseBody": {
         "tenant_discovery_endpoint": "https://login.microsoftonline.com/c54fac88-3dd3-461f-a7c4-8a368e0340b3/v2.0/.well-known/openid-configuration",
@@ -89,17 +88,17 @@
       }
     },
     {
-      "RequestUri": "https://login.microsoftonline.com/common/userrealm/sschaab716@azuresdkplayground.onmicrosoft.com?api-version=1.0",
+      "RequestUri": "https://login.microsoftonline.com/common/userrealm/identitytestuser@azuresdkplayground.onmicrosoft.com?api-version=1.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-d6a455d25dd61043bd8ceb6062239bef-17c1b9c4a3e3fa4b-00",
+        "traceparent": "00-09b0e49971395c4398a8ff5aa033f05a-80022a064ea4b043-00",
         "User-Agent": [
-          "azsdk-net-Identity/1.2.0-dev.20200716.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Identity/1.4.0-alpha.20210205.1",
+          "(.NET Core 3.1.11; Microsoft Windows 10.0.19042)"
         ],
-        "x-client-OS": "Microsoft Windows 10.0.18363 ",
+        "x-client-OS": "Microsoft Windows 10.0.19042",
         "x-client-SKU": "MSAL.NetCore",
-        "x-client-Ver": "4.16.1.0",
+        "x-client-Ver": "4.23.0.0",
         "x-ms-client-request-id": "886b2b2aaaed2ac8db7d283d631fa6d3",
         "x-ms-return-client-request-id": "true"
       },
@@ -110,19 +109,19 @@
         "Content-Disposition": "inline; filename=userrealm.json",
         "Content-Length": "187",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 16 Jul 2020 07:38:59 GMT",
+        "Date": "Fri, 05 Feb 2021 20:01:58 GMT",
         "Expires": "-1",
         "P3P": "CP=\u0022DSP CUR OTPi IND OTRi ONL FIN\u0022",
         "Pragma": "no-cache",
         "Set-Cookie": [
-          "fpc=Au73AAbOEZ1MhRD-hUtg0ws; expires=Sat, 15-Aug-2020 07:38:59 GMT; path=/; secure; HttpOnly; SameSite=None",
-          "x-ms-gateway-slice=prod; path=/; SameSite=None; secure; HttpOnly",
-          "stsservicecookie=ests; path=/; secure; HttpOnly; SameSite=None"
+          "fpc=AoMWyVze9J1GhXPK92uLvfjoE88hCgAAACKbr9cOAAAASl0JjBQAAAAmm6_XDgAAAA; expires=Sun, 07-Mar-2021 20:01:59 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly",
+          "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ests-server": "2.1.10821.14 - WUS2 ProdSlices",
-        "x-ms-request-id": "f0d37180-6c96-4514-9153-8d2872850101"
+        "x-ms-ests-server": "2.1.11459.15 - WUS2 ProdSlices",
+        "x-ms-request-id": "1b911531-26d7-497e-8cd4-7f0d0e4a0800"
       },
       "ResponseBody": {
         "ver": "1.0",
@@ -136,47 +135,48 @@
       "RequestUri": "https://login.microsoftonline.com/c54fac88-3dd3-461f-a7c4-8a368e0340b3/oauth2/v2.0/token",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "client-request-id": "0fe0d9b3-cbe5-4ddd-9c70-a5a0ccc6b408",
+        "client-request-id": "a984b227-155b-4857-8512-734a1befeb16",
         "Content-Length": "9",
+        "Content-Type": "application/x-www-form-urlencoded",
         "return-client-request-id": "true",
-        "traceparent": "00-d6a455d25dd61043bd8ceb6062239bef-f1eec97dabcad446-00",
+        "traceparent": "00-09b0e49971395c4398a8ff5aa033f05a-412f725dd33c5943-00",
         "User-Agent": [
-          "azsdk-net-Identity/1.2.0-dev.20200716.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Identity/1.4.0-alpha.20210205.1",
+          "(.NET Core 3.1.11; Microsoft Windows 10.0.19042)"
         ],
         "x-app-name": "UnknownClient",
         "x-app-ver": "0.0.0.0",
         "x-client-current-telemetry": "2|1003,0|",
         "x-client-last-telemetry": "2|0|||",
-        "x-client-OS": "Microsoft Windows 10.0.18363 ",
+        "x-client-OS": "Microsoft Windows 10.0.19042",
         "x-client-SKU": "MSAL.NetCore",
-        "x-client-Ver": "4.16.1.0",
+        "x-client-Ver": "4.23.0.0",
         "x-ms-client-request-id": "7033cc3d6eaf666ebf4ccc819d566ec6",
         "x-ms-lib-capability": "retry-after, h429",
         "x-ms-PKeyAuth": "1.0",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "U2FuaXRpemVk",
+      "RequestBody": "Sanitized",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "client-request-id": "0fe0d9b3-cbe5-4ddd-9c70-a5a0ccc6b408",
-        "Content-Length": "1543",
+        "client-request-id": "a984b227-155b-4857-8512-734a1befeb16",
+        "Content-Length": "1645",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 16 Jul 2020 07:38:59 GMT",
+        "Date": "Fri, 05 Feb 2021 20:01:58 GMT",
         "Expires": "-1",
         "P3P": "CP=\u0022DSP CUR OTPi IND OTRi ONL FIN\u0022",
         "Pragma": "no-cache",
         "Set-Cookie": [
-          "fpc=Au73AAbOEZ1MhRD-hUtg0wsCGiLjAQAAABL7odYOAAAA; expires=Sat, 15-Aug-2020 07:38:59 GMT; path=/; secure; HttpOnly; SameSite=None",
-          "x-ms-gateway-slice=prod; path=/; SameSite=None; secure; HttpOnly",
-          "stsservicecookie=ests; path=/; secure; HttpOnly; SameSite=None"
+          "fpc=AoMWyVze9J1GhXPK92uLvfjoE88hCgAAACKbr9cOAAAASl0JjBQAAAAmm6_XDgAAANJ4XoMBAAAANpuv1w4AAAA; expires=Sun, 07-Mar-2021 20:01:59 GMT; path=/; secure; HttpOnly; SameSite=None",
+          "x-ms-gateway-slice=estsfd; path=/; secure; samesite=none; httponly",
+          "stsservicecookie=estsfd; path=/; secure; samesite=none; httponly"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-clitelem": "1,0,0,,",
-        "x-ms-ests-server": "2.1.10821.14 - WUS2 ProdSlices",
-        "x-ms-request-id": "9d7d496b-d4fb-474b-a3c0-d043104aed01"
+        "x-ms-ests-server": "2.1.11459.15 - WUS2 ProdSlices",
+        "x-ms-request-id": "1b911531-26d7-497e-8cd4-7f0d104a0800"
       },
       "ResponseBody": {
         "token_type": "Bearer",
@@ -186,14 +186,14 @@
         "access_token": "Sanitized",
         "refresh_token": "Sanitized",
         "foci": "1",
-        "id_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Imh1Tjk1SXZQZmVocTM0R3pCRFoxR1hHaXJuTSJ9.eyJhdWQiOiIwNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDYiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vYzU0ZmFjODgtM2RkMy00NjFmLWE3YzQtOGEzNjhlMDM0MGIzL3YyLjAiLCJpYXQiOjE1OTQ4ODQ4MzksIm5iZiI6MTU5NDg4NDgzOSwiZXhwIjoxNTk0ODg4NzM5LCJhaW8iOiJBVFFBeS84UUFBQUFtZmZiL1VaZ09sNzMxMEdYNnhpSkxaUTVOekUwKzhwamN2NzAyT1hRR0JhZ0F3TmVBMHczTVN0UVFxaVNUL0tIIiwibmFtZSI6InNzY2hhYWI3MTYiLCJvaWQiOiI0ZjY1ZmYzMy03MDdlLTQ0YTMtOGU4OS05ZTg0OTA2ODY5OGEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzc2NoYWFiNzE2QGF6dXJlc2RrcGxheWdyb3VuZC5vbm1pY3Jvc29mdC5jb20iLCJzdWIiOiJhYVozeGRhaVUtdE9OR0hMdzRsZFd3LXJpREpwekpud1NkNFIzVmNZRU5jIiwidGlkIjoiYzU0ZmFjODgtM2RkMy00NjFmLWE3YzQtOGEzNjhlMDM0MGIzIiwidXRpIjoiYTBsOW5mdlVTMGVqd05CREVFcnRBUSIsInZlciI6IjIuMCJ9.BWNE8514J1jjrmjzJoW3qoDB4aKliwuBLstDlmBkLXJxzdZu4h-_qGY2JPAhHbg86fAS1Mdf82SWPziqVw0zOmNBrCvjtaAv_ipXOUkZ3dhUmKIqB93I5r6uFJxbBhNuIYZ0BkCdoWCNZyvefrjPd9UV1WOSm2xnA6pAr37huuSay1vSueJbrTT8pQemxCeU46ulXUh_UKUslOr2gH06uBcVRDqwa4V4eSoM3zbpc04zaYs7TvbV5lShTveyMyc2vGKUSfgV_8qMhNx7MDqyckhAsRZaKlxU4fuAtQPyvadHA3bqy1rK9haXWFpQffLWEIoOBmcizUff9-rfO0sMnw",
-        "client_info": "eyJ1aWQiOiI0ZjY1ZmYzMy03MDdlLTQ0YTMtOGU4OS05ZTg0OTA2ODY5OGEiLCJ1dGlkIjoiYzU0ZmFjODgtM2RkMy00NjFmLWE3YzQtOGEzNjhlMDM0MGIzIn0"
+        "id_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiIwNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDYiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vYzU0ZmFjODgtM2RkMy00NjFmLWE3YzQtOGEzNjhlMDM0MGIzL3YyLjAiLCJpYXQiOjE2MTI1NTUwMTksIm5iZiI6MTYxMjU1NTAxOSwiZXhwIjoxNjEyNTU4OTE5LCJhaW8iOiJBVFFBeS84VEFBQUFFUGNucjQ0SndnaGRKNnNXZlhFd2VmMkNTMXV0aGFPMzMvUzJrM2dvcWZOWHVBMGZWUEE0ZUd3RCs2TEpaL0dBIiwibmFtZSI6IklkZW50aXR5IFRlc3QgVXNlciIsIm9pZCI6IjQyZDhlODg0LTI2NWEtNGNkNC05MDg5LTRjM2JjNDBhZjE4MyIsInByZWZlcnJlZF91c2VybmFtZSI6ImlkZW50aXR5dGVzdHVzZXJAYXp1cmVzZGtwbGF5Z3JvdW5kLm9ubWljcm9zb2Z0LmNvbSIsInJoIjoiMC5BUzBBaUt4UHhkTTlIMGFueElvMmpnTkFzNVYzc0FUYmpScEd1LTRDLWVHX2UwWXRBSWsuIiwic3ViIjoiRHh5SUFhMjRMTWtWb2djWV9iYWhlTnZ3UGNXYldoa2FqaHNmcEZLOU5PNCIsInRpZCI6ImM1NGZhYzg4LTNkZDMtNDYxZi1hN2M0LThhMzY4ZTAzNDBiMyIsInV0aSI6Ik1SV1JHOWNtZmttTTFIOE5FRW9JQUEiLCJ2ZXIiOiIyLjAifQ.EoEsrdH9SAQiP9a5x9T7kGs246PiHPbGhHuB0Wy5Nx3YkMwf6X71A5KAYQRwivJZPQtAfaz6CRrpiPuMgWGULgU5Ya5h9ENbGWwBFsKTSMA2aF5pBechc0Fbk-kaPCv-f6dN_hHiDAADqFf3TnIaXjggP7tQop7TB4o5vFrvUKbB35OGK2322F4NyYBzdQs6aoPIhAP_2GB-2NKc_yTFACPWfUIOWjd3aqcWATYJNLkF_P5C_pCIo8lZrso8sT-B72_yqcLxifXzFffpkDBocWVMZSpvIx6x-dq1pouLly1wV5Ekd4pT-HuV13t7KqBHnw-9exgLhnXsmoszm9xytg",
+        "client_info": "eyJ1aWQiOiI0MmQ4ZTg4NC0yNjVhLTRjZDQtOTA4OS00YzNiYzQwYWYxODMiLCJ1dGlkIjoiYzU0ZmFjODgtM2RkMy00NjFmLWE3YzQtOGEzNjhlMDM0MGIzIn0"
       }
     }
   ],
   "Variables": {
     "AZURE_IDENTITY_TEST_TENANTID": "c54fac88-3dd3-461f-a7c4-8a368e0340b3",
-    "AZURE_IDENTITY_TEST_USERNAME": "sschaab716@azuresdkplayground.onmicrosoft.com",
+    "AZURE_IDENTITY_TEST_USERNAME": "identitytestuser@azuresdkplayground.onmicrosoft.com",
     "RandomSeed": "1452968491"
   }
 }

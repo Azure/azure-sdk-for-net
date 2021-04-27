@@ -65,8 +65,6 @@ namespace Azure.Identity.Tests
         {
             var mockMsalClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.Now + TimeSpan.FromMinutes(10)));
 
-            var mockAadClient = new MockAadIdentityClient(() => new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow.AddMinutes(10)));
-
             var credential = InstrumentClient(new ClientCertificateCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new X509Certificate2(), default, default, mockMsalClient));
 
             var method = "ClientCertificateCredential.GetToken";

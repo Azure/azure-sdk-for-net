@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ServerDnsAliasListResult
+    internal partial class ServerDnsAliasListResult
     {
         internal static ServerDnsAliasListResult DeserializeServerDnsAliasListResult(JsonElement element)
         {

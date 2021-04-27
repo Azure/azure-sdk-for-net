@@ -16,8 +16,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     /// </summary>
     public static class IndexingMode
     {
-        public const string Consistent = "Consistent";
-        public const string Lazy = "Lazy";
-        public const string None = "None";
+        public const string Consistent = "consistent";
+        public const string Lazy = "lazy";
+        public const string None = "none";
     }
 }

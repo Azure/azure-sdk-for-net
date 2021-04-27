@@ -28,15 +28,9 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         internal RecognizedForm(DocumentResult documentResult, IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults, string modelId)
-            : this(documentResult, pageResults, readResults, modelId, false) { }
-
-        internal RecognizedForm(DocumentResult documentResult, IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults, string modelId, bool isBusinessCards)
         {
             // Recognized form from a model trained with labels.
             FormType = documentResult.DocType;
-
-            // TODO: validate that PageRange.Length == 2.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10547
 
             PageRange = new FormPageRange(documentResult.PageRange[0], documentResult.PageRange[1]);
 
@@ -45,7 +39,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             Fields = documentResult.Fields == null
                 ? new Dictionary<string, FormField>()
-                : ConvertSupervisedFields(documentResult.Fields, readResults, isBusinessCards);
+                : ConvertSupervisedFields(documentResult.Fields, readResults);
             Pages = ConvertSupervisedPages(pageResults, readResults);
             ModelId = documentResult.ModelId.HasValue ? documentResult.ModelId.Value.ToString() : modelId;
             FormTypeConfidence = documentResult.DocTypeConfidence ?? Constants.DefaultConfidenceValue;
@@ -121,7 +115,7 @@ namespace Azure.AI.FormRecognizer.Models
             return fieldDictionary;
         }
 
-        private static IReadOnlyDictionary<string, FormField> ConvertSupervisedFields(IReadOnlyDictionary<string, FieldValue_internal> fields, IReadOnlyList<ReadResult> readResults, bool isBusinessCards)
+        private static IReadOnlyDictionary<string, FormField> ConvertSupervisedFields(IReadOnlyDictionary<string, FieldValue_internal> fields, IReadOnlyList<ReadResult> readResults)
         {
             Dictionary<string, FormField> fieldDictionary = new Dictionary<string, FormField>();
 
@@ -129,7 +123,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 fieldDictionary[field.Key] = field.Value == null
                     ? null
-                    : new FormField(field.Key, field.Value, readResults, isBusinessCards);
+                    : new FormField(field.Key, field.Value, readResults);
             }
 
             return fieldDictionary;

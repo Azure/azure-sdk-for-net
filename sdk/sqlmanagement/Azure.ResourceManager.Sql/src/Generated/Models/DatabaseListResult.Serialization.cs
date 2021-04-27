@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DatabaseListResult
+    internal partial class DatabaseListResult
     {
         internal static DatabaseListResult DeserializeDatabaseListResult(JsonElement element)
         {

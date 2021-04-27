@@ -449,7 +449,7 @@ namespace ResourceGroups.Tests
 
                 // Act.
                 WhatIfOperationResult result = client.Deployments
-                    .WhatIfAtManagementGroupScope("testMG", NewDeploymentName(), deploymentWhatIf);
+                    .WhatIfAtManagementGroupScope("tag-mg-sdk", NewDeploymentName(), deploymentWhatIf);
 
                 // Assert.
                 Assert.Equal("Succeeded", result.Status);
@@ -479,7 +479,7 @@ namespace ResourceGroups.Tests
 
                 // Act.
                 WhatIfOperationResult result = client.Deployments
-                    .WhatIfAtManagementGroupScope("testMG", NewDeploymentName(), deploymentWhatIf);
+                    .WhatIfAtManagementGroupScope("tag-mg-sdk", NewDeploymentName(), deploymentWhatIf);
 
                 // Assert.
                 Assert.Equal("Succeeded", result.Status);
@@ -518,7 +518,7 @@ namespace ResourceGroups.Tests
 
                 // Act.
                 WhatIfOperationResult result = client.Deployments
-                    .WhatIfAtManagementGroupScope("testMG", NewDeploymentName(), deploymentWhatIf);
+                    .WhatIfAtManagementGroupScope("tag-mg-sdk", NewDeploymentName(), deploymentWhatIf);
 
                 // Assert.
                 Assert.Equal("Succeeded", result.Status);

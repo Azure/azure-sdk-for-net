@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus.Administration
@@ -17,9 +19,9 @@ namespace Azure.Messaging.ServiceBus.Administration
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
         private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
         private int _maxDeliveryCount = 10;
-        private string _forwardTo = null;
-        private string _forwardDeadLetteredMessagesTo = null;
-        private string _userMetadata = null;
+        private string _forwardTo;
+        private string _forwardDeadLetteredMessagesTo;
+        private string _userMetadata;
 
         /// <summary>
         /// Initializes a new instance of QueueProperties class with the specified relative name.
@@ -51,6 +53,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             Status = options.Status;
             ForwardTo = options.ForwardTo;
             ForwardDeadLetteredMessagesTo = options.ForwardDeadLetteredMessagesTo;
+            EnablePartitioning = options.EnablePartitioning;
             if (options.UserMetadata != null)
             {
                 UserMetadata = options.UserMetadata;
@@ -148,7 +151,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// Indicates whether this queue has dead letter support when a message expires.
         /// </summary>
         /// <remarks>If true, the expired messages are moved to dead-letter subqueue. Default value is false.</remarks>
-        public bool DeadLetteringOnMessageExpiration { get; set; } = false;
+        public bool DeadLetteringOnMessageExpiration { get; set; }
 
         /// <summary>
         /// The <see cref="TimeSpan"/> duration of duplicate detection history that is maintained by the service.
@@ -174,7 +177,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// <summary>
         /// The maximum delivery count of a message before it is dead-lettered.
         /// </summary>
-        /// <remarks>The delivery count is increased when a message is received in <see cref="ReceiveMode.PeekLock"/> mode
+        /// <remarks>The delivery count is increased when a message is received in <see cref="ServiceBusReceiveMode.PeekLock"/> mode
         /// and didn't complete the message before the message lock expired.
         /// Default value is 10. Minimum value is 1.</remarks>
         public int MaxDeliveryCount
@@ -226,7 +229,6 @@ namespace Azure.Messaging.ServiceBus.Administration
 
                 EntityNameFormatter.CheckValidQueueName(value, nameof(ForwardTo));
                 if (Name.Equals(value, StringComparison.CurrentCultureIgnoreCase))
-
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
@@ -286,11 +288,29 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
         }
 
+        internal bool IsAnonymousAccessible { get; set; }
+
+        internal bool SupportOrdering
+        {
+            get
+            {
+                return _internalSupportOrdering ?? !EnablePartitioning;
+            }
+            set
+            {
+                _internalSupportOrdering = value;
+            }
+        }
+
+        internal bool? _internalSupportOrdering;
+
+        internal bool EnableExpress { get; set; }
+
         /// <summary>
         /// List of properties that were retrieved using GetQueue but are not understood by this version of client is stored here.
         /// The list will be sent back when an already retrieved QueueDescription will be used in UpdateQueue call.
         /// </summary>
-        internal List<object> UnknownProperties { get; set; }
+        internal List<XElement> UnknownProperties { get; set; }
 
         /// <summary>
         ///   Returns a hash code for this instance.
@@ -326,6 +346,9 @@ namespace Azure.Messaging.ServiceBus.Administration
                 && RequiresDuplicateDetection.Equals(otherDescription.RequiresDuplicateDetection)
                 && RequiresSession.Equals(otherDescription.RequiresSession)
                 && Status.Equals(otherDescription.Status)
+                && SupportOrdering.Equals(other.SupportOrdering)
+                && EnableExpress == other.EnableExpress
+                && IsAnonymousAccessible == other.IsAnonymousAccessible
                 && string.Equals(_userMetadata, otherDescription._userMetadata, StringComparison.OrdinalIgnoreCase)
                 && (AuthorizationRules != null && otherDescription.AuthorizationRules != null
                     || AuthorizationRules == null && otherDescription.AuthorizationRules == null)

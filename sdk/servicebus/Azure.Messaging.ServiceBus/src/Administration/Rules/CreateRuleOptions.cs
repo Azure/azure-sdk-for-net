@@ -130,7 +130,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return false;
         }
 
-        /// <inheritdoc/>
+        /// <summary>Compares two <see cref="CreateRuleOptions"/> values for equality.</summary>
         public static bool operator ==(CreateRuleOptions left, CreateRuleOptions right)
         {
             if (ReferenceEquals(left, right))
@@ -146,7 +146,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return left.Equals(right);
         }
 
-        /// <inheritdoc/>
+        /// <summary>Compares two <see cref="CreateRuleOptions"/> values for inequality.</summary>
         public static bool operator !=(CreateRuleOptions left, CreateRuleOptions right)
         {
             return !(left == right);

@@ -24,33 +24,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class ReadMeSnippetsLiveTests
-
     {
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        private EventHubScope _scope;
-
-        /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
-        /// </summary>
-        ///
-        [OneTimeSetUp]
-        public async Task FixtureSetUp()
-        {
-            _scope = await EventHubScope.CreateAsync(2);
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
-        /// </summary>
-        ///
-        [OneTimeTearDown]
-        public async Task FixtureTearDown()
-        {
-            await _scope.DisposeAsync();
-        }
-
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -58,13 +32,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task Inspect()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_ReadMe_Inspect
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
+            /*@@*/ eventHubName = scope.EventHubName;
 
             await using (var producer = new EventHubProducerClient(connectionString, eventHubName))
             {
@@ -81,13 +57,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task Publish()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_ReadMe_Publish
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
+            /*@@*/ eventHubName = scope.EventHubName;
 
             await using (var producer = new EventHubProducerClient(connectionString, eventHubName))
             {
@@ -108,6 +86,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task Read()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             try
             {
                 #region Snippet:EventHubs_ReadMe_Read
@@ -116,7 +96,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 var eventHubName = "<< NAME OF THE EVENT HUB >>";
                 /*@@*/
                 /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-                /*@@*/ eventHubName = _scope.EventHubName;
+                /*@@*/ eventHubName = scope.EventHubName;
 
                 string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
@@ -149,6 +129,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task ReadPartition()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             try
             {
                 #region Snippet:EventHubs_ReadMe_ReadPartition
@@ -157,7 +139,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 var eventHubName = "<< NAME OF THE EVENT HUB >>";
                 /*@@*/
                 /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-                /*@@*/ eventHubName = _scope.EventHubName;
+                /*@@*/ eventHubName = scope.EventHubName;
 
                 string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
@@ -193,6 +175,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task PublishIdentity()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_ReadMe_PublishIdentity
 
             TokenCredential credential = new DefaultAzureCredential();
@@ -202,7 +186,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = _scope.EventHubName;
+            /*@@*/ eventHubName = scope.EventHubName;
 
             await using (var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential))
             {

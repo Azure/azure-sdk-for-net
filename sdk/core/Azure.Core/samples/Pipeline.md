@@ -35,7 +35,6 @@ public class StopwatchPolicy : HttpPipelinePolicy
         stopwatch.Stop();
 
         Console.WriteLine($"Request to {message.Request.Uri} took {stopwatch.Elapsed}");
-
     }
 
     public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)

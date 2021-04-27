@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ServiceTierAdvisorListResult
+    internal partial class ServiceTierAdvisorListResult
     {
         internal static ServiceTierAdvisorListResult DeserializeServiceTierAdvisorListResult(JsonElement element)
         {

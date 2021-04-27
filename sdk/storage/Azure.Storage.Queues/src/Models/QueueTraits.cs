@@ -31,14 +31,10 @@ namespace Azure.Storage.Queues.Models
     /// </summary>
     internal static partial class QueueExtensions
     {
-        /// <summary>
-        /// Convert the details into a <see cref="ListQueuesIncludeType"/> value.
-        /// </summary>
-        /// <returns>A <see cref="ListQueuesIncludeType"/> value.</returns>
-        internal static IEnumerable<ListQueuesIncludeType> AsIncludeTypes(this QueueTraits traits) =>
+        internal static IEnumerable<string> AsIncludeTypes(this QueueTraits traits) =>
             ((traits & QueueTraits.Metadata) == QueueTraits.Metadata)
                 ?
-                new ListQueuesIncludeType[] { ListQueuesIncludeType.Metadata } :
-                Array.Empty<ListQueuesIncludeType>();
+                new string[] { Constants.Queue.QueueTraitsMetadata } :
+                Array.Empty<string>();
     }
 }

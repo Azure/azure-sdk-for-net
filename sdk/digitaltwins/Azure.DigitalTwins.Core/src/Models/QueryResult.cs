@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
@@ -28,14 +27,6 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Initializes a new instance of QueryResult.
         /// </summary>
-        internal QueryResult()
-        {
-            Value = new ChangeTrackingList<T>();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of QueryResult.
-        /// </summary>
         /// <param name="value">The query results.</param>
         /// <param name="continuationToken">A token which can be used to construct a new QuerySpecification to retrieve the next set of results.</param>
         internal QueryResult(IReadOnlyList<T> value, string continuationToken)
@@ -54,6 +45,7 @@ namespace Azure.DigitalTwins.Core
         {
             IReadOnlyList<T> items = default;
             string continuationToken = default;
+
             foreach (JsonProperty property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -62,13 +54,18 @@ namespace Azure.DigitalTwins.Core
                     {
                         continue;
                     }
+
                     var array = new List<T>();
+
                     foreach (JsonElement item in property.Value.EnumerateArray())
                     {
-                        using MemoryStream streamedObject = StreamHelper.WriteToStream(item, objectSerializer, default);
+                        using MemoryStream streamedObject = StreamHelper.WriteJsonElementToStream(item);
+
+                        // To deserialize the stream object into the generic type of T, the provided ObjectSerializer will be used.
                         T obj = (T)objectSerializer.Deserialize(streamedObject, typeof(T), default);
                         array.Add(obj);
                     }
+
                     items = array;
                     continue;
                 }

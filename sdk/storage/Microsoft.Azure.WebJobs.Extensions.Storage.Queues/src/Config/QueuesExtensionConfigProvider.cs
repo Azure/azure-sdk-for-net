@@ -24,13 +24,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
         private readonly IContextGetter<IMessageEnqueuedWatcher> _contextGetter;
         private readonly QueueServiceClientProvider _queueServiceClientProvider;
         private readonly QueueTriggerAttributeBindingProvider _triggerProvider;
+        private readonly QueueCausalityManager _queueCausalityManager;
 
         public QueuesExtensionConfigProvider(QueueServiceClientProvider queueServiceClientProvider, IContextGetter<IMessageEnqueuedWatcher> contextGetter,
-            QueueTriggerAttributeBindingProvider triggerProvider)
+            QueueTriggerAttributeBindingProvider triggerProvider, QueueCausalityManager queueCausalityManager)
         {
             _contextGetter = contextGetter;
             _queueServiceClientProvider = queueServiceClientProvider;
             _triggerProvider = triggerProvider;
+            _queueCausalityManager = queueCausalityManager;
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -43,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
             context.AddBindingRule<QueueTriggerAttribute>().BindToTrigger(_triggerProvider);
 
             var config = new PerHostConfig();
-            config.Initialize(context, _queueServiceClientProvider, _contextGetter);
+            config.Initialize(context, _queueServiceClientProvider, _contextGetter, _queueCausalityManager);
         }
 
         // $$$ Get rid of PerHostConfig part?
@@ -59,24 +61,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
             // This is per-host (not per-config)
             private IContextGetter<IMessageEnqueuedWatcher> _messageEnqueuedWatcherGetter;
 
-            public void Initialize(ExtensionConfigContext context, QueueServiceClientProvider queueServiceClientProvider, IContextGetter<IMessageEnqueuedWatcher> contextGetter)
+            private QueueCausalityManager _queueCausalityManager;
+
+            public void Initialize(
+                ExtensionConfigContext context,
+                QueueServiceClientProvider queueServiceClientProvider,
+                IContextGetter<IMessageEnqueuedWatcher> contextGetter,
+                QueueCausalityManager queueCausalityManager)
             {
                 _queueServiceClientProvider = queueServiceClientProvider;
                 _messageEnqueuedWatcherGetter = contextGetter;
-
-                // TODO: FACAVAL replace this with queue options. This should no longer be needed.
-                //context.ApplyConfig(context.Config.Queues, "queues");
+                _queueCausalityManager = queueCausalityManager;
 
                 // IStorageQueueMessage is the core testing interface
                 var binding = context.AddBindingRule<QueueAttribute>();
                 binding
                     .AddConverter<byte[], QueueMessage>(ConvertByteArrayToCloudQueueMessage)
                     .AddConverter<string, QueueMessage>(ConvertStringToCloudQueueMessage)
+                    .AddConverter<BinaryData, QueueMessage>(ConvertBinaryDataToCloudQueueMessage)
                     .AddOpenConverter<OpenType.Poco, QueueMessage>(ConvertPocoToCloudQueueMessage);
 
                 context // global converters, apply to multiple attributes.
                      .AddConverter<QueueMessage, byte[]>(ConvertCloudQueueMessageToByteArray)
-                     .AddConverter<QueueMessage, string>(ConvertCloudQueueMessageToString);
+                     .AddConverter<QueueMessage, string>(ConvertCloudQueueMessageToString)
+                     .AddConverter<QueueMessage, BinaryData>(ConvertCloudQueueMessageToBinaryData);
 
                 var builder = new QueueBuilder(this);
 
@@ -139,18 +147,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
 
             private byte[] ConvertCloudQueueMessageToByteArray(QueueMessage arg)
             {
-                return Encoding.UTF8.GetBytes(arg.MessageText);
+                return arg.Body.ToArray();
+            }
+
+            private BinaryData ConvertCloudQueueMessageToBinaryData(QueueMessage arg)
+            {
+                return arg.Body;
             }
 
             private static string ConvertCloudQueueMessageToString(QueueMessage arg)
             {
-                return arg.MessageText;
+                return arg.Body.ToValidUTF8String();
             }
 
             private static QueueMessage ConvertByteArrayToCloudQueueMessage(byte[] arg, QueueAttribute attrResolved)
             {
-                // TODO (kasobol-msft) revisit this base64/BinaryData
-                return QueuesModelFactory.QueueMessage(null, null, Encoding.UTF8.GetString(arg), 0);
+                return QueuesModelFactory.QueueMessage(null, null, new BinaryData(arg), 0);
+            }
+
+            private static QueueMessage ConvertBinaryDataToCloudQueueMessage(BinaryData arg, QueueAttribute attrResolved)
+            {
+                return QueuesModelFactory.QueueMessage(null, null, arg, 0);
             }
 
             private static QueueMessage ConvertStringToCloudQueueMessage(string arg, QueueAttribute attrResolved)
@@ -214,7 +231,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config
                     throw new InvalidOperationException("Cannot enqueue a null queue message instance.");
                 }
 
-                await _queue.AddMessageAndCreateIfNotExistsAsync(message.MessageText, cancellationToken).ConfigureAwait(false);
+                await _queue.AddMessageAndCreateIfNotExistsAsync(message.Body, cancellationToken).ConfigureAwait(false);
 
                 if (_messageEnqueuedWatcher != null)
                 {

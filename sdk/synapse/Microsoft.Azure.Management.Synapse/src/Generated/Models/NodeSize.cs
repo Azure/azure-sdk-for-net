@@ -22,5 +22,6 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public const string Large = "Large";
         public const string XLarge = "XLarge";
         public const string XXLarge = "XXLarge";
+        public const string XXXLarge = "XXXLarge";
     }
 }

@@ -17,12 +17,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
     /// </summary>
     public class BlobChangeFeedAsyncPagableTests : ChangeFeedTestBase
     {
-        public BlobChangeFeedAsyncPagableTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlobChangeFeedAsyncPagableTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task Test()
         {
@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task TestHistorical()
         {
@@ -52,7 +52,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task TestLastHour()
         {
@@ -73,7 +73,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// This test runs long in recording mode as it waits multiple times for events.
         /// </summary>
         /// <returns></returns>
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task TestTailEvents()
         {
@@ -144,7 +144,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.IsEmpty(EventIdsPart2.Intersect(EventIdsPart3));
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task PageSizeTest()
         {
@@ -166,7 +166,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task CursorTest()
         {
@@ -195,7 +195,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task CanReadTillEnd()
         {
@@ -214,7 +214,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.IsNotEmpty(list);
         }
 
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task ResumeFromTheMiddleOfTheChunk()
         {
@@ -317,7 +317,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// Changes related to same blobName are guaranteed to end up in same shard.
         /// </summary>
         /// <returns></returns>
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task ResumeFromTheMiddleOfTheChunkWithSomeEmptyShards()
         {
@@ -422,7 +422,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// Easiest way to set this up is to modify lot of random blobs (i.e. with names that contain GUIDs).
         /// </summary>
         /// <returns></returns>
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task ResumeFromTheMiddleOfTheChunkWithManyNonEmptyShards()
         {
@@ -522,7 +522,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.AreEqual(AllEventIds, AllEventIdsFromResumingIteration);
         }
 
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task ResumeFromEndInThePastYieldsEmptyResult()
         {
@@ -556,13 +556,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(continuation);
             IList<BlobChangeFeedEvent> tail = await blobChangeFeedAsyncPagable.ToListAsync();
 
-
             // Assert
             Assert.AreEqual(0, tail.Count);
             Assert.Greater(AllEventIds.Count, 0);
         }
 
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task ImmediateResumeFromEndOfCurrentHourYieldsEmptyResult()
         {
@@ -597,7 +596,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             blobChangeFeedAsyncPagable = blobChangeFeedClient.GetChangesAsync(continuation);
             IList<BlobChangeFeedEvent> tail = await blobChangeFeedAsyncPagable.ToListAsync();
 
-
             // Assert
             Assert.AreEqual(0, tail.Count);
             Assert.Greater(AllEventIds.Count, 0);
@@ -608,7 +606,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// to an hour after end time.
         /// </summary>
         /// <returns></returns>
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task TestAlreadyRoundedBoundaries()
         {
@@ -638,7 +636,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// To setup account for this test have a steady stream of events (i.e. some changes every 1 minute) that covers at least from an hour before start time
         /// to an hour after end time.
         /// </summary>
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task TestNonRoundedBoundaries()
         {
@@ -666,7 +664,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.IsNotNull(eventList.Find(e => e.EventTime > roundedEndTime.AddMinutes(-15)), "There is some event 15 minutes before end");
         }
 
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task CursorFormatTest()
         {

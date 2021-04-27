@@ -11,7 +11,7 @@ namespace Azure
     {
         public override ETag Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            string value = reader.GetString();
+            string? value = reader.GetString();
             if (value == null)
             {
                 return default;

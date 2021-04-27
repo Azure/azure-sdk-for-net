@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{3238ECD2-ED0C-459A-B6E7-9625BF49E787}") = "Microsoft.Azure.Management.RedisEnterpriseCache.Tests", "tests\Microsoft.Azure.Management.RedisEnterpriseCache.Tests.csproj", "{C48270D4-AEEC-4AC2-BCD4-130DD1F6D51D}"
+EndProject
+Project("{3238ECD2-ED0C-459A-B6E7-9625BF49E787}") = "Microsoft.Azure.Management.RedisEnterprise", "src\Microsoft.Azure.Management.RedisEnterprise.csproj", "{C5030563-FC2F-47F9-A407-05C81C09BAD6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C48270D4-AEEC-4AC2-BCD4-130DD1F6D51D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C48270D4-AEEC-4AC2-BCD4-130DD1F6D51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C48270D4-AEEC-4AC2-BCD4-130DD1F6D51D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C48270D4-AEEC-4AC2-BCD4-130DD1F6D51D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5030563-FC2F-47F9-A407-05C81C09BAD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5030563-FC2F-47F9-A407-05C81C09BAD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5030563-FC2F-47F9-A407-05C81C09BAD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5030563-FC2F-47F9-A407-05C81C09BAD6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -9,9 +9,7 @@
     <Import_RootNamespace>Azure.Security.KeyVault.Tests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)SampleFixture.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SynapseTestEnvironment.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SynapseTestEventListener.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SynapseTestUtilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SynapseTestExtensions.cs" />
   </ItemGroup>
 </Project>

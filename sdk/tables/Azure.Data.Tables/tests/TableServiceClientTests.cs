@@ -3,18 +3,15 @@
 
 using System;
 using Azure.Core.TestFramework;
-using Azure.Data.Tables;
 using Azure.Data.Tables.Sas;
 using NUnit.Framework;
 
-namespace Azure.Tables.Tests
+namespace Azure.Data.Tables.Tests
 {
     public class TableServiceClientTests : ClientTestBase
     {
-
         public TableServiceClientTests(bool isAsync) : base(isAsync)
         {
-
         }
 
         /// <summary>
@@ -33,7 +30,7 @@ namespace Azure.Tables.Tests
         [SetUp]
         public void TestSetup()
         {
-            service_Instrumented = InstrumentClient(new TableServiceClient(_url));
+            service_Instrumented = InstrumentClient(new TableServiceClient(_url, new AzureSasCredential("sig")));
         }
 
         /// <summary>
@@ -44,11 +41,11 @@ namespace Azure.Tables.Tests
         {
             Assert.That(() => new TableServiceClient(null, new TableSharedKeyCredential(_accountName, string.Empty)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
 
-            Assert.That(() => new TableServiceClient(_url, credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the TablesSharedKeyCredential.");
+            Assert.That(() => new TableServiceClient(_url, credential: default(TableSharedKeyCredential)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the TablesSharedKeyCredential.");
 
-            Assert.That(() => new TableServiceClient(_urlHttp), Throws.InstanceOf<ArgumentException>(), "The constructor should validate the Uri is https when using a SAS token.");
+            Assert.That(() => new TableServiceClient(_urlHttp, new AzureSasCredential("sig")), Throws.InstanceOf<ArgumentException>(), "The constructor should validate the Uri is https when using a SAS token.");
 
-            Assert.That(() => new TableServiceClient(_url), Throws.Nothing, "The constructor should accept a null credential");
+            Assert.That(() => new TableServiceClient(_url, default(AzureSasCredential)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept a null credential");
 
             Assert.That(() => new TableServiceClient(_url, new TableSharedKeyCredential(_accountName, string.Empty)), Throws.Nothing, "The constructor should accept valid arguments.");
 
@@ -61,7 +58,7 @@ namespace Azure.Tables.Tests
         [Test]
         public void ServiceMethodsValidateArguments()
         {
-            var service = InstrumentClient(new TableServiceClient(_url));
+            var service = InstrumentClient(new TableServiceClient(_url, new AzureSasCredential("sig")));
 
             Assert.That(() => service.GetTableClient(null), Throws.InstanceOf<ArgumentNullException>(), "The method should validate the table name.");
 

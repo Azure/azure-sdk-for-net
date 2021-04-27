@@ -7,21 +7,23 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SparkBatchJobStateConverter))]
     public partial class SparkBatchJobState
     {
         internal static SparkBatchJobState DeserializeSparkBatchJobState(JsonElement element)
         {
-            Optional<DateTimeOffset> notStartedAt = default;
-            Optional<DateTimeOffset> startingAt = default;
-            Optional<DateTimeOffset> runningAt = default;
-            Optional<DateTimeOffset> deadAt = default;
-            Optional<DateTimeOffset> successAt = default;
-            Optional<DateTimeOffset> killedAt = default;
-            Optional<DateTimeOffset> recoveringAt = default;
+            Optional<DateTimeOffset?> notStartedAt = default;
+            Optional<DateTimeOffset?> startingAt = default;
+            Optional<DateTimeOffset?> runningAt = default;
+            Optional<DateTimeOffset?> deadAt = default;
+            Optional<DateTimeOffset?> successAt = default;
+            Optional<DateTimeOffset?> killedAt = default;
+            Optional<DateTimeOffset?> recoveringAt = default;
             Optional<string> currentState = default;
             Optional<SparkRequest> jobCreationRequest = default;
             foreach (var property in element.EnumerateObject())
@@ -30,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        notStartedAt = null;
                         continue;
                     }
                     notStartedAt = property.Value.GetDateTimeOffset("O");
@@ -40,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        startingAt = null;
                         continue;
                     }
                     startingAt = property.Value.GetDateTimeOffset("O");
@@ -50,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        runningAt = null;
                         continue;
                     }
                     runningAt = property.Value.GetDateTimeOffset("O");
@@ -60,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        deadAt = null;
                         continue;
                     }
                     deadAt = property.Value.GetDateTimeOffset("O");
@@ -70,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        successAt = null;
                         continue;
                     }
                     successAt = property.Value.GetDateTimeOffset("O");
@@ -80,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        killedAt = null;
                         continue;
                     }
                     killedAt = property.Value.GetDateTimeOffset("O");
@@ -90,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        recoveringAt = null;
                         continue;
                     }
                     recoveringAt = property.Value.GetDateTimeOffset("O");
@@ -113,6 +115,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SparkBatchJobState(Optional.ToNullable(notStartedAt), Optional.ToNullable(startingAt), Optional.ToNullable(runningAt), Optional.ToNullable(deadAt), Optional.ToNullable(successAt), Optional.ToNullable(killedAt), Optional.ToNullable(recoveringAt), currentState.Value, jobCreationRequest.Value);
+        }
+
+        internal partial class SparkBatchJobStateConverter : JsonConverter<SparkBatchJobState>
+        {
+            public override void Write(Utf8JsonWriter writer, SparkBatchJobState model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SparkBatchJobState Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSparkBatchJobState(document.RootElement);
+            }
         }
     }
 }

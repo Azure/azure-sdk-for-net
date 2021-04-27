@@ -212,6 +212,15 @@ namespace Azure.Messaging.ServiceBus {
                 return ResourceManager.GetString("DefaultServerBusyException", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to he message processor is unable to continue and will stop processing; the host application has closed the connection to the Service Bus service..
+        /// </summary>
+        internal static string DisposedConnectionMessageProcessorMustStop {
+            get {
+                return ResourceManager.GetString("DisposedConnectionMessageProcessorMustStop", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to The minimum back off period &apos;{0}&apos; cannot exceed the maximum back off period of &apos;{1}&apos;..
@@ -250,11 +259,29 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is not a supported body type..
+        /// </summary>
+        internal static string InvalidAmqpMessageBodyType {
+            get {
+                return ResourceManager.GetString("InvalidAmqpMessageBodyType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} is not a supported user property type..
         /// </summary>
         internal static string InvalidAmqpMessageProperty {
             get {
                 return ResourceManager.GetString("InvalidAmqpMessageProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not a supported value body type..
+        /// </summary>
+        internal static string InvalidAmqpMessageValueBody {
+            get {
+                return ResourceManager.GetString("InvalidAmqpMessageValueBody", resourceCulture);
             }
         }
         
@@ -511,15 +538,6 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The operation is not supported for peeked message. Only received message can be settled..
-        /// </summary>
-        internal static string SettlementOperationNotSupported {
-            get {
-                return ResourceManager.GetString("SettlementOperationNotSupported", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to In order to update the signature, a shared access key must have been provided when the shared access signature was created..
         /// </summary>
         internal static string SharedAccessKeyIsRequired {
@@ -606,6 +624,15 @@ namespace Azure.Messaging.ServiceBus {
         internal static string UnknownRetryMode {
             get {
                 return ResourceManager.GetString("UnknownRetryMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The credential provided is not a supported type..
+        /// </summary>
+        internal static string UnsupportedCredential {
+            get {
+                return ResourceManager.GetString("UnsupportedCredential", resourceCulture);
             }
         }
         

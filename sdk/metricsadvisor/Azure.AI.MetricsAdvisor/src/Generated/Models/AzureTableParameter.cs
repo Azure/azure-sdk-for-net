@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureTableParameter. </summary>
@@ -16,22 +14,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="connectionString"> Azure Table connection string. </param>
         /// <param name="table"> Table name. </param>
         /// <param name="query"> Query script. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/>, <paramref name="table"/>, or <paramref name="query"/> is null. </exception>
         public AzureTableParameter(string connectionString, string table, string query)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
-            if (table == null)
-            {
-                throw new ArgumentNullException(nameof(table));
-            }
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
-
             ConnectionString = connectionString;
             Table = table;
             Query = query;

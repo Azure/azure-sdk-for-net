@@ -54,9 +54,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// gateway.</param>
         /// <param name="isRoutingPreferenceInternet">Enable Routing Preference
         /// property for the Public IP Interface of the VpnGateway.</param>
+        /// <param name="natRules">List of all the nat Rules associated with
+        /// the gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), IList<VpnConnection> connections = default(IList<VpnConnection>), BgpSettings bgpSettings = default(BgpSettings), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), IList<VpnGatewayIpConfiguration> ipConfigurations = default(IList<VpnGatewayIpConfiguration>), bool? isRoutingPreferenceInternet = default(bool?), string etag = default(string))
+        public VpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), IList<VpnConnection> connections = default(IList<VpnConnection>), BgpSettings bgpSettings = default(BgpSettings), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), IList<VpnGatewayIpConfiguration> ipConfigurations = default(IList<VpnGatewayIpConfiguration>), bool? isRoutingPreferenceInternet = default(bool?), IList<VpnGatewayNatRule> natRules = default(IList<VpnGatewayNatRule>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualHub = virtualHub;
@@ -66,6 +68,7 @@ namespace Microsoft.Azure.Management.Network.Models
             VpnGatewayScaleUnit = vpnGatewayScaleUnit;
             IpConfigurations = ipConfigurations;
             IsRoutingPreferenceInternet = isRoutingPreferenceInternet;
+            NatRules = natRules;
             Etag = etag;
             CustomInit();
         }
@@ -118,6 +121,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isRoutingPreferenceInternet")]
         public bool? IsRoutingPreferenceInternet { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of all the nat Rules associated with the gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.natRules")]
+        public IList<VpnGatewayNatRule> NatRules { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

@@ -348,7 +348,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Assert.AreEqual(1, testScanInfoManager.UpdateCounts[accountName][SecondContainerName]);
         }
 
-
         [Test]
         public async Task ExecuteAsync_UpdatesScanInfo_WithEarliestFailure()
         {

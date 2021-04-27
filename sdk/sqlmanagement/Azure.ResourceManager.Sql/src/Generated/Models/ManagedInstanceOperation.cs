@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A managed instance operation. </summary>
-    public partial class ManagedInstanceOperation : Resource
+    public partial class ManagedInstanceOperation : ProxyResource
     {
         /// <summary> Initializes a new instance of ManagedInstanceOperation. </summary>
         public ManagedInstanceOperation()

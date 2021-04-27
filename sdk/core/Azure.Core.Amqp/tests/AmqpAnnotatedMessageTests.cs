@@ -14,7 +14,7 @@ namespace Azure.Core.Amqp.Tests
         [Test]
         public void CanCreateAnnotatedMessage()
         {
-            var message = new AmqpAnnotatedMessage(new ReadOnlyMemory<byte>[] { Encoding.UTF8.GetBytes("some data") });
+            var message = new AmqpAnnotatedMessage(new AmqpMessageBody(new ReadOnlyMemory<byte>[] { Encoding.UTF8.GetBytes("some data") }));
             message.ApplicationProperties.Add("applicationKey", "applicationValue");
             message.DeliveryAnnotations.Add("deliveryKey", "deliveryValue");
             message.MessageAnnotations.Add("messageKey", "messageValue");
@@ -40,7 +40,8 @@ namespace Azure.Core.Amqp.Tests
             message.Properties.UserId = Encoding.UTF8.GetBytes("userId");
 
             Assert.AreEqual(AmqpMessageBodyType.Data, message.Body.BodyType);
-            Assert.AreEqual("some data", Encoding.UTF8.GetString(((AmqpDataMessageBody)message.Body).Data.First().ToArray()));
+            Assert.IsTrue(message.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> body));
+            Assert.AreEqual("some data", Encoding.UTF8.GetString(body.First().ToArray()));
             Assert.AreEqual("applicationValue", message.ApplicationProperties["applicationKey"]);
             Assert.AreEqual("deliveryValue", message.DeliveryAnnotations["deliveryKey"]);
             Assert.AreEqual("messageValue", message.MessageAnnotations["messageKey"]);

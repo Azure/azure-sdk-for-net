@@ -84,7 +84,10 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-04-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -92,7 +95,6 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("skipToken", skipToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
@@ -102,9 +104,9 @@ namespace Microsoft.Azure.Management.DataBox
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (skipToken != null)
             {
@@ -271,7 +273,10 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2020-04-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -280,7 +285,6 @@ namespace Microsoft.Azure.Management.DataBox
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("skipToken", skipToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroup", tracingParameters);
@@ -291,9 +295,9 @@ namespace Microsoft.Azure.Management.DataBox
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (skipToken != null)
             {
@@ -484,7 +488,10 @@ namespace Microsoft.Azure.Management.DataBox
                     throw new ValidationException(ValidationRules.Pattern, "jobName", "^[-\\w\\.]+$");
                 }
             }
-            string apiVersion = "2020-04-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -494,7 +501,6 @@ namespace Microsoft.Azure.Management.DataBox
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("expand", expand);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
@@ -506,9 +512,9 @@ namespace Microsoft.Azure.Management.DataBox
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{jobName}", System.Uri.EscapeDataString(jobName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (expand != null)
             {
@@ -782,6 +788,10 @@ namespace Microsoft.Azure.Management.DataBox
                     throw new ValidationException(ValidationRules.Pattern, "jobName", "^[-\\w\\.]+$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (shipmentPickUpRequest == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "shipmentPickUpRequest");
@@ -790,7 +800,6 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 shipmentPickUpRequest.Validate();
             }
-            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -800,7 +809,6 @@ namespace Microsoft.Azure.Management.DataBox
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("shipmentPickUpRequest", shipmentPickUpRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BookShipmentPickUp", tracingParameters);
@@ -812,9 +820,9 @@ namespace Microsoft.Azure.Management.DataBox
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{jobName}", System.Uri.EscapeDataString(jobName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1003,11 +1011,14 @@ namespace Microsoft.Azure.Management.DataBox
                     throw new ValidationException(ValidationRules.Pattern, "jobName", "^[-\\w\\.]+$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (reason == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reason");
             }
-            string apiVersion = "2020-04-01";
             CancellationReason cancellationReason = new CancellationReason();
             if (reason != null)
             {
@@ -1022,7 +1033,6 @@ namespace Microsoft.Azure.Management.DataBox
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationReason", cancellationReason);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Cancel", tracingParameters);
@@ -1034,9 +1044,9 @@ namespace Microsoft.Azure.Management.DataBox
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{jobName}", System.Uri.EscapeDataString(jobName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1207,7 +1217,10 @@ namespace Microsoft.Azure.Management.DataBox
                     throw new ValidationException(ValidationRules.Pattern, "jobName", "^[-\\w\\.]+$");
                 }
             }
-            string apiVersion = "2020-04-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1217,7 +1230,6 @@ namespace Microsoft.Azure.Management.DataBox
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListCredentials", tracingParameters);
             }
@@ -1228,9 +1240,9 @@ namespace Microsoft.Azure.Management.DataBox
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{jobName}", System.Uri.EscapeDataString(jobName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1418,6 +1430,10 @@ namespace Microsoft.Azure.Management.DataBox
                     throw new ValidationException(ValidationRules.Pattern, "jobName", "^[-\\w\\.]+$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (jobResource == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "jobResource");
@@ -1426,7 +1442,6 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 jobResource.Validate();
             }
-            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1436,7 +1451,6 @@ namespace Microsoft.Azure.Management.DataBox
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("jobResource", jobResource);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
@@ -1448,9 +1462,9 @@ namespace Microsoft.Azure.Management.DataBox
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{jobName}", System.Uri.EscapeDataString(jobName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1636,7 +1650,10 @@ namespace Microsoft.Azure.Management.DataBox
                     throw new ValidationException(ValidationRules.Pattern, "jobName", "^[-\\w\\.]+$");
                 }
             }
-            string apiVersion = "2020-04-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1646,7 +1663,6 @@ namespace Microsoft.Azure.Management.DataBox
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
@@ -1657,9 +1673,9 @@ namespace Microsoft.Azure.Management.DataBox
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{jobName}", System.Uri.EscapeDataString(jobName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1831,11 +1847,14 @@ namespace Microsoft.Azure.Management.DataBox
                     throw new ValidationException(ValidationRules.Pattern, "jobName", "^[-\\w\\.]+$");
                 }
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (jobResourceUpdateParameter == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "jobResourceUpdateParameter");
             }
-            string apiVersion = "2020-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1845,7 +1864,6 @@ namespace Microsoft.Azure.Management.DataBox
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("ifMatch", ifMatch);
                 tracingParameters.Add("jobResourceUpdateParameter", jobResourceUpdateParameter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1858,9 +1876,9 @@ namespace Microsoft.Azure.Management.DataBox
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{jobName}", System.Uri.EscapeDataString(jobName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

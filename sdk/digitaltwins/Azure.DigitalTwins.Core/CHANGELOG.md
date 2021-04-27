@@ -1,12 +1,33 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
+
+
+## 1.2.2 (2021-04-12)
+
+### Fixes and improvements
+
+- Updated core dependencies to bring in security vulnerability fixes that are addressed in `Azure.Core v1.13.0` and `System.Memory.Data v1.0.2`
+
+## 1.2.1 (2021-02-03)
+
+### Fixes and improvements
+
+- Fixed an issue with Query APIs when `DigitalTwinsClient` has been initialized with a non-default `ObjectSerializer`.
+
+## 1.2.0 (2020-11-16)
 
 ### New Features
 
+- Added `DigitalTwinsModelFactory` to allow for the creation of certain model objects to enable mocking them for unit tests.
+
 ### Breaking changes
 
+- None
+
 ### Fixes and improvements
+
+- None
 
 ## 1.0.1 (2020-11-04)
 
@@ -56,7 +77,7 @@ Note that these breaking changes are only breaking changes from the **preview** 
 - Type definitions in Azure.DigitalTwins.Core.Models namespace moved to Azure.DigitalTwins.Core.
 - `CreateModelsAsync` and `CreateModels` APIs now return `Response<ModelData[]>` instead of `Response<IReadOnlyList<ModelData>>`.
 
-## 1.0.0-preview.2
+## 1.0.0-preview.2 
 
 ### New features
 
@@ -69,15 +90,3 @@ Note that these breaking changes are only breaking changes from the **preview** 
 ### New features
 
 - Initial preview of Azure.DigitalTwins.Core SDK
-
-### Breaking changes
-
-- N/A
-
-### Added
-
-- N/A
-
-### Fixes and improvements
-
-- N/A

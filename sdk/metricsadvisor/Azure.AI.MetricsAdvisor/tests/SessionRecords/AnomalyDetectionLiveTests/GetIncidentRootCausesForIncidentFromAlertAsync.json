@@ -6,25 +6,22 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201103.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "79045f3a3d07aeb14b5581bf6adea3c2",
+        "x-ms-client-request-id": "142b0ddc47594b61061f66e3c6553a6a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "6a0a028e-8a17-4a75-aa1e-99d77c13438d",
-        "Content-Length": "5870",
+        "apim-request-id": "90bf4bea-7451-4554-a1a6-384561fd9887",
+        "Content-Length": "5816",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 18:02:17 GMT",
+        "Date": "Tue, 15 Dec 2020 01:34:37 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "1144",
-        "X-Request-ID": "6a0a028e-8a17-4a75-aa1e-99d77c13438d"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "387",
+        "x-request-id": "90bf4bea-7451-4554-a1a6-384561fd9887"
       },
       "ResponseBody": {
         "value": [
@@ -142,8 +139,7 @@
               }
             },
             "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -192,8 +188,7 @@
               }
             },
             "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -259,8 +254,7 @@
               }
             },
             "property": {
-              "maxSeverity": "Low",
-              "incidentStatus": "Active"
+              "incidentStatus": "Resolved"
             }
           },
           {
@@ -290,25 +284,22 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201103.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "bdd407a21050acc187eec788fb5f4d6f",
+        "x-ms-client-request-id": "782c242e5ae34173bb5ba2bdb112b9a1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ce8f78f1-f860-4375-90d3-e106026b03cc",
+        "apim-request-id": "18e382c8-6f62-41dd-9479-7df258843eae",
         "Content-Length": "4931",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 18:02:18 GMT",
+        "Date": "Tue, 15 Dec 2020 01:34:37 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "702",
-        "X-Request-ID": "ce8f78f1-f860-4375-90d3-e106026b03cc"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "318",
+        "x-request-id": "18e382c8-6f62-41dd-9479-7df258843eae"
       },
       "ResponseBody": {
         "value": [
@@ -323,7 +314,7 @@
               "category",
               "city"
             ],
-            "score": 0.10291394635023254,
+            "score": 0.11089225174293765,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Karachi"
           },
           {
@@ -337,22 +328,8 @@
               "category",
               "city"
             ],
-            "score": 0.043172926670104361,
+            "score": 0.042003840876839782,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Mumbai"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Delhi"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.017047353056102055,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Delhi"
           },
           {
             "rootCause": {
@@ -365,8 +342,22 @@
               "category",
               "city"
             ],
-            "score": 0.015140109024445125,
+            "score": 0.022965991387544238,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Beijing"
+          },
+          {
+            "rootCause": {
+              "dimension": {
+                "category": "Shoes Handbags \u0026 Sunglasses",
+                "city": "Delhi"
+              }
+            },
+            "path": [
+              "category",
+              "city"
+            ],
+            "score": 0.021664945755742737,
+            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Delhi"
           },
           {
             "rootCause": {
@@ -379,7 +370,7 @@
               "category",
               "city"
             ],
-            "score": 0.012082483936165844,
+            "score": 0.012681768994856457,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Tianjin"
           },
           {
@@ -393,8 +384,22 @@
               "category",
               "city"
             ],
-            "score": 0.00922249776845746,
+            "score": 0.0095021699028767226,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Miami"
+          },
+          {
+            "rootCause": {
+              "dimension": {
+                "category": "Shoes Handbags \u0026 Sunglasses",
+                "city": "Santiago"
+              }
+            },
+            "path": [
+              "category",
+              "city"
+            ],
+            "score": 0.00910792036807545,
+            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Santiago"
           },
           {
             "rootCause": {
@@ -407,7 +412,7 @@
               "category",
               "city"
             ],
-            "score": 0.0054018981305615221,
+            "score": 0.0062310114852275333,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Osaka"
           },
           {
@@ -421,22 +426,8 @@
               "category",
               "city"
             ],
-            "score": 0.0053687257364603558,
+            "score": 0.0053759057751610051,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = New York"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Santiago"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.0050133151962014622,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Santiago"
           },
           {
             "rootCause": {
@@ -449,7 +440,7 @@
               "category",
               "city"
             ],
-            "score": 0.0036380155367801148,
+            "score": 0.0035519659323802744,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Dallas"
           },
           {
@@ -463,7 +454,7 @@
               "category",
               "city"
             ],
-            "score": 0.0032654609662532419,
+            "score": 0.0034541118505209134,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Bogota"
           },
           {
@@ -477,8 +468,22 @@
               "category",
               "city"
             ],
-            "score": 0.0026858149980803492,
+            "score": 0.0026728692603048554,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Lima"
+          },
+          {
+            "rootCause": {
+              "dimension": {
+                "category": "Shoes Handbags \u0026 Sunglasses",
+                "city": "Madrid"
+              }
+            },
+            "path": [
+              "category",
+              "city"
+            ],
+            "score": 0.0024158823559967124,
+            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Madrid"
           },
           {
             "rootCause": {
@@ -491,7 +496,7 @@
               "category",
               "city"
             ],
-            "score": 0.0021137521086953548,
+            "score": 0.0023511967363784025,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Hong Kong"
           },
           {
@@ -505,22 +510,8 @@
               "category",
               "city"
             ],
-            "score": 0.0016667422373576324,
+            "score": 0.0015569996223966376,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Bangkok"
-          },
-          {
-            "rootCause": {
-              "dimension": {
-                "category": "Shoes Handbags \u0026 Sunglasses",
-                "city": "Madrid"
-              }
-            },
-            "path": [
-              "category",
-              "city"
-            ],
-            "score": 0.0013846804126225187,
-            "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Madrid"
           },
           {
             "rootCause": {
@@ -533,7 +524,7 @@
               "category",
               "city"
             ],
-            "score": 0.0011379896220113372,
+            "score": 0.0014399448421371086,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Shanghai"
           },
           {
@@ -547,7 +538,7 @@
               "category",
               "city"
             ],
-            "score": 0.00094771017909872635,
+            "score": 0.00090889266939275792,
             "description": "Several potential root causes has been identified, most contributors are: category = Shoes Handbags \u0026 Sunglasses | city = Paris"
           }
         ]
@@ -559,6 +550,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "698976930"
+    "RandomSeed": "2083524157"
   }
 }

@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -120,6 +120,11 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IRuntimeVersionsOperations.
+        /// </summary>
+        public virtual IRuntimeVersionsOperations RuntimeVersions { get; private set; }
 
         /// <summary>
         /// Gets the ISkusOperations.
@@ -376,9 +381,10 @@ namespace Microsoft.Azure.Management.AppPlatform
             CustomDomains = new CustomDomainsOperations(this);
             Deployments = new DeploymentsOperations(this);
             Operations = new Operations(this);
+            RuntimeVersions = new RuntimeVersionsOperations(this);
             Skus = new SkusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-07-01";
+            ApiVersion = "2020-11-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

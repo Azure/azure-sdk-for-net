@@ -23,8 +23,8 @@ namespace Azure.Storage.Test
         public static void AssertSequenceEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)
         {
             Assert.AreEqual(expected.Count(), actual.Count(), "Actual sequence length does not match expected sequence length");
-            (int index, T expected, T actual)[] firstErrors = expected.Zip(actual, (e, a) => (expected: e, actual: a)).Select((x, i) => (index: i, x.expected, x.actual)).Where(x => !x.expected.Equals(x.actual)).Take(5).ToArray();
-            Assert.IsFalse(firstErrors.Any(), $"Actual sequence does not match expected sequence at locations\n{string.Join("\n", firstErrors.Select(e => $"{e.index} => expected = {e.expected}, actual = {e.actual}"))}");
+            (int Index, T Expected, T Actual)[] firstErrors = expected.Zip(actual, (e, a) => (Expected: e, Actual: a)).Select((x, i) => (Index: i, x.Expected, x.Actual)).Where(x => !x.Expected.Equals(x.Actual)).Take(5).ToArray();
+            Assert.IsFalse(firstErrors.Any(), $"Actual sequence does not match expected sequence at locations\n{string.Join("\n", firstErrors.Select(e => $"{e.Index} => expected = {e.Expected}, actual = {e.Actual}"))}");
         }
 
         public static IEnumerable<byte> AsBytes(this Stream s)
@@ -59,9 +59,26 @@ namespace Azure.Storage.Test
             where T : Exception
             => AssertExpectedException(action, expectedException, GetDefaultExceptionAssertion(predicate));
 
-        public static void AssertExpectedException<T>(Action action, Func<T, bool> predicate = null)
+        public static void AssertExpectedException<T>(Action action, Func<T, bool> predicate)
             where T : Exception
-            => AssertExpectedException(action, default, GetDefaultExceptionAssertion<T>((_, a) => predicate(a)));
+        {
+            Assert.IsNotNull(action);
+            Assert.IsNotNull(predicate);
+
+            try
+            {
+                action();
+
+                Assert.Fail("Expected exception not found");
+            }
+            catch (T actualException)
+            {
+                if (!predicate(actualException))
+                {
+                    Assert.Fail($"Unexpected exception: {actualException.Message}");
+                }
+            }
+        }
 
         public static void AssertExpectedException<T>(Action action, T expectedException, Action<T, T> assertion)
             where T : Exception

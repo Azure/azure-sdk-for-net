@@ -299,14 +299,14 @@ namespace Azure.Storage.Blobs
             // regular style Uri will already have account name in domain
             if (_isPathStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
-                path.Append("/").Append(AccountName);
+                path.Append('/').Append(AccountName);
             }
             if (!string.IsNullOrWhiteSpace(BlobContainerName))
             {
-                path.Append("/").Append(BlobContainerName);
+                path.Append('/').Append(BlobContainerName);
                 if (BlobName != null && BlobName.Length > 0)
                 {
-                    path.Append("/").Append(Uri.EscapeDataString(BlobName));
+                    path.Append('/').Append(Uri.EscapeDataString(BlobName));
                 }
             }
 
@@ -315,20 +315,20 @@ namespace Azure.Storage.Blobs
             if (!string.IsNullOrWhiteSpace(Snapshot))
             {
                 if (query.Length > 0)
-                { query.Append("&"); }
-                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
+                { query.Append('&'); }
+                query.Append(Constants.SnapshotParameterName).Append('=').Append(Snapshot);
             }
             if (!string.IsNullOrWhiteSpace(VersionId))
             {
                 if (query.Length > 0)
-                { query.Append("&"); }
-                query.Append(Constants.VersionIdParameterName).Append("=").Append(VersionId);
+                { query.Append('&'); }
+                query.Append(Constants.VersionIdParameterName).Append('=').Append(VersionId);
             }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {
                 if (query.Length > 0)
-                { query.Append("&"); }
+                { query.Append('&'); }
                 query.Append(sas);
             }
 

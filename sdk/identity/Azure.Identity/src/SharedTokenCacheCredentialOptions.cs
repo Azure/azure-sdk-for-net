@@ -8,7 +8,12 @@ namespace Azure.Identity
     /// </summary>
     public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
-        private string _tenantId = null;
+        private string _tenantId;
+
+        /// <summary>
+        /// The client id of the application registration used to authenticate users in the cache.
+        /// </summary>
+        public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
 
         /// <summary>
         /// Specifies the preferred authentication account username, or UPN, to be retrieved from the shared token cache for single sign on authentication with
@@ -27,17 +32,34 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication with an interactive credential, such as the <see cref="InteractiveBrowserCredential"/> or <see cref="DeviceCodeCredential"/>.
+        /// When set to true the <see cref="SharedTokenCacheCredential"/> can be used to authenticate to tenants other than the home tenant, requiring <see cref="Username"/> and <see cref="TenantId"/> also to be specified as well.
         /// </summary>
-        internal AuthenticationRecord AuthenticationRecord { get; set; }
+        public bool EnableGuestTenantAuthentication { get; set; }
 
         /// <summary>
-        /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
+        /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication with an interactive credential, such as the <see cref="InteractiveBrowserCredential"/> or <see cref="DeviceCodeCredential"/>.
         /// </summary>
-        internal bool AllowUnencryptedCache { get; set; }
+        public AuthenticationRecord AuthenticationRecord { get; set; }
 
-        bool ITokenCacheOptions.AllowUnencryptedCache => AllowUnencryptedCache;
+        /// <summary>
+        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential.
+        /// </summary>
+        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; }
 
-        bool ITokenCacheOptions.EnablePersistentCache => true;
+        /// <summary>
+        /// Initializes a new instance of <see cref="SharedTokenCacheCredentialOptions"/>.
+        /// </summary>
+        public SharedTokenCacheCredentialOptions()
+            : this(null)
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="SharedTokenCacheCredentialOptions"/>.
+        /// </summary>
+        /// <param name="tokenCacheOptions">The <see cref="TokenCachePersistenceOptions"/> that will apply to the token cache used by this credential.</param>
+        public SharedTokenCacheCredentialOptions(TokenCachePersistenceOptions tokenCacheOptions)
+        {
+            TokenCachePersistenceOptions = tokenCacheOptions;
+        }
     }
 }

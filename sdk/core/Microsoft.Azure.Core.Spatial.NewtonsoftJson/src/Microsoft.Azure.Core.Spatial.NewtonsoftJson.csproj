@@ -3,7 +3,8 @@
     <AssemblyTitle>Newtonsoft.Json support for the Microsoft.Spatial library</AssemblyTitle>
     <Description>This library contains converters dependent on the Newtonsoft.Json package for use with Microsoft.Spatial when using the Azure SDK for .NET.</Description>
     <RootNamespace>Azure.Core.Serialization</RootNamespace>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.1.0-beta.1</Version>
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure SDK Spatial Newtonsoft Json</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>

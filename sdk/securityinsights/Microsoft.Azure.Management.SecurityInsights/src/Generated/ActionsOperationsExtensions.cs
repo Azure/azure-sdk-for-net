@@ -70,6 +70,171 @@ namespace Microsoft.Azure.Management.SecurityInsights
             }
 
             /// <summary>
+            /// Gets the action of alert rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='ruleId'>
+            /// Alert rule ID
+            /// </param>
+            /// <param name='actionId'>
+            /// Action ID
+            /// </param>
+            public static ActionResponse Get(this IActionsOperations operations, string resourceGroupName, string workspaceName, string ruleId, string actionId)
+            {
+                return operations.GetAsync(resourceGroupName, workspaceName, ruleId, actionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the action of alert rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='ruleId'>
+            /// Alert rule ID
+            /// </param>
+            /// <param name='actionId'>
+            /// Action ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ActionResponse> GetAsync(this IActionsOperations operations, string resourceGroupName, string workspaceName, string ruleId, string actionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, ruleId, actionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates the action of alert rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='ruleId'>
+            /// Alert rule ID
+            /// </param>
+            /// <param name='actionId'>
+            /// Action ID
+            /// </param>
+            /// <param name='action'>
+            /// The action
+            /// </param>
+            public static ActionResponse CreateOrUpdate(this IActionsOperations operations, string resourceGroupName, string workspaceName, string ruleId, string actionId, ActionRequest action)
+            {
+                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, ruleId, actionId, action).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates the action of alert rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='ruleId'>
+            /// Alert rule ID
+            /// </param>
+            /// <param name='actionId'>
+            /// Action ID
+            /// </param>
+            /// <param name='action'>
+            /// The action
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ActionResponse> CreateOrUpdateAsync(this IActionsOperations operations, string resourceGroupName, string workspaceName, string ruleId, string actionId, ActionRequest action, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, ruleId, actionId, action, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete the action of alert rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='ruleId'>
+            /// Alert rule ID
+            /// </param>
+            /// <param name='actionId'>
+            /// Action ID
+            /// </param>
+            public static void Delete(this IActionsOperations operations, string resourceGroupName, string workspaceName, string ruleId, string actionId)
+            {
+                operations.DeleteAsync(resourceGroupName, workspaceName, ruleId, actionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete the action of alert rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='ruleId'>
+            /// Alert rule ID
+            /// </param>
+            /// <param name='actionId'>
+            /// Action ID
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IActionsOperations operations, string resourceGroupName, string workspaceName, string ruleId, string actionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, ruleId, actionId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets all actions of alert rule.
             /// </summary>
             /// <param name='operations'>

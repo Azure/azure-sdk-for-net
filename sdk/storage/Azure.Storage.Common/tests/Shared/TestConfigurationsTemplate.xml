@@ -69,9 +69,9 @@
       <FileServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
-	
+
     <!-- A storage account with premium preformance enabled -->
-	<!-- Replace [RAGRS-ACCOUNT] and [RAGRS-ACCOUNT-KEY] -->
+    <!-- Replace [RAGRS-ACCOUNT] and [RAGRS-ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>PremiumBlobTenant</TenantName>
       <TenantType>Cloud</TenantType>
@@ -86,8 +86,8 @@
       <FileServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
-    
-    <!-- A storge account with hierarchical namespace enabled and OAuth access -->
+
+    <!-- A storge account with hierarchical namespace enabled, OAuth access, and blob soft delete enabled -->
     <!-- Replace [NAMESPACE-ACCOUNT] and [NAMESPACE-ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>NamespaceTenant</TenantName>
@@ -145,7 +145,6 @@
       <FileServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
-  </TenantConfigurations>
 
     <!-- A Premium FileStorage account -->
     <!-- Replace [ACCOUNT] and [ACCOUNT-KEY] -->

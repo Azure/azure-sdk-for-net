@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public async Task<Response<Resource>> GetAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
+        public async Task<Response<JobVersion>> GetAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -209,9 +209,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        Resource value = default;
+                        JobVersion value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Resource.DeserializeResource(document.RootElement);
+                        value = JobVersion.DeserializeJobVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public Response<Resource> Get(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
+        public Response<JobVersion> Get(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -252,9 +252,9 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        Resource value = default;
+                        JobVersion value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Resource.DeserializeResource(document.RootElement);
+                        value = JobVersion.DeserializeJobVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

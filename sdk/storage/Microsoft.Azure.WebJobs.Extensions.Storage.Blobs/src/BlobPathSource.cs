@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             BindingTemplateSource template = BindingTemplateSource.FromString(pattern);
 
-            if (template.ParameterNames.Count() > 0)
+            if (template.ParameterNames.Any())
             {
                 return new ParameterizedBlobPathSource(containerNamePattern, blobNamePattern, template);
             }

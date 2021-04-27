@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Administration;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -80,7 +79,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                   await client.GetQueueAsync(queueName),
                   Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.MessagingEntityNotFound));
         }
-
 
         [Test]
         public async Task CreateTopicAndSubscription()

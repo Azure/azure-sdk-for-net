@@ -30,8 +30,6 @@ namespace Azure.DigitalTwins.Core.Tests
         [SetUp]
         public virtual void SetupE2eTestBase()
         {
-            TestDiagnostics = false;
-
             // TODO: set via client options and pipeline instead
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }

@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
-        public static KeyVaultRoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IList<KeyVaultPermission> permissions, IList<string> assignableScopes) =>
+        public static KeyVaultRoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IList<KeyVaultPermission> permissions, IList<KeyVaultRoleScope> assignableScopes) =>
             new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions, assignableScopes);
 
         /// <summary>
@@ -77,13 +77,12 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initializes a new instance of a <see cref="BackupResult"/> for mocking purposes.
         /// </summary>
-        /// <param name="backupFolderUri">The location of the backup.</param>
+        /// <param name="folderUri">The location of the backup.</param>
         /// <param name="startTime">The start time of the backup operation.</param>
         /// <param name="endTime">The end time of the backup operation.</param>
         /// <returns>A new <see cref="BackupResult"/> instance.</returns>
-        public static BackupResult BackupResult(Uri backupFolderUri, DateTimeOffset startTime, DateTimeOffset endTime) =>
-            new BackupResult(backupFolderUri, startTime, endTime);
-
+        public static BackupResult BackupResult(Uri folderUri, DateTimeOffset startTime, DateTimeOffset endTime) =>
+            new BackupResult(folderUri, startTime, endTime);
 
         /// <summary>
         /// Initializes a new instance of a <see cref="RestoreResult"/> for mocking purposes.
@@ -92,6 +91,15 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="endTime">The end time of the restore operation.</param>
         /// <returns>A new <see cref="BackupResult"/> instance.</returns>
         public static RestoreResult RestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
+            new RestoreResult(startTime, endTime);
+
+        /// <summary>
+        /// Initializes a new instance of a <see cref="SelectiveKeyRestoreResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="startTime">The start time of the restore operation.</param>
+        /// <param name="endTime">The end time of the restore operation.</param>
+        /// <returns>A new <see cref="BackupResult"/> instance.</returns>
+        public static RestoreResult SelectiveKeyRestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
             new RestoreResult(startTime, endTime);
     }
 }

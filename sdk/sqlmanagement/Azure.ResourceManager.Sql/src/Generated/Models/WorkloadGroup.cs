@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Workload group operations for a data warehouse. </summary>
-    public partial class WorkloadGroup : Resource
+    public partial class WorkloadGroup : ProxyResource
     {
         /// <summary> Initializes a new instance of WorkloadGroup. </summary>
         public WorkloadGroup()

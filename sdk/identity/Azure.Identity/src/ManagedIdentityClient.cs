@@ -10,27 +10,34 @@ namespace Azure.Identity
 {
     internal class ManagedIdentityClient
     {
-        internal const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
         internal const string MsiUnavailableError = "ManagedIdentityCredential authentication unavailable. No Managed Identity endpoint found.";
 
-        private readonly AsyncLockWithValue<IManagedIdentitySource> _identitySourceAsyncLock = new AsyncLockWithValue<IManagedIdentitySource>();
-        private readonly CredentialPipeline _pipeline;
+        private readonly AsyncLockWithValue<ManagedIdentitySource> _identitySourceAsyncLock = new AsyncLockWithValue<ManagedIdentitySource>();
+        private readonly ManagedIdentityClientOptions _options;
 
         protected ManagedIdentityClient()
         {
         }
 
         public ManagedIdentityClient(CredentialPipeline pipeline, string clientId = null)
+            : this(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId})
         {
-            _pipeline = pipeline;
-            ClientId = clientId;
         }
+
+        public ManagedIdentityClient(ManagedIdentityClientOptions options)
+        {
+            _options = options;
+            ClientId = options.ClientId;
+            Pipeline = options.Pipeline;
+        }
+
+        internal CredentialPipeline Pipeline { get; }
 
         protected string ClientId { get; }
 
-        public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, string[] scopes, CancellationToken cancellationToken)
+        public virtual async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
-            IManagedIdentitySource identitySource = await GetManagedIdentitySourceAsync(async, cancellationToken).ConfigureAwait(false);
+            ManagedIdentitySource identitySource = await GetManagedIdentitySourceAsync(async, cancellationToken).ConfigureAwait(false);
 
             // if msi is unavailable or we were unable to determine the type return CredentialUnavailable exception that no endpoint was found
             if (identitySource == default)
@@ -38,29 +45,10 @@ namespace Azure.Identity
                 throw new CredentialUnavailableException(MsiUnavailableError);
             }
 
-            using Request request = identitySource.CreateRequest(scopes);
-            Response response = async
-                ? await _pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false)
-                : _pipeline.HttpPipeline.SendRequest(request, cancellationToken);
-
-            if (response.Status == 200)
-            {
-                using JsonDocument json = async
-                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
-                    : JsonDocument.Parse(response.ContentStream);
-
-                (JsonElement accessToken, JsonElement expiresOnProp) = GetAccessTokenProperties(json.RootElement);
-                return identitySource.GetAccessTokenFromJson(accessToken, expiresOnProp);
-            }
-
-            await identitySource.HandleFailedRequestAsync(response, _pipeline.Diagnostics, async).ConfigureAwait(false);
-
-            throw async
-                ? await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
-                : _pipeline.Diagnostics.CreateRequestFailedException(response);
+            return await identitySource.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
         }
 
-        private protected virtual async ValueTask<IManagedIdentitySource> GetManagedIdentitySourceAsync(bool async, CancellationToken cancellationToken)
+        private protected virtual async ValueTask<ManagedIdentitySource> GetManagedIdentitySourceAsync(bool async, CancellationToken cancellationToken)
         {
             using var asyncLock = await _identitySourceAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
             if (asyncLock.HasValue)
@@ -68,36 +56,14 @@ namespace Azure.Identity
                 return asyncLock.Value;
             }
 
-            IManagedIdentitySource identitySource = AppServiceV2017ManagedIdentitySource.TryCreate(_pipeline.HttpPipeline, ClientId) ??
-                                                    CloudShellManagedIdentitySource.TryCreate(_pipeline.HttpPipeline, ClientId) ??
-                                                    await ImdsManagedIdentitySource.TryCreateAsync(_pipeline.HttpPipeline, ClientId, async, cancellationToken).ConfigureAwait(false);
+            ManagedIdentitySource identitySource = AppServiceV2017ManagedIdentitySource.TryCreate(_options) ??
+                                                    CloudShellManagedIdentitySource.TryCreate(_options) ??
+                                                    AzureArcManagedIdentitySource.TryCreate(_options) ??
+                                                    ServiceFabricManagedIdentitySource.TryCreate(_options) ??
+                                                    await ImdsManagedIdentitySource.TryCreateAsync(_options, async, cancellationToken).ConfigureAwait(false);
 
             asyncLock.SetValue(identitySource);
             return identitySource;
-        }
-
-        private static (JsonElement accessToken, JsonElement expiresOnProp) GetAccessTokenProperties(in JsonElement root)
-        {
-            JsonElement? accessToken = null;
-            JsonElement? expiresOnProp = null;
-
-            foreach (JsonProperty prop in root.EnumerateObject())
-            {
-                switch (prop.Name)
-                {
-                    case "access_token":
-                        accessToken = prop.Value;
-                        break;
-
-                    case "expires_on":
-                        expiresOnProp = prop.Value;
-                        break;
-                }
-            }
-
-            return accessToken.HasValue && expiresOnProp.HasValue
-                ? (accessToken.Value, expiresOnProp.Value)
-                : throw new AuthenticationFailedException(AuthenticationResponseInvalidFormatError);
         }
     }
 }

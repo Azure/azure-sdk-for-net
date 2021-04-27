@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of failover groups. </summary>
-    public partial class FailoverGroupListResult
+    internal partial class FailoverGroupListResult
     {
         /// <summary> Initializes a new instance of FailoverGroupListResult. </summary>
         internal FailoverGroupListResult()

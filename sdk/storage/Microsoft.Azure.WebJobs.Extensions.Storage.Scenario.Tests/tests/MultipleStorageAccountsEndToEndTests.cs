@@ -29,7 +29,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         private const string Secondary = "SecondaryStorage";
         private static TestFixture _fixture;
 
-
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
@@ -160,7 +159,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             output = input;
         }
 
-
         public static void QueueToQueue_DifferentAccounts_PrimaryToSecondary(
             [QueueTrigger(Input)] string input,
             [Queue(Output, Connection = Secondary)] out string output)
@@ -222,8 +220,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
                 BlobServiceClient1 = new BlobServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
                 BlobServiceClient2 = new BlobServiceClient(testEnvironment.SecondaryStorageAccountConnectionString);
-                QueueServiceClient1 = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString);
-                QueueServiceClient2 = new QueueServiceClient(testEnvironment.SecondaryStorageAccountConnectionString);
+                var queueOptions = new QueueClientOptions() { MessageEncoding = QueueMessageEncoding.Base64 };
+                QueueServiceClient1 = new QueueServiceClient(testEnvironment.PrimaryStorageAccountConnectionString, queueOptions);
+                QueueServiceClient2 = new QueueServiceClient(testEnvironment.SecondaryStorageAccountConnectionString, queueOptions);
 
                 await CleanContainersAsync();
 

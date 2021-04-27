@@ -12,7 +12,7 @@ and check for status or wait for completion.
 
 ```C# Snippet:ResumeBackupAsync
 // Construct a new KeyVaultBackupClient or use an existing one.
-KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
 // Construct a BackupOperation using a KeyVaultBackupClient and the Id from a previously started operation.
 BackupOperation backupOperation = new BackupOperation(client, backupOperationId);
@@ -21,7 +21,7 @@ BackupOperation backupOperation = new BackupOperation(client, backupOperationId)
 Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
 // Get the Uri for the location of you backup blob.
-Uri backupFolderUri = backupResult.Value.BackupFolderUri;
+Uri folderUri = backupResult.Value.FolderUri;
 ```
 
 ## Checking status of a full key restore operation

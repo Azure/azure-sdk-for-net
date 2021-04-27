@@ -10,6 +10,7 @@ $EngScriptsDir = Join-Path $EngDir "scripts"
 . (Join-Path $EngCommonScriptsDir Package-Properties.ps1)
 . (Join-Path $EngCommonScriptsDir logging.ps1)
 . (Join-Path $EngCommonScriptsDir Invoke-GitHubAPI.ps1)
+. (Join-Path $EngCommonScriptsDir Invoke-DevOpsAPI.ps1)
 . (Join-Path $EngCommonScriptsDir artifact-metadata-parsing.ps1)
 
 # Setting expected from common languages settings
@@ -23,12 +24,21 @@ $EngScriptsLanguageSettings = Join-path $EngScriptsDir "Language-Settings.ps1"
 if (Test-Path $EngScriptsLanguageSettings) {
   . $EngScriptsLanguageSettings
 }
-if (-not $LanguageShort)
+
+if (!(Get-Variable -Name "LanguageShort" -ValueOnly -ErrorAction "Ignore"))
 {
-  $LangaugeShort = $Language
+  $LanguageShort = $Language
+}
+
+if (!(Get-Variable -Name "LanguageDisplayName" -ValueOnly -ErrorAction "Ignore"))
+{
+  $LanguageDisplayName = $Language
 }
 
 # Transformed Functions
 $GetPackageInfoFromRepoFn = "Get-${Language}-PackageInfoFromRepo"
 $GetPackageInfoFromPackageFileFn = "Get-${Language}-PackageInfoFromPackageFile"
 $PublishGithubIODocsFn = "Publish-${Language}-GithubIODocs"
+$UpdateDocCIFn = "Update-${Language}-CIConfig"
+$GetGithubIoDocIndexFn = "Get-${Language}-GithubIoDocIndex"
+$FindArtifactForApiReviewFn = "Find-${Language}-Artifacts-For-Apireview"

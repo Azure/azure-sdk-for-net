@@ -271,7 +271,7 @@ namespace Azure.Storage.Shared
         /// Position - offsetOfBuffer is the index in the returned array of the current byte.
         /// </summary>
         /// <returns></returns>
-        private (byte[] currentBuffer, int bufferCount, long offsetOfBuffer) GetBufferFromPosition()
+        private (byte[] CurrentBuffer, int BufferCount, long OffsetOfBuffer) GetBufferFromPosition()
         {
             AssertPositionInBounds();
 
@@ -346,6 +346,7 @@ namespace Azure.Storage.Shared
 
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             Clear();
         }
 

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents a server firewall rule. </summary>
-    public partial class FirewallRule : Resource
+    public partial class FirewallRule : ProxyResource
     {
         /// <summary> Initializes a new instance of FirewallRule. </summary>
         public FirewallRule()

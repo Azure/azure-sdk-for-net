@@ -1,18 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "42",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b737d12ad1b6ab4b89bc1700bd7bc4e0-43da2e62dbedd444-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
+        "traceparent": "00-39aa42cff2ea2d4181f42d87c819ae89-76c76f2d03ebac4c-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "80161b84cf3a2c46e4bde6cd52de6834",
         "x-ms-return-client-request-id": "true"
       },
@@ -22,115 +19,136 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "a7faa7f3-4ab2-4e92-8ccf-51897da577f0",
+        "apim-request-id": "a3fe3e94-6a0f-4f77-a031-62f5baa0cb76",
         "Content-Length": "0",
-        "Date": "Wed, 09 Sep 2020 22:31:26 GMT",
-        "Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648",
+        "Date": "Tue, 23 Mar 2021 00:50:23 GMT",
+        "Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "255"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "56"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "07d63e81b52617bbc701c4ee9eb7fde9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "50c319c4-b686-4686-b9f5-9ee7d7e2e880",
+        "apim-request-id": "b1d48198-d3fa-49a9-9810-72b0f3832135",
+        "Content-Length": "170",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:31:26 GMT",
+        "Date": "Tue, 23 Mar 2021 00:50:23 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "18"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "4a918c49-5b19-4267-873a-9bcf95f06648",
+          "modelId": "0835690a-ac97-45b5-becd-d528a3fb4ff1",
           "status": "creating",
-          "createdDateTime": "2020-09-09T22:31:26Z",
-          "lastUpdatedDateTime": "2020-09-09T22:31:26Z"
+          "createdDateTime": "2021-03-23T00:50:24Z",
+          "lastUpdatedDateTime": "2021-03-23T00:50:24Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "7c8b6b42f9b3a01b195b4a92de899361",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b08cb862-0a06-4489-95c9-b1ab6ba6d3e7",
+        "apim-request-id": "fe83b916-e9f8-4866-ad3d-55b1f54865fe",
+        "Content-Length": "170",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:31:27 GMT",
+        "Date": "Tue, 23 Mar 2021 00:50:25 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "27"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "4a918c49-5b19-4267-873a-9bcf95f06648",
+          "modelId": "0835690a-ac97-45b5-becd-d528a3fb4ff1",
           "status": "creating",
-          "createdDateTime": "2020-09-09T22:31:26Z",
-          "lastUpdatedDateTime": "2020-09-09T22:31:26Z"
+          "createdDateTime": "2021-03-23T00:50:24Z",
+          "lastUpdatedDateTime": "2021-03-23T00:50:24Z"
         }
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "3191a1c36c80cfda5ffeb8380a588e2d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "48d7cc15-35ac-4777-942c-494617b8d85d",
+        "apim-request-id": "b160db0c-40f0-4dfd-b039-2ae0b617f51e",
+        "Content-Length": "170",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:31:28 GMT",
+        "Date": "Tue, 23 Mar 2021 00:50:26 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "20"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "21"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "4a918c49-5b19-4267-873a-9bcf95f06648",
+          "modelId": "0835690a-ac97-45b5-becd-d528a3fb4ff1",
+          "status": "creating",
+          "createdDateTime": "2021-03-23T00:50:24Z",
+          "lastUpdatedDateTime": "2021-03-23T00:50:24Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "e68bfcc0eb5388802235edcb6b29393e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "f85e2bc2-b13e-48ef-a165-adb4251c7f38",
+        "Content-Length": "1242",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Mar 2021 00:50:27 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "0835690a-ac97-45b5-becd-d528a3fb4ff1",
           "attributes": {
             "isComposed": false
           },
           "status": "ready",
-          "createdDateTime": "2020-09-09T22:31:26Z",
-          "lastUpdatedDateTime": "2020-09-09T22:31:28Z"
+          "createdDateTime": "2021-03-23T00:50:24Z",
+          "lastUpdatedDateTime": "2021-03-23T00:50:27Z"
         },
         "trainResult": {
           "averageModelAccuracy": 0.96,
@@ -168,15 +186,15 @@
             },
             {
               "fieldName": "CompanyName",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "CompanyPhoneNumber",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "DatedAs",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "Email",
@@ -184,19 +202,19 @@
             },
             {
               "fieldName": "Merchant",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "PhoneNumber",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "PurchaseOrderNumber",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "Quantity",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "Signature",
@@ -204,23 +222,23 @@
             },
             {
               "fieldName": "Subtotal",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "Tax",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "Total",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "VendorName",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "Website",
-              "accuracy": 1.0
+              "accuracy": 0.995
             }
           ],
           "errors": []
@@ -228,19 +246,16 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648/analyze?includeTextDetails=true",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyze?includeTextDetails=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "22",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f7d9fc8b60b88943af4f68ab027e929b-8bce87ef63f72d43-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "e68bfcc0eb5388802235edcb6b29393e",
+        "traceparent": "00-dfba0034195207469f0bfffb538cb6dc-97f95f1a02d73e42-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "fc2b626ecc25d56990bc1cb440e295c1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -248,254 +263,311 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "01d40022-5dd6-4cd6-afb9-c15437ffc635",
+        "apim-request-id": "bcd21929-cf74-4b35-b1fd-61fe025a1680",
         "Content-Length": "0",
-        "Date": "Wed, 09 Sep 2020 22:31:28 GMT",
-        "Operation-Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648/analyzeresults/a23bef33-f898-4f13-9a62-87f6e43f1431",
+        "Date": "Tue, 23 Mar 2021 00:50:27 GMT",
+        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyzeresults/13cc24b7-9651-4e31-87ee-8f43682ef247",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "71"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "96"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648/analyzeResults/a23bef33-f898-4f13-9a62-87f6e43f1431",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyzeResults/13cc24b7-9651-4e31-87ee-8f43682ef247",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "fc2b626ecc25d56990bc1cb440e295c1",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "5ccf055d-0719-42e2-8cad-4c4a4c672806",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:31:28 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "33"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:31:28Z",
-        "lastUpdatedDateTime": "2020-09-09T22:31:28Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648/analyzeResults/a23bef33-f898-4f13-9a62-87f6e43f1431",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "e1d21cccacfed70e20090e4a7f0f6336",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8716b10f-e68a-46d5-b844-45779fd8bf90",
+        "apim-request-id": "1c7f3415-6772-467b-babc-600e5426f750",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:31:29 GMT",
+        "Date": "Tue, 23 Mar 2021 00:50:27 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "27"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:31:28Z",
-        "lastUpdatedDateTime": "2020-09-09T22:31:29Z"
+        "createdDateTime": "2021-03-23T00:50:28Z",
+        "lastUpdatedDateTime": "2021-03-23T00:50:28Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648/analyzeResults/a23bef33-f898-4f13-9a62-87f6e43f1431",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyzeResults/13cc24b7-9651-4e31-87ee-8f43682ef247",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "a8c97ac5912df40893b55696cfcb4740",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c61332b6-9521-4432-aebe-a80ffd0c619c",
+        "apim-request-id": "c6b958a3-7a33-4469-8e06-dbf8a278ccc3",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:31:30 GMT",
+        "Date": "Tue, 23 Mar 2021 00:50:29 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "26"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:31:28Z",
-        "lastUpdatedDateTime": "2020-09-09T22:31:29Z"
+        "createdDateTime": "2021-03-23T00:50:28Z",
+        "lastUpdatedDateTime": "2021-03-23T00:50:29Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648/analyzeResults/a23bef33-f898-4f13-9a62-87f6e43f1431",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyzeResults/13cc24b7-9651-4e31-87ee-8f43682ef247",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "4efe2b9f5757c23f5453dc1bbd1e5681",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f0293b9b-4b8a-4184-8ef9-68cde56c4d5e",
+        "apim-request-id": "1d37ad08-fdc0-4dee-961d-7f07cef77483",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:31:31 GMT",
+        "Date": "Tue, 23 Mar 2021 00:50:30 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "27"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:31:28Z",
-        "lastUpdatedDateTime": "2020-09-09T22:31:29Z"
+        "createdDateTime": "2021-03-23T00:50:28Z",
+        "lastUpdatedDateTime": "2021-03-23T00:50:29Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648/analyzeResults/a23bef33-f898-4f13-9a62-87f6e43f1431",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyzeResults/13cc24b7-9651-4e31-87ee-8f43682ef247",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "c6efe658ed193a9314dd4e4955780754",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c5b5805f-5656-48e3-aaae-e784106705e9",
+        "apim-request-id": "e0db61a2-df13-4df9-ab53-ed0a67b01ed6",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:31:32 GMT",
+        "Date": "Tue, 23 Mar 2021 00:50:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "22"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "26"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:31:28Z",
-        "lastUpdatedDateTime": "2020-09-09T22:31:32Z"
+        "createdDateTime": "2021-03-23T00:50:28Z",
+        "lastUpdatedDateTime": "2021-03-23T00:50:29Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648/analyzeResults/a23bef33-f898-4f13-9a62-87f6e43f1431",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyzeResults/13cc24b7-9651-4e31-87ee-8f43682ef247",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "53aacec215106ddf3a0753d9b5ec3674",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bd834c1a-6aef-452f-916d-41029fd2a8ae",
+        "apim-request-id": "6c47edd0-48c3-44b1-a014-9d32eccc4d7a",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:31:33 GMT",
+        "Date": "Tue, 23 Mar 2021 00:50:33 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "22"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "25"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:31:28Z",
-        "lastUpdatedDateTime": "2020-09-09T22:31:32Z"
+        "createdDateTime": "2021-03-23T00:50:28Z",
+        "lastUpdatedDateTime": "2021-03-23T00:50:29Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648/analyzeResults/a23bef33-f898-4f13-9a62-87f6e43f1431",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyzeResults/13cc24b7-9651-4e31-87ee-8f43682ef247",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "e93dd55e81dcb22698c43a7909f66cdc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "98c92c52-fed4-4766-91f9-387bc675822d",
+        "apim-request-id": "c2da4fa1-49ed-479c-8f1a-32c3b5271e4b",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:31:34 GMT",
+        "Date": "Tue, 23 Mar 2021 00:50:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "29"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-09-09T22:31:28Z",
-        "lastUpdatedDateTime": "2020-09-09T22:31:32Z"
+        "createdDateTime": "2021-03-23T00:50:28Z",
+        "lastUpdatedDateTime": "2021-03-23T00:50:33Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648/analyzeResults/a23bef33-f898-4f13-9a62-87f6e43f1431",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyzeResults/13cc24b7-9651-4e31-87ee-8f43682ef247",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "ef59874b0274437007818b1199ba8527",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3e1e1d0c-1e27-47ea-9e1b-917ca65276c3",
-        "Content-Length": "30845",
+        "apim-request-id": "3e4b20c4-f18d-4c46-99c0-e0380b994108",
+        "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:31:35 GMT",
+        "Date": "Tue, 23 Mar 2021 00:50:35 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "23"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-03-23T00:50:28Z",
+        "lastUpdatedDateTime": "2021-03-23T00:50:33Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyzeResults/13cc24b7-9651-4e31-87ee-8f43682ef247",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "80eadaa71e3a4078a7f8bb4cdb656444",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4e69ecb6-8d40-41be-b7b3-8b6a1a551113",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Mar 2021 00:50:36 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "69"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-03-23T00:50:28Z",
+        "lastUpdatedDateTime": "2021-03-23T00:50:36Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyzeResults/13cc24b7-9651-4e31-87ee-8f43682ef247",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "2d8d779a47935bff64fae15bf61518dd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3f513301-03db-4c6d-817a-86656d1284e8",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Mar 2021 00:50:38 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "26"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-03-23T00:50:28Z",
+        "lastUpdatedDateTime": "2021-03-23T00:50:36Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyzeResults/13cc24b7-9651-4e31-87ee-8f43682ef247",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "2fd1123eeb0c2da10f18487c472468a1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d77c252c-d260-4ab5-ab11-f868dcb8e27d",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Mar 2021 00:50:39 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
         "x-envoy-upstream-service-time": "27"
       },
       "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-03-23T00:50:28Z",
+        "lastUpdatedDateTime": "2021-03-23T00:50:36Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1/analyzeResults/13cc24b7-9651-4e31-87ee-8f43682ef247",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "2276461c572c6094da8e1c403c1c4a92",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "213e22d5-7d9f-4a20-93af-ee1255228d66",
+        "Content-Length": "34072",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Mar 2021 00:50:40 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "33"
+      },
+      "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2020-09-09T22:31:28Z",
-        "lastUpdatedDateTime": "2020-09-09T22:31:35Z",
+        "createdDateTime": "2021-03-23T00:50:28Z",
+        "lastUpdatedDateTime": "2021-03-23T00:50:39Z",
         "analyzeResult": {
           "version": "2.1.0",
           "readResults": [
@@ -518,6 +590,12 @@
                     1.2812
                   ],
                   "text": "Company A Invoice",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -575,6 +653,12 @@
                     1.2121
                   ],
                   "text": "Invoice For:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -618,6 +702,12 @@
                     1.6155
                   ],
                   "text": "Address:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -647,6 +737,12 @@
                     1.5931
                   ],
                   "text": "Bilbo Baggins",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -690,6 +786,12 @@
                     1.7854
                   ],
                   "text": "123 Hobbit Lane",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -747,6 +849,12 @@
                     1.9554
                   ],
                   "text": "567 Main St.",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -804,6 +912,12 @@
                     2.0275
                   ],
                   "text": "Redmond, WA",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -847,6 +961,12 @@
                     2.1975
                   ],
                   "text": "Redmond, WA",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -890,6 +1010,12 @@
                     2.2254
                   ],
                   "text": "555-555-5555",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -919,6 +1045,12 @@
                     2.3954
                   ],
                   "text": "555-555-5555",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -948,6 +1080,12 @@
                     3.109
                   ],
                   "text": "Item",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -977,6 +1115,12 @@
                     3.1371
                   ],
                   "text": "Quantity",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1006,6 +1150,12 @@
                     3.109
                   ],
                   "text": "Price",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1035,6 +1185,12 @@
                     3.318
                   ],
                   "text": "A",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1064,6 +1220,12 @@
                     3.3176
                   ],
                   "text": "1",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1093,6 +1255,12 @@
                     3.319
                   ],
                   "text": "10.99",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1122,6 +1290,12 @@
                     3.531
                   ],
                   "text": "B",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1151,6 +1325,12 @@
                     3.531
                   ],
                   "text": "2",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1180,6 +1360,12 @@
                     3.5323
                   ],
                   "text": "14.67",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1209,6 +1395,12 @@
                     3.7421
                   ],
                   "text": "C",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1238,6 +1430,12 @@
                     3.7413
                   ],
                   "text": "4",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1267,6 +1465,12 @@
                     3.7423
                   ],
                   "text": "15.66",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1296,6 +1500,12 @@
                     3.951
                   ],
                   "text": "D",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1325,6 +1535,12 @@
                     3.951
                   ],
                   "text": "1",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1354,6 +1570,12 @@
                     3.9523
                   ],
                   "text": "12.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1383,6 +1605,12 @@
                     4.1614
                   ],
                   "text": "E",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1412,6 +1640,12 @@
                     4.1617
                   ],
                   "text": "4",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1441,6 +1675,12 @@
                     4.1627
                   ],
                   "text": "10.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1470,6 +1710,12 @@
                     4.3717
                   ],
                   "text": "F",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1499,6 +1745,12 @@
                     4.3727
                   ],
                   "text": "6",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1528,6 +1780,12 @@
                     4.3727
                   ],
                   "text": "12.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1557,6 +1815,12 @@
                     4.5827
                   ],
                   "text": "G",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1586,6 +1850,12 @@
                     4.5827
                   ],
                   "text": "8",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1615,6 +1885,12 @@
                     4.5827
                   ],
                   "text": "22.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1644,6 +1920,12 @@
                     5.0131
                   ],
                   "text": "Subtotal: 300.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1687,6 +1969,12 @@
                     5.2333
                   ],
                   "text": "Tax: 30.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1730,6 +2018,12 @@
                     5.481
                   ],
                   "text": "Tip: 100.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1773,6 +2067,12 @@
                     5.6733
                   ],
                   "text": "Total: 430.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1816,6 +2116,12 @@
                     6.7981
                   ],
                   "text": "Signature: ____Bilbo Baggins__________",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1861,71 +2167,13 @@
                     }
                   ]
                 }
-              ],
-              "selectionMarks": [
-                {
-                  "boundingBox": [
-                    0,
-                    9.8745,
-                    1.1035,
-                    9.8745,
-                    1.1035,
-                    10.9943,
-                    0,
-                    10.9943
-                  ],
-                  "confidence": 0.881,
-                  "state": "unselected"
-                },
-                {
-                  "boundingBox": [
-                    0,
-                    10.4952,
-                    1.9659,
-                    10.4952,
-                    1.9659,
-                    10.9978,
-                    0,
-                    10.9978
-                  ],
-                  "confidence": 0.8,
-                  "state": "unselected"
-                },
-                {
-                  "boundingBox": [
-                    0,
-                    0.0263,
-                    1.0499,
-                    0.0263,
-                    1.0499,
-                    1.0117,
-                    0,
-                    1.0117
-                  ],
-                  "confidence": 0.6,
-                  "state": "unselected"
-                },
-                {
-                  "boundingBox": [
-                    7.5064,
-                    9.9415,
-                    8.4985,
-                    9.9415,
-                    8.4985,
-                    11,
-                    7.5064,
-                    11
-                  ],
-                  "confidence": 0.553,
-                  "state": "unselected"
-                }
               ]
             },
             {
               "page": 2,
               "angle": 0,
-              "width": 8.4967,
-              "height": 10.9967,
+              "width": 8.5,
+              "height": 11,
               "unit": "inch",
               "lines": []
             },
@@ -1948,6 +2196,12 @@
                     1.2812
                   ],
                   "text": "Company B Invoice",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2005,6 +2259,12 @@
                     1.2121
                   ],
                   "text": "Invoice For:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2048,6 +2308,12 @@
                     1.6155
                   ],
                   "text": "Address:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2077,6 +2343,12 @@
                     1.5931
                   ],
                   "text": "Frodo Baggins",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2120,6 +2392,12 @@
                     1.7854
                   ],
                   "text": "123 Hobbit Lane",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2177,6 +2455,12 @@
                     1.9554
                   ],
                   "text": "567 Main St.",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2234,6 +2518,12 @@
                     2.0275
                   ],
                   "text": "Redmond, WA",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2277,6 +2567,12 @@
                     2.1975
                   ],
                   "text": "Redmond, WA",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2320,6 +2616,12 @@
                     2.2254
                   ],
                   "text": "555-555-5555",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2349,6 +2651,12 @@
                     2.3954
                   ],
                   "text": "555-555-5555",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2378,6 +2686,12 @@
                     3.109
                   ],
                   "text": "Item",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2407,6 +2721,12 @@
                     3.1371
                   ],
                   "text": "Quantity",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2436,6 +2756,12 @@
                     3.109
                   ],
                   "text": "Price",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2465,6 +2791,12 @@
                     3.318
                   ],
                   "text": "A",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2494,6 +2826,12 @@
                     3.319
                   ],
                   "text": "10",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2523,6 +2861,12 @@
                     3.319
                   ],
                   "text": "100.99",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2552,6 +2896,12 @@
                     3.531
                   ],
                   "text": "B",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2581,6 +2931,12 @@
                     3.5323
                   ],
                   "text": "20",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2610,6 +2966,12 @@
                     3.5323
                   ],
                   "text": "140.67",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2639,6 +3001,12 @@
                     3.7421
                   ],
                   "text": "C",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2668,6 +3036,12 @@
                     3.7423
                   ],
                   "text": "40",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2697,6 +3071,12 @@
                     3.7423
                   ],
                   "text": "150.66",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2726,6 +3106,12 @@
                     3.951
                   ],
                   "text": "D",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2755,6 +3141,12 @@
                     3.9523
                   ],
                   "text": "10",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2784,6 +3176,12 @@
                     3.9523
                   ],
                   "text": "120.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2813,6 +3211,12 @@
                     4.1614
                   ],
                   "text": "E",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2842,6 +3246,12 @@
                     4.1627
                   ],
                   "text": "40",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2871,6 +3281,12 @@
                     4.1627
                   ],
                   "text": "100.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2900,6 +3316,12 @@
                     4.3717
                   ],
                   "text": "F",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2929,6 +3351,12 @@
                     4.3727
                   ],
                   "text": "60",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2958,6 +3386,12 @@
                     4.3727
                   ],
                   "text": "120.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2987,6 +3421,12 @@
                     4.5827
                   ],
                   "text": "G",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3016,6 +3456,12 @@
                     4.5827
                   ],
                   "text": "80",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3045,6 +3491,12 @@
                     4.5827
                   ],
                   "text": "220.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3074,6 +3526,12 @@
                     5.0131
                   ],
                   "text": "Subtotal: 3000.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3117,6 +3575,12 @@
                     5.2333
                   ],
                   "text": "Tax: 300.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3160,6 +3624,12 @@
                     5.481
                   ],
                   "text": "Tip: 1000.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3203,6 +3673,12 @@
                     5.6733
                   ],
                   "text": "Total: 4300.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3246,6 +3722,12 @@
                     6.7981
                   ],
                   "text": "Signature: ____Frodo Baggins__________",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3291,78 +3773,6 @@
                     }
                   ]
                 }
-              ],
-              "selectionMarks": [
-                {
-                  "boundingBox": [
-                    0,
-                    9.877,
-                    1.1039,
-                    9.877,
-                    1.1039,
-                    10.9946,
-                    0,
-                    10.9946
-                  ],
-                  "confidence": 0.881,
-                  "state": "unselected"
-                },
-                {
-                  "boundingBox": [
-                    0,
-                    10.498,
-                    1.9897,
-                    10.498,
-                    1.9897,
-                    10.9975,
-                    0,
-                    10.9975
-                  ],
-                  "confidence": 0.833,
-                  "state": "unselected"
-                },
-                {
-                  "boundingBox": [
-                    0,
-                    0.0268,
-                    1.048,
-                    0.0268,
-                    1.048,
-                    1.0107,
-                    0,
-                    1.0107
-                  ],
-                  "confidence": 0.6,
-                  "state": "unselected"
-                },
-                {
-                  "boundingBox": [
-                    6.8221,
-                    10.6394,
-                    8.4766,
-                    10.6394,
-                    8.4766,
-                    11,
-                    6.8221,
-                    11
-                  ],
-                  "confidence": 0.6,
-                  "state": "unselected"
-                },
-                {
-                  "boundingBox": [
-                    7.5061,
-                    9.9417,
-                    8.4988,
-                    9.9417,
-                    8.4988,
-                    11,
-                    7.5061,
-                    11
-                  ],
-                  "confidence": 0.553,
-                  "state": "unselected"
-                }
               ]
             }
           ],
@@ -3379,14 +3789,14 @@
                       "columnIndex": 0,
                       "text": "Item",
                       "boundingBox": [
-                        1.0037,
-                        2.9443,
-                        3.1681,
-                        2.9443,
-                        3.1681,
-                        3.1543,
-                        1.0037,
-                        3.1543
+                        0.9909,
+                        2.9408,
+                        3.1582,
+                        2.9408,
+                        3.1582,
+                        3.1528,
+                        0.9909,
+                        3.1528
                       ],
                       "elements": [
                         "#/readResults/0/lines/10/words/0"
@@ -3397,14 +3807,14 @@
                       "columnIndex": 1,
                       "text": "Quantity",
                       "boundingBox": [
-                        3.1681,
-                        2.9443,
-                        5.3353,
-                        2.9443,
-                        5.3353,
-                        3.1543,
-                        3.1681,
-                        3.1543
+                        3.1582,
+                        2.9408,
+                        5.3322,
+                        2.9408,
+                        5.3322,
+                        3.1528,
+                        3.1582,
+                        3.1528
                       ],
                       "elements": [
                         "#/readResults/0/lines/11/words/0"
@@ -3415,14 +3825,14 @@
                       "columnIndex": 2,
                       "text": "Price",
                       "boundingBox": [
-                        5.3353,
-                        2.9443,
-                        7.4997,
-                        2.9443,
-                        7.4997,
-                        3.1543,
-                        5.3353,
-                        3.1543
+                        5.3322,
+                        2.9408,
+                        7.4928,
+                        2.947,
+                        7.4928,
+                        3.1528,
+                        5.3322,
+                        3.1528
                       ],
                       "elements": [
                         "#/readResults/0/lines/12/words/0"
@@ -3433,14 +3843,14 @@
                       "columnIndex": 0,
                       "text": "A",
                       "boundingBox": [
-                        1.0037,
-                        3.1543,
-                        3.1681,
-                        3.1543,
-                        3.1681,
-                        3.3643,
-                        1.0037,
-                        3.3643
+                        0.9909,
+                        3.1528,
+                        3.1582,
+                        3.1528,
+                        3.1582,
+                        3.3649,
+                        0.9976,
+                        3.3649
                       ],
                       "elements": [
                         "#/readResults/0/lines/13/words/0"
@@ -3451,14 +3861,14 @@
                       "columnIndex": 1,
                       "text": "1",
                       "boundingBox": [
-                        3.1681,
-                        3.1543,
-                        5.3353,
-                        3.1543,
-                        5.3353,
-                        3.3643,
-                        3.1681,
-                        3.3643
+                        3.1582,
+                        3.1528,
+                        5.3322,
+                        3.1528,
+                        5.3322,
+                        3.3649,
+                        3.1582,
+                        3.3649
                       ],
                       "elements": [
                         "#/readResults/0/lines/14/words/0"
@@ -3469,14 +3879,14 @@
                       "columnIndex": 2,
                       "text": "10.99",
                       "boundingBox": [
-                        5.3353,
-                        3.1543,
-                        7.4997,
-                        3.1543,
-                        7.4997,
-                        3.3643,
-                        5.3353,
-                        3.3643
+                        5.3322,
+                        3.1528,
+                        7.4928,
+                        3.1528,
+                        7.4995,
+                        3.3649,
+                        5.3322,
+                        3.3649
                       ],
                       "elements": [
                         "#/readResults/0/lines/15/words/0"
@@ -3487,14 +3897,14 @@
                       "columnIndex": 0,
                       "text": "B",
                       "boundingBox": [
-                        1.0037,
-                        3.3643,
-                        3.1681,
-                        3.3643,
-                        3.1681,
-                        3.5776,
-                        1.0037,
-                        3.5776
+                        0.9976,
+                        3.3649,
+                        3.1582,
+                        3.3649,
+                        3.1582,
+                        3.5707,
+                        0.9976,
+                        3.5707
                       ],
                       "elements": [
                         "#/readResults/0/lines/16/words/0"
@@ -3505,14 +3915,14 @@
                       "columnIndex": 1,
                       "text": "2",
                       "boundingBox": [
-                        3.1681,
-                        3.3643,
-                        5.3353,
-                        3.3643,
-                        5.3353,
-                        3.5776,
-                        3.1681,
-                        3.5776
+                        3.1582,
+                        3.3649,
+                        5.3322,
+                        3.3649,
+                        5.3322,
+                        3.5707,
+                        3.1582,
+                        3.5707
                       ],
                       "elements": [
                         "#/readResults/0/lines/17/words/0"
@@ -3523,14 +3933,14 @@
                       "columnIndex": 2,
                       "text": "14.67",
                       "boundingBox": [
-                        5.3353,
-                        3.3643,
-                        7.4997,
-                        3.3643,
-                        7.4997,
-                        3.5776,
-                        5.3353,
-                        3.5776
+                        5.3322,
+                        3.3649,
+                        7.4995,
+                        3.3649,
+                        7.4995,
+                        3.5707,
+                        5.3322,
+                        3.5707
                       ],
                       "elements": [
                         "#/readResults/0/lines/18/words/0"
@@ -3541,14 +3951,14 @@
                       "columnIndex": 0,
                       "text": "C",
                       "boundingBox": [
-                        1.0037,
-                        3.5776,
-                        3.1681,
-                        3.5776,
-                        3.1681,
-                        3.7876,
-                        1.0037,
-                        3.7876
+                        0.9976,
+                        3.5707,
+                        3.1582,
+                        3.5707,
+                        3.1582,
+                        3.7827,
+                        0.9976,
+                        3.7827
                       ],
                       "elements": [
                         "#/readResults/0/lines/19/words/0"
@@ -3559,14 +3969,14 @@
                       "columnIndex": 1,
                       "text": "4",
                       "boundingBox": [
-                        3.1681,
-                        3.5776,
-                        5.3353,
-                        3.5776,
-                        5.3353,
-                        3.7876,
-                        3.1681,
-                        3.7876
+                        3.1582,
+                        3.5707,
+                        5.3322,
+                        3.5707,
+                        5.3322,
+                        3.7827,
+                        3.1582,
+                        3.7827
                       ],
                       "elements": [
                         "#/readResults/0/lines/20/words/0"
@@ -3577,14 +3987,14 @@
                       "columnIndex": 2,
                       "text": "15.66",
                       "boundingBox": [
-                        5.3353,
-                        3.5776,
-                        7.4997,
-                        3.5776,
-                        7.4997,
-                        3.7876,
-                        5.3353,
-                        3.7876
+                        5.3322,
+                        3.5707,
+                        7.4995,
+                        3.5707,
+                        7.4995,
+                        3.7827,
+                        5.3322,
+                        3.7827
                       ],
                       "elements": [
                         "#/readResults/0/lines/21/words/0"
@@ -3595,14 +4005,14 @@
                       "columnIndex": 0,
                       "text": "D",
                       "boundingBox": [
-                        1.0037,
-                        3.7876,
-                        3.1681,
-                        3.7876,
-                        3.1681,
-                        3.9976,
-                        1.0037,
-                        3.9976
+                        0.9976,
+                        3.7827,
+                        3.1582,
+                        3.7827,
+                        3.1582,
+                        3.9885,
+                        1.0043,
+                        3.9885
                       ],
                       "elements": [
                         "#/readResults/0/lines/22/words/0"
@@ -3613,14 +4023,14 @@
                       "columnIndex": 1,
                       "text": "1",
                       "boundingBox": [
-                        3.1681,
-                        3.7876,
-                        5.3353,
-                        3.7876,
-                        5.3353,
-                        3.9976,
-                        3.1681,
-                        3.9976
+                        3.1582,
+                        3.7827,
+                        5.3322,
+                        3.7827,
+                        5.3322,
+                        3.9885,
+                        3.1582,
+                        3.9885
                       ],
                       "elements": [
                         "#/readResults/0/lines/23/words/0"
@@ -3631,14 +4041,14 @@
                       "columnIndex": 2,
                       "text": "12.00",
                       "boundingBox": [
-                        5.3353,
-                        3.7876,
-                        7.4997,
-                        3.7876,
-                        7.4997,
-                        3.9976,
-                        5.3353,
-                        3.9976
+                        5.3322,
+                        3.7827,
+                        7.4995,
+                        3.7827,
+                        7.4995,
+                        3.9885,
+                        5.3322,
+                        3.9885
                       ],
                       "elements": [
                         "#/readResults/0/lines/24/words/0"
@@ -3649,14 +4059,14 @@
                       "columnIndex": 0,
                       "text": "E",
                       "boundingBox": [
-                        1.0037,
-                        3.9976,
-                        3.1681,
-                        3.9976,
-                        3.1681,
-                        4.2081,
-                        1.0037,
-                        4.2081
+                        1.0043,
+                        3.9885,
+                        3.1582,
+                        3.9885,
+                        3.1582,
+                        4.2006,
+                        1.0043,
+                        4.2006
                       ],
                       "elements": [
                         "#/readResults/0/lines/25/words/0"
@@ -3667,14 +4077,14 @@
                       "columnIndex": 1,
                       "text": "4",
                       "boundingBox": [
-                        3.1681,
-                        3.9976,
-                        5.3353,
-                        3.9976,
-                        5.3353,
-                        4.2081,
-                        3.1681,
-                        4.2081
+                        3.1582,
+                        3.9885,
+                        5.3322,
+                        3.9885,
+                        5.3322,
+                        4.2006,
+                        3.1582,
+                        4.2006
                       ],
                       "elements": [
                         "#/readResults/0/lines/26/words/0"
@@ -3685,14 +4095,14 @@
                       "columnIndex": 2,
                       "text": "10.00",
                       "boundingBox": [
-                        5.3353,
-                        3.9976,
-                        7.4997,
-                        3.9976,
-                        7.4997,
-                        4.2081,
-                        5.3353,
-                        4.2081
+                        5.3322,
+                        3.9885,
+                        7.4995,
+                        3.9885,
+                        7.5062,
+                        4.2006,
+                        5.3322,
+                        4.2006
                       ],
                       "elements": [
                         "#/readResults/0/lines/27/words/0"
@@ -3703,14 +4113,14 @@
                       "columnIndex": 0,
                       "text": "F",
                       "boundingBox": [
-                        1.0037,
-                        4.2081,
-                        3.1681,
-                        4.2081,
-                        3.1681,
-                        4.4181,
-                        1.0037,
-                        4.4181
+                        1.0043,
+                        4.2006,
+                        3.1582,
+                        4.2006,
+                        3.1582,
+                        4.4126,
+                        1.0043,
+                        4.4126
                       ],
                       "elements": [
                         "#/readResults/0/lines/28/words/0"
@@ -3721,14 +4131,14 @@
                       "columnIndex": 1,
                       "text": "6",
                       "boundingBox": [
-                        3.1681,
-                        4.2081,
-                        5.3353,
-                        4.2081,
-                        5.3353,
-                        4.4181,
-                        3.1681,
-                        4.4181
+                        3.1582,
+                        4.2006,
+                        5.3322,
+                        4.2006,
+                        5.3322,
+                        4.4126,
+                        3.1582,
+                        4.4126
                       ],
                       "elements": [
                         "#/readResults/0/lines/29/words/0"
@@ -3739,14 +4149,14 @@
                       "columnIndex": 2,
                       "text": "12.00",
                       "boundingBox": [
-                        5.3353,
-                        4.2081,
-                        7.4997,
-                        4.2081,
-                        7.4997,
-                        4.4181,
-                        5.3353,
-                        4.4181
+                        5.3322,
+                        4.2006,
+                        7.5062,
+                        4.2006,
+                        7.5062,
+                        4.4126,
+                        5.3322,
+                        4.4126
                       ],
                       "elements": [
                         "#/readResults/0/lines/30/words/0"
@@ -3757,14 +4167,14 @@
                       "columnIndex": 0,
                       "text": "G",
                       "boundingBox": [
-                        1.0037,
-                        4.4181,
-                        3.1681,
-                        4.4181,
-                        3.1681,
-                        4.6281,
-                        1.0037,
-                        4.6281
+                        1.0043,
+                        4.4126,
+                        3.1582,
+                        4.4126,
+                        3.1582,
+                        4.6184,
+                        1.011,
+                        4.6246
                       ],
                       "elements": [
                         "#/readResults/0/lines/31/words/0"
@@ -3775,14 +4185,14 @@
                       "columnIndex": 1,
                       "text": "8",
                       "boundingBox": [
-                        3.1681,
-                        4.4181,
-                        5.3353,
-                        4.4181,
-                        5.3353,
-                        4.6281,
-                        3.1681,
-                        4.6281
+                        3.1582,
+                        4.4126,
+                        5.3322,
+                        4.4126,
+                        5.3322,
+                        4.6184,
+                        3.1582,
+                        4.6184
                       ],
                       "elements": [
                         "#/readResults/0/lines/32/words/0"
@@ -3793,19 +4203,29 @@
                       "columnIndex": 2,
                       "text": "22.00",
                       "boundingBox": [
-                        5.3353,
-                        4.4181,
-                        7.4997,
-                        4.4181,
-                        7.4997,
-                        4.6281,
-                        5.3353,
-                        4.6281
+                        5.3322,
+                        4.4126,
+                        7.5062,
+                        4.4126,
+                        7.5062,
+                        4.6246,
+                        5.3322,
+                        4.6184
                       ],
                       "elements": [
                         "#/readResults/0/lines/33/words/0"
                       ]
                     }
+                  ],
+                  "boundingBox": [
+                    0.9957,
+                    2.9322,
+                    7.4976,
+                    2.9326,
+                    7.4974,
+                    4.6222,
+                    0.9944,
+                    4.6216
                   ]
                 }
               ]
@@ -3826,14 +4246,14 @@
                       "columnIndex": 0,
                       "text": "Item",
                       "boundingBox": [
-                        1.0037,
-                        2.9443,
-                        3.1681,
-                        2.9443,
-                        3.1681,
-                        3.1543,
-                        1.0037,
-                        3.1543
+                        0.9909,
+                        2.9408,
+                        3.1582,
+                        2.9408,
+                        3.1582,
+                        3.1528,
+                        0.9909,
+                        3.1528
                       ],
                       "elements": [
                         "#/readResults/2/lines/10/words/0"
@@ -3844,14 +4264,14 @@
                       "columnIndex": 1,
                       "text": "Quantity",
                       "boundingBox": [
-                        3.1681,
-                        2.9443,
-                        5.3353,
-                        2.9443,
-                        5.3353,
-                        3.1543,
-                        3.1681,
-                        3.1543
+                        3.1582,
+                        2.9408,
+                        5.3322,
+                        2.9408,
+                        5.3322,
+                        3.1528,
+                        3.1582,
+                        3.1528
                       ],
                       "elements": [
                         "#/readResults/2/lines/11/words/0"
@@ -3862,14 +4282,14 @@
                       "columnIndex": 2,
                       "text": "Price",
                       "boundingBox": [
-                        5.3353,
-                        2.9443,
-                        7.4997,
-                        2.9443,
-                        7.4997,
-                        3.1543,
-                        5.3353,
-                        3.1543
+                        5.3322,
+                        2.9408,
+                        7.4928,
+                        2.947,
+                        7.4928,
+                        3.1528,
+                        5.3322,
+                        3.1528
                       ],
                       "elements": [
                         "#/readResults/2/lines/12/words/0"
@@ -3880,14 +4300,14 @@
                       "columnIndex": 0,
                       "text": "A",
                       "boundingBox": [
-                        1.0037,
-                        3.1543,
-                        3.1681,
-                        3.1543,
-                        3.1681,
-                        3.3643,
-                        1.0037,
-                        3.3643
+                        0.9909,
+                        3.1528,
+                        3.1582,
+                        3.1528,
+                        3.1582,
+                        3.3649,
+                        0.9976,
+                        3.3649
                       ],
                       "elements": [
                         "#/readResults/2/lines/13/words/0"
@@ -3898,14 +4318,14 @@
                       "columnIndex": 1,
                       "text": "10",
                       "boundingBox": [
-                        3.1681,
-                        3.1543,
-                        5.3353,
-                        3.1543,
-                        5.3353,
-                        3.3643,
-                        3.1681,
-                        3.3643
+                        3.1582,
+                        3.1528,
+                        5.3322,
+                        3.1528,
+                        5.3322,
+                        3.3649,
+                        3.1582,
+                        3.3649
                       ],
                       "elements": [
                         "#/readResults/2/lines/14/words/0"
@@ -3916,14 +4336,14 @@
                       "columnIndex": 2,
                       "text": "100.99",
                       "boundingBox": [
-                        5.3353,
-                        3.1543,
-                        7.4997,
-                        3.1543,
-                        7.4997,
-                        3.3643,
-                        5.3353,
-                        3.3643
+                        5.3322,
+                        3.1528,
+                        7.4928,
+                        3.1528,
+                        7.4995,
+                        3.3649,
+                        5.3322,
+                        3.3649
                       ],
                       "elements": [
                         "#/readResults/2/lines/15/words/0"
@@ -3934,14 +4354,14 @@
                       "columnIndex": 0,
                       "text": "B",
                       "boundingBox": [
-                        1.0037,
-                        3.3643,
-                        3.1681,
-                        3.3643,
-                        3.1681,
-                        3.5776,
-                        1.0037,
-                        3.5776
+                        0.9976,
+                        3.3649,
+                        3.1582,
+                        3.3649,
+                        3.1582,
+                        3.5707,
+                        0.9976,
+                        3.5707
                       ],
                       "elements": [
                         "#/readResults/2/lines/16/words/0"
@@ -3952,14 +4372,14 @@
                       "columnIndex": 1,
                       "text": "20",
                       "boundingBox": [
-                        3.1681,
-                        3.3643,
-                        5.3353,
-                        3.3643,
-                        5.3353,
-                        3.5776,
-                        3.1681,
-                        3.5776
+                        3.1582,
+                        3.3649,
+                        5.3322,
+                        3.3649,
+                        5.3322,
+                        3.5707,
+                        3.1582,
+                        3.5707
                       ],
                       "elements": [
                         "#/readResults/2/lines/17/words/0"
@@ -3970,14 +4390,14 @@
                       "columnIndex": 2,
                       "text": "140.67",
                       "boundingBox": [
-                        5.3353,
-                        3.3643,
-                        7.4997,
-                        3.3643,
-                        7.4997,
-                        3.5776,
-                        5.3353,
-                        3.5776
+                        5.3322,
+                        3.3649,
+                        7.4995,
+                        3.3649,
+                        7.4995,
+                        3.5707,
+                        5.3322,
+                        3.5707
                       ],
                       "elements": [
                         "#/readResults/2/lines/18/words/0"
@@ -3988,14 +4408,14 @@
                       "columnIndex": 0,
                       "text": "C",
                       "boundingBox": [
-                        1.0037,
-                        3.5776,
-                        3.1681,
-                        3.5776,
-                        3.1681,
-                        3.7876,
-                        1.0037,
-                        3.7876
+                        0.9976,
+                        3.5707,
+                        3.1582,
+                        3.5707,
+                        3.1582,
+                        3.7827,
+                        0.9976,
+                        3.7827
                       ],
                       "elements": [
                         "#/readResults/2/lines/19/words/0"
@@ -4006,14 +4426,14 @@
                       "columnIndex": 1,
                       "text": "40",
                       "boundingBox": [
-                        3.1681,
-                        3.5776,
-                        5.3353,
-                        3.5776,
-                        5.3353,
-                        3.7876,
-                        3.1681,
-                        3.7876
+                        3.1582,
+                        3.5707,
+                        5.3322,
+                        3.5707,
+                        5.3322,
+                        3.7827,
+                        3.1582,
+                        3.7827
                       ],
                       "elements": [
                         "#/readResults/2/lines/20/words/0"
@@ -4024,14 +4444,14 @@
                       "columnIndex": 2,
                       "text": "150.66",
                       "boundingBox": [
-                        5.3353,
-                        3.5776,
-                        7.4997,
-                        3.5776,
-                        7.4997,
-                        3.7876,
-                        5.3353,
-                        3.7876
+                        5.3322,
+                        3.5707,
+                        7.4995,
+                        3.5707,
+                        7.4995,
+                        3.7827,
+                        5.3322,
+                        3.7827
                       ],
                       "elements": [
                         "#/readResults/2/lines/21/words/0"
@@ -4042,14 +4462,14 @@
                       "columnIndex": 0,
                       "text": "D",
                       "boundingBox": [
-                        1.0037,
-                        3.7876,
-                        3.1681,
-                        3.7876,
-                        3.1681,
-                        3.9976,
-                        1.0037,
-                        3.9976
+                        0.9976,
+                        3.7827,
+                        3.1582,
+                        3.7827,
+                        3.1582,
+                        3.9885,
+                        1.0043,
+                        3.9885
                       ],
                       "elements": [
                         "#/readResults/2/lines/22/words/0"
@@ -4060,14 +4480,14 @@
                       "columnIndex": 1,
                       "text": "10",
                       "boundingBox": [
-                        3.1681,
-                        3.7876,
-                        5.3353,
-                        3.7876,
-                        5.3353,
-                        3.9976,
-                        3.1681,
-                        3.9976
+                        3.1582,
+                        3.7827,
+                        5.3322,
+                        3.7827,
+                        5.3322,
+                        3.9885,
+                        3.1582,
+                        3.9885
                       ],
                       "elements": [
                         "#/readResults/2/lines/23/words/0"
@@ -4078,14 +4498,14 @@
                       "columnIndex": 2,
                       "text": "120.00",
                       "boundingBox": [
-                        5.3353,
-                        3.7876,
-                        7.4997,
-                        3.7876,
-                        7.4997,
-                        3.9976,
-                        5.3353,
-                        3.9976
+                        5.3322,
+                        3.7827,
+                        7.4995,
+                        3.7827,
+                        7.4995,
+                        3.9885,
+                        5.3322,
+                        3.9885
                       ],
                       "elements": [
                         "#/readResults/2/lines/24/words/0"
@@ -4096,14 +4516,14 @@
                       "columnIndex": 0,
                       "text": "E",
                       "boundingBox": [
-                        1.0037,
-                        3.9976,
-                        3.1681,
-                        3.9976,
-                        3.1681,
-                        4.2081,
-                        1.0037,
-                        4.2081
+                        1.0043,
+                        3.9885,
+                        3.1582,
+                        3.9885,
+                        3.1582,
+                        4.2006,
+                        1.0043,
+                        4.2006
                       ],
                       "elements": [
                         "#/readResults/2/lines/25/words/0"
@@ -4114,14 +4534,14 @@
                       "columnIndex": 1,
                       "text": "40",
                       "boundingBox": [
-                        3.1681,
-                        3.9976,
-                        5.3353,
-                        3.9976,
-                        5.3353,
-                        4.2081,
-                        3.1681,
-                        4.2081
+                        3.1582,
+                        3.9885,
+                        5.3322,
+                        3.9885,
+                        5.3322,
+                        4.2006,
+                        3.1582,
+                        4.2006
                       ],
                       "elements": [
                         "#/readResults/2/lines/26/words/0"
@@ -4132,14 +4552,14 @@
                       "columnIndex": 2,
                       "text": "100.00",
                       "boundingBox": [
-                        5.3353,
-                        3.9976,
-                        7.4997,
-                        3.9976,
-                        7.4997,
-                        4.2081,
-                        5.3353,
-                        4.2081
+                        5.3322,
+                        3.9885,
+                        7.4995,
+                        3.9885,
+                        7.5062,
+                        4.2006,
+                        5.3322,
+                        4.2006
                       ],
                       "elements": [
                         "#/readResults/2/lines/27/words/0"
@@ -4150,14 +4570,14 @@
                       "columnIndex": 0,
                       "text": "F",
                       "boundingBox": [
-                        1.0037,
-                        4.2081,
-                        3.1681,
-                        4.2081,
-                        3.1681,
-                        4.4181,
-                        1.0037,
-                        4.4181
+                        1.0043,
+                        4.2006,
+                        3.1582,
+                        4.2006,
+                        3.1582,
+                        4.4126,
+                        1.0043,
+                        4.4126
                       ],
                       "elements": [
                         "#/readResults/2/lines/28/words/0"
@@ -4168,14 +4588,14 @@
                       "columnIndex": 1,
                       "text": "60",
                       "boundingBox": [
-                        3.1681,
-                        4.2081,
-                        5.3353,
-                        4.2081,
-                        5.3353,
-                        4.4181,
-                        3.1681,
-                        4.4181
+                        3.1582,
+                        4.2006,
+                        5.3322,
+                        4.2006,
+                        5.3322,
+                        4.4126,
+                        3.1582,
+                        4.4126
                       ],
                       "elements": [
                         "#/readResults/2/lines/29/words/0"
@@ -4186,14 +4606,14 @@
                       "columnIndex": 2,
                       "text": "120.00",
                       "boundingBox": [
-                        5.3353,
-                        4.2081,
-                        7.4997,
-                        4.2081,
-                        7.4997,
-                        4.4181,
-                        5.3353,
-                        4.4181
+                        5.3322,
+                        4.2006,
+                        7.5062,
+                        4.2006,
+                        7.5062,
+                        4.4126,
+                        5.3322,
+                        4.4126
                       ],
                       "elements": [
                         "#/readResults/2/lines/30/words/0"
@@ -4204,14 +4624,14 @@
                       "columnIndex": 0,
                       "text": "G",
                       "boundingBox": [
-                        1.0037,
-                        4.4181,
-                        3.1681,
-                        4.4181,
-                        3.1681,
-                        4.6281,
-                        1.0037,
-                        4.6281
+                        1.0043,
+                        4.4126,
+                        3.1582,
+                        4.4126,
+                        3.1582,
+                        4.6184,
+                        1.011,
+                        4.6246
                       ],
                       "elements": [
                         "#/readResults/2/lines/31/words/0"
@@ -4222,14 +4642,14 @@
                       "columnIndex": 1,
                       "text": "80",
                       "boundingBox": [
-                        3.1681,
-                        4.4181,
-                        5.3353,
-                        4.4181,
-                        5.3353,
-                        4.6281,
-                        3.1681,
-                        4.6281
+                        3.1582,
+                        4.4126,
+                        5.3322,
+                        4.4126,
+                        5.3322,
+                        4.6184,
+                        3.1582,
+                        4.6184
                       ],
                       "elements": [
                         "#/readResults/2/lines/32/words/0"
@@ -4240,19 +4660,29 @@
                       "columnIndex": 2,
                       "text": "220.00",
                       "boundingBox": [
-                        5.3353,
-                        4.4181,
-                        7.4997,
-                        4.4181,
-                        7.4997,
-                        4.6281,
-                        5.3353,
-                        4.6281
+                        5.3322,
+                        4.4126,
+                        7.5062,
+                        4.4126,
+                        7.5062,
+                        4.6246,
+                        5.3322,
+                        4.6184
                       ],
                       "elements": [
                         "#/readResults/2/lines/33/words/0"
                       ]
                     }
+                  ],
+                  "boundingBox": [
+                    0.996,
+                    2.9328,
+                    7.4972,
+                    2.9334,
+                    7.4967,
+                    4.6223,
+                    0.9946,
+                    4.6216
                   ]
                 }
               ]
@@ -4260,156 +4690,22 @@
           ],
           "documentResults": [
             {
-              "docType": "custom:4a918c49-5b19-4267-873a-9bcf95f06648",
-              "modelId": "4a918c49-5b19-4267-873a-9bcf95f06648",
+              "docType": "custom:0835690a-ac97-45b5-becd-d528a3fb4ff1",
+              "modelId": "0835690a-ac97-45b5-becd-d528a3fb4ff1",
               "pageRange": [
                 1,
                 3
               ],
               "fields": {
-                "PurchaseOrderNumber": {
+                "Quantity": {
                   "type": "string",
-                  "valueString": "100.99",
-                  "text": "100.99",
-                  "page": 3,
-                  "boundingBox": [
-                    5.425,
-                    3.21,
-                    5.86,
-                    3.21,
-                    5.86,
-                    3.32,
-                    5.425,
-                    3.32
-                  ],
-                  "confidence": 0.127,
-                  "elements": [
-                    "#/readResults/2/lines/15/words/0"
-                  ]
+                  "text": null,
+                  "confidence": 0.658
                 },
-                "CompanyPhoneNumber": {
+                "PhoneNumber": {
                   "type": "string",
-                  "valueString": "22.00",
-                  "text": "22.00",
-                  "page": 1,
-                  "boundingBox": [
-                    5.42,
-                    4.475,
-                    5.78,
-                    4.475,
-                    5.78,
-                    4.585,
-                    5.42,
-                    4.585
-                  ],
-                  "confidence": 0.296,
-                  "elements": [
-                    "#/readResults/0/lines/33/words/0"
-                  ]
-                },
-                "Signature": {
-                  "type": "string",
-                  "valueString": "Signature:",
-                  "text": "Signature:",
-                  "page": 1,
-                  "boundingBox": [
-                    1.005,
-                    6.66,
-                    1.7,
-                    6.66,
-                    1.7,
-                    6.8,
-                    1.005,
-                    6.8
-                  ],
-                  "confidence": 0.175,
-                  "elements": [
-                    "#/readResults/0/lines/38/words/0"
-                  ]
-                },
-                "Email": {
-                  "type": "string",
-                  "valueString": "Company A Invoice",
-                  "text": "Company A Invoice",
-                  "page": 1,
-                  "boundingBox": [
-                    0.885,
-                    1.12,
-                    2.38,
-                    1.12,
-                    2.38,
-                    1.28,
-                    0.885,
-                    1.28
-                  ],
-                  "confidence": 0.138,
-                  "elements": [
-                    "#/readResults/0/lines/0/words/0",
-                    "#/readResults/0/lines/0/words/1",
-                    "#/readResults/0/lines/0/words/2"
-                  ]
-                },
-                "CompanyName": {
-                  "type": "string",
-                  "valueString": "Bilbo Baggins",
-                  "text": "Bilbo Baggins",
-                  "page": 1,
-                  "boundingBox": [
-                    2.05,
-                    6.655,
-                    3.04,
-                    6.655,
-                    3.04,
-                    6.8,
-                    2.05,
-                    6.8
-                  ],
-                  "confidence": 0.198,
-                  "elements": [
-                    "#/readResults/0/lines/38/words/1",
-                    "#/readResults/0/lines/38/words/2"
-                  ]
-                },
-                "Merchant": {
-                  "type": "string",
-                  "valueString": "Invoice For:",
-                  "text": "Invoice For:",
-                  "page": 1,
-                  "boundingBox": [
-                    6.02,
-                    1.065,
-                    7.035,
-                    1.065,
-                    7.035,
-                    1.21,
-                    6.02,
-                    1.21
-                  ],
-                  "confidence": 0.16,
-                  "elements": [
-                    "#/readResults/0/lines/1/words/0",
-                    "#/readResults/0/lines/1/words/1"
-                  ]
-                },
-                "Website": {
-                  "type": "string",
-                  "valueString": "555-555-5555",
-                  "text": "555-555-5555",
-                  "page": 1,
-                  "boundingBox": [
-                    0.885,
-                    2.29,
-                    1.81,
-                    2.29,
-                    1.81,
-                    2.395,
-                    0.885,
-                    2.395
-                  ],
-                  "confidence": 0.126,
-                  "elements": [
-                    "#/readResults/0/lines/9/words/0"
-                  ]
+                  "text": null,
+                  "confidence": 0.528
                 },
                 "CompanyAddress": {
                   "type": "string",
@@ -4426,39 +4722,151 @@
                     1.09,
                     4.585
                   ],
-                  "confidence": 0.297,
+                  "confidence": 0.995,
                   "elements": [
                     "#/readResults/0/lines/31/words/0"
                   ]
                 },
-                "VendorName": {
+                "Tax": {
                   "type": "string",
-                  "valueString": "B",
-                  "text": "B",
+                  "text": null,
+                  "confidence": 0.936
+                },
+                "Signature": {
+                  "type": "string",
+                  "text": null,
+                  "confidence": 0.671
+                },
+                "DatedAs": {
+                  "type": "string",
+                  "valueString": "123 Hobbit Lane",
+                  "text": "123 Hobbit Lane",
                   "page": 1,
                   "boundingBox": [
-                    1.095,
-                    3.425,
-                    1.165,
-                    3.425,
-                    1.165,
-                    3.53,
-                    1.095,
-                    3.53
+                    6.015,
+                    1.67,
+                    7.1,
+                    1.67,
+                    7.1,
+                    1.785,
+                    6.015,
+                    1.785
                   ],
-                  "confidence": 0.157,
+                  "confidence": 0.995,
                   "elements": [
-                    "#/readResults/0/lines/16/words/0"
+                    "#/readResults/0/lines/4/words/0",
+                    "#/readResults/0/lines/4/words/1",
+                    "#/readResults/0/lines/4/words/2"
                   ]
                 },
-                "DatedAs": null,
-                "PhoneNumber": null,
-                "Quantity": null,
-                "Subtotal": null,
-                "Tax": null,
-                "Total": null
+                "Merchant": {
+                  "type": "string",
+                  "text": null,
+                  "confidence": 0.636
+                },
+                "CompanyName": {
+                  "type": "string",
+                  "text": null,
+                  "confidence": 0.518
+                },
+                "Subtotal": {
+                  "type": "string",
+                  "text": null,
+                  "confidence": 0.936
+                },
+                "PurchaseOrderNumber": {
+                  "type": "string",
+                  "valueString": "10.99",
+                  "text": "10.99",
+                  "page": 1,
+                  "boundingBox": [
+                    5.425,
+                    3.21,
+                    5.78,
+                    3.21,
+                    5.78,
+                    3.32,
+                    5.425,
+                    3.32
+                  ],
+                  "confidence": 0.995,
+                  "elements": [
+                    "#/readResults/0/lines/15/words/0"
+                  ]
+                },
+                "Total": {
+                  "type": "string",
+                  "text": null,
+                  "confidence": 0.936
+                },
+                "CompanyPhoneNumber": {
+                  "type": "string",
+                  "valueString": "430.00",
+                  "text": "430.00",
+                  "page": 1,
+                  "boundingBox": [
+                    5.94,
+                    5.565,
+                    6.4,
+                    5.565,
+                    6.4,
+                    5.675,
+                    5.94,
+                    5.675
+                  ],
+                  "confidence": 0.995,
+                  "elements": [
+                    "#/readResults/0/lines/37/words/1"
+                  ]
+                },
+                "Email": {
+                  "type": "string",
+                  "valueString": "555-555-5555",
+                  "text": "555-555-5555",
+                  "page": 1,
+                  "boundingBox": [
+                    0.885,
+                    2.29,
+                    1.81,
+                    2.29,
+                    1.81,
+                    2.395,
+                    0.885,
+                    2.395
+                  ],
+                  "confidence": 0.995,
+                  "elements": [
+                    "#/readResults/0/lines/9/words/0"
+                  ]
+                },
+                "VendorName": {
+                  "type": "string",
+                  "valueString": "Redmond, WA",
+                  "text": "Redmond, WA",
+                  "page": 1,
+                  "boundingBox": [
+                    6.015,
+                    1.89,
+                    6.98,
+                    1.89,
+                    6.98,
+                    2.03,
+                    6.015,
+                    2.03
+                  ],
+                  "confidence": 0.995,
+                  "elements": [
+                    "#/readResults/0/lines/6/words/0",
+                    "#/readResults/0/lines/6/words/1"
+                  ]
+                },
+                "Website": {
+                  "type": "string",
+                  "text": null,
+                  "confidence": 0.661
+                }
               },
-              "docTypeConfidence": 1.0
+              "docTypeConfidence": 0.001
             }
           ],
           "errors": []
@@ -4466,28 +4874,25 @@
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/4a918c49-5b19-4267-873a-9bcf95f06648",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/0835690a-ac97-45b5-becd-d528a3fb4ff1",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c11143b47afddc438543758f794161a3-bfacba881ad3864a-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "80eadaa71e3a4078a7f8bb4cdb656444",
+        "traceparent": "00-afa79ba82b01d548b9d924ee8c88dce8-423e9fbb5278e64e-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "c80ddddf3594af38d5601d7aff831440",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "48e54474-26c3-45ea-bd58-b3c56964a335",
+        "apim-request-id": "c021a560-c476-4e45-8b3b-fa1e0bf783d7",
         "Content-Length": "0",
-        "Date": "Wed, 09 Sep 2020 22:31:35 GMT",
+        "Date": "Tue, 23 Mar 2021 00:50:40 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "165"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "41"
       },
       "ResponseBody": []
     }
@@ -4495,7 +4900,7 @@
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
     "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
     "RandomSeed": "1253358472"
   }
 }

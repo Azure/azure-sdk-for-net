@@ -64,7 +64,7 @@
                 ""
             ],
             "type": "String",
-            "defaultValue": ""
+            "defaultValue": "default"
         },
         "tagValues": {
             "defaultValue": {},
@@ -173,6 +173,13 @@
         "libraryRequirementsContent": {
             "defaultValue": "",
             "type": "String"
+        },
+        "managedVirtualNetworkSettings": {
+            "type": "object",
+            "defaultValue": {
+                "allowedAadTenantIdsForLinking": [],
+                "preventDataExfiltration": false
+            }
         }
     },
     "variables": {
@@ -181,7 +188,7 @@
         "uniqueDataLakeStorageFilesystemName": "[concat(parameters('defaultDataLakeStorageFilesystemNamePrefix'), parameters('baseName'))]",
         "storageBlobDataContributorRoleID": "ba92f5b4-2d11-453d-a403-e96b0029c9fe",
         "defaultDataLakeStorageAccountUrl": "[concat('https://', variables('uniqueDataLakeStorageAccountName'), '.dfs.core.windows.net')]",
-        "uniqueSparkPoolName": "[concat(parameters('sparkPoolPrefix'), parameters('baseName'))]"
+        "uniqueSparkPoolName": "[take(concat(parameters('sparkPoolPrefix'), parameters('baseName')), 15)]"
     },
     "resources": [
         {
@@ -205,7 +212,8 @@
                 "sqlAdministratorLogin": "[parameters('sqlAdministratorLogin')]",
                 "sqlAdministratorLoginPassword": "[parameters('sqlAdministratorLoginPassword')]",
                 "adlaResourceId": "[parameters('adlaResourceId')]",
-                "managedVirtualNetwork": "[parameters('managedVirtualNetwork')]"
+                "managedVirtualNetwork": "[parameters('managedVirtualNetwork')]",
+                "managedVirtualNetworkSettings": "[parameters('managedVirtualNetworkSettings')]"
             },
             "resources": [
                 {
@@ -386,6 +394,10 @@
         "AZURE_STORAGE_FILE_SYSTEM_NAME": {
             "type": "string",
             "value": "[variables('uniqueDataLakeStorageFilesystemName')]"
+        },
+        "AZURE_SYNAPSE_PRINCIPAL_ID": {
+            "type": "string",
+            "value": "[parameters('testApplicationOid')]"
         }
     }
 }

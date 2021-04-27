@@ -8,9 +8,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
@@ -41,7 +39,7 @@ namespace Azure.Search.Documents.Tests
             params string[] expectedKeys)
         {
             List<SearchResult<T>> docs = await response.Value.GetResultsAsync().ToListAsync();
-            CollectionAssert.AreEqual(expectedKeys, docs.Select(keyAccessor));
+            CollectionAssert.AreEquivalent(expectedKeys, docs.Select(keyAccessor));
         }
 
         private ICollection<FacetResult> GetFacetsForField(
@@ -135,13 +133,15 @@ namespace Azure.Search.Documents.Tests
 
             List<SearchResult<SearchDocument>> docs = await response.GetResultsAsync().ToListAsync();
             Assert.AreEqual(SearchResources.TestDocuments.Length, docs.Count);
-            for (int i = 0; i < docs.Count; i++)
+            Hotel[] expected = SearchResources.TestDocuments.OrderBy(d => d.HotelId).ToArray();
+            SearchResult<SearchDocument>[] actual = docs.OrderBy(r => r.Document["hotelId"]).ToArray();
+            for (int i = 0; i < actual.Length; i++)
             {
-                Assert.AreEqual(1, docs[i].Score);
-                Assert.IsNull(docs[i].Highlights);
+                Assert.AreEqual(1, actual[i].Score);
+                Assert.IsNull(actual[i].Highlights);
                 SearchTestBase.AssertApproximate(
-                    SearchResources.TestDocuments[i].AsDocument(),
-                    docs[i].Document);
+                    expected[i].AsDocument(),
+                    actual[i].Document);
             }
         }
 
@@ -158,11 +158,13 @@ namespace Azure.Search.Documents.Tests
 
             List<SearchResult<Hotel>> docs = await response.GetResultsAsync().ToListAsync();
             Assert.AreEqual(SearchResources.TestDocuments.Length, docs.Count);
-            for (int i = 0; i < docs.Count; i++)
+            Hotel[] expected = SearchResources.TestDocuments.OrderBy(d => d.HotelId).ToArray();
+            SearchResult<Hotel>[] actual = docs.OrderBy(r => r.Document.HotelId).ToArray();
+            for (int i = 0; i < actual.Length; i++)
             {
-                Assert.AreEqual(1, docs[i].Score);
-                Assert.IsNull(docs[i].Highlights);
-                Assert.AreEqual(SearchResources.TestDocuments[i], docs[i].Document);
+                Assert.AreEqual(1, actual[i].Score);
+                Assert.IsNull(actual[i].Highlights);
+                Assert.AreEqual(expected[i], actual[i].Document);
             }
         }
 
@@ -172,7 +174,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchClient client = resources.GetQueryClient(
-                new SearchClientOptions()
+                new SearchClientOptions(ServiceVersion)
                 {
                     Serializer = new JsonObjectSerializer(
                         new JsonSerializerOptions()
@@ -180,9 +182,7 @@ namespace Azure.Search.Documents.Tests
                             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                             Converters =
                             {
-#if EXPERIMENTAL_SPATIAL
                                 new GeoJsonConverter()
-#endif
                             }
                         })
                 });
@@ -193,12 +193,14 @@ namespace Azure.Search.Documents.Tests
 
             List<SearchResult<UncasedHotel>> docs = await response.GetResultsAsync().ToListAsync();
             Assert.AreEqual(SearchResources.TestDocuments.Length, docs.Count);
-            for (int i = 0; i < docs.Count; i++)
+            Hotel[] expected = SearchResources.TestDocuments.OrderBy(d => d.HotelId).ToArray();
+            SearchResult<UncasedHotel>[] actual = docs.OrderBy(r => r.Document.HotelId).ToArray();
+            for (int i = 0; i < actual.Length; i++)
             {
-                Assert.AreEqual(1, docs[i].Score);
-                Assert.IsNull(docs[i].Highlights);
+                Assert.AreEqual(1, actual[i].Score);
+                Assert.IsNull(actual[i].Highlights);
                 // Flip expected/actual order because we implemented Equals in UncasedHotel
-                Assert.AreEqual(docs[i].Document, SearchResources.TestDocuments[i]);
+                Assert.AreEqual(actual[i].Document, expected[i]);
             }
         }
 
@@ -587,7 +589,6 @@ namespace Azure.Search.Documents.Tests
             RangeFacetResult<double> last = facets.ElementAt(3).AsRangeFacetResult<double>();
             Assert.AreEqual(null, first.From);
             Assert.AreEqual(null, last.To);
-
         }
 
         [Test]

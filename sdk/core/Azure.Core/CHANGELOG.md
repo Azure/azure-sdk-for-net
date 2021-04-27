@@ -1,9 +1,74 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.14.0-beta.1 (Unreleased)
+
+
+## 1.13.0 (2021-04-07)
+
+### Key Bug Fixes
+
+- Fixed `NotSupportedException` when running using Blazor in the browser.
+- Disable the response caching and enable the streaming when running using Blazor in the browser.
+
+## 1.12.0 (2021-04-06)
 
 ### Added
+
+- Added `HttpPipeline.CreateHttpMessagePropertiesScope` that can be used to inject scoped properties into `HttpMessage`.
+
+## 1.11.0 (2021-03-22)
+
+### Added
+
+- `Operation` base class for operations that do not return a value.
+- Added `Content` property to `Response` which returns the body of the response as a `BinaryData` if the body is buffered.
+- `AzureNamedKeyCredential` has been implemented to cover scenarios where services require that a shared key name and the key value be used as a component of the algorithm to form the authorization token.
+
+### Key Bug Fixes
+
+- Check the `JsonIgnoreAttribute.Condition` property added in .NET 5 when discovering members with `JsonObjectSerializer`.
+- `ETag` now returns `string.Empty` if it is constructed with a null value.
+- Keep-Alive connections are recycled every 300 seconds to observe DNS changes.
+
+## 1.10.0 (2021-03-09)
+
+## Added
+
+- Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/blob/master/spec.md).
+
+## 1.9.0 (2021-02-09)
+
+## Added
+- Added Serialize overloads on `ObjectSerializer` that serialize to `BinaryData`.
+- Added AzureCoreExtensions containing extensions methods for `BinaryData` that allow deserializing with an `ObjectSerializer`.
+
+### Key Bug Fixes
+
+- Avoid `ObjectDisposedException` when the request is cancelled during content upload over HTTPS.
+- Fix exception while setting `If-Modified-Since` header on .NET Framework.
+
+## 1.8.1 (2021-01-11)
+
+### Key Bug Fixes
+
+- Include `Microsoft.Bcl.AsyncInterfaces` dependency on .NET 5 to avoid build issues in applications targeting .NET 5.
+
+## 1.8.0 (2021-01-06)
+
+### Added
+- `AzureSasCredential` and its respective policy.
+
+### Key Bug Fixes
+- Avoid a causing and ignoring an exception when setting network stream timeout on .NET Core 
+
+## 1.7.0 (2020-12-14)
+
+### New Features
 - `System.Text.Json.JsonConverter` implementation for the `ETag`
+- Synchronous `HttpClient` support on .NET 5.
+
+### Key Bug Fixes
+- System proxy settings are correctly applied on .NET Framework
 
 ## 1.6.0 (2020-10-28)
 
@@ -62,7 +127,7 @@ When the environment variable or the switch are set the `HttpClientTransport` wo
 ### Bugfix
 - Retry server timeouts on .NET Framework.
 
-## 1.2.1  (2020-04-30)
+## 1.2.1 (2020-04-30)
 
 ### Changed
 - Read client request ID value used for logging and tracing off the initial request object if available.
@@ -93,28 +158,28 @@ When the environment variable or the switch are set the `HttpClientTransport` wo
 - Add support for retrying on 408, 500, 502, 504 status codes.
 - Remove commit hash from User-Agent telemetry.
 
-## 1.0.1
+## 1.0.1 
 
 - Fix issues with log redaction where first query character was replaced with '?' character.
 - Exclude EventCounter events from AzureEventSourceListener.
 - Add `AZURE_TRACING_DISABLED` environment variable support.
 
-## 1.0.0
+## 1.0.0 
 
 - Updating versioning and packaging for general availability.
 - Make types and namespace names consistent.
 
-## 1.0.0-preview.9
+## 1.0.0-preview.9 
 
 - Added console and trace logger listener.
 - Added additional content and header logging options.
 - Moved commonly used types to Azure namespace.
 
-## 1.0.0-preview.8
+## 1.0.0-preview.8 
 
 - Minor improvements and bug fixes.
 
-## 1.0.0-preview.7
+## 1.0.0-preview.7 
 
 - Support for distributed tracing added.
 - Support for TokenCredential in ASP.NET Core integration added.

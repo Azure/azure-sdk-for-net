@@ -1,18 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyze?includeTextDetails=false",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyze?includeTextDetails=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "22",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-1521ed686eee654299ca6593f16fefb1-bceee76681dbbe45-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201015.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "traceparent": "00-319660f12c33b140a4b3c9aee4461d37-0e3e8a27da43d948-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "8f9106139b9b408f8d5600f72a8fe135",
         "x-ms-return-client-request-id": "true"
       },
@@ -21,140 +18,101 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "31bd4234-f0bc-4f25-9c65-360dbe99daeb",
+        "apim-request-id": "034d5119-721f-47c2-b414-edab935510f6",
         "Content-Length": "0",
-        "Date": "Thu, 15 Oct 2020 18:19:03 GMT",
-        "Operation-Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyzeResults/31bd4234-f0bc-4f25-9c65-360dbe99daeb",
+        "Date": "Wed, 31 Mar 2021 17:36:52 GMT",
+        "Operation-Location": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/034d5119-721f-47c2-b414-edab935510f6",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "960"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "621"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyzeResults/31bd4234-f0bc-4f25-9c65-360dbe99daeb",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/034d5119-721f-47c2-b414-edab935510f6",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201015.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "5ae10cd78867c7a79a358012931ac3e7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d68de411-dceb-45eb-9eb1-9e45a3aba903",
-        "Content-Length": "109",
+        "apim-request-id": "e70b86dd-211a-4122-b0e7-110da12c4ea7",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 15 Oct 2020 18:19:04 GMT",
+        "Date": "Wed, 31 Mar 2021 17:36:52 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "13"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "12"
       },
       "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-10-15T18:19:04Z",
-        "lastUpdatedDateTime": "2020-10-15T18:19:04Z"
+        "status": "running",
+        "createdDateTime": "2021-03-31T17:36:53Z",
+        "lastUpdatedDateTime": "2021-03-31T17:36:53Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyzeResults/31bd4234-f0bc-4f25-9c65-360dbe99daeb",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/034d5119-721f-47c2-b414-edab935510f6",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201015.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "6357431f630f192e2834ed181d49bff6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cdbf61db-0fae-43b6-816a-15ad18ed2829",
+        "apim-request-id": "57c185e0-8004-4527-8c99-e72719a702df",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 15 Oct 2020 18:19:06 GMT",
+        "Date": "Wed, 31 Mar 2021 17:36:55 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "30"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "11"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-10-15T18:19:04Z",
-        "lastUpdatedDateTime": "2020-10-15T18:19:05Z"
+        "createdDateTime": "2021-03-31T17:36:53Z",
+        "lastUpdatedDateTime": "2021-03-31T17:36:53Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyzeResults/31bd4234-f0bc-4f25-9c65-360dbe99daeb",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/034d5119-721f-47c2-b414-edab935510f6",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201015.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "0b62d92ad6b68af95fc9f4661b7cad72",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "7f61f475-8d30-47b8-ae6e-a045722f696e",
-        "Content-Length": "106",
+        "apim-request-id": "894c6eee-263e-48a8-b118-2c95313e40ce",
+        "Content-Length": "2684",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 15 Oct 2020 18:19:07 GMT",
+        "Date": "Wed, 31 Mar 2021 17:36:56 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "18"
-      },
-      "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2020-10-15T18:19:04Z",
-        "lastUpdatedDateTime": "2020-10-15T18:19:05Z"
-      }
-    },
-    {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyzeResults/31bd4234-f0bc-4f25-9c65-360dbe99daeb",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201015.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "e7d818937e377426ddc732329a8eaa51",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "a1f278ed-2ff4-46e8-9251-ad63164fbe85",
-        "Content-Length": "2679",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 15 Oct 2020 18:19:09 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "1524"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2020-10-15T18:19:04Z",
-        "lastUpdatedDateTime": "2020-10-15T18:19:07Z",
+        "createdDateTime": "2021-03-31T17:36:53Z",
+        "lastUpdatedDateTime": "2021-03-31T17:36:55Z",
         "analyzeResult": {
           "version": "2.1.0",
           "readResults": [
             {
               "page": 1,
-              "angle": -17.0956,
+              "angle": -16.6836,
               "width": 4032,
               "height": 3024,
               "unit": "pixel"
@@ -168,6 +126,50 @@
                 1
               ],
               "fields": {
+                "Addresses": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "2 Kingdom Street Paddington, London, W2 6BD",
+                      "text": "2 Kingdom Street Paddington, London, W2 6BD",
+                      "boundingBox": [
+                        1227.3,
+                        2138.3,
+                        2520.2,
+                        1690.5,
+                        2597,
+                        1912.3,
+                        1304.1,
+                        2360.1
+                      ],
+                      "page": 1,
+                      "confidence": 0.98
+                    }
+                  ]
+                },
+                "CompanyNames": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "Contoso",
+                      "text": "Contoso",
+                      "boundingBox": [
+                        1146,
+                        1926,
+                        2224,
+                        1587,
+                        2285,
+                        1756,
+                        1202,
+                        2099
+                      ],
+                      "page": 1,
+                      "confidence": 0.168
+                    }
+                  ]
+                },
                 "ContactNames": {
                   "type": "array",
                   "valueArray": [
@@ -179,14 +181,14 @@
                           "valueString": "Avery",
                           "text": "Avery",
                           "boundingBox": [
-                            703,
-                            1096,
-                            1134,
-                            989,
-                            1165,
-                            1109,
-                            733,
-                            1206
+                            666,
+                            1102,
+                            1111,
+                            995,
+                            1140,
+                            1114,
+                            696,
+                            1216
                           ],
                           "page": 1
                         },
@@ -195,52 +197,31 @@
                           "valueString": "Smith",
                           "text": "Smith",
                           "boundingBox": [
-                            1186,
-                            976,
-                            1585,
-                            879,
-                            1618,
-                            998,
-                            1218,
-                            1096
+                            1170,
+                            981,
+                            1571,
+                            881,
+                            1600,
+                            1000,
+                            1200,
+                            1100
                           ],
                           "page": 1
                         }
                       },
                       "text": "Dr. Avery Smith",
                       "boundingBox": [
-                        419.3,
-                        1154.6,
-                        1589.6,
-                        877.9,
-                        1618.9,
-                        1001.7,
-                        448.6,
-                        1278.4
-                      ],
-                      "confidence": 0.793
-                    }
-                  ]
-                },
-                "JobTitles": {
-                  "type": "array",
-                  "valueArray": [
-                    {
-                      "type": "string",
-                      "valueString": "Senior Researcher",
-                      "text": "Senior Researcher",
-                      "boundingBox": [
-                        451.8,
-                        1301.9,
-                        1313.5,
-                        1099.9,
-                        1333.8,
-                        1186.7,
-                        472.2,
-                        1388.7
+                        414.1,
+                        1153,
+                        1572,
+                        880.8,
+                        1601.3,
+                        1005.6,
+                        443.5,
+                        1277.9
                       ],
                       "page": 1,
-                      "confidence": 0.99
+                      "confidence": 0.979
                     }
                   ]
                 },
@@ -252,17 +233,17 @@
                       "valueString": "Cloud \u0026 Al Department",
                       "text": "Cloud \u0026 Al Department",
                       "boundingBox": [
-                        480.1,
-                        1403.3,
-                        1590.5,
-                        1129.6,
-                        1612.6,
-                        1219.6,
-                        502.3,
-                        1493.3
+                        473.6,
+                        1409.5,
+                        1586,
+                        1134,
+                        1607.3,
+                        1219.8,
+                        494.9,
+                        1495.3
                       ],
                       "page": 1,
-                      "confidence": 0.99
+                      "confidence": 0.989
                     }
                   ]
                 },
@@ -274,14 +255,78 @@
                       "valueString": "avery.smith@contoso.com",
                       "text": "avery.smith@contoso.com",
                       "boundingBox": [
-                        2107,
+                        2106,
                         934,
-                        2917,
-                        696,
-                        2935,
-                        764,
-                        2126,
-                        995
+                        2908,
+                        706,
+                        2921,
+                        769,
+                        2122,
+                        993
+                      ],
+                      "page": 1,
+                      "confidence": 0.99
+                    }
+                  ]
+                },
+                "Faxes": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "phoneNumber",
+                      "text": "\u002B44 (0) 20 6789 2345",
+                      "boundingBox": [
+                        2520.4,
+                        1195.5,
+                        3191.8,
+                        983.5,
+                        3215.8,
+                        1059.2,
+                        2544.3,
+                        1271.3
+                      ],
+                      "page": 1,
+                      "confidence": 0.99
+                    }
+                  ]
+                },
+                "JobTitles": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "Senior Researcher",
+                      "text": "Senior Researcher",
+                      "boundingBox": [
+                        451,
+                        1312,
+                        1315.9,
+                        1103.6,
+                        1334.7,
+                        1181.7,
+                        469.8,
+                        1390
+                      ],
+                      "page": 1,
+                      "confidence": 0.99
+                    }
+                  ]
+                },
+                "MobilePhones": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "phoneNumber",
+                      "text": "\u002B44 (0) 7911 123456",
+                      "boundingBox": [
+                        2426.8,
+                        1040.1,
+                        3065.5,
+                        846,
+                        3087.2,
+                        917.6,
+                        2448.5,
+                        1111.7
                       ],
                       "page": 1,
                       "confidence": 0.99
@@ -296,124 +341,38 @@
                       "valueString": "https://www.contoso.com/",
                       "text": "https://www.contoso.com/",
                       "boundingBox": [
-                        2121,
-                        1002,
-                        2992,
-                        755,
-                        3014,
-                        826,
-                        2143,
-                        1077
-                      ],
-                      "page": 1,
-                      "confidence": 0.995
-                    }
-                  ]
-                },
-                "MobilePhones": {
-                  "type": "array",
-                  "valueArray": [
-                    {
-                      "type": "phoneNumber",
-                      "text": "\u002B44 (0) 7911 123456",
-                      "boundingBox": [
-                        2434.9,
-                        1033.3,
-                        3072,
-                        836,
-                        3096.2,
-                        914.3,
-                        2459.1,
-                        1111.6
+                        2120,
+                        1003,
+                        2981,
+                        757,
+                        3006,
+                        824,
+                        2139,
+                        1075
                       ],
                       "page": 1,
                       "confidence": 0.99
                     }
                   ]
                 },
-                "OtherPhones": {
+                "WorkPhones": {
                   "type": "array",
                   "valueArray": [
                     {
                       "type": "phoneNumber",
                       "text": "\u002B44 (0) 20 9876 5432",
                       "boundingBox": [
-                        2473.2,
-                        1115.4,
-                        3139.2,
-                        907.7,
-                        3163.2,
-                        984.7,
-                        2497.2,
-                        1192.4
+                        2468.2,
+                        1118.1,
+                        3130.3,
+                        914.6,
+                        3152.9,
+                        988.2,
+                        2490.8,
+                        1191.6
                       ],
                       "page": 1,
-                      "confidence": 0.99
-                    }
-                  ]
-                },
-                "Faxes": {
-                  "type": "array",
-                  "valueArray": [
-                    {
-                      "type": "phoneNumber",
-                      "text": "\u002B44 (0) 20 6789 2345",
-                      "boundingBox": [
-                        2525,
-                        1185.4,
-                        3192.4,
-                        977.9,
-                        3217.9,
-                        1060,
-                        2550.5,
-                        1267.5
-                      ],
-                      "page": 1,
-                      "confidence": 0.99
-                    }
-                  ]
-                },
-                "Addresses": {
-                  "type": "array",
-                  "valueArray": [
-                    {
-                      "type": "string",
-                      "valueString": "2 Kingdom Street Paddington, London, W2 6BD",
-                      "text": "2 Kingdom Street Paddington, London, W2 6BD",
-                      "boundingBox": [
-                        1230,
-                        2138,
-                        2535.2,
-                        1678.6,
-                        2614.2,
-                        1903.1,
-                        1309,
-                        2362.5
-                      ],
-                      "page": 1,
-                      "confidence": 0.977
-                    }
-                  ]
-                },
-                "CompanyNames": {
-                  "type": "array",
-                  "valueArray": [
-                    {
-                      "type": "string",
-                      "valueString": "Contoso",
-                      "text": "Contoso",
-                      "boundingBox": [
-                        1152,
-                        1916,
-                        2293,
-                        1552,
-                        2358,
-                        1733,
-                        1219,
-                        2105
-                      ],
-                      "page": 1,
-                      "confidence": 0.067
+                      "confidence": 0.989
                     }
                   ]
                 }
@@ -426,7 +385,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-canada-central.cognitiveservices.azure.com/",
     "RandomSeed": "208948226"
   }
 }

@@ -6,23 +6,18 @@
 #nullable disable
 
 using System;
+using Azure.AI.TextAnalytics;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasksEntityRecognitionPiiTasksItem. </summary>
-    public partial class EntityRecognitionPiiTasksItem : TaskState
+    internal partial class EntityRecognitionPiiTasksItem : TaskState
     {
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
         /// <param name="status"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status) : base(lastUpdateDateTime, name, status)
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
         }
 
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
@@ -30,15 +25,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, PiiEntitiesResult results) : base(lastUpdateDateTime, name, status)
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, PiiEntitiesResult results) : base(lastUpdateDateTime, name, status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
             Results = results;
         }
+
+        public PiiEntitiesResult Results { get; }
     }
 }

@@ -71,7 +71,7 @@ steps:
         --debug
         ${{parameters.TestsConventionOptions}}
       displayName: Create Live Test pipelines for public repository
-      condition: ne(variables['TestsConventionOptions'],'')
+      condition: ne('${{parameters.TestsConventionOptions}}','')
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
 
@@ -132,6 +132,6 @@ steps:
         --no-schedule
         ${{parameters.TestsConventionOptions}}
       displayName: Create Live Test pipelines for private repository
-      condition: ne(variables['TestsConventionOptions'],'')
+      condition: ne('${{parameters.TestsConventionOptions}}','')
       env:
         PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)

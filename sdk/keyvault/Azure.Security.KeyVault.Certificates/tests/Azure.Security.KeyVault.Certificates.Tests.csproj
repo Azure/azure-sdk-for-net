@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
@@ -24,5 +24,6 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Security.KeyVault.Certificates.csproj" />
+    <ProjectReference Include="..\..\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj" />
   </ItemGroup>
 </Project>

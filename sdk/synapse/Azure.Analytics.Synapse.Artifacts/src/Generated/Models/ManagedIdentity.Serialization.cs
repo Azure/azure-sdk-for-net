@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ManagedIdentityConverter))]
     public partial class ManagedIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -26,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static ManagedIdentity DeserializeManagedIdentity(JsonElement element)
         {
             Optional<string> principalId = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             Optional<ResourceIdentityType> type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +40,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -51,7 +59,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ManagedIdentity(principalId.Value, tenantId.Value, Optional.ToNullable(type));
+            return new ManagedIdentity(principalId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(type));
+        }
+
+        internal partial class ManagedIdentityConverter : JsonConverter<ManagedIdentity>
+        {
+            public override void Write(Utf8JsonWriter writer, ManagedIdentity model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ManagedIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeManagedIdentity(document.RootElement);
+            }
         }
     }
 }

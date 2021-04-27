@@ -7,7 +7,7 @@
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The resource model definition for a ARM proxy resource. It will have everything other than required location and tags. </summary>
+    /// <summary> The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location. </summary>
     public partial class ProxyResource : Resource
     {
         /// <summary> Initializes a new instance of ProxyResource. </summary>
@@ -16,9 +16,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of ProxyResource. </summary>
-        /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
+        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         internal ProxyResource(string id, string name, string type) : base(id, name, type)
         {
         }

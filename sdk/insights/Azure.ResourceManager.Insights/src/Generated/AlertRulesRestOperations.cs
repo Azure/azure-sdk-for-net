@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath(ruleName, true);
             uri.AppendQuery("api-version", "2016-03-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -314,8 +314,8 @@ namespace Azure.ResourceManager.Insights
             uri.AppendPath(ruleName, true);
             uri.AppendQuery("api-version", "2016-03-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(alertRulesResource);
             request.Content = content;

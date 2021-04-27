@@ -147,10 +147,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public string ChainOfCustodySasKey { get; private set; }
 
         /// <summary>
-        /// Gets details about which key encryption type is being used.
+        /// Gets or sets details about which key encryption type is being used.
         /// </summary>
         [JsonProperty(PropertyName = "keyEncryptionKey")]
-        public KeyEncryptionKey KeyEncryptionKey { get; private set; }
+        public KeyEncryptionKey KeyEncryptionKey { get; set; }
 
         /// <summary>
         /// Gets or sets the expected size of the data, which needs to be

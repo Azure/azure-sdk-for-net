@@ -31,7 +31,6 @@
     <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="xunit" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" />
   </ItemGroup>
 

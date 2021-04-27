@@ -326,7 +326,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 && this.RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
                 && this.RequiresSession.Equals(other.RequiresSession)
                 && this.Status.Equals(other.Status)
-                && this.internalSupportOrdering.Equals(other.SupportOrdering)
+                && this.SupportOrdering.Equals(other.SupportOrdering)
                 && this.EnableExpress == other.EnableExpress
                 && this.IsAnonymousAccessible == other.IsAnonymousAccessible
                 && string.Equals(this.userMetadata, other.userMetadata, StringComparison.OrdinalIgnoreCase)

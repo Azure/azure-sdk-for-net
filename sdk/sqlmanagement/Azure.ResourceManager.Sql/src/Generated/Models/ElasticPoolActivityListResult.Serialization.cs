@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ElasticPoolActivityListResult
+    internal partial class ElasticPoolActivityListResult
     {
         internal static ElasticPoolActivityListResult DeserializeElasticPoolActivityListResult(JsonElement element)
         {

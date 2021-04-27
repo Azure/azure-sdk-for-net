@@ -67,51 +67,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 }
             }
 
-            /// <summary>
-            /// Fetches Operation Result for Prepare Data Move
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='vaultName'>
-            /// The name of the recovery services vault.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group where the recovery services vault is
-            /// present.
-            /// </param>
-            /// <param name='operationId'>
-            /// </param>
-            public static VaultStorageConfigOperationResultResponse BeginGet(this IBMSPrepareDataMoveOperationResultOperations operations, string vaultName, string resourceGroupName, string operationId)
-            {
-                return operations.BeginGetAsync(vaultName, resourceGroupName, operationId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Fetches Operation Result for Prepare Data Move
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='vaultName'>
-            /// The name of the recovery services vault.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group where the recovery services vault is
-            /// present.
-            /// </param>
-            /// <param name='operationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VaultStorageConfigOperationResultResponse> BeginGetAsync(this IBMSPrepareDataMoveOperationResultOperations operations, string vaultName, string resourceGroupName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginGetWithHttpMessagesAsync(vaultName, resourceGroupName, operationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
     }
 }

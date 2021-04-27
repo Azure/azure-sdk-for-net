@@ -9,7 +9,6 @@ namespace Azure.Messaging.ServiceBus.Primitives
 {
     internal static class StringUtility
     {
-
         public static string GetFormattedLockTokens(IEnumerable<string> lockTokens)
         {
             var lockTokenBuilder = new StringBuilder();

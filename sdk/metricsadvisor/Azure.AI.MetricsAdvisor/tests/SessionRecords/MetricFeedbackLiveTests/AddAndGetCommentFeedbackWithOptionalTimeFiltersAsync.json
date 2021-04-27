@@ -1,0 +1,97 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "275",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-f255312e8f7156448392273e179a191f-22db10d7d3f54d4d-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "44cbfe006fbb9b6ee775ead974c49c48",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "startTime": "2020-09-26T00:00:00Z",
+        "endTime": "2020-09-29T00:00:00Z",
+        "value": {
+          "commentValue": "Feedback created in a .NET test."
+        },
+        "feedbackType": "Comment",
+        "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+        "dimensionFilter": {
+          "dimension": {
+            "city": "Delhi",
+            "category": "Handmade"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "4f6e5541-f7de-46f8-9ace-e55c240ed5cf",
+        "Content-Length": "0",
+        "Date": "Tue, 15 Dec 2020 01:34:47 GMT",
+        "Location": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/57bb55e8-d848-4f30-bc0c-ce64ac6e56ac",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "242",
+        "x-request-id": "4f6e5541-f7de-46f8-9ace-e55c240ed5cf"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://js-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/feedback/metric/57bb55e8-d848-4f30-bc0c-ce64ac6e56ac",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-d1a67773f19565409b7c7e74e9d963ea-8452b8031f31d645-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "x-api-key": "Sanitized",
+        "x-ms-client-request-id": "f57009969bee4bb009167dfd08f2a2c1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "7064d3b7-722f-441e-b02d-689f5c178a02",
+        "Content-Length": "402",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 15 Dec 2020 01:34:47 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "79",
+        "x-request-id": "7064d3b7-722f-441e-b02d-689f5c178a02"
+      },
+      "ResponseBody": {
+        "feedbackId": "57bb55e8-d848-4f30-bc0c-ce64ac6e56ac",
+        "createdTime": "2020-12-15T01:34:48.103Z",
+        "userPrincipal": "foo@contoso.com",
+        "metricId": "27e3015f-04fd-44ba-a20b-bc529a0aebae",
+        "dimensionFilter": {
+          "dimension": {
+            "city": "Delhi",
+            "category": "Handmade"
+          }
+        },
+        "feedbackType": "Comment",
+        "startTime": "2020-09-26T00:00:00Z",
+        "endTime": "2020-09-29T00:00:00Z",
+        "value": {
+          "commentValue": "Feedback created in a .NET test."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2020-12-14T17:34:48.2452816-08:00",
+    "METRICSADVISOR_ACCOUNT_NAME": "js-metrics-advisor",
+    "METRICSADVISOR_ENDPOINT_SUFFIX": null,
+    "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
+    "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
+    "RandomSeed": "2006532572"
+  }
+}

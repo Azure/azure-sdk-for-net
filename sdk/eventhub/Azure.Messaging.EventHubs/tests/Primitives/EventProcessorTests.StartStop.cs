@@ -851,7 +851,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var capturedException = default(Exception);
             var expectedException = new DivideByZeroException("BOOM!");
-            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var startCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var stopCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(1) };
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
             var mockConnection = new Mock<EventHubConnection>();
@@ -859,12 +860,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockEventSource
                 .Setup(log => log.EventProcessorStopComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Callback(() => completionSource.TrySetResult(true));
+                .Callback(() => stopCompletionSource.TrySetResult(true));
 
             mockConnection
                 .SetupSequence(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Array.Empty<string>())
-                .Throws(expectedException);
+                .ReturnsAsync(Array.Empty<string>())
+                .Returns(async () =>
+                {
+                    await startCompletionSource.Task;
+                    throw expectedException;
+                });
 
             mockProcessor.Object.Logger = mockEventSource.Object;
 
@@ -904,8 +910,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should be running.");
+            startCompletionSource.TrySetResult(true);
 
-            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            await Task.WhenAny(stopCompletionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             mockProcessor

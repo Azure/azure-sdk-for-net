@@ -60,7 +60,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        internal ClientSecretCredential(string tenantId, string clientId, string clientSecret, ClientSecretCredentialOptions options)
+        public ClientSecretCredential(string tenantId, string clientId, string clientSecret, ClientSecretCredentialOptions options)
             : this(tenantId, clientId, clientSecret, options, null, null)
         {
         }

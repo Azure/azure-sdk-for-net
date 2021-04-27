@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
-        internal PrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStateStatus? status, string description, string actionsRequired)
+        internal PrivateLinkServiceConnectionState(string status, string description, string actionsRequired)
         {
             Status = status;
             Description = description;
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> The private link service connection status. </summary>
-        public PrivateLinkServiceConnectionStateStatus? Status { get; set; }
+        public string Status { get; set; }
         /// <summary> The private link service connection description. </summary>
         public string Description { get; set; }
         /// <summary> The actions required for private link service connection. </summary>

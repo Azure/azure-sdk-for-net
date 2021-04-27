@@ -12,7 +12,6 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-
 namespace Azure.ResourceManager.Compute.Tests
 {
     [AsyncOnly]
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.True(outProximityPlacementGroup == null, "ProximityPlacementGroup in response should be null.");
 
             //Patch and expect success
-            UpdateResource proximityPlacementGroupUpdate = new UpdateResource();
+            ProximityPlacementGroupUpdate proximityPlacementGroupUpdate = new ProximityPlacementGroupUpdate();
             proximityPlacementGroupUpdate.Tags.InitializeFrom(inputProximityPlacementGroup.Tags);
             //Note: Same Tags object is referred in proximityPlacementGroupUpdate and expectedProximityPlacementGroup,
             //hence this will also update tags in expectedProximityPlacementGroup.
@@ -278,8 +277,8 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachine inputVM;
             var returnTwoVM = await CreateVM(m_resourceGroup1Name, asName, storageAccountName, imageRef, hasManagedDisks: true, hasDiffDisks: false, vmSize: "Standard_A0",
                 osDiskStorageAccountType: "Standard_LRS", dataDiskStorageAccountType: "Standard_LRS", writeAcceleratorEnabled: false, zones: null, ppgName: ppgName, diskEncryptionSetId: null);
-            VirtualMachine outVM = returnTwoVM.Item1;
-            inputVM = returnTwoVM.Item2;
+            VirtualMachine outVM = returnTwoVM.Response;
+            inputVM = returnTwoVM.Input;
             // Get and expect success.
             outProximityPlacementGroup = await ProximityPlacementGroupsOperations.GetAsync(m_resourceGroup1Name, ppgName, includeColocationStatus: "true");
             InstanceViewStatus expectedInstanceViewStatus = new InstanceViewStatus
@@ -402,7 +401,6 @@ namespace Azure.ResourceManager.Compute.Tests
         private void ValidateProximityPlacementGroup(ProximityPlacementGroup expectedProximityPlacementGroup, ProximityPlacementGroup outputProximityPlacementGroup,
             string expectedProximityPlacementGroupName)
         {
-
             Assert.True(outputProximityPlacementGroup != null, "ProximityPlacementGroup is null in response.");
             Assert.True(expectedProximityPlacementGroupName == outputProximityPlacementGroup.Name, "ProximityPlacementGroup.Name in response mismatch with expected value.");
             Assert.True(

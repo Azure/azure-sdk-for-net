@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The InfluxDBParameter. </summary>
@@ -18,30 +16,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="userName"> Database access user. </param>
         /// <param name="password"> Database access password. </param>
         /// <param name="query"> Query script. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/>, <paramref name="database"/>, <paramref name="userName"/>, <paramref name="password"/>, or <paramref name="query"/> is null. </exception>
         public InfluxDBParameter(string connectionString, string database, string userName, string password, string query)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
-            if (database == null)
-            {
-                throw new ArgumentNullException(nameof(database));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
-
             ConnectionString = connectionString;
             Database = database;
             UserName = userName;

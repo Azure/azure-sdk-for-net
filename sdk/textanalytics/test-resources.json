@@ -50,7 +50,9 @@
         }
     },
     "variables": {
+        "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]",
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
+        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]"
     },
     "resources": [
         {
@@ -59,12 +61,31 @@
             "name": "[variables('uniqueSubDomainName')]",
             "location":"[parameters('location')]",
             "sku": {
-                "name": "S0"
+                "name": "S"
             },
             "kind": "TextAnalytics",
             "properties": {
                 "customSubDomainName": "[variables('uniqueSubDomainName')]"
             }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[guid(resourceGroup().id)]",
+            "properties": {
+                "roleDefinitionId": "[variables('roleDefinitionId')]",
+                "principalId": "[parameters('testApplicationOid')]"
+            }
         }
-    ]
+    ],
+    "outputs": {
+        "TEXT_ANALYTICS_API_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('uniqueSubDomainName')), '2017-04-18').key1]"
+        },
+        "TEXT_ANALYTICS_ENDPOINT": {
+            "type": "string",
+            "value": "[variables('endpointValue')]"
+        }
+    }
 }

@@ -2,17 +2,14 @@
   <PropertyGroup>
     <AssemblyTitle>Newtonsoft.Json support for Azure Core shared client library for .NET</AssemblyTitle>
     <RootNamespace>Azure.Core.Serialization</RootNamespace>
-    <Version>1.0.0-preview.2</Version>
+    <Version>1.1.0-beta.1</Version>
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <Description>This library contains converters dependent on the Newtonsoft.Json package for use with Azure.Core.</Description>
     <PackageTags>Microsoft Azure SDK Newtonsoft Json</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Azure.Core" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" />
@@ -22,4 +19,6 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Core\src\Azure.Core.props" />
 </Project>

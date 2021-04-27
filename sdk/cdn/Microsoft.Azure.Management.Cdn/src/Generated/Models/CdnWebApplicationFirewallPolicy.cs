@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="resourceState">Resource status of the policy.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public CdnWebApplicationFirewallPolicy(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), RateLimitRuleList rateLimitRules = default(RateLimitRuleList), CustomRuleList customRules = default(CustomRuleList), ManagedRuleSetList managedRules = default(ManagedRuleSetList), IList<CdnEndpoint> endpointLinks = default(IList<CdnEndpoint>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public CdnWebApplicationFirewallPolicy(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), RateLimitRuleList rateLimitRules = default(RateLimitRuleList), CustomRuleList customRules = default(CustomRuleList), ManagedRuleSetList managedRules = default(ManagedRuleSetList), IList<CdnEndpoint> endpointLinks = default(IList<CdnEndpoint>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
+            : base(location, id, name, type, systemData, tags)
         {
             PolicySettings = policySettings;
             RateLimitRules = rateLimitRules;

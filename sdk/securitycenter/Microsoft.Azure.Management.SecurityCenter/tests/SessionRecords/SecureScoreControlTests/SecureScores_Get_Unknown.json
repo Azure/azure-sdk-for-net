@@ -1,0 +1,66 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/secureScores/unknown/secureScoreControls?api-version=2020-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2VjdXJlU2NvcmVzL3Vua25vd24vc2VjdXJlU2NvcmVDb250cm9scz9hcGktdmVyc2lvbj0yMDIwLTAxLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7699b2be-a3dc-410d-adfd-e54dcab96da6"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 25 Oct 2020 14:22:37 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-request-id": [
+          "1879572d-89dd-4e69-a42b-c2bcc9859998"
+        ],
+        "x-ms-correlation-request-id": [
+          "1879572d-89dd-4e69-a42b-c2bcc9859998"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20201025T142238Z:1879572d-89dd-4e69-a42b-c2bcc9859998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "12"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

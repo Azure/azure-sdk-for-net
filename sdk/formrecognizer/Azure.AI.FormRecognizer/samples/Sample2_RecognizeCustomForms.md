@@ -23,8 +23,12 @@ To recognize form fields and other content from your custom forms from a given f
 
 ```C# Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
 string modelId = "<modelId>";
+Uri formUri = <formUri>;
 
-RecognizedFormCollection forms = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri).WaitForCompletionAsync();
+RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri);
+Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+RecognizedFormCollection forms = operationResponse.Value;
+
 foreach (RecognizedForm form in forms)
 {
     Console.WriteLine($"Form of type: {form.FormType}");
@@ -33,15 +37,15 @@ foreach (RecognizedForm form in forms)
     Console.WriteLine($"Form was analyzed with model with ID: {form.ModelId}");
     foreach (FormField field in form.Fields.Values)
     {
-        Console.WriteLine($"Field '{field.Name}: ");
+        Console.WriteLine($"Field '{field.Name}': ");
 
         if (field.LabelData != null)
         {
-            Console.WriteLine($"    Label: '{field.LabelData.Text}");
+            Console.WriteLine($"  Label: '{field.LabelData.Text}'");
         }
 
-        Console.WriteLine($"    Value: '{field.ValueData.Text}");
-        Console.WriteLine($"    Confidence: '{field.Confidence}");
+        Console.WriteLine($"  Value: '{field.ValueData.Text}'");
+        Console.WriteLine($"  Confidence: '{field.Confidence}'");
     }
 }
 ```
@@ -51,14 +55,31 @@ foreach (RecognizedForm form in forms)
 To recognize form fields and other content from your custom forms from a file stream, use the `StartRecognizeCustomForms` method. The returned value is a collection of `RecognizedForm` objects -- one for each form identified in the submitted document.
 
 ```C# Snippet:FormRecognizerRecognizeCustomFormsFromFile
-using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
-{
-    string modelId = "<modelId>";
+string modelId = "<modelId>";
+string filePath = "<filePath>";
 
-    RecognizedFormCollection forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
-    /*
-     *
-     */
+using var stream = new FileStream(filePath, FileMode.Open);
+
+RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
+RecognizedFormCollection forms = operationResponse.Value;
+
+foreach (RecognizedForm form in forms)
+{
+    Console.WriteLine($"Form of type: {form.FormType}");
+    Console.WriteLine($"Form was analyzed with model with ID: {form.ModelId}");
+    foreach (FormField field in form.Fields.Values)
+    {
+        Console.WriteLine($"Field '{field.Name}': ");
+
+        if (field.LabelData != null)
+        {
+            Console.WriteLine($"  Label: '{field.LabelData.Text}'");
+        }
+
+        Console.WriteLine($"  Value: '{field.ValueData.Text}'");
+        Console.WriteLine($"  Confidence: '{field.Confidence}'");
+    }
 }
 ```
 

@@ -1174,11 +1174,13 @@ namespace Storage.Tests
                     BlobServiceProperties properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, sourceAccountName);
                     properties.ChangeFeed = new ChangeFeed();
                     properties.ChangeFeed.Enabled = true;
+                    properties.ChangeFeed.RetentionInDays = 3;
                     properties.IsVersioningEnabled = true;
                     storageMgmtClient.BlobServices.SetServiceProperties(rgName, sourceAccountName, properties);
                     properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, sourceAccountName);
                     Assert.True(properties.IsVersioningEnabled);
                     Assert.True(properties.ChangeFeed.Enabled);
+                    Assert.Equal(3, properties.ChangeFeed.RetentionInDays.Value);
 
                     properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, destAccountName);
                     properties.ChangeFeed = new ChangeFeed();

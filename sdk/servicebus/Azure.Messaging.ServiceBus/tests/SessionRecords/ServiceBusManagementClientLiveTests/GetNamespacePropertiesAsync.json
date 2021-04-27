@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://recordedtests.servicebus.windows.net/$namespaceinfo?api-version=2017-04\u0026enrich=False",
+      "RequestUri": "https://jolovservicebus.servicebus.windows.net/$namespaceinfo?api-version=2017-04\u0026enrich=False",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-d6371c7296f7a44d8e33c485657c5475-71f7e2510032ae4e-00",
+        "traceparent": "00-b828bac5b6314c4084f81cc37a12247b-861420ea8f46d147-00",
         "User-Agent": [
-          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201029.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-Messaging.ServiceBus/7.0.0-alpha.20201119.1",
+          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "9cbb0856a5b701b3a32870b90131e8fa",
         "x-ms-return-client-request-id": "true"
@@ -17,15 +17,15 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/atom\u002Bxml; type=entry; charset=utf-8",
-        "Date": "Thu, 29 Oct 2020 16:52:35 GMT",
+        "Date": "Fri, 20 Nov 2020 03:31:48 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Transfer-Encoding": "chunked"
       },
-      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://recordedtests.servicebus.windows.net/$namespaceinfo?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Erecordedtests\u003C/title\u003E\u003Cupdated\u003E2020-10-29T16:52:36Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Erecordedtests\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://recordedtests.servicebus.windows.net/$namespaceinfo?api-version=2017-04\u0026amp;enrich=False\u0022\u003E\u003C/link\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CNamespaceInfo xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CCreatedTime\u003E2020-10-29T15:48:00.867Z\u003C/CreatedTime\u003E\u003CMessagingSKU\u003EStandard\u003C/MessagingSKU\u003E\u003CModifiedTime\u003E2020-10-29T15:48:00.867Z\u003C/ModifiedTime\u003E\u003CName\u003Erecordedtests\u003C/Name\u003E\u003CNamespaceType\u003EMessaging\u003C/NamespaceType\u003E\u003C/NamespaceInfo\u003E\u003C/content\u003E\u003C/entry\u003E"
+      "ResponseBody": "\u003Centry xmlns=\u0022http://www.w3.org/2005/Atom\u0022\u003E\u003Cid\u003Ehttps://jolovservicebus.servicebus.windows.net/$namespaceinfo?api-version=2017-04\u0026amp;enrich=False\u003C/id\u003E\u003Ctitle type=\u0022text\u0022\u003Ejolovservicebus\u003C/title\u003E\u003Cupdated\u003E2020-11-20T03:31:48Z\u003C/updated\u003E\u003Cauthor\u003E\u003Cname\u003Ejolovservicebus\u003C/name\u003E\u003C/author\u003E\u003Clink rel=\u0022self\u0022 href=\u0022https://jolovservicebus.servicebus.windows.net/$namespaceinfo?api-version=2017-04\u0026amp;enrich=False\u0022\u003E\u003C/link\u003E\u003Ccontent type=\u0022application/xml\u0022\u003E\u003CNamespaceInfo xmlns=\u0022http://schemas.microsoft.com/netservices/2010/10/servicebus/connect\u0022 xmlns:i=\u0022http://www.w3.org/2001/XMLSchema-instance\u0022\u003E\u003CCreatedTime\u003E2020-01-21T21:22:06.24Z\u003C/CreatedTime\u003E\u003CMessagingSKU\u003EStandard\u003C/MessagingSKU\u003E\u003CModifiedTime\u003E2020-07-10T04:32:59.303Z\u003C/ModifiedTime\u003E\u003CName\u003Ejolovservicebus\u003C/Name\u003E\u003CNamespaceType\u003EMessaging\u003C/NamespaceType\u003E\u003C/NamespaceInfo\u003E\u003C/content\u003E\u003C/entry\u003E"
     }
   ],
   "Variables": {
     "RandomSeed": "959395559",
-    "SERVICEBUS_CONNECTION_STRING": "Endpoint=sb://recordedtests.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Kg=="
+    "SERVICEBUS_CONNECTION_STRING": "Endpoint=sb://jolovservicebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Kg=="
   }
 }

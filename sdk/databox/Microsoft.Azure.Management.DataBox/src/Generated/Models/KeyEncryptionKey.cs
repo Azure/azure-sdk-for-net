@@ -32,13 +32,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="kekType">Type of encryption key used for key
         /// encryption. Possible values include: 'MicrosoftManaged',
         /// 'CustomerManaged'</param>
+        /// <param name="identityProperties">Managed identity properties used
+        /// for key encryption.</param>
         /// <param name="kekUrl">Key encryption key. It is required in case of
         /// Customer managed KekType.</param>
         /// <param name="kekVaultResourceID">Kek vault resource id. It is
         /// required in case of Customer managed KekType.</param>
-        public KeyEncryptionKey(KekType kekType, string kekUrl = default(string), string kekVaultResourceID = default(string))
+        public KeyEncryptionKey(KekType kekType, IdentityProperties identityProperties = default(IdentityProperties), string kekUrl = default(string), string kekVaultResourceID = default(string))
         {
             KekType = kekType;
+            IdentityProperties = identityProperties;
             KekUrl = kekUrl;
             KekVaultResourceID = kekVaultResourceID;
             CustomInit();
@@ -55,6 +58,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "kekType")]
         public KekType KekType { get; set; }
+
+        /// <summary>
+        /// Gets or sets managed identity properties used for key encryption.
+        /// </summary>
+        [JsonProperty(PropertyName = "identityProperties")]
+        public IdentityProperties IdentityProperties { get; set; }
 
         /// <summary>
         /// Gets or sets key encryption key. It is required in case of Customer

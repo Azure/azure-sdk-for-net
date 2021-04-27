@@ -12,13 +12,13 @@ namespace Azure.AI.FormRecognizer.Models
     public enum SelectionMarkState
     {
         /// <summary>
-        /// Value is selected.
-        /// </summary>
-        Selected,
-
-        /// <summary>
         /// Value is unselected.
         /// </summary>
-        Unselected
+        Unselected,
+
+        /// <summary>
+        /// Value is selected.
+        /// </summary>
+        Selected
     }
 }

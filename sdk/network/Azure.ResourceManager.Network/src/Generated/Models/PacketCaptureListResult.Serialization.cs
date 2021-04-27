@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PacketCaptureListResult
+    internal partial class PacketCaptureListResult
     {
         internal static PacketCaptureListResult DeserializePacketCaptureListResult(JsonElement element)
         {

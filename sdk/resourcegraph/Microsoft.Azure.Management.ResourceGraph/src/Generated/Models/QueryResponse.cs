@@ -39,11 +39,11 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// the current page.</param>
         /// <param name="resultTruncated">Indicates whether the query results
         /// are truncated. Possible values include: 'true', 'false'</param>
-        /// <param name="data">Query output in tabular format.</param>
+        /// <param name="data">Query output in JObject array or Table
+        /// format.</param>
         /// <param name="skipToken">When present, the value can be passed to a
-        /// subsequent query call (together with the same query and
-        /// subscriptions used in the current request) to retrieve the next
-        /// page of data.</param>
+        /// subsequent query call (together with the same query and scopes used
+        /// in the current request) to retrieve the next page of data.</param>
         /// <param name="facets">Query facets.</param>
         public QueryResponse(long totalRecords, long count, ResultTruncated resultTruncated, object data, string skipToken = default(string), IList<Facet> facets = default(IList<Facet>))
         {
@@ -84,14 +84,14 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
 
         /// <summary>
         /// Gets or sets when present, the value can be passed to a subsequent
-        /// query call (together with the same query and subscriptions used in
-        /// the current request) to retrieve the next page of data.
+        /// query call (together with the same query and scopes used in the
+        /// current request) to retrieve the next page of data.
         /// </summary>
         [JsonProperty(PropertyName = "$skipToken")]
         public string SkipToken { get; set; }
 
         /// <summary>
-        /// Gets or sets query output in tabular format.
+        /// Gets or sets query output in JObject array or Table format.
         /// </summary>
         [JsonProperty(PropertyName = "data")]
         public object Data { get; set; }

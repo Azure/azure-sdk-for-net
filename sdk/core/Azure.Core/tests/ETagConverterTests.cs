@@ -57,7 +57,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expected, serialized);
         }
 
-
         private class ClassWithEtagProperty
         {
             public ETag ETag { get; set; }

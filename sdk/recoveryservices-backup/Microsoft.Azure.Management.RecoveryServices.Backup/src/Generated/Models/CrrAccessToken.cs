@@ -11,11 +11,10 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// Container level access token for CRR
-    /// </summary>
     public partial class CrrAccessToken
     {
         /// <summary>
@@ -38,6 +37,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="resourceName">Resource Name of the source
         /// vault</param>
         /// <param name="resourceId">Resource Id of the source vault</param>
+        /// <param name="protectionContainerId">Protected item container
+        /// id</param>
         /// <param name="recoveryPointId">Recovery Point Id</param>
         /// <param name="recoveryPointTime">Recovery Point Time</param>
         /// <param name="containerName">Container Unique name</param>
@@ -58,13 +59,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// to be used by BCM in restore call</param>
         /// <param name="tokenExtendedInformation">Extended Information about
         /// the token like FileSpec etc.</param>
-        public CrrAccessToken(string accessTokenString = default(string), string subscriptionId = default(string), string resourceGroupName = default(string), string resourceName = default(string), string resourceId = default(string), string recoveryPointId = default(string), string recoveryPointTime = default(string), string containerName = default(string), string containerType = default(string), string backupManagementType = default(string), string datasourceType = default(string), string datasourceName = default(string), string datasourceId = default(string), string datasourceContainerName = default(string), string coordinatorServiceStampId = default(string), string coordinatorServiceStampUri = default(string), string protectionServiceStampId = default(string), string protectionServiceStampUri = default(string), string tokenExtendedInformation = default(string))
+        /// <param name="rpTierInformation">Recovery point Tier
+        /// Information</param>
+        /// <param name="rpOriginalSAOption">Recovery point information:
+        /// Original SA option</param>
+        /// <param name="rpIsManagedVirtualMachine">Recovery point information:
+        /// Managed virtual machine</param>
+        /// <param name="rpVMSizeDescription">Recovery point information: VM
+        /// size description</param>
+        /// <param name="bMSActiveRegion">Active region name of BMS
+        /// Stamp</param>
+        public CrrAccessToken(string accessTokenString = default(string), string subscriptionId = default(string), string resourceGroupName = default(string), string resourceName = default(string), string resourceId = default(string), long? protectionContainerId = default(long?), string recoveryPointId = default(string), string recoveryPointTime = default(string), string containerName = default(string), string containerType = default(string), string backupManagementType = default(string), string datasourceType = default(string), string datasourceName = default(string), string datasourceId = default(string), string datasourceContainerName = default(string), string coordinatorServiceStampId = default(string), string coordinatorServiceStampUri = default(string), string protectionServiceStampId = default(string), string protectionServiceStampUri = default(string), string tokenExtendedInformation = default(string), IDictionary<string, string> rpTierInformation = default(IDictionary<string, string>), bool? rpOriginalSAOption = default(bool?), bool? rpIsManagedVirtualMachine = default(bool?), string rpVMSizeDescription = default(string), string bMSActiveRegion = default(string))
         {
             AccessTokenString = accessTokenString;
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
             ResourceName = resourceName;
             ResourceId = resourceId;
+            ProtectionContainerId = protectionContainerId;
             RecoveryPointId = recoveryPointId;
             RecoveryPointTime = recoveryPointTime;
             ContainerName = containerName;
@@ -79,6 +91,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             ProtectionServiceStampId = protectionServiceStampId;
             ProtectionServiceStampUri = protectionServiceStampUri;
             TokenExtendedInformation = tokenExtendedInformation;
+            RpTierInformation = rpTierInformation;
+            RpOriginalSAOption = rpOriginalSAOption;
+            RpIsManagedVirtualMachine = rpIsManagedVirtualMachine;
+            RpVMSizeDescription = rpVMSizeDescription;
+            BMSActiveRegion = bMSActiveRegion;
             CustomInit();
         }
 
@@ -116,6 +133,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "resourceId")]
         public string ResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets protected item container id
+        /// </summary>
+        [JsonProperty(PropertyName = "protectionContainerId")]
+        public long? ProtectionContainerId { get; set; }
 
         /// <summary>
         /// Gets or sets recovery Point Id
@@ -205,6 +228,36 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "tokenExtendedInformation")]
         public string TokenExtendedInformation { get; set; }
+
+        /// <summary>
+        /// Gets or sets recovery point Tier Information
+        /// </summary>
+        [JsonProperty(PropertyName = "rpTierInformation")]
+        public IDictionary<string, string> RpTierInformation { get; set; }
+
+        /// <summary>
+        /// Gets or sets recovery point information: Original SA option
+        /// </summary>
+        [JsonProperty(PropertyName = "rpOriginalSAOption")]
+        public bool? RpOriginalSAOption { get; set; }
+
+        /// <summary>
+        /// Gets or sets recovery point information: Managed virtual machine
+        /// </summary>
+        [JsonProperty(PropertyName = "rpIsManagedVirtualMachine")]
+        public bool? RpIsManagedVirtualMachine { get; set; }
+
+        /// <summary>
+        /// Gets or sets recovery point information: VM size description
+        /// </summary>
+        [JsonProperty(PropertyName = "rpVMSizeDescription")]
+        public string RpVMSizeDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets active region name of BMS Stamp
+        /// </summary>
+        [JsonProperty(PropertyName = "bMSActiveRegion")]
+        public string BMSActiveRegion { get; set; }
 
     }
 }

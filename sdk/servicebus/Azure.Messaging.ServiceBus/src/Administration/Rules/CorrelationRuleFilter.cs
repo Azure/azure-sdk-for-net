@@ -52,8 +52,9 @@ namespace Azure.Messaging.ServiceBus.Administration
         }
 
         internal override RuleFilter Clone() =>
-            new CorrelationRuleFilter(CorrelationId)
+            new CorrelationRuleFilter
             {
+                CorrelationId = CorrelationId,
                 MessageId = MessageId,
                 To = To,
                 ReplyTo = ReplyTo,
@@ -265,7 +266,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return false;
         }
 
-        /// <inheritdoc/>
+        /// <summary>Compares two <see cref="CorrelationRuleFilter"/> values for equality.</summary>
         public static bool operator ==(CorrelationRuleFilter left, CorrelationRuleFilter right)
         {
             if (ReferenceEquals(left, right))
@@ -281,7 +282,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return left.Equals(right);
         }
 
-        /// <inheritdoc/>
+        /// <summary>Compares two <see cref="CorrelationRuleFilter"/> values for inequality.</summary>
         public static bool operator !=(CorrelationRuleFilter left, CorrelationRuleFilter right)
         {
             return !(left == right);

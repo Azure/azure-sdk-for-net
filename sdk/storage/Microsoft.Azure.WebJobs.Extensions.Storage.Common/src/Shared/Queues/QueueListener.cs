@@ -194,7 +194,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                         // check anymore (steady state).
                         // However the queue can always be deleted from underneath us, in which case
                         // we need to recheck. That is handled below.
-                        _queueExists = await _queue.ExistsAsync().ConfigureAwait(false);
+                        _queueExists = await _queue.ExistsAsync(cancellationToken).ConfigureAwait(false);
                     }
 
                     if (_queueExists.Value)
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                         Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(_queueProcessor.QueuesOptions.BatchSize, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
                         batch = response.Value;
 
-                        int count = batch?.Count() ?? -1;
+                        int count = batch?.Length ?? -1;
                         Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, response.GetRawResponse().ClientRequestId, count, sw.ElapsedMilliseconds);
                     }
                 }
@@ -322,7 +322,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                 }
 
                 FunctionResult result = null;
-                using (ITaskSeriesTimer timer = CreateUpdateMessageVisibilityTimer(_queue, message, visibilityTimeout, _exceptionHandler))
+                Action<UpdateReceipt> onUpdateReceipt = updateReceipt => { message = message.Update(updateReceipt); };
+                using (ITaskSeriesTimer timer = CreateUpdateMessageVisibilityTimer(_queue, message, visibilityTimeout, _exceptionHandler, onUpdateReceipt))
                 {
                     timer.Start();
 
@@ -357,13 +358,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
         private ITaskSeriesTimer CreateUpdateMessageVisibilityTimer(QueueClient queue,
             QueueMessage message, TimeSpan visibilityTimeout,
-            IWebJobsExceptionHandler exceptionHandler)
+            IWebJobsExceptionHandler exceptionHandler, Action<UpdateReceipt> onUpdateReceipt)
         {
             // Update a message's visibility when it is halfway to expiring.
             TimeSpan normalUpdateInterval = new TimeSpan(visibilityTimeout.Ticks / 2);
 
             IDelayStrategy speedupStrategy = new LinearSpeedupStrategy(normalUpdateInterval, MinimumVisibilityRenewalInterval);
-            ITaskSeriesCommand command = new UpdateQueueMessageVisibilityCommand(queue, message, visibilityTimeout, speedupStrategy);
+            ITaskSeriesCommand command = new UpdateQueueMessageVisibilityCommand(queue, message, visibilityTimeout, speedupStrategy, onUpdateReceipt);
             return new TaskSeriesTimer(command, exceptionHandler, Task.Delay(normalUpdateInterval));
         }
 

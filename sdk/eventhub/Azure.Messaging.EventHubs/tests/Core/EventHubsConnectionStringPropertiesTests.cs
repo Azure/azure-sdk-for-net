@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Azure.Messaging.EventHubs;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 

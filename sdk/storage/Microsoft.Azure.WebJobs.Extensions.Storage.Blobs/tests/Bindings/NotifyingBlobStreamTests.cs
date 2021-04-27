@@ -1319,7 +1319,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             // Act
             using (Stream product = CreateProductUnderTest(innerStream, committedAction))
             {
-
             }
 
             // Assert

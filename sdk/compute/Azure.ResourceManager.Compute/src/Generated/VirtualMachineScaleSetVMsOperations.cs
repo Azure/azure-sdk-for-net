@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Compute
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal VirtualMachineScaleSetVMsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMsOperations for mocking. </summary>
         protected VirtualMachineScaleSetVMsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVMsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
@@ -268,7 +270,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetVMReimageInput"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="instanceId"/> is null. </exception>
-        public virtual async Task<VirtualMachineScaleSetVMsReimageOperation> StartReimageAsync(string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineReimageParameters vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
+        public virtual async Task<VirtualMachineScaleSetVMsReimageOperation> StartReimageAsync(string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -304,7 +306,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmScaleSetVMReimageInput"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, or <paramref name="instanceId"/> is null. </exception>
-        public virtual VirtualMachineScaleSetVMsReimageOperation StartReimage(string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineReimageParameters vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
+        public virtual VirtualMachineScaleSetVMsReimageOperation StartReimage(string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = null, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

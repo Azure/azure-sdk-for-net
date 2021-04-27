@@ -48,6 +48,5 @@ namespace Azure.ResourceManager.Communication.Tests
 
             base.Sanitize(session);
         }
-
     }
 }

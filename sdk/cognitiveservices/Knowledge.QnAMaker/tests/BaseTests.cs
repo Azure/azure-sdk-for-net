@@ -20,7 +20,7 @@ namespace QnAMaker.Tests
         {
             IQnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials(QnAMakerSubscriptionKey), handlers: handler)
             {
-                Endpoint = "https://australiaeast.api.cognitive.microsoft.com"
+                Endpoint = "https://westus.api.cognitive.microsoft.com"
             };
                 
 

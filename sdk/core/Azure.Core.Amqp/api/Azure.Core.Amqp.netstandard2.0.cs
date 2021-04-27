@@ -18,7 +18,7 @@ namespace Azure.Core.Amqp
     }
     public partial class AmqpAnnotatedMessage
     {
-        public AmqpAnnotatedMessage(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> dataBody) { }
+        public AmqpAnnotatedMessage(Azure.Core.Amqp.AmqpMessageBody body) { }
         public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
         public Azure.Core.Amqp.AmqpMessageBody Body { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, object> DeliveryAnnotations { get { throw null; } }
@@ -27,16 +27,17 @@ namespace Azure.Core.Amqp
         public System.Collections.Generic.IDictionary<string, object> MessageAnnotations { get { throw null; } }
         public Azure.Core.Amqp.AmqpMessageProperties Properties { get { throw null; } }
     }
-    public partial class AmqpDataMessageBody : Azure.Core.Amqp.AmqpMessageBody
+    public partial class AmqpMessageBody
     {
-        public AmqpDataMessageBody(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { }
-        public override Azure.Core.Amqp.AmqpMessageBodyType BodyType { get { throw null; } }
-        public virtual System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> Data { get { throw null; } }
-    }
-    public abstract partial class AmqpMessageBody
-    {
-        protected AmqpMessageBody() { }
-        public abstract Azure.Core.Amqp.AmqpMessageBodyType BodyType { get; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public AmqpMessageBody(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { }
+        public Azure.Core.Amqp.AmqpMessageBodyType BodyType { get { throw null; } }
+        public static Azure.Core.Amqp.AmqpMessageBody FromData(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { throw null; }
+        public static Azure.Core.Amqp.AmqpMessageBody FromSequence(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<object>> sequence) { throw null; }
+        public static Azure.Core.Amqp.AmqpMessageBody FromValue(object value) { throw null; }
+        public bool TryGetData(out System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>>? data) { throw null; }
+        public bool TryGetSequence(out System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<object>>? sequence) { throw null; }
+        public bool TryGetValue(out object? value) { throw null; }
     }
     public enum AmqpMessageBodyType
     {

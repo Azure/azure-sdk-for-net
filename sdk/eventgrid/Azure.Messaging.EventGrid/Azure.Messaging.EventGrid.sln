@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Experimental", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{21CF4B4A-5027-46D0-B50A-976BF8483095}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents", "..\Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents\src\Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.csproj", "{A24C8A1C-B6A0-4F50-A690-9B1D3DF9228C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests", "..\Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents\tests\Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents.Tests.csproj", "{28B77D76-084F-4C7E-8A1B-631444EED6A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{21CF4B4A-5027-46D0-B50A-976BF8483095}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21CF4B4A-5027-46D0-B50A-976BF8483095}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21CF4B4A-5027-46D0-B50A-976BF8483095}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A24C8A1C-B6A0-4F50-A690-9B1D3DF9228C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A24C8A1C-B6A0-4F50-A690-9B1D3DF9228C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A24C8A1C-B6A0-4F50-A690-9B1D3DF9228C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A24C8A1C-B6A0-4F50-A690-9B1D3DF9228C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28B77D76-084F-4C7E-8A1B-631444EED6A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28B77D76-084F-4C7E-8A1B-631444EED6A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28B77D76-084F-4C7E-8A1B-631444EED6A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28B77D76-084F-4C7E-8A1B-631444EED6A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

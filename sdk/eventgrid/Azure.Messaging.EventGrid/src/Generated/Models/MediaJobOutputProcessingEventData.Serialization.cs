@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MediaJobOutputProcessingEventDataConverter))]
     public partial class MediaJobOutputProcessingEventData
     {
         internal static MediaJobOutputProcessingEventData DeserializeMediaJobOutputProcessingEventData(JsonElement element)
@@ -57,6 +60,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MediaJobOutputProcessingEventData(Optional.ToNullable(previousState), output.Value, Optional.ToDictionary(jobCorrelationData));
+        }
+
+        internal partial class MediaJobOutputProcessingEventDataConverter : JsonConverter<MediaJobOutputProcessingEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MediaJobOutputProcessingEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override MediaJobOutputProcessingEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMediaJobOutputProcessingEventData(document.RootElement);
+            }
         }
     }
 }

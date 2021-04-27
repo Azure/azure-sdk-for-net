@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             var queueListener = new QueueListener();
             var watcherMock = new Mock<IBlobWrittenWatcher>(MockBehavior.Strict);
-            var executor = new BlobQueueTriggerExecutor(watcherMock.Object, NullLogger<BlobListener>.Instance);
+            var executor = new BlobQueueTriggerExecutor(BlobTriggerSource.LogsAndContainerScan, watcherMock.Object, NullLogger<BlobListener>.Instance);
             var sharedBlobQueueListener = new SharedBlobQueueListener(queueListener, executor);
             var sharedListenerMock = new Mock<ISharedListener>(MockBehavior.Strict);
             var blobListener1 = new BlobListener(sharedBlobQueueListener);

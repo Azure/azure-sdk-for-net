@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Test.PerfStress;
 using CommandLine;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Emit;
 using System.Runtime;
 using System.Text;
 using System.Text.Json;
@@ -26,12 +24,13 @@ namespace Azure.Test.Stress
 
             if (testTypes.Any())
             {
-                var optionTypes = GetOptionTypes(testTypes);
-                await Parser.Default.ParseArguments(args, optionTypes).MapResult<StressOptions, Task>(
+                var optionTypes = PerfStressUtilities.GetOptionTypes(testTypes);
+
+                await PerfStressUtilities.Parser.ParseArguments(args, optionTypes).MapResult<StressOptions, Task>(
                     async o =>
                     {
                         var verbName = o.GetType().GetCustomAttribute<VerbAttribute>().Name;
-                        var testType = testTypes.Where(t => GetVerbName(t.Name) == verbName).Single();
+                        var testType = testTypes.Where(t => PerfStressUtilities.GetVerbName(t.Name) == verbName).Single();
                         await Run(testType, o);
                     },
                     errors => Task.CompletedTask
@@ -49,7 +48,7 @@ namespace Azure.Test.Stress
             Console.WriteLine(header);
 
             using var setupStatusCts = new CancellationTokenSource();
-            var setupStatusThread = PrintStatus("=== Setup ===", () => ".", newLine: false, setupStatusCts.Token);
+            var setupStatusThread = PerfStressUtilities.PrintStatus("=== Setup ===", () => ".", newLine: false, setupStatusCts.Token);
 
             using var cleanupStatusCts = new CancellationTokenSource();
             Thread cleanupStatusThread = null;
@@ -69,7 +68,7 @@ namespace Azure.Test.Stress
                     setupStatusCts.Cancel();
                     setupStatusThread.Join();
 
-                    await RunTestAsync(test, options.Duration, options.StatusInterval, metrics);
+                    await RunTestAsync(test, options, metrics);
                 }
                 finally
                 {
@@ -77,7 +76,7 @@ namespace Azure.Test.Stress
                     {
                         if (cleanupStatusThread == null)
                         {
-                            cleanupStatusThread = PrintStatus("=== Cleanup ===", () => ".", newLine: false, cleanupStatusCts.Token);
+                            cleanupStatusThread = PerfStressUtilities.PrintStatus("=== Cleanup ===", () => ".", newLine: false, cleanupStatusCts.Token);
                         }
 
                         await test.CleanupAsync();
@@ -185,27 +184,27 @@ namespace Azure.Test.Stress
             }
         }
 
-        private static async Task RunTestAsync(IStressTest test, int durationSeconds, int statusIntervalSeconds, StressMetrics metrics)
+        private static async Task RunTestAsync(IStressTest test, StressOptions options, StressMetrics metrics)
         {
-            var duration = TimeSpan.FromSeconds(durationSeconds);
+            var duration = TimeSpan.FromSeconds(options.Duration);
             using var testCts = new CancellationTokenSource(duration);
             var cancellationToken = testCts.Token;
 
             metrics.StartAutoUpdate();
 
             using var progressStatusCts = new CancellationTokenSource();
-            var progressStatusThread = PrintStatus(
+            var progressStatusThread = PerfStressUtilities.PrintStatus(
                 "=== Metrics ===",
                 () => metrics.ToString(),
                 newLine: true,
                 progressStatusCts.Token,
-                statusIntervalSeconds);
+                options.StatusInterval);
 
             try
             {
                 await test.RunAsync(cancellationToken);
             }
-            catch (Exception e) when (ContainsOperationCanceledException(e))
+            catch (Exception e) when (PerfStressUtilities.ContainsOperationCanceledException(e))
             {
             }
             // TODO: Consider more exception handling, including a special case for OutOfMemoryException, StackOverflowException, etc
@@ -214,113 +213,6 @@ namespace Azure.Test.Stress
 
             progressStatusCts.Cancel();
             progressStatusThread.Join();
-        }
-
-        internal static bool ContainsOperationCanceledException(Exception e)
-        {
-            if (e is OperationCanceledException)
-            {
-                return true;
-            }
-            else if (e.InnerException != null)
-            {
-                return ContainsOperationCanceledException(e.InnerException);
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        // Run in dedicated thread instead of using async/await in ThreadPool, to ensure this thread has priority
-        // and never fails to run to due ThreadPool starvation.
-        private static Thread PrintStatus(string header, Func<object> status, bool newLine, CancellationToken token, int intervalSeconds = 1)
-        {
-            var thread = new Thread(() =>
-            {
-                Console.WriteLine(header);
-
-                bool needsExtraNewline = false;
-
-                while (!token.IsCancellationRequested)
-                {
-                    try
-                    {
-                        Sleep(TimeSpan.FromSeconds(intervalSeconds), token);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                    }
-
-                    var obj = status();
-
-                    if (newLine)
-                    {
-                        Console.WriteLine(obj);
-                    }
-                    else
-                    {
-                        Console.Write(obj);
-                        needsExtraNewline = true;
-                    }
-                }
-
-                if (needsExtraNewline)
-                {
-                    Console.WriteLine();
-                }
-
-                Console.WriteLine();
-            });
-
-            thread.Start();
-
-            return thread;
-        }
-
-        private static void Sleep(TimeSpan timeout, CancellationToken token)
-        {
-            var sw = Stopwatch.StartNew();
-            while (sw.Elapsed < timeout)
-            {
-                if (token.IsCancellationRequested)
-                {
-                    // Simulate behavior of Task.Delay(TimeSpan, CancellationToken)
-                    throw new OperationCanceledException();
-                }
-
-                Thread.Sleep(TimeSpan.FromMilliseconds(10));
-            }
-        }
-
-        // Dynamically create option types with a "Verb" attribute
-        private static Type[] GetOptionTypes(IEnumerable<Type> testTypes)
-        {
-            var optionTypes = new List<Type>();
-
-            var ab = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName("Options"), AssemblyBuilderAccess.Run);
-            var mb = ab.DefineDynamicModule("Options");
-
-            foreach (var t in testTypes)
-            {
-                var baseOptionsType = t.GetConstructors().First().GetParameters()[0].ParameterType;
-                var tb = mb.DefineType(t.Name + "Options", TypeAttributes.Public, baseOptionsType);
-
-                var attrCtor = typeof(VerbAttribute).GetConstructor(new Type[] { typeof(string), typeof(bool) });
-                var verbName = GetVerbName(t.Name);
-                tb.SetCustomAttribute(new CustomAttributeBuilder(attrCtor,
-                    new object[] { verbName, attrCtor.GetParameters()[1].DefaultValue }));
-
-                optionTypes.Add(tb.CreateType());
-            }
-
-            return optionTypes.ToArray();
-        }
-
-        private static string GetVerbName(string testName)
-        {
-            var lower = testName.ToLowerInvariant();
-            return lower.EndsWith("test") ? lower.Substring(0, lower.Length - 4) : lower;
         }
     }
 }

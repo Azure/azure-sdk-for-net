@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
 
@@ -22,31 +23,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
     public class Sample06_IdentityAndSharedAccessCredentialsLiveTests
     {
-        /// <summary>The active Event Hub resource scope for the test fixture.</summary>
-        private EventHubScope _scope;
-
-        /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
-        /// </summary>
-        ///
-        [OneTimeSetUp]
-        public async Task FixtureSetUp()
-        {
-            _scope = await EventHubScope.CreateAsync(2);
-        }
-
-        /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
-        /// </summary>
-        ///
-        [OneTimeTearDown]
-        public async Task FixtureTearDown()
-        {
-            await _scope.DisposeAsync();
-        }
-
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -54,6 +30,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task DefaultAzureCredential()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample06_DefaultAzureCredential
 
             TokenCredential credential = new DefaultAzureCredential();
@@ -62,9 +40,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = _scope.EventHubName;
+            /*@@*/ eventHubName = scope.EventHubName;
             /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
-
+            /*@@*/
             var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
             try
@@ -99,17 +77,22 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task SharedAccessSignature()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample06_SharedAccessSignature
 
-            TokenCredential credential = new DefaultAzureCredential();
+            var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
 
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = _scope.EventHubName;
-            /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
-
+            /*@@*/ eventHubName = scope.EventHubName;
+            /*@@*/
+            /*@@*/ var resource = EventHubConnection.BuildConnectionSignatureAuthorizationResource(new EventHubProducerClientOptions().ConnectionOptions.TransportType, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
+            /*@@*/ var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+            /*@@*/ credential = new AzureSasCredential(signature.Value);
+            /*@@*/
             var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
             try
@@ -144,17 +127,19 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         [Test]
         public async Task SharedAccessKey()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample06_SharedAccessKey
 
-            TokenCredential credential = new DefaultAzureCredential();
+            var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED KEY >>");
 
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
-            /*@@*/ eventHubName = _scope.EventHubName;
-            /*@@*/ credential = EventHubsTestEnvironment.Instance.Credential;
-
+            /*@@*/ eventHubName = scope.EventHubName;
+            /*@@*/ credential = new AzureNamedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+            /*@@*/
             var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
             try
@@ -187,15 +172,17 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         /// </summary>
         ///
         [Test]
-        public async Task EventHubs_Sample06_ConnectionStringParse()
+        public async Task ConnectionStringParse()
         {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
             #region Snippet:EventHubs_Sample06_ConnectionStringParse
 
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             /*@@*/
             /*@@*/ connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
-            /*@@*/ eventHubName = _scope.EventHubName;
+            /*@@*/ eventHubName = scope.EventHubName;
 
             EventHubsConnectionStringProperties properties =
                 EventHubsConnectionStringProperties.Parse(connectionString);

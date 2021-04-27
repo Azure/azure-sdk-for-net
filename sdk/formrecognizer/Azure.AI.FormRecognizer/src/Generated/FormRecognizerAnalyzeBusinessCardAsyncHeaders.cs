@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal class FormRecognizerAnalyzeBusinessCardAsyncHeaders
+    internal partial class FormRecognizerAnalyzeBusinessCardAsyncHeaders
     {
         private readonly Response _response;
         public FormRecognizerAnalyzeBusinessCardAsyncHeaders(Response response)

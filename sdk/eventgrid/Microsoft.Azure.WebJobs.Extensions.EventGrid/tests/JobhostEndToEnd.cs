@@ -14,6 +14,7 @@ using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -173,7 +174,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicKeySetting)}' property must be the name of an application setting containing the Topic Key", indexException.InnerException.Message);
         }
 
-
         [Theory]
         [TestCase("SingleEvent", "0")]
         [TestCase("SingleReturnEvent", "0")]
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(new TestLoggerProvider());
             // use moq eventgridclient for test extension
-            var customExtension = new EventGridExtensionConfigProvider(customConverter, loggerFactory);
+            var customExtension = new EventGridExtensionConfigProvider(customConverter, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
 
             var configuration = new Dictionary<string, string>
                 {
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var expectedEvents = new HashSet<string>(expectedCollection.Split(' '));
             foreach (EventGridEvent eve in output)
             {
-                Assert.True(expectedEvents.Remove(eve.GetData<string>()));
+                Assert.True(expectedEvents.Remove(eve.Data.ToObjectFromJson<string>()));
             }
             Assert.True(expectedEvents.Count == 0);
         }
@@ -253,6 +253,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             public void TestEventGridToNuget_Single([EventGridTrigger] EventGridEvent value)
             {
                 _functionOut = value.Subject;
+                Assert.IsNotNull(value.Data);
             }
 
             public void TestEventGridToCollection_Batch([EventGridTrigger] EventGridEvent[] values)
@@ -366,13 +367,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             public void SingleEvent([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out EventGridEvent single)
             {
-                single = new EventGridEvent("0", "", "", "");
+                single = new EventGridEvent("", "", "", data: "0");
             }
 
             [return: EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")]
             public EventGridEvent SingleReturnEvent()
             {
-                return new EventGridEvent("0", "", "", "");
+                return new EventGridEvent("", "", "", data: "0");
             }
 
             public void ArrayEvent([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out EventGridEvent[] array)
@@ -380,7 +381,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 array = new EventGridEvent[5];
                 for (int i = 0; i < 5; i++)
                 {
-                    array[i] = new EventGridEvent(i.ToString(), "", "", "");
+                    array[i] = new EventGridEvent("", "", "", data: i.ToString());
                 }
             }
 
@@ -388,7 +389,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    collector.Add(new EventGridEvent(i.ToString(), "", "", ""));
+                    collector.Add(new EventGridEvent("", "", "", data: i.ToString()));
                 }
             }
 
@@ -396,7 +397,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             {
                 for (int i = 0; i < 7; i++)
                 {
-                    await asyncCollector.AddAsync(new EventGridEvent(i.ToString(), "", "", ""));
+                    await asyncCollector.AddAsync(new EventGridEvent("", "", "", data: i.ToString()));
 
                     if (i % 3 == 0)
                     {

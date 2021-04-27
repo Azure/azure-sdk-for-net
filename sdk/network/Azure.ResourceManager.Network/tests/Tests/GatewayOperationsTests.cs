@@ -1053,7 +1053,6 @@ namespace Azure.ResourceManager.Network.Tests.Tests
             Assert.True(getVirtualNetworkGatewayResponse.Value.VpnClientConfiguration.VpnClientRevokedCertificates.Count() == 0);
         }
 
-
         // Tests Resource:-VirtualNetworkGateway ActiveActive Feature Test:-
         [Test]
         [Ignore("Track2: The current operation failed due to an intermittent error with gateway 'azsmnet123'. Please try again")]

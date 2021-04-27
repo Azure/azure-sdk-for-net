@@ -32,6 +32,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private readonly FunctionDescriptor _functionDescriptor;
         private readonly QueueServiceClient _hostQueueServiceClient;
         private readonly ILoggerFactory _loggerFactory;
+        private readonly BlobTriggerSource _blobTriggerSource;
 
         public SharedBlobQueueListenerFactory(
             QueueServiceClient hostQueueServiceClient,
@@ -41,7 +42,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             IWebJobsExceptionHandler exceptionHandler,
             ILoggerFactory loggerFactory,
             IBlobWrittenWatcher blobWrittenWatcher,
-            FunctionDescriptor functionDescriptor)
+            FunctionDescriptor functionDescriptor,
+            BlobTriggerSource blobTriggerSource)
         {
             _hostQueueServiceClient = hostQueueServiceClient ?? throw new ArgumentNullException(nameof(hostQueueServiceClient));
             _sharedQueueWatcher = sharedQueueWatcher ?? throw new ArgumentNullException(nameof(sharedQueueWatcher));
@@ -49,14 +51,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _blobsOptions = blobsOptions ?? throw new ArgumentNullException(nameof(blobsOptions));
             _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
             _loggerFactory = loggerFactory;
-            _blobWrittenWatcher = blobWrittenWatcher ?? throw new ArgumentNullException(nameof(blobWrittenWatcher));
+            _blobWrittenWatcher = blobWrittenWatcher;
             _functionDescriptor = functionDescriptor;
+            _blobTriggerSource = blobTriggerSource;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public SharedBlobQueueListener Create()
         {
-            BlobQueueTriggerExecutor triggerExecutor = new BlobQueueTriggerExecutor(_blobWrittenWatcher, _loggerFactory.CreateLogger<BlobListener>());
+            BlobQueueTriggerExecutor triggerExecutor = new BlobQueueTriggerExecutor(_blobTriggerSource, _blobWrittenWatcher, _loggerFactory.CreateLogger<BlobListener>());
 
             // The poison queue to use for a given poison blob lives in the same
             // storage account as the triggering blob by default. In multi-storage account scenarios
@@ -122,7 +125,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     throw new ArgumentNullException(nameof(message));
                 }
 
-                var blobTriggerMessage = JsonConvert.DeserializeObject<BlobTriggerMessage>(message.MessageText);
+                var blobTriggerMessage = JsonConvert.DeserializeObject<BlobTriggerMessage>(message.Body.ToValidUTF8String());
 
                 BlobQueueRegistration registration = null;
                 if (_executor.TryGetRegistration(blobTriggerMessage.FunctionId, out registration))

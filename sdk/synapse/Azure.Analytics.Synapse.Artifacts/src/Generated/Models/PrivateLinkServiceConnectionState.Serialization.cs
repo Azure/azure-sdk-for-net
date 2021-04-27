@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(PrivateLinkServiceConnectionStateConverter))]
     public partial class PrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -18,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(Description))
             {
@@ -30,19 +33,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static PrivateLinkServiceConnectionState DeserializePrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<PrivateLinkServiceConnectionStateStatus> status = default;
+            Optional<string> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    status = new PrivateLinkServiceConnectionStateStatus(property.Value.GetString());
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -56,7 +54,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            return new PrivateLinkServiceConnectionState(status.Value, description.Value, actionsRequired.Value);
+        }
+
+        internal partial class PrivateLinkServiceConnectionStateConverter : JsonConverter<PrivateLinkServiceConnectionState>
+        {
+            public override void Write(Utf8JsonWriter writer, PrivateLinkServiceConnectionState model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override PrivateLinkServiceConnectionState Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializePrivateLinkServiceConnectionState(document.RootElement);
+            }
         }
     }
 }

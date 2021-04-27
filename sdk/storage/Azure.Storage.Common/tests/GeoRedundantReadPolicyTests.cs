@@ -143,6 +143,5 @@ namespace Azure.Storage.Tests
             mockRequest.Method = RequestMethod.Get;
             return mockRequest;
         }
-
     }
 }

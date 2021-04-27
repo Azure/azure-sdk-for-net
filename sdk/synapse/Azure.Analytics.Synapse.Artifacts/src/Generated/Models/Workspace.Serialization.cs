@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(WorkspaceConverter))]
     public partial class Workspace : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -87,10 +90,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption");
+                writer.WriteObjectValue(Encryption);
+            }
             if (Optional.IsDefined(ManagedVirtualNetworkSettings))
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings");
                 writer.WriteObjectValue(ManagedVirtualNetworkSettings);
+            }
+            if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
+            {
+                writer.WritePropertyName("workspaceRepositoryConfiguration");
+                writer.WriteObjectValue(WorkspaceRepositoryConfiguration);
+            }
+            if (Optional.IsDefined(PurviewConfiguration))
+            {
+                writer.WritePropertyName("purviewConfiguration");
+                writer.WriteObjectValue(PurviewConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -113,8 +131,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IDictionary<string, string>> connectivityEndpoints = default;
             Optional<string> managedVirtualNetwork = default;
             Optional<IList<PrivateEndpointConnection>> privateEndpointConnections = default;
+            Optional<EncryptionDetails> encryption = default;
+            Optional<Guid> workspaceUID = default;
             Optional<IReadOnlyDictionary<string, object>> extraProperties = default;
             Optional<ManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
+            Optional<WorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
+            Optional<PurviewConfiguration> purviewConfiguration = default;
+            Optional<string> adlaResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -246,6 +269,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("encryption"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            encryption = EncryptionDetails.DeserializeEncryptionDetails(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("workspaceUID"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            workspaceUID = property0.Value.GetGuid();
+                            continue;
+                        }
                         if (property0.NameEquals("extraProperties"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -271,11 +314,49 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             managedVirtualNetworkSettings = ManagedVirtualNetworkSettings.DeserializeManagedVirtualNetworkSettings(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("workspaceRepositoryConfiguration"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            workspaceRepositoryConfiguration = WorkspaceRepositoryConfiguration.DeserializeWorkspaceRepositoryConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("purviewConfiguration"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("adlaResourceId"))
+                        {
+                            adlaResourceId = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value);
+            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, adlaResourceId.Value);
+        }
+
+        internal partial class WorkspaceConverter : JsonConverter<Workspace>
+        {
+            public override void Write(Utf8JsonWriter writer, Workspace model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override Workspace Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWorkspace(document.RootElement);
+            }
         }
     }
 }

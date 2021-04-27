@@ -45,7 +45,7 @@ namespace AzureSamples.Security.KeyVault.Proxy
         /// <inheritdoc/>
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
 #pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted() is not in scope
-            ProcessAsync(false, message, pipeline).GetAwaiter().GetResult();
+            ProcessAsync(false, message, pipeline).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102
 
         /// <inheritdoc/>

@@ -107,7 +107,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
 
             // Run subsequent iterations at 2 second intervals.
-            return new TaskSeriesCommandResult(wait: Task.Delay(TwoSeconds));
+            return new TaskSeriesCommandResult(wait: Task.Delay(TwoSeconds, CancellationToken.None));
         }
 
         public void Cancel()
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 {
                     Blob = blob,
                     PollId = null,
-                    TriggerSource = BlobTriggerSource.ContainerScan
+                    TriggerSource = BlobTriggerScanSource.ContainerScan
                 };
 
                 FunctionResult result = await registration.ExecuteAsync(context, cancellationToken).ConfigureAwait(false);
@@ -161,7 +161,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             try
             {
                 currentBlobs = container.GetBlobsAsync(cancellationToken: cancellationToken);
-
 
                 List<BlobBaseClient> newBlobs = new List<BlobBaseClient>();
 

@@ -18,13 +18,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Initializes a new instance of KeyVaultRoleAssignment. </summary>
         /// <param name="id"> The role assignment ID. </param>
         /// <param name="name"> The role assignment name. </param>
-        /// <param name="roleAssignmentType"> The role assignment type. </param>
+        /// <param name="type"> The role assignment type. </param>
         /// <param name="properties"> Role assignment properties. </param>
-        internal KeyVaultRoleAssignment(string id, string name, string roleAssignmentType, KeyVaultRoleAssignmentPropertiesWithScope properties)
+        internal KeyVaultRoleAssignment(string id, string name, string type, KeyVaultRoleAssignmentPropertiesWithScope properties)
         {
             Id = id;
             Name = name;
-            RoleAssignmentType = roleAssignmentType;
+            Type = type;
             Properties = properties;
         }
 
@@ -32,6 +32,8 @@ namespace Azure.Security.KeyVault.Administration
         public string Id { get; }
         /// <summary> The role assignment name. </summary>
         public string Name { get; }
+        /// <summary> The role assignment type. </summary>
+        public string Type { get; }
         /// <summary> Role assignment properties. </summary>
         public KeyVaultRoleAssignmentPropertiesWithScope Properties { get; }
     }

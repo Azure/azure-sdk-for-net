@@ -31,12 +31,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 MockResponse response = new MockResponse((int)HttpStatusCode.Unauthorized);
                 await _requestResponse.ThrowIfRequestFailedAsync(new MockRequest(), response);
             }
-            catch (ServiceBusException ex)
+            catch (UnauthorizedAccessException ex)
             {
-                Assert.AreEqual(ServiceBusFailureReason.Unauthorized, ex.Reason);
                 var inner = (RequestFailedException)ex.InnerException;
                 Assert.AreEqual((int)HttpStatusCode.Unauthorized, inner.Status);
+                return;
             }
+            Assert.Fail($"Expected exception not thrown");
         }
 
         [Test]

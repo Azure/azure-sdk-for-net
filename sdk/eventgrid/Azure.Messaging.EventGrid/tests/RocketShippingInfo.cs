@@ -3,7 +3,6 @@
 
 namespace Azure.Messaging.EventGrid.Tests
 {
-
     public class RocketShippingInfo : ShippingInfo
     {
         public int RocketNumber { get; set; }

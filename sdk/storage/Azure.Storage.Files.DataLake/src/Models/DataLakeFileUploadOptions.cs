@@ -19,7 +19,9 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Optional custom metadata to set for this file.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata Metadata { get; set; }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access

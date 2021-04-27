@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Tests.Plugins;
@@ -37,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = GetNoRetryClient();
+                await using var client = CreateNoRetryClient();
                 _listener.SingleEventById(ServiceBusEventSource.ClientCreateStartEvent, e => e.Payload.Contains(nameof(ServiceBusClient)) && e.Payload.Contains(client.FullyQualifiedNamespace));
                 var messageCount = 10;
 
@@ -51,6 +53,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationStartEvent, e => e.Payload.Contains(sender.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationCompleteEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkCompleteEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.SendMessageStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.SendMessageCompleteEvent, e => e.Payload.Contains(sender.Identifier));
@@ -77,6 +81,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     }
                 }
                 _listener.SingleEventById(ServiceBusEventSource.CreateReceiveLinkStartEvent, e => e.Payload.Contains(receiver.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationStartEvent, e => e.Payload.Contains(receiver.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationCompleteEvent, e => e.Payload.Contains(receiver.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateReceiveLinkCompleteEvent, e => e.Payload.Contains(receiver.Identifier));
                 Assert.IsTrue(_listener.EventsById(ServiceBusEventSource.ReceiveMessageStartEvent).Any());
                 Assert.IsTrue(_listener.EventsById(ServiceBusEventSource.ReceiveMessageCompleteEvent).Any());
@@ -130,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = GetNoRetryClient();
+                await using var client = CreateNoRetryClient();
                 _listener.SingleEventById(ServiceBusEventSource.ClientCreateStartEvent, e => e.Payload.Contains(nameof(ServiceBusClient)) && e.Payload.Contains(client.FullyQualifiedNamespace));
                 var messageCount = 10;
 
@@ -144,6 +150,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationStartEvent, e => e.Payload.Contains(sender.Identifier));
+                _listener.SingleEventById(ServiceBusEventSource.RequestAuthorizationCompleteEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkCompleteEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.SendMessageStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.SendMessageCompleteEvent, e => e.Payload.Contains(sender.Identifier));
@@ -203,7 +211,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-
 
                 ServiceBusMessage message = GetMessage();
 
@@ -277,7 +284,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage());
                 await using var processor = client.CreateProcessor(scope.QueueName);
@@ -310,7 +317,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage());
                 await using var processor = client.CreateProcessor(scope.QueueName);
@@ -336,7 +343,46 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerStartEvent);
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerExceptionEvent);
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorErrorHandlerThrewExceptionEvent);
+            }
+        }
 
+        [Test]
+        public async Task LogsProcessorClientClosedExceptionEvent()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var messageCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                await using var client = CreateClient(60);
+                await SendMessagesAsync(client, scope.QueueName, 100);
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    AutoCompleteMessages = true,
+                    PrefetchCount = 20
+                });
+
+                processor.ProcessMessageAsync += args =>
+                {
+                    messageCompletionSource.TrySetResult(true);
+                    return Task.CompletedTask;
+                };
+
+                processor.ProcessErrorAsync += args => Task.CompletedTask;
+
+                using var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(TimeSpan.FromMinutes(10));
+
+                await processor.StartProcessingAsync(cancellationSource.Token);
+                await messageCompletionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+                await client.DisposeAsync();
+
+                while (processor.IsProcessing)
+                {
+                    await Task.Delay(500, cancellationSource.Token);
+                }
+
+                _listener.SingleEventById(ServiceBusEventSource.ProcessorClientClosedExceptionEvent);
             }
         }
     }

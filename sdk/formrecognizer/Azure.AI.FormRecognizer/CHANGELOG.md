@@ -1,21 +1,64 @@
 # Release History
 
-## 3.1.0-beta.1 (Unreleased)
-
-### Breaking changes
-- It defaults to the latest supported API version, which currently is `2.1-preview.1`.
+## 3.1.0-beta.5 (Unreleased)
 
 ### New Features
+- Updated the `FormRecognizerModelFactory` class to support missing model types for mocking.
+
+## 3.0.1 (2021-04-09)
+
+### Key Bug Fixes
+- Updated dependency versions.
+
+## 3.1.0-beta.4 (2021-04-06)
+
+### New Features
+- Added support for pre-built passports and US driver licenses recognition with the `StartRecognizeIdDocuments` API.
+- Expanded the set of document languages that can be provided to the `StartRecognizeContent` API.
+- Added property `Pages` to `RecognizeBusinessCardsOptions`, `RecognizeCustomFormsOptions`, `RecognizeInvoicesOptions`, and `RecognizeReceiptsOptions` to specify the page numbers to recognize.
+- Added property `ReadingOrder` to `RecognizeContentOptions` to specify the order in which recognized text lines are returned.
+
+### Breaking changes
+- The client defaults to the latest supported service version, which currently is `2.1-preview.3`.
+- `StartRecognizeCustomForms` now throws a `RequestFailedException` when an invalid file is passed.
+
+## 3.1.0-beta.3 (2021-03-09)
+
+### New Features
+- Added protected constructors for mocking to `Operation` types, such as `TrainingOperation` and `RecognizeContentOperation`.
+
+## 3.1.0-beta.2 (2021-02-09)
+### Breaking changes
+- Renamed the model `Appearance` to `TextAppearance`.
+- Renamed the model `Style` to `TextStyle`.
+- Renamed the extensible enum `TextStyle` to `TextStyleName`.
+- Changed object type for property `Pages` under `RecognizeContentOptions` from `IEnumerable` to `IList`.
+- Changed model type of `Locale` from `string` to `FormRecognizerLocale` in `RecognizeBusinessCardsOptions`, `RecognizeInvoicesOptions`, and `RecognizeReceiptsOptions`.
+- Changed model type of `Language` from `string` to `FormRecognizerLanguage` in `RecognizeContentOptions`.
+
+## 3.1.0-beta.1 (2020-11-23)
+
+### Breaking changes
+- It defaults to the latest supported service version, which currently is `2.1-preview.2`.
+
+### New Features
+- Added integration for ASP.NET Core.
 - Added support for pre-built business card recognition.
-- Added support for providing locale info when recognizing receipts and business cards. Supported locales include support EN-US, EN-AU, EN-CA, EN-GB, EN-IN.
+- Added support for pre-built invoices recognition.
+- Added support for providing locale information when recognizing receipts and business cards. Supported locales include EN-US, EN-AU, EN-CA, EN-GB, EN-IN.
+- Added support for providing the document language in `StartRecognizeContent` when recognizing a form.
 - Added support to train and recognize custom forms with selection marks such as check boxes and radio buttons. This functionality is only available in train with labels scenarios.
+- Added support to `StartRecognizeContent` to recognize selection marks such as check boxes and radio buttons.
 - Added ability to create a composed model from the `FormTrainingClient` by calling method `StartCreateComposedModel`.
 - Added ability to pass parameter `ModelName` to `StartTraining` methods.
 - Added the properties `ModelName` and `Properties` to types `CustomFormModel` and `CustomFormModelInfo`.
 - Added type `CustomFormModelProperties` that includes information like if a model is a composed model.
 - Added property `ModelId` to `CustomFormSubmodel` and `TrainingDocumentInfo`.
 - Added properties `ModelId` and `FormTypeConfidence` to `RecognizedForm`.
-- Added support to `StartRecognizeContent` to recognize selection marks such as check boxes and radio buttons.
+- Added property `Appearance` to `FormLine` to indicate the style of the extracted text. For example, "handwriting" or "other".
+- Added property `BoundingBox` to `FormTable`.
+- Added support for `ContentType` `image/bmp` in recognize content and prebuilt models.
+- Added property `Pages` to `RecognizeContentOptions` to specify the page numbers to analyze.
 
 ## 3.0.0 (2020-08-20)
 

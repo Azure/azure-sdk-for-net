@@ -25,6 +25,18 @@ namespace Azure.Test.Perf
         [Option('l', "latency", HelpText = "Track and print per-operation latency statistics")]
         public bool Latency { get; set; }
 
+        [Option("max-io-completion-threads", HelpText = "The maximum number of asynchronous I/O threads that the thread pool creates on demand")]
+        public int? MaxIOCompletionThreads { get; set; }
+
+        [Option("max-worker-threads", HelpText = "The maximum number of worker threads that the thread pool creates on demand")]
+        public int? MaxWorkerThreads { get; set; }
+
+        [Option("min-io-completion-threads", HelpText = "The minimum number of asynchronous I/O threads that the thread pool creates on demand")]
+        public int? MinIOCompletionThreads { get; set; }
+
+        [Option("min-worker-threads", HelpText = "The minimum number of worker threads that the thread pool creates on demand")]
+        public int? MinWorkerThreads { get; set; }
+
         [Option("no-cleanup", HelpText = "Disables test cleanup")]
         public bool NoCleanup { get; set; }
 
@@ -36,6 +48,9 @@ namespace Azure.Test.Perf
 
         [Option('r', "rate", HelpText = "Target throughput (ops/sec)")]
         public int? Rate { get; set; }
+
+        [Option("status-interval", Default = 1, HelpText = "Interval to write status to console in seconds")]
+        public int StatusInterval { get; set; }
 
         [Option("sync", HelpText = "Runs sync version of test")]
         public bool Sync { get; set; }

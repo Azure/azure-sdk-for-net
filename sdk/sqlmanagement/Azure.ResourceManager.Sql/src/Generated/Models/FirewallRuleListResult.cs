@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the response to a List Firewall Rules request. </summary>
-    public partial class FirewallRuleListResult
+    internal partial class FirewallRuleListResult
     {
         /// <summary> Initializes a new instance of FirewallRuleListResult. </summary>
         internal FirewallRuleListResult()

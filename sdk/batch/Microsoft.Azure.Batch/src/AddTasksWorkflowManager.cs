@@ -42,7 +42,7 @@
         /// <param name="fileStagingArtifacts">File staging artifacts associated with this operation.  If the customer does not set this, it is unviewable by them.</param>
         /// <param name="bhMgr">The behavior manager.</param>
         internal AddTasksWorkflowManager(
-            JobOperations jobOperations, 
+            JobOperations jobOperations,
             string jobId,
             BatchClientParallelOptions parallelOptions,
             ConcurrentBag<ConcurrentDictionary<Type, IFileStagingArtifact>> fileStagingArtifacts,
@@ -55,7 +55,7 @@
             {
                 parallelOptions = new BatchClientParallelOptions();
             }
-            
+
             //
             // Set up the data structures associated with this workflow
             //
@@ -69,7 +69,7 @@
             this._behaviorManager = bhMgr;
             this._maxTasks = Constants.MaxTasksInSingleAddTaskCollectionRequest;
             this._hasRun = HasNotRun; //Has not run by default
-            
+
             //Read the behavior manager and populate the collection
             List<AddTaskCollectionResultHandler> behaviorList = this._behaviorManager.GetBehaviors<AddTaskCollectionResultHandler>();
             foreach (AddTaskCollectionResultHandler handler in behaviorList)
@@ -96,7 +96,7 @@
             {
                 throw new RunOnceException(string.Format(CultureInfo.InvariantCulture, BatchErrorMessages.CanOnlyBeRunOnceFailure, this.GetType().Name));
             }
-            
+
             //Determine what time to timeout at
             if (timeout != null)
             {
@@ -131,12 +131,12 @@
                 {
                     throw new ArgumentNullException(nameof(tasksToAdd), BatchErrorMessages.CollectionMustNotContainNull);
                 }
-                
+
                 if (cloudTask.BindingState == BindingState.Bound)
                 {
                     throw UtilitiesInternal.OperationForbiddenOnBoundObjects;
                 }
-                
+
                 this._remainingTasksToAdd.Enqueue(new TrackedCloudTask(this._jobId, this._jobOperations, cloudTask));
             }
 
@@ -149,12 +149,12 @@
                 //1. We have no free request slots
                 //2. We have no more tasks to add and there are ongoing pending operations which could result in task add retries (causing us to get more tasks to add)
                 bool noFreeSlots = this._pendingAsyncOperations.Count >= this._parallelOptions.MaxDegreeOfParallelism;
-                bool noTasksToAddButSomePendingLegsRemain = this._remainingTasksToAdd.Count == 0 && this._pendingAsyncOperations.Count > 0;
+                bool noTasksToAddButSomePendingLegsRemain = this._remainingTasksToAdd.IsEmpty && this._pendingAsyncOperations.Count > 0;
                 if (noFreeSlots || noTasksToAddButSomePendingLegsRemain)
                 {
                     await this.ProcessPendingOperationResults().ConfigureAwait(continueOnCapturedContext: false);
                 }
-                
+
                 //If we get here, we are starting a single new leg.  Another iteration of this loop will get to any tasks which do not fit in this leg.
 
                 //Add any tasks (up to max count in 1 request) which are remaining since we have an open parallel slot
@@ -193,7 +193,7 @@
         {
             //We always throw when cancelation is requested
             this._parallelOptions.CancellationToken.ThrowIfCancellationRequested();
-         
+
 
             DateTime currentTime = DateTime.UtcNow;
 
@@ -209,7 +209,7 @@
         /// <returns>True if the workflow has successfully completed, false if it has not.</returns>
         private bool IsWorkflowDone()
         {
-            return !(this._remainingTasksToAdd.Count > 0 || this._pendingAsyncOperations.Count > 0);
+            return !(!this._remainingTasksToAdd.IsEmpty || this._pendingAsyncOperations.Count > 0);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@
 
             // wait for file staging async task
             await fileStagingTask.ConfigureAwait(continueOnCapturedContext: false);
-            
+
             // now update each non-finalized Task with its new ResourceFiles
             foreach (TrackedCloudTask taskToAdd in tasksToAdd.Values)
             {
@@ -279,7 +279,7 @@
                             }
                         }
                     }
-                    
+
                     //Mark the file staging collection as read only just incase there's another reference to it
                     ConcurrentChangeTrackedList<IFileStagingProvider> filesToStageListImpl =
                         taskToAdd.Task.FilesToStage as ConcurrentChangeTrackedList<IFileStagingProvider>;
@@ -353,13 +353,13 @@
             {
                 string taskId = protoAddTaskResult.TaskId;
                 TrackedCloudTask trackedTask = taskMap[taskId];
-                
+
                 AddTaskResult omResult = new AddTaskResult(trackedTask.Task, trackedTask.RetryCount, protoAddTaskResult);
-                
+
                 //We know that there must be at least one AddTaskResultHandler so the below ForEach will always be called
                 //at least once.
                 AddTaskResultStatus status = AddTaskResultStatus.Success; //The default is success to avoid infinite retry
-                
+
                 //Call the customer defined result handler
                 foreach (var resultHandlerFunction in this._addTaskResultHandlerCollection)
                 {
@@ -385,7 +385,7 @@
         private async Task ProcessPendingOperationResults()
         {
             //Wait for any task to complete
-            Task completedTask = await Task.WhenAny(this._pendingAsyncOperations).ConfigureAwait(continueOnCapturedContext: false); 
+            Task completedTask = await Task.WhenAny(this._pendingAsyncOperations).ConfigureAwait(continueOnCapturedContext: false);
 
             //Check for a task failure -- if there is one, we a-wait for all remaining tasks to complete (this will throw an exception since at least one of them failed).
             if (completedTask.IsFaulted)
@@ -395,7 +395,7 @@
             else
             {
                 await completedTask.ConfigureAwait(continueOnCapturedContext: false); //This await should finish immediately and will not fail since the task has not faulted
-                
+
                 //Remove the task which completed
                 this._pendingAsyncOperations.Remove(completedTask);
             }
@@ -421,7 +421,7 @@
 #endregion
 
 #region Private classes
-        
+
         /// <summary>
         /// Internal task wrapper which tracks a tasks retry count and holds a reference to the protocol object and CloudTask.
         /// </summary>
@@ -444,7 +444,7 @@
                 this.JobOperations = jobOperations;  // matt-c: do we really need one of these in every instance?  Even when they were wiMgrs couldnt something outside keep a reference?
                 this.RetryCount = 0;
             }
-            
+
             public void IncrementRetryCount()
             {
                 this.RetryCount++;

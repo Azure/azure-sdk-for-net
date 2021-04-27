@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Batch
                 {
                     value = _lowerBoundDelayBetweenRefresh;
                 }
-                
+
                 _delayBetweenDataFetch = value;
             }
         }
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Batch
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     internal delegate IPagedEnumerable<T> ListDelegate<T>();
-    
+
     /// <summary>
     /// A class that leverages OData predicates to poll the states of instances.
     /// </summary>
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Batch
             // queue that holds the instances that have been refreshed and failed the condition...
             // to be refreshed again on the next pass
             public Queue<MonitorLastCall<T>> NextPassQueue = new Queue<MonitorLastCall<T>>();
-            
+
             public CancellationToken CancellationToken { get; private set; }
 
             /// <summary>
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Batch
             private readonly StringBuilder _odataFilterSB = new StringBuilder();
 
             private const string IdPrefix = "id eq '";
-            private const string IdPostfix = "'";
+            private const char IdPostfix = '\'';
             private const string OrOperator = " or ";
 
             internal async Task ProcessOneInstance(MonitorLastCall<T> nextInstance, Func<T, string> getName)
@@ -322,7 +322,7 @@ namespace Microsoft.Azure.Batch
                     return;
                 }
 
-                // update the detail level 
+                // update the detail level
                 _odataDetailLevel.FilterClause = predicate;
 
                 // get the enumerable to refresh the instances

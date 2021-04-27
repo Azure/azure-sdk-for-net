@@ -17,8 +17,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of IncidentRootCause. </summary>
         /// <param name="dimensionKey"> . </param>
         /// <param name="paths"> drilling down path from query anomaly to root cause. </param>
-        /// <param name="score"> score. </param>
-        /// <param name="description"> description. </param>
+        /// <param name="score"> score of the root cause. </param>
+        /// <param name="description"> description of the root cause. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionKey"/>, <paramref name="paths"/>, or <paramref name="description"/> is null. </exception>
         internal IncidentRootCause(DimensionKey dimensionKey, IEnumerable<string> paths, double score, string description)
         {
@@ -44,8 +44,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of IncidentRootCause. </summary>
         /// <param name="dimensionKey"> . </param>
         /// <param name="paths"> drilling down path from query anomaly to root cause. </param>
-        /// <param name="score"> score. </param>
-        /// <param name="description"> description. </param>
+        /// <param name="score"> score of the root cause. </param>
+        /// <param name="description"> description of the root cause. </param>
         internal IncidentRootCause(DimensionKey dimensionKey, IReadOnlyList<string> paths, double score, string description)
         {
             DimensionKey = dimensionKey;

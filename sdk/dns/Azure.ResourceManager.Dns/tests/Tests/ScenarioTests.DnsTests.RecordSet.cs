@@ -27,7 +27,6 @@ namespace Azure.Management.Dns.Tests
         private Dictionary<string, string> metadata;
         private bool setupRun = false;
 
-
         public ScenarioTestsRecordSets()
             : base(true)
         {
@@ -59,7 +58,6 @@ namespace Azure.Management.Dns.Tests
                 var aZone = new Zone("Global");
                 await ZonesOperations.CreateOrUpdateAsync(this.resourceGroup, this.zoneNameForList, aZone);
                 setupRun = true;
-
             }
             else if (setupRun)
             {
@@ -279,13 +277,11 @@ namespace Azure.Management.Dns.Tests
                                     this.dummyNsRecords, this.dummyPtrRecords, this.dummySrvRecords, this.dummyTxtRecords, null, null, this.dummyCaaRecords);
             var createRecordSetResponse = await RecordSetsOperations.CreateOrUpdateAsync(resourceGroup, this.zoneNameForList, recordName, RecordType.MX, testMxRecordSet);
             Assert.True(Helper.AreEqual(createRecordSetResponse, testMxRecordSet, ignoreEtag: true));
-
         }
 
         [TestCase]
         public async Task CreateGetNs()
         {
-
             var nsRecords = new ChangeTrackingList<NsRecord>
             {
                 new NsRecord {Nsdname = "ns1.scsfsm.com"},
@@ -313,11 +309,9 @@ namespace Azure.Management.Dns.Tests
             Assert.True(Helper.AreEqual(createRecordSetResponse, testPtrRecordSet, ignoreEtag: true));
         }
 
-
         [TestCase]
         public async Task CreateGetSrv()
         {
-
             var srvRecords = new ChangeTrackingList<SrvRecord>
             {
                     new SrvRecord
@@ -346,7 +340,6 @@ namespace Azure.Management.Dns.Tests
         [TestCase]
         public async Task CreateGetTxt()
         {
-
             var txtRecords = new ChangeTrackingList<TxtRecord>
             {
                     new TxtRecord(new List<string>{"lorem"}),
@@ -396,7 +389,6 @@ namespace Azure.Management.Dns.Tests
             Assert.NotNull(deleteRecordSetResponse);
         }
 
-
         [TestCase]
         public async Task UpdateRecordSetPreconditionFailed()
         {
@@ -427,10 +419,6 @@ namespace Azure.Management.Dns.Tests
             {
                 Assert.True(exceptionCaught);
             }
-
         }
-
-
-
     }
 }

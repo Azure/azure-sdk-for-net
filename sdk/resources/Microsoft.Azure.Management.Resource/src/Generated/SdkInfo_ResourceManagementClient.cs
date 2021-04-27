@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.ResourceManager
           {
               return new Tuple<string, string, string>[]
               {
+<<<<<<< HEAD
                 new Tuple<string, string, string>("Management", "DeploymentOperations", "2020-06-01"),
                 new Tuple<string, string, string>("Management", "Deployments", "2020-06-01"),
                 new Tuple<string, string, string>("Management", "Providers", "2020-06-01"),
@@ -31,6 +32,21 @@ namespace Microsoft.Azure.Management.ResourceManager
                 new Tuple<string, string, string>("Resources", "Deployments", "2020-06-01"),
                 new Tuple<string, string, string>("Resources", "Operations", "2020-06-01"),
                 new Tuple<string, string, string>("Resources", "Tags", "2020-06-01"),
+=======
+                new Tuple<string, string, string>("Management", "DeploymentOperations", "2020-10-01"),
+                new Tuple<string, string, string>("Management", "Deployments", "2020-10-01"),
+                new Tuple<string, string, string>("Management", "Providers", "2020-10-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "DeploymentOperations", "2020-10-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "ProviderResourceTypes", "2020-10-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "Providers", "2020-10-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "ResourceGroups", "2020-10-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "Resources", "2020-10-01"),
+                new Tuple<string, string, string>("ResourceManagementClient", "Tags", "2020-10-01"),
+                new Tuple<string, string, string>("Resources", "DeploymentOperations", "2020-10-01"),
+                new Tuple<string, string, string>("Resources", "Deployments", "2020-10-01"),
+                new Tuple<string, string, string>("Resources", "Operations", "2020-10-01"),
+                new Tuple<string, string, string>("Resources", "Tags", "2020-10-01"),
+>>>>>>> 18f5f35a64878044268bea48b93c3026115b832d
               }.AsEnumerable();
           }
       }

@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/import", false);
             uri.AppendQuery("api-version", "2014-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(extensionName.ToString(), true);
             uri.AppendQuery("api-version", "2014-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -256,8 +256,8 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/export", false);
             uri.AppendQuery("api-version", "2014-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -739,8 +739,8 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(databaseName, true);
             uri.AppendQuery("api-version", "2017-10-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
@@ -930,8 +930,8 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(databaseName, true);
             uri.AppendQuery("api-version", "2017-10-01-preview", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;

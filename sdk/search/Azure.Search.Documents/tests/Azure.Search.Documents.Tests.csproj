@@ -18,7 +18,7 @@
   <!-- Add Test References -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />

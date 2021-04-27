@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -42,7 +40,10 @@ namespace Azure.Core.Serialization
         public static JsonSerializerSettings CreateJsonSerializerSettings()
         {
             var settings = new JsonSerializerSettings();
+
+            // NOTE: Update the README when converters are added by default.
             settings.Converters.Add(new NewtonsoftJsonETagConverter());
+
             return settings;
         }
 
@@ -72,8 +73,8 @@ namespace Azure.Core.Serialization
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> or <paramref name="returnType"/> is null.</exception>
-        public override ValueTask<object> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken) =>
-            new ValueTask<object>(Deserialize(stream, returnType, cancellationToken));
+        public override ValueTask<object?> DeserializeAsync(Stream stream, Type returnType, CancellationToken cancellationToken) =>
+            new ValueTask<object?>(Deserialize(stream, returnType, cancellationToken));
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> or <paramref name="inputType"/> is null.</exception>

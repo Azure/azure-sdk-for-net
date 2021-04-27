@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
     internal static class StorageQueueExtensions
     {
         public static async Task<SendReceipt> AddMessageAndCreateIfNotExistsAsync(this QueueClient queue,
-            string message, CancellationToken cancellationToken)
+            BinaryData body, CancellationToken cancellationToken)
         {
             if (queue == null)
             {
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             SendReceipt receipt = null;
             try
             {
-                receipt = await queue.SendMessageAsync(message, cancellationToken).ConfigureAwait(false);
+                receipt = await queue.SendMessageAsync(body, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return receipt;
             }
             catch (RequestFailedException exception)
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
 
             Debug.Assert(isQueueNotFoundException);
             await queue.CreateAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            receipt = await queue.SendMessageAsync(message, cancellationToken).ConfigureAwait(false);
+            receipt = await queue.SendMessageAsync(body, cancellationToken: cancellationToken).ConfigureAwait(false);
             return receipt;
         }
     }

@@ -15,6 +15,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         /// </summary>
         public string PollId { get; set; }
 
-        public BlobTriggerSource TriggerSource { get; set; }
+        public BlobTriggerScanSource TriggerSource { get; set; }
     }
 }

@@ -16,8 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
                 throw new ArgumentNullException(nameof(input));
             }
 
-            // TODO (kasobol-msft) revisit this base64/BinaryData
-            return Encoding.UTF8.GetBytes(input.MessageText);
+            return input.Body.ToArray();
         }
     }
 }

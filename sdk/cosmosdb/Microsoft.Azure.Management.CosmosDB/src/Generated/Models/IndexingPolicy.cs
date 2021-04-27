@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="automatic">Indicates if the indexing policy is
         /// automatic</param>
         /// <param name="indexingMode">Indicates the indexing mode. Possible
-        /// values include: 'Consistent', 'Lazy', 'None'</param>
+        /// values include: 'consistent', 'lazy', 'none'</param>
         /// <param name="includedPaths">List of paths to include in the
         /// indexing</param>
         /// <param name="excludedPaths">List of paths to exclude from
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 
         /// <summary>
         /// Gets or sets indicates the indexing mode. Possible values include:
-        /// 'Consistent', 'Lazy', 'None'
+        /// 'consistent', 'lazy', 'none'
         /// </summary>
         [JsonProperty(PropertyName = "indexingMode")]
         public string IndexingMode { get; set; }

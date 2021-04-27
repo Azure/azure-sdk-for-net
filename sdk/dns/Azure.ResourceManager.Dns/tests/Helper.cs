@@ -21,7 +21,6 @@ namespace Azure.Management.Dns.Tests
             Azure.ResourceManager.Dns.Models.Resource second,
             bool ignoreEtag = false)
         {
-
             if (first == null || second == null)
             {
                 return false;
@@ -327,6 +326,5 @@ namespace Azure.Management.Dns.Tests
 
             return true;
         }
-
     }
 }

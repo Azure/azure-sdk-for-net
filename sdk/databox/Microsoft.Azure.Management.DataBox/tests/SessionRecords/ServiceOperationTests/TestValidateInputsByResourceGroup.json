@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg7904/providers/Microsoft.DataBox/locations/westus/validateInputs?api-version=2020-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnNzkwNC9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvbG9jYXRpb25zL3dlc3R1cy92YWxpZGF0ZUlucHV0cz9hcGktdmVyc2lvbj0yMDIwLTA0LTAx",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourceGroups/SdkRg8910/providers/Microsoft.DataBox/locations/westus/validateInputs?api-version=2020-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Jlc291cmNlR3JvdXBzL1Nka1JnODkxMC9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFCb3gvbG9jYXRpb25zL3dlc3R1cy92YWxpZGF0ZUlucHV0cz9hcGktdmVyc2lvbj0yMDIwLTExLTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"validationCategory\": \"JobCreationValidation\",\r\n  \"individualRequestDetails\": [\r\n    {\r\n      \"validationType\": \"ValidateDataTransferDetails\",\r\n      \"dataImportDetails\": [\r\n        {\r\n          \"accountDetails\": {\r\n            \"dataAccountType\": \"StorageAccount\",\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourcegroups/databoxbvt/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount\"\r\n          }\r\n        }\r\n      ],\r\n      \"deviceType\": \"DataBox\",\r\n      \"transferType\": \"ImportToAzure\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateAddress\",\r\n      \"shippingAddress\": {\r\n        \"streetAddress1\": \"16 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"city\": \"San Francisco\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"companyName\": \"Microsoft\",\r\n        \"addressType\": \"Commercial\"\r\n      },\r\n      \"deviceType\": \"DataBox\",\r\n      \"transportPreferences\": {\r\n        \"preferredShipmentType\": \"MicrosoftManaged\"\r\n      }\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateSubscriptionIsAllowedToCreateJob\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateSkuAvailability\",\r\n      \"deviceType\": \"DataBox\",\r\n      \"transferType\": \"ImportToAzure\",\r\n      \"country\": \"US\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateCreateOrderLimit\",\r\n      \"deviceType\": \"DataBox\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidatePreferences\",\r\n      \"preference\": {\r\n        \"transportPreferences\": {\r\n          \"preferredShipmentType\": \"MicrosoftManaged\"\r\n        }\r\n      },\r\n      \"deviceType\": \"DataBox\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d5d9c7ec-7dc8-4e1e-9364-3cb24cc0822f"
+          "2ed17fb4-31f7-4e48-8189-1fbae62c116b"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29130.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -32,32 +32,32 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "48316698-3f86-4305-a9f3-4968a7ca5d60"
-        ],
-        "x-ms-client-request-id": [
-          "d5d9c7ec-7dc8-4e1e-9364-3cb24cc0822f"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "48316698-3f86-4305-a9f3-4968a7ca5d60"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20200831T045602Z:48316698-3f86-4305-a9f3-4968a7ca5d60"
+          "1198"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "dfcf9a3a-3208-45b8-90f2-8a92b8039fb8"
+        ],
+        "x-ms-client-request-id": [
+          "2ed17fb4-31f7-4e48-8189-1fbae62c116b"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-correlation-request-id": [
+          "dfcf9a3a-3208-45b8-90f2-8a92b8039fb8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20201110T132507Z:dfcf9a3a-3208-45b8-90f2-8a92b8039fb8"
+        ],
         "Date": [
-          "Mon, 31 Aug 2020 04:56:01 GMT"
+          "Tue, 10 Nov 2020 13:25:07 GMT"
         ],
         "Content-Length": [
           "2065"
@@ -75,7 +75,7 @@
   ],
   "Names": {
     "TestValidateInputsByResourceGroup": [
-      "SdkRg7904"
+      "SdkRg8910"
     ]
   },
   "Variables": {

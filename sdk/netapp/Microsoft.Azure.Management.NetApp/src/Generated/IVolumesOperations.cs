@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<Volume>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Volume>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Describe a volume
         /// </summary>
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <remarks>
         /// Resync the connection on the destination volume. If the operation
         /// is ran on the source volume it will reverse-resync the connection
-        /// and sync from source to destination.
+        /// and sync from destination to source.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -640,7 +640,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <remarks>
         /// Resync the connection on the destination volume. If the operation
         /// is ran on the source volume it will reverse-resync the connection
-        /// and sync from source to destination.
+        /// and sync from destination to source.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -798,5 +798,30 @@ namespace Microsoft.Azure.Management.NetApp
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginPoolChangeWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, string volumeName, PoolChangeRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Describe all volumes
+        /// </summary>
+        /// <remarks>
+        /// List all volumes within the capacity pool
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<Volume>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -41,9 +41,11 @@ message: >
   
   # What if I am onboarding a new service?
   
-  Often, new services do not have validation pipelines associated with them,
-  in order to bootstrap pipelines for a new service, you can issue the following
-  command as a pull request comment:
+  Often, new services do not have validation pipelines associated with them.
+  In order to bootstrap pipelines for a new service, please perform following steps:
+
+  ## For data-plane/track 2 SDKs
+  Issue the following command as a pull request comment:
   
   ```
   /azp run prepare-pipelines
@@ -56,3 +58,8 @@ message: >
   ```
   /azp run net - [service] - ci
   ```
+  
+  ## For track 1 management-plane SDKs
+  
+  Please open a separate PR and to your service SDK path in [this file](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/pipelines/mgmt.yml). Once that PR has been merged, you can re-run the pipeline to trigger the verification.
+  

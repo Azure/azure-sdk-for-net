@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,11 +35,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="recoveryPointTimeInUTC">UTC time at which recovery
         /// point was created</param>
         /// <param name="type">Type of restore point. Possible values include:
-        /// 'Invalid', 'Full', 'Log', 'Differential'</param>
-        public AzureWorkloadRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string))
+        /// 'Invalid', 'Full', 'Log', 'Differential', 'Incremental'</param>
+        /// <param name="recoveryPointTierDetails">Recovery point tier
+        /// information.</param>
+        /// <param name="recoveryPointMoveReadinessInfo">Eligibility of RP to
+        /// be moved to another tier</param>
+        public AzureWorkloadRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string), IList<RecoveryPointTierInformation> recoveryPointTierDetails = default(IList<RecoveryPointTierInformation>), IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default(IDictionary<string, RecoveryPointMoveReadinessInfo>))
         {
             RecoveryPointTimeInUTC = recoveryPointTimeInUTC;
             Type = type;
+            RecoveryPointTierDetails = recoveryPointTierDetails;
+            RecoveryPointMoveReadinessInfo = recoveryPointMoveReadinessInfo;
             CustomInit();
         }
 
@@ -54,10 +62,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets type of restore point. Possible values include: 'Invalid',
-        /// 'Full', 'Log', 'Differential'
+        /// 'Full', 'Log', 'Differential', 'Incremental'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets recovery point tier information.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryPointTierDetails")]
+        public IList<RecoveryPointTierInformation> RecoveryPointTierDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets eligibility of RP to be moved to another tier
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryPointMoveReadinessInfo")]
+        public IDictionary<string, RecoveryPointMoveReadinessInfo> RecoveryPointMoveReadinessInfo { get; set; }
 
     }
 }

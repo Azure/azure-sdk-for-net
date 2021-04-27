@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "//subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/providers/Microsoft.Resources/tags/default?api-version=2020-06-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2ExYmZhNjM1LWYyYmYtNDJmMS04NmI1LTg0OGM2NzRmYzMyMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90YWdzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMC0wNi0wMQ==",
+      "RequestUri": "//subscriptions/a1bfa635-f2bf-42f1-86b5-848c674fc321/providers/Microsoft.Resources/tags/default?api-version=2020-10-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2ExYmZhNjM1LWYyYmYtNDJmMS04NmI1LTg0OGM2NzRmYzMyMS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy90YWdzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAyMC0xMC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"tags\": {\r\n      \"tagKey1\": \"tagValue1\",\r\n      \"tagKey2\": \"tagValue2\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7dadc835-b770-4a88-ae7b-dc3df3a6a28e"
+          "60090323-8953-4bce-93ec-b1efd7e54420"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28207.03",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/4.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "342af0cf-95c4-46fe-8808-0690a64e4d86"
+          "57087972-cc2a-4a59-a6ca-7ac5b27f4563"
         ],
         "x-ms-correlation-request-id": [
-          "342af0cf-95c4-46fe-8808-0690a64e4d86"
+          "57087972-cc2a-4a59-a6ca-7ac5b27f4563"
         ],
         "x-ms-routing-request-id": [
-          "NORTHCENTRALUS:20200623T153328Z:342af0cf-95c4-46fe-8808-0690a64e4d86"
+          "WESTCENTRALUS:20201117T201917Z:57087972-cc2a-4a59-a6ca-7ac5b27f4563"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Jun 2020 15:33:27 GMT"
+          "Tue, 17 Nov 2020 20:19:16 GMT"
         ],
         "Content-Length": [
           "222"

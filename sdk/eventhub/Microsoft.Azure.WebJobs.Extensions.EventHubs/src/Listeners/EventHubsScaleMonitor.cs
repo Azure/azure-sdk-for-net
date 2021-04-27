@@ -3,87 +3,49 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.EventHubs.Consumer;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Microsoft.Azure.WebJobs.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
     internal class EventHubsScaleMonitor : IScaleMonitor<EventHubsTriggerMetrics>
     {
-        private const string EventHubContainerName = "azure-webjobs-eventhub";
         private const int PartitionLogIntervalInMinutes = 5;
 
         private readonly string _functionId;
-        private readonly string _eventHubName;
-        private readonly string _consumerGroup;
-        private readonly string _connectionString;
-        private readonly string _storageConnectionString;
-        private readonly Lazy<EventHubConsumerClient> _client;
-        private readonly ScaleMonitorDescriptor _scaleMonitorDescriptor;
+        private readonly IEventHubConsumerClient _client;
         private readonly ILogger _logger;
+        private readonly BlobsCheckpointStore _checkpointStore;
 
-        private BlobContainerClient _blobContainer;
         private DateTime _nextPartitionLogTime;
         private DateTime _nextPartitionWarningTime;
 
         public EventHubsScaleMonitor(
             string functionId,
-            string eventHubName,
-            string consumerGroup,
-            string connectionString,
-            string storageConnectionString,
-            ILogger logger,
-            BlobContainerClient blobContainer = null)
+            IEventHubConsumerClient client,
+            BlobsCheckpointStore checkpointStore,
+            ILogger logger)
         {
             _functionId = functionId;
-            _eventHubName = eventHubName;
-            _consumerGroup = consumerGroup;
-            _connectionString = connectionString;
-            _storageConnectionString = storageConnectionString;
             _logger = logger;
-            _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-EventHubTrigger-{_eventHubName}-{_consumerGroup}".ToLowerInvariant());
+            _checkpointStore = checkpointStore;
             _nextPartitionLogTime = DateTime.UtcNow;
             _nextPartitionWarningTime = DateTime.UtcNow;
-            _blobContainer = blobContainer;
+            _client = client;
 
-            EventHubsConnectionStringBuilder builder = new EventHubsConnectionStringBuilder(connectionString);
-            builder.EntityPath = eventHubName;
-
-            _client = new Lazy<EventHubConsumerClient>(() => new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, builder.ToString()));
+            Descriptor = new ScaleMonitorDescriptor($"{_functionId}-EventHubTrigger-{_client.EventHubName}-{_client.ConsumerGroup}".ToLowerInvariant());
         }
 
-        public ScaleMonitorDescriptor Descriptor
-        {
-            get
-            {
-                return _scaleMonitorDescriptor;
-            }
-        }
+        public ScaleMonitorDescriptor Descriptor { get; }
 
-        private BlobContainerClient BlobContainer
-        {
-            get
-            {
-                if (_blobContainer == null)
-                {
-                    BlobServiceClient blobService = new BlobServiceClient(_storageConnectionString);
-                    _blobContainer = blobService.GetBlobContainerClient(EventHubContainerName);
-                }
-                return _blobContainer;
-            }
-        }
-
+        /// <summary>
+        /// Returns the state of the event hub for scaling purposes.
+        /// </summary>
         async Task<ScaleMetrics> IScaleMonitor.GetMetricsAsync()
         {
             return await GetMetricsAsync().ConfigureAwait(false);
@@ -92,33 +54,50 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         public async Task<EventHubsTriggerMetrics> GetMetricsAsync()
         {
             EventHubsTriggerMetrics metrics = new EventHubsTriggerMetrics();
-            EventHubProperties runtimeInfo = null;
+            string[] partitions = null;
 
             try
             {
-                runtimeInfo = await _client.Value.GetEventHubPropertiesAsync().ConfigureAwait(false);
+                partitions = await _client.GetPartitionsAsync().ConfigureAwait(false);
+                metrics.PartitionCount = partitions.Length;
             }
             catch (Exception e)
             {
-                _logger.LogWarning($"Encountered an exception while checking EventHub '{_eventHubName}'. Error: {e.Message}");
+                _logger.LogWarning($"Encountered an exception while checking EventHub '{_client.EventHubName}'. Error: {e.Message}");
                 return metrics;
             }
 
             // Get the PartitionRuntimeInformation for all partitions
-            _logger.LogInformation($"Querying partition information for {runtimeInfo.PartitionIds.Length} partitions.");
-            var tasks = new Task<PartitionProperties>[runtimeInfo.PartitionIds.Length];
+            _logger.LogInformation($"Querying partition information for {partitions.Length} partitions.");
+            var tasks = new Task<PartitionProperties>[partitions.Length];
 
-            for (int i = 0; i < runtimeInfo.PartitionIds.Length; i++)
+            for (int i = 0; i < partitions.Length; i++)
             {
-                tasks[i] = _client.Value.GetPartitionPropertiesAsync(runtimeInfo.PartitionIds[i]);
+                tasks[i] = _client.GetPartitionPropertiesAsync(partitions[i]);
             }
 
             await Task.WhenAll(tasks).ConfigureAwait(false);
 
-            return await CreateTriggerMetrics(tasks.Select(t => t.Result).ToList()).ConfigureAwait(false);
+            IEnumerable<EventProcessorCheckpoint> checkpoints;
+            try
+            {
+                checkpoints = await _checkpointStore.ListCheckpointsAsync(
+                        _client.FullyQualifiedNamespace,
+                        _client.EventHubName,
+                        _client.ConsumerGroup,
+                        default)
+                    .ConfigureAwait(false);
+            }
+            catch
+            {
+                // ListCheckpointsAsync would log
+                return metrics;
+            }
+
+            return CreateTriggerMetrics(tasks.Select(t => t.Result).ToList(), checkpoints.ToArray());
         }
 
-        internal async Task<EventHubsTriggerMetrics> CreateTriggerMetrics(List<PartitionProperties> partitionRuntimeInfo, bool alwaysLog = false)
+        private EventHubsTriggerMetrics CreateTriggerMetrics(List<PartitionProperties> partitionRuntimeInfo, EventProcessorCheckpoint[] checkpoints, bool alwaysLog = false)
         {
             long totalUnprocessedEventCount = 0;
             bool logPartitionInfo = alwaysLog ? true : DateTime.UtcNow >= _nextPartitionLogTime;
@@ -130,24 +109,22 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             List<string> partitionErrors = new List<string>();
             for (int i = 0; i < partitionRuntimeInfo.Count; i++)
             {
-                Tuple<BlobParitionCheckpoint, string> partitionLeaseFile = await GetPartitionLeaseFileAsync(i).ConfigureAwait(false);
-                BlobParitionCheckpoint partitionLeaseInfo = partitionLeaseFile.Item1;
-                string errorMsg = partitionLeaseFile.Item2;
+                var partitionProperties = partitionRuntimeInfo[i];
 
-                if (partitionRuntimeInfo[i] == null || partitionLeaseInfo == null)
+                var checkpoint = (BlobsCheckpointStore.BlobStorageCheckpoint)checkpoints.SingleOrDefault(c => c.PartitionId == partitionProperties.Id);
+                if (checkpoint == null)
                 {
-                    partitionErrors.Add(errorMsg);
+                    partitionErrors.Add($"Unable to find a checkpoint information for partition: {partitionProperties.Id}");
+                    continue;
                 }
-                else
+
+                // Check for the unprocessed messages when there are messages on the event hub parition
+                // In that case, LastEnqueuedSequenceNumber will be >= 0
+                if ((partitionProperties.LastEnqueuedSequenceNumber != -1 && partitionProperties.LastEnqueuedSequenceNumber != checkpoint.SequenceNumber)
+                    || (checkpoint.Offset == null && partitionProperties.LastEnqueuedSequenceNumber >= 0))
                 {
-                    // Check for the unprocessed messages when there are messages on the event hub parition
-                    // In that case, LastEnqueuedSequenceNumber will be >= 0
-                    if ((partitionRuntimeInfo[i].LastEnqueuedSequenceNumber != -1 && partitionRuntimeInfo[i].LastEnqueuedSequenceNumber != partitionLeaseInfo.SequenceNumber)
-                        || (partitionLeaseInfo.Offset == null && partitionRuntimeInfo[i].LastEnqueuedSequenceNumber >= 0))
-                    {
-                        long partitionUnprocessedEventCount = GetUnprocessedEventCount(partitionRuntimeInfo[i], partitionLeaseInfo);
-                        totalUnprocessedEventCount += partitionUnprocessedEventCount;
-                    }
+                    long partitionUnprocessedEventCount = GetUnprocessedEventCount(partitionProperties, checkpoint);
+                    totalUnprocessedEventCount += partitionUnprocessedEventCount;
                 }
             }
 
@@ -173,56 +150,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             };
         }
 
-        // EventProcessorClient checkpoints by storing metadata on zero byte blobs named after the partition
-        // that is being checkpointed. These are the names of the keys that are used for storing this data.
-        private const string SequenceNumberMetadataName = "sequencenumber";
-        private const string OffsetMetadataName = "offset";
-
-        private async Task<Tuple<BlobParitionCheckpoint, string>> GetPartitionLeaseFileAsync(int partitionId)
-        {
-            BlobParitionCheckpoint blobParitionCheckpoint = null;
-            string prefix = $"{EventHubOptions.GetBlobPrefix(_eventHubName, _client.Value.FullyQualifiedNamespace)}{_consumerGroup}/checkpoint/{partitionId}";
-            string errorMsg = null;
-
-            try
-            {
-                BlobClient blockBlob = BlobContainer.GetBlobClient(prefix);
-                BlobProperties properties = await blockBlob.GetPropertiesAsync().ConfigureAwait(false);
-
-                if (properties.Metadata.TryGetValue(SequenceNumberMetadataName, out string sequenceNumberString))
-                {
-                    blobParitionCheckpoint ??= new BlobParitionCheckpoint();
-                    blobParitionCheckpoint.SequenceNumber = long.Parse(sequenceNumberString, CultureInfo.InvariantCulture);
-                }
-
-                if (properties.Metadata.TryGetValue(OffsetMetadataName, out string offsetString))
-                {
-                    blobParitionCheckpoint ??= new BlobParitionCheckpoint();
-                    blobParitionCheckpoint.Offset = long.Parse(offsetString, CultureInfo.InvariantCulture);
-                }
-
-                if (blobParitionCheckpoint == null)
-                {
-                    errorMsg = $"Checkpoint file did not contain required metadata on Partition: '{partitionId}', " +
-                        $"EventHub: '{_eventHubName}', '{_consumerGroup}'.";
-                }
-            }
-            catch (RequestFailedException e) when (e.Status == (int)HttpStatusCode.NotFound)
-            {
-                errorMsg = $"Checkpoint file data could not be found for blob on Partition: '{partitionId}', " +
-                    $"EventHub: '{_eventHubName}', '{_consumerGroup}'. Error: {e.Message}";
-            }
-            catch (Exception e)
-            {
-                errorMsg = $"Encountered exception while checking for last checkpointed sequence number for blob " +
-                    $"on Partition: '{partitionId}', EventHub: '{_eventHubName}', Consumer Group: '{_consumerGroup}'. Error: {e.Message}";
-            }
-
-            return new Tuple<BlobParitionCheckpoint, string>(blobParitionCheckpoint, errorMsg);
-        }
-
         // Get the number of unprocessed events by deriving the delta between the server side info and the partition lease info,
-        private static long GetUnprocessedEventCount(PartitionProperties partitionInfo, BlobParitionCheckpoint partitionLeaseInfo)
+        private static long GetUnprocessedEventCount(PartitionProperties partitionInfo, BlobsCheckpointStore.BlobStorageCheckpoint partitionLeaseInfo)
         {
             long partitionLeaseInfoSequenceNumber = partitionLeaseInfo.SequenceNumber ?? 0;
 
@@ -254,6 +183,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             return (count < 0) ? 0 : count;
         }
 
+        /// <summary>
+        /// Return the current scaling decision based on the EventHub status.
+        /// </summary>
         ScaleStatus IScaleMonitor.GetScaleStatus(ScaleStatusContext context)
         {
             return GetScaleStatusCore(context.WorkerCount, context.Metrics?.Cast<EventHubsTriggerMetrics>().ToArray());
@@ -287,7 +219,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 status.Vote = ScaleVote.ScaleIn;
                 _logger.LogInformation($"WorkerCount ({workerCount}) > PartitionCount ({partitionCount}).");
                 _logger.LogInformation($"Number of instances ({workerCount}) is too high relative to number " +
-                                       $"of partitions ({partitionCount}) for EventHubs entity ({_eventHubName}, {_consumerGroup}).");
+                                       $"of partitions ({partitionCount}) for EventHubs entity ({_client.EventHubName}, {_client.ConsumerGroup}).");
                 return status;
             }
 
@@ -303,7 +235,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             {
                 status.Vote = ScaleVote.ScaleOut;
                 _logger.LogInformation($"EventCount ({latestEventCount}) > WorkerCount ({workerCount}) * 1,000.");
-                _logger.LogInformation($"Event count ({latestEventCount}) for EventHubs entity ({_eventHubName}, {_consumerGroup}) " +
+                _logger.LogInformation($"Event count ({latestEventCount}) for EventHubs entity ({_client.EventHubName}, {_client.ConsumerGroup}) " +
                                        $"is too high relative to the number of instances ({workerCount}).");
                 return status;
             }
@@ -313,7 +245,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             if (isIdle)
             {
                 status.Vote = ScaleVote.ScaleIn;
-                _logger.LogInformation($"'{_eventHubName}' is idle.");
+                _logger.LogInformation($"'{_client.EventHubName}' is idle.");
                 return status;
             }
 
@@ -329,7 +261,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 if (eventCountIncreasing)
                 {
                     status.Vote = ScaleVote.ScaleOut;
-                    _logger.LogInformation($"Event count is increasing for '{_eventHubName}'.");
+                    _logger.LogInformation($"Event count is increasing for '{_client.EventHubName}'.");
                     return status;
                 }
             }
@@ -342,11 +274,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             if (eventCountDecreasing)
             {
                 status.Vote = ScaleVote.ScaleIn;
-                _logger.LogInformation($"Event count is decreasing for '{_eventHubName}'.");
+                _logger.LogInformation($"Event count is decreasing for '{_client.EventHubName}'.");
                 return status;
             }
 
-            _logger.LogInformation($"EventHubs entity '{_eventHubName}' is steady.");
+            _logger.LogInformation($"EventHubs entity '{_client.EventHubName}' is steady.");
 
             return status;
         }
@@ -363,15 +295,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             }
 
             return true;
-        }
-
-        // The BlobParitionCheckpoint class used for reading blob lease data for a partition from storage. The Offset and SequenceNumber
-        // are stored as storage metdata on the blob.
-        private class BlobParitionCheckpoint
-        {
-            public long? Offset { get; set; }
-
-            public long? SequenceNumber { get; set; }
         }
     }
 }

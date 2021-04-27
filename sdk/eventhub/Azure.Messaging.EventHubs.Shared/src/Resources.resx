@@ -234,9 +234,6 @@
   <data name="ClientNeededForThisInformation" xml:space="preserve">
     <value>The Event Hub client responsible for this information is not available.</value>
   </data>
-  <data name="BlobsResourceDoesNotExist" xml:space="preserve">
-    <value>The Azure Storage Blobs container or blob used by the Event Processor Client does not exist.</value>
-  </data>
   <data name="CannotCreateCheckpointForEmptyEvent" xml:space="preserve">
     <value>A checkpoint cannot be created or updated using an empty event.</value>
   </data>

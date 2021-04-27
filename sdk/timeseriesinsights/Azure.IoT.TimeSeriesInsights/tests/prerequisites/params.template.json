@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "region": {
+            "value": "<REGION>"
+        },
+        "resourceGroup": {
+            "value": "<RESOURCE_GROUP>"
+        },
+        "subscriptionId": {
+            "value": "<SUBSCRIPTION_ID>"
+        },
+        "environmentName": {
+            "value": "<ENVIRONMENT_NAME>"
+        },
+        "environmentTimeSeriesIdProperties": {
+            "value": "<TS_IDPROPERTIES>"
+        },
+        "iotHubName": {
+            "value": "<IOTHUB_NANE>"
+        },
+        "consumerGroupName": {
+            "value": "<CONSUMER_GROUP_NAME>"
+        },
+        "eventSourceName": {
+            "value": "<EVENT_SOURCE_NAME>"
+        },
+        "eventSourceTimestampPropertyName": {
+            "value": "<TIMESTAMP_PROPERTY_NAME>"
+        },
+        "testApplicationOid": {
+            "value": "<APPLICATION_OID>"
+        }
+    }
+}

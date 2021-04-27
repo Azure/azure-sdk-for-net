@@ -21,75 +21,93 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-                var documents = new List<TextDocumentInput>
+            string documentA = @"The food and service were unacceptable, but the concierge were nice.
+                                After talking to them about the quality of the food and the process
+                                to get room service they refunded the money we spent at the restaurant and
+                                gave us a voucher for nearby restaurants.";
+
+            string documentB = @"Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia
+                                sabía de nuestra celebración y me ayudaron a tenerle una sorpresa a mi pareja.
+                                La habitación estaba limpia y decorada como yo había pedido. Una gran experiencia.
+                                El próximo año volveremos.";
+
+            string documentC = @"The rooms were beautiful. The AC was good and quiet, which was key for us as outside
+                                it was 100F and our baby was getting uncomfortable because of the heat. The breakfast
+                                was good too with good options and good servicing times.
+                                The thing we didn't like was that the toilet in our bathroom was smelly.
+                                It could have been that the toilet was not cleaned before we arrived.
+                                Either way it was very uncomfortable. Once we notified the staff, they came and cleaned
+                                it and left candles.";
+
+            var documents = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1", "That was the best day of my life!")
+                new TextDocumentInput("1", documentA)
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("2", "This food is very bad. Everyone who ate with us got sick.")
+                new TextDocumentInput("2", documentB)
+                {
+                     Language = "es",
+                },
+                new TextDocumentInput("3", documentC)
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("3", "I'm not sure how I feel about this product.")
-                {
-                     Language = "en",
-                },
-                new TextDocumentInput("4", "Pike Place Market is my favorite Seattle attraction.  We had so much fun there.")
-                {
-                     Language = "en",
-                }
+                new TextDocumentInput("4", string.Empty)
             };
 
-            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            var options = new AnalyzeSentimentOptions { IncludeStatistics = true };
+
+            Response<AnalyzeSentimentResultCollection> response = await client.AnalyzeSentimentBatchAsync(documents, options);
+            AnalyzeSentimentResultCollection sentimentPerDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{results.ModelVersion}\"");
+            Console.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{sentimentPerDocuments.ModelVersion}\"");
             Console.WriteLine("");
 
-            foreach (AnalyzeSentimentResult result in results)
+            foreach (AnalyzeSentimentResult sentimentInDocument in sentimentPerDocuments)
             {
                 TextDocumentInput document = documents[i++];
 
-                Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\"):");
 
-                if (result.HasError)
+                if (sentimentInDocument.HasError)
                 {
-                    Console.WriteLine($"    Document error: {result.Error.ErrorCode}.");
-                    Console.WriteLine($"    Message: {result.Error.Message}.");
+                    Console.WriteLine("  Error!");
+                    Console.WriteLine($"  Document error: {sentimentInDocument.Error.ErrorCode}.");
+                    Console.WriteLine($"  Message: {sentimentInDocument.Error.Message}");
                 }
                 else
                 {
-                    Console.WriteLine($"Document sentiment is {result.DocumentSentiment.Sentiment}, with confidence scores: ");
-                    Console.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive}.");
-                    Console.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral}.");
-                    Console.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative}.");
+                    Console.WriteLine($"Document sentiment is {sentimentInDocument.DocumentSentiment.Sentiment}, with confidence scores: ");
+                    Console.WriteLine($"  Positive confidence score: {sentimentInDocument.DocumentSentiment.ConfidenceScores.Positive}.");
+                    Console.WriteLine($"  Neutral confidence score: {sentimentInDocument.DocumentSentiment.ConfidenceScores.Neutral}.");
+                    Console.WriteLine($"  Negative confidence score: {sentimentInDocument.DocumentSentiment.ConfidenceScores.Negative}.");
+                    Console.WriteLine("");
+                    Console.WriteLine($"  Sentence sentiment results:");
 
-                    Console.WriteLine($"    Sentence sentiment results:");
-
-                    foreach (SentenceSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
+                    foreach (SentenceSentiment sentimentInSentence in sentimentInDocument.DocumentSentiment.Sentences)
                     {
-                        Console.WriteLine($"    For sentence: \"{sentenceSentiment.Text}\"");
-                        Console.WriteLine($"    Offset (in UTF-16 code units): {sentenceSentiment.Offset}");
-                        Console.WriteLine($"    Sentiment is {sentenceSentiment.Sentiment}, with confidence scores: ");
-                        Console.WriteLine($"        Positive confidence score: {sentenceSentiment.ConfidenceScores.Positive}.");
-                        Console.WriteLine($"        Neutral confidence score: {sentenceSentiment.ConfidenceScores.Neutral}.");
-                        Console.WriteLine($"        Negative confidence score: {sentenceSentiment.ConfidenceScores.Negative}.");
+                        Console.WriteLine($"  For sentence: \"{sentimentInSentence.Text}\"");
+                        Console.WriteLine($"  Sentiment is {sentimentInSentence.Sentiment}, with confidence scores: ");
+                        Console.WriteLine($"    Positive confidence score: {sentimentInSentence.ConfidenceScores.Positive}.");
+                        Console.WriteLine($"    Neutral confidence score: {sentimentInSentence.ConfidenceScores.Neutral}.");
+                        Console.WriteLine($"    Negative confidence score: {sentimentInSentence.ConfidenceScores.Negative}.");
+                        Console.WriteLine("");
                     }
 
-                    Console.WriteLine($"    Document statistics:");
-                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
-                    Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-                    Console.WriteLine("");
+                    Console.WriteLine($"  Document statistics:");
+                    Console.WriteLine($"    Character count: {sentimentInDocument.Statistics.CharacterCount}");
+                    Console.WriteLine($"    Transaction count: {sentimentInDocument.Statistics.TransactionCount}");
                 }
+                Console.WriteLine("");
             }
 
             Console.WriteLine($"Batch operation statistics:");
-            Console.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
-            Console.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
-            Console.WriteLine($"    Invalid document count: {results.Statistics.InvalidDocumentCount}");
-            Console.WriteLine($"    Transaction count: {results.Statistics.TransactionCount}");
-            Console.WriteLine("");
+            Console.WriteLine($"  Document count: {sentimentPerDocuments.Statistics.DocumentCount}");
+            Console.WriteLine($"  Valid document count: {sentimentPerDocuments.Statistics.ValidDocumentCount}");
+            Console.WriteLine($"  Invalid document count: {sentimentPerDocuments.Statistics.InvalidDocumentCount}");
+            Console.WriteLine($"  Transaction count: {sentimentPerDocuments.Statistics.TransactionCount}");
         }
     }
 }

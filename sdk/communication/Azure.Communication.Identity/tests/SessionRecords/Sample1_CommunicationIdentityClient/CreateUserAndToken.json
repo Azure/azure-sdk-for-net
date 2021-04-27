@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/identities?api-version=2021-03-07",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "34",
+        "Content-Type": "application/json",
+        "Date": "Thu, 04 Mar 2021 19:52:36 GMT",
+        "traceparent": "00-bb85bcd0b1b7794096217227da19e578-d358ad730478f543-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.0.0-alpha.20210304.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "ab33f79e9fca0db84a28972928f0e1e9",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "createTokenWithScopes": [
+          "chat"
+        ]
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-03-07",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 Mar 2021 19:52:34 GMT",
+        "MS-CV": "MKgzOXH66kG0aeL2sySxeg.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0gzpBYAAAAACxIMf4iP6ARZ1slu3F448/Q0hHRURHRTE2MTcAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "x-ms-client-request-id": "ab33f79e9fca0db84a28972928f0e1e9",
+        "X-Processing-Time": "38ms"
+      },
+      "ResponseBody": {
+        "identity": {
+          "id": "8:acs:ac80d96a-85de-48b1-995d-a3a3fa3627c8_00000008-9eae-363b-28c5-593a0d001688"
+        },
+        "accessToken": {
+          "token": "Sanitized",
+          "expiresOn": "2021-03-05T19:52:34.6625965\u002B00:00"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "993003176"
+  }
+}

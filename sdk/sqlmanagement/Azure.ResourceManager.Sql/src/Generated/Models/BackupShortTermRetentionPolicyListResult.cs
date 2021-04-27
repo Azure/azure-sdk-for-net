@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of short term retention policies. </summary>
-    public partial class BackupShortTermRetentionPolicyListResult
+    internal partial class BackupShortTermRetentionPolicyListResult
     {
         /// <summary> Initializes a new instance of BackupShortTermRetentionPolicyListResult. </summary>
         internal BackupShortTermRetentionPolicyListResult()

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of TasksState. </summary>
         /// <param name="tasks"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
-        internal TasksState(TasksStateTasks tasks)
+        internal TasksState(AnalyzeTasks tasks)
         {
             if (tasks == null)
             {
@@ -26,6 +25,6 @@ namespace Azure.AI.TextAnalytics.Models
             Tasks = tasks;
         }
 
-        public TasksStateTasks Tasks { get; }
+        public AnalyzeTasks Tasks { get; }
     }
 }

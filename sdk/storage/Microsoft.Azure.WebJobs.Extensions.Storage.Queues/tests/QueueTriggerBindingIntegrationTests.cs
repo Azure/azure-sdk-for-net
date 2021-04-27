@@ -11,6 +11,7 @@ using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Timers;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -26,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         public void SetUp()
         {
             _invariantCultureFixture = new InvariantCultureFixture();
-            IQueueTriggerArgumentBindingProvider provider = new UserTypeArgumentBindingProvider();
+            IQueueTriggerArgumentBindingProvider provider = new UserTypeArgumentBindingProvider(new NullLoggerFactory());
             ParameterInfo pi = new StubParameterInfo("parameterName", typeof(UserDataType));
             var argumentBinding = provider.TryCreate(pi);
 
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             _binding = new QueueTriggerBinding("parameterName", queueServiceClient, queue, argumentBinding,
                 new QueuesOptions(), exceptionHandler,
                 enqueueWatcher,
-                null, null);
+                new NullLoggerFactory(), null, new QueueCausalityManager(new NullLoggerFactory()));
         }
 
         [TearDown]

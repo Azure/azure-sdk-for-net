@@ -311,6 +311,102 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin database from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateGremlinDatabaseToAutoscale(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName)
+            {
+                return operations.MigrateGremlinDatabaseToAutoscaleAsync(resourceGroupName, accountName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin database from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateGremlinDatabaseToAutoscaleAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateGremlinDatabaseToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin database from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateGremlinDatabaseToManualThroughput(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName)
+            {
+                return operations.MigrateGremlinDatabaseToManualThroughputAsync(resourceGroupName, accountName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin database from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateGremlinDatabaseToManualThroughputAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateGremlinDatabaseToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the Gremlin graph under an existing Azure Cosmos DB database account.
             /// </summary>
             /// <param name='operations'>
@@ -630,6 +726,114 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin graph from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='graphName'>
+            /// Cosmos DB graph name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateGremlinGraphToAutoscale(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName)
+            {
+                return operations.MigrateGremlinGraphToAutoscaleAsync(resourceGroupName, accountName, databaseName, graphName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin graph from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='graphName'>
+            /// Cosmos DB graph name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateGremlinGraphToAutoscaleAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateGremlinGraphToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, graphName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin graph from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='graphName'>
+            /// Cosmos DB graph name.
+            /// </param>
+            public static ThroughputSettingsGetResults MigrateGremlinGraphToManualThroughput(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName)
+            {
+                return operations.MigrateGremlinGraphToManualThroughputAsync(resourceGroupName, accountName, databaseName, graphName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin graph from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='graphName'>
+            /// Cosmos DB graph name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> MigrateGremlinGraphToManualThroughputAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateGremlinGraphToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, graphName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update an Azure Cosmos DB Gremlin database
             /// </summary>
             /// <param name='operations'>
@@ -773,6 +977,102 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task<ThroughputSettingsGetResults> BeginUpdateGremlinDatabaseThroughputAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateGremlinDatabaseThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, updateThroughputParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin database from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateGremlinDatabaseToAutoscale(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName)
+            {
+                return operations.BeginMigrateGremlinDatabaseToAutoscaleAsync(resourceGroupName, accountName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin database from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateGremlinDatabaseToAutoscaleAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateGremlinDatabaseToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin database from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateGremlinDatabaseToManualThroughput(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName)
+            {
+                return operations.BeginMigrateGremlinDatabaseToManualThroughputAsync(resourceGroupName, accountName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin database from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateGremlinDatabaseToManualThroughputAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateGremlinDatabaseToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -940,6 +1240,114 @@ namespace Microsoft.Azure.Management.CosmosDB
             public static async Task<ThroughputSettingsGetResults> BeginUpdateGremlinGraphThroughputAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName, ThroughputSettingsUpdateParameters updateThroughputParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateGremlinGraphThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, graphName, updateThroughputParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin graph from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='graphName'>
+            /// Cosmos DB graph name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateGremlinGraphToAutoscale(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName)
+            {
+                return operations.BeginMigrateGremlinGraphToAutoscaleAsync(resourceGroupName, accountName, databaseName, graphName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin graph from manual throughput to
+            /// autoscale
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='graphName'>
+            /// Cosmos DB graph name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateGremlinGraphToAutoscaleAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateGremlinGraphToAutoscaleWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, graphName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin graph from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='graphName'>
+            /// Cosmos DB graph name.
+            /// </param>
+            public static ThroughputSettingsGetResults BeginMigrateGremlinGraphToManualThroughput(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName)
+            {
+                return operations.BeginMigrateGremlinGraphToManualThroughputAsync(resourceGroupName, accountName, databaseName, graphName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Migrate an Azure Cosmos DB Gremlin graph from autoscale to manual
+            /// throughput
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='databaseName'>
+            /// Cosmos DB database name.
+            /// </param>
+            /// <param name='graphName'>
+            /// Cosmos DB graph name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ThroughputSettingsGetResults> BeginMigrateGremlinGraphToManualThroughputAsync(this IGremlinResourcesOperations operations, string resourceGroupName, string accountName, string databaseName, string graphName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateGremlinGraphToManualThroughputWithHttpMessagesAsync(resourceGroupName, accountName, databaseName, graphName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -16,6 +16,6 @@ namespace Azure.Search.Documents
         /// Set this to true if you're not inspecting the results of the Index
         /// Documents action.
         /// </summary>
-        public bool ThrowOnAnyError { get; set; } = false;
+        public bool ThrowOnAnyError { get; set; }
     }
 }

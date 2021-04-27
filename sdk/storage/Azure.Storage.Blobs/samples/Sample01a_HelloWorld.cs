@@ -84,14 +84,10 @@ namespace Azure.Storage.Blobs.Samples
                 BlobClient blob = container.GetBlobClient(Randomize("sample-file"));
 
                 // First upload something the blob so we have something to download
-                blob.Upload(File.OpenRead(originalPath));
+                blob.Upload(originalPath);
 
                 // Download the blob's contents and save it to a file
-                BlobDownloadInfo download = blob.Download();
-                using (FileStream file = File.OpenWrite(downloadPath))
-                {
-                    download.Content.CopyTo(file);
-                }
+                blob.DownloadTo(downloadPath);
 
                 // Verify the contents
                 Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
@@ -167,8 +163,6 @@ namespace Azure.Storage.Blobs.Samples
             container.Delete();
         }
 
-
-
         /// <summary>
         /// Trigger a recoverable error.
         /// </summary>
@@ -195,7 +189,6 @@ namespace Azure.Storage.Blobs.Samples
             catch (RequestFailedException ex)
                 when (ex.ErrorCode == BlobErrorCode.ContainerBeingDeleted ||
                       ex.ErrorCode == BlobErrorCode.ContainerNotFound)
-
             {
                 // Ignore any errors if the container being deleted or if it has already been deleted
             }

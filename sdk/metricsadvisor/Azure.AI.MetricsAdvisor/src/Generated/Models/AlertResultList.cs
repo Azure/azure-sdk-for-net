@@ -15,21 +15,15 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class AlertResultList
     {
         /// <summary> Initializes a new instance of AlertResultList. </summary>
-        /// <param name="nextLink"> . </param>
         /// <param name="value"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="value"/> is null. </exception>
-        internal AlertResultList(string nextLink, IEnumerable<AnomalyAlert> value)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AlertResultList(IEnumerable<AnomalyAlert> value)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            NextLink = nextLink;
             Value = value.ToList();
         }
 

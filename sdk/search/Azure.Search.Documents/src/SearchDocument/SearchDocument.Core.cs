@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// The document properties.
         /// </summary>
-        private readonly IDictionary<string, object> _values = null;
+        private readonly IDictionary<string, object> _values;
 
         /// <summary>
         /// Set a document property.

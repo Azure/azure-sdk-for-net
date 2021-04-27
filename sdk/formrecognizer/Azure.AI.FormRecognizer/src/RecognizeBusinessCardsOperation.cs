@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -79,13 +78,15 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeBusinessCardsOperation"/> class.
+        /// Initializes a new instance of the <see cref="RecognizeBusinessCardsOperation"/> class which
+        /// tracks the status of a long-running operation for recognizing values from business cards.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         public RecognizeBusinessCardsOperation(string operationId, FormRecognizerClient client)
         {
-            // TODO: Add argument validation here.
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(client, nameof(client));
 
             Id = operationId;
             _serviceClient = client.ServiceClient;
@@ -106,6 +107,14 @@ namespace Azure.AI.FormRecognizer.Models
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
             Id = operationLocation.Split('/').Last();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizeBusinessCardsOperation"/> class. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        protected RecognizeBusinessCardsOperation()
+        {
         }
 
         /// <summary>
@@ -181,7 +190,7 @@ namespace Azure.AI.FormRecognizer.Models
                     if (update.Value.Status == OperationStatus.Succeeded)
                     {
                         // We need to first assign a value and then mark the operation as completed to avoid a race condition with the getter in Value
-                        _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
+                        _value = ClientCommon.ConvertPrebuiltOutputToRecognizedForms(update.Value.AnalyzeResult);
                         _hasCompleted = true;
                     }
                     else if (update.Value.Status == OperationStatus.Failed)
@@ -201,16 +210,6 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return GetRawResponse();
-        }
-
-        private static RecognizedFormCollection ConvertToRecognizedForms(AnalyzeResult analyzeResult)
-        {
-            List<RecognizedForm> businessCards = new List<RecognizedForm>();
-            for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)
-            {
-                businessCards.Add(new RecognizedForm(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults, default, isBusinessCards: true));
-            }
-            return new RecognizedFormCollection(businessCards);
         }
     }
 }

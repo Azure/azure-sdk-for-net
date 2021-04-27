@@ -142,5 +142,48 @@ namespace Microsoft.Azure.Management.Marketplace
                 }
             }
 
+            /// <summary>
+            /// Delete Private store offer. This is a workaround.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='offerId'>
+            /// The offer ID to update or delete
+            /// </param>
+            /// <param name='payload'>
+            /// Possible values include: 'DeletePrivateStoreOffer', 'Ping'
+            /// </param>
+            public static void Post(this IPrivateStoreOfferOperations operations, string privateStoreId, string offerId, string payload = default(string))
+            {
+                operations.PostAsync(privateStoreId, offerId, payload).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete Private store offer. This is a workaround.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='privateStoreId'>
+            /// The store ID - must use the tenant ID
+            /// </param>
+            /// <param name='offerId'>
+            /// The offer ID to update or delete
+            /// </param>
+            /// <param name='payload'>
+            /// Possible values include: 'DeletePrivateStoreOffer', 'Ping'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task PostAsync(this IPrivateStoreOfferOperations operations, string privateStoreId, string offerId, string payload = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.PostWithHttpMessagesAsync(privateStoreId, offerId, payload, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
     }
 }

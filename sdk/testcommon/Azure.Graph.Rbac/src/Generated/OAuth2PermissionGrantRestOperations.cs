@@ -124,10 +124,10 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/oauth2PermissionGrants", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             if (body != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(body);
                 request.Content = content;

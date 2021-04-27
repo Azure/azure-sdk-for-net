@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ProximityPlacementGroupListResult
+    internal partial class ProximityPlacementGroupListResult
     {
         internal static ProximityPlacementGroupListResult DeserializeProximityPlacementGroupListResult(JsonElement element)
         {

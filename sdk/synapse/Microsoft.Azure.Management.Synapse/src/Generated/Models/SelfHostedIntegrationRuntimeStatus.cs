@@ -49,6 +49,8 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// was created, in ISO8601 format.</param>
         /// <param name="taskQueueId">The task queue id of the integration
         /// runtime.</param>
+        /// <param name="nodeCommunicationChannelEncryptionMode">The node
+        /// communication Channel encryption mode</param>
         /// <param name="internalChannelEncryption">It is used to set the
         /// encryption mode for node-node communication channel (when more than
         /// 2 self-hosted integration runtime nodes exist). Possible values
@@ -80,11 +82,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// center.</param>
         /// <param name="autoUpdateETA">The estimated time when the self-hosted
         /// integration runtime will be updated.</param>
-        public SelfHostedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string dataFactoryName = default(string), string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string), string versionStatus = default(string), IList<LinkedIntegrationRuntime> links = default(IList<LinkedIntegrationRuntime>), string pushedVersion = default(string), string latestVersion = default(string), System.DateTime? autoUpdateETA = default(System.DateTime?))
+        public SelfHostedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string dataFactoryName = default(string), string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string nodeCommunicationChannelEncryptionMode = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string), string versionStatus = default(string), IList<LinkedIntegrationRuntime> links = default(IList<LinkedIntegrationRuntime>), string pushedVersion = default(string), string latestVersion = default(string), System.DateTime? autoUpdateETA = default(System.DateTime?))
             : base(additionalProperties, dataFactoryName, state)
         {
             CreateTime = createTime;
             TaskQueueId = taskQueueId;
+            NodeCommunicationChannelEncryptionMode = nodeCommunicationChannelEncryptionMode;
             InternalChannelEncryption = internalChannelEncryption;
             Version = version;
             Nodes = nodes;
@@ -119,6 +122,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.taskQueueId")]
         public string TaskQueueId { get; private set; }
+
+        /// <summary>
+        /// Gets the node communication Channel encryption mode
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.nodeCommunicationChannelEncryptionMode")]
+        public string NodeCommunicationChannelEncryptionMode { get; private set; }
 
         /// <summary>
         /// Gets it is used to set the encryption mode for node-node

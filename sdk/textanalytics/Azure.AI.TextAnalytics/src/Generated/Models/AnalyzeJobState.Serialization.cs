@@ -19,14 +19,14 @@ namespace Azure.AI.TextAnalytics.Models
         {
             Optional<IReadOnlyList<TextAnalyticsErrorInternal>> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
-            TasksStateTasks tasks = default;
+            AnalyzeTasks tasks = default;
             Optional<string> nextLink = default;
-            DateTimeOffset createdDateTime = default;
             Optional<string> displayName = default;
+            DateTimeOffset createdDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
-            Guid jobId = default;
+            string jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
-            JobStatus status = default;
+            TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errors"))
@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("tasks"))
                 {
-                    tasks = TasksStateTasks.DeserializeTasksStateTasks(property.Value);
+                    tasks = AnalyzeTasks.DeserializeAnalyzeTasks(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@nextLink"))
@@ -64,14 +64,14 @@ namespace Azure.AI.TextAnalytics.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"))
-                {
-                    createdDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (property.NameEquals("displayName"))
                 {
                     displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("createdDateTime"))
+                {
+                    createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("expirationDateTime"))
@@ -86,7 +86,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("jobId"))
                 {
-                    jobId = property.Value.GetGuid();
+                    jobId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"))
@@ -96,11 +96,11 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new JobStatus(property.Value.GetString());
+                    status = new TextAnalyticsOperationStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new AnalyzeJobState(createdDateTime, displayName.Value, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, Optional.ToList(errors), statistics.Value, tasks, nextLink.Value);
+            return new AnalyzeJobState(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, displayName.Value, Optional.ToList(errors), statistics.Value, tasks, nextLink.Value);
         }
     }
 }

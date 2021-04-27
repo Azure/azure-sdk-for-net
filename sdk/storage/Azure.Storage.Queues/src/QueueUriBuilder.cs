@@ -261,18 +261,18 @@ namespace Azure.Storage.Queues
             // regular style Uri will already have account name in domain
             if (_isPathStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
-                path.Append("/").Append(AccountName);
+                path.Append('/').Append(AccountName);
             }
 
             if (!string.IsNullOrWhiteSpace(QueueName))
             {
-                path.Append("/").Append(QueueName);
+                path.Append('/').Append(QueueName);
                 if (Messages)
                 {
                     path.Append("/messages");
                     if (!string.IsNullOrWhiteSpace(MessageId))
                     {
-                        path.Append("/").Append(MessageId);
+                        path.Append('/').Append(MessageId);
                     }
                 }
             }
@@ -282,7 +282,7 @@ namespace Azure.Storage.Queues
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {
-                if (query.Length > 0) { query.Append("&"); }
+                if (query.Length > 0) { query.Append('&'); }
                 query.Append(sas);
             }
 

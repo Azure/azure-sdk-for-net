@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus.Administration
@@ -16,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         private string _name;
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
         private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
-        private string _userMetadata = null;
+        private string _userMetadata;
 
         /// <summary>
         /// Initializes a new instance of TopicDescription class with the specified relative name.
@@ -43,6 +44,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             AuthorizationRules = options.AuthorizationRules;
             Status = options.Status;
             EnableBatchedOperations = options.EnableBatchedOperations;
+            EnablePartitioning = options.EnablePartitioning;
             if (options.UserMetadata != null)
             {
                 UserMetadata = options.UserMetadata;
@@ -103,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// will be discarded.
         /// </summary>
         /// <remarks>Defaults to false.</remarks>
-        public bool RequiresDuplicateDetection { get; set; } = false;
+        public bool RequiresDuplicateDetection { get; set; }
 
         /// <summary>
         /// The <see cref="TimeSpan"/> duration of duplicate detection history that is maintained by the service.
@@ -156,14 +158,14 @@ namespace Azure.Messaging.ServiceBus.Administration
         /// Indicates whether the topic is to be partitioned across multiple message brokers.
         /// </summary>
         /// <remarks>Defaults to false.</remarks>
-        public bool EnablePartitioning { get; set; } = false;
+        public bool EnablePartitioning { get; set; }
 
         /// <summary>
         /// Defines whether ordering needs to be maintained. If true, messages sent to topic will be
         /// forwarded to the subscription in order.
         /// </summary>
         /// <remarks>Defaults to false.</remarks>
-        public bool SupportOrdering { get; set; } = false;
+        public bool SupportOrdering { get; set; }
 
         /// <summary>
         /// Indicates whether server-side batched operations are enabled.
@@ -190,11 +192,21 @@ namespace Azure.Messaging.ServiceBus.Administration
             }
         }
 
+        internal bool IsAnonymousAccessible { get; set; }
+
+        internal bool FilteringMessagesBeforePublishing { get; set; }
+
+        internal string ForwardTo { get; set; }
+
+        internal bool EnableExpress { get; set; }
+
+        internal bool EnableSubscriptionPartitioning { get; set; }
+
         /// <summary>
         /// List of properties that were retrieved using GetTopic but are not understood by this version of client is stored here.
         /// The list will be sent back when an already retrieved TopicDescription will be used in UpdateTopic call.
         /// </summary>
-        internal List<object> UnknownProperties { get; set; }
+        internal List<XElement> UnknownProperties { get; set; }
 
         /// <summary>
         ///   Returns a hash code for this instance.
@@ -225,6 +237,11 @@ namespace Azure.Messaging.ServiceBus.Administration
                 && RequiresDuplicateDetection.Equals(otherDescription.RequiresDuplicateDetection)
                 && Status.Equals(otherDescription.Status)
                 && string.Equals(_userMetadata, otherDescription._userMetadata, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(ForwardTo, other.ForwardTo, StringComparison.OrdinalIgnoreCase)
+                && EnableExpress == other.EnableExpress
+                && IsAnonymousAccessible == other.IsAnonymousAccessible
+                && FilteringMessagesBeforePublishing == other.FilteringMessagesBeforePublishing
+                && EnableSubscriptionPartitioning == other.EnableSubscriptionPartitioning
                 && (AuthorizationRules != null && otherDescription.AuthorizationRules != null
                     || AuthorizationRules == null && otherDescription.AuthorizationRules == null)
                 && (AuthorizationRules == null || AuthorizationRules.Equals(otherDescription.AuthorizationRules)))

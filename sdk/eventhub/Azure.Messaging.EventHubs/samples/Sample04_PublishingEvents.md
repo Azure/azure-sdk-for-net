@@ -20,6 +20,8 @@ When publishing, there is a limit to the size (in bytes) that can be sent to the
 
 The `EventDataBatch` exists to provide a deterministic and accurate means to measure the size of a message sent to the service, minimizing the chance that a publishing operation will fail.  Because the batch works in cooperation with the service, it has an understanding of the maximum size and has the ability to measure the exact size of an event when serialized for publishing.  For the majority of scenarios, we recommend using the `EventDataBatch` to ensure that your application does not attempt to publish a set of events larger than the Event Hubs service allows.  The majority of examples in this sample will demonstrate a batched approach.
 
+All of the events that belong to an `EventDataBatch` are considered part of a single unit of work.  When a batch is published, the result is atomic; either publishing was successful for all events in the batch, or it has failed for all events.  Partial success or failure when publishing a batch is not possible.
+
 To create an `EventDataBatch`, the `EventProducerClient` must be used, as the size limit is queried from the Event Hubs service the first time that a batch is created.  After the size has been queried once, batch creation will not incur the cost of a service request.   The `EventDataBatch` follows a `TryAdd` pattern; if the call returns `true` then the event was accepted into the batch.  If not, then the event was unable to fit.  To avoid accidentally losing events, it is recommended to check the return value when adding events.
 
 ```C# Snippet:EventHubs_Sample04_EventBatch
@@ -52,7 +54,7 @@ The `EventDataBatch` is scoped to a single publish operation.  Once that operati
 
 Allowing automatic assignment to partitions is recommended when publishing needs to be highly available and shouldn't fail if a single partition is experiencing trouble.  Automatic assignment also helps to ensure that event data is evenly distributed among all available partitions, which helps to ensure throughput when publishing and reading data.
 
-When the producer publishes the event, it will receive an acknowledgment from the Event Hubs service; so long as there is no exception thrown by this call, the service assumes responsibility for delivery.  Your event data will be published to one of the Event Hub partitions, thought here may be a slight delay until it is available to be read.
+When the batch is published, the `EventHubProducerClient` will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown by this call, your application can consider publishing successful.  The service assumes responsibility for delivery of the batch.  All of your event data will be published to one of the Event Hub partitions, thought here may be a slight delay until it is available to be read.
 
 ```C# Snippet:EventHubs_Sample04_AutomaticRouting
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -88,6 +90,8 @@ finally
 When publishing events, it may be desirable to request that the Event Hubs service keep the different event batches together on the same partition.  This can be accomplished by setting a partition key when creating the batch.  The partition key is NOT the identifier of a specific partition.  Rather, it is an arbitrary piece of string data that Event Hubs uses as the basis to compute a hash value.  Event Hubs will associate the hash value with a specific partition, ensuring that any events published with the same partition key are routed to the same partition.
                 
 There is no means of predicting which partition will be associated with a given partition key; we can only be assured that it will be a consistent choice of partition.  If you have a need to understand which exact partition an event is published to, you will need to specify the partition directly rather than using a partition key.
+
+When the batch is published, the `EventHubProducerClient` will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown by this call, your application can consider publishing successful.  The service assumes responsibility for delivery of the batch.  All of your event data will be published to one of the Event Hub partitions, thought here may be a slight delay until it is available to be read.
 
 **Note:** It is important to be aware that if you are using a partition key, you may not also specify a partition identifier; they are mutually exclusive.
 
@@ -128,6 +132,8 @@ finally
 ## Publishing events to a specific partition
 
 When publishing, it may be desirable to request that the Event Hubs service place a batch on a specific partition, for organization and processing.  For example, you may have designated one partition of your Event Hub as being responsible for all of your telemetry-related events.  This can be accomplished by setting the identifier of the desired partition when creating the batch.  
+
+When the batch is published, the `EventHubProducerClient` will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown by this call, your application can consider publishing successful.  The service assumes responsibility for delivery of the batch.  All of your event data will be published to one of the Event Hub partitions, thought here may be a slight delay until it is available to be read.
 
 **Note:** It is important to be aware that if you are using a partition identifier, you may not also specify a partition key; they are mutually exclusive.
 
@@ -215,9 +221,11 @@ finally
 
 ## Publishing events without an explicit batch
 
-In scenarios where producers publish events more frequently and aren't concerned with exceeding the size limitation, it is reasonable to bypass the safety offered by using the `EventDataBatch` to offer minor throughput gains and fewer memory allocations.  In support of this scenario, the `EventProducerClient` offers a `SendAsync` overload that accepts a set of events.
+In scenarios where producers publish events more frequently and aren't concerned with exceeding the size limitation, it is reasonable to bypass the safety offered by using the `EventDataBatch` to offer minor throughput gains and fewer memory allocations.  In support of this scenario, the `EventProducerClient` offers a `SendAsync` overload that accepts a set of events.  This method delegates validation to the Event Hubs service to avoid the performance cost of a client-side measurement.  If the set of events that was published exceeds the size limit, an [EventHubsException](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsexception?view=azure-dotnet) will be surfaced with its `Reason` set to [MessageSizeExceeded](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsexception.failurereason?view=azure-dotnet). 
 
-When events are passed in this form, the `EventProducerClient` will package them as a single publishing operation, allowing the service to perform its validation alone.  If the set of events that was published exceeds the size limit, an [EventHubsException](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsexception?view=azure-dotnet) will be surfaced with its `Reason` set to [MessageSizeExceeded](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsexception.failurereason?view=azure-dotnet). 
+When events are passed in this form, the `EventProducerClient` will package them as a single publishing operation.  When the set is published, the result is atomic; either publishing was successful for all events, or it has failed for all events.  Partial success or failure when publishing a batch is not possible.
+
+When published, the `EventHubProducerClient` will receive an acknowledgment from the Event Hubs service; so long as no exception is thrown by this call, your application can consider publishing successful.  The service assumes responsibility for delivery of the set.  All of your event data will be published to one of the Event Hub partitions, thought here may be a slight delay until it is available to be read.
 
 ```C# Snippet:EventHubs_Sample04_NoBatch
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";

@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/createShareableLinks", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(bslRequest);
             request.Content = content;
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/deleteShareableLinks", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(bslRequest);
             request.Content = content;
@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/getShareableLinks", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(bslRequest);
             request.Content = content;
@@ -413,8 +413,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/disconnectActiveSessions", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sessionIds);
             request.Content = content;
@@ -678,8 +678,8 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/GenerateVpnProfile", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(vpnClientParams);
             request.Content = content;
@@ -761,7 +761,6 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -849,7 +848,6 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1024,7 +1022,6 @@ namespace Azure.ResourceManager.Network
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             return message;
         }

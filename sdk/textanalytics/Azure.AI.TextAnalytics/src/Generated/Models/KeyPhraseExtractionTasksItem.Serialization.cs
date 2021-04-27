@@ -7,19 +7,19 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.TextAnalytics.Models;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class KeyPhraseExtractionTasksItem
+    internal partial class KeyPhraseExtractionTasksItem
     {
         internal static KeyPhraseExtractionTasksItem DeserializeKeyPhraseExtractionTasksItem(JsonElement element)
         {
             Optional<KeyPhraseResult> results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            string name = default;
-            JobStatus status = default;
+            Optional<string> name = default;
+            TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
@@ -44,11 +44,11 @@ namespace Azure.AI.TextAnalytics
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new JobStatus(property.Value.GetString());
+                    status = new TextAnalyticsOperationStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new KeyPhraseExtractionTasksItem(lastUpdateDateTime, name, status, results.Value);
+            return new KeyPhraseExtractionTasksItem(lastUpdateDateTime, name.Value, status, results.Value);
         }
     }
 }

@@ -98,7 +98,6 @@ namespace Azure.Core.Tests
 "--batchresponse_6040fee7-a2b8-4e78-a674-02086369606a--\n" +
 "";
 
-
         [Test]
         [TestCase(TablesOdataBatchResponse)]
         [TestCase(CosmosTableBatchOdataResponse)]
@@ -229,7 +228,6 @@ namespace Azure.Core.Tests
             using var sr = new StreamReader(memStream, Encoding.UTF8);
             string requestBody = sr.ReadToEnd();
             Console.WriteLine(requestBody);
-
 
             Assert.That(requestBody, Is.EqualTo($"--batch_{batchGuid}\r\n" +
                 $"{HttpHeader.Names.ContentType}: multipart/mixed; boundary=changeset_{changesetGuid}\r\n" +

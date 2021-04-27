@@ -6,24 +6,18 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics.Models;
+using Azure.AI.TextAnalytics;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasksEntityRecognitionTasksItem. </summary>
-    public partial class EntityRecognitionTasksItem : TaskState
+    internal partial class EntityRecognitionTasksItem : TaskState
     {
         /// <summary> Initializes a new instance of EntityRecognitionTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
-        /// <param name="name"> . </param>
         /// <param name="status"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status) : base(lastUpdateDateTime, name, status)
+        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
         }
 
         /// <summary> Initializes a new instance of EntityRecognitionTasksItem. </summary>
@@ -31,15 +25,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
         /// <param name="results"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, EntitiesResult results) : base(lastUpdateDateTime, name, status)
+        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, EntitiesResult results) : base(lastUpdateDateTime, name, status)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
             Results = results;
         }
+
+        public EntitiesResult Results { get; }
     }
 }

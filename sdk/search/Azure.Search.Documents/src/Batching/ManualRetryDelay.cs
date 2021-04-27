@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Batching
         /// <summary>
         /// The number of recent attempts that have been throttled.
         /// </summary>
-        private int _throttledAttempts = 0;
+        private int _throttledAttempts;
 
         /// <summary>
         /// When we should wait until before sending our next request.

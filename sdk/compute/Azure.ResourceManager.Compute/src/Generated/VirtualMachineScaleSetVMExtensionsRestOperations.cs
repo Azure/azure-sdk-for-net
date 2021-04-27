@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(vmExtensionName, true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(extensionParameters);
             request.Content = content;
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(vmExtensionName, true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(extensionParameters);
             request.Content = content;

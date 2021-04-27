@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Moq;
 using NUnit.Framework;
@@ -14,12 +14,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class BlobChangeFeedExtensionsTests : ChangeFeedTestBase
     {
-        public BlobChangeFeedExtensionsTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlobChangeFeedExtensionsTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void ToDateTimeOffsetTests()
         {
             Assert.AreEqual(
@@ -63,7 +63,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 BlobChangeFeedExtensions.ToDateTimeOffset(((string)null)));
         }
 
-        [Test]
+        [RecordedTest]
         public void RoundDownToNearestHourTests()
         {
             Assert.AreEqual(
@@ -77,7 +77,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 ((DateTimeOffset?)null).RoundDownToNearestHour());
         }
 
-        [Test]
+        [RecordedTest]
         public void RoundUpToNearestHourTests()
         {
             Assert.AreEqual(
@@ -97,7 +97,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 ((DateTimeOffset?)null).RoundUpToNearestHour());
         }
 
-        [Test]
+        [RecordedTest]
         public void RoundDownToNearestYearTests()
         {
             Assert.AreEqual(
@@ -111,8 +111,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 ((DateTimeOffset?)null).RoundDownToNearestYear());
         }
 
-
-        [Test]
+        [RecordedTest]
         public async Task GetSegmentsInYearTest()
         {
             // Arrange

@@ -37,8 +37,14 @@ namespace Azure.AI.TextAnalytics
         /// Gets or sets a value that, if set, indicates the version of the text
         /// analytics model that will be used to generate the result.  For supported
         /// model versions, see operation-specific documentation, for example:
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-sentiment-analysis#model-versioning"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-sentiment-analysis#model-versioning"/>.
         /// </summary>
         public string ModelVersion { get; set; }
+
+        /// <summary>
+        /// Specifies the method used to interpret string offsets. Defaults to
+        /// <see cref="StringIndexType.Utf16CodeUnit"/>.
+        /// </summary>
+        public StringIndexType StringIndexType { get; set; } = StringIndexType.Utf16CodeUnit;
     }
 }

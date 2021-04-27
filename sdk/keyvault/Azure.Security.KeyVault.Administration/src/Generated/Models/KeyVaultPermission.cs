@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -16,23 +17,32 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
         public KeyVaultPermission()
         {
-            AllowActions = new ChangeTrackingList<string>();
-            DenyActions = new ChangeTrackingList<string>();
-            AllowDataActions = new ChangeTrackingList<string>();
-            DenyDataActions = new ChangeTrackingList<string>();
+            Actions = new ChangeTrackingList<string>();
+            NotActions = new ChangeTrackingList<string>();
+            DataActions = new ChangeTrackingList<KeyVaultDataAction>();
+            NotDataActions = new ChangeTrackingList<KeyVaultDataAction>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
-        /// <param name="allowActions"> Allowed actions. </param>
-        /// <param name="denyActions"> Denied actions. </param>
-        /// <param name="allowDataActions"> Allowed Data actions. </param>
-        /// <param name="denyDataActions"> Denied Data actions. </param>
-        internal KeyVaultPermission(IList<string> allowActions, IList<string> denyActions, IList<string> allowDataActions, IList<string> denyDataActions)
+        /// <param name="actions"> Action permissions that are granted. </param>
+        /// <param name="notActions"> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
+        /// <param name="dataActions"> Data action permissions that are granted. </param>
+        /// <param name="notDataActions"> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
+        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<KeyVaultDataAction> dataActions, IList<KeyVaultDataAction> notDataActions)
         {
-            AllowActions = allowActions;
-            DenyActions = denyActions;
-            AllowDataActions = allowDataActions;
-            DenyDataActions = denyDataActions;
+            Actions = actions;
+            NotActions = notActions;
+            DataActions = dataActions;
+            NotDataActions = notDataActions;
         }
+
+        /// <summary> Action permissions that are granted. </summary>
+        public IList<string> Actions { get; }
+        /// <summary> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </summary>
+        public IList<string> NotActions { get; }
+        /// <summary> Data action permissions that are granted. </summary>
+        public IList<KeyVaultDataAction> DataActions { get; }
+        /// <summary> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </summary>
+        public IList<KeyVaultDataAction> NotDataActions { get; }
     }
 }

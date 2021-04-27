@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    /// <inheritdoc />
     [CodeGenModel("EventRoutesGetByIdOptions")]
     internal partial class GetDigitalTwinsEventRouteOptions
     {
@@ -21,7 +20,6 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Provides vendor-specific trace identification information and is a companion to TraceParent. </summary>
         [CodeGenMember("Tracestate")]
         internal string TraceState { get; set; }
-
 
         // This is internal because users should not set page size here. It should be set on the pageable instances's .AsPages() method.
         internal int? MaxItemsPerPage { get; set; }

@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.Serialization;
-
 namespace Azure.Data.Tables
 {
     internal static class TableConstants
@@ -35,7 +33,7 @@ namespace Azure.Data.Tables
 
         internal static class PropertyNames
         {
-            public const string TimeStamp = "Timestamp";
+            public const string Timestamp = "Timestamp";
             public const string PartitionKey = "PartitionKey";
             public const string RowKey = "RowKey";
             public const string EtagOdata = "odata.etag";
@@ -61,6 +59,7 @@ namespace Azure.Data.Tables
             internal const string MissingPartitionKey = "The entity must contain a PartitionKey value";
             internal const string MissingRowKey = "The entity must contain a RowKey value";
             internal const string BatchCanOnlyBeSubmittedOnce = "A batch can only be submitted once.";
+            internal const string BatchIsEmpty = "The batch contains no entity operations.";
         }
 
         internal static class ExceptionData
@@ -76,7 +75,10 @@ namespace Azure.Data.Tables
             // SASTimeFormat represents the format of a SAS start or expiry time. Use it when formatting/parsing a time.Time.
             // ISO 8601 uses "yyyy'-'MM'-'dd'T'HH':'mm':'ss"
             public const string SasTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
-
+            public const string SasTimeFormatSeconds = "yyyy-MM-ddTHH:mm:ssZ";
+            public const string SasTimeFormatSubSeconds = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
+            public const string SasTimeFormatMinutes = "yyyy-MM-ddTHH:mmZ";
+            public const string SasTimeFormatDays = "yyyy-MM-dd";
             /// <summary>
             /// Gets the default service version to use when building shared access
             /// signatures.
@@ -98,10 +100,10 @@ namespace Azure.Data.Tables
             {
                 public const string Version = "sv";
                 public const string TableName = "tn";
-                public const string StartPartitionKey = "startpk";
-                public const string EndPartitionKey = "startrk";
-                public const string StartRowKey = "endpk";
-                public const string EndRowKey = "endrk";
+                public const string StartPartitionKey = "spk";
+                public const string EndPartitionKey = "epk";
+                public const string StartRowKey = "srk";
+                public const string EndRowKey = "erk";
                 public const string TableNameUpper = "TN";
                 public const string VersionUpper = "SV";
                 public const string Services = "ss";
@@ -137,7 +139,6 @@ namespace Azure.Data.Tables
             {
                 public const string Table = "t";
             }
-
         }
         /// <summary>
         /// Table Connection String constant values.

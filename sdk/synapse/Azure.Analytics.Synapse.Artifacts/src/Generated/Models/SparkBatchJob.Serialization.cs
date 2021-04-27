@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SparkBatchJobConverter))]
     public partial class SparkBatchJob
     {
         internal static SparkBatchJob DeserializeSparkBatchJob(JsonElement element)
@@ -152,6 +155,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("appId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        appId = null;
+                        continue;
+                    }
                     appId = property.Value.GetString();
                     continue;
                 }
@@ -159,7 +167,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        appInfo = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -179,7 +187,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        log = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -192,6 +200,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SparkBatchJob(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, Optional.ToList(errorInfo), Optional.ToDictionary(tags), id, appId.Value, Optional.ToDictionary(appInfo), state.Value, Optional.ToList(log));
+        }
+
+        internal partial class SparkBatchJobConverter : JsonConverter<SparkBatchJob>
+        {
+            public override void Write(Utf8JsonWriter writer, SparkBatchJob model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SparkBatchJob Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSparkBatchJob(document.RootElement);
+            }
         }
     }
 }

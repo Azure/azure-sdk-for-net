@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <summary>
         /// Initializes a new instance of the DatabaseRestoreResource class.
         /// </summary>
-        /// <param name="databaseName">The name of the database to
+        /// <param name="databaseName">The name of the database available for
         /// restore.</param>
-        /// <param name="collectionNames">The names of the collections to
-        /// restore.</param>
+        /// <param name="collectionNames">The names of the collections
+        /// available for restore.</param>
         public DatabaseRestoreResource(string databaseName = default(string), IList<string> collectionNames = default(IList<string>))
         {
             DatabaseName = databaseName;
@@ -48,13 +48,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the database to restore.
+        /// Gets or sets the name of the database available for restore.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets the names of the collections to restore.
+        /// Gets or sets the names of the collections available for restore.
         /// </summary>
         [JsonProperty(PropertyName = "collectionNames")]
         public IList<string> CollectionNames { get; set; }

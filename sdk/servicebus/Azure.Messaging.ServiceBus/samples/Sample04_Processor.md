@@ -13,32 +13,32 @@ await using var client = new ServiceBusClient(connectionString);
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
-// create a message batch that we can send
-ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
-messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAddMessage(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+// create a set of messages that we can send
+ServiceBusMessage[] messages = new ServiceBusMessage[]
+{
+    new ServiceBusMessage("First"),
+    new ServiceBusMessage("Second")
+};
 
 // send the message batch
-await sender.SendMessagesAsync(messageBatch);
+await sender.SendMessagesAsync(messages);
 
-// get the options to use for configuring the processor
+// create the options to use for configuring the processor
 var options = new ServiceBusProcessorOptions
 {
-    // By default after the message handler returns, the processor will complete the message
-    // If I want more fine-grained control over settlement, I can set this to false.
-    AutoComplete = false,
+    // By default or when AutoCompleteMessages is set to true, the processor will complete the message after executing the message handler
+    // Set AutoCompleteMessages to false to [settle messages](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) on your own.
+    // In both cases, if the message handler throws an exception without settling the message, the processor will abandon the message.
+    AutoCompleteMessages = false,
 
     // I can also allow for multi-threading
     MaxConcurrentCalls = 2
 };
 
 // create a processor that we can use to process the messages
-ServiceBusProcessor processor = client.CreateProcessor(queueName, options);
+await using ServiceBusProcessor processor = client.CreateProcessor(queueName, options);
 
-// since the message handler will run in a background thread, in order to prevent
-// this sample from terminating immediately, we can use a task completion source that
-// we complete from within the message handler.
-TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+// configure the message and error handler to use
 processor.ProcessMessageAsync += MessageHandler;
 processor.ProcessErrorAsync += ErrorHandler;
 
@@ -49,7 +49,6 @@ async Task MessageHandler(ProcessMessageEventArgs args)
 
     // we can evaluate application logic and use that to determine how to settle the message.
     await args.CompleteMessageAsync(args.Message);
-    tcs.SetResult(true);
 }
 
 Task ErrorHandler(ProcessErrorEventArgs args)
@@ -63,13 +62,12 @@ Task ErrorHandler(ProcessErrorEventArgs args)
     Console.WriteLine(args.Exception.ToString());
     return Task.CompletedTask;
 }
+
+// start processing
 await processor.StartProcessingAsync();
 
-// await our task completion source task so that the message handler will be invoked at least once.
-await tcs.Task;
-
-// stop processing once the task completion source was completed.
-await processor.StopProcessingAsync();
+// since the processing happens in the background, we add a Conole.ReadKey to allow the processing to continue until a key is pressed.
+Console.ReadKey();
 ```
 
 ## Source

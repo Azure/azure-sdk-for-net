@@ -25,22 +25,25 @@ namespace Azure.Core.Pipeline
             _networkTimeout = networkTimeout;
         }
 
-        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            await ProcessAsync(message, pipeline, true).ConfigureAwait(false);
-        }
+        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
+            ProcessAsync(message, pipeline, true);
 
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
+        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline) =>
             ProcessAsync(message, pipeline, false).EnsureCompleted();
-        }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             CancellationToken oldToken = message.CancellationToken;
             using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
-            cts.CancelAfter(_networkTimeout);
+            var networkTimeout = _networkTimeout;
+
+            if (message.NetworkTimeout is TimeSpan networkTimeoutOverride)
+            {
+                networkTimeout = networkTimeoutOverride;
+            }
+
+            cts.CancelAfter(networkTimeout);
             try
             {
                 message.CancellationToken = cts.Token;
@@ -67,9 +70,9 @@ namespace Azure.Core.Pipeline
 
             if (message.BufferResponse)
             {
-                if (_networkTimeout != Timeout.InfiniteTimeSpan)
+                if (networkTimeout != Timeout.InfiniteTimeSpan)
                 {
-                    cts.Token.Register(state => ((Stream)state)?.Dispose(), responseContentStream);
+                    cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
                 }
 
                 try
@@ -95,9 +98,9 @@ namespace Azure.Core.Pipeline
                     throw;
                 }
             }
-            else if (_networkTimeout != Timeout.InfiniteTimeSpan)
+            else if (networkTimeout != Timeout.InfiniteTimeSpan)
             {
-                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, _networkTimeout);
+                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
             }
         }
 
@@ -109,7 +112,9 @@ namespace Azure.Core.Pipeline
                 while (true)
                 {
                     cancellationTokenSource.CancelAfter(_networkTimeout);
+#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                     int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
+#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
                     if (bytesRead == 0) break;
                     await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
                 }

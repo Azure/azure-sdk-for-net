@@ -44,6 +44,7 @@ namespace Azure.AI.MetricsAdvisor
         /// Filters the result by series. Only incidents detected in the time series groups specified will
         /// be returned.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IList<DimensionKey> DimensionsToFilter
         {
             get => _dimensionsToFilter;
@@ -53,6 +54,7 @@ namespace Azure.AI.MetricsAdvisor
                 _dimensionsToFilter = value;
             }
         }
+#pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the amount of items to

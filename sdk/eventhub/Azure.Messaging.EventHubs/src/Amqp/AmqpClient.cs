@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static TimeSpan CredentialRefreshBuffer { get; } = TimeSpan.FromMinutes(5);
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>The currently active token to use for authorization with the Event Hubs service.</summary>
         private AccessToken _accessToken;
@@ -55,6 +55,12 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </summary>
         ///
         public override Uri ServiceEndpoint { get; }
+
+        /// <summary>
+        ///   The endpoint to used establishing a connection to the Event Hubs service to which the scope is associated.
+        /// </summary>
+        ///
+        public Uri ConnectionEndpoint { get; }
 
         /// <summary>
         ///   The name of the Event Hub to which the client is bound.
@@ -152,13 +158,23 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     Scheme = clientOptions.TransportType.GetUriScheme(),
                     Host = host
-
                 }.Uri;
+
+                ConnectionEndpoint = clientOptions.CustomEndpointAddress switch
+                {
+                    null => ServiceEndpoint,
+
+                    _ => new UriBuilder
+                        {
+                            Scheme = ServiceEndpoint.Scheme,
+                            Host = clientOptions.CustomEndpointAddress.Host
+                        }.Uri
+                };
 
                 EventHubName = eventHubName;
                 Credential = credential;
                 MessageConverter = messageConverter ?? new AmqpMessageConverter();
-                ConnectionScope = connectionScope ?? new AmqpConnectionScope(ServiceEndpoint, eventHubName, credential, clientOptions.TransportType, clientOptions.Proxy);
+                ConnectionScope = connectionScope ?? new AmqpConnectionScope(ServiceEndpoint, ConnectionEndpoint, eventHubName, credential, clientOptions.TransportType, clientOptions.Proxy);
 
                 ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                     timeout => ConnectionScope.OpenManagementLinkAsync(timeout, CancellationToken.None),
@@ -234,7 +250,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         ++failedAttemptCount;
                         retryDelay = retryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
-                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
+                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!_closed) && (!cancellationToken.IsCancellationRequested))
                         {
                             EventHubsEventSource.Log.GetPropertiesError(EventHubName, activeEx.Message);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
@@ -334,7 +350,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         ++failedAttemptCount;
                         retryDelay = retryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
-                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
+                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!_closed) && (!cancellationToken.IsCancellationRequested))
                         {
                             EventHubsEventSource.Log.GetPartitionPropertiesError(EventHubName, partitionId, activeEx.Message);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);

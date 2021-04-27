@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    internal static class SensitivityExtensions
+    internal static partial class SensitivityExtensions
     {
         public static string ToSerialString(this Sensitivity value) => value switch
         {

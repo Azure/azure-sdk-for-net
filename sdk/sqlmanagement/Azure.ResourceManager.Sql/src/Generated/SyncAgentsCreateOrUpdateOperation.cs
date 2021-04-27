@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class SyncAgentsCreateOrUpdateOperation : Operation<SyncAgent>, IOperationSource<SyncAgent>
     {
         private readonly ArmOperationHelpers<SyncAgent> _operation;
+
+        /// <summary> Initializes a new instance of SyncAgentsCreateOrUpdateOperation for mocking. </summary>
+        protected SyncAgentsCreateOrUpdateOperation()
+        {
+        }
+
         internal SyncAgentsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<SyncAgent>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SyncAgentsCreateOrUpdateOperation");

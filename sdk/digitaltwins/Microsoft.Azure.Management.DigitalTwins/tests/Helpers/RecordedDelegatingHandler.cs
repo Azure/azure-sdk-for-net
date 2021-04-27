@@ -1,14 +1,19 @@
-﻿namespace DigitalTwins.Tests.Helpers
-{
-    using System;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Threading.Tasks;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace DigitalTwins.Tests.Helpers
+{
     public class RecordedDelegatingHandler : DelegatingHandler
     {
-        private HttpResponseMessage _response;
+        private readonly HttpResponseMessage _response;
+        private int _counter;
 
         public RecordedDelegatingHandler()
         {
@@ -17,9 +22,8 @@
         }
 
         public RecordedDelegatingHandler(HttpResponseMessage response)
+            : this()
         {
-            StatusCodeToReturn = HttpStatusCode.Created;
-            SubsequentStatusCodeToReturn = StatusCodeToReturn;
             _response = response;
         }
 
@@ -37,13 +41,14 @@
 
         public Uri Uri { get; private set; }
 
-        public bool IsPassThrough { get; set; }
+        public bool IsPassthrough { get; set; }
 
-        private int counter;
-
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
         {
-            counter++;
+            _counter++;
+
             // Save request
             if (request.Content == null)
             {
@@ -62,26 +67,26 @@
             Uri = request.RequestUri;
 
             // Prepare response
-            if (IsPassThrough)
+            if (IsPassthrough)
             {
                 return await base.SendAsync(request, cancellationToken);
             }
-            else
+
+            if (_response != null && _counter == 1)
             {
-                if (_response != null && counter == 1)
-                {
-                    return _response;
-                }
-                else
-                {
-                    var statusCode = StatusCodeToReturn;
-                    if (counter > 1)
-                        statusCode = SubsequentStatusCodeToReturn;
-                    HttpResponseMessage response = new HttpResponseMessage(statusCode);
-                    response.Content = new StringContent("");
-                    return response;
-                }
+                return _response;
             }
+
+            var statusCode = StatusCodeToReturn;
+            if (_counter > 1)
+            {
+                statusCode = SubsequentStatusCodeToReturn;
+            }
+            var response = new HttpResponseMessage(statusCode)
+            {
+                Content = new StringContent(""),
+            };
+            return response;
         }
     }
 }

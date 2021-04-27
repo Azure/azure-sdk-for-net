@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class CheckNameAvailabilityReasonExtensions
+    internal static partial class CheckNameAvailabilityReasonExtensions
     {
         public static string ToSerialString(this CheckNameAvailabilityReason value) => value switch
         {

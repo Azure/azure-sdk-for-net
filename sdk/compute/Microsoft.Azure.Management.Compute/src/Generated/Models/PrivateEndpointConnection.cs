@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
@@ -19,7 +20,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// The Private Endpoint Connection resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PrivateEndpointConnection
+    public partial class PrivateEndpointConnection : IResource
     {
         /// <summary>
         /// Initializes a new instance of the PrivateEndpointConnection class.
@@ -60,10 +61,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource of private end point.
+        /// Gets the resource of private end point.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpoint")]
-        public PrivateEndpoint PrivateEndpoint { get; set; }
+        public PrivateEndpoint PrivateEndpoint { get; private set; }
 
         /// <summary>
         /// Gets or sets a collection of information about the state of the

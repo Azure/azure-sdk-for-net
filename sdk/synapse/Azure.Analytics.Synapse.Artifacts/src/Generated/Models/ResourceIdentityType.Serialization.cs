@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal static class ResourceIdentityTypeExtensions
+    internal static partial class ResourceIdentityTypeExtensions
     {
         public static string ToSerialString(this ResourceIdentityType value) => value switch
         {

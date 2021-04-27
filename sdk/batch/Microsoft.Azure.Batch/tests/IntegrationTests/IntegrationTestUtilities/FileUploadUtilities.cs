@@ -147,12 +147,12 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         }
 
         /// <summary>
-        /// Specifies that a local file should be staged to blob storage.  
+        /// Specifies that a local file should be staged to blob storage.
         /// The specified account will be charged for storage costs.
         /// </summary>
         /// <param name="localFileToStage">The name of the local file.</param>
         /// <param name="storageCredentials">The storage credentials to be used when creating the default container.</param>
-        /// <param name="nodeFileName">Optional name to be given to the file on the compute node.  If this parameter is null or missing 
+        /// <param name="nodeFileName">Optional name to be given to the file on the compute node.  If this parameter is null or missing
         /// the name on the compute node will be set to the value of localFileToStage stripped of all path information.</param>
         public FileToStage(string localFileToStage, StagingStorageAccount storageCredentials, string nodeFileName = null)
         {
@@ -233,7 +233,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
             if (index != -1)
             {
-                //SAS                
+                //SAS
                 string containerAbsoluteUrl = container.Substring(0, index);
                 return containerAbsoluteUrl + "/" + blob + container.Substring(index);
             }
@@ -273,7 +273,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
                     Permissions = permissions,
                     StartsOn = start,
                     ExpiresOn = end,
-                    
+
                 },
             };
 
@@ -395,7 +395,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         }
 
         /// <summary>
-        /// Stages all files in the queue 
+        /// Stages all files in the queue
         /// </summary>
         private async static Task StageFilesAsync(List<IFileStagingProvider> filesToStage, SequentialFileStagingArtifact seqArtifacts)
         {
@@ -466,16 +466,16 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
     public sealed class SequentialFileStagingArtifact : IFileStagingArtifact
     {
         /// <summary>
-        /// The name of any blob container created.  
-        /// 
-        /// A blob container is created if there is at least one file 
+        /// The name of any blob container created.
+        ///
+        /// A blob container is created if there is at least one file
         /// to be uploaded that does not have an explicit container specified.
         /// </summary>
         public string BlobContainerCreated { get; internal set; }
 
         /// <summary>
         /// Optionally set by caller.  Optionally used by implementation. A name fragment that can be used when constructing default names.
-        /// 
+        ///
         /// Can only be set once.
         /// </summary>
         public string NamingFragment { get; set; }
@@ -497,7 +497,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             if (!string.IsNullOrWhiteSpace(namingFragment))
             {
                 newNameBuilder.Append(namingFragment);
-                newNameBuilder.Append("-");
+                newNameBuilder.Append('-');
             }
 
             string newName = newNameBuilder.ToString();

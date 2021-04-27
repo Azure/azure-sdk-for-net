@@ -8,7 +8,10 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableBatchResponse
+    /// <summary>
+    /// The response from <see cref="TableTransactionalBatch.SubmitBatch(System.Threading.CancellationToken)"/> or <see cref="TableTransactionalBatch.SubmitBatchAsync(System.Threading.CancellationToken)"/>.
+    /// </summary>
+    public class TableBatchResponse
     {
         internal IDictionary<string, (HttpMessage Message, RequestType RequestType)> _requestLookup;
 

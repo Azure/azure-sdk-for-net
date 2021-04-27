@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(CopyActivityConverter))]
     public partial class CopyActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -116,6 +119,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("redirectIncompatibleRowSettings");
                 writer.WriteObjectValue(RedirectIncompatibleRowSettings);
             }
+            if (Optional.IsDefined(LogStorageSettings))
+            {
+                writer.WritePropertyName("logStorageSettings");
+                writer.WriteObjectValue(LogStorageSettings);
+            }
+            if (Optional.IsDefined(LogSettings))
+            {
+                writer.WritePropertyName("logSettings");
+                writer.WriteObjectValue(LogSettings);
+            }
             if (Optional.IsCollectionDefined(PreserveRules))
             {
                 writer.WritePropertyName("preserveRules");
@@ -135,6 +148,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ValidateDataConsistency))
+            {
+                writer.WritePropertyName("validateDataConsistency");
+                writer.WriteObjectValue(ValidateDataConsistency);
+            }
+            if (Optional.IsDefined(SkipErrorFile))
+            {
+                writer.WritePropertyName("skipErrorFile");
+                writer.WriteObjectValue(SkipErrorFile);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -165,8 +188,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> dataIntegrationUnits = default;
             Optional<object> enableSkipIncompatibleRow = default;
             Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
+            Optional<LogStorageSettings> logStorageSettings = default;
+            Optional<LogSettings> logSettings = default;
             Optional<IList<object>> preserveRules = default;
             Optional<IList<object>> preserve = default;
+            Optional<object> validateDataConsistency = default;
+            Optional<SkipErrorFile> skipErrorFile = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -355,6 +382,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             redirectIncompatibleRowSettings = RedirectIncompatibleRowSettings.DeserializeRedirectIncompatibleRowSettings(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("logStorageSettings"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            logStorageSettings = LogStorageSettings.DeserializeLogStorageSettings(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("logSettings"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            logSettings = LogSettings.DeserializeLogSettings(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("preserveRules"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -385,13 +432,46 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             preserve = array;
                             continue;
                         }
+                        if (property0.NameEquals("validateDataConsistency"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            validateDataConsistency = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("skipErrorFile"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            skipErrorFile = SkipErrorFile.DeserializeSkipErrorFile(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopyActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(inputs), Optional.ToList(outputs), source, sink, translator.Value, enableStaging.Value, stagingSettings.Value, parallelCopies.Value, dataIntegrationUnits.Value, enableSkipIncompatibleRow.Value, redirectIncompatibleRowSettings.Value, Optional.ToList(preserveRules), Optional.ToList(preserve));
+            return new CopyActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(inputs), Optional.ToList(outputs), source, sink, translator.Value, enableStaging.Value, stagingSettings.Value, parallelCopies.Value, dataIntegrationUnits.Value, enableSkipIncompatibleRow.Value, redirectIncompatibleRowSettings.Value, logStorageSettings.Value, logSettings.Value, Optional.ToList(preserveRules), Optional.ToList(preserve), validateDataConsistency.Value, skipErrorFile.Value);
+        }
+
+        internal partial class CopyActivityConverter : JsonConverter<CopyActivity>
+        {
+            public override void Write(Utf8JsonWriter writer, CopyActivity model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override CopyActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCopyActivity(document.RootElement);
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    internal static class ConditionOperatorExtensions
+    internal static partial class ConditionOperatorExtensions
     {
         public static string ToSerialString(this ConditionOperator value) => value switch
         {

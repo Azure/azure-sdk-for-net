@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//customvision/v3.3/training/domains",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9kb21haW5z",
+      "RequestUri": "//customvision/v3.4-preview/training/domains",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuNC1wcmV2aWV3L3RyYWluaW5nL2RvbWFpbnM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,7 +10,7 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
@@ -18,10 +18,10 @@
       },
       "ResponseHeaders": {
         "Request-Id": [
-          "7eb0053a-8ff8-4518-b771-98fd28111363"
+          "c15575cf-d178-4c09-b61c-117e14418829"
         ],
         "apim-request-id": [
-          "7eb0053a-8ff8-4518-b771-98fd28111363"
+          "c15575cf-d178-4c09-b61c-117e14418829"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -30,21 +30,21 @@
           "nosniff"
         ],
         "Date": [
-          "Sat, 06 Jun 2020 16:46:32 GMT"
+          "Fri, 06 Nov 2020 17:07:49 GMT"
         ],
         "Content-Length": [
-          "1762"
+          "3418"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"name\": \"General\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"name\": \"Food\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"ca455789-012d-4b50-9fec-5bb63841c793\",\r\n    \"name\": \"Landmarks\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"b30a91ae-e3c1-4f73-a81e-c270bff27c39\",\r\n    \"name\": \"Retail\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"45badf75-3591-4f26-a705-45678d3e9f5f\",\r\n    \"name\": \"Adult\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"0732100f-1a38-4e49-a514-c9b44c697ab5\",\r\n    \"name\": \"General (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"8882951b-82cd-4c32-970b-d5f8cb8bf6d7\",\r\n    \"name\": \"Food (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"b5cfd229-2ac7-4b2b-8d0a-2b0661344894\",\r\n    \"name\": \"Landmarks (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"6b4faeda-8396-481b-9f8b-177b9fa3097f\",\r\n    \"name\": \"Retail (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"da2e3a8a-40a5-4171-82f4-58522f70fbc1\",\r\n    \"name\": \"General\",\r\n    \"type\": \"ObjectDetection\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"1d8ffafe-ec40-4fb2-8f90-72b3b6cecea4\",\r\n    \"name\": \"Logo\",\r\n    \"type\": \"ObjectDetection\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"3780a898-81c3-4516-81ae-3a139614e1f3\",\r\n    \"name\": \"Products on Shelves\",\r\n    \"type\": \"ObjectDetection\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"a27d5ca5-bb19-49d8-a70a-fec086c47f5b\",\r\n    \"name\": \"General (compact)\",\r\n    \"type\": \"ObjectDetection\",\r\n    \"exportable\": true,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"7ec2ac80-887b-48a6-8df9-8b1357765430\",\r\n    \"name\": \"General (compact) [S1]\",\r\n    \"type\": \"ObjectDetection\",\r\n    \"exportable\": true,\r\n    \"enabled\": true\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"name\": \"General\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [],\r\n    \"modelInformation\": null\r\n  },\r\n  {\r\n    \"id\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"name\": \"Food\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [],\r\n    \"modelInformation\": null\r\n  },\r\n  {\r\n    \"id\": \"ca455789-012d-4b50-9fec-5bb63841c793\",\r\n    \"name\": \"Landmarks\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [],\r\n    \"modelInformation\": null\r\n  },\r\n  {\r\n    \"id\": \"b30a91ae-e3c1-4f73-a81e-c270bff27c39\",\r\n    \"name\": \"Retail\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [],\r\n    \"modelInformation\": null\r\n  },\r\n  {\r\n    \"id\": \"45badf75-3591-4f26-a705-45678d3e9f5f\",\r\n    \"name\": \"Adult\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [],\r\n    \"modelInformation\": null\r\n  },\r\n  {\r\n    \"id\": \"0732100f-1a38-4e49-a514-c9b44c697ab5\",\r\n    \"name\": \"General (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [\r\n      \"VAIDK\",\r\n      \"CoreML\",\r\n      \"DockerFile\",\r\n      \"ONNX\",\r\n      \"OpenVino\",\r\n      \"TensorFlow\"\r\n    ],\r\n    \"modelInformation\": {\r\n      \"estimatedModelSizeInMegabytes\": 5,\r\n      \"description\": \"A ShuffleNet-like model for general classification problem.\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": \"8882951b-82cd-4c32-970b-d5f8cb8bf6d7\",\r\n    \"name\": \"Food (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [\r\n      \"VAIDK\",\r\n      \"CoreML\",\r\n      \"DockerFile\",\r\n      \"ONNX\",\r\n      \"OpenVino\",\r\n      \"TensorFlow\"\r\n    ],\r\n    \"modelInformation\": {\r\n      \"estimatedModelSizeInMegabytes\": 5,\r\n      \"description\": \"A ShuffleNet-like model for food classification problem.\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": \"b5cfd229-2ac7-4b2b-8d0a-2b0661344894\",\r\n    \"name\": \"Landmarks (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [\r\n      \"VAIDK\",\r\n      \"CoreML\",\r\n      \"DockerFile\",\r\n      \"ONNX\",\r\n      \"OpenVino\",\r\n      \"TensorFlow\"\r\n    ],\r\n    \"modelInformation\": {\r\n      \"estimatedModelSizeInMegabytes\": 5,\r\n      \"description\": \"A ShuffleNet-like model for landmarks classification problem.\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": \"6b4faeda-8396-481b-9f8b-177b9fa3097f\",\r\n    \"name\": \"Retail (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [\r\n      \"VAIDK\",\r\n      \"CoreML\",\r\n      \"DockerFile\",\r\n      \"ONNX\",\r\n      \"OpenVino\",\r\n      \"TensorFlow\"\r\n    ],\r\n    \"modelInformation\": {\r\n      \"estimatedModelSizeInMegabytes\": 5,\r\n      \"description\": \"A ShuffleNet-like based model for food classification problem.\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": \"da2e3a8a-40a5-4171-82f4-58522f70fbc1\",\r\n    \"name\": \"General\",\r\n    \"type\": \"ObjectDetection\",\r\n    \"exportable\": false,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [],\r\n    \"modelInformation\": null\r\n  },\r\n  {\r\n    \"id\": \"1d8ffafe-ec40-4fb2-8f90-72b3b6cecea4\",\r\n    \"name\": \"Logo\",\r\n    \"type\": \"ObjectDetection\",\r\n    \"exportable\": false,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [],\r\n    \"modelInformation\": null\r\n  },\r\n  {\r\n    \"id\": \"3780a898-81c3-4516-81ae-3a139614e1f3\",\r\n    \"name\": \"Products on Shelves\",\r\n    \"type\": \"ObjectDetection\",\r\n    \"exportable\": false,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [],\r\n    \"modelInformation\": null\r\n  },\r\n  {\r\n    \"id\": \"a27d5ca5-bb19-49d8-a70a-fec086c47f5b\",\r\n    \"name\": \"General (compact)\",\r\n    \"type\": \"ObjectDetection\",\r\n    \"exportable\": true,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [\r\n      \"CoreML\",\r\n      \"DockerFile\",\r\n      \"ONNX\",\r\n      \"TensorFlow\"\r\n    ],\r\n    \"modelInformation\": {\r\n      \"estimatedModelSizeInMegabytes\": 42,\r\n      \"description\": \"A YOLO-like model for general detection problem.\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": \"7ec2ac80-887b-48a6-8df9-8b1357765430\",\r\n    \"name\": \"General (compact) [S1]\",\r\n    \"type\": \"ObjectDetection\",\r\n    \"exportable\": true,\r\n    \"enabled\": true,\r\n    \"exportablePlatforms\": [\r\n      \"VAIDK\",\r\n      \"CoreML\",\r\n      \"DockerFile\",\r\n      \"ONNX\",\r\n      \"OpenVino\",\r\n      \"TensorFlow\",\r\n      \"IVS\"\r\n    ],\r\n    \"modelInformation\": {\r\n      \"estimatedModelSizeInMegabytes\": 13,\r\n      \"description\": \"A SSD-like model for general detection problem.\"\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.3/training/domains/ee85a74c-405e-4adc-bb47-ffa8ca0c9f31",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMy90cmFpbmluZy9kb21haW5zL2VlODVhNzRjLTQwNWUtNGFkYy1iYjQ3LWZmYThjYTBjOWYzMQ==",
+      "RequestUri": "//customvision/v3.4-preview/training/domains/ee85a74c-405e-4adc-bb47-ffa8ca0c9f31",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuNC1wcmV2aWV3L3RyYWluaW5nL2RvbWFpbnMvZWU4NWE3NGMtNDA1ZS00YWRjLWJiNDctZmZhOGNhMGM5ZjMx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -52,7 +52,7 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.28801.04",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/2.0.0.0"
@@ -60,10 +60,10 @@
       },
       "ResponseHeaders": {
         "Request-Id": [
-          "7de141d6-e6e3-4661-ba80-b6bd200da166"
+          "930b4135-09dd-4b5e-9da0-1e74a2ebe7ad"
         ],
         "apim-request-id": [
-          "7de141d6-e6e3-4661-ba80-b6bd200da166"
+          "930b4135-09dd-4b5e-9da0-1e74a2ebe7ad"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -72,16 +72,16 @@
           "nosniff"
         ],
         "Date": [
-          "Sat, 06 Jun 2020 16:46:32 GMT"
+          "Fri, 06 Nov 2020 17:07:49 GMT"
         ],
         "Content-Length": [
-          "120"
+          "169"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n  \"name\": \"General\",\r\n  \"type\": \"Classification\",\r\n  \"exportable\": false,\r\n  \"enabled\": true\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n  \"name\": \"General\",\r\n  \"type\": \"Classification\",\r\n  \"exportable\": false,\r\n  \"enabled\": true,\r\n  \"exportablePlatforms\": [],\r\n  \"modelInformation\": null\r\n}",
       "StatusCode": 200
     }
   ],

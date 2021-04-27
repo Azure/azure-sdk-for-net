@@ -26,6 +26,8 @@ namespace Azure.DigitalTwins.Core
         /// This field will contain metadata about changes on properties on the digital twin.
         /// The key will be the property name, and the value is the metadata.
         /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
         public IDictionary<string, DigitalTwinPropertyMetadata> PropertyMetadata { get; set; } = new Dictionary<string, DigitalTwinPropertyMetadata>();
+#pragma warning restore CA2227 // Collection properties should be readonly
     }
 }

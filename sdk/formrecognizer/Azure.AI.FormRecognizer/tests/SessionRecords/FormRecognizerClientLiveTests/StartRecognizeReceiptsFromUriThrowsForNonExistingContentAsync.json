@@ -1,18 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/receipt/analyze?includeTextDetails=false",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyze?includeTextDetails=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "22",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-963dde9136439c4392a914a403e26a5b-c53656d068231e40-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20200909.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
-        ],
+        "traceparent": "00-944ca56827c4964a954ed823ccecb2ef-b4bac9e21c932e41-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "eea21153064a7cdf5d442d236b154082",
         "x-ms-return-client-request-id": "true"
       },
@@ -21,19 +18,19 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "545d1d3e-dc93-4353-9928-cabbe745acb3",
+        "apim-request-id": "170cb981-f47a-408a-b629-92d4f0383a68",
         "Content-Length": "161",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 09 Sep 2020 22:34:34 GMT",
+        "Date": "Wed, 31 Mar 2021 17:38:18 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "3944"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "3105"
       },
       "ResponseBody": {
         "error": {
           "code": "FailedToDownloadImage",
           "innerError": {
-            "requestId": "545d1d3e-dc93-4353-9928-cabbe745acb3"
+            "requestId": "170cb981-f47a-408a-b629-92d4f0383a68"
           },
           "message": "Failed to download image from input URL."
         }
@@ -42,7 +39,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-canada-central.cognitiveservices.azure.com/",
     "RandomSeed": "313658198"
   }
 }

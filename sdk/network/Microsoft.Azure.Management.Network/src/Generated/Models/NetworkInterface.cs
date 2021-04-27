@@ -215,6 +215,10 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 ExtendedLocation.Validate();
             }
+            if (PrivateEndpoint != null)
+            {
+                PrivateEndpoint.Validate();
+            }
             if (IpConfigurations != null)
             {
                 foreach (var element in IpConfigurations)

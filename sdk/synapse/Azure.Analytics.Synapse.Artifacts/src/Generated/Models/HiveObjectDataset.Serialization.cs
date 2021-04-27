@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(HiveObjectDatasetConverter))]
     public partial class HiveObjectDataset : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -225,6 +228,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HiveObjectDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, tableName.Value, table.Value, schema0.Value);
+        }
+
+        internal partial class HiveObjectDatasetConverter : JsonConverter<HiveObjectDataset>
+        {
+            public override void Write(Utf8JsonWriter writer, HiveObjectDataset model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override HiveObjectDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeHiveObjectDataset(document.RootElement);
+            }
         }
     }
 }

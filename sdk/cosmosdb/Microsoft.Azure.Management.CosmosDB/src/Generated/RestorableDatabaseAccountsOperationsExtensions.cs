@@ -25,7 +25,9 @@ namespace Microsoft.Azure.Management.CosmosDB
     {
             /// <summary>
             /// Lists all the restorable Azure Cosmos DB database accounts available under
-            /// the subscription and in a region.
+            /// the subscription and in a region.  This call requires
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read'
+            /// permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -40,7 +42,9 @@ namespace Microsoft.Azure.Management.CosmosDB
 
             /// <summary>
             /// Lists all the restorable Azure Cosmos DB database accounts available under
-            /// the subscription and in a region.
+            /// the subscription and in a region.  This call requires
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read'
+            /// permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,7 +65,9 @@ namespace Microsoft.Azure.Management.CosmosDB
 
             /// <summary>
             /// Lists all the restorable Azure Cosmos DB database accounts available under
-            /// the subscription.
+            /// the subscription. This call requires
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read'
+            /// permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -73,7 +79,9 @@ namespace Microsoft.Azure.Management.CosmosDB
 
             /// <summary>
             /// Lists all the restorable Azure Cosmos DB database accounts available under
-            /// the subscription.
+            /// the subscription. This call requires
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read'
+            /// permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -91,7 +99,9 @@ namespace Microsoft.Azure.Management.CosmosDB
 
             /// <summary>
             /// Retrieves the properties of an existing Azure Cosmos DB restorable database
-            /// account.
+            /// account.  This call requires
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*'
+            /// permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -109,7 +119,9 @@ namespace Microsoft.Azure.Management.CosmosDB
 
             /// <summary>
             /// Retrieves the properties of an existing Azure Cosmos DB restorable database
-            /// account.
+            /// account.  This call requires
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*'
+            /// permission.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

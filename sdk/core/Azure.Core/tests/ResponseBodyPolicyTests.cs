@@ -169,6 +169,43 @@ namespace Azure.Core.Tests
             Assert.That(async () => await getRequestTask, Throws.InstanceOf<OperationCanceledException>());
         }
 
+        [Test]
+        public void CanOverrideDefaultNetworkTimeout()
+        {
+            var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            MockTransport mockTransport = MockTransport.FromMessageCallback(message =>
+            {
+                tcs.Task.Wait(message.CancellationToken);
+                return null;
+            });
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () => await SendRequestAsync(mockTransport, message =>
+            {
+                message.NetworkTimeout = TimeSpan.FromMilliseconds(30);
+            }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false));
+        }
+
+        [Test]
+        public async Task CanOverrideDefaultNetworkTimeout_Stream()
+        {
+            var hangingStream = new HangingReadStream();
+
+            MockResponse mockResponse = new MockResponse(200)
+            {
+                ContentStream = hangingStream
+            };
+
+            MockTransport mockTransport = new MockTransport(mockResponse);
+            Response response = await SendRequestAsync(mockTransport, message =>
+            {
+                message.NetworkTimeout = TimeSpan.FromMilliseconds(30);
+            }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false);
+
+            Assert.IsInstanceOf<ReadTimeoutStream>(response.ContentStream);
+            Assert.AreEqual(30, hangingStream.ReadTimeout);
+        }
+
         private class SlowReadStream : TestReadStream
         {
             public readonly TaskCompletionSource<object> StartedReader = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -201,6 +238,8 @@ namespace Azure.Core.Tests
             }
 
             public override int ReadTimeout { get; set; }
+
+            public override bool CanTimeout { get; } = true;
         }
 
         private class ReadTrackingStream : TestReadStream
@@ -244,7 +283,6 @@ namespace Azure.Core.Tests
                 return left;
             }
 
-
             public override void Close()
             {
                 IsClosed = true;
@@ -252,7 +290,6 @@ namespace Azure.Core.Tests
             }
 
             public bool IsClosed { get; set; }
-
         }
 
         private abstract class TestReadStream: Stream

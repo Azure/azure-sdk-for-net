@@ -8,25 +8,22 @@
         "Content-Length": "169",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201103.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "1c960cc44410f81e2c2674f0aae217ef",
+        "x-ms-client-request-id": "565e58f2f76341b57d6d19474cf5d419",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "{\u0022startTime\u0022:\u00222020-10-01T00:00:00Z\u0022,\u0022endTime\u0022:\u00222020-10-31T00:00:00Z\u0022,\u0022filter\u0022:{\u0022dimensionFilter\u0022:[{\u0022dimension\u0022:{\u0022city\u0022:\u0022__SUM__\u0022,\u0022category\u0022:\u0022Grocery \u0026 Gourmet Food\u0022}}]}}",
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "75f49a57-f2c0-4caa-ba06-64cba19e30f9",
+        "apim-request-id": "f93fd4c2-ed3e-4c84-b536-6228fee2a325",
         "Content-Length": "1108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 18:02:31 GMT",
+        "Date": "Tue, 15 Dec 2020 01:34:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "416",
-        "X-Request-ID": "75f49a57-f2c0-4caa-ba06-64cba19e30f9"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "269",
+        "x-request-id": "f93fd4c2-ed3e-4c84-b536-6228fee2a325"
       },
       "ResponseBody": {
         "value": [
@@ -100,25 +97,22 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201103.1",
-          "(.NET Core 4.6.29321.03; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20201214.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "2b8664a63e3480e59c70cf880ea675ec",
+        "x-ms-client-request-id": "adb2b9b9bbbd45ff2f59a195c53047de",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d50704f8-b0dc-46fd-9512-69cb50ded8c3",
+        "apim-request-id": "c94e01e6-d9e5-4b8e-b881-ce1646a6f665",
         "Content-Length": "1631",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Nov 2020 18:02:31 GMT",
+        "Date": "Tue, 15 Dec 2020 01:34:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "269",
-        "X-Request-ID": "d50704f8-b0dc-46fd-9512-69cb50ded8c3"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "233",
+        "x-request-id": "c94e01e6-d9e5-4b8e-b881-ce1646a6f665"
       },
       "ResponseBody": {
         "value": [
@@ -132,7 +126,7 @@
             "path": [
               "city"
             ],
-            "score": 0.093254247542794433,
+            "score": 0.093254247542794544,
             "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Houston"
           },
           {
@@ -145,7 +139,7 @@
             "path": [
               "city"
             ],
-            "score": 0.070565102895706888,
+            "score": 0.070565102895706944,
             "description": "Several potential root causes has been identified, most contributors are: category = Grocery \u0026 Gourmet Food | city = Manila"
           },
           {
@@ -209,6 +203,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "1057209934"
+    "RandomSeed": "308348974"
   }
 }

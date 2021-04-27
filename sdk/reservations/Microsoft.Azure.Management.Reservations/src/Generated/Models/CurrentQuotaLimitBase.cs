@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using System.Linq;
 
     /// <summary>
-    /// Quota limits.
+    /// Quota properties.
     /// </summary>
     public partial class CurrentQuotaLimitBase : IResource
     {

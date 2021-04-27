@@ -12,7 +12,7 @@ namespace Azure.Core.Amqp
     /// </summary>
     public struct AmqpMessageId : IEquatable<AmqpMessageId>
     {
-        private readonly string? _messageIdString;
+        private readonly string _messageIdString;
 
         /// <summary>
         /// Initializes a new <see cref="AmqpMessageId"/> using the provided
@@ -22,6 +22,7 @@ namespace Azure.Core.Amqp
         /// <param name="messageId">The message Id.</param>
         public AmqpMessageId(string messageId)
         {
+            Argument.AssertNotNull(messageId, nameof(messageId));
             _messageIdString = messageId;
         }
 
@@ -30,7 +31,7 @@ namespace Azure.Core.Amqp
         /// </summary>
         ///
         /// <returns>A <see cref="string"/> from the value of this instance.</returns>
-        public override string ToString() => _messageIdString!;
+        public override string ToString() => _messageIdString;
 
         /// <summary>
         /// Determines whether the provided object is equal to the current object.
@@ -69,7 +70,7 @@ namespace Azure.Core.Amqp
         /// <see cref="AmqpMessageId"/>; otherwise, <see langword="false" />.
         /// </returns>
         public bool Equals(AmqpMessageId other) =>
-            other.Equals(_messageIdString!);
+            other.Equals(_messageIdString);
 
         /// <summary>
         /// Determines whether the provided <see cref="string"/> is equal to the current instance.
@@ -86,23 +87,13 @@ namespace Azure.Core.Amqp
         public bool Equals(string other) =>
             _messageIdString == other;
 
-        /// <inheritdoc/>
+        /// <summary>Compares two <see cref="AmqpMessageId"/> values for equality.</summary>
         public static bool operator ==(AmqpMessageId left, AmqpMessageId right)
         {
-            if (ReferenceEquals(left, right))
-            {
-                return true;
-            }
-
-            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
-            {
-                return false;
-            }
-
             return left.Equals(right);
         }
 
-        /// <inheritdoc/>
+        /// <summary>Compares two <see cref="AmqpMessageId"/> values for inequality.</summary>
         public static bool operator !=(AmqpMessageId left, AmqpMessageId right)
         {
             return !(left == right);

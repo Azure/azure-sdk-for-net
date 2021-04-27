@@ -6,12 +6,14 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Moq" />
-    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="..\..\Shared\src\CommunicationBearerTokenCredential.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Communication.Common.csproj" />
   </ItemGroup>

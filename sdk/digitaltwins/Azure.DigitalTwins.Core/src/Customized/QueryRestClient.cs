@@ -82,7 +82,7 @@ namespace Azure.DigitalTwins.Core
         // For methods that we need to override, when the parameter list is the same, autorest knows not to generate them again.
         // These methods should never be called.
 
-#pragma warning disable CA1801, IDE0051, IDE0060 // Remove unused parameter
+#pragma warning disable CA1801, IDE0051, IDE0060, CA1822 // Remove unused parameter
 
         private Task<ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders>> QueryTwinsAsync(QuerySpecification querySpecification, QueryOptions queryTwinsOptions = null, CancellationToken cancellationToken = default) => null;
 

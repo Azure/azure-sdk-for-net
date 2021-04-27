@@ -15,31 +15,58 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString");
-            writer.WriteStringValue(ConnectionString);
-            writer.WritePropertyName("query");
-            writer.WriteStringValue(Query);
+            if (Optional.IsDefined(ConnectionString))
+            {
+                if (ConnectionString != null)
+                {
+                    writer.WritePropertyName("connectionString");
+                    writer.WriteStringValue(ConnectionString);
+                }
+                else
+                {
+                    writer.WriteNull("connectionString");
+                }
+            }
+            if (Query != null)
+            {
+                writer.WritePropertyName("query");
+                writer.WriteStringValue(Query);
+            }
+            else
+            {
+                writer.WriteNull("query");
+            }
             writer.WriteEndObject();
         }
 
         internal static SqlSourceParameter DeserializeSqlSourceParameter(JsonElement element)
         {
-            string connectionString = default;
+            Optional<string> connectionString = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionString"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        connectionString = null;
+                        continue;
+                    }
                     connectionString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("query"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        query = null;
+                        continue;
+                    }
                     query = property.Value.GetString();
                     continue;
                 }
             }
-            return new SqlSourceParameter(connectionString, query);
+            return new SqlSourceParameter(connectionString.Value, query);
         }
     }
 }

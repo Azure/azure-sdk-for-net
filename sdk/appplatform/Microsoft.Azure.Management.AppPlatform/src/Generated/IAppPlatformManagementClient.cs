@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
@@ -115,6 +115,11 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IRuntimeVersionsOperations.
+        /// </summary>
+        IRuntimeVersionsOperations RuntimeVersions { get; }
 
         /// <summary>
         /// Gets the ISkusOperations.

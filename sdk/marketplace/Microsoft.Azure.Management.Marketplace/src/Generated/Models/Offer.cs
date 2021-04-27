@@ -54,7 +54,9 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// offer was not updated to db (true = not updated). If the allow list
         /// is identical to the existed one in db, the offer would not be
         /// updated.</param>
-        public Offer(string id = default(string), string name = default(string), string type = default(string), string uniqueOfferId = default(string), string offerDisplayName = default(string), string publisherDisplayName = default(string), string eTag = default(string), string privateStoreId = default(string), string createdAt = default(string), string modifiedAt = default(string), IList<string> specificPlanIdsLimitation = default(IList<string>), string updateSuppressedDueIdempotence = default(string), IList<Icon> iconFileUris = default(IList<Icon>))
+        /// <param name="iconFileUris">Icon File Uris</param>
+        /// <param name="plans">Offer plans</param>
+        public Offer(string id = default(string), string name = default(string), string type = default(string), string uniqueOfferId = default(string), string offerDisplayName = default(string), string publisherDisplayName = default(string), string eTag = default(string), string privateStoreId = default(string), string createdAt = default(string), string modifiedAt = default(string), IList<string> specificPlanIdsLimitation = default(IList<string>), bool? updateSuppressedDueIdempotence = default(bool?), IDictionary<string, string> iconFileUris = default(IDictionary<string, string>), IList<Plan> plans = default(IList<Plan>))
             : base(id, name, type)
         {
             UniqueOfferId = uniqueOfferId;
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.Marketplace.Models
             SpecificPlanIdsLimitation = specificPlanIdsLimitation;
             UpdateSuppressedDueIdempotence = updateSuppressedDueIdempotence;
             IconFileUris = iconFileUris;
+            Plans = plans;
             CustomInit();
         }
 
@@ -130,12 +133,18 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// one in db, the offer would not be updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updateSuppressedDueIdempotence")]
-        public string UpdateSuppressedDueIdempotence { get; set; }
+        public bool? UpdateSuppressedDueIdempotence { get; set; }
 
         /// <summary>
+        /// Gets or sets icon File Uris
         /// </summary>
         [JsonProperty(PropertyName = "properties.iconFileUris")]
-        public IList<Icon> IconFileUris { get; set; }
+        public IDictionary<string, string> IconFileUris { get; set; }
 
+        /// <summary>
+        /// Gets or sets offer plans
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.plans")]
+        public IList<Plan> Plans { get; set; }
     }
 }

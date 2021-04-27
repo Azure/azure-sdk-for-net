@@ -27,7 +27,7 @@ namespace Azure.Storage.Internal.Avro
         /// <summary>
         /// To detect redundant calls.
         /// </summary>
-        private bool _disposed = false;
+        private bool _disposed;
 
         public StreamWithPosition(
             Stream stream,
@@ -140,6 +140,8 @@ namespace Azure.Storage.Internal.Avro
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
+
             if (_disposed)
             {
                 return;

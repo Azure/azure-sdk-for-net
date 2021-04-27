@@ -114,6 +114,64 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string MongoDbV2SinkCopyActivity = @"
+{
+  ""name"": ""ExampleCopyActivity"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""MongoDbAtlasSource"",
+            ""filter"": {
+                ""value"": ""@dataset().MyFilter""
+             },
+            ""cursorMethods"": {
+                ""project"": {
+                  ""value"": ""@dataset().MyProject"",
+                  ""type"": ""Expression""
+                },
+                ""sort"": ""{ age : 1 }"",
+                ""skip"": ""3"",
+                ""limit"": ""3""
+              },
+             ""batchSize"": ""5""
+          },
+          ""sink"": {
+            ""type"": ""MongoDbV2Sink"",
+            ""writeBehavior"": ""upsert"",
+            ""writeBatchSize"": ""5000""
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleSourceDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleSinkDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
+       }
+    ],
+    ""parameters"": {
+        ""MyFilter"": {
+          ""type"": ""String""
+        },
+        ""MyProject"": {
+          ""type"": ""String""
+        }
+      }
+}
+}
+";
+
+        [JsonSample]
         public const string CopyActivity = @"
 {
   ""name"": ""MyPipeline"",
@@ -599,7 +657,10 @@ namespace DataFactory.Tests.JsonSamples
                     {
                         type: ""AzureSqlSource"",
                         sqlReaderQuery: ""$EncryptedString$MyEncryptedQuery"",
-                        parallelOption: ""DynamicRange"",
+                        partitionOption: {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+                        },
                         partitionSettings: 
                         {
                             partitionColumnName: ""partitionColumnName"",
@@ -2114,7 +2175,8 @@ namespace DataFactory.Tests.JsonSamples
                         ""propertyBagPropertyName2"": ""PropertyBagValue2"",
                         ""dateTime1"": ""2015-04-12T12:13:14Z"",
                     },
-                    ""retentionTimeInDays"": 35
+                    ""retentionTimeInDays"": 35,
+                    ""autoUserSpecification"" : ""pooladmin""
                 }
             }
         ]
@@ -2362,10 +2424,13 @@ namespace DataFactory.Tests.JsonSamples
                 ""type"": ""AzureMLExecutePipeline"",
                 ""typeProperties"": {
                     ""mlPipelineId"": ""93b9ccc4-0000-0000-8968-43a0a0fe0c44"",
+                    ""mlPipelineEndpointId"": ""mymlPipelineEndpointId"",
+                    ""version"": ""myversion"",
                     ""experimentName"": ""myExperimentName"",
                     ""mlPipelineParameters"": {
                         ""param_name"": ""param_value""
-                    }
+                    },
+                    ""dataPathAssignments"": ""mydataPathAssignments""
                 },
                 ""linkedServiceName"": {
                     ""referenceName"": ""MyAzureMLServiceLinkedService"",
@@ -5610,13 +5675,11 @@ namespace DataFactory.Tests.JsonSamples
         ""typeProperties"": {
           ""source"": {
             ""type"": ""TeradataSource"",
-            ""partitionOption"": ""DynamicRange"",
-                        ""partitionSettings"": {
-                            ""partitionColumnName"": ""EmployeeKey"",
-                            ""partitionUpperBound"": ""1"",
-                            ""partitionLowerBound"": ""500""
-                        }
-          },
+            ""partitionOption"": {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+               }
+           },
           ""sink"": {
             ""type"": ""BinarySink"",
             ""storeSettings"": {
@@ -5873,7 +5936,10 @@ namespace DataFactory.Tests.JsonSamples
                         type: ""SapTableSource"",
                         rowCount: 3,
                         sapDataColumnDelimiter: ""|"",
-                        partitionOption: ""PartitionOnCalendarDate"",
+                        partitionOption: {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+                        },
                         partitionSettings: 
                         {
                              ""partitionColumnName"": ""fakeColumn"",
@@ -6042,7 +6108,10 @@ namespace DataFactory.Tests.JsonSamples
                     source:
                     {                               
                         type: ""NetezzaSource"",
-                        partitionOption: ""DataSlice""
+                        partitionOption: {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+                        },
                     },
                     sink:
                     {
@@ -6444,6 +6513,51 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string ExecuteDataFlowActivityPipelineWithExpression = @"
+{
+    name: ""My Execute Data Flow Activity pipeline"",
+    properties: 
+    {
+        activities:
+        [
+            {
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                type: ""ExecuteDataFlow"",
+                typeProperties: {
+                    dataFlow: {
+                        referenceName: ""referenced1"",
+                        type: ""DataFlowReference""
+                    },
+                    staging: {
+                        linkedService: {
+                            referenceName: ""referenced2"",
+                            type: ""LinkedServiceReference""
+                        },
+                        folderPath: ""adfjobs/staging""
+                    },
+                    integrationRuntime: {
+                        referenceName: ""dataflowIR10minTTL"",
+                        type: ""IntegrationRuntimeReference""
+                    },
+                    compute: {
+                        computeType:  {
+                            value: ""@parameters('MemoryOptimized')"",
+                            type: ""Expression""
+                        },
+                        coreCount: {
+                           value: ""@parameters('8')"",
+                           type: ""Expression""
+                        },                       
+                    }
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
         public const string CopyActivity_DelimitedText_GoogleCloudStorage = @"{
   ""properties"": {
     ""activities"": [
@@ -6458,6 +6572,126 @@ namespace DataFactory.Tests.JsonSamples
               ""prefix"": ""fakeprefix"",
               ""wildcardFileName"": ""*.csv"",
               ""wildcardFolderPath"": ""A*"",
+              ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
+              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""skipLineCount"": 10,
+              ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
+            }
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""quoteAllText"": true,
+              ""fileExtension"": "".csv""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
+        public const string CopyActivity_DelimitedText_AmazonS3Compatible = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""AmazonS3CompatibleReadSettings"",
+              ""recursive"": true,
+              ""wildcardFolderPath"": ""A*"",
+              ""wildcardFileName"": ""*.csv"",
+              ""prefix"": ""fakeprefix"",
+              ""fileListPath"": ""fileListPath"",
+              ""enablePartitionDiscovery"": true,
+              ""partitionRootPath"": ""partitionRootPath"",
+              ""deleteFilesAfterCompletion"": true,
+              ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
+              ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextReadSettings"",
+              ""skipLineCount"": 10,
+              ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
+            }
+          },
+          ""sink"": {
+            ""type"": ""DelimitedTextSink"",
+            ""storeSettings"": {
+              ""type"": ""AzureDataLakeStoreWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy""
+            },
+            ""formatSettings"": {
+              ""type"": ""DelimitedTextWriteSettings"",
+              ""quoteAllText"": true,
+              ""fileExtension"": "".csv""
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""name"": ""ExampleCopyActivity""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
+        public const string CopyActivity_DelimitedText_OracleCloudStorage = @"{
+  ""properties"": {
+    ""activities"": [
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""DelimitedTextSource"",
+            ""storeSettings"": {
+              ""type"": ""OracleCloudStorageReadSettings"",
+              ""recursive"": true,
+              ""wildcardFolderPath"": ""A*"",
+              ""wildcardFileName"": ""*.csv"",
+              ""prefix"": ""fakeprefix"",
+              ""fileListPath"": ""fileListPath"",
+              ""enablePartitionDiscovery"": true,
+              ""partitionRootPath"": ""partitionRootPath"",
+              ""deleteFilesAfterCompletion"": true,
               ""modifiedDatetimeStart"":  ""2019-07-02T00:00:00.000Z"",
               ""modifiedDatetimeEnd"":  ""2019-07-03T00:00:00.000Z""
             },
@@ -6740,7 +6974,10 @@ namespace DataFactory.Tests.JsonSamples
                     {
                         ""type"": ""SapHanaSource"",
                         ""query"": ""$select=Column0"",
-                        ""partitionOption"": ""SapHanaDynamicRange"",
+                        ""partitionOption"": {
+                            ""value"": ""pipeline().parameters.parallelOption"",
+                            ""type"": ""Expression""
+                        },
                         ""partitionSettings"": {
                             ""partitionColumnName"": ""INTEGERTYPE""
                         }                        

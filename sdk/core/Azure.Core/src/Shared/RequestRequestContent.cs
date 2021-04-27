@@ -60,7 +60,7 @@ namespace Azure.Core
             Argument.AssertNotNull(stream, nameof(stream));
 
             byte[] header = SerializeHeader();
-            await stream.WriteAsync(header, 0, header.Length).ConfigureAwait(false);
+            await stream.WriteAsync(header, 0, header.Length, cancellationToken).ConfigureAwait(false);
 
             if (_request.Content != null)
             {

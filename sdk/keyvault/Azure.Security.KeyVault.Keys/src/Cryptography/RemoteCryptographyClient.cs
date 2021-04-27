@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public bool SupportsOperation(KeyOperation operation) => true;
 
-        public virtual async Task<Response<EncryptResult>> EncryptAsync(EncryptOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EncryptResult>> EncryptAsync(EncryptParameters parameters, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Encrypt)}");
             scope.AddAttribute("key", _keyId);
@@ -51,9 +51,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 // Make sure the IV is initialized.
                 // TODO: Remove this call once the service will initialized it: https://github.com/Azure/azure-sdk-for-net/issues/16175
-                options.Initialize();
+                parameters.Initialize();
 
-                return await Pipeline.SendRequestAsync(RequestMethod.Post, options, () => new EncryptResult { Algorithm = options.Algorithm }, cancellationToken, "/encrypt").ConfigureAwait(false);
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new EncryptResult { Algorithm = parameters.Algorithm }, cancellationToken, "/encrypt").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -62,7 +62,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public virtual Response<EncryptResult> Encrypt(EncryptOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<EncryptResult> Encrypt(EncryptParameters parameters, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Encrypt)}");
             scope.AddAttribute("key", _keyId);
@@ -72,9 +72,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 // Make sure the IV is initialized.
                 // TODO: Remove this call once the service will initialized it: https://github.com/Azure/azure-sdk-for-net/issues/16175
-                options.Initialize();
+                parameters.Initialize();
 
-                return Pipeline.SendRequest(RequestMethod.Post, options, () => new EncryptResult { Algorithm = options.Algorithm }, cancellationToken, "/encrypt");
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new EncryptResult { Algorithm = parameters.Algorithm }, cancellationToken, "/encrypt");
             }
             catch (Exception e)
             {
@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public virtual async Task<Response<DecryptResult>> DecryptAsync(DecryptOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DecryptResult>> DecryptAsync(DecryptParameters parameters, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Decrypt)}");
             scope.AddAttribute("key", _keyId);
@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                return await Pipeline.SendRequestAsync(RequestMethod.Post, options, () => new DecryptResult { Algorithm = options.Algorithm }, cancellationToken, "/decrypt").ConfigureAwait(false);
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new DecryptResult { Algorithm = parameters.Algorithm }, cancellationToken, "/decrypt").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -100,7 +100,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        public virtual Response<DecryptResult> Decrypt(DecryptOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DecryptResult> Decrypt(DecryptParameters parameters, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Decrypt)}");
             scope.AddAttribute("key", _keyId);
@@ -108,7 +108,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                return Pipeline.SendRequest(RequestMethod.Post, options, () => new DecryptResult { Algorithm = options.Algorithm }, cancellationToken, "/decrypt");
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new DecryptResult { Algorithm = parameters.Algorithm }, cancellationToken, "/decrypt");
             }
             catch (Exception e)
             {
@@ -337,26 +337,26 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
-        bool ICryptographyProvider.ShouldRemote => false;
+        bool ICryptographyProvider.CanRemote => false;
 
-        async Task<EncryptResult> ICryptographyProvider.EncryptAsync(EncryptOptions options, CancellationToken cancellationToken)
+        async Task<EncryptResult> ICryptographyProvider.EncryptAsync(EncryptParameters parameters, CancellationToken cancellationToken)
         {
-            return await EncryptAsync(options, cancellationToken).ConfigureAwait(false);
+            return await EncryptAsync(parameters, cancellationToken).ConfigureAwait(false);
         }
 
-        EncryptResult ICryptographyProvider.Encrypt(EncryptOptions options, CancellationToken cancellationToken)
+        EncryptResult ICryptographyProvider.Encrypt(EncryptParameters parameters, CancellationToken cancellationToken)
         {
-            return Encrypt(options, cancellationToken);
+            return Encrypt(parameters, cancellationToken);
         }
 
-        async Task<DecryptResult> ICryptographyProvider.DecryptAsync(DecryptOptions options, CancellationToken cancellationToken)
+        async Task<DecryptResult> ICryptographyProvider.DecryptAsync(DecryptParameters parameters, CancellationToken cancellationToken)
         {
-            return await DecryptAsync(options, cancellationToken).ConfigureAwait(false);
+            return await DecryptAsync(parameters, cancellationToken).ConfigureAwait(false);
         }
 
-        DecryptResult ICryptographyProvider.Decrypt(DecryptOptions options, CancellationToken cancellationToken)
+        DecryptResult ICryptographyProvider.Decrypt(DecryptParameters parameters, CancellationToken cancellationToken)
         {
-            return Decrypt(options, cancellationToken);
+            return Decrypt(parameters, cancellationToken);
         }
 
         async Task<WrapResult> ICryptographyProvider.WrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)

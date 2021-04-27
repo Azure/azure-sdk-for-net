@@ -4,11 +4,15 @@
     <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />
+    <PackageReference Include="Azure.Messaging.EventGrid" />
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
+    
+    <ExcludeFromProjectReferenceToConversion Include="Azure.Messaging.EventGrid" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
