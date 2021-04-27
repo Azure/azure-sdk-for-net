@@ -20,8 +20,8 @@ namespace Azure.Security.KeyVault
         { }
 
         /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequestAsync" />
-        protected override async ValueTask AuthorizeRequestAsync(HttpMessage message)
-            => await AuthorizeRequestInternal(message, true).ConfigureAwait(false);
+        protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
+            => AuthorizeRequestInternal(message, true);
 
         /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequest" />
         protected override void AuthorizeRequest(HttpMessage message)
@@ -69,8 +69,8 @@ namespace Azure.Security.KeyVault
         }
 
         /// <inheritdoc cref="BearerTokenChallengeAuthenticationPolicy.AuthorizeRequestOnChallengeAsync" />
-        protected override async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
-            => await AuthorizeRequestOnChallengeAsyncInternal(message, true).ConfigureAwait(false);
+        protected override ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
+            => AuthorizeRequestOnChallengeAsyncInternal(message, true);
 
         protected override bool AuthorizeRequestOnChallenge(HttpMessage message)
             => AuthorizeRequestOnChallengeAsyncInternal(message, false).EnsureCompleted();
