@@ -42,8 +42,16 @@ namespace Proto.Network
             Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).PublicIPAddresses;
 
-        /// <inheritdoc />
-        public override ArmResponse<PublicIpAddress> CreateOrUpdate(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a public IP address. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the public IP address. </param>
+        /// <param name="resourceDetails"> The desired public IP address configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A response with the <see cref="ArmResponse{PublicIpAddress}"/> operation for this resource. </returns>
+        /// <exception cref="ArgumentException"> Name of the public IP address cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public ArmResponse<PublicIpAddress> CreateOrUpdate(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken);
             return new PhArmResponse<PublicIpAddress, PublicIPAddress>(
@@ -51,8 +59,16 @@ namespace Proto.Network
                 n => new PublicIpAddress(Parent, new PublicIPAddressData(n)));
         }
 
-        /// <inheritdoc />
-        public override async Task<ArmResponse<PublicIpAddress>> CreateOrUpdateAsync(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a public IP address. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the public IP address. </param>
+        /// <param name="resourceDetails"> The desired public IP address configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{PublicIpAddress}"/> operation for this public IP address. </returns>
+        /// <exception cref="ArgumentException"> Name of the public IP address cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public async Task<ArmResponse<PublicIpAddress>> CreateOrUpdateAsync(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<PublicIpAddress, PublicIPAddress>(
@@ -60,16 +76,38 @@ namespace Proto.Network
                 n => new PublicIpAddress(Parent, new PublicIPAddressData(n)));
         }
 
-        /// <inheritdoc />
-        public override ArmOperation<PublicIpAddress> StartCreateOrUpdate(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a public IP address. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the public IP address. </param>
+        /// <param name="resourceDetails"> The desired public IP address configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> An <see cref="ArmOperation{PublicIpAddress}"/> that allows polling for completion of the operation. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        /// <exception cref="ArgumentException"> Name of the public IP address cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public ArmOperation<PublicIpAddress> StartCreateOrUpdate(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<PublicIpAddress, PublicIPAddress>(
                 Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken),
                 n => new PublicIpAddress(Parent, new PublicIPAddressData(n)));
         }
 
-        /// <inheritdoc />
-        public override async Task<ArmOperation<PublicIpAddress>> StartCreateOrUpdateAsync(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a public IP address. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the public IP address. </param>
+        /// <param name="resourceDetails"> The desired public IP address configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{PublicIpAddress}"/> that allows polling for completion of the operation. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        /// <exception cref="ArgumentException"> Name of the public IP address cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public async Task<ArmOperation<PublicIpAddress>> StartCreateOrUpdateAsync(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<PublicIpAddress, PublicIPAddress>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false),
@@ -81,7 +119,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="location"> The location to create the network security group. </param>
         /// <returns> Object used to create a <see cref="PublicIpAddress"/>. </returns>
-        public ArmBuilder<ResourceGroupResourceIdentifier, PublicIpAddress, PublicIPAddressData> Construct(LocationData location = null)
+        public PublicIpAddressBuilder Construct(LocationData location = null)
         {
             var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier, ResourceGroupOperations>();
             var ipAddress = new PublicIPAddress()
@@ -91,7 +129,7 @@ namespace Proto.Network
                 Location = location ?? parent.Data.Location,
             };
 
-            return new ArmBuilder<ResourceGroupResourceIdentifier, PublicIpAddress, PublicIPAddressData>(this, new PublicIPAddressData(ipAddress));
+            return new PublicIpAddressBuilder(this, new PublicIPAddressData(ipAddress));
         }
 
         /// <summary>
@@ -188,6 +226,6 @@ namespace Proto.Network
         public override async Task<ArmResponse<PublicIpAddress>> GetAsync(string publicIpAddressesName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.GetAsync(Id.ResourceGroupName, publicIpAddressesName, cancellationToken: cancellationToken), Convertor());
-        }     
+        }
     }
 }
