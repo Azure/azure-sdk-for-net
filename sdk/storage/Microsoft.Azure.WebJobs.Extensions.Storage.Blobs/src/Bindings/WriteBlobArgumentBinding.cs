@@ -40,33 +40,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             return await Task.FromResult(new NotifyingBlobStream(rawStream, committedAction)).ConfigureAwait(false);
         }
 
-        public static async Task<CacheAfterWriteStream> BindStreamAsync(BlobWithContainer<BlobBaseClient> blob,
+        public static async Task<ICacheAwareWriteObject> BindStreamCacheAwareAsync(BlobWithContainer<BlobBaseClient> blob,
             ValueBindingContext context, IBlobWrittenWatcher blobWrittenWatcher, IFunctionDataCache functionDataCache)
         {
-            var blockBlob = blob.BlobClient as BlockBlobClient;
-
-            if (blockBlob == null)
-            {
-                throw new InvalidOperationException("Cannot bind to page or append blobs using 'out string', 'TextWriter', or writable 'Stream' parameters.");
-            }
-            var functionID = context.FunctionInstanceId;
-            BlobProperties properties = await blockBlob.FetchPropertiesOrNullIfNotExistAsync().ConfigureAwait(false);
-            Dictionary<string, string> metadata = new Dictionary<string, string>();
-            if (properties != null && properties.Metadata != null)
-            {
-                metadata = new Dictionary<string, string>(properties.Metadata);
-            }
-
-            BlobCausalityManager.SetWriter(metadata, functionID);
-            BlockBlobOpenWriteOptions options = new BlockBlobOpenWriteOptions()
-            {
-                Metadata = metadata,
-            };
-            Stream rawStream = await blockBlob.OpenWriteAsync(true, options).ConfigureAwait(false);
-            IBlobCommitedAction committedAction = new BlobCommittedAction(blob, blobWrittenWatcher);
-
-            Stream notifyingStream = new NotifyingBlobStream(rawStream, committedAction);
-            return await Task.FromResult(new CacheAfterWriteStream(context.SharedMemoryMetadata, functionDataCache, blob, notifyingStream)).ConfigureAwait(false);
+            Stream blobStream = await BindStreamAsync(blob, context, blobWrittenWatcher).ConfigureAwait(false);
+            return new CacheObjectAndBlobStream(blob, context.SharedMemoryMetadata, blobStream, functionDataCache);
         }
     }
 }

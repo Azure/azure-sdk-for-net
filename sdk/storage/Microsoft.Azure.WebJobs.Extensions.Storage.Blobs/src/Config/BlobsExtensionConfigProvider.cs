@@ -76,17 +76,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             IConverterManager converterManager,
             BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             HttpRequestProcessor httpRequestProcessor,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory) : this(blobServiceClientProvider, triggerBinder, contextAccessor, nameResolver, converterManager, blobTriggerQueueWriterFactory, httpRequestProcessor, null, loggerFactory)
         {
-            _blobServiceClientProvider = blobServiceClientProvider;
-            _triggerBinder = triggerBinder;
-            _blobWrittenWatcherGetter = contextAccessor;
-            _nameResolver = nameResolver;
-            _converterManager = converterManager;
-            _blobTriggerQueueWriterFactory = blobTriggerQueueWriterFactory;
-            _httpRequestProcessor = httpRequestProcessor;
-            _functionDataCache = null;
-            _logger = loggerFactory.CreateLogger<BlobsExtensionConfigProvider>();
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -121,6 +112,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             rule.BindToInput<BlobClient>((attr, cts) => CreateBlobReference<BlobClient>(attr, cts));
             rule.BindToInput<BlobBaseClient>((attr, cts) => CreateBlobReference<BlobBaseClient>(attr, cts));
 
+            // If caching is enabled, create a binding for that
+            if (_functionDataCache != null && _functionDataCache.IsEnabled)
+            {
+                rule.When("Access", FileAccess.Read).
+                    BindToInput<ICacheAwareReadObject>((attr, ctx) => CreateCacheAwareReadObjectAsync(attr, ctx));
+
+                rule.When("Access", FileAccess.Write).
+                    BindToInput<ICacheAwareWriteObject>((attr, ctx) => CreateCacheAwareWriteObjectAsync(attr, ctx));
+            }
+
             // CloudBlobStream's derived functionality is only relevant to writing. check derived functionality
             rule.When("Access", FileAccess.Write).
                 BindToInput<Stream>(ConvertToCloudBlobStreamAsync);
@@ -139,6 +140,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
             RegisterCommonConverters(rule);
             rule.AddConverter<BlobBaseClient, BlobClient>(ConvertBlobBaseClientToBlobClient);
+
+            // If caching is enabled, create a binding for that
+            //if (_functionDataCache != null && _functionDataCache.IsEnabled)
+            //{
+            //    rule.AddConverter<BlobBaseClient, ICacheAfterWriteStream>(ConvertToBlobAndStreamAsync);
+            //}
         }
 
 #pragma warning disable CS0618 // Type or member is obsolete. FluentBindingRule is "Not ready for public consumption."
@@ -362,21 +369,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             }
         }
 
-        private Task<Stream> CreateStreamAsync(
+        private async Task<ICacheAwareWriteObject> CreateCacheAwareWriteObjectAsync(
             BlobAttribute blobAttribute,
             ValueBindingContext context)
         {
-            if (_functionDataCache != null)
+            var cancellationToken = context.CancellationToken;
+            var blob = await GetBlobAsync(blobAttribute, cancellationToken).ConfigureAwait(false);
+
+            switch (blobAttribute.Access)
             {
-                return CreateCacheAwareStreamAsync(blobAttribute, context);
-            }
-            else
-            {
-                return CreateStreamCoreAsync(blobAttribute, context);
+                case FileAccess.Write:
+                    var writeStream = await WriteBlobArgumentBinding.BindStreamCacheAwareAsync(blob,
+                        context, _blobWrittenWatcherGetter.Value, _functionDataCache).ConfigureAwait(false);
+                    return writeStream;
+
+                default:
+                    throw new InvalidOperationException("Cannot bind blob to Stream using FileAccess ReadWrite.");
             }
         }
 
-        private async Task<Stream> CreateCacheAwareStreamAsync(
+        private async Task<ICacheAwareReadObject> CreateCacheAwareReadObjectAsync(
             BlobAttribute blobAttribute,
             ValueBindingContext context)
         {
@@ -386,20 +398,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             switch (blobAttribute.Access)
             {
                 case FileAccess.Read:
-                    var readStream = await ReadBlobArgumentBinding.TryBindStreamAsync(blob, context, _functionDataCache).ConfigureAwait(false);
+                    var readStream = await ReadBlobArgumentBinding.TryBindCacheAwareAsync(blob, context, _functionDataCache).ConfigureAwait(false);
                     return readStream;
-
-                case FileAccess.Write:
-                    var writeStream = await WriteBlobArgumentBinding.BindStreamAsync(blob,
-                        context, _blobWrittenWatcherGetter.Value, _functionDataCache).ConfigureAwait(false);
-                    return writeStream;
 
                 default:
                     throw new InvalidOperationException("Cannot bind blob to Stream using FileAccess ReadWrite.");
             }
         }
 
-        private async Task<Stream> CreateStreamCoreAsync(
+        private async Task<Stream> CreateStreamAsync(
             BlobAttribute blobAttribute,
             ValueBindingContext context)
         {

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 
@@ -17,41 +18,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
         public static Task<Stream> TryBindStreamAsync(BlobBaseClient blob, ValueBindingContext context)
         {
             return TryBindStreamAsync(blob, context.CancellationToken);
-        }
-
-        public static async Task<Stream> TryBindStreamAsync(BlobWithContainer<BlobBaseClient> blob, ValueBindingContext context, IFunctionDataCache functionDataCache)
-        {
-            try
-            {
-                // Generate the cache key for this blob
-                FunctionDataCacheKey cacheKey = await GetFunctionDataCacheKey(blob, context.CancellationToken).ConfigureAwait(false);
-
-                // Check if it exists in the cache
-                FunctionDataCacheStream cacheStream = TryGetFromFunctionDataCache(cacheKey, functionDataCache);
-                if (cacheStream != null)
-                {
-                    // Cache hit
-                    return cacheStream;
-                }
-
-                // Cache miss
-                // Wrap the blob's stream along with the cache key so it can be inserted in the cache later using the above
-                // generated key for this blob.
-                Stream innerStream = await TryBindStreamAsync(blob.BlobClient, context.CancellationToken).ConfigureAwait(false);
-                CacheableObjectStream cachableObjStream = new CacheableObjectStream(cacheKey, innerStream, functionDataCache);
-                return cachableObjStream;
-            }
-            catch (RequestFailedException exception)
-            {
-                // Testing generic error case since specific error codes are not available for FetchAttributes
-                // (HEAD request), including OpenRead.
-                if (!exception.IsNotFound())
-                {
-                    throw;
-                }
-
-                return null;
-            }
         }
 
         public static async Task<Stream> TryBindStreamAsync(BlobBaseClient blob, CancellationToken cancellationToken)
@@ -76,6 +42,67 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             return rawStream;
         }
 
+        public static async Task<Stream> TryBindStreamAsync(BlobBaseClient blob, string eTag, CancellationToken cancellationToken)
+        {
+            Stream rawStream;
+            try
+            {
+                BlobOpenReadOptions readOptions = new BlobOpenReadOptions(allowModifications: false)
+                {
+                    Conditions = new BlobRequestConditions()
+                    {
+                        IfMatch = new ETag(eTag),
+                    },
+                };
+                rawStream = await blob.OpenReadAsync(readOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException exception)
+            {
+                // Testing generic error case since specific error codes are not available for FetchAttributes
+                // (HEAD request), including OpenRead.
+                if (!exception.IsNotFound())
+                {
+                    throw;
+                }
+
+                return null;
+            }
+
+            return rawStream;
+        }
+
+        public static async Task<ICacheAwareReadObject> TryBindCacheAwareAsync(BlobWithContainer<BlobBaseClient> blob, ValueBindingContext context, IFunctionDataCache functionDataCache)
+        {
+            try
+            {
+                // Generate the cache key for this blob
+                FunctionDataCacheKey cacheKey = await GetFunctionDataCacheKey(blob, context.CancellationToken).ConfigureAwait(false);
+
+                // Check if it exists in the cache
+                if (functionDataCache.TryGet(cacheKey, isIncrementActiveReference: true, out SharedMemoryMetadata sharedMemoryMeta))
+                {
+                    // CACHE HIT
+                    return new CacheObjectOrBlobStream(cacheKey, sharedMemoryMeta, functionDataCache);
+                }
+
+                // CACHE MISS
+                // Wrap the blob's stream along with the cache key so it can be inserted in the cache later using the above generated key for this blob
+                Stream innerStream = await TryBindStreamAsync(blob.BlobClient, cacheKey.Version, context.CancellationToken).ConfigureAwait(false);
+                return new CacheObjectOrBlobStream(cacheKey, innerStream, functionDataCache);
+            }
+            catch (RequestFailedException exception)
+            {
+                // Testing generic error case since specific error codes are not available for FetchAttributes
+                // (HEAD request), including OpenRead.
+                if (!exception.IsNotFound())
+                {
+                    throw;
+                }
+
+                return null;
+            }
+        }
+
         private static async Task<FunctionDataCacheKey> GetFunctionDataCacheKey(BlobWithContainer<BlobBaseClient> blob, CancellationToken cancellationToken)
         {
             // To be strongly consistent, first check the latest version present in blob storage;
@@ -85,18 +112,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             string id = blob.BlobClient.Uri.ToString();
             FunctionDataCacheKey cacheKey = new FunctionDataCacheKey(id, eTag);
             return cacheKey;
-        }
-
-        private static FunctionDataCacheStream TryGetFromFunctionDataCache(
-            FunctionDataCacheKey cacheKey,
-            IFunctionDataCache functionDataCache)
-        {
-            if (!functionDataCache.TryGet(cacheKey, isIncrementActiveReference: true, out SharedMemoryMetadata sharedMemoryMeta))
-            {
-                return null;
-            }
-
-            return new FunctionDataCacheStream(cacheKey, sharedMemoryMeta, functionDataCache);
         }
     }
 }
