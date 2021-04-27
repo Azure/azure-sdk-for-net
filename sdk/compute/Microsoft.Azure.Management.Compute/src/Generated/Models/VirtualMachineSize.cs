@@ -31,7 +31,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="name">The name of the virtual machine size.</param>
         /// <param name="numberOfCores">The number of cores supported by the
-        /// virtual machine size.</param>
+        /// virtual machine size. For Constrained vCPU capable VM sizes, this
+        /// number represents the total vCPUs of quota that the VM uses. For
+        /// accurate vCPU count, please refer to
+        /// https://docs.microsoft.com/en-us/azure/virtual-machines/constrained-vcpu
+        /// or
+        /// https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list</param>
         /// <param name="osDiskSizeInMB">The OS disk size, in MB, allowed by
         /// the virtual machine size.</param>
         /// <param name="resourceDiskSizeInMB">The resource disk size, in MB,
@@ -64,7 +69,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the number of cores supported by the virtual machine
-        /// size.
+        /// size. For Constrained vCPU capable VM sizes, this number represents
+        /// the total vCPUs of quota that the VM uses. For accurate vCPU count,
+        /// please refer to
+        /// https://docs.microsoft.com/en-us/azure/virtual-machines/constrained-vcpu
+        /// or
+        /// https://docs.microsoft.com/en-us/rest/api/compute/resourceskus/list
         /// </summary>
         [JsonProperty(PropertyName = "numberOfCores")]
         public int? NumberOfCores { get; set; }

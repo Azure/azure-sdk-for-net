@@ -258,8 +258,10 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView'
+            /// The expand expression to apply on the operation. 'InstanceView' will
+            /// retrieve the instance view of the virtual machine. 'UserData' will retrieve
+            /// the UserData of the virtual machine. Possible values include:
+            /// 'instanceView', 'userData'
             /// </param>
             public static VirtualMachine Get(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
@@ -280,8 +282,10 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView'
+            /// The expand expression to apply on the operation. 'InstanceView' will
+            /// retrieve the instance view of the virtual machine. 'UserData' will retrieve
+            /// the UserData of the virtual machine. Possible values include:
+            /// 'instanceView', 'userData'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
