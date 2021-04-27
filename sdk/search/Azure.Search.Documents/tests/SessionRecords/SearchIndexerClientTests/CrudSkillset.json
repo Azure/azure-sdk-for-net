@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/skillsets?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?api-version=2020-06-30-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "2227",
+        "Content-Length": "3785",
         "Content-Type": "application/json",
-        "traceparent": "00-b14b20f1028f97449e3e21222f9c00c7-cdcabba7952f2541-00",
+        "traceparent": "00-c5f1427643cb6c4eacaa6c2afd9461a0-e7af56d97d99344b-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210426.1",
+          "(.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "719e8dac28fd9b3cfce9636118e05032",
         "x-ms-return-client-request-id": "true"
@@ -167,19 +167,108 @@
         ],
         "cognitiveServices": {
           "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices"
+        },
+        "knowledgeStore": {
+          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=Sanitized;EndpointSuffix=core.windows.net",
+          "projections": [
+            {
+              "tables": [
+                {
+                  "tableName": "hotelReviewsDocument",
+                  "generatedKeyName": "Documentid",
+                  "source": "/document/tableprojection"
+                },
+                {
+                  "tableName": "hotelReviewsPages",
+                  "generatedKeyName": "Pagesid",
+                  "source": "/document/tableprojection/pages/*"
+                },
+                {
+                  "tableName": "hotelReviewsKeyPhrases",
+                  "generatedKeyName": "KeyPhrasesid",
+                  "source": "/document/tableprojection/pages/*/keyphrase/*"
+                }
+              ]
+            },
+            {
+              "tables": [
+                {
+                  "tableName": "hotelReviewsInlineDocument",
+                  "generatedKeyName": "Documentid",
+                  "sourceContext": "/document",
+                  "inputs": [
+                    {
+                      "name": "name",
+                      "source": "/document/name"
+                    },
+                    {
+                      "name": "reviews_date",
+                      "source": "/document/reviews_date"
+                    },
+                    {
+                      "name": "reviews_rating",
+                      "source": "/document/reviews_rating"
+                    },
+                    {
+                      "name": "reviews_text",
+                      "source": "/document/reviews_text"
+                    },
+                    {
+                      "name": "reviews_title",
+                      "source": "/document/reviews_title"
+                    },
+                    {
+                      "name": "AzureSearch_DocumentKey",
+                      "source": "/document/AzureSearch_DocumentKey"
+                    }
+                  ]
+                },
+                {
+                  "tableName": "hotelReviewsInlinePages",
+                  "generatedKeyName": "Pagesid",
+                  "sourceContext": "/document/reviews_text/pages/*",
+                  "inputs": [
+                    {
+                      "name": "SentimentScore",
+                      "source": "/document/reviews_text/pages/*/Sentiment"
+                    },
+                    {
+                      "name": "LanguageCode",
+                      "source": "/document/Language"
+                    },
+                    {
+                      "name": "Page",
+                      "source": "/document/reviews_text/pages/*"
+                    }
+                  ]
+                },
+                {
+                  "tableName": "hotelReviewsInlineKeyPhrases",
+                  "generatedKeyName": "kpidv2",
+                  "sourceContext": "/document/reviews_text/pages/*/Keyphrases/*",
+                  "inputs": [
+                    {
+                      "name": "Keyphrases",
+                      "source": "/document/reviews_text/pages/*/Keyphrases/*"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "719e8dac-28fd-9b3c-fce9-636118e05032",
-        "Content-Length": "3209",
+        "Content-Length": "5562",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 17 Jul 2020 20:21:25 GMT",
-        "elapsed-time": "91",
-        "ETag": "W/\u00220x8D82A8EFAA3FCF9\u0022",
+        "Date": "Tue, 27 Apr 2021 02:04:01 GMT",
+        "elapsed-time": "86",
+        "ETag": "W/\u00220x8D90920BA3E294D\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-pakrysearch.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30",
+        "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -188,8 +277,8 @@
         "x-ms-client-request-id": "719e8dac-28fd-9b3c-fce9-636118e05032"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-pakrysearch.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D82A8EFAA3FCF9\u0022",
+        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
+        "@odata.etag": "\u00220x8D90920BA3E294D\u0022",
         "name": "qgrsmesk",
         "description": null,
         "skills": [
@@ -254,6 +343,8 @@
             "name": null,
             "description": null,
             "context": "/document",
+            "defaultCountryHint": null,
+            "modelVersion": null,
             "inputs": [
               {
                 "name": "text",
@@ -276,6 +367,7 @@
             "context": "/document/reviews_text/pages/*",
             "defaultLanguageCode": "en",
             "maxKeyPhraseCount": null,
+            "modelVersion": null,
             "inputs": [
               {
                 "name": "text",
@@ -390,24 +482,152 @@
           "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices",
           "description": null
         },
-        "knowledgeStore": null,
+        "knowledgeStore": {
+          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=PTzW6XFeH7IsvWOdK\u002B0vmav7H1Zsuq4NKvOVViBttqAixm7smFzZtvUdAAGQb/zBPw2nwifF4e4CSUU9qvdjNQ==;EndpointSuffix=core.windows.net",
+          "projections": [
+            {
+              "tables": [
+                {
+                  "tableName": "hotelReviewsDocument",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "Documentid",
+                  "source": "/document/tableprojection",
+                  "sourceContext": null,
+                  "inputs": []
+                },
+                {
+                  "tableName": "hotelReviewsPages",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "Pagesid",
+                  "source": "/document/tableprojection/pages/*",
+                  "sourceContext": null,
+                  "inputs": []
+                },
+                {
+                  "tableName": "hotelReviewsKeyPhrases",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "KeyPhrasesid",
+                  "source": "/document/tableprojection/pages/*/keyphrase/*",
+                  "sourceContext": null,
+                  "inputs": []
+                }
+              ],
+              "objects": [],
+              "files": []
+            },
+            {
+              "tables": [
+                {
+                  "tableName": "hotelReviewsInlineDocument",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "Documentid",
+                  "source": null,
+                  "sourceContext": "/document",
+                  "inputs": [
+                    {
+                      "name": "name",
+                      "source": "/document/name",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_date",
+                      "source": "/document/reviews_date",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_rating",
+                      "source": "/document/reviews_rating",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_text",
+                      "source": "/document/reviews_text",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_title",
+                      "source": "/document/reviews_title",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "AzureSearch_DocumentKey",
+                      "source": "/document/AzureSearch_DocumentKey",
+                      "sourceContext": null,
+                      "inputs": []
+                    }
+                  ]
+                },
+                {
+                  "tableName": "hotelReviewsInlinePages",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "Pagesid",
+                  "source": null,
+                  "sourceContext": "/document/reviews_text/pages/*",
+                  "inputs": [
+                    {
+                      "name": "SentimentScore",
+                      "source": "/document/reviews_text/pages/*/Sentiment",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "LanguageCode",
+                      "source": "/document/Language",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "Page",
+                      "source": "/document/reviews_text/pages/*",
+                      "sourceContext": null,
+                      "inputs": []
+                    }
+                  ]
+                },
+                {
+                  "tableName": "hotelReviewsInlineKeyPhrases",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "kpidv2",
+                  "source": null,
+                  "sourceContext": "/document/reviews_text/pages/*/Keyphrases/*",
+                  "inputs": [
+                    {
+                      "name": "Keyphrases",
+                      "source": "/document/reviews_text/pages/*/Keyphrases/*",
+                      "sourceContext": null,
+                      "inputs": []
+                    }
+                  ]
+                }
+              ],
+              "objects": [],
+              "files": []
+            }
+          ],
+          "parameters": null
+        },
         "encryptionKey": null
       }
     },
     {
-      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30-Preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "Content-Length": "2512",
+        "Content-Length": "4274",
         "Content-Type": "application/json",
-        "If-Match": "\u00220x8D82A8EFAA3FCF9\u0022",
+        "If-Match": "\u00220x8D90920BA3E294D\u0022",
         "Prefer": "return=representation",
-        "traceparent": "00-b76d6c121fcbe34380b1c1666916a451-b74ce1f9b3494544-00",
+        "traceparent": "00-bbc6a65c1e499b4d97c3c3efe5109d6b-44a1393a3bb9fa4f-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210426.1",
+          "(.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "679371d6c884723bbe56b85c3c72fed0",
         "x-ms-return-client-request-id": "true"
@@ -582,17 +802,123 @@
         "cognitiveServices": {
           "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices"
         },
-        "@odata.etag": "\u00220x8D82A8EFAA3FCF9\u0022"
+        "knowledgeStore": {
+          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=Sanitized;EndpointSuffix=core.windows.net",
+          "projections": [
+            {
+              "tables": [
+                {
+                  "tableName": "hotelReviewsDocument",
+                  "generatedKeyName": "Documentid",
+                  "source": "/document/tableprojection",
+                  "inputs": []
+                },
+                {
+                  "tableName": "hotelReviewsPages",
+                  "generatedKeyName": "Pagesid",
+                  "source": "/document/tableprojection/pages/*",
+                  "inputs": []
+                },
+                {
+                  "tableName": "hotelReviewsKeyPhrases",
+                  "generatedKeyName": "KeyPhrasesid",
+                  "source": "/document/tableprojection/pages/*/keyphrase/*",
+                  "inputs": []
+                }
+              ],
+              "objects": [],
+              "files": []
+            },
+            {
+              "tables": [
+                {
+                  "tableName": "hotelReviewsInlineDocument",
+                  "generatedKeyName": "Documentid",
+                  "sourceContext": "/document",
+                  "inputs": [
+                    {
+                      "name": "name",
+                      "source": "/document/name",
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_date",
+                      "source": "/document/reviews_date",
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_rating",
+                      "source": "/document/reviews_rating",
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_text",
+                      "source": "/document/reviews_text",
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_title",
+                      "source": "/document/reviews_title",
+                      "inputs": []
+                    },
+                    {
+                      "name": "AzureSearch_DocumentKey",
+                      "source": "/document/AzureSearch_DocumentKey",
+                      "inputs": []
+                    }
+                  ]
+                },
+                {
+                  "tableName": "hotelReviewsInlinePages",
+                  "generatedKeyName": "Pagesid",
+                  "sourceContext": "/document/reviews_text/pages/*",
+                  "inputs": [
+                    {
+                      "name": "SentimentScore",
+                      "source": "/document/reviews_text/pages/*/Sentiment",
+                      "inputs": []
+                    },
+                    {
+                      "name": "LanguageCode",
+                      "source": "/document/Language",
+                      "inputs": []
+                    },
+                    {
+                      "name": "Page",
+                      "source": "/document/reviews_text/pages/*",
+                      "inputs": []
+                    }
+                  ]
+                },
+                {
+                  "tableName": "hotelReviewsInlineKeyPhrases",
+                  "generatedKeyName": "kpidv2",
+                  "sourceContext": "/document/reviews_text/pages/*/Keyphrases/*",
+                  "inputs": [
+                    {
+                      "name": "Keyphrases",
+                      "source": "/document/reviews_text/pages/*/Keyphrases/*",
+                      "inputs": []
+                    }
+                  ]
+                }
+              ],
+              "objects": [],
+              "files": []
+            }
+          ]
+        },
+        "@odata.etag": "\u00220x8D90920BA3E294D\u0022"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "679371d6-c884-723b-be56-b85c3c72fed0",
-        "Content-Length": "3225",
+        "Content-Length": "5578",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 17 Jul 2020 20:21:25 GMT",
-        "elapsed-time": "95",
-        "ETag": "W/\u00220x8D82A8EFAB6C508\u0022",
+        "Date": "Tue, 27 Apr 2021 02:04:01 GMT",
+        "elapsed-time": "79",
+        "ETag": "W/\u00220x8D90920BA59CC83\u0022",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -602,8 +928,8 @@
         "x-ms-client-request-id": "679371d6-c884-723b-be56-b85c3c72fed0"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-pakrysearch.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D82A8EFAB6C508\u0022",
+        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
+        "@odata.etag": "\u00220x8D90920BA59CC83\u0022",
         "name": "qgrsmesk",
         "description": "Update description",
         "skills": [
@@ -668,6 +994,8 @@
             "name": null,
             "description": null,
             "context": "/document",
+            "defaultCountryHint": null,
+            "modelVersion": null,
             "inputs": [
               {
                 "name": "text",
@@ -690,6 +1018,7 @@
             "context": "/document/reviews_text/pages/*",
             "defaultLanguageCode": "en",
             "maxKeyPhraseCount": null,
+            "modelVersion": null,
             "inputs": [
               {
                 "name": "text",
@@ -804,20 +1133,148 @@
           "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices",
           "description": null
         },
-        "knowledgeStore": null,
+        "knowledgeStore": {
+          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=PTzW6XFeH7IsvWOdK\u002B0vmav7H1Zsuq4NKvOVViBttqAixm7smFzZtvUdAAGQb/zBPw2nwifF4e4CSUU9qvdjNQ==;EndpointSuffix=core.windows.net",
+          "projections": [
+            {
+              "tables": [
+                {
+                  "tableName": "hotelReviewsDocument",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "Documentid",
+                  "source": "/document/tableprojection",
+                  "sourceContext": null,
+                  "inputs": []
+                },
+                {
+                  "tableName": "hotelReviewsPages",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "Pagesid",
+                  "source": "/document/tableprojection/pages/*",
+                  "sourceContext": null,
+                  "inputs": []
+                },
+                {
+                  "tableName": "hotelReviewsKeyPhrases",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "KeyPhrasesid",
+                  "source": "/document/tableprojection/pages/*/keyphrase/*",
+                  "sourceContext": null,
+                  "inputs": []
+                }
+              ],
+              "objects": [],
+              "files": []
+            },
+            {
+              "tables": [
+                {
+                  "tableName": "hotelReviewsInlineDocument",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "Documentid",
+                  "source": null,
+                  "sourceContext": "/document",
+                  "inputs": [
+                    {
+                      "name": "name",
+                      "source": "/document/name",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_date",
+                      "source": "/document/reviews_date",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_rating",
+                      "source": "/document/reviews_rating",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_text",
+                      "source": "/document/reviews_text",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_title",
+                      "source": "/document/reviews_title",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "AzureSearch_DocumentKey",
+                      "source": "/document/AzureSearch_DocumentKey",
+                      "sourceContext": null,
+                      "inputs": []
+                    }
+                  ]
+                },
+                {
+                  "tableName": "hotelReviewsInlinePages",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "Pagesid",
+                  "source": null,
+                  "sourceContext": "/document/reviews_text/pages/*",
+                  "inputs": [
+                    {
+                      "name": "SentimentScore",
+                      "source": "/document/reviews_text/pages/*/Sentiment",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "LanguageCode",
+                      "source": "/document/Language",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "Page",
+                      "source": "/document/reviews_text/pages/*",
+                      "sourceContext": null,
+                      "inputs": []
+                    }
+                  ]
+                },
+                {
+                  "tableName": "hotelReviewsInlineKeyPhrases",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "kpidv2",
+                  "source": null,
+                  "sourceContext": "/document/reviews_text/pages/*/Keyphrases/*",
+                  "inputs": [
+                    {
+                      "name": "Keyphrases",
+                      "source": "/document/reviews_text/pages/*/Keyphrases/*",
+                      "sourceContext": null,
+                      "inputs": []
+                    }
+                  ]
+                }
+              ],
+              "objects": [],
+              "files": []
+            }
+          ],
+          "parameters": null
+        },
         "encryptionKey": null
       }
     },
     {
-      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-9462771ee94f5345a8e8900882cf8425-62ccabd7ba4e4843-00",
+        "traceparent": "00-c96d8930d4f2ab4bb3b005284a04cdbc-d5d5ecbffd8c6540-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210426.1",
+          "(.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "f1c57e6ece060e33a389385319a9f862",
         "x-ms-return-client-request-id": "true"
@@ -827,11 +1284,11 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "f1c57e6e-ce06-0e33-a389-385319a9f862",
-        "Content-Length": "3225",
+        "Content-Length": "5609",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 17 Jul 2020 20:21:25 GMT",
-        "elapsed-time": "29",
-        "ETag": "W/\u00220x8D82A8EFAB6C508\u0022",
+        "Date": "Tue, 27 Apr 2021 02:04:01 GMT",
+        "elapsed-time": "23",
+        "ETag": "W/\u00220x8D90920BA59CC83\u0022",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -841,8 +1298,8 @@
         "x-ms-client-request-id": "f1c57e6e-ce06-0e33-a389-385319a9f862"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-pakrysearch.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D82A8EFAB6C508\u0022",
+        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
+        "@odata.etag": "\u00220x8D90920BA59CC83\u0022",
         "name": "qgrsmesk",
         "description": "Update description",
         "skills": [
@@ -907,6 +1364,8 @@
             "name": "#3",
             "description": null,
             "context": "/document",
+            "defaultCountryHint": null,
+            "modelVersion": null,
             "inputs": [
               {
                 "name": "text",
@@ -929,6 +1388,7 @@
             "context": "/document/reviews_text/pages/*",
             "defaultLanguageCode": "en",
             "maxKeyPhraseCount": null,
+            "modelVersion": null,
             "inputs": [
               {
                 "name": "text",
@@ -1043,21 +1503,151 @@
           "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices",
           "description": null
         },
-        "knowledgeStore": null,
+        "knowledgeStore": {
+          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=PTzW6XFeH7IsvWOdK\u002B0vmav7H1Zsuq4NKvOVViBttqAixm7smFzZtvUdAAGQb/zBPw2nwifF4e4CSUU9qvdjNQ==;EndpointSuffix=core.windows.net",
+          "projections": [
+            {
+              "tables": [
+                {
+                  "tableName": "hotelReviewsDocument",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "Documentid",
+                  "source": "/document/tableprojection",
+                  "sourceContext": null,
+                  "inputs": []
+                },
+                {
+                  "tableName": "hotelReviewsPages",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "Pagesid",
+                  "source": "/document/tableprojection/pages/*",
+                  "sourceContext": null,
+                  "inputs": []
+                },
+                {
+                  "tableName": "hotelReviewsKeyPhrases",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "KeyPhrasesid",
+                  "source": "/document/tableprojection/pages/*/keyphrase/*",
+                  "sourceContext": null,
+                  "inputs": []
+                }
+              ],
+              "objects": [],
+              "files": []
+            },
+            {
+              "tables": [
+                {
+                  "tableName": "hotelReviewsInlineDocument",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "Documentid",
+                  "source": null,
+                  "sourceContext": "/document",
+                  "inputs": [
+                    {
+                      "name": "name",
+                      "source": "/document/name",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_date",
+                      "source": "/document/reviews_date",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_rating",
+                      "source": "/document/reviews_rating",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_text",
+                      "source": "/document/reviews_text",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "reviews_title",
+                      "source": "/document/reviews_title",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "AzureSearch_DocumentKey",
+                      "source": "/document/AzureSearch_DocumentKey",
+                      "sourceContext": null,
+                      "inputs": []
+                    }
+                  ]
+                },
+                {
+                  "tableName": "hotelReviewsInlinePages",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "Pagesid",
+                  "source": null,
+                  "sourceContext": "/document/reviews_text/pages/*",
+                  "inputs": [
+                    {
+                      "name": "SentimentScore",
+                      "source": "/document/reviews_text/pages/*/Sentiment",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "LanguageCode",
+                      "source": "/document/Language",
+                      "sourceContext": null,
+                      "inputs": []
+                    },
+                    {
+                      "name": "Page",
+                      "source": "/document/reviews_text/pages/*",
+                      "sourceContext": null,
+                      "inputs": []
+                    }
+                  ]
+                },
+                {
+                  "tableName": "hotelReviewsInlineKeyPhrases",
+                  "referenceKeyName": null,
+                  "generatedKeyName": "kpidv2",
+                  "source": null,
+                  "sourceContext": "/document/reviews_text/pages/*/Keyphrases/*",
+                  "inputs": [
+                    {
+                      "name": "Keyphrases",
+                      "source": "/document/reviews_text/pages/*/Keyphrases/*",
+                      "sourceContext": null,
+                      "inputs": []
+                    }
+                  ]
+                }
+              ],
+              "objects": [],
+              "files": []
+            }
+          ],
+          "parameters": {
+            "synthesizeGeneratedKeyName": true
+          }
+        },
         "encryptionKey": null
       }
     },
     {
-      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets(\u0027qgrsmesk\u0027)?api-version=2020-06-30-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "If-Match": "\u00220x8D82A8EFAB6C508\u0022",
-        "traceparent": "00-a5bc22f68ddc0042956972d11167157e-ece16c11b491c24b-00",
+        "If-Match": "\u00220x8D90920BA59CC83\u0022",
+        "traceparent": "00-76a59d163dc0314e9d97a48e67bd01b2-1e225357fb9cc342-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210426.1",
+          "(.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "0c24f8073ecce4ed512cb2a66fdf5e89",
         "x-ms-return-client-request-id": "true"
@@ -1067,8 +1657,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "0c24f807-3ecc-e4ed-512c-b2a66fdf5e89",
-        "Date": "Fri, 17 Jul 2020 20:21:25 GMT",
-        "elapsed-time": "44",
+        "Date": "Tue, 27 Apr 2021 02:04:01 GMT",
+        "elapsed-time": "47",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "0c24f807-3ecc-e4ed-512c-b2a66fdf5e89",
@@ -1078,15 +1668,15 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/skillsets?$select=name\u0026api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/skillsets?$select=name\u0026api-version=2020-06-30-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-cdf85b0a5eb15649a6c3b6f31c17198c-1323dfb786de6944-00",
+        "traceparent": "00-60125591af06bc4c98540f0aa87fb25a-5723864baf407146-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210426.1",
+          "(.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "99f292ea5f1b082c3e85c3fb90e85815",
         "x-ms-return-client-request-id": "true"
@@ -1096,10 +1686,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "99f292ea-5f1b-082c-3e85-c3fb90e85815",
-        "Content-Length": "123",
+        "Content-Length": "134",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 17 Jul 2020 20:21:25 GMT",
-        "elapsed-time": "18",
+        "Date": "Tue, 27 Apr 2021 02:04:01 GMT",
+        "elapsed-time": "15",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -1109,24 +1699,27 @@
         "x-ms-client-request-id": "99f292ea-5f1b-082c-3e85-c3fb90e85815"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-pakrysearch.search.windows.net/$metadata#skillsets(name)",
+        "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets(name)",
         "value": [
           {
-            "name": "jnayotai"
+            "name": "fpmjeogx"
+          },
+          {
+            "name": "lefvvewn"
           }
         ]
       }
     },
     {
-      "RequestUri": "https://azs-net-pakrysearch.search.windows.net/indexes(\u0027jfkaevts\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027xjopitud\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-bca9dc9000c82d4fa03d0c62d3344ffa-05adca54ac936e4d-00",
+        "traceparent": "00-4e891fb3fec3ab41ad3195abdd7ac7ee-ecdbe645defb794e-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.1.0-dev.20200717.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210426.1",
+          "(.NET Framework 4.8.4341.0; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "4355565ef14e300491e09fda1b8c9ec4",
         "x-ms-return-client-request-id": "true"
@@ -1136,8 +1729,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "4355565e-f14e-3004-91e0-9fda1b8c9ec4",
-        "Date": "Fri, 17 Jul 2020 20:21:25 GMT",
-        "elapsed-time": "425",
+        "Date": "Tue, 27 Apr 2021 02:04:01 GMT",
+        "elapsed-time": "177",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "4355565e-f14e-3004-91e0-9fda1b8c9ec4",
@@ -1148,12 +1741,14 @@
     }
   ],
   "Variables": {
-    "BlobContainerName": "yqsoctmu",
+    "BlobContainerName": "duoaesay",
     "RandomSeed": "1965957870",
-    "SearchIndexName": "jfkaevts",
+    "SearchIndexName": "xjopitud",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-pakrysearch",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs",
     "SEARCH_STORAGE_KEY": "Sanitized",
-    "SEARCH_STORAGE_NAME": "pakrysearchstg"
+    "SEARCH_STORAGE_NAME": "mohitcsablob",
+    "STORAGE_ENDPOINT_SUFFIX": null
   }
 }
