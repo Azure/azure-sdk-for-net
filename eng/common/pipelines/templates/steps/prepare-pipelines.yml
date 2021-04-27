@@ -2,8 +2,6 @@ parameters:
   - name: Repository
     type: string
     default: $(Build.Repository.Name)
-  - name: Branch
-    type: string
     default: main
   - name: Prefix
     type: string
@@ -19,7 +17,7 @@ parameters:
 
 steps:
   - template: install-pipeline-generation.yml
-
+  - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
   # This covers our public repos.
   - ${{ if not(endsWith(parameters.Repository, '-pr'))}}:
     - script: >
@@ -33,7 +31,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention ci
         --agentpool Hosted
-        --branch refs/heads/${{parameters.Branch}}
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         ${{parameters.CIConventionOptions}}
@@ -51,7 +49,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention up
         --agentpool Hosted
-        --branch refs/heads/${{parameters.Branch}}
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         ${{parameters.UPConventionOptions}}
@@ -69,7 +67,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention tests
         --agentpool Hosted
-        --branch refs/heads/${{parameters.Branch}}
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         ${{parameters.TestsConventionOptions}}
@@ -91,7 +89,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention ci
         --agentpool Hosted
-        --branch refs/heads/${{parameters.Branch}}
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         --no-schedule
@@ -110,7 +108,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention up
         --agentpool Hosted
-        --branch refs/heads/${{parameters.Branch}}
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         --no-schedule
@@ -129,7 +127,7 @@ steps:
         --repository ${{parameters.Repository}}
         --convention tests
         --agentpool Hosted
-        --branch refs/heads/${{parameters.Branch}}
+        --branch refs/heads/$(DefaultBranch)
         --patvar PATVAR
         --debug
         --no-schedule
