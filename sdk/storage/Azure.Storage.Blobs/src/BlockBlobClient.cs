@@ -2138,7 +2138,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             string operationName = $"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}";
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}");
 
             try
             {
