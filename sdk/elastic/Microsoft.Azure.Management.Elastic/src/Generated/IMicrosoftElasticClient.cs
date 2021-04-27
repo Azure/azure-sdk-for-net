@@ -94,5 +94,20 @@ namespace Microsoft.Azure.Management.Elastic
         /// </summary>
         ITagRulesOperations TagRules { get; }
 
+        /// <summary>
+        /// Gets the IVMHostOperations.
+        /// </summary>
+        IVMHostOperations VMHost { get; }
+
+        /// <summary>
+        /// Gets the IVMIngestionOperations.
+        /// </summary>
+        IVMIngestionOperations VMIngestion { get; }
+
+        /// <summary>
+        /// Gets the IVMCollectionOperations.
+        /// </summary>
+        IVMCollectionOperations VMCollection { get; }
+
     }
 }
