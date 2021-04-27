@@ -2,7 +2,6 @@ parameters:
   - name: Repository
     type: string
     default: $(Build.Repository.Name)
-    default: main
   - name: Prefix
     type: string
   - name: CIConventionOptions
