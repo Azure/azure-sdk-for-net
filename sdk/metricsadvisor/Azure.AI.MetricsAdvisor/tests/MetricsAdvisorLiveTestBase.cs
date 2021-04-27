@@ -94,7 +94,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             var options = new MetricsAdvisorClientsOptions();
 
-            options.AddPolicy(new RetryOnTooManyRequestsPolicy(), HttpPipelinePosition.PerRetry);
+            options.Retry.MaxRetries = 6;
 
             return InstrumentClientOptions(options);
         }
