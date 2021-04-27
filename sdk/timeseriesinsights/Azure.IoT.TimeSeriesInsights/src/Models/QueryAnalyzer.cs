@@ -25,9 +25,9 @@ namespace Azure.IoT.TimeSeriesInsights
         public double? Progress { get; internal set; }
 
         /// <summary>
-        /// Initializes a new instance of the QueryResults class.
+        /// Initializes a new instance of the QueryAnalyzer class.
         /// </summary>
-        /// <param name="queryClient">The query REST client that talks to TSI service.</param>
+        /// <param name="queryClient">The query REST client that talks to the Time Series Insights service.</param>
         /// <param name="queryRequest">The query request payload.</param>
         /// <param name="storeType">The store the query should be executed on.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -41,9 +41,9 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Get all of the <see cref="TimeSeriesPoint"/> asynchronously.
+        /// Get all of the <see cref="TimeSeriesPoint"/> in pages asynchronously.
         /// </summary>
-        /// <returns>The search results represented as <see cref="TimeSeriesPoint"/>.</returns>
+        /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/> of time series points.</returns>
         public AsyncPageable<TimeSeriesPoint> GetResultsAsync()
         {
             async Task<Page<TimeSeriesPoint>> FirstPageFunc(int? pageSizeHint)
@@ -90,9 +90,9 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Get all of the <see cref="TimeSeriesPoint"/> synchronously.
+        /// Get all of the <see cref="TimeSeriesPoint"/> in pages synchronously.
         /// </summary>
-        /// <returns>The search results represented as <see cref="TimeSeriesPoint"/>.</returns>
+        /// <returns>The pageable list <see cref="Pageable{TimeSeriesPoint}"/> of time series points.</returns>
         public Pageable<TimeSeriesPoint> GetResults()
         {
             Page<TimeSeriesPoint> FirstPageFunc(int? pageSizeHint)
