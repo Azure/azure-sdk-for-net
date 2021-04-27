@@ -106,7 +106,7 @@ namespace Azure.Communication.Chat.Tests
             SendChatMessageOptions sendChatMessageOptions7 = new()
             {
                 Content = "Content for message 7",
-                ChatMessageType = ChatMessageType.Html,
+                MessageType = ChatMessageType.Html,
                 SenderDisplayName = "DisplayName sender message options message 7",
                 Properties = {
                     { "tags", "tag value" },
@@ -212,13 +212,13 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(messageContent5, message5.Content.Message);
             Assert.AreEqual(messageContent6, message6.Content.Message);
 
-            Assert.AreEqual(sendChatMessageOptions7.ChatMessageType, message7.Type);
+            Assert.AreEqual(sendChatMessageOptions7.MessageType, message7.Type);
             Assert.AreEqual(sendChatMessageOptions7.SenderDisplayName, message7.SenderDisplayName);
             Assert.AreEqual(sendChatMessageOptions7.Content, message7.Content.Message);
             Assert.AreEqual(4, message7.Properties.Count);
             CollectionAssert.IsSubsetOf(message7.Properties, sendChatMessageOptions7.Properties);
 
-            Assert.AreEqual(sendChatMessageOptions7.ChatMessageType, actualUpdateMessage7.Value.Type);
+            Assert.AreEqual(sendChatMessageOptions7.MessageType, actualUpdateMessage7.Value.Type);
             Assert.AreEqual(sendChatMessageOptions7.SenderDisplayName, actualUpdateMessage7.Value.SenderDisplayName);
             Assert.AreEqual(updateChatMessageOptions7.Content, actualUpdateMessage7.Value.Content.Message);
             Assert.AreEqual(3, actualUpdateMessage7.Value.Properties.Count);
