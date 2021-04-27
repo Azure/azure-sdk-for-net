@@ -32,7 +32,7 @@
         },
         "hsmLocation": {
             "type": "string",
-            "defaultValue": "usgovvirginia",
+            "defaultValue": "southcentralus",
             "allowedValues": [
                 "australiacentral",
                 "canadacentral",
@@ -47,8 +47,7 @@
                 "switzerlandnorth",
                 "uksouth",
                 "westeurope",
-                "westus",
-                "usgovvirginia"
+                "westus"
             ],
             "metadata": {
                 "description": "The location of the Managed HSM. By default, this is 'southcentralus'."
