@@ -8,9 +8,9 @@
         "api-key": "Sanitized",
         "Content-Length": "5201",
         "Content-Type": "application/json",
-        "traceparent": "00-55f9dd38bab0174292fdcfbadb9cef57-c122e87c8ef60c4d-00",
+        "traceparent": "00-365f213b2d48dd42b925616d16b8c81c-274a073d9a158e4b-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210427.1",
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "736a681f3427c94a05ac6bd1d810826b",
@@ -27,9 +27,9 @@
         "client-request-id": "736a681f-3427-c94a-05ac-6bd1d810826b",
         "Content-Length": "5332",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 27 Apr 2021 18:32:29 GMT",
-        "elapsed-time": "50",
-        "ETag": "W/\u00220x8D909AAD09C5036\u0022",
+        "Date": "Wed, 28 Apr 2021 22:47:47 GMT",
+        "elapsed-time": "48",
+        "ETag": "W/\u00220x8D90A97A4D386FE\u0022",
         "Expires": "-1",
         "Location": "https://mohitc-acs.search.windows.net/synonymmaps(\u0027yjlkevvv\u0027)?api-version=2020-06-30-Preview",
         "OData-Version": "4.0",
@@ -39,7 +39,7 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "736a681f-3427-c94a-05ac-6bd1d810826b"
       },
-      "ResponseBody": "{\u0022@odata.context\u0022:\u0022https://mohitc-acs.search.windows.net/$metadata#synonymmaps/$entity\u0022,\u0022@odata.etag\u0022:\u0022\\\u00220x8D909AAD09C5036\\\u0022\u0022,\u0022name\u0022:\u0022yjlkevvv\u0022,\u0022format\u0022:\u0022solr\u0022,\u0022synonyms\u0022:\u0022Afghanistan,AF,AFG\\n\\u00c5land Islands,AX,ALA\\nAlbania,AL,ALB\\nAlgeria,DZ,DZA\\nAmerican Samoa,AS,ASM\\nAndorra,AD,AND\\nAngola,AO,AGO\\nAnguilla,AI,AIA\\nAntarctica,AQ,ATA\\nAntigua and Barbuda,AG,ATG\\nArgentina,AR,ARG\\nArmenia,AM,ARM\\nAruba,AW,ABW\\nAustralia,AU,AUS\\nAustria,AT,AUT\\nAzerbaijan,AZ,AZE\\nBahamas,BS,BHS\\nBahrain,BH,BHR\\nBangladesh,BD,BGD\\nBarbados,BB,BRB\\nBelarus,BY,BLR\\nBelgium,BE,BEL\\nBelize,BZ,BLZ\\nBenin,BJ,BEN\\nBermuda,BM,BMU\\nBhutan,BT,BTN\\nBolivia,Plurinational State of Bolivia,BO,BOL\\nBonaire,Sint Eustatius and Saba,BQ,BES\\nBosnia and Herzegovina,BA,BIH\\nBotswana,BW,BWA\\nBouvet Island,BV,BVT\\nBrazil,BR,BRA\\nBritish Indian Ocean Territory,IO,IOT\\nBrunei Darussalam,BN,BRN\\nBulgaria,BG,BGR\\nBurkina Faso,BF,BFA\\nBurundi,BI,BDI\\nCabo Verde,CV,CPV\\nCambodia,KH,KHM\\nCameroon,CM,CMR\\nCanada,CA,CAN\\nCayman Islands,KY,CYM\\nCentral African Republic,CF,CAF\\nChad,TD,TCD\\nChile,CL,CHL\\nChina,CN,CHN\\nChristmas Island,CX,CXR\\nCocos (Keeling) Islands,CC,CCK\\nColombia,CO,COL\\nComoros,KM,COM\\nCongo,CG,COG\\nDemocratic Republic of the Congo,CD,COD\\nCook Islands,CK,COK\\nCosta Rica,CR,CRI\\nC\\u00f4te d\u0027Ivoire,CI,CIV\\nCroatia,HR,HRV\\nCuba,CU,CUB\\nCura\\u00e7ao,CW,CUW\\nCyprus,CY,CYP\\nCzechia,CZ,CZE\\nDenmark,DK,DNK\\nDjibouti,DJ,DJI\\nDominica,DM,DMA\\nDominican Republic,DO,DOM\\nEcuador,EC,ECU\\nEgypt,EG,EGY\\nEl Salvador,SV,SLV\\nEquatorial Guinea,GQ,GNQ\\nEritrea,ER,ERI\\nEstonia,EE,EST\\nEswatini,SZ,SWZ\\nEthiopia,ET,ETH\\nFalkland Islands (Malvinas),FK,FLK\\nFaroe Islands,FO,FRO\\nFiji,FJ,FJI\\nFinland,FI,FIN\\nFrance,FR,FRA\\nFrench Guiana,GF,GUF\\nFrench Polynesia,PF,PYF\\nFrench Southern Territories,TF,ATF\\nGabon,GA,GAB\\nGambia,GM,GMB\\nGeorgia,GE,GEO\\nGermany,DE,DEU\\nGhana,GH,GHA\\nGibraltar,GI,GIB\\nGreece,GR,GRC\\nGreenland,GL,GRL\\nGrenada,GD,GRD\\nGuadeloupe,GP,GLP\\nGuam,GU,GUM\\nGuatemala,GT,GTM\\nGuernsey,GG,GGY\\nGuinea,GN,GIN\\nGuinea-Bissau,GW,GNB\\nGuyana,GY,GUY\\nHaiti,HT,HTI\\nHeard Island and McDonald Islands,HM,HMD\\nHoly See,VA,VAT\\nHonduras,HN,HND\\nHong Kong,HK,HKG\\nHungary,HU,HUN\\nIceland,IS,ISL\\nIndia,IN,IND\\nIndonesia,ID,IDN\\nIran,Islamic Republic of Iran,IR,IRN\\nIraq,IQ,IRQ\\nIreland,IE,IRL\\nIsle of Man,IM,IMN\\nIsrael,IL,ISR\\nItaly,IT,ITA\\nJamaica,JM,JAM\\nJapan,JP,JPN\\nJersey,JE,JEY\\nJordan,JO,JOR\\nKazakhstan,KZ,KAZ\\nKenya,KE,KEN\\nKiribati,KI,KIR\\nDemocratic People\u0027s Republic of Korea,KP,PRK\\nKorea,Republic of Korea,KR,KOR\\nKuwait,KW,KWT\\nKyrgyzstan,KG,KGZ\\nLao People\u0027s Democratic Republic,LA,LAO\\nLatvia,LV,LVA\\nLebanon,LB,LBN\\nLesotho,LS,LSO\\nLiberia,LR,LBR\\nLibya,LY,LBY\\nLiechtenstein,LI,LIE\\nLithuania,LT,LTU\\nLuxembourg,LU,LUX\\nMacao,MO,MAC\\nMadagascar,MG,MDG\\nMalawi,MW,MWI\\nMalaysia,MY,MYS\\nMaldives,MV,MDV\\nMali,ML,MLI\\nMalta,MT,MLT\\nMarshall Islands,MH,MHL\\nMartinique,MQ,MTQ\\nMauritania,MR,MRT\\nMauritius,MU,MUS\\nMayotte,YT,MYT\\nMexico,MX,MEX\\nMicronesia,Federated States of Micronesia,FM,FSM\\nMoldova,Republic of Moldova,MD,MDA\\nMonaco,MC,MCO\\nMongolia,MN,MNG\\nMontenegro,ME,MNE\\nMontserrat,MS,MSR\\nMorocco,MA,MAR\\nMozambique,MZ,MOZ\\nMyanmar,MM,MMR\\nNamibia,NA,NAM\\nNauru,NR,NRU\\nNepal,NP,NPL\\nNetherlands,NL,NLD\\nNew Caledonia,NC,NCL\\nNew Zealand,NZ,NZL\\nNicaragua,NI,NIC\\nNiger,NE,NER\\nNigeria,NG,NGA\\nNiue,NU,NIU\\nNorfolk Island,NF,NFK\\nNorth Macedonia,MK,MKD\\nNorthern Mariana Islands,MP,MNP\\nNorway,NO,NOR\\nOman,OM,OMN\\nPakistan,PK,PAK\\nPalau,PW,PLW\\nPalestine,State of Palestine,PS,PSE\\nPanama,PA,PAN\\nPapua New Guinea,PG,PNG\\nParaguay,PY,PRY\\nPeru,PE,PER\\nPhilippines,PH,PHL\\nPitcairn,PN,PCN\\nPoland,PL,POL\\nPortugal,PT,PRT\\nPuerto Rico,PR,PRI\\nQatar,QA,QAT\\nR\\u00e9union,RE,REU\\nRomania,RO,ROU\\nRussia,Russian Federation,RU,RUS\\nRwanda,RW,RWA\\nSaint Barth\\u00e9lemy,BL,BLM\\nSaint Helena,Ascension and Tristan da Cunha,SH,SHN\\nSaint Kitts and Nevis,KN,KNA\\nSaint Lucia,LC,LCA\\nSaint Martin (French part),MF,MAF\\nSaint Pierre and Miquelon,PM,SPM\\nSaint Vincent and the Grenadines,VC,VCT\\nSamoa,WS,WSM\\nSan Marino,SM,SMR\\nSao Tome and Principe,ST,STP\\nSaudi Arabia,SA,SAU\\nSenegal,SN,SEN\\nSerbia,RS,SRB\\nSeychelles,SC,SYC\\nSierra Leone,SL,SLE\\nSingapore,SG,SGP\\nSint Maarten (Dutch part),SX,SXM\\nSlovakia,SK,SVK\\nSlovenia,SI,SVN\\nSolomon Islands,SB,SLB\\nSomalia,SO,SOM\\nSouth Africa,ZA,ZAF\\nSouth Georgia and the South Sandwich Islands,GS,SGS\\nSouth Sudan,SS,SSD\\nSpain,ES,ESP\\nSri Lanka,LK,LKA\\nSudan,SD,SDN\\nSuriname,SR,SUR\\nSvalbard and Jan Mayen,SJ,SJM\\nSweden,SE,SWE\\nSwitzerland,CH,CHE\\nSyrian Arab Republic,SY,SYR\\nTaiwan,Province of China,TW,TWN\\nTajikistan,TJ,TJK\\nTanzania,United Republic of Tanzania,TZ,TZA\\nThailand,TH,THA\\nTimor-Leste,TL,TLS\\nTogo,TG,TGO\\nTokelau,TK,TKL\\nTonga,TO,TON\\nTrinidad and Tobago,TT,TTO\\nTunisia,TN,TUN\\nTurkey,TR,TUR\\nTurkmenistan,TM,TKM\\nTurks and Caicos Islands,TC,TCA\\nTuvalu,TV,TUV\\nUganda,UG,UGA\\nUkraine,UA,UKR\\nUnited Arab Emirates,AE,ARE\\nUnited Kingdom of Great Britain and Northern Ireland,GB,GBR\\nUnited States of America,US,USA\\nUnited States Minor Outlying Islands,UM,UMI\\nUruguay,UY,URY\\nUzbekistan,UZ,UZB\\nVanuatu,VU,VUT\\nVenezuela (Bolivarian Republic of),VE,VEN\\nViet Nam,VN,VNM\\nVirgin Islands (British),VG,VGB\\nVirgin Islands (U.S.),VI,VIR\\nWallis and Futuna,WF,WLF\\nWestern Sahara,EH,ESH\\nYemen,YE,YEM\\nZambia,ZM,ZMB\\nZimbabwe,ZW,ZWE\\n\u0022,\u0022encryptionKey\u0022:null}"
+      "ResponseBody": "{\u0022@odata.context\u0022:\u0022https://mohitc-acs.search.windows.net/$metadata#synonymmaps/$entity\u0022,\u0022@odata.etag\u0022:\u0022\\\u00220x8D90A97A4D386FE\\\u0022\u0022,\u0022name\u0022:\u0022yjlkevvv\u0022,\u0022format\u0022:\u0022solr\u0022,\u0022synonyms\u0022:\u0022Afghanistan,AF,AFG\\n\\u00c5land Islands,AX,ALA\\nAlbania,AL,ALB\\nAlgeria,DZ,DZA\\nAmerican Samoa,AS,ASM\\nAndorra,AD,AND\\nAngola,AO,AGO\\nAnguilla,AI,AIA\\nAntarctica,AQ,ATA\\nAntigua and Barbuda,AG,ATG\\nArgentina,AR,ARG\\nArmenia,AM,ARM\\nAruba,AW,ABW\\nAustralia,AU,AUS\\nAustria,AT,AUT\\nAzerbaijan,AZ,AZE\\nBahamas,BS,BHS\\nBahrain,BH,BHR\\nBangladesh,BD,BGD\\nBarbados,BB,BRB\\nBelarus,BY,BLR\\nBelgium,BE,BEL\\nBelize,BZ,BLZ\\nBenin,BJ,BEN\\nBermuda,BM,BMU\\nBhutan,BT,BTN\\nBolivia,Plurinational State of Bolivia,BO,BOL\\nBonaire,Sint Eustatius and Saba,BQ,BES\\nBosnia and Herzegovina,BA,BIH\\nBotswana,BW,BWA\\nBouvet Island,BV,BVT\\nBrazil,BR,BRA\\nBritish Indian Ocean Territory,IO,IOT\\nBrunei Darussalam,BN,BRN\\nBulgaria,BG,BGR\\nBurkina Faso,BF,BFA\\nBurundi,BI,BDI\\nCabo Verde,CV,CPV\\nCambodia,KH,KHM\\nCameroon,CM,CMR\\nCanada,CA,CAN\\nCayman Islands,KY,CYM\\nCentral African Republic,CF,CAF\\nChad,TD,TCD\\nChile,CL,CHL\\nChina,CN,CHN\\nChristmas Island,CX,CXR\\nCocos (Keeling) Islands,CC,CCK\\nColombia,CO,COL\\nComoros,KM,COM\\nCongo,CG,COG\\nDemocratic Republic of the Congo,CD,COD\\nCook Islands,CK,COK\\nCosta Rica,CR,CRI\\nC\\u00f4te d\u0027Ivoire,CI,CIV\\nCroatia,HR,HRV\\nCuba,CU,CUB\\nCura\\u00e7ao,CW,CUW\\nCyprus,CY,CYP\\nCzechia,CZ,CZE\\nDenmark,DK,DNK\\nDjibouti,DJ,DJI\\nDominica,DM,DMA\\nDominican Republic,DO,DOM\\nEcuador,EC,ECU\\nEgypt,EG,EGY\\nEl Salvador,SV,SLV\\nEquatorial Guinea,GQ,GNQ\\nEritrea,ER,ERI\\nEstonia,EE,EST\\nEswatini,SZ,SWZ\\nEthiopia,ET,ETH\\nFalkland Islands (Malvinas),FK,FLK\\nFaroe Islands,FO,FRO\\nFiji,FJ,FJI\\nFinland,FI,FIN\\nFrance,FR,FRA\\nFrench Guiana,GF,GUF\\nFrench Polynesia,PF,PYF\\nFrench Southern Territories,TF,ATF\\nGabon,GA,GAB\\nGambia,GM,GMB\\nGeorgia,GE,GEO\\nGermany,DE,DEU\\nGhana,GH,GHA\\nGibraltar,GI,GIB\\nGreece,GR,GRC\\nGreenland,GL,GRL\\nGrenada,GD,GRD\\nGuadeloupe,GP,GLP\\nGuam,GU,GUM\\nGuatemala,GT,GTM\\nGuernsey,GG,GGY\\nGuinea,GN,GIN\\nGuinea-Bissau,GW,GNB\\nGuyana,GY,GUY\\nHaiti,HT,HTI\\nHeard Island and McDonald Islands,HM,HMD\\nHoly See,VA,VAT\\nHonduras,HN,HND\\nHong Kong,HK,HKG\\nHungary,HU,HUN\\nIceland,IS,ISL\\nIndia,IN,IND\\nIndonesia,ID,IDN\\nIran,Islamic Republic of Iran,IR,IRN\\nIraq,IQ,IRQ\\nIreland,IE,IRL\\nIsle of Man,IM,IMN\\nIsrael,IL,ISR\\nItaly,IT,ITA\\nJamaica,JM,JAM\\nJapan,JP,JPN\\nJersey,JE,JEY\\nJordan,JO,JOR\\nKazakhstan,KZ,KAZ\\nKenya,KE,KEN\\nKiribati,KI,KIR\\nDemocratic People\u0027s Republic of Korea,KP,PRK\\nKorea,Republic of Korea,KR,KOR\\nKuwait,KW,KWT\\nKyrgyzstan,KG,KGZ\\nLao People\u0027s Democratic Republic,LA,LAO\\nLatvia,LV,LVA\\nLebanon,LB,LBN\\nLesotho,LS,LSO\\nLiberia,LR,LBR\\nLibya,LY,LBY\\nLiechtenstein,LI,LIE\\nLithuania,LT,LTU\\nLuxembourg,LU,LUX\\nMacao,MO,MAC\\nMadagascar,MG,MDG\\nMalawi,MW,MWI\\nMalaysia,MY,MYS\\nMaldives,MV,MDV\\nMali,ML,MLI\\nMalta,MT,MLT\\nMarshall Islands,MH,MHL\\nMartinique,MQ,MTQ\\nMauritania,MR,MRT\\nMauritius,MU,MUS\\nMayotte,YT,MYT\\nMexico,MX,MEX\\nMicronesia,Federated States of Micronesia,FM,FSM\\nMoldova,Republic of Moldova,MD,MDA\\nMonaco,MC,MCO\\nMongolia,MN,MNG\\nMontenegro,ME,MNE\\nMontserrat,MS,MSR\\nMorocco,MA,MAR\\nMozambique,MZ,MOZ\\nMyanmar,MM,MMR\\nNamibia,NA,NAM\\nNauru,NR,NRU\\nNepal,NP,NPL\\nNetherlands,NL,NLD\\nNew Caledonia,NC,NCL\\nNew Zealand,NZ,NZL\\nNicaragua,NI,NIC\\nNiger,NE,NER\\nNigeria,NG,NGA\\nNiue,NU,NIU\\nNorfolk Island,NF,NFK\\nNorth Macedonia,MK,MKD\\nNorthern Mariana Islands,MP,MNP\\nNorway,NO,NOR\\nOman,OM,OMN\\nPakistan,PK,PAK\\nPalau,PW,PLW\\nPalestine,State of Palestine,PS,PSE\\nPanama,PA,PAN\\nPapua New Guinea,PG,PNG\\nParaguay,PY,PRY\\nPeru,PE,PER\\nPhilippines,PH,PHL\\nPitcairn,PN,PCN\\nPoland,PL,POL\\nPortugal,PT,PRT\\nPuerto Rico,PR,PRI\\nQatar,QA,QAT\\nR\\u00e9union,RE,REU\\nRomania,RO,ROU\\nRussia,Russian Federation,RU,RUS\\nRwanda,RW,RWA\\nSaint Barth\\u00e9lemy,BL,BLM\\nSaint Helena,Ascension and Tristan da Cunha,SH,SHN\\nSaint Kitts and Nevis,KN,KNA\\nSaint Lucia,LC,LCA\\nSaint Martin (French part),MF,MAF\\nSaint Pierre and Miquelon,PM,SPM\\nSaint Vincent and the Grenadines,VC,VCT\\nSamoa,WS,WSM\\nSan Marino,SM,SMR\\nSao Tome and Principe,ST,STP\\nSaudi Arabia,SA,SAU\\nSenegal,SN,SEN\\nSerbia,RS,SRB\\nSeychelles,SC,SYC\\nSierra Leone,SL,SLE\\nSingapore,SG,SGP\\nSint Maarten (Dutch part),SX,SXM\\nSlovakia,SK,SVK\\nSlovenia,SI,SVN\\nSolomon Islands,SB,SLB\\nSomalia,SO,SOM\\nSouth Africa,ZA,ZAF\\nSouth Georgia and the South Sandwich Islands,GS,SGS\\nSouth Sudan,SS,SSD\\nSpain,ES,ESP\\nSri Lanka,LK,LKA\\nSudan,SD,SDN\\nSuriname,SR,SUR\\nSvalbard and Jan Mayen,SJ,SJM\\nSweden,SE,SWE\\nSwitzerland,CH,CHE\\nSyrian Arab Republic,SY,SYR\\nTaiwan,Province of China,TW,TWN\\nTajikistan,TJ,TJK\\nTanzania,United Republic of Tanzania,TZ,TZA\\nThailand,TH,THA\\nTimor-Leste,TL,TLS\\nTogo,TG,TGO\\nTokelau,TK,TKL\\nTonga,TO,TON\\nTrinidad and Tobago,TT,TTO\\nTunisia,TN,TUN\\nTurkey,TR,TUR\\nTurkmenistan,TM,TKM\\nTurks and Caicos Islands,TC,TCA\\nTuvalu,TV,TUV\\nUganda,UG,UGA\\nUkraine,UA,UKR\\nUnited Arab Emirates,AE,ARE\\nUnited Kingdom of Great Britain and Northern Ireland,GB,GBR\\nUnited States of America,US,USA\\nUnited States Minor Outlying Islands,UM,UMI\\nUruguay,UY,URY\\nUzbekistan,UZ,UZB\\nVanuatu,VU,VUT\\nVenezuela (Bolivarian Republic of),VE,VEN\\nViet Nam,VN,VNM\\nVirgin Islands (British),VG,VGB\\nVirgin Islands (U.S.),VI,VIR\\nWallis and Futuna,WF,WLF\\nWestern Sahara,EH,ESH\\nYemen,YE,YEM\\nZambia,ZM,ZMB\\nZimbabwe,ZW,ZWE\\n\u0022,\u0022encryptionKey\u0022:null}"
     },
     {
       "RequestUri": "https://mohitc-acs.search.windows.net/indexes?api-version=2020-06-30-Preview",
@@ -49,9 +49,9 @@
         "api-key": "Sanitized",
         "Content-Length": "1593",
         "Content-Type": "application/json",
-        "traceparent": "00-84c6605876eddf48ba4c4ce7a1331c85-c9803c7803816a48-00",
+        "traceparent": "00-2efcafc9f195d446923c549953123a36-effb506d24c8bf4e-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210427.1",
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "29cc6bfc8a7936ff705a7e8d11c9ba9e",
@@ -179,9 +179,9 @@
         "client-request-id": "29cc6bfc-8a79-36ff-705a-7e8d11c9ba9e",
         "Content-Length": "2883",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 27 Apr 2021 18:32:29 GMT",
-        "elapsed-time": "651",
-        "ETag": "W/\u00220x8D909AAD108447B\u0022",
+        "Date": "Wed, 28 Apr 2021 22:47:47 GMT",
+        "elapsed-time": "606",
+        "ETag": "W/\u00220x8D90A97A53826FB\u0022",
         "Expires": "-1",
         "Location": "https://mohitc-acs.search.windows.net/indexes(\u0027fgsbkgip\u0027)?api-version=2020-06-30-Preview",
         "OData-Version": "4.0",
@@ -193,7 +193,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D909AAD108447B\u0022",
+        "@odata.etag": "\u00220x8D90A97A53826FB\u0022",
         "name": "fgsbkgip",
         "defaultScoringProfile": null,
         "fields": [
@@ -380,9 +380,9 @@
         "api-key": "Sanitized",
         "Content-Length": "216",
         "Content-Type": "application/json",
-        "traceparent": "00-2be66abacffc294ea064bd52836dbd76-984dc628b97c4346-00",
+        "traceparent": "00-bb3fcdab69988f47bd6d09025ad9918e-80ee550567ab3e47-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210427.1",
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "1e31e9c53621254d806c77bb6721507a",
@@ -395,7 +395,7 @@
           "connectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=Sanitized;EndpointSuffix=core.windows.net"
         },
         "container": {
-          "name": "ftfaarpe"
+          "name": "sdplyrvx"
         }
       },
       "StatusCode": 201,
@@ -404,9 +404,9 @@
         "client-request-id": "1e31e9c5-3621-254d-806c-77bb6721507a",
         "Content-Length": "371",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 27 Apr 2021 18:32:29 GMT",
-        "elapsed-time": "55",
-        "ETag": "W/\u00220x8D909AAD11A7024\u0022",
+        "Date": "Wed, 28 Apr 2021 22:47:47 GMT",
+        "elapsed-time": "61",
+        "ETag": "W/\u00220x8D90A97A54A79B0\u0022",
         "Expires": "-1",
         "Location": "https://mohitc-acs.search.windows.net/datasources(\u0027ofgjbglc\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
@@ -418,7 +418,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#datasources/$entity",
-        "@odata.etag": "\u00220x8D909AAD11A7024\u0022",
+        "@odata.etag": "\u00220x8D90A97A54A79B0\u0022",
         "name": "ofgjbglc",
         "description": null,
         "type": "azureblob",
@@ -427,7 +427,7 @@
           "connectionString": null
         },
         "container": {
-          "name": "ftfaarpe",
+          "name": "sdplyrvx",
           "query": null
         },
         "dataChangeDetectionPolicy": null,
@@ -443,9 +443,9 @@
         "api-key": "Sanitized",
         "Content-Length": "996",
         "Content-Type": "application/json",
-        "traceparent": "00-059c656ad08ed74ab2159d2902aec56e-9d8091c1c3459a4a-00",
+        "traceparent": "00-e70486380718c04e967e2a5723d6e712-439e8b236136d74b-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210427.1",
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "102596419a8fb2c3d682648f59e0153a",
@@ -512,11 +512,11 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "10259641-9a8f-b2c3-d682-648f59e0153a",
-        "Content-Length": "1466",
+        "Content-Length": "1387",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 27 Apr 2021 18:32:29 GMT",
-        "elapsed-time": "75",
-        "ETag": "W/\u00220x8D909AAD12A9FA1\u0022",
+        "Date": "Wed, 28 Apr 2021 22:47:47 GMT",
+        "elapsed-time": "77",
+        "ETag": "W/\u00220x8D90A97A55AF75F\u0022",
         "Expires": "-1",
         "Location": "https://mohitc-acs.search.windows.net/skillsets(\u0027tpmehipv\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
@@ -528,7 +528,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#skillsets/$entity",
-        "@odata.etag": "\u00220x8D909AAD12A9FA1\u0022",
+        "@odata.etag": "\u00220x8D90A97A55AF75F\u0022",
         "name": "tpmehipv",
         "description": null,
         "skills": [
@@ -594,7 +594,7 @@
           "key": "Sanitized"
         },
         "knowledgeStore": {
-          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=PTzW6XFeH7IsvWOdK\u002B0vmav7H1Zsuq4NKvOVViBttqAixm7smFzZtvUdAAGQb/zBPw2nwifF4e4CSUU9qvdjNQ==;EndpointSuffix=core.windows.net",
+          "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=mohitcsablob;AccountKey=Sanitized;EndpointSuffix=core.windows.net",
           "projections": [],
           "parameters": null
         },
@@ -609,9 +609,9 @@
         "api-key": "Sanitized",
         "Content-Length": "436",
         "Content-Type": "application/json",
-        "traceparent": "00-cc17b27923a76a4c8e32842287031a3a-d7675b1d6ab77f45-00",
+        "traceparent": "00-b2225464a492b24293606b565432934b-3ba49a6822a97f4b-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210427.1",
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "059fef0e17e8d0b78f54dd8a113d95e5",
@@ -657,9 +657,9 @@
         "client-request-id": "059fef0e-17e8-d0b7-8f54-dd8a113d95e5",
         "Content-Length": "1004",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 27 Apr 2021 18:32:31 GMT",
-        "elapsed-time": "278",
-        "ETag": "W/\u00220x8D909AAD14B73DD\u0022",
+        "Date": "Wed, 28 Apr 2021 22:47:48 GMT",
+        "elapsed-time": "301",
+        "ETag": "W/\u00220x8D90A97A5801221\u0022",
         "Expires": "-1",
         "Location": "https://mohitc-acs.search.windows.net/indexers(\u0027caupyhfn\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
@@ -671,7 +671,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexers/$entity",
-        "@odata.etag": "\u00220x8D909AAD14B73DD\u0022",
+        "@odata.etag": "\u00220x8D90A97A5801221\u0022",
         "name": "caupyhfn",
         "description": null,
         "dataSourceName": "ofgjbglc",
@@ -731,9 +731,9 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-9571073194f37c48973ed032f64c40e4-23804a9967aaec43-00",
+        "traceparent": "00-492f8759b0305b4296f56ecebacbbccd-a9b89a9333714b46-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210427.1",
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "e5e5c4a8c0bccd2120267139e6b48a42",
@@ -746,8 +746,8 @@
         "client-request-id": "e5e5c4a8-c0bc-cd21-2026-7139e6b48a42",
         "Content-Length": "2498",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Tue, 27 Apr 2021 18:32:41 GMT",
-        "elapsed-time": "13",
+        "Date": "Wed, 28 Apr 2021 22:47:58 GMT",
+        "elapsed-time": "12",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -763,12 +763,12 @@
         "lastResult": {
           "status": "success",
           "errorMessage": null,
-          "startTime": "2021-04-27T18:32:31.448Z",
-          "endTime": "2021-04-27T18:32:32.228Z",
+          "startTime": "2021-04-28T22:47:48.572Z",
+          "endTime": "2021-04-28T22:47:49.177Z",
           "itemsProcessed": 10,
           "itemsFailed": 0,
-          "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-04-27T18:32:31.463Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
-          "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-04-27T18:32:01.4631156\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-04-27T18:32:01.4631156\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+          "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-04-28T22:47:48.577Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+          "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-04-28T22:47:18.5774394\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-04-28T22:47:18.5774394\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
           "errors": [],
           "warnings": [
             {
@@ -785,12 +785,12 @@
           {
             "status": "success",
             "errorMessage": null,
-            "startTime": "2021-04-27T18:32:31.448Z",
-            "endTime": "2021-04-27T18:32:32.228Z",
+            "startTime": "2021-04-28T22:47:48.572Z",
+            "endTime": "2021-04-28T22:47:49.177Z",
             "itemsProcessed": 10,
             "itemsFailed": 0,
-            "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-04-27T18:32:31.463Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
-            "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-04-27T18:32:01.4631156\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-04-27T18:32:01.4631156\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
+            "initialTrackingState": "{\r\n  \u0022lastFullEnumerationStartTime\u0022: \u00220001-01-01T00:00:00Z\u0022,\r\n  \u0022lastAttemptedEnumerationStartTime\u0022: \u00222021-04-28T22:47:48.577Z\u0022,\r\n  \u0022nameHighWaterMark\u0022: null\r\n}",
+            "finalTrackingState": "{\u0022LastFullEnumerationStartTime\u0022:\u00222021-04-28T22:47:18.5774394\u002B00:00\u0022,\u0022LastAttemptedEnumerationStartTime\u0022:\u00222021-04-28T22:47:18.5774394\u002B00:00\u0022,\u0022NameHighWaterMark\u0022:null}",
             "errors": [],
             "warnings": [
               {
@@ -819,9 +819,9 @@
         "api-key": "Sanitized",
         "Content-Length": "23",
         "Content-Type": "application/json",
-        "traceparent": "00-252656f5f7fbf546861c02672149f262-7f6f4f01e5eb204f-00",
+        "traceparent": "00-1375cce40e7dcc488b64a5df1c425660-9d2605821656aa40-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210427.1",
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "a001e65fbefbbecaca940005028a28cf",
@@ -836,8 +836,8 @@
         "client-request-id": "a001e65f-befb-beca-ca94-0005028a28cf",
         "Content-Length": "986",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Tue, 27 Apr 2021 18:32:41 GMT",
-        "elapsed-time": "76",
+        "Date": "Wed, 28 Apr 2021 22:47:58 GMT",
+        "elapsed-time": "63",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -854,9 +854,9 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-c845469c12dc8e43b065af54dbbe8245-660dc274868ed548-00",
+        "traceparent": "00-09e12e42e11fe64fab912ec857c0b66b-9395c4b7bc836641-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210427.1",
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "8dfd28c352184d82cdd2e5c2a67eeadb",
@@ -867,7 +867,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "8dfd28c3-5218-4d82-cdd2-e5c2a67eeadb",
-        "Date": "Tue, 27 Apr 2021 18:32:41 GMT",
+        "Date": "Wed, 28 Apr 2021 22:47:58 GMT",
         "elapsed-time": "66",
         "Expires": "-1",
         "Pragma": "no-cache",
@@ -883,9 +883,9 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-b857c47f61e6d14780fcc8f995ce6fd5-81217c77b2ed854d-00",
+        "traceparent": "00-bfdf4a87d7db1d4d8d9ceafbc66ca050-2a330eb04f9d8144-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210427.1",
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "2a2a9bc9f43beae9fa261a28c01ccb95",
@@ -896,8 +896,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "2a2a9bc9-f43b-eae9-fa26-1a28c01ccb95",
-        "Date": "Tue, 27 Apr 2021 18:32:41 GMT",
-        "elapsed-time": "85",
+        "Date": "Wed, 28 Apr 2021 22:47:58 GMT",
+        "elapsed-time": "51",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "2a2a9bc9-f43b-eae9-fa26-1a28c01ccb95",
@@ -912,9 +912,9 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-e4720ab11f10ab4ea1ebd751ce0ef7a1-ab18b28ec4c7b64b-00",
+        "traceparent": "00-a6961c582c84714aae227f6e90c6ccdf-34923bd7899c6443-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210427.1",
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "bd75a1fdfdb60d2a64b4d229d907184c",
@@ -925,8 +925,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "bd75a1fd-fdb6-0d2a-64b4-d229d907184c",
-        "Date": "Tue, 27 Apr 2021 18:32:41 GMT",
-        "elapsed-time": "51",
+        "Date": "Wed, 28 Apr 2021 22:47:58 GMT",
+        "elapsed-time": "55",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "bd75a1fd-fdb6-0d2a-64b4-d229d907184c",
@@ -941,9 +941,9 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-e9231f13bab5d04d95be3de4aee61cc2-9c0b288a3efc8743-00",
+        "traceparent": "00-66aa3e1bbba4ec46816eafd238cceee0-52cb2af66df87b4d-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210427.1",
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "673b24a9fe60ce943e1292f1375a8cb1",
@@ -954,8 +954,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "673b24a9-fe60-ce94-3e12-92f1375a8cb1",
-        "Date": "Tue, 27 Apr 2021 18:32:41 GMT",
-        "elapsed-time": "175",
+        "Date": "Wed, 28 Apr 2021 22:47:58 GMT",
+        "elapsed-time": "178",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "673b24a9-fe60-ce94-3e12-92f1375a8cb1",
@@ -970,9 +970,9 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-e6515b4c66fbda40be0c9271e03d0846-df78b1df5595be41-00",
+        "traceparent": "00-07c8c8508637074ebdabefc12af5c6ad-8606d5552bb48445-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210427.1",
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210428.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "05c44f072c08cb24701dc58621c011f2",
@@ -983,8 +983,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "05c44f07-2c08-cb24-701d-c58621c011f2",
-        "Date": "Tue, 27 Apr 2021 18:32:41 GMT",
-        "elapsed-time": "46",
+        "Date": "Wed, 28 Apr 2021 22:47:58 GMT",
+        "elapsed-time": "50",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "05c44f07-2c08-cb24-701d-c58621c011f2",
@@ -995,7 +995,7 @@
     }
   ],
   "Variables": {
-    "BlobContainerName": "ftfaarpe",
+    "BlobContainerName": "sdplyrvx",
     "RandomSeed": "1271390025",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_COGNITIVE_KEY": "Sanitized",
