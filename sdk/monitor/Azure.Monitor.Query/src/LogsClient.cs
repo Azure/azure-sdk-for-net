@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +12,9 @@ using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query
 {
+    /// <summary>
+    /// The <see cref="LogsClient"/> allows to query the Azure Monitor Logs service.
+    /// </summary>
     public class LogsClient
     {
         private readonly QueryRestClient _queryClient;
@@ -20,10 +22,19 @@ namespace Azure.Monitor.Query
         private readonly HttpPipeline _pipeline;
         private readonly RowBinder _rowBinder;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="LogsClient"/>.
+        /// </summary>
+        /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public LogsClient(TokenCredential credential) : this(credential, null)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="LogsClient"/>.
+        /// </summary>
+        /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
+        /// <param name="options">The <see cref="LogsClientOptions"/> instance to as client configuration.</param>
         public LogsClient(TokenCredential credential, LogsClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -36,10 +47,22 @@ namespace Azure.Monitor.Query
             _rowBinder = new RowBinder();
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="LogsClient"/> for mocking.
+        /// </summary>
         protected LogsClient()
         {
         }
 
+        /// <summary>
+        /// Executes the logs query.
+        /// </summary>
+        /// <param name="workspaceId">The workspace to include in the query.</param>
+        /// <param name="query">The query text to execute.</param>
+        /// <param name="timeSpan">The timespan over which to query data.</param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
         public virtual Response<IReadOnlyList<T>> Query<T>(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = Query(workspaceId, query, timeSpan, options, cancellationToken);
@@ -47,6 +70,15 @@ namespace Azure.Monitor.Query
             return Response.FromValue(_rowBinder.BindResults<T>(response), response.GetRawResponse());
         }
 
+        /// <summary>
+        /// Executes the logs query.
+        /// </summary>
+        /// <param name="workspaceId">The workspace to include in the query.</param>
+        /// <param name="query">The query text to execute.</param>
+        /// <param name="timeSpan">The timespan over which to query data.</param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
         public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = await QueryAsync(workspaceId, query, timeSpan, options, cancellationToken).ConfigureAwait(false);
@@ -54,6 +86,15 @@ namespace Azure.Monitor.Query
             return Response.FromValue(_rowBinder.BindResults<T>(response), response.GetRawResponse());
         }
 
+        /// <summary>
+        /// Executes the logs query.
+        /// </summary>
+        /// <param name="workspaceId">The workspace to include in the query.</param>
+        /// <param name="query">The query text to execute.</param>
+        /// <param name="timeSpan">The timespan over which to query data.</param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
         public virtual Response<LogsQueryResult> Query(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
@@ -69,6 +110,15 @@ namespace Azure.Monitor.Query
             }
         }
 
+        /// <summary>
+        /// Executes the logs query.
+        /// </summary>
+        /// <param name="workspaceId">The workspace to include in the query.</param>
+        /// <param name="query">The query text to execute.</param>
+        /// <param name="timeSpan">The timespan over which to query data.</param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
         public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
@@ -84,6 +134,10 @@ namespace Azure.Monitor.Query
             }
         }
 
+        /// <summary>
+        /// Creates an instance of <see cref="LogsBatchQuery"/> that allows executing multiple queries at once.
+        /// </summary>
+        /// <returns>The <see cref="LogsBatchQuery"/> instance that allows building a list of queries and submitting them.</returns>
         public virtual LogsBatchQuery CreateBatchQuery()
         {
             return new LogsBatchQuery(_clientDiagnostics, _queryClient, _rowBinder);

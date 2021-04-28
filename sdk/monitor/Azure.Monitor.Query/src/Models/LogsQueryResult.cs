@@ -11,9 +11,15 @@ namespace Azure.Monitor.Query.Models
     public partial class LogsQueryResult
     {
         // TODO: Handle not found
+        /// <summary>
+        /// Returns the primary result of the query.
+        /// </summary>
         public LogsQueryResultTable PrimaryTable => Tables.Single(t => t.Name == "PrimaryResult");
 
 #pragma warning disable AZC0014
+        /// <summary>
+        /// Returns the query statistics.
+        /// </summary>
         public JsonElement Statistics { get; }
 #pragma warning restore AZC0014
 

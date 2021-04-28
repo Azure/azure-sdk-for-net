@@ -7,10 +7,12 @@ namespace Azure.Monitor.Query.Models
 {
     public partial class MetadataValue
     {
-        /// <summary> the name of the metadata. </summary>
         [CodeGenMember("Name")]
-        internal LocalizableString LocalizedName { get; }
+        private LocalizableString LocalizedName { get; }
 
+        /// <summary>
+        /// Gets the name of the metadata value.
+        /// </summary>
         public string Name => LocalizedName.Value;
     }
 }

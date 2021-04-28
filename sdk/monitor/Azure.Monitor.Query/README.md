@@ -1,9 +1,61 @@
 # Azure Monitor Query client library for .NET
 
-TODO
+The `Azure.Monitor.Query` package provides an ability to query [Azure Monitor Logs](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-platform-logs) and [Azure Monitor Metrics](https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/data-platform-metrics) data.
+
+Azure Monitor Logs is a feature of Azure Monitor that collects and organizes log and performance data from monitored resources. Data from different sources such as platform logs from Azure services, log and performance data from virtual machines agents, and usage and performance data from applications can be consolidated into a single workspace so they can be analyzed together using a sophisticated query language that's capable of quickly analyzing millions of records.
+
+Azure Monitor Metrics is a feature of Azure Monitor that collects numeric data from monitored resources into a time series database. Metrics are numerical values that are collected at regular intervals and describe some aspect of a system at a particular time. Metrics in Azure Monitor are lightweight and capable of supporting near real-time scenarios making them particularly useful for alerting and fast detection of issues.
+
+[Source code][query_client_src] | [Package (NuGet)][query_client_nuget_package]
+
+## Getting startedA
+
+### Install the package
+Install the Azure Monitor Query client library for .NET with [NuGet][query_client_nuget_package]:
+
+```
+dotnet add package Azure.Monitor.Query --prerelease
+```
+
+### Prerequisites
+* An [Azure subscription][azure_sub].
+* To be able to query logs you would need an existing Log Analytics workspace. You can create it in one of the following approaches:
+    * [Azure Portal](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/quick-create-workspace)
+    * [Azure CLI](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/quick-create-workspace-cli)
+    * [PowerShell](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/powershell-workspace-configuration)
+
+* To be able to query metrics all you need is an Azure resource of any kind (Storage Account, KeyVault, CosmosDB etc.)
+
+### Authenticate the Client
 
 
-## Samples
+## Key concepts
+
+- `LogsClient` - Client that provides methods to query logs from Azure Monitor Logs.
+- `MetricsClient` - Client that provides methods to query metrics from Azure Monitor Metrics.
+
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
+
+## Examples
+
+- [Query logs](#query-logs)
+- [Query logs as model](#query-logs-as-model)
+- [Query logs as primitive](#query-logs-as-primitive)
+- [Batch query](#batch-query)
+- [Query dynamic table](#query-dynamic-table)
+- [Increase query timeout](#increase-query-timeout)
 
 ### Query logs
 
@@ -92,7 +144,7 @@ foreach (var logEntryModel in topEntries)
 }
 ```
 
-### Query dynamic table 
+### Query dynamic table
 
 You can also dynamically inspect the list of columns. The following example prints the result of the query as a table:
 
@@ -121,3 +173,55 @@ foreach (var row in table.Rows)
     Console.WriteLine();
 }
 ```
+
+### Increase query timeout
+
+Some queries take longer to execute than the default service timeout allows. You can use the `LogsQueryOptions` parameter to specify the service timeout.
+
+```C# Snippet:QueryLogsPrintTable
+LogsClient client = new LogsClient(new DefaultAzureCredential());
+string workspaceId = "<workspace_id>";
+Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated");
+
+LogsQueryResultTable table = response.Value.PrimaryTable;
+
+foreach (var column in table.Columns)
+{
+    Console.Write(column.Name + ";");
+}
+
+Console.WriteLine();
+
+var columnCount = table.Columns.Count;
+foreach (var row in table.Rows)
+{
+    for (int i = 0; i < columnCount; i++)
+    {
+        Console.Write(row[i] + ";");
+    }
+
+    Console.WriteLine();
+}
+```
+
+## Contributing
+
+This project welcomes contributions and suggestions.  Most contributions require
+you to agree to a Contributor License Agreement (CLA) declaring that you have
+the right to, and actually do, grant us the rights to use your contribution. For
+details, visit [cla.microsoft.com][cla].
+
+This project has adopted the [Microsoft Open Source Code of Conduct][coc].
+For more information see the [Code of Conduct FAQ][coc_faq] or contact 
+[opencode@microsoft.com][coc_contact] with any additional questions or comments.
+
+[query_client_src]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/monitor/Azure.Monitor.Query/src
+[query_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Monitor.Query
+[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_sub]: https://azure.microsoft.com/free/
+[cla]: https://cla.microsoft.com
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[coc_contact]: mailto:opencode@microsoft.com
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fmonitor%2FAzure.Monitor.Query%2FREADME.png)

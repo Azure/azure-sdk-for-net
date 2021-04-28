@@ -151,6 +151,34 @@ namespace Azure.Monitor.Query.Tests
             #endregion
         }
 
+        [Test]
+        public async Task QueryLogsWithTimeout()
+        {
+            #region Snippet:QueryLogsWithTimeout
+
+            LogsClient client = new LogsClient(new DefaultAzureCredential());
+#if SNIPPET
+            string workspaceId = "<workspace_id>";
+#else
+            string workspaceId = TestEnvironment.WorkspaceId;
+#endif
+
+            // Query TOP 10 resource groups by event count
+            Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(workspaceId,
+                "AzureActivity | summarize count()",
+                options: new LogsQueryOptions()
+                {
+                    Timeout = TimeSpan.FromMinutes(10)
+                });
+
+            foreach (var resourceGroup in response.Value)
+            {
+                Console.WriteLine(resourceGroup);
+            }
+
+            #endregion
+        }
+
         #region Snippet:QueryLogsAsModelsModel
 
         public class MyLogEntryModel

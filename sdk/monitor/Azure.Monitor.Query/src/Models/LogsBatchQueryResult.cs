@@ -15,6 +15,13 @@ namespace Azure.Monitor.Query.Models
         private  BatchResponseError Error { get; }
         internal RowBinder RowBinder { get; set; }
 
+        /// <summary>
+        /// Gets the result for the query that was a part of the batch.
+        /// </summary>
+        /// <param name="queryId">The query identifier returned from the <see cref="LogsBatchQuery.AddQuery"/>.</param>
+        /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
+        /// <exception cref="ArgumentException">When the query with <paramref name="queryId"/> was not part of the batch.</exception>
+        /// <exception cref="RequestFailedException">When the query  <paramref name="queryId"/> failed.</exception>
         public LogsQueryResult GetResult(string queryId)
         {
             LogQueryResponse result = Responses.SingleOrDefault(r => r.Id == queryId);
@@ -33,6 +40,13 @@ namespace Azure.Monitor.Query.Models
             return result.Body;
         }
 
+        /// <summary>
+        /// Gets the result for the query that was a part of the batch.
+        /// </summary>
+        /// <param name="queryId">The query identifier returned from the <see cref="LogsBatchQuery.AddQuery"/>.</param>
+        /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
+        /// <exception cref="ArgumentException">When the query with <paramref name="queryId"/> was not part of the batch.</exception>
+        /// <exception cref="RequestFailedException">When the query  <paramref name="queryId"/> failed.</exception>
         public IReadOnlyList<T> GetResult<T>(string queryId)
         {
             return RowBinder.BindResults<T>(GetResult(queryId));

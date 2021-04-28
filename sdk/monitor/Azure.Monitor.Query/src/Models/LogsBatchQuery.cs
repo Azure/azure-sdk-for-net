@@ -10,6 +10,9 @@ using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query
 {
+    /// <summary>
+    /// Represents a batch that consists out of multiple log queries.
+    /// </summary>
     public class LogsBatchQuery
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -26,10 +29,21 @@ namespace Azure.Monitor.Query
             _batch = new BatchRequest();
         }
 
+        /// <summary>
+        /// Constructor to support mocking.
+        /// </summary>
         protected LogsBatchQuery()
         {
         }
 
+        /// <summary>
+        /// Adds query to the batch. Results can be retrieved after the query is submitted via the <see cref="SubmitAsync"/> call.
+        /// </summary>
+        /// <param name="workspaceId">The workspace to include in the query.</param>
+        /// <param name="query">The query text to execute.</param>
+        /// <param name="timeSpan">The timespan over which to query data.</param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <returns>The query identifier that has to be passed into <see cref="LogsBatchQueryResult.GetResult"/> to get the result.</returns>
         public virtual string AddQuery(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null)
         {
             var id = _counter.ToString("G", CultureInfo.InvariantCulture);
@@ -48,6 +62,11 @@ namespace Azure.Monitor.Query
             return id;
         }
 
+        /// <summary>
+        /// Submits the batch.
+        /// </summary>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The <see cref="LogsBatchQueryResult"/> that allows retrieving query results.</returns>
         public virtual Response<LogsBatchQueryResult> Submit(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsBatchQuery)}.{nameof(Submit)}");
@@ -65,6 +84,11 @@ namespace Azure.Monitor.Query
             }
         }
 
+        /// <summary>
+        /// Submits the batch.
+        /// </summary>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The <see cref="LogsBatchQueryResult"/> that allows retrieving query results.</returns>
         public virtual async Task<Response<LogsBatchQueryResult>> SubmitAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsBatchQuery)}.{nameof(Submit)}");
