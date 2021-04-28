@@ -481,11 +481,6 @@ namespace Azure.Search.Documents.Tests
                 Context = "/document",
             };
 
-            SearchIndexerSkillset skillset = new SearchIndexerSkillset(skillsetName, new[] { skill1, skill2, skill3, skill4, skill5 })
-            {
-                CognitiveServicesAccount = new DefaultCognitiveServicesAccount(),
-            };
-
             SearchIndexerKnowledgeStoreTableProjectionSelector table1 = new("hotelReviewsDocument")
             {
                 GeneratedKeyName = "Documentid",
@@ -550,7 +545,11 @@ namespace Azure.Search.Documents.Tests
 
             List<SearchIndexerKnowledgeStoreProjection> projections = new() { projection1, projection2 };
 
-            skillset.KnowledgeStore = new SearchIndexerKnowledgeStore(resources.StorageAccountConnectionString, projections);
+            SearchIndexerSkillset skillset = new SearchIndexerSkillset(skillsetName, new[] { skill1, skill2, skill3, skill4, skill5 })
+            {
+                CognitiveServicesAccount = new DefaultCognitiveServicesAccount(),
+                KnowledgeStore = new SearchIndexerKnowledgeStore(resources.StorageAccountConnectionString, projections),
+            };
 
             // Create the skillset.
             SearchIndexerSkillset createdSkillset = await client.CreateSkillsetAsync(skillset);

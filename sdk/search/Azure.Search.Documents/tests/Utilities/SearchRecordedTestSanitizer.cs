@@ -20,6 +20,11 @@ namespace Azure.Search.Documents.Tests
         /// </summary>
         private const string ApiKeyHeaderName = "api-key";
 
+        public SearchRecordedTestSanitizer()
+        {
+            JsonPathSanitizers.Add("$..storageConnectionString");
+        }
+
         /// <summary>
         /// Sanitizes all headers, variables, and body content of a <see cref="RecordSession"/>.
         /// </summary>
