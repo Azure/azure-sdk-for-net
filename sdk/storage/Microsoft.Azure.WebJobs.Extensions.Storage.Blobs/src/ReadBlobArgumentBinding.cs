@@ -77,6 +77,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             {
                 // Generate the cache key for this blob
                 FunctionDataCacheKey cacheKey = await GetFunctionDataCacheKey(blob, context.CancellationToken).ConfigureAwait(false);
+                if (cacheKey == null)
+                {
+                    return null;
+                }
 
                 // Check if it exists in the cache
                 if (functionDataCache.TryGet(cacheKey, isIncrementActiveReference: true, out SharedMemoryMetadata sharedMemoryMeta))
@@ -108,6 +112,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             // To be strongly consistent, first check the latest version present in blob storage;
             // query for that particular version in the cache.
             BlobProperties properties = await blob.BlobClient.FetchPropertiesOrNullIfNotExistAsync(cancellationToken).ConfigureAwait(false);
+            if (properties == null)
+            {
+                return null;
+            }
             string eTag = properties.ETag.ToString();
             string id = blob.BlobClient.Uri.ToString();
             FunctionDataCacheKey cacheKey = new FunctionDataCacheKey(id, eTag);
