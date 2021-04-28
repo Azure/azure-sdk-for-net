@@ -126,7 +126,7 @@ namespace Azure.Security.Attestation
         ///
         /// If present, the value for this field is normally "JWT".
         /// </summary>
-        public string Type { get => Header.Type; }
+        public string Type => Header.Type;
 
         /// <summary>
         /// Json Web Token Header "content type". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.10 for details.
