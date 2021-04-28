@@ -20,7 +20,7 @@ namespace Azure.Storage.Test.Shared
                 // WARN! Never ever override SAS version in Live mode. We should test the default there.
 
                 // TODO Uncomment this to record/playback with different sas version
-                SetSasVersion("2020-08-04");
+                // SetSasVersion("2020-08-04");
             }
         }
 
