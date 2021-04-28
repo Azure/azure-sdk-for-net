@@ -775,5 +775,59 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
             }
         }
+
+        [Test]
+        public async Task ProcessDlq()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 10;
+
+                // send some messages
+                await sender.SendMessagesAsync(GetMessages(messageCount));
+
+                // receive the messages
+                var receiver = client.CreateReceiver(scope.QueueName);
+                int remaining = messageCount;
+
+                // move the messages to the DLQ
+                while (remaining > 0)
+                {
+                    var messages = await receiver.ReceiveMessagesAsync(remaining);
+                    remaining -= messages.Count;
+                    foreach (ServiceBusReceivedMessage message in messages)
+                    {
+                        await receiver.DeadLetterMessageAsync(message);
+                    }
+                }
+
+                // process the DLQ
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    SubQueue = SubQueue.DeadLetter
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    var ct = Interlocked.Increment(ref receivedCount);
+                    if (ct == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+                    return Task.CompletedTask;
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
     }
 }
