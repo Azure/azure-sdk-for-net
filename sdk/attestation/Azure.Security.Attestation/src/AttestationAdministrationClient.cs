@@ -158,7 +158,7 @@ namespace Azure.Security.Attestation
                     {
                         throw new AttestationTokenValidationFailedException("Attestation Token was rejected.")
                         {
-                            Signers = (IReadOnlyList<AttestationSigner>)signers,
+                            Signers = signers,
                             Token = token,
                         };
                     }
