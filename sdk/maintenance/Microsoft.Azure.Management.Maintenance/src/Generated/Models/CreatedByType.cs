@@ -12,17 +12,13 @@ namespace Microsoft.Azure.Management.Maintenance.Models
 {
 
     /// <summary>
-    /// Defines values for Visibility.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class Visibility
+    public static class CreatedByType
     {
-        /// <summary>
-        /// Only visible to users with permissions.
-        /// </summary>
-        public const string Custom = "Custom";
-        /// <summary>
-        /// Visible to all users.
-        /// </summary>
-        public const string Public = "Public";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }
