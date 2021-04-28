@@ -33,5 +33,14 @@ namespace Azure.Security.Attestation
         /// Represents the attestation token which was being validated.
         /// </summary>
         public AttestationToken Token { get; internal set; }
+
+        internal static void ThrowFailure(IReadOnlyList<AttestationSigner> signers, AttestationToken token)
+        {
+            throw new AttestationTokenValidationFailedException($"An Attestation Token was rejected by an {nameof(AttestationTokenValidationOptions)}.{nameof(AttestationTokenValidationOptions.TokenValidated)} event handler.")
+            {
+                Signers = signers,
+                Token = token,
+            };
+        }
     }
 }
