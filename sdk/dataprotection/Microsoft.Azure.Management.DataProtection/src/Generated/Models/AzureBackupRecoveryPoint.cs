@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,6 +19,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Azure backup recoveryPoint
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("AzureBackupRecoveryPoint")]
     public partial class AzureBackupRecoveryPoint
     {
         /// <summary>

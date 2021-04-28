@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,6 +19,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Immediate copy Option
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("ImmediateCopyOption")]
     public partial class ImmediateCopyOption : CopyOption
     {
         /// <summary>

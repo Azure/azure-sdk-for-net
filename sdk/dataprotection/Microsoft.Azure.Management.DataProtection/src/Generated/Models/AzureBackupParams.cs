@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Azure backup parameters
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("AzureBackupParams")]
     public partial class AzureBackupParams : BackupParameters
     {
         /// <summary>

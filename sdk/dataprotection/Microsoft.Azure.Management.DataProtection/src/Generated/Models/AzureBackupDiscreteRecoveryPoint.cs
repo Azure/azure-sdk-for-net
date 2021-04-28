@@ -21,6 +21,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Azure backup discrete RecoveryPoint
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("AzureBackupDiscreteRecoveryPoint")]
     public partial class AzureBackupDiscreteRecoveryPoint : AzureBackupRecoveryPoint
     {
         /// <summary>

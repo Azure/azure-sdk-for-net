@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,6 +19,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Copy on Expiry Option
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("CopyOnExpiryOption")]
     public partial class CopyOnExpiryOption : CopyOption
     {
         /// <summary>

@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -18,6 +19,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Delete option with duration
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("AbsoluteDeleteOption")]
     public partial class AbsoluteDeleteOption : DeleteOption
     {
         /// <summary>

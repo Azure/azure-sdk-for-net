@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// Rule based backup policy
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("BackupPolicy")]
     public partial class BackupPolicy : BaseBackupPolicy
     {
         /// <summary>
