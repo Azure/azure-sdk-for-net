@@ -135,7 +135,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Json Web Token Header "Key URL". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.2 for details.
         /// </summary>
-        public Uri KeyUrl { get => Header.JWKUri; }
+        public Uri KeyUrl => Header.JWKUri;
         /// <summary>
         /// Json Web Token Header "Key ID". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.4 for details.
         /// </summary>
