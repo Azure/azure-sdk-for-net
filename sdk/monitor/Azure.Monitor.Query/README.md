@@ -265,7 +265,7 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 
 [query_client_src]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/monitor/Azure.Monitor.Query/src
 [query_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Monitor.Query
-[monitor_rest_api]: https://docs.microsoft.com/en-us/rest/api/monitor/
+[monitor_rest_api]: https://docs.microsoft.com/rest/api/monitor/
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [cla]: https://cla.microsoft.com
