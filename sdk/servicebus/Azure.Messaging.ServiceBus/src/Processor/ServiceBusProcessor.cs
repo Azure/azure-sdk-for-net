@@ -225,7 +225,6 @@ namespace Azure.Messaging.ServiceBus
 
             AutoCompleteMessages = Options.AutoCompleteMessages;
 
-            EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, options.SubQueue);
             IsSessionProcessor = isSessionEntity;
             _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
             _plugins = plugins;
