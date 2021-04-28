@@ -24,7 +24,7 @@ var policySetToken = new AttestationToken(
 using var shaHasher = SHA256Managed.Create();
 byte[] attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.Serialize()));
 
-Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash));
+Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash.ToArray()));
 ```
 
 - The JSON Web Token associated properties in the `AttestationToken` class have been converted to nullable types to allow the AttestationToken class to express JSON Web Signature objects.
