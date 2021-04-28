@@ -24,7 +24,7 @@ namespace Azure.Security.Attestation
         {
             SigningCertificates = signingCertificates switch
             {
-                IReadOnlyList<X509Certificate2> => (IReadOnlyList<X509Certificate2>)signingCertificates,
+                IReadOnlyList<X509Certificate2> certificateList => certificateList
                 _ => signingCertificates.ToList().AsReadOnly()
             };
             CertificateKeyId = certificateKeyId;
