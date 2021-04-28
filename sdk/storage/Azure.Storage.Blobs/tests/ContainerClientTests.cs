@@ -459,8 +459,7 @@ namespace Azure.Storage.Blobs.Test
 
             BlobSasQueryParameters sasQueryParameters = GetContainerSas(
                 containerName: containerName,
-                permissions: permissions,
-                sasVersion: ToSasVersion(_serviceVersion));
+                permissions: permissions);
 
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(service.GetBlobContainerClient(containerName).Uri)
             {

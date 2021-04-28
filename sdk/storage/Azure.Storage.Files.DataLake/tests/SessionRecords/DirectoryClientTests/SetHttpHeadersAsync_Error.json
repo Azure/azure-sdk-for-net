@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "3faad4ad-c077-292c-5ebb-bfad5af6ee7c",
         "x-ms-date": "Mon, 26 Apr 2021 22:14:52 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -24,7 +24,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "3faad4ad-c077-292c-5ebb-bfad5af6ee7c",
         "x-ms-request-id": "84fa1d3b-801e-0002-18e9-3ac10a000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     },
@@ -45,7 +45,7 @@
         "x-ms-client-request-id": "e874ce27-f62b-50f3-b353-445b781aa557",
         "x-ms-date": "Mon, 26 Apr 2021 22:14:53 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -57,7 +57,7 @@
         "x-ms-client-request-id": "e874ce27-f62b-50f3-b353-445b781aa557",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "84fa1d9d-801e-0002-6ee9-3ac10a000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
@@ -76,7 +76,7 @@
         "x-ms-client-request-id": "b4ead326-d393-4398-fdfa-baa583e22400",
         "x-ms-date": "Mon, 26 Apr 2021 22:14:53 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -86,7 +86,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "b4ead326-d393-4398-fdfa-baa583e22400",
         "x-ms-request-id": "84fa1dd9-801e-0002-27e9-3ac10a000000",
-        "x-ms-version": "2020-08-04"
+        "x-ms-version": "2020-10-02"
       },
       "ResponseBody": []
     }
