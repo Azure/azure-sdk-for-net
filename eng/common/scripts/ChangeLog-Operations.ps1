@@ -121,6 +121,10 @@ function Confirm-ChangeLogEntry {
       $status = $changeLogEntry.ReleaseStatus.Trim().Trim("()")
       try {
         $releaseDate = [DateTime]$status
+        if ($status -ne ($releaseDate.ToString($CHANGELOG_DATE_FORMAT)))
+        {
+          throw "Date must be in the format $($CHANGELOG_DATE_FORMAT)"
+        }
         if (((Get-Date).AddDays(-31) -gt $releaseDate) -or ($releaseDate -gt (Get-Date).AddDays(31)))
         {
           throw "Date is way outside of the current release period."
