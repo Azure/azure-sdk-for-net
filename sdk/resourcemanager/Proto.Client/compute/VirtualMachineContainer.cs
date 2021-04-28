@@ -47,7 +47,7 @@ namespace Proto.Compute
         /// <param name="resourceDetails"> Parameters supplied to the Create Virtual Machine operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> A response with the <see cref="ArmResponse{VirtualMachine}"/> operation for this resource. </returns>
-        public override ArmResponse<VirtualMachine> CreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
+        public ArmResponse<VirtualMachine> CreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
@@ -62,7 +62,7 @@ namespace Proto.Compute
         /// <param name="resourceDetails"> Parameters supplied to the Create Virtual Machine operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{VirtualMachine}"/> operation for this resource. </returns>
-        public async override Task<ArmResponse<VirtualMachine>> CreateOrUpdateAsync(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<ArmResponse<VirtualMachine>> CreateOrUpdateAsync(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
@@ -80,7 +80,7 @@ namespace Proto.Compute
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <returns> An <see cref="ArmOperation{VirtualMachine}"/> that allows polling for completion of the operation. </returns>
-        public override ArmOperation<VirtualMachine> StartCreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
+        public ArmOperation<VirtualMachine> StartCreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
                 Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken),
@@ -97,7 +97,7 @@ namespace Proto.Compute
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{VirtualMachine}"/> that allows polling for completion of the operation. </returns>
-        public async override Task<ArmOperation<VirtualMachine>> StartCreateOrUpdateAsync(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<ArmOperation<VirtualMachine>> StartCreateOrUpdateAsync(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false),

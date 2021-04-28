@@ -19,6 +19,16 @@ namespace Azure.ResourceManager.Core
         ITaggableResource<ResourceGroupResourceIdentifier, ResourceGroup>, IDeletableResource
     {
         /// <summary>
+        /// Name of the CreateOrUpdate() method in [Resource]Container classes.
+        /// </summary>
+        private const string CreateOrUpdateMethodName = "CreateOrUpdate";
+
+        /// <summary>
+        /// Name of the CreateOrUpdateAsync() method in [Resource]Container classes.
+        /// </summary>
+        private const string CreateOrUpdateAsyncMethodName = "CreateOrUpdateAsync";
+
+        /// <summary>
         /// Gets the resource type definition for a ResourceType.
         /// </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions/resourceGroups";
@@ -334,8 +344,8 @@ namespace Azure.ResourceManager.Core
 
             var myResource = model as TrackedResource<TIdentifier>;
             TContainer container = Activator.CreateInstance(typeof(TContainer), ClientOptions, myResource) as TContainer;
-
-            return container.CreateOrUpdate(name, model);
+            var createOrUpdateMethod = typeof(TContainer).GetMethod(CreateOrUpdateMethodName);
+            return createOrUpdateMethod.Invoke(container, new object[] { name, model }) as ArmResponse<TOperations>;
         }
 
         /// <summary>
@@ -365,8 +375,8 @@ namespace Azure.ResourceManager.Core
             var myResource = model as TrackedResource<TIdentifier>;
 
             TContainer container = Activator.CreateInstance(typeof(TContainer), ClientOptions, myResource) as TContainer;
-
-            return container.CreateOrUpdateAsync(name, model, cancellationToken);
+            var createOrUpdateAsyncMethod = typeof(TContainer).GetMethod(CreateOrUpdateAsyncMethodName);
+            return createOrUpdateAsyncMethod.Invoke(container, new object[] { name, model, cancellationToken }) as Task<ArmResponse<TOperations>>;
         }
 
         /// <inheritdoc/>

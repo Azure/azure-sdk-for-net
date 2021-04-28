@@ -5,7 +5,7 @@ namespace Proto.Compute.Convenience
     /// <summary>
     /// A class representing the base for a builder object to help create a virtual machine.
     /// </summary>
-    public abstract class VirtualMachineModelBuilderBase : ArmBuilder<ResourceGroupResourceIdentifier, VirtualMachine, VirtualMachineData>
+    public abstract class VirtualMachineModelBuilderBase : VirtualMachineBuilder
     {
         /// <summary>
         /// Initializes a new instance of <see cref="VirtualMachineModelBuilderBase"/>.
