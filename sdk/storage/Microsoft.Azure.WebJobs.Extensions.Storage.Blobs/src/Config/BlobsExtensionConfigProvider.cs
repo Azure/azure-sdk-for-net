@@ -140,12 +140,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
             RegisterCommonConverters(rule);
             rule.AddConverter<BlobBaseClient, BlobClient>(ConvertBlobBaseClientToBlobClient);
-
-            // If caching is enabled, create a binding for that
-            //if (_functionDataCache != null && _functionDataCache.IsEnabled)
-            //{
-            //    rule.AddConverter<BlobBaseClient, ICacheAfterWriteStream>(ConvertToBlobAndStreamAsync);
-            //}
         }
 
 #pragma warning disable CS0618 // Type or member is obsolete. FluentBindingRule is "Not ready for public consumption."

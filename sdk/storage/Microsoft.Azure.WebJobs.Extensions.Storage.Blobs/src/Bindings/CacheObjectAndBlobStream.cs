@@ -9,23 +9,33 @@ using Azure.Storage.Blobs.Specialized;
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
 {
     /// <summary>
-    /// This type should ideally be not part of extension.
+    /// Class representing an object that exists in shared memory.
+    /// This object needs to be persisted to storage using the associated Stream.
+    /// Once it is persisted, it needs to be inserted into the <see cref="IFunctionDataCache"/>.
     /// </summary>
     internal class CacheObjectAndBlobStream : ICacheAwareWriteObject
     {
+        /// <summary>
+        /// Cache in which to put this object when required.
+        /// </summary>
         private readonly IFunctionDataCache _functionDataCache;
 
+        /// <summary>
+        /// Blob for this object in storage.
+        /// </summary>
         private readonly BlobWithContainer<BlobBaseClient> _blob;
 
+        /// <summary>
+        /// Desribes the shared memory region containing this object.
+        /// </summary>
         private readonly SharedMemoryMetadata _cacheObject;
 
         /// <summary>
-        /// TODO.
         /// </summary>
-        /// <param name="blob"></param>
-        /// <param name="cacheObject"></param>
-        /// <param name="blobStream"></param>
-        /// <param name="functionDataCache"></param>
+        /// <param name="blob">Blob for this object in storage.</param>
+        /// <param name="cacheObject">Desribes the shared memory region containing this object.</param>
+        /// <param name="blobStream">Stream to use for writing this object to storage.</param>
+        /// <param name="functionDataCache">Cache in which to put this object when required.</param>
         public CacheObjectAndBlobStream(BlobWithContainer<BlobBaseClient> blob, SharedMemoryMetadata cacheObject, Stream blobStream, IFunctionDataCache functionDataCache)
         {
             _cacheObject = cacheObject;
@@ -35,15 +45,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
         }
 
         /// <summary>
-        /// Gets or sets.
+        /// Gets or sets the Stream associated to this object using which it will be written to storage.
         /// </summary>
         public Stream BlobStream { get; private set; }
 
         /// <summary>
-        /// TODO.
+        /// Put this object in the <see cref="IFunctionDataCache"/>.
         /// </summary>
-        /// <param name="isDeleteOnFailure"></param>
-        /// <returns></returns>
+        /// <param name="isDeleteOnFailure">If true, in the case of failure when adding to the cache, delete the object from shared memory
+        /// which is being added. If false, in the case of failure the object is not deleted from shared memory.</param>
+        /// <returns>True if the object was successfully put into the cache, false otherwise.</returns>
         public async Task<bool> TryPutToCacheAsync(bool isDeleteOnFailure)
         {
             if (_cacheObject == null)
