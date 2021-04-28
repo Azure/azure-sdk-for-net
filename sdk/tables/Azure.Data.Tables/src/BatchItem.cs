@@ -1,21 +1,45 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-
 namespace Azure.Data.Tables
 {
-    internal class BatchItem
+    /// <summary>
+    ///
+    /// </summary>
+    public class BatchItem
     {
-        public RequestType RequestType { get; set; }
-        public ITableEntity Entity { get; set; }
-        public HttpMessage Message { get; set; }
+        /// <summary>
+        ///
+        /// </summary>
+        public BatchOperation BatchOperation { get; set; }
 
-        public BatchItem(RequestType requestType, ITableEntity entity, HttpMessage message)
+        /// <summary>
+        ///
+        /// </summary>
+        public ITableEntity Entity { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public ETag ETag { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public BatchItem()
+        { }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="batchOperation"></param>
+        /// <param name="entity"></param>
+        /// <param name="etag"></param>
+        public BatchItem(BatchOperation batchOperation, ITableEntity entity, ETag etag = default)
         {
-            RequestType = requestType;
+            BatchOperation = batchOperation;
             Entity = entity;
-            Message = message;
+            ETag = etag;
         }
     }
 }

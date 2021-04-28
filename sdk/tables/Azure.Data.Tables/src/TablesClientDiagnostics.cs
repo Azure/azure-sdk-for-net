@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
 using Azure.Data.Tables;
+using Azure.Data.Tables.Models;
 
 namespace Azure.Core.Pipeline
 {
@@ -61,7 +62,7 @@ namespace Azure.Core.Pipeline
                                     {
                                         additionalInfo ??= new Dictionary<string, string>();
                                         additionalInfo[TableConstants.ExceptionData.FailedEntityIndex] = failedEntityIndex.ToString(CultureInfo.InvariantCulture);
-                                        message += $"\nYou can retrieve the entity that caused the error by calling {nameof(TableTransactionalBatch.TryGetFailedEntityFromException)} and passing this exception instance to the method.";
+                                        message += $"\nYou can retrieve the entity that caused the error by calling {nameof(TableBatchResponse.TryGetFailedEntityFromException)} and passing this exception instance to the method.";
                                     }
                                     break;
                                 }
