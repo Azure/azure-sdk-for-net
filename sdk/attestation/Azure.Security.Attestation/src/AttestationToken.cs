@@ -139,7 +139,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Json Web Token Header "Key ID". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.4 for details.
         /// </summary>
-        public string KeyId { get => Header.KeyId; }
+        public string KeyId => Header.KeyId;
 
         /// <summary>
         /// Json Web Token Header "X509 URL". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.5 for details.
