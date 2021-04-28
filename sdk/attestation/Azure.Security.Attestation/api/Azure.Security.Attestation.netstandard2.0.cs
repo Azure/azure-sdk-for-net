@@ -270,7 +270,7 @@ namespace Azure.Security.Attestation
         public PolicyModificationResult() { }
         public Azure.Security.Attestation.PolicyModification PolicyResolution { get { throw null; } }
         public Azure.Security.Attestation.AttestationSigner PolicySigner { get { throw null; } }
-        public byte[] PolicyTokenHash { get { throw null; } }
+        public System.BinaryData PolicyTokenHash { get { throw null; } }
     }
     public partial class StoredAttestationPolicy
     {
