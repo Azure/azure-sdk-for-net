@@ -1,6 +1,7 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -37,6 +38,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var converted = WebPubSubConfigProvider.ConvertToWebPubSubOperation(jObject);
 
             Assert.AreEqual(operationKind, converted.OperationKind.ToString());
+        }
+
+        [TestCase]
+        public void TestBinaryDataConvertFromByteArray()
+        {
+            var testData = @"{""type"":""Buffer"", ""data"": [66, 105, 110, 97, 114, 121, 68, 97, 116, 97]}";
+
+            var converted = JsonConvert.DeserializeObject<BinaryData>(testData, new BinaryDataJsonConverter());
+
+            Assert.AreEqual("BinaryData", converted.ToString());
         }
 
         [TestCase]

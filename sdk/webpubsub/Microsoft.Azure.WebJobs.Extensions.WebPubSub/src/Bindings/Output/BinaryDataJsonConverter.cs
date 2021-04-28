@@ -35,22 +35,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         private static bool TryLoadBinary(JToken input, out byte[] output)
         {
-            var converted = new List<byte>();
-            if (input["type"] != null && input["type"].ToString().Equals("Buffer", StringComparison.OrdinalIgnoreCase))
+            if (input["type"] != null)
             {
-                var data = input["data"];
-                if (data is JArray bytes)
-                {
-                    foreach (var item in bytes)
-                    {
-                        converted.Add(byte.Parse(item.ToString(), CultureInfo.InvariantCulture));
-                    }
-                    output = converted.ToArray();
-                    return true;
-                }
+                var target = input.ToObject<ArrayBuffer>();
+                output = target.Data;
+                return true;
             }
             output = null;
             return false;
+        }
+
+        private sealed class ArrayBuffer
+        {
+            public string Type { get; set; }
+            public byte[] Data { get; set; }
         }
     }
 }
