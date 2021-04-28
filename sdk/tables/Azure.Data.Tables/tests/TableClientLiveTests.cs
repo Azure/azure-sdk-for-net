@@ -1251,6 +1251,15 @@ namespace Azure.Data.Tables.Tests
             Assert.That(TableBatchResponse.TryGetFailedEntityFromException(ex, batch, out ITableEntity failedEntity), Is.True);
             Assert.That(failedEntity.RowKey, Is.EqualTo(entitiesToCreate.Last().RowKey));
             Assert.That(ex.Message.Contains(nameof(TableBatchResponse.TryGetFailedEntityFromException)));
+
+            if (_endpointType != TableEndpointType.CosmosTable)
+            {
+                // Try submitting a batch larger than 100 items
+                batch = new List<BatchItem>(CreateTableEntities("error", 101).Select(e => new BatchItem(BatchOperation.Add, e)));
+
+                ex = Assert.ThrowsAsync<RequestFailedException>(() => client.SubmitTransactionAsync(batch));
+                Assert.That(ex.Message, Does.Contain("The batch request operation exceeds the maximum 100 changes per change set"));
+            }
         }
     }
 }

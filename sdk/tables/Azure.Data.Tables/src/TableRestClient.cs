@@ -68,19 +68,21 @@ namespace Azure.Data.Tables
                 case 202:
                     {
                         var responses = await Multipart.ParseAsync(
-                            message.Response.ContentStream,
-                            message.Response.Headers.ContentType,
-                            expectBoundariesWithCRLF: false,
-                            async: true,
-                            cancellationToken).ConfigureAwait(false);
+                                message.Response.ContentStream,
+                                message.Response.Headers.ContentType,
+                                false,
+                                true,
+                                cancellationToken)
+                            .ConfigureAwait(false);
 
-                        if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
+                        var failedSubResponse = responses.FirstOrDefault(r => r.Status >= 400);
+                        if (failedSubResponse == null)
                         {
-                            var ex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(responses[0]).ConfigureAwait(false);
-                            throw ex;
+                            return Response.FromValue(responses.ToList(), message.Response);
                         }
 
-                        return Response.FromValue(responses.ToList(), message.Response);
+                        Exception ex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(failedSubResponse).ConfigureAwait(false);
+                        throw ex;
                     }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -104,19 +106,21 @@ namespace Azure.Data.Tables
                 case 202:
                     {
                         var responses = Multipart.ParseAsync(
-                            message.Response.ContentStream,
-                            message.Response.Headers.ContentType,
-                            expectBoundariesWithCRLF: false,
-                            async: false,
-                            cancellationToken).EnsureCompleted();
+                                message.Response.ContentStream,
+                                message.Response.Headers.ContentType,
+                                false,
+                                false,
+                                cancellationToken)
+                            .EnsureCompleted();
 
-                        if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
+                        var failedSubResponse = responses.FirstOrDefault(r => r.Status >= 400);
+                        if (failedSubResponse == null)
                         {
-                            var ex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
-                            throw ex;
+                            return Response.FromValue(responses.ToList(), message.Response);
                         }
 
-                        return Response.FromValue(responses.ToList(), message.Response);
+                        var ex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
+                        throw ex;
                     }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
