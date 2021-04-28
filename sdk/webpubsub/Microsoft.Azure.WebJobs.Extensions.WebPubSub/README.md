@@ -18,9 +18,23 @@ You must have an [Azure subscription](https://azure.microsoft.com/free/) and an 
 
 ### Authenticate the client
 
-In order to let the extension publish events, you will need to provide valid `access_token` for the request client.
+In order to let the extension work with Azure Web PubSub service, you will need to provide a valid `ConnectionString`. 
 
-You can work with [Web PubSub Input binding](#using-web-pubsub-input-binding) to help client generate a valid access token.
+You can find the **Keys** for you Azure Web PubSub service in the [Azure Portal](https://portal.azure.com/).
+
+The `AzureWebJobsStorage` connection string is used to preserve the processing checkpoint information as required refer to [Storage considerations](https://docs.microsoft.com/azure/azure-functions/storage-considerations#storage-account-requirements)
+
+For the local development use the `local.settings.json` file to store the connection string:
+
+```json
+{
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "<connection_name>": "Endpoint=https://<webpubsub-name>.webpubsub.azure.com;AccessKey=<access-key>;Version=1.0;"
+  }
+}
+```
+When deployed use the [application settings](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings) to set the connection string.
 
 ## Key concepts
 
