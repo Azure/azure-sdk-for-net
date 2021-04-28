@@ -157,7 +157,7 @@ namespace Azure.Core.Pipeline
                 _credential = credential;
                 _tokenRefreshOffset = tokenRefreshOffset;
                 _tokenRefreshRetryDelay = tokenRefreshRetryDelay;
-                _currentContext = new TokenRequestContext(initialScopes);
+                _currentContext = new TokenRequestContext(initialScopes, null, null, null);
             }
 
             public async ValueTask<string> GetHeaderValueAsync(HttpMessage message, TokenRequestContext context, bool async)
