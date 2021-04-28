@@ -764,15 +764,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri, options);
-
-            if (Mode == RecordedTestMode.Playback)
-            {
-                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
-            }
-            else
-            {
-                await operation.WaitForCompletionAsync();
-            }
+            await operation.WaitForCompletionAsync();
 
             // Assert
             Response<BlobProperties> propertiesResponse = await destBlob.GetPropertiesAsync();

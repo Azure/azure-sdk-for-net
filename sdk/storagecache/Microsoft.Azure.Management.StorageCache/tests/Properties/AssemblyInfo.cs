@@ -9,8 +9,8 @@ using System.Resources;
 // associated with an assembly.
 [assembly: AssemblyTitle("Microsoft Azure Storagecache Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Storagecache management functions for managing the Microsoft Azure HPC cache service.")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]

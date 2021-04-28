@@ -108,10 +108,9 @@ Next, we can create a new table.
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The <see cref="TableItem" /> class stores properties of the created table.
-
 string tableName = "OfficeSupplies1p1";
 TableItem table = serviceClient.CreateTable(tableName);
-Console.WriteLine($"The created table's name is {table.TableName}.");
+Console.WriteLine($"The created table's name is {table.Name}.");
 ```
 
 ### Get an Azure table
@@ -128,7 +127,7 @@ Console.WriteLine("The following are the names of the tables in the query result
 
 foreach (TableItem table in queryTableResults)
 {
-    Console.WriteLine(table.TableName);
+    Console.WriteLine(table.Name);
 }
 ```
 
@@ -138,7 +137,6 @@ Individual tables can be deleted from the service.
 
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
-
 string tableName = "OfficeSupplies1p1";
 serviceClient.DeleteTable(tableName);
 ```

@@ -4,16 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    -  https://github.com/Azure/azure-sdk-for-js/blob/1998b841dcfa3fd17f0d8e0a4973ea61a25d2ecb/sdk/containerregistry/container-registry/swagger/containerregistry.json
+    -  https://github.com/jeremymeng/azure-rest-api-specs/blob/96bdb14b80d5542ea6982cd766be19e7c8c58c86/specification/containerregistry/data-plane/Azure.ContainerRegistry/preview/2019-08-15-preview/containerregistry.json
 model-namespace: false
-```
-
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.DeletedRepository
-  transform: >
-    $["x-accessibility"] = "internal"
 ```
 
 ``` yaml

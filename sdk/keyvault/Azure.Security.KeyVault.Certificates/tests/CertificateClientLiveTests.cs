@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -30,6 +31,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public partial class CertificateClientLiveTests : CertificatesTestBase
     {
+        private static MethodInfo s_clearCacheMethod;
+
         public CertificateClientLiveTests(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
@@ -47,6 +50,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Client = GetClient();
 
                 ChallengeBasedAuthenticationPolicy.ClearCache();
+
+                // Make sure the shared source copy of ChallengeBasedAuthenticationPolicy is cleared as well for Keys.
+                if (s_clearCacheMethod is null)
+                {
+                    s_clearCacheMethod = typeof(CryptographyClient).Assembly.GetType("Azure.Security.KeyVault.ChallengeBasedAuthenticationPolicy", true, false)
+                        .GetMethod(nameof(ChallengeBasedAuthenticationPolicy.ClearCache), BindingFlags.Static | BindingFlags.NonPublic)
+                        ?? throw new NotSupportedException($"{nameof(ChallengeBasedAuthenticationPolicy)}.{nameof(ChallengeBasedAuthenticationPolicy.ClearCache)} not found in {typeof(CryptographyClient).Assembly}");
+                }
+
+                s_clearCacheMethod.Invoke(null, null);
             }
         }
 
@@ -434,7 +447,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             byte[] certificateBytes = Encoding.ASCII.GetBytes(PemCertificateWithV3Extensions);
 
             #region Snippet:CertificateClientLiveTests_VerifyImportCertificatePem
-            //@@byte[] certificateBytes = File.ReadAllBytes("certificate.pem");
+#if SNIPPET
+            byte[] certificateBytes = File.ReadAllBytes("certificate.pem");
+#endif
 
             ImportCertificateOptions options = new ImportCertificateOptions(certificateName, certificateBytes)
             {
@@ -894,7 +909,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
                 Assert.IsTrue(publicKey.VerifyData(plaintext, result.Signature, keyCurveName.GetHashAlgorithmName()));
             }
-            catch (CryptographicException) when (IsExpectedP256KException(certificate, keyCurveName))
+            catch (Exception ex) when (IsExpectedP256KException(ex, keyCurveName))
             {
                 Assert.Ignore("The curve is not supported by the current platform");
             }
@@ -948,7 +963,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
                 Assert.IsTrue(result.IsValid);
             }
-            catch (CryptographicException) when (IsExpectedP256KException(certificate, keyCurveName))
+            catch (Exception ex) when (IsExpectedP256KException(ex, keyCurveName))
             {
                 Assert.Ignore("The curve is not supported by the current platform");
             }
@@ -978,9 +993,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 )
             );
 
-        private static bool IsExpectedP256KException(X509Certificate2 certificate, CertificateKeyCurveName keyCurveName) =>
-            certificate is null &&
-            RuntimeInformation.IsOSPlatform(OSPlatform.OSX) &&
+        private static bool IsExpectedP256KException(Exception ex, CertificateKeyCurveName keyCurveName) =>
+            // OpenSSL-based implementations do not support P256K.
+            // TODO: Remove this entire check when https://github.com/Azure/azure-sdk-for-net/issues/20244 is resolved.
+            (ex is CryptographicException || ex is TargetInvocationException tiex && tiex.InnerException is ArgumentException {  ParamName: "privateKey" }) &&
+            !RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
             keyCurveName == CertificateKeyCurveName.P256K;
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy

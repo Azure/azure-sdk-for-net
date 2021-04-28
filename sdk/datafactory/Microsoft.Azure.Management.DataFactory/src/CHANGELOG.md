@@ -1,5 +1,14 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.18.0
+###  Feature Additions
+- Added MongoDB/MongoDBAtlas sink
+- Added Sql always encrypted settings 
+
+## Version 4.17.1
+###  Feature Additions
+- Fixed potential MI type missing issue by using system assigned MI as default
+
 ## Version 4.17.0
 ###  Feature Additions
 - Fixed FactoryIdentity property Type can not be null issue

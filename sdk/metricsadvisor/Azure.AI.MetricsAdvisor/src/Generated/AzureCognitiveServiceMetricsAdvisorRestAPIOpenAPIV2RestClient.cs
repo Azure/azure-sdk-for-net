@@ -326,7 +326,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetAlertsByAnomalyAlertingConfigurationRequest(Guid configurationId, AlertingResultQuery body, int? skip, int? top)
+        internal HttpMessage CreateGetAlertsByAnomalyAlertingConfigurationRequest(Guid configurationId, AlertingResultQuery body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -341,9 +341,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -358,17 +358,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="body"> query alerting result request. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<AlertResultList>> GetAlertsByAnomalyAlertingConfigurationAsync(Guid configurationId, AlertingResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AlertResultList>> GetAlertsByAnomalyAlertingConfigurationAsync(Guid configurationId, AlertingResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetAlertsByAnomalyAlertingConfigurationRequest(configurationId, body, skip, top);
+            using var message = CreateGetAlertsByAnomalyAlertingConfigurationRequest(configurationId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -388,17 +388,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="body"> query alerting result request. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<AlertResultList> GetAlertsByAnomalyAlertingConfiguration(Guid configurationId, AlertingResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<AlertResultList> GetAlertsByAnomalyAlertingConfiguration(Guid configurationId, AlertingResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetAlertsByAnomalyAlertingConfigurationRequest(configurationId, body, skip, top);
+            using var message = CreateGetAlertsByAnomalyAlertingConfigurationRequest(configurationId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -414,7 +414,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationRequest(Guid configurationId, string alertId, int? skip, int? top)
+        internal HttpMessage CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationRequest(Guid configurationId, string alertId, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -431,9 +431,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -444,17 +444,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        public async Task<Response<AnomalyResultList>> GetAnomaliesFromAlertByAnomalyAlertingConfigurationAsync(Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AnomalyResultList>> GetAnomaliesFromAlertByAnomalyAlertingConfigurationAsync(Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (alertId == null)
             {
                 throw new ArgumentNullException(nameof(alertId));
             }
 
-            using var message = CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationRequest(configurationId, alertId, skip, top);
+            using var message = CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationRequest(configurationId, alertId, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -474,17 +474,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        public Response<AnomalyResultList> GetAnomaliesFromAlertByAnomalyAlertingConfiguration(Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<AnomalyResultList> GetAnomaliesFromAlertByAnomalyAlertingConfiguration(Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (alertId == null)
             {
                 throw new ArgumentNullException(nameof(alertId));
             }
 
-            using var message = CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationRequest(configurationId, alertId, skip, top);
+            using var message = CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationRequest(configurationId, alertId, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -500,7 +500,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationRequest(Guid configurationId, string alertId, int? skip, int? top)
+        internal HttpMessage CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationRequest(Guid configurationId, string alertId, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -517,9 +517,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -530,17 +530,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        public async Task<Response<IncidentResultList>> GetIncidentsFromAlertByAnomalyAlertingConfigurationAsync(Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IncidentResultList>> GetIncidentsFromAlertByAnomalyAlertingConfigurationAsync(Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (alertId == null)
             {
                 throw new ArgumentNullException(nameof(alertId));
             }
 
-            using var message = CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationRequest(configurationId, alertId, skip, top);
+            using var message = CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationRequest(configurationId, alertId, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -560,17 +560,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
-        public Response<IncidentResultList> GetIncidentsFromAlertByAnomalyAlertingConfiguration(Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<IncidentResultList> GetIncidentsFromAlertByAnomalyAlertingConfiguration(Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (alertId == null)
             {
                 throw new ArgumentNullException(nameof(alertId));
             }
 
-            using var message = CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationRequest(configurationId, alertId, skip, top);
+            using var message = CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationRequest(configurationId, alertId, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -953,7 +953,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetAnomaliesByAnomalyDetectionConfigurationRequest(Guid configurationId, DetectionAnomalyResultQuery body, int? skip, int? top)
+        internal HttpMessage CreateGetAnomaliesByAnomalyDetectionConfigurationRequest(Guid configurationId, DetectionAnomalyResultQuery body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -968,9 +968,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -985,17 +985,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection anomaly result request. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<AnomalyResultList>> GetAnomaliesByAnomalyDetectionConfigurationAsync(Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AnomalyResultList>> GetAnomaliesByAnomalyDetectionConfigurationAsync(Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetAnomaliesByAnomalyDetectionConfigurationRequest(configurationId, body, skip, top);
+            using var message = CreateGetAnomaliesByAnomalyDetectionConfigurationRequest(configurationId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1015,17 +1015,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection anomaly result request. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<AnomalyResultList> GetAnomaliesByAnomalyDetectionConfiguration(Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<AnomalyResultList> GetAnomaliesByAnomalyDetectionConfiguration(Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetAnomaliesByAnomalyDetectionConfigurationRequest(configurationId, body, skip, top);
+            using var message = CreateGetAnomaliesByAnomalyDetectionConfigurationRequest(configurationId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1041,7 +1041,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationRequest(Guid configurationId, AnomalyDimensionQuery body, int? skip, int? top)
+        internal HttpMessage CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationRequest(Guid configurationId, AnomalyDimensionQuery body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1056,9 +1056,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1073,17 +1073,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query dimension values request. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<AnomalyDimensionList>> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationAsync(Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AnomalyDimensionList>> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationAsync(Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationRequest(configurationId, body, skip, top);
+            using var message = CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationRequest(configurationId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1103,17 +1103,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query dimension values request. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<AnomalyDimensionList> GetDimensionOfAnomaliesByAnomalyDetectionConfiguration(Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<AnomalyDimensionList> GetDimensionOfAnomaliesByAnomalyDetectionConfiguration(Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationRequest(configurationId, body, skip, top);
+            using var message = CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationRequest(configurationId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1129,7 +1129,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetIncidentsByAnomalyDetectionConfigurationRequest(Guid configurationId, DetectionIncidentResultQuery body, int? top)
+        internal HttpMessage CreateGetIncidentsByAnomalyDetectionConfigurationRequest(Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1140,9 +1140,9 @@ namespace Azure.AI.MetricsAdvisor
             uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
             uri.AppendPath(configurationId, true);
             uri.AppendPath("/incidents/query", false);
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1156,17 +1156,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query incidents under anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection incident result request. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationAsync(Guid configurationId, DetectionIncidentResultQuery body, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationAsync(Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationRequest(configurationId, body, top);
+            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationRequest(configurationId, body, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1185,17 +1185,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query incidents under anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection incident result request. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfiguration(Guid configurationId, DetectionIncidentResultQuery body, int? top = null, CancellationToken cancellationToken = default)
+        public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfiguration(Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationRequest(configurationId, body, top);
+            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationRequest(configurationId, body, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1211,7 +1211,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesRequest(Guid configurationId, int? top, string token)
+        internal HttpMessage CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesRequest(Guid configurationId, int? maxpagesize, string token)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1222,9 +1222,9 @@ namespace Azure.AI.MetricsAdvisor
             uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
             uri.AppendPath(configurationId, true);
             uri.AppendPath("/incidents/query", false);
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             if (token != null)
             {
@@ -1237,12 +1237,12 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary> Query incidents under anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="token"> the token for getting the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationNextPagesAsync(Guid configurationId, int? top = null, string token = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationNextPagesAsync(Guid configurationId, int? maxpagesize = null, string token = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesRequest(configurationId, top, token);
+            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesRequest(configurationId, maxpagesize, token);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1260,12 +1260,12 @@ namespace Azure.AI.MetricsAdvisor
 
         /// <summary> Query incidents under anomaly detection configuration. </summary>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="token"> the token for getting the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfigurationNextPages(Guid configurationId, int? top = null, string token = null, CancellationToken cancellationToken = default)
+        public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfigurationNextPages(Guid configurationId, int? maxpagesize = null, string token = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesRequest(configurationId, top, token);
+            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesRequest(configurationId, maxpagesize, token);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1355,7 +1355,306 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateListDataFeedsRequest(string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? top)
+        internal HttpMessage CreateCreateCredentialRequest(DataSourceCredential body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/credentials", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Create a new data source credential. </summary>
+        /// <param name="body"> Create data source credential request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders>> CreateCredentialAsync(DataSourceCredential body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateCreateCredentialRequest(body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Create a new data source credential. </summary>
+        /// <param name="body"> Create data source credential request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> CreateCredential(DataSourceCredential body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateCreateCredentialRequest(body);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListCredentialsRequest(int? skip, int? maxpagesize)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/credentials", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> List all credentials. </summary>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<DataSourceCredentialList>> ListCredentialsAsync(int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListCredentialsRequest(skip, maxpagesize);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataSourceCredentialList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataSourceCredentialList.DeserializeDataSourceCredentialList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> List all credentials. </summary>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<DataSourceCredentialList> ListCredentials(int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListCredentialsRequest(skip, maxpagesize);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataSourceCredentialList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataSourceCredentialList.DeserializeDataSourceCredentialList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateCredentialRequest(Guid credentialId, DataSourceCredentialPatch body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/credentials/", false);
+            uri.AppendPath(credentialId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Update a data source credential. </summary>
+        /// <param name="credentialId"> Data source credential unique ID. </param>
+        /// <param name="body"> Update data source credential request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<Response> UpdateCredentialAsync(Guid credentialId, DataSourceCredentialPatch body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateUpdateCredentialRequest(credentialId, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Update a data source credential. </summary>
+        /// <param name="credentialId"> Data source credential unique ID. </param>
+        /// <param name="body"> Update data source credential request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public Response UpdateCredential(Guid credentialId, DataSourceCredentialPatch body, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateUpdateCredentialRequest(credentialId, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteCredentialRequest(Guid credentialId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/credentials/", false);
+            uri.AppendPath(credentialId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Delete a data source credential. </summary>
+        /// <param name="credentialId"> Data source credential unique ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response> DeleteCredentialAsync(Guid credentialId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteCredentialRequest(credentialId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Delete a data source credential. </summary>
+        /// <param name="credentialId"> Data source credential unique ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response DeleteCredential(Guid credentialId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteCredentialRequest(credentialId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetCredentialRequest(Guid credentialId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/credentials/", false);
+            uri.AppendPath(credentialId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get a data source credential. </summary>
+        /// <param name="credentialId"> Data source credential unique ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<DataSourceCredential>> GetCredentialAsync(Guid credentialId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetCredentialRequest(credentialId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataSourceCredential value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataSourceCredential.DeserializeDataSourceCredential(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get a data source credential. </summary>
+        /// <param name="credentialId"> Data source credential unique ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<DataSourceCredential> GetCredential(Guid credentialId, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetCredentialRequest(credentialId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataSourceCredential value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataSourceCredential.DeserializeDataSourceCredential(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListDataFeedsRequest(string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1388,9 +1687,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1404,11 +1703,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="status"> filter data feed by its status. </param>
         /// <param name="creator"> filter data feed by its creator. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DataFeedList>> ListDataFeedsAsync(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFeedList>> ListDataFeedsAsync(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, top);
+            using var message = CreateListDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1431,11 +1730,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="status"> filter data feed by its status. </param>
         /// <param name="creator"> filter data feed by its creator. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DataFeedList> ListDataFeeds(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DataFeedList> ListDataFeeds(string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, top);
+            using var message = CreateListDataFeedsRequest(dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1741,7 +2040,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateListMetricFeedbacksRequest(MetricFeedbackFilter body, int? skip, int? top)
+        internal HttpMessage CreateListMetricFeedbacksRequest(MetricFeedbackFilter body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1754,9 +2053,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1770,17 +2069,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> List feedback on the given metric. </summary>
         /// <param name="body"> metric feedback filter. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<MetricFeedbackList>> ListMetricFeedbacksAsync(MetricFeedbackFilter body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricFeedbackList>> ListMetricFeedbacksAsync(MetricFeedbackFilter body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateListMetricFeedbacksRequest(body, skip, top);
+            using var message = CreateListMetricFeedbacksRequest(body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1799,17 +2098,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> List feedback on the given metric. </summary>
         /// <param name="body"> metric feedback filter. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<MetricFeedbackList> ListMetricFeedbacks(MetricFeedbackFilter body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<MetricFeedbackList> ListMetricFeedbacks(MetricFeedbackFilter body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateListMetricFeedbacksRequest(body, skip, top);
+            using var message = CreateListMetricFeedbacksRequest(body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1889,7 +2188,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateListHooksRequest(string hookName, int? skip, int? top)
+        internal HttpMessage CreateListHooksRequest(string hookName, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1906,9 +2205,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1918,11 +2217,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> List all hooks. </summary>
         /// <param name="hookName"> filter hook by its name. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<HookList>> ListHooksAsync(string hookName = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<HookList>> ListHooksAsync(string hookName = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListHooksRequest(hookName, skip, top);
+            using var message = CreateListHooksRequest(hookName, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1941,11 +2240,11 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> List all hooks. </summary>
         /// <param name="hookName"> filter hook by its name. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<HookList> ListHooks(string hookName = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<HookList> ListHooks(string hookName = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListHooksRequest(hookName, skip, top);
+            using var message = CreateListHooksRequest(hookName, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2194,7 +2493,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetDataFeedIngestionStatusRequest(Guid dataFeedId, IngestionStatusQueryOptions body, int? skip, int? top)
+        internal HttpMessage CreateGetDataFeedIngestionStatusRequest(Guid dataFeedId, IngestionStatusQueryOptions body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2209,9 +2508,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2226,17 +2525,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="body"> The query time range. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<IngestionStatusList>> GetDataFeedIngestionStatusAsync(Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IngestionStatusList>> GetDataFeedIngestionStatusAsync(Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetDataFeedIngestionStatusRequest(dataFeedId, body, skip, top);
+            using var message = CreateGetDataFeedIngestionStatusRequest(dataFeedId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2256,17 +2555,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="body"> The query time range. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<IngestionStatusList> GetDataFeedIngestionStatus(Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<IngestionStatusList> GetDataFeedIngestionStatus(Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetDataFeedIngestionStatusRequest(dataFeedId, body, skip, top);
+            using var message = CreateGetDataFeedIngestionStatusRequest(dataFeedId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2482,7 +2781,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetMetricSeriesRequest(Guid metricId, MetricSeriesQueryOptions body, int? skip, int? top)
+        internal HttpMessage CreateGetMetricSeriesRequest(Guid metricId, MetricSeriesQueryOptions body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2497,9 +2796,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2514,17 +2813,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> filter to query series. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<MetricSeriesList>> GetMetricSeriesAsync(Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricSeriesList>> GetMetricSeriesAsync(Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetMetricSeriesRequest(metricId, body, skip, top);
+            using var message = CreateGetMetricSeriesRequest(metricId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2544,17 +2843,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> filter to query series. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<MetricSeriesList> GetMetricSeries(Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<MetricSeriesList> GetMetricSeries(Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetMetricSeriesRequest(metricId, body, skip, top);
+            using var message = CreateGetMetricSeriesRequest(metricId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2570,7 +2869,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetMetricDimensionRequest(Guid metricId, MetricDimensionQueryOptions body, int? skip, int? top)
+        internal HttpMessage CreateGetMetricDimensionRequest(Guid metricId, MetricDimensionQueryOptions body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2585,9 +2884,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2602,17 +2901,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query dimension option. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<MetricDimensionList>> GetMetricDimensionAsync(Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricDimensionList>> GetMetricDimensionAsync(Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetMetricDimensionRequest(metricId, body, skip, top);
+            using var message = CreateGetMetricDimensionRequest(metricId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2632,17 +2931,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query dimension option. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<MetricDimensionList> GetMetricDimension(Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<MetricDimensionList> GetMetricDimension(Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetMetricDimensionRequest(metricId, body, skip, top);
+            using var message = CreateGetMetricDimensionRequest(metricId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2716,7 +3015,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetEnrichmentStatusByMetricRequest(Guid metricId, EnrichmentStatusQueryOption body, int? skip, int? top)
+        internal HttpMessage CreateGetEnrichmentStatusByMetricRequest(Guid metricId, EnrichmentStatusQueryOption body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2731,9 +3030,9 @@ namespace Azure.AI.MetricsAdvisor
             {
                 uri.AppendQuery("$skip", skip.Value, true);
             }
-            if (top != null)
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2748,17 +3047,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query options. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<EnrichmentStatusList>> GetEnrichmentStatusByMetricAsync(Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EnrichmentStatusList>> GetEnrichmentStatusByMetricAsync(Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetEnrichmentStatusByMetricRequest(metricId, body, skip, top);
+            using var message = CreateGetEnrichmentStatusByMetricRequest(metricId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2778,17 +3077,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query options. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<EnrichmentStatusList> GetEnrichmentStatusByMetric(Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<EnrichmentStatusList> GetEnrichmentStatusByMetric(Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetEnrichmentStatusByMetricRequest(metricId, body, skip, top);
+            using var message = CreateGetEnrichmentStatusByMetricRequest(metricId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3468,7 +3767,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetAlertsByAnomalyAlertingConfigurationNextPageRequest(string nextLink, Guid configurationId, AlertingResultQuery body, int? skip, int? top)
+        internal HttpMessage CreateGetAlertsByAnomalyAlertingConfigurationNextPageRequest(string nextLink, Guid configurationId, AlertingResultQuery body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3487,10 +3786,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="body"> query alerting result request. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Response<AlertResultList>> GetAlertsByAnomalyAlertingConfigurationNextPageAsync(string nextLink, Guid configurationId, AlertingResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AlertResultList>> GetAlertsByAnomalyAlertingConfigurationNextPageAsync(string nextLink, Guid configurationId, AlertingResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3501,7 +3800,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetAlertsByAnomalyAlertingConfigurationNextPageRequest(nextLink, configurationId, body, skip, top);
+            using var message = CreateGetAlertsByAnomalyAlertingConfigurationNextPageRequest(nextLink, configurationId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3522,10 +3821,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="body"> query alerting result request. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public Response<AlertResultList> GetAlertsByAnomalyAlertingConfigurationNextPage(string nextLink, Guid configurationId, AlertingResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<AlertResultList> GetAlertsByAnomalyAlertingConfigurationNextPage(string nextLink, Guid configurationId, AlertingResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3536,7 +3835,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetAlertsByAnomalyAlertingConfigurationNextPageRequest(nextLink, configurationId, body, skip, top);
+            using var message = CreateGetAlertsByAnomalyAlertingConfigurationNextPageRequest(nextLink, configurationId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3552,7 +3851,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageRequest(string nextLink, Guid configurationId, string alertId, int? skip, int? top)
+        internal HttpMessage CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageRequest(string nextLink, Guid configurationId, string alertId, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3571,10 +3870,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="alertId"/> is null. </exception>
-        public async Task<Response<AnomalyResultList>> GetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageAsync(string nextLink, Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AnomalyResultList>> GetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageAsync(string nextLink, Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3585,7 +3884,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(alertId));
             }
 
-            using var message = CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageRequest(nextLink, configurationId, alertId, skip, top);
+            using var message = CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageRequest(nextLink, configurationId, alertId, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3606,10 +3905,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="alertId"/> is null. </exception>
-        public Response<AnomalyResultList> GetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPage(string nextLink, Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<AnomalyResultList> GetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPage(string nextLink, Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3620,7 +3919,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(alertId));
             }
 
-            using var message = CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageRequest(nextLink, configurationId, alertId, skip, top);
+            using var message = CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageRequest(nextLink, configurationId, alertId, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3636,7 +3935,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageRequest(string nextLink, Guid configurationId, string alertId, int? skip, int? top)
+        internal HttpMessage CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageRequest(string nextLink, Guid configurationId, string alertId, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3655,10 +3954,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="alertId"/> is null. </exception>
-        public async Task<Response<IncidentResultList>> GetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageAsync(string nextLink, Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IncidentResultList>> GetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageAsync(string nextLink, Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3669,7 +3968,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(alertId));
             }
 
-            using var message = CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageRequest(nextLink, configurationId, alertId, skip, top);
+            using var message = CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageRequest(nextLink, configurationId, alertId, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3690,10 +3989,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly alerting configuration unique id. </param>
         /// <param name="alertId"> alert id. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="alertId"/> is null. </exception>
-        public Response<IncidentResultList> GetIncidentsFromAlertByAnomalyAlertingConfigurationNextPage(string nextLink, Guid configurationId, string alertId, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<IncidentResultList> GetIncidentsFromAlertByAnomalyAlertingConfigurationNextPage(string nextLink, Guid configurationId, string alertId, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3704,7 +4003,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(alertId));
             }
 
-            using var message = CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageRequest(nextLink, configurationId, alertId, skip, top);
+            using var message = CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageRequest(nextLink, configurationId, alertId, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3720,7 +4019,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetAnomaliesByAnomalyDetectionConfigurationNextPageRequest(string nextLink, Guid configurationId, DetectionAnomalyResultQuery body, int? skip, int? top)
+        internal HttpMessage CreateGetAnomaliesByAnomalyDetectionConfigurationNextPageRequest(string nextLink, Guid configurationId, DetectionAnomalyResultQuery body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3739,10 +4038,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection anomaly result request. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Response<AnomalyResultList>> GetAnomaliesByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AnomalyResultList>> GetAnomaliesByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3753,7 +4052,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetAnomaliesByAnomalyDetectionConfigurationNextPageRequest(nextLink, configurationId, body, skip, top);
+            using var message = CreateGetAnomaliesByAnomalyDetectionConfigurationNextPageRequest(nextLink, configurationId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3774,10 +4073,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection anomaly result request. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public Response<AnomalyResultList> GetAnomaliesByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<AnomalyResultList> GetAnomaliesByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, DetectionAnomalyResultQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3788,7 +4087,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetAnomaliesByAnomalyDetectionConfigurationNextPageRequest(nextLink, configurationId, body, skip, top);
+            using var message = CreateGetAnomaliesByAnomalyDetectionConfigurationNextPageRequest(nextLink, configurationId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3804,7 +4103,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPageRequest(string nextLink, Guid configurationId, AnomalyDimensionQuery body, int? skip, int? top)
+        internal HttpMessage CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPageRequest(string nextLink, Guid configurationId, AnomalyDimensionQuery body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3823,10 +4122,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query dimension values request. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Response<AnomalyDimensionList>> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AnomalyDimensionList>> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3837,7 +4136,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPageRequest(nextLink, configurationId, body, skip, top);
+            using var message = CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPageRequest(nextLink, configurationId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3858,10 +4157,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query dimension values request. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public Response<AnomalyDimensionList> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<AnomalyDimensionList> GetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, AnomalyDimensionQuery body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3872,7 +4171,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPageRequest(nextLink, configurationId, body, skip, top);
+            using var message = CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPageRequest(nextLink, configurationId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3888,7 +4187,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetIncidentsByAnomalyDetectionConfigurationNextPageRequest(string nextLink, Guid configurationId, DetectionIncidentResultQuery body, int? top)
+        internal HttpMessage CreateGetIncidentsByAnomalyDetectionConfigurationNextPageRequest(string nextLink, Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3906,10 +4205,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection incident result request. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, DetectionIncidentResultQuery body, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationNextPageAsync(string nextLink, Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3920,7 +4219,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPageRequest(nextLink, configurationId, body, top);
+            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPageRequest(nextLink, configurationId, body, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3940,10 +4239,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
         /// <param name="body"> query detection incident result request. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, DetectionIncidentResultQuery body, int? top = null, CancellationToken cancellationToken = default)
+        public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfigurationNextPage(string nextLink, Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -3954,7 +4253,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPageRequest(nextLink, configurationId, body, top);
+            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPageRequest(nextLink, configurationId, body, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3970,7 +4269,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesNextPageRequest(string nextLink, Guid configurationId, int? top, string token)
+        internal HttpMessage CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesNextPageRequest(string nextLink, Guid configurationId, int? maxpagesize, string token)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3987,18 +4286,18 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query incidents under anomaly detection configuration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="token"> the token for getting the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationNextPagesNextPageAsync(string nextLink, Guid configurationId, int? top = null, string token = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IncidentResultList>> GetIncidentsByAnomalyDetectionConfigurationNextPagesNextPageAsync(string nextLink, Guid configurationId, int? maxpagesize = null, string token = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesNextPageRequest(nextLink, configurationId, top, token);
+            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesNextPageRequest(nextLink, configurationId, maxpagesize, token);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -4017,18 +4316,18 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary> Query incidents under anomaly detection configuration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="configurationId"> anomaly detection configuration unique id. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="token"> the token for getting the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfigurationNextPagesNextPage(string nextLink, Guid configurationId, int? top = null, string token = null, CancellationToken cancellationToken = default)
+        public Response<IncidentResultList> GetIncidentsByAnomalyDetectionConfigurationNextPagesNextPage(string nextLink, Guid configurationId, int? maxpagesize = null, string token = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesNextPageRequest(nextLink, configurationId, top, token);
+            using var message = CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesNextPageRequest(nextLink, configurationId, maxpagesize, token);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -4044,7 +4343,79 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateListDataFeedsNextPageRequest(string nextLink, string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? top)
+        internal HttpMessage CreateListCredentialsNextPageRequest(string nextLink, int? skip, int? maxpagesize)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> List all credentials. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<Response<DataSourceCredentialList>> ListCredentialsNextPageAsync(string nextLink, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateListCredentialsNextPageRequest(nextLink, skip, maxpagesize);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataSourceCredentialList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataSourceCredentialList.DeserializeDataSourceCredentialList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> List all credentials. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="skip"> for paging, skipped number. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public Response<DataSourceCredentialList> ListCredentialsNextPage(string nextLink, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateListCredentialsNextPageRequest(nextLink, skip, maxpagesize);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataSourceCredentialList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataSourceCredentialList.DeserializeDataSourceCredentialList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListDataFeedsNextPageRequest(string nextLink, string dataFeedName, DataFeedSourceType? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4066,17 +4437,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="status"> filter data feed by its status. </param>
         /// <param name="creator"> filter data feed by its creator. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DataFeedList>> ListDataFeedsNextPageAsync(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFeedList>> ListDataFeedsNextPageAsync(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListDataFeedsNextPageRequest(nextLink, dataFeedName, dataSourceType, granularityName, status, creator, skip, top);
+            using var message = CreateListDataFeedsNextPageRequest(nextLink, dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -4100,17 +4471,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="status"> filter data feed by its status. </param>
         /// <param name="creator"> filter data feed by its creator. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DataFeedList> ListDataFeedsNextPage(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<DataFeedList> ListDataFeedsNextPage(string nextLink, string dataFeedName = null, DataFeedSourceType? dataSourceType = null, DataFeedGranularityType? granularityName = null, DataFeedStatus? status = null, string creator = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListDataFeedsNextPageRequest(nextLink, dataFeedName, dataSourceType, granularityName, status, creator, skip, top);
+            using var message = CreateListDataFeedsNextPageRequest(nextLink, dataFeedName, dataSourceType, granularityName, status, creator, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -4126,7 +4497,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateListMetricFeedbacksNextPageRequest(string nextLink, MetricFeedbackFilter body, int? skip, int? top)
+        internal HttpMessage CreateListMetricFeedbacksNextPageRequest(string nextLink, MetricFeedbackFilter body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4144,10 +4515,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="body"> metric feedback filter. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Response<MetricFeedbackList>> ListMetricFeedbacksNextPageAsync(string nextLink, MetricFeedbackFilter body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricFeedbackList>> ListMetricFeedbacksNextPageAsync(string nextLink, MetricFeedbackFilter body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4158,7 +4529,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateListMetricFeedbacksNextPageRequest(nextLink, body, skip, top);
+            using var message = CreateListMetricFeedbacksNextPageRequest(nextLink, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -4178,10 +4549,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="body"> metric feedback filter. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public Response<MetricFeedbackList> ListMetricFeedbacksNextPage(string nextLink, MetricFeedbackFilter body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<MetricFeedbackList> ListMetricFeedbacksNextPage(string nextLink, MetricFeedbackFilter body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4192,7 +4563,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateListMetricFeedbacksNextPageRequest(nextLink, body, skip, top);
+            using var message = CreateListMetricFeedbacksNextPageRequest(nextLink, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -4208,7 +4579,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateListHooksNextPageRequest(string nextLink, string hookName, int? skip, int? top)
+        internal HttpMessage CreateListHooksNextPageRequest(string nextLink, string hookName, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4226,17 +4597,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="hookName"> filter hook by its name. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<HookList>> ListHooksNextPageAsync(string nextLink, string hookName = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<HookList>> ListHooksNextPageAsync(string nextLink, string hookName = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListHooksNextPageRequest(nextLink, hookName, skip, top);
+            using var message = CreateListHooksNextPageRequest(nextLink, hookName, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -4256,17 +4627,17 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="hookName"> filter hook by its name. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<HookList> ListHooksNextPage(string nextLink, string hookName = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<HookList> ListHooksNextPage(string nextLink, string hookName = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListHooksNextPageRequest(nextLink, hookName, skip, top);
+            using var message = CreateListHooksNextPageRequest(nextLink, hookName, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -4282,7 +4653,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetDataFeedIngestionStatusNextPageRequest(string nextLink, Guid dataFeedId, IngestionStatusQueryOptions body, int? skip, int? top)
+        internal HttpMessage CreateGetDataFeedIngestionStatusNextPageRequest(string nextLink, Guid dataFeedId, IngestionStatusQueryOptions body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4301,10 +4672,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="body"> The query time range. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Response<IngestionStatusList>> GetDataFeedIngestionStatusNextPageAsync(string nextLink, Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IngestionStatusList>> GetDataFeedIngestionStatusNextPageAsync(string nextLink, Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4315,7 +4686,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetDataFeedIngestionStatusNextPageRequest(nextLink, dataFeedId, body, skip, top);
+            using var message = CreateGetDataFeedIngestionStatusNextPageRequest(nextLink, dataFeedId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -4336,10 +4707,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="dataFeedId"> The data feed unique id. </param>
         /// <param name="body"> The query time range. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public Response<IngestionStatusList> GetDataFeedIngestionStatusNextPage(string nextLink, Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<IngestionStatusList> GetDataFeedIngestionStatusNextPage(string nextLink, Guid dataFeedId, IngestionStatusQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4350,7 +4721,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetDataFeedIngestionStatusNextPageRequest(nextLink, dataFeedId, body, skip, top);
+            using var message = CreateGetDataFeedIngestionStatusNextPageRequest(nextLink, dataFeedId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -4366,7 +4737,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetMetricSeriesNextPageRequest(string nextLink, Guid metricId, MetricSeriesQueryOptions body, int? skip, int? top)
+        internal HttpMessage CreateGetMetricSeriesNextPageRequest(string nextLink, Guid metricId, MetricSeriesQueryOptions body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4385,10 +4756,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> filter to query series. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Response<MetricSeriesList>> GetMetricSeriesNextPageAsync(string nextLink, Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricSeriesList>> GetMetricSeriesNextPageAsync(string nextLink, Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4399,7 +4770,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetMetricSeriesNextPageRequest(nextLink, metricId, body, skip, top);
+            using var message = CreateGetMetricSeriesNextPageRequest(nextLink, metricId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -4420,10 +4791,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> filter to query series. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public Response<MetricSeriesList> GetMetricSeriesNextPage(string nextLink, Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<MetricSeriesList> GetMetricSeriesNextPage(string nextLink, Guid metricId, MetricSeriesQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4434,7 +4805,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetMetricSeriesNextPageRequest(nextLink, metricId, body, skip, top);
+            using var message = CreateGetMetricSeriesNextPageRequest(nextLink, metricId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -4450,7 +4821,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetMetricDimensionNextPageRequest(string nextLink, Guid metricId, MetricDimensionQueryOptions body, int? skip, int? top)
+        internal HttpMessage CreateGetMetricDimensionNextPageRequest(string nextLink, Guid metricId, MetricDimensionQueryOptions body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4469,10 +4840,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query dimension option. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Response<MetricDimensionList>> GetMetricDimensionNextPageAsync(string nextLink, Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricDimensionList>> GetMetricDimensionNextPageAsync(string nextLink, Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4483,7 +4854,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetMetricDimensionNextPageRequest(nextLink, metricId, body, skip, top);
+            using var message = CreateGetMetricDimensionNextPageRequest(nextLink, metricId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -4504,10 +4875,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query dimension option. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public Response<MetricDimensionList> GetMetricDimensionNextPage(string nextLink, Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<MetricDimensionList> GetMetricDimensionNextPage(string nextLink, Guid metricId, MetricDimensionQueryOptions body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4518,7 +4889,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetMetricDimensionNextPageRequest(nextLink, metricId, body, skip, top);
+            using var message = CreateGetMetricDimensionNextPageRequest(nextLink, metricId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -4534,7 +4905,7 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
-        internal HttpMessage CreateGetEnrichmentStatusByMetricNextPageRequest(string nextLink, Guid metricId, EnrichmentStatusQueryOption body, int? skip, int? top)
+        internal HttpMessage CreateGetEnrichmentStatusByMetricNextPageRequest(string nextLink, Guid metricId, EnrichmentStatusQueryOption body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -4553,10 +4924,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query options. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Response<EnrichmentStatusList>> GetEnrichmentStatusByMetricNextPageAsync(string nextLink, Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EnrichmentStatusList>> GetEnrichmentStatusByMetricNextPageAsync(string nextLink, Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4567,7 +4938,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetEnrichmentStatusByMetricNextPageRequest(nextLink, metricId, body, skip, top);
+            using var message = CreateGetEnrichmentStatusByMetricNextPageRequest(nextLink, metricId, body, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -4588,10 +4959,10 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="body"> query options. </param>
         /// <param name="skip"> for paging, skipped number. </param>
-        /// <param name="top"> for paging, item number in response. </param>
+        /// <param name="maxpagesize"> the maximum number of items in one page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="body"/> is null. </exception>
-        public Response<EnrichmentStatusList> GetEnrichmentStatusByMetricNextPage(string nextLink, Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<EnrichmentStatusList> GetEnrichmentStatusByMetricNextPage(string nextLink, Guid metricId, EnrichmentStatusQueryOption body, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -4602,7 +4973,7 @@ namespace Azure.AI.MetricsAdvisor
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateGetEnrichmentStatusByMetricNextPageRequest(nextLink, metricId, body, skip, top);
+            using var message = CreateGetEnrichmentStatusByMetricNextPageRequest(nextLink, metricId, body, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

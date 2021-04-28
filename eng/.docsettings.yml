@@ -172,6 +172,7 @@ known_content_issues:
   - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', '#15423']
   - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', '#15423']
   - ['sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/README.md', '#15423']
+  - ['sdk/monitor/Azure.Monitor.Query/README.md', '#15423']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

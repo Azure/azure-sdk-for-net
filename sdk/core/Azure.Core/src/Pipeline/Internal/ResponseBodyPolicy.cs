@@ -36,7 +36,14 @@ namespace Azure.Core.Pipeline
             CancellationToken oldToken = message.CancellationToken;
             using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
-            cts.CancelAfter(_networkTimeout);
+            var networkTimeout = _networkTimeout;
+
+            if (message.NetworkTimeout is TimeSpan networkTimeoutOverride)
+            {
+                networkTimeout = networkTimeoutOverride;
+            }
+
+            cts.CancelAfter(networkTimeout);
             try
             {
                 message.CancellationToken = cts.Token;
@@ -63,7 +70,7 @@ namespace Azure.Core.Pipeline
 
             if (message.BufferResponse)
             {
-                if (_networkTimeout != Timeout.InfiniteTimeSpan)
+                if (networkTimeout != Timeout.InfiniteTimeSpan)
                 {
                     cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
                 }
@@ -91,9 +98,9 @@ namespace Azure.Core.Pipeline
                     throw;
                 }
             }
-            else if (_networkTimeout != Timeout.InfiniteTimeSpan)
+            else if (networkTimeout != Timeout.InfiniteTimeSpan)
             {
-                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, _networkTimeout);
+                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, networkTimeout);
             }
         }
 

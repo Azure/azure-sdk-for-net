@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         private readonly ConcurrentStack<string> _keysToPurge = new ConcurrentStack<string>();
 
         protected AdministrationTestBase(bool isAsync, RecordedTestMode? mode)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(isAsync, mode)
         {
         }
 

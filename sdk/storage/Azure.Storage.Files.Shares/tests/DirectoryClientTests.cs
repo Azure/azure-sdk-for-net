@@ -1155,7 +1155,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -1194,7 +1194,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void CanGenerateSas_GetFileClient()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -1237,7 +1237,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void CanGenerateSas_GetSubdirectoryClient()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -1297,19 +1297,21 @@ namespace Azure.Storage.Files.Shares.Tests
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
-            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
-            string connectionString = storageConnectionString.ToString(true);
+
             string shareName = GetNewShareName();
             string directoryName = GetNewDirectoryName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(serviceUri)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = directoryName
+            };
             ShareDirectoryClient directoryClient = InstrumentClient(new ShareDirectoryClient(
-                connectionString,
-                shareName,
-                directoryName,
+                shareUriBuilder.ToUri(),
+                constants.Sas.SharedKeyCredential,
                 GetOptions()));
 
             // Act
@@ -1321,40 +1323,41 @@ namespace Azure.Storage.Files.Shares.Tests
                 ShareName = shareName,
                 FilePath = directoryName,
             };
-            ShareUriBuilder expectedUri = new ShareUriBuilder(blobEndpoint)
+            ShareUriBuilder expectedUri = new ShareUriBuilder(serviceUri)
             {
                 ShareName = shareName,
                 DirectoryOrFilePath = directoryName,
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
-            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+            Assert.AreEqual(expectedUri.ToUri(), sasUri);
         }
 
         [RecordedTest]
         public void GenerateSas_Builder()
         {
-            var constants = new TestConstants(this);
+            // Arrange
+            TestConstants constants = TestConstants.Create(this);
             ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
-            var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
-            var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
-            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
-            string connectionString = storageConnectionString.ToString(true);
+
             string shareName = GetNewShareName();
             string directoryName = GetNewDirectoryName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(serviceUri)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = directoryName
+            };
 
             ShareDirectoryClient directoryClient = InstrumentClient(new ShareDirectoryClient(
-                connectionString,
-                shareName,
-                directoryName,
+                shareUriBuilder.ToUri(),
+                constants.Sas.SharedKeyCredential,
                 GetOptions()));
 
             ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
             {
                 ShareName = shareName,
                 FilePath = directoryName,
-                StartsOn = startsOn
             };
 
             // Act
@@ -1364,29 +1367,78 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareSasBuilder sasBuilder2 = new ShareSasBuilder(permissions, expiresOn)
             {
                 ShareName = shareName,
-                FilePath = directoryName,
-                StartsOn = startsOn
+                FilePath = directoryName
             };
-            ShareUriBuilder expectedUri = new ShareUriBuilder(blobEndpoint)
+            ShareUriBuilder expectedUri = new ShareUriBuilder(serviceUri)
             {
                 ShareName = shareName,
                 DirectoryOrFilePath = directoryName,
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
-            Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+        }
+
+        [RecordedTest]
+        public void GenerateSas_BuilderNullShareName()
+        {
+            // Arrange
+            TestConstants constants = TestConstants.Create(this);
+            ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+
+            string shareName = GetNewShareName();
+            string directoryName = GetNewDirectoryName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(serviceUri)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = directoryName
+            };
+
+            ShareDirectoryClient directoryClient = InstrumentClient(new ShareDirectoryClient(
+                shareUriBuilder.ToUri(),
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = null,
+                FilePath = directoryName,
+            };
+
+            // Act
+            Uri sasUri = directoryClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            ShareSasBuilder sasBuilder2 = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = shareName,
+                FilePath = directoryName
+            };
+            ShareUriBuilder expectedUri = new ShareUriBuilder(serviceUri)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = directoryName,
+                Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri(), sasUri);
         }
 
         [RecordedTest]
         public void GenerateSas_BuilderWrongShareName()
         {
             // Arrange
-            var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("http://127.0.0.1/");
-            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            TestConstants constants = TestConstants.Create(this);
+            string shareName = GetNewShareName();
             string directoryName = GetNewDirectoryName();
-            blobUriBuilder.Path += constants.Sas.Account + "/" + GetNewShareName() + "/" + directoryName;
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(serviceUri)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = directoryName
+            };
             ShareDirectoryClient directoryClient = InstrumentClient(new ShareDirectoryClient(
-                blobUriBuilder.Uri,
+                shareUriBuilder.ToUri(),
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
 
@@ -1397,29 +1449,72 @@ namespace Azure.Storage.Files.Shares.Tests
             };
 
             // Act
-            try
-            {
-                Uri sasUri = directoryClient.GenerateSasUri(sasBuilder);
+            TestHelper.AssertExpectedException(
+                () => directoryClient.GenerateSasUri(sasBuilder),
+                new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.ShareName does not match ShareName in the Client. ShareSasBuilder.ShareName must either be left empty or match the ShareName in the Client"));
+        }
 
-                Assert.Fail("ShareDirectoryClient.GenerateSasUri should have failed with an ArgumentException.");
-            }
-            catch (InvalidOperationException)
+        [RecordedTest]
+        public void GenerateSas_builderNullDirectoryName()
+        {
+            // Arrange
+            TestConstants constants = TestConstants.Create(this);
+            ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+
+            string shareName = GetNewShareName();
+            string directoryName = GetNewDirectoryName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(serviceUri)
             {
-                //the correct exception came back
-            }
+                ShareName = shareName,
+                DirectoryOrFilePath = directoryName
+            };
+
+            ShareDirectoryClient directoryClient = InstrumentClient(new ShareDirectoryClient(
+                shareUriBuilder.ToUri(),
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = shareName,
+                FilePath = null,
+            };
+
+            // Act
+            Uri sasUri = directoryClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            ShareSasBuilder sasBuilder2 = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = shareName,
+                FilePath = directoryName
+            };
+            ShareUriBuilder expectedUri = new ShareUriBuilder(serviceUri)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = directoryName,
+                Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri(), sasUri);
         }
 
         [RecordedTest]
         public void GenerateSas_BuilderWrongDirectoryName()
         {
             // Arrange
-            var constants = new TestConstants(this);
-            var blobEndpoint = new Uri("http://127.0.0.1/");
-            UriBuilder blobUriBuilder = new UriBuilder(blobEndpoint);
+            TestConstants constants = TestConstants.Create(this);
             string shareName = GetNewShareName();
-            blobUriBuilder.Path += constants.Sas.Account + "/" + shareName + "/" + GetNewDirectoryName();
+            string directoryName = GetNewDirectoryName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(serviceUri)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = directoryName
+            };
             ShareDirectoryClient directoryClient = InstrumentClient(new ShareDirectoryClient(
-                blobUriBuilder.Uri,
+                shareUriBuilder.ToUri(),
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
 
@@ -1430,16 +1525,9 @@ namespace Azure.Storage.Files.Shares.Tests
             };
 
             // Act
-            try
-            {
-                Uri sasUri = directoryClient.GenerateSasUri(sasBuilder);
-
-                Assert.Fail("ShareDirectoryClient.GenerateSasUri should have failed with an ArgumentException.");
-            }
-            catch (InvalidOperationException)
-            {
-                //the correct exception came back
-            }
+            TestHelper.AssertExpectedException(
+                () => directoryClient.GenerateSasUri(sasBuilder),
+                new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.FilePath does not match Path in the Client. ShareSasBuilder.FilePath must either be left empty or match the Path in the Client"));
         }
         #endregion
 

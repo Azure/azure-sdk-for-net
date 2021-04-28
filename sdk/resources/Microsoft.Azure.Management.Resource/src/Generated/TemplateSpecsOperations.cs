@@ -547,6 +547,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='templateSpecName'>
         /// Name of the Template Spec.
         /// </param>
+        /// <param name='expand'>
+        /// Allows for expansion of additional Template Spec details in the response.
+        /// Optional. Possible values include: 'versions'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -568,7 +572,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TemplateSpec>> GetWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TemplateSpec>> GetWithHttpMessagesAsync(string resourceGroupName, string templateSpecName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -625,6 +629,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("templateSpecName", templateSpecName);
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -635,6 +640,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{templateSpecName}", System.Uri.EscapeDataString(templateSpecName));
             List<string> _queryParameters = new List<string>();
+            if (expand != null)
+            {
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -963,6 +972,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <summary>
         /// Lists all the Template Specs within the specified subscriptions.
         /// </summary>
+        /// <param name='expand'>
+        /// Allows for expansion of additional Template Spec details in the response.
+        /// Optional. Possible values include: 'versions'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -984,7 +997,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<TemplateSpec>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<TemplateSpec>>> ListBySubscriptionWithHttpMessagesAsync(string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1001,6 +1014,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListBySubscription", tracingParameters);
             }
@@ -1009,6 +1023,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs/").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (expand != null)
+            {
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -1139,6 +1157,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
+        /// <param name='expand'>
+        /// Allows for expansion of additional Template Spec details in the response.
+        /// Optional. Possible values include: 'versions'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1160,7 +1182,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<TemplateSpec>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<TemplateSpec>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1197,6 +1219,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroup", tracingParameters);
             }
@@ -1206,6 +1229,10 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
+            if (expand != null)
+            {
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));

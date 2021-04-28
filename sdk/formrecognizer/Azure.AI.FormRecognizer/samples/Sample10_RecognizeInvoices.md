@@ -20,7 +20,8 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 ## Recognize invoices from a URI
 
 To recognize invoices from a URI, use the `StartRecognizeInvoicesFromUriAsync` method.
-For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: https://aka.ms/formrecognizer/invoicefields
+
+For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/invoicefields).
 
 ```C# Snippet:FormRecognizerSampleRecognizeInvoicesUri
     Uri invoiceUri = <invoiceUri>;
@@ -150,7 +151,8 @@ For simplicity, we are not showing all the fields that the service returns. To s
 ## Recognize invoices from a given file
 
 To recognize invoices from a given file, use the `StartRecognizeInvoicesAsync` method.
-For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: https://aka.ms/formrecognizer/invoicefields
+
+For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/invoicefields).
 
 ```C# Snippet:FormRecognizerSampleRecognizeInvoicesFileStream
 string invoicePath = "<invoicePath>";
@@ -207,6 +209,16 @@ if (invoice.Fields.TryGetValue("Items", out FormField itemsField))
                     }
                 }
 
+                if (itemFields.TryGetValue("Quantity", out FormField itemQuantityField))
+                {
+                    if (itemQuantityField.Value.ValueType == FieldValueType.Float)
+                    {
+                        float quantityAmount = itemQuantityField.Value.AsFloat();
+
+                        Console.WriteLine($"  Quantity: '{quantityAmount}', with confidence {itemQuantityField.Confidence}");
+                    }
+                }
+
                 if (itemFields.TryGetValue("UnitPrice", out FormField itemUnitPriceField))
                 {
                     if (itemUnitPriceField.Value.ValueType == FieldValueType.Float)
@@ -217,13 +229,20 @@ if (invoice.Fields.TryGetValue("Items", out FormField itemsField))
                     }
                 }
 
-                if (itemFields.TryGetValue("Quantity", out FormField itemQuantityField))
+                if (itemFields.TryGetValue("Tax", out FormField itemTaxPriceField))
                 {
-                    if (itemQuantityField.Value.ValueType == FieldValueType.Float)
+                    if (itemTaxPriceField.Value.ValueType == FieldValueType.Float)
                     {
-                        float quantityAmount = itemQuantityField.Value.AsFloat();
-
-                        Console.WriteLine($"  Quantity: '{quantityAmount}', with confidence {itemQuantityField.Confidence}");
+                        try
+                        {
+                            float itemTax = itemTaxPriceField.Value.AsFloat();
+                            Console.WriteLine($"  Tax: '{itemTax}', with confidence {itemTaxPriceField.Confidence}");
+                        }
+                        catch
+                        {
+                            string itemTaxText = itemTaxPriceField.ValueData.Text;
+                            Console.WriteLine($"  Tax: '{itemTaxText}', with confidence {itemTaxPriceField.Confidence}");
+                        }
                     }
                 }
 

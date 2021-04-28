@@ -14,22 +14,22 @@ namespace Azure.Containers.ContainerRegistry
     {
         /// <summary> Initializes a new instance of Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema. </summary>
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
-        /// <param name="aadAccesstoken"> AAD access token, mandatory when grant_type is access_token_refresh_token or access_token. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="service"/> or <paramref name="aadAccesstoken"/> is null. </exception>
-        internal Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema(string service, string aadAccesstoken)
+        /// <param name="aadAccessToken"> AAD access token, mandatory when grant_type is access_token_refresh_token or access_token. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/> or <paramref name="aadAccessToken"/> is null. </exception>
+        internal Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema(string service, string aadAccessToken)
         {
             if (service == null)
             {
                 throw new ArgumentNullException(nameof(service));
             }
-            if (aadAccesstoken == null)
+            if (aadAccessToken == null)
             {
-                throw new ArgumentNullException(nameof(aadAccesstoken));
+                throw new ArgumentNullException(nameof(aadAccessToken));
             }
 
             GrantType = "access_token";
             Service = service;
-            AadAccesstoken = aadAccesstoken;
+            AadAccessToken = aadAccessToken;
         }
 
         /// <summary> Can take a value of access_token. </summary>
@@ -37,6 +37,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Indicates the name of your Azure container registry. </summary>
         public string Service { get; }
         /// <summary> AAD access token, mandatory when grant_type is access_token_refresh_token or access_token. </summary>
-        public string AadAccesstoken { get; }
+        public string AadAccessToken { get; }
     }
 }

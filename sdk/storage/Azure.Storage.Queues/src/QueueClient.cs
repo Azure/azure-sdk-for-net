@@ -203,7 +203,7 @@ namespace Azure.Storage.Queues
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
@@ -341,7 +341,7 @@ namespace Azure.Storage.Queues
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
                 messageEncoding: options.MessageEncoding,
@@ -3130,6 +3130,13 @@ namespace Azure.Storage.Queues
             QueueSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+
+            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
+            builder = QueueSasBuilder.DeepCopy(builder);
+
+            // Assigned builder's QueueName if it is null
+            builder.QueueName ??= Name;
+
             if (!builder.QueueName.Equals(Name, StringComparison.InvariantCulture))
             {
                 // TODO: throw proper exception for non-matching builder name
@@ -3141,8 +3148,10 @@ namespace Azure.Storage.Queues
                     nameof(QueueSasBuilder),
                     nameof(Name));
             }
-            QueueUriBuilder sasUri = new QueueUriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString();
+            QueueUriBuilder sasUri = new QueueUriBuilder(Uri)
+            {
+                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
+            };
             return sasUri.ToUri();
         }
         #endregion

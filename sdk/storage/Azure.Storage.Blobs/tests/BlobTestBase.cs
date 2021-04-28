@@ -13,6 +13,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 
@@ -26,9 +27,11 @@ namespace Azure.Storage.Test.Shared
         BlobClientOptions.ServiceVersion.V2020_04_08,
         BlobClientOptions.ServiceVersion.V2020_06_12,
         BlobClientOptions.ServiceVersion.V2020_08_04,
+        StorageVersionExtensions.LatestVersion,
+        StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
         LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
-    public abstract class BlobTestBase : StorageTestBase
+    public abstract class BlobTestBase : StorageTestBase<BlobTestEnvironment>
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";
