@@ -24,7 +24,7 @@ You can find the **Keys** for you Azure Web PubSub service in the [Azure Portal]
 
 The `AzureWebJobsStorage` connection string is used to preserve the processing checkpoint information as required refer to [Storage considerations](https://docs.microsoft.com/azure/azure-functions/storage-considerations#storage-account-requirements)
 
-For the local development use the `local.settings.json` file to store the connection string:
+For the local development use the `local.settings.json` file to store the connection string, `<connection_name>` can be set to `WebPubSubConnectionString` as default supported in the extension, or you can set customized names by mapping it with `ConnectionStringSetting = <connection_name>` in function binding attributes:
 
 ```json
 {
