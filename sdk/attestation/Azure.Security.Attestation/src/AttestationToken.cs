@@ -144,7 +144,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Json Web Token Header "X509 URL". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.5 for details.
         /// </summary>
-        public Uri X509Url { get => Header.X509Uri; }
+        public Uri X509Url => Header.X509Uri;
 
         /// <summary>
         /// Json Web Token Body Issuer. See https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.1 for details.
