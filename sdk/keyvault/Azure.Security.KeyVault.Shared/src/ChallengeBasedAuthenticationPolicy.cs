@@ -19,11 +19,11 @@ namespace Azure.Security.KeyVault
         public ChallengeBasedAuthenticationPolicy(TokenCredential credential) : base(credential, Array.Empty<string>())
         { }
 
-        /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequestAsync" />
+        /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequestAsync(Azure.Core.HttpMessage)" />
         protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
             => AuthorizeRequestInternal(message, true);
 
-        /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequest" />
+        /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequest(Azure.Core.HttpMessage)" />
         protected override void AuthorizeRequest(HttpMessage message)
             => AuthorizeRequestInternal(message, false).EnsureCompleted();
 
@@ -47,11 +47,11 @@ namespace Azure.Security.KeyVault
                 var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
                 if (async)
                 {
-                    await SetAuthorizationHeaderAsync(message, context).ConfigureAwait(false);
+                    await AuthorizeRequestAsync(message, context).ConfigureAwait(false);
                 }
                 else
                 {
-                    SetAuthorizationHeader(message, context);
+                    AuthorizeRequest(message, context);
                 }
                 return;
             }
@@ -109,11 +109,11 @@ namespace Azure.Security.KeyVault
             var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
             if (async)
             {
-                await SetAuthorizationHeaderAsync(message, context).ConfigureAwait(false);
+                await AuthorizeRequestAsync(message, context).ConfigureAwait(false);
             }
             else
             {
-                SetAuthorizationHeader(message, context);
+                AuthorizeRequest(message, context);
             }
             return true;
         }
