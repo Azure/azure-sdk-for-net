@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.ResourceManager.Core.Adapters;
-using Azure.ResourceManager.Resources;
 using System;
 using System.Threading;
+using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
 {
@@ -111,13 +110,13 @@ namespace Azure.ResourceManager.Core
         /// <returns> An instance of <see cref="ResourceOperationsBase{TenantResourceIdentifier, Subscription}"/>. </returns>
         protected override ResourceOperationsBase<SubscriptionResourceIdentifier, Subscription> GetOperation(string subscriptionGuid)
         {
-            return new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), subscriptionGuid);
+            return new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), subscriptionGuid);
         }
 
         //TODO: can make static?
         private Func<ResourceManager.Resources.Models.Subscription, Subscription> Converter()
         {
-            return s => new Subscription(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), s.SubscriptionId), new SubscriptionData(s));
+            return s => new Subscription(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), s.SubscriptionId), new SubscriptionData(s));
         }
     }
 }

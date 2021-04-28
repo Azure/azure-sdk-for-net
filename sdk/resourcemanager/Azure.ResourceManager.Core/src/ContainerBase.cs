@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -33,13 +32,13 @@ namespace Azure.ResourceManager.Core
             : base(clientContext, id)
         {
         }
-       
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerBase{TOperations, TIdentifier}"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         protected ContainerBase(ResourceOperationsBase parent)
-            : base(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri), parent.Id)
+            : base(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri, parent.Pipeline), parent.Id)
         {
             Parent = parent;
         }

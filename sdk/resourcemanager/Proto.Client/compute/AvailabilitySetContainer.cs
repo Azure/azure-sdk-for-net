@@ -29,8 +29,16 @@ namespace Proto.Compute
         /// </summary>
         public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
-        /// <inheritdoc/>
-        public override ArmResponse<AvailabilitySet> CreateOrUpdate(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update an availability set. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name">The name of the availability set.</param>
+        /// <param name="resourceDetails">The desired availability set configuration.</param>
+        /// <param name="cancellationToken">A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />.</param>
+        /// <returns>A response with the <see cref="ArmResponse{AvailabilitySet}"/> operation for this resource.</returns>
+        /// <exception cref="ArgumentException"> Name of the availability set cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public ArmResponse<AvailabilitySet> CreateOrUpdate(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
         {
             var response = Operations.CreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model);
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
@@ -38,8 +46,16 @@ namespace Proto.Compute
                 a => new AvailabilitySet(Parent, new AvailabilitySetData(a)));
         }
 
-        /// <inheritdoc/>
-        public async override Task<ArmResponse<AvailabilitySet>> CreateOrUpdateAsync(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update an availability set. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the availability set. </param>
+        /// <param name="resourceDetails"> The desired availability set configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{AvailabilitySet}"/> operation for this resource group. </returns>
+        /// <exception cref="ArgumentException"> Name of the availability set cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public async Task<ArmResponse<AvailabilitySet>> CreateOrUpdateAsync(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
         {
             var containerId = Id as ResourceGroupResourceIdentifier;
             var response = await Operations.CreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
@@ -48,16 +64,38 @@ namespace Proto.Compute
                 a => new AvailabilitySet(Parent, new AvailabilitySetData(a)));
         }
 
-        /// <inheritdoc/>
-        public override ArmOperation<AvailabilitySet> StartCreateOrUpdate(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update an availability set. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the availability set. </param>
+        /// <param name="resourceDetails"> The desired availability set configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> An <see cref="ArmOperation{AvailabilitySet}"/> that allows polling for completion of the operation. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        /// <exception cref="ArgumentException"> Name of the availability set cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public ArmOperation<AvailabilitySet> StartCreateOrUpdate(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 Operations.CreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken),
                 a => new AvailabilitySet(Parent, new AvailabilitySetData(a)));
         }
 
-        /// <inheritdoc/>
-        public async override Task<ArmOperation<AvailabilitySet>> StartCreateOrUpdateAsync(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update an availability set. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the availability set. </param>
+        /// <param name="resourceDetails"> The desired availability set configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{AvailabilitySet}"/> that allows polling for completion of the operation. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        /// <exception cref="ArgumentException"> Name of the availability set cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public async Task<ArmOperation<AvailabilitySet>> StartCreateOrUpdateAsync(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 await Operations.CreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false),
@@ -70,7 +108,7 @@ namespace Proto.Compute
         /// <param name="skuName"> The sku name of the resource. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <returns> A builder with <see cref="AvailabilitySet"/> and <see cref="AvailabilitySetData"/>. </returns>
-        public ArmBuilder<ResourceGroupResourceIdentifier, AvailabilitySet, AvailabilitySetData> Construct(string skuName, LocationData location = null)
+        public AvailabilitySetBuilder Construct(string skuName, LocationData location = null)
         {
             var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier, ResourceGroupOperations>();
             var availabilitySet = new Azure.ResourceManager.Compute.Models.AvailabilitySet(location ?? parent.Data.Location)
@@ -80,7 +118,7 @@ namespace Proto.Compute
                 Sku = new Azure.ResourceManager.Compute.Models.Sku() { Name = skuName }
             };
 
-            return new ArmBuilder<ResourceGroupResourceIdentifier, AvailabilitySet, AvailabilitySetData>(this, new AvailabilitySetData(availabilitySet));
+            return new AvailabilitySetBuilder(this, new AvailabilitySetData(availabilitySet));
         }
 
         /// <summary>
