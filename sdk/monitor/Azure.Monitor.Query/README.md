@@ -205,6 +205,53 @@ foreach (var row in table.Rows)
 }
 ```
 
+## Troubleshooting
+
+### General
+
+When you interact with the Azure Monitor Query client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][monitor_rest_api] requests.
+
+For example, if you submit an invalid query a `400` error is returned, indicating "Bad Request".
+
+```C# Snippet:BadRequest
+string workspaceId = "<workspace_id>";
+LogsClient client = new LogsClient(new DefaultAzureCredential());
+try
+{
+    await client.QueryAsync(workspaceId, "My Not So Valid Query");
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+    throw;
+}
+```
+
+The exception also contains some additional information like the full error content.
+
+```
+Azure.RequestFailedException : The request had some invalid properties
+Status: 400 (Bad Request)
+ErrorCode: BadArgumentError
+
+Content:
+{"error":{"message":"The request had some invalid properties","code":"BadArgumentError","correlationId":"34f5f93a-6007-48a4-904f-487ca4e62a82","innererror":{"code":"SyntaxError","message":"A recognition error occurred in the query.","innererror":{"code":"SYN0002","message":"Query could not be parsed at 'Not' on line [1,3]","line":1,"pos":3,"token":"Not"}}}}
+```
+
+### Setting up console logging
+
+The simplest way to see the logs is to enable the console logging.
+To create an Azure SDK log listener that outputs messages to console use AzureEventSourceListener.CreateConsoleLogger method.
+
+```C#
+// Setup a listener to monitor logged events.
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
+
+To learn more about other logging mechanisms see [here][logging].
+
+## Next steps
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require
@@ -218,6 +265,7 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 
 [query_client_src]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/monitor/Azure.Monitor.Query/src
 [query_client_nuget_package]: https://www.nuget.org/packages?q=Azure.Monitor.Query
+[monitor_rest_api]: https://docs.microsoft.com/en-us/rest/api/monitor/
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [cla]: https://cla.microsoft.com

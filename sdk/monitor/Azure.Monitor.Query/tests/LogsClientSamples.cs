@@ -179,6 +179,28 @@ namespace Azure.Monitor.Query.Tests
             #endregion
         }
 
+        [Test]
+        public async Task BadRequest()
+        {
+            #region Snippet:BadRequest
+#if SNIPPET
+            string workspaceId = "<workspace_id>";
+#else
+            string workspaceId = TestEnvironment.WorkspaceId;
+#endif
+            LogsClient client = new LogsClient(new DefaultAzureCredential());
+            try
+            {
+                await client.QueryAsync(workspaceId, "My Not So Valid Query");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            #endregion
+        }
+
         #region Snippet:QueryLogsAsModelsModel
 
         public class MyLogEntryModel
