@@ -120,7 +120,11 @@ function Confirm-ChangeLogEntry {
     else {
       $status = $changeLogEntry.ReleaseStatus.Trim().Trim("()")
       try {
-        [DateTime]$status
+        $releaseDate = [DateTime]$status
+        if (((Get-Date).AddDays(-31) -gt $releaseDate) -or ($releaseDate -gt (Get-Date).AddDays(31)))
+        {
+          throw "Date is way outside of the current release period."
+        }
       }
       catch {
           LogError "Invalid date [ $status ] passed as status for Version [$($changeLogEntry.ReleaseVersion)]."
