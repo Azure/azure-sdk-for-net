@@ -131,7 +131,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Json Web Token Header "content type". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.10 for details.
         /// </summary>
-        public string ContentType { get => Header.ContentType; }
+        public string ContentType => Header.ContentType;
         /// <summary>
         /// Json Web Token Header "Key URL". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.2 for details.
         /// </summary>
