@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.SignalR
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SignalRPrivateEndpointConnectionsOperations operations.
+    /// SignalRSharedPrivateLinkResourcesOperations operations.
     /// </summary>
-    public partial interface ISignalRPrivateEndpointConnectionsOperations
+    public partial interface ISignalRSharedPrivateLinkResourcesOperations
     {
         /// <summary>
-        /// List private endpoint connections
+        /// List shared private link resources
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -49,12 +49,12 @@ namespace Microsoft.Azure.Management.SignalR
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SharedPrivateLinkResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the specified private endpoint connection
+        /// Get the specified shared private link resource
         /// </summary>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection
+        /// <param name='sharedPrivateLinkResourceName'>
+        /// The name of the shared private link resource
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -79,15 +79,15 @@ namespace Microsoft.Azure.Management.SignalR
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection>> GetWithHttpMessagesAsync(string privateEndpointConnectionName, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SharedPrivateLinkResource>> GetWithHttpMessagesAsync(string sharedPrivateLinkResourceName, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update the state of specified private endpoint connection
+        /// Create or update a shared private link resource
         /// </summary>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection
+        /// <param name='sharedPrivateLinkResourceName'>
+        /// The name of the shared private link resource
         /// </param>
         /// <param name='parameters'>
-        /// The resource of private endpoint and its properties
+        /// The shared private link resource
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -112,12 +112,12 @@ namespace Microsoft.Azure.Management.SignalR
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection>> UpdateWithHttpMessagesAsync(string privateEndpointConnectionName, PrivateEndpointConnection parameters, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SharedPrivateLinkResource>> CreateOrUpdateWithHttpMessagesAsync(string sharedPrivateLinkResourceName, SharedPrivateLinkResource parameters, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete the specified private endpoint connection
+        /// Delete the specified shared private link resource
         /// </summary>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection
+        /// <param name='sharedPrivateLinkResourceName'>
+        /// The name of the shared private link resource
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -139,12 +139,45 @@ namespace Microsoft.Azure.Management.SignalR
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string privateEndpointConnectionName, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string sharedPrivateLinkResourceName, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete the specified private endpoint connection
+        /// Create or update a shared private link resource
         /// </summary>
-        /// <param name='privateEndpointConnectionName'>
-        /// The name of the private endpoint connection
+        /// <param name='sharedPrivateLinkResourceName'>
+        /// The name of the shared private link resource
+        /// </param>
+        /// <param name='parameters'>
+        /// The shared private link resource
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SharedPrivateLinkResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string sharedPrivateLinkResourceName, SharedPrivateLinkResource parameters, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete the specified shared private link resource
+        /// </summary>
+        /// <param name='sharedPrivateLinkResourceName'>
+        /// The name of the shared private link resource
         /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -166,9 +199,9 @@ namespace Microsoft.Azure.Management.SignalR
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string privateEndpointConnectionName, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string sharedPrivateLinkResourceName, string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List private endpoint connections
+        /// List shared private link resources
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -188,6 +221,6 @@ namespace Microsoft.Azure.Management.SignalR
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SharedPrivateLinkResource>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

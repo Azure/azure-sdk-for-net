@@ -12,13 +12,13 @@ namespace Microsoft.Azure.Management.SignalR.Models
 {
 
     /// <summary>
-    /// Defines values for FeatureFlags.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class FeatureFlags
+    public static class CreatedByType
     {
-        public const string ServiceMode = "ServiceMode";
-        public const string EnableConnectivityLogs = "EnableConnectivityLogs";
-        public const string EnableMessagingLogs = "EnableMessagingLogs";
-        public const string EnableLiveTrace = "EnableLiveTrace";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }
