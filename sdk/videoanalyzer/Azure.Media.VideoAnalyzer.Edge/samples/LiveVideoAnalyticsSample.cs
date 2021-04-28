@@ -155,9 +155,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
         private void SetSources(PipelineTopologyProperties pipelineTopologyProps)
         {
             pipelineTopologyProps.Sources.Add(new RtspSource("rtspSource", new UnsecuredEndpoint("${rtspUrl}")
-                {
-                    Credentials = new UsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
-                })
+            {
+                Credentials = new UsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
+            })
             );
         }
 

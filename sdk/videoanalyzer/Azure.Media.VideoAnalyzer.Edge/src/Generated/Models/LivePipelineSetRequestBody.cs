@@ -10,7 +10,7 @@ using System;
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Represents the livePipelineSet request body. </summary>
-    public partial class LivePipelineSetRequestBody : MethodRequest
+    internal partial class LivePipelineSetRequestBody : MethodRequest
     {
         /// <summary> Initializes a new instance of LivePipelineSetRequestBody. </summary>
         /// <param name="name"> The identifier for the live pipeline. </param>

@@ -10,7 +10,7 @@ using System;
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Represents the pipelineTopologySet request. </summary>
-    public partial class PipelineTopologySetRequest : MethodRequest
+    internal partial class PipelineTopologySetRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of PipelineTopologySetRequest. </summary>
         /// <param name="pipelineTopology"> The definition of a pipeline topology. </param>

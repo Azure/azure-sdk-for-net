@@ -29,7 +29,7 @@ extends:
     ServiceDirectory: mediaservices
     ArtifactName: packages
     Artifacts:
-      - name: Microsoft.Azure.Media.VideoAnalyer.Edge
+      - name: Microsoft.Azure.Media.VideoAnalyzer.Edge
         safeName: MicrosoftAzureMediaVideoAnalyzerEdge
       - name: Azure.Media.VideoAnalyzer.Edge
         safeName: AzureMediaVideoAnalyzerEdge
