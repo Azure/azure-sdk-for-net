@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Core
         internal SubscriptionOperations(ClientContext clientContext, string subscriptionGuid)
             : base(clientContext, new SubscriptionResourceIdentifier(subscriptionGuid))
         {
+            ResourceManager.Resources.ResourcesManagementClientOptions options = new();
+            SubscriptionsClient = new SubscriptionsOperations(new ClientDiagnostics(options),
+                ManagementPipelineBuilder.Build(Credential, BaseUri, options),
+                BaseUri);
         }
 
         /// <summary>
@@ -44,6 +48,10 @@ namespace Azure.ResourceManager.Core
         protected SubscriptionOperations(SubscriptionOperations subscription, SubscriptionResourceIdentifier id)
             : base(subscription, id)
         {
+            ResourceManager.Resources.ResourcesManagementClientOptions options = new();
+            SubscriptionsClient = new SubscriptionsOperations(new ClientDiagnostics(options),
+                ManagementPipelineBuilder.Build(Credential, BaseUri, options),
+                BaseUri);
         }
 
         /// <summary>
@@ -73,11 +81,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private SubscriptionsOperations SubscriptionsClient => new ResourcesManagementClient(
-            BaseUri,
-            Guid.NewGuid().ToString(),
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>()).Subscriptions;
+        private SubscriptionsOperations SubscriptionsClient;
 
         /// <summary>
         /// Gets the resource group container under this subscription.
@@ -100,7 +104,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override ArmResponse<Subscription> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
+            return new PhArmResponse<Subscription, SubscriptionData>(
                 SubscriptionsClient.Get(Id.Name, cancellationToken),
                 Converter());
         }
@@ -108,14 +112,14 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override async Task<ArmResponse<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
+            return new PhArmResponse<Subscription, SubscriptionData>(
                 await SubscriptionsClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
                 Converter());
         }
 
-        private Func<ResourceManager.Resources.Models.Subscription, Subscription> Converter()
+        private Func<SubscriptionData, Subscription> Converter()
         {
-            return s => new Subscription(this, new SubscriptionData(s));
+            return s => new Subscription(this, s);
         }
     }
 }
