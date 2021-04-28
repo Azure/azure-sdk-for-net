@@ -19,13 +19,13 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationTokenValidationFailedException"/> class.
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">Message helping explain the source of the exception.</param>
         public AttestationTokenValidationFailedException(string message) : base(message)
         {
         }
 
         /// <summary>
-        /// Represents the entity which had signed the attestation token, or null if the token was unsecured.
+        /// Represents a set of signing certificates which may have signed the attestation token, or null if there are no official signers.
         /// </summary>
         public IReadOnlyList<AttestationSigner> Signers { get; internal set; }
 
