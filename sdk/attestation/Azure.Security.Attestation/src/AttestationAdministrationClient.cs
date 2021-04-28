@@ -99,7 +99,7 @@ namespace Azure.Security.Attestation
         /// <remarks>
         /// This API returns the underlying attestation policy object stored in the attestation service for this <paramref name="attestationType"/>.
         ///
-        /// The actual service response to the API is an RFC 7519 JSON Web Token(see https://tools.ietf.org/html/rfc719"). This token can be retrieved from <see cref="AttestationResponse{T}.Token"/>.
+        /// The actual service response to the API is an RFC 7519 JSON Web Token(see https://tools.ietf.org/html/rfc7519"). This token can be retrieved from <see cref="AttestationResponse{T}.Token"/>.
         /// For the GetPolicy API, the body of the <see cref="AttestationResponse{T}.Token"/> is a <see cref="StoredAttestationPolicy"/> object, NOT a string.
         /// </remarks>
         public virtual AttestationResponse<string> GetPolicy(AttestationType attestationType, CancellationToken cancellationToken = default)
