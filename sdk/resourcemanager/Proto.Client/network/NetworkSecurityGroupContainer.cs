@@ -61,8 +61,6 @@ namespace Proto.Network
         /// <param name="resourceDetails"> The desired network security group configuration. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A response with the <see cref="ArmResponse{NetworkSecurityGroup}"/> operation for this resource. </returns>
-        /// <exception cref="ArgumentException"> Name of the network security group cannot be null or a whitespace. </exception>
-        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public ArmResponse<NetworkSecurityGroup> CreateOrUpdate(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
@@ -78,8 +76,6 @@ namespace Proto.Network
         /// <param name="resourceDetails"> The desired network security group configuration. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{NetworkSecurityGroup}"/> operation for this network security group. </returns>
-        /// <exception cref="ArgumentException"> Name of the network security group cannot be null or a whitespace. </exception>
-        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public async Task<ArmResponse<NetworkSecurityGroup>> CreateOrUpdateAsync(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
@@ -98,8 +94,6 @@ namespace Proto.Network
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        /// <exception cref="ArgumentException"> Name of the network security group cannot be null or a whitespace. </exception>
-        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public ArmOperation<NetworkSecurityGroup> StartCreateOrUpdate(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
@@ -117,8 +111,6 @@ namespace Proto.Network
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        /// <exception cref="ArgumentException"> Name of the network security group cannot be null or a whitespace. </exception>
-        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
         public async Task<ArmOperation<NetworkSecurityGroup>> StartCreateOrUpdateAsync(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(

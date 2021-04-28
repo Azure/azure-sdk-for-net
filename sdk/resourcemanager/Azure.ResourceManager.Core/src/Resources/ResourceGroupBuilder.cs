@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Core
         public ResourceGroupBuilder(ResourceGroupContainer container, ResourceGroupData resource)
         {
             Resource = resource;
-            UnTypedContainer = container;
+            Container = container;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the container object to create the resource in.
         /// </summary>
-        protected ResourceGroupContainer UnTypedContainer { get; private set; }
+        protected ResourceGroupContainer Container { get; private set; }
 
         /// <summary>
         /// Creates the resource object to send to the Azure API.
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Core
             ResourceName = name;
             Resource = Build();
 
-            return UnTypedContainer.CreateOrUpdate(name, Resource, cancellationToken);
+            return Container.CreateOrUpdate(name, Resource, cancellationToken);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Core
             ResourceName = name;
             Resource = Build();
 
-            return await UnTypedContainer.CreateOrUpdateAsync(name, Resource, cancellationToken).ConfigureAwait(false);
+            return await Container.CreateOrUpdateAsync(name, Resource, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An <see cref="ArmOperation{ResourceGroup}"/> that allows polling for completion of the operation. </returns>
         /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// See <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning" /> for details on long running operation object.
         /// </remarks>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
         public ArmOperation<ResourceGroup> StartCreateOrUpdate(string name, CancellationToken cancellationToken = default)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Core
             ResourceName = name;
             Resource = Build();
 
-            return UnTypedContainer.StartCreateOrUpdate(name, Resource, cancellationToken);
+            return Container.StartCreateOrUpdate(name, Resource, cancellationToken);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{ResourceGroup}"/> that allows polling for completion of the operation. </returns>
         /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// See <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning" /> for details on long running operation object.
         /// </remarks>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
         public async Task<ArmOperation<ResourceGroup>> StartCreateOrUpdateAsync(
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Core
             ResourceName = name;
             Resource = Build();
 
-            return await UnTypedContainer.StartCreateOrUpdateAsync(name, Resource, cancellationToken).ConfigureAwait(false);
+            return await Container.StartCreateOrUpdateAsync(name, Resource, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Perform any tasks necessary after the resource is built
+        /// Perform any tasks necessary after the resource is built.
         /// </summary>
         protected virtual void OnAfterBuild()
         {
         }
 
         /// <summary>
-        /// Perform any tasks necessary before the resource is built
+        /// Perform any tasks necessary before the resource is built.
         /// </summary>
         protected virtual void OnBeforeBuild()
         {
