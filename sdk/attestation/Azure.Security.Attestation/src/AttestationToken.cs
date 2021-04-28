@@ -182,7 +182,7 @@ namespace Azure.Security.Attestation
         public bool? Critical { get => Header.Critical; }
 
         /// <summary>
-        /// Returns the standard properties in the JSON Web Token header. See https://tools.ietf.org/html/rfc7515 for more details.
+        /// Returns the standard properties in the JSON Web Token header. <seealso href="https://tools.ietf.org/html/rfc7515">RFC 7515</seealso> for more details.
         /// </summary>
         internal JsonWebTokenHeader Header { get => JsonSerializer.Deserialize<JsonWebTokenHeader>(TokenHeaderBytes.ToArray()); }
 
