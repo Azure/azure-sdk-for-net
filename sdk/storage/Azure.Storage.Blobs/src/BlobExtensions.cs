@@ -1268,7 +1268,7 @@ namespace Azure.Storage.Blobs
                 RemainingRetentionDays = containerPropertiesInternal.RemainingRetentionDays,
                 ETag = new ETag(containerPropertiesInternal.Etag),
                 Metadata = metadata.ToMetadata(),
-                HasVersionLevelWorm = containerPropertiesInternal.IsVersionLevelWormEnabled.GetValueOrDefault(),
+                HasImmutableStorageWithVersioning = containerPropertiesInternal.IsImmutableStorageWithVersioningEnabled.GetValueOrDefault(),
             };
         }
 
@@ -1294,7 +1294,7 @@ namespace Azure.Storage.Blobs
                 // Container Get Properties does not return RemainingRetentionDays.
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 Metadata = response.Headers.Metadata.ToMetadata(),
-                HasVersionLevelWorm = response.Headers.IsVersionLevelWormEnabled.GetValueOrDefault()
+                HasImmutableStorageWithVersioning = response.Headers.IsImmutableStorageWithVersioningEnabled.GetValueOrDefault()
             };
         }
 

@@ -20,7 +20,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
-    [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+    //[PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
     public class VersionLevelWormTests : BlobTestBase
     {
         public VersionLevelWormTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
@@ -535,7 +535,7 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContainerProperties> propertiesResponse = await vlwContainer.Container.GetPropertiesAsync();
 
             // Assert
-            Assert.IsTrue(propertiesResponse.Value.HasVersionLevelWorm);
+            Assert.IsTrue(propertiesResponse.Value.HasImmutableStorageWithVersioning);
 
             // Validate we are deserializing BlobContainerItems correctly.
             // Act
@@ -544,7 +544,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerItem containerItem = containers.Where(c => c.Name == vlwContainer.Container.Name).FirstOrDefault();
 
             // Assert
-            Assert.IsTrue(containerItem.Properties.HasVersionLevelWorm);
+            Assert.IsTrue(containerItem.Properties.HasImmutableStorageWithVersioning);
         }
 
         [Test]
