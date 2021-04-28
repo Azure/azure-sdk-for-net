@@ -127,7 +127,7 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The deserialized application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The deserialized application/json digital twin and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <typeparam name="T">The type to deserialize the digital twin to.</typeparam>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
@@ -193,7 +193,7 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         /// <param name="digitalTwinId">The Id of the digital twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The deserialized application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The deserialized application/json digital twin and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <typeparam name="T">The type to deserialize the digital twin to.</typeparam>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
@@ -243,7 +243,7 @@ namespace Azure.DigitalTwins.Core
         /// match on the service.
         /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The created application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The created application/json digital twin and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <typeparam name="T">The type to deserialize the digital twin to.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
@@ -329,7 +329,7 @@ namespace Azure.DigitalTwins.Core
         /// match on the service.
         /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The created application/json digital twin and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The created application/json digital twin and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <typeparam name="T">The type to deserialize the digital twin to.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
@@ -379,7 +379,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin to delete.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -424,7 +424,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the digital twin to delete.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// <para>
         /// To delete a digital twin, any relationships referencing it must be deleted first.
@@ -466,7 +466,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
-        /// <returns>The http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response{T}"/>. This response object includes an HTTP header that gives you the updated ETag for this resource.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -506,7 +506,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellationToken.</param>
-        /// <returns>The http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response{T}"/>. This response object includes an HTTP header that gives you the updated ETag for this resource.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -642,7 +642,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The HTTP response <see cref="Response{T}"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response{T}"/>. This response object includes an HTTP header that gives you the updated ETag for this resource.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -705,7 +705,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's component.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The HTTP response <see cref="Response{T}"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response{T}"/>. This response object includes an HTTP header that gives you the updated ETag for this resource.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -751,7 +751,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipName">The name of a relationship to filter to. If null, all relationships for the digital twin will be returned.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
+        /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json relationships belonging to the specified digital twin and the HTTP response.</returns>
         /// <typeparam name="T">The type to deserialize the relationship to.</typeparam>
         /// <remarks>
         /// <para>
@@ -849,7 +849,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipName">The name of a relationship to filter to. If null, all relationships for the digital twin will be returned.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json relationships belonging to the specified digital twin and the http response.</returns>
+        /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json relationships belonging to the specified digital twin and the HTTP response.</returns>
         /// <typeparam name="T">The type to deserialize the relationship to.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
@@ -925,7 +925,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the target digital twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json relationships directed towards the specified digital twin and the http response.</returns>
+        /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json relationships directed towards the specified digital twin and the HTTP response.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1003,7 +1003,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="digitalTwinId">The Id of the target digital twin.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json relationships directed towards the specified digital twin and the http response.</returns>
+        /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json relationships directed towards the specified digital twin and the HTTP response.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1071,7 +1071,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to retrieve.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The deserialized application/json relationship corresponding to the provided relationshipId and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The deserialized application/json relationship corresponding to the provided relationshipId and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <typeparam name="T">The type to deserialize the relationship to.</typeparam>
         /// <remarks>
         /// <para>
@@ -1129,7 +1129,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="digitalTwinId">The Id of the source digital twin.</param>
         /// <param name="relationshipId">The Id of the relationship to retrieve.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The deserialized application/json relationship corresponding to the provided relationshipId and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The deserialized application/json relationship corresponding to the provided relationshipId and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <typeparam name="T">The type to deserialize the relationship to.</typeparam>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
@@ -1177,7 +1177,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipId">The Id of the relationship to delete.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1215,7 +1215,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="relationshipId">The Id of the relationship to delete.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1362,7 +1362,7 @@ namespace Azure.DigitalTwins.Core
         /// match on the service.
         /// </param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response{T}"/>.</returns>
         /// <typeparam name="T">The type to deserialize the relationship to.</typeparam>
         /// <remarks>
         /// <para>
@@ -1424,7 +1424,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>. This response object includes an HTTP header that gives you the updated ETag for this resource.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1476,7 +1476,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="jsonPatchDocument">The application/json-patch+json operations to be performed on the specified digital twin's relationship.</param>
         /// <param name="ifMatch">Optional. Only perform the operation if the entity's ETag matches this optional ETag or * (<see cref="ETag.All"/>) is provided.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>. This response object includes an HTTP header that gives you the updated ETag for this resource.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1521,7 +1521,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json models and the http response.</returns>
+        /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json models and the HTTP response.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1613,7 +1613,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="options">The optional parameters for this request. If null, the default option values will be used.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json models and the http response.</returns>
+        /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json models and the HTTP response.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1678,7 +1678,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="modelId">The Id of the model.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The application/json model and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The application/json model and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1717,7 +1717,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="modelId">The Id of the model.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The application/json model and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The application/json model and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -1753,7 +1753,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="modelId">The Id of the model to decommission.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// <para>
         /// When a model is decommissioned, new digital twins will no longer be able to be defined by this model.
@@ -1807,7 +1807,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="modelId">The Id of the model to decommission.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// <para>
         /// When a model is decommissioned, new digital twins will no longer be able to be defined by this model.
@@ -1849,7 +1849,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="dtdlModels">The set of models conforming to Digital Twins Definition Language (DTDL) v2 to create. Each string corresponds to exactly one model.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The created models and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The created models and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <exception cref="RequestFailedException">
         /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
         /// </exception>
@@ -1900,7 +1900,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="dtdlModels">The set of models conforming to Digital Twins Definition Language (DTDL) v2 to create. Each string corresponds to exactly one model.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The created models and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The created models and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
         /// <para>
         /// Bulk model creation is useful when several models have references to each other.
@@ -1946,7 +1946,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="modelId"> The id for the model. The id is globally unique and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// <para>
         /// A model can only be deleted if no other models reference it.
@@ -2001,7 +2001,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="modelId"> The id for the model. The id is globally unique and case sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// <para>
         /// A model can only be deleted if no other models reference it.
@@ -2269,7 +2269,7 @@ namespace Azure.DigitalTwins.Core
         /// Lists the event routes in a digital twins instance by iterating through a collection asynchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json event routes and the http response.</returns>
+        /// <returns>The pageable list <see cref="AsyncPageable{T}"/> of application/json event routes and the HTTP response.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -2353,7 +2353,7 @@ namespace Azure.DigitalTwins.Core
         /// Lists the event routes in a digital twins instance by iterating through a collection synchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json event routes and the http response.</returns>
+        /// <returns>The pageable list <see cref="Pageable{T}"/> of application/json event routes and the HTTP response.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -2429,7 +2429,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The application/json event routes and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The application/json event routes and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -2461,7 +2461,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The application/json event routes and the http response <see cref="Response{T}"/>.</returns>
+        /// <returns>The application/json event routes and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -2498,7 +2498,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRouteId">The Id of the event route to create.</param>
         /// <param name="eventRoute">The event route data containing the endpoint and optional filter.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -2541,7 +2541,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRouteId">The Id of the event route to create.</param>
         /// <param name="eventRoute">The event route data containing the endpoint and optional filter.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -2576,7 +2576,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -2614,7 +2614,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         /// <param name="eventRouteId">The Id of the event route to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -2654,7 +2654,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
         /// <param name="timestamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -2718,7 +2718,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
         /// <param name="timestamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -2777,7 +2777,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
         /// <param name="timestamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
@@ -2852,7 +2852,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="payload">The application/json telemetry payload to be sent.</param>
         /// <param name="timestamp">An RFC 3339 timestamp that identifies the time the telemetry was measured. It defaults to the current date/time UTC.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The http response <see cref="Response"/>.</returns>
+        /// <returns>The HTTP response <see cref="Response"/>.</returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>

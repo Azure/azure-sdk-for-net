@@ -2763,6 +2763,60 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(expected, forms.Count);
         }
 
+        [RecordedTest]
+        public async Task StartRecognizeCustomFormsWithTableVariableRows()
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeCustomFormsOperation operation;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.TableVariableRows);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormTableVariableRows);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
+            }
+
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
+
+            RecognizedForm form = forms.Single();
+
+            ValidateModelWithLabelsForm(
+                form,
+                trainedModel.ModelId,
+                includeFieldElements: false,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1,
+                isComposedModel: false);
+        }
+
+        [RecordedTest]
+        public async Task StartRecognizeCustomFormsWithTableFixedRows()
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeCustomFormsOperation operation;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.TableFixedRows);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormTableFixedRows);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
+            }
+
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
+
+            RecognizedForm form = forms.Single();
+
+            ValidateModelWithLabelsForm(
+                form,
+                trainedModel.ModelId,
+                includeFieldElements: false,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1,
+                isComposedModel: false);
+        }
+
         #endregion
 
         private void ValidateFormPage(FormPage formPage, bool includeFieldElements, int expectedPageNumber)

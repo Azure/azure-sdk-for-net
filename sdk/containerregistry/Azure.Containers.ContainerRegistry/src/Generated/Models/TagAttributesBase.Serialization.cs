@@ -15,11 +15,11 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static TagAttributesBase DeserializeTagAttributesBase(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> digest = default;
+            string name = default;
+            string digest = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdateTime = default;
-            Optional<ContentProperties> changeableAttributes = default;
+            ContentProperties changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -44,16 +44,11 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("changeableAttributes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     changeableAttributes = ContentProperties.DeserializeContentProperties(property.Value);
                     continue;
                 }
             }
-            return new TagAttributesBase(name.Value, digest.Value, createdTime, lastUpdateTime, changeableAttributes.Value);
+            return new TagAttributesBase(name, digest, createdTime, lastUpdateTime, changeableAttributes);
         }
     }
 }

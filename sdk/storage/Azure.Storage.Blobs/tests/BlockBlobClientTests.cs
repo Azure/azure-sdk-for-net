@@ -1070,7 +1070,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task CommitBlockListAsync_Headers()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
@@ -1856,7 +1856,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task UploadAsync_Headers()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
@@ -2833,7 +2833,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task SyncUploadFromUriAsync()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -2890,7 +2890,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task SyncUploadFromUriAsync_Error()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -2906,7 +2906,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task SyncUploadFromUriAsync_OverwiteSourceBlobProperties()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
             BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));

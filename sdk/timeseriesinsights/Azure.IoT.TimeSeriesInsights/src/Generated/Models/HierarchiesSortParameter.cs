@@ -10,7 +10,7 @@ using Azure.IoT.TimeSeriesInsights.Models;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Definition of sorting of hierarchy nodes. </summary>
-    public partial class HierarchiesSortParameter
+    internal partial class HierarchiesSortParameter
     {
         /// <summary> Initializes a new instance of HierarchiesSortParameter. </summary>
         public HierarchiesSortParameter()

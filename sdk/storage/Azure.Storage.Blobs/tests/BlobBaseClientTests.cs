@@ -4472,7 +4472,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task SetHttpHeadersAsync()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
@@ -4501,7 +4501,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task SetHttpHeadersAsync_MultipleHeaders()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
@@ -4982,12 +4982,14 @@ namespace Azure.Storage.Blobs.Test
 
             var leaseId = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
+            var leaseClient = InstrumentClient(blob.GetBlobLeaseClient(leaseId));
 
             // Act
-            Response<BlobLease> response = await InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(duration);
+            Response<BlobLease> response = await leaseClient.AcquireAsync(duration);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
         }
 
         [RecordedTest]
@@ -5147,6 +5149,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.AreEqual(response.Value.LeaseId, lease.LeaseId);
         }
 
         [RecordedTest]
@@ -5591,6 +5594,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.AreEqual(newLeaseId, response.Value.LeaseId);
+            Assert.AreEqual(response.Value.LeaseId, lease.LeaseId);
         }
 
         [RecordedTest]
@@ -5909,7 +5914,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetTierAsync_Version()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingContainer test = await GetTestContainerAsync();
             var data = GetRandomBuffer(Constants.KB);
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
@@ -6421,7 +6426,7 @@ namespace Azure.Storage.Blobs.Test
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -6468,7 +6473,7 @@ namespace Azure.Storage.Blobs.Test
         public void CanGenerateSas_GetParentBlobContainerClient()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -6520,7 +6525,7 @@ namespace Azure.Storage.Blobs.Test
         public void CanGenerateSas_WithSnapshot_True()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -6545,7 +6550,7 @@ namespace Azure.Storage.Blobs.Test
         public void CanGenerateSas_WithSnapshot_False()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
 
             // Create blob
@@ -6566,7 +6571,7 @@ namespace Azure.Storage.Blobs.Test
         public void CanGenerateSas_WithVersion_True()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -6591,7 +6596,7 @@ namespace Azure.Storage.Blobs.Test
         public void CanGenerateSas_WithVersion_False()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
 
             // Create blob
@@ -6629,7 +6634,7 @@ namespace Azure.Storage.Blobs.Test
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.blob.core.windows.net");
@@ -6666,7 +6671,7 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public void GenerateSas_Builder()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string containerName = GetNewContainerName();
             string blobName = GetNewBlobName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.blob.core.windows.net");
@@ -6713,7 +6718,7 @@ namespace Azure.Storage.Blobs.Test
         public void GenerateSas_BuilderNullContainerName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string blobName = GetNewBlobName();
             string containerName = GetNewContainerName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.blob.core.windows.net");
@@ -6758,7 +6763,7 @@ namespace Azure.Storage.Blobs.Test
         public void GenerateSas_BuilderWrongContainerName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string blobName = GetNewBlobName();
             string containerName = GetNewContainerName();
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(new Uri($"https://{constants.Sas.Account}.blob.core.windows.net"))
@@ -6790,7 +6795,7 @@ namespace Azure.Storage.Blobs.Test
         public void GenerateSas_BuilderNullBlobName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string blobName = GetNewBlobName();
             string containerName = GetNewContainerName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.blob.core.windows.net");
@@ -6838,7 +6843,7 @@ namespace Azure.Storage.Blobs.Test
         public void GenerateSas_BuilderWrongBlobName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string containerName = GetNewContainerName();
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(new Uri($"https://{constants.Sas.Account}.blob.core.windows.net"))
             {
@@ -6868,7 +6873,7 @@ namespace Azure.Storage.Blobs.Test
         public void GenerateSas_BuilderNullSnapshot()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string blobName = GetNewBlobName();
             string containerName = GetNewContainerName();
             string snapshot = "2020-07-03T12:45:46.1234567Z";
@@ -6921,7 +6926,7 @@ namespace Azure.Storage.Blobs.Test
         public void GenerateSas_BuilderWrongSnapshot()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string snapshot = "2020-07-03T12:45:46.1234567Z";
             string differentSnapshot = "2019-07-03T12:45:46.1234567Z";
             string containerName = GetNewContainerName();
@@ -6957,7 +6962,7 @@ namespace Azure.Storage.Blobs.Test
         public void GenerateSas_BuilderNullVersion()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string blobName = GetNewBlobName();
             string containerName = GetNewContainerName();
             string versionId = "2020-07-03T12:45:46.1234567Z";
@@ -7010,7 +7015,7 @@ namespace Azure.Storage.Blobs.Test
         public void GenerateSas_BuilderWrongVersion()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string blobVersionId = "2020-07-03T12:45:46.1234567Z";
             string diffBlobVersionId = "2019-07-03T12:45:46.1234567Z";
             string containerName = GetNewContainerName();
