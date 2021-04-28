@@ -10,17 +10,17 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ServicePrincipalCredential. </summary>
-    internal partial class ServicePrincipalCredential : DataSourceCredential
+    internal partial class ServicePrincipalCredential : DataSourceCredentialIdentity
     {
         /// <summary> Initializes a new instance of ServicePrincipalCredential. </summary>
-        /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
+        /// <param name="name"> Name of data source credential. </param>
         /// <param name="parameters"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceCredentialName"/> or <paramref name="parameters"/> is null. </exception>
-        public ServicePrincipalCredential(string dataSourceCredentialName, ServicePrincipalParam parameters) : base(dataSourceCredentialName)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
+        public ServicePrincipalCredential(string name, ServicePrincipalParam parameters) : base(name)
         {
-            if (dataSourceCredentialName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(dataSourceCredentialName));
+                throw new ArgumentNullException(nameof(name));
             }
             if (parameters == null)
             {
@@ -33,11 +33,11 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> Initializes a new instance of ServicePrincipalCredential. </summary>
         /// <param name="dataSourceCredentialType"> Type of data source credential. </param>
-        /// <param name="dataSourceCredentialId"> Unique id of data source credential. </param>
-        /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
-        /// <param name="dataSourceCredentialDescription"> Description of data source credential. </param>
+        /// <param name="id"> Unique id of data source credential. </param>
+        /// <param name="name"> Name of data source credential. </param>
+        /// <param name="description"> Description of data source credential. </param>
         /// <param name="parameters"> . </param>
-        internal ServicePrincipalCredential(DataSourceCredentialType dataSourceCredentialType, Guid? dataSourceCredentialId, string dataSourceCredentialName, string dataSourceCredentialDescription, ServicePrincipalParam parameters) : base(dataSourceCredentialType, dataSourceCredentialId, dataSourceCredentialName, dataSourceCredentialDescription)
+        internal ServicePrincipalCredential(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters) : base(dataSourceCredentialType, id, name, description)
         {
             Parameters = parameters;
             DataSourceCredentialType = dataSourceCredentialType;
