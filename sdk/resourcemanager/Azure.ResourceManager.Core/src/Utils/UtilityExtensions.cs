@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Core
         public static Response<TOperations> WaitForCompletion<TOperations>(this Operation<TOperations> operation, CancellationToken cancellationToken = default)
         {
             //TODO: Remove after ADO 5665 is closed
-            var pollingInterval = ArmOperationHelpers<TOperations>.DefaultPollingInterval;
+            var pollingInterval = OperationInternals<TOperations>.DefaultPollingInterval;
             while (true)
             {
                 operation.UpdateStatus(cancellationToken);

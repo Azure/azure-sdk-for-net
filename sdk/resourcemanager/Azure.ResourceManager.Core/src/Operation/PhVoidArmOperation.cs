@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public class PhVoidArmOperation : ArmOperation
     {
-        private readonly Operation<Response> _wrappedOperation;
-        private readonly ArmOperation _wrappedResponseOperation;
+        private readonly Operation _wrappedOperation;
+        private readonly OperationOrResponseInternals<Response> _wrappedResponseOperation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhVoidArmOperation"/> class for mocking.
@@ -27,8 +27,11 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="PhVoidArmOperation"/> class.
         /// </summary>
         /// <param name="wrapped"> The results to wrap. </param>
-        public PhVoidArmOperation(Operation<Response> wrapped)
+        public PhVoidArmOperation(Operation wrapped)
         {
+            if (wrapped is null)
+                throw new ArgumentNullException(nameof(wrapped));
+
             _wrappedOperation = wrapped;
         }
 
@@ -38,7 +41,10 @@ namespace Azure.ResourceManager.Core
         /// <param name="wrapped"> The results to wrap. </param>
         public PhVoidArmOperation(Response wrapped)
         {
-            _wrappedResponseOperation = new PhNoValueArmOperation(wrapped);
+            if (wrapped is null)
+                throw new ArgumentNullException(nameof(wrapped));
+
+            _wrappedResponseOperation = new OperationOrResponseInternals<Response>(Response.FromValue(wrapped, wrapped));
         }
 
         private bool _doesWrapOperation => _wrappedResponseOperation is null;
@@ -50,73 +56,35 @@ namespace Azure.ResourceManager.Core
         public override bool HasCompleted => _doesWrapOperation ? _wrappedOperation.HasCompleted : _wrappedResponseOperation.HasCompleted;
 
         /// <inheritdoc/>
-        public override Response GetRawResponse()
-        {
-            return _doesWrapOperation ? _wrappedOperation.GetRawResponse() : _wrappedResponseOperation.GetRawResponse();
-        }
+        public override Response GetRawResponse() => _doesWrapOperation ? _wrappedOperation.GetRawResponse() : _wrappedResponseOperation.GetRawResponse();
 
         /// <inheritdoc/>
-        public override Response UpdateStatus(CancellationToken cancellationToken = default)
-        {
-            return _doesWrapOperation ? _wrappedOperation.UpdateStatus(cancellationToken) : _wrappedResponseOperation.UpdateStatus(cancellationToken);
-        }
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) => _doesWrapOperation ? _wrappedOperation.UpdateStatus(cancellationToken) : _wrappedResponseOperation.UpdateStatus(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
-        {
-            return _doesWrapOperation
-                ? _wrappedOperation.UpdateStatusAsync(cancellationToken)
-                : _wrappedResponseOperation.UpdateStatusAsync(cancellationToken);
-        }
+        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _doesWrapOperation ? _wrappedOperation.UpdateStatusAsync(cancellationToken) : _wrappedResponseOperation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override async ValueTask<Response<Response>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+        public override async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default)
         {
-            var task = WaitForCompletionAsync(ArmOperationHelpers<object>.DefaultPollingInterval, cancellationToken);
+            var task = WaitForCompletionResponseAsync(OperationInternals<object>.DefaultPollingInterval, cancellationToken);
             return await task.ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
-        public override async ValueTask<Response<Response>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        public override async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
-            var task = _doesWrapOperation
-                ? _wrappedOperation.WaitForCompletionAsync(pollingInterval, cancellationToken)
-                : _wrappedResponseOperation.WaitForCompletionAsync(pollingInterval, cancellationToken);
-            var value = await task.ConfigureAwait(false);
-            return value;
-        }
-
-        /// <inheritdoc/>
-        public override Response WaitForCompletion(CancellationToken cancellationToken = default)
-        {
-            return WaitForCompletion(ArmOperationHelpers<object>.DefaultPollingInterval.Seconds, cancellationToken);
-        }
-
-        /// <inheritdoc/>
-        public override Response WaitForCompletion(int pollingInterval, CancellationToken cancellationToken = default)
-        {
-            while (true)
+            if (_doesWrapOperation)
             {
-                UpdateStatus(cancellationToken);
-                if (HasCompleted)
-                {
-                    return Value;
-                }
-
-                Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);
+                return await _wrappedOperation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
             }
-        }
-
-        /// <inheritdoc/>
-        public override Response CreateResult(Response response, CancellationToken cancellationToken)
-        {
-            return response;
-        }
-
-        /// <inheritdoc/>
-        public override ValueTask<Response> CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            return new ValueTask<Response>(response);
+            else
+            {
+                var taskResponseResponse = await _wrappedResponseOperation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+                var taskResponse = Task.FromResult(taskResponseResponse.Value);
+                var valueTask = new ValueTask<Response>(taskResponse);
+                return await valueTask.ConfigureAwait(false);
+            }
         }
     }
 }

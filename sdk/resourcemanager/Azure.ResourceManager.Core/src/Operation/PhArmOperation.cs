@@ -37,6 +37,12 @@ namespace Azure.ResourceManager.Core
         /// <param name="converter"> The function used to convert from existing type to new type. </param>
         public PhArmOperation(Operation<TModel> wrapped, Func<TModel, TOperations> converter)
         {
+            if (wrapped is null)
+                throw new ArgumentNullException(nameof(wrapped));
+
+            if (converter is null)
+                throw new ArgumentNullException(nameof(converter));
+
             _wrappedOperation = wrapped;
             _converter = converter;
         }
@@ -48,6 +54,12 @@ namespace Azure.ResourceManager.Core
         /// <param name="converter"> The function used to convert from existing type to new type. </param>
         public PhArmOperation(Response<TModel> wrapped, Func<TModel, TOperations> converter)
         {
+            if (wrapped is null)
+                throw new ArgumentNullException(nameof(wrapped));
+
+            if (converter is null)
+                throw new ArgumentNullException(nameof(converter));
+
             _wrappedResponseOperation = new PhValueArmOperation<TModel>(wrapped);
             _converter = converter;
         }
@@ -89,7 +101,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override async ValueTask<Response<TOperations>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
-            var task = WaitForCompletionAsync(ArmOperationHelpers<TOperations>.DefaultPollingInterval, cancellationToken);
+            var task = WaitForCompletionAsync(OperationInternals<TOperations>.DefaultPollingInterval, cancellationToken);
             return await task.ConfigureAwait(false);
         }
 
@@ -106,7 +118,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override Response<TOperations> WaitForCompletion(CancellationToken cancellationToken = default)
         {
-            return WaitForCompletion(ArmOperationHelpers<TOperations>.DefaultPollingInterval.Seconds, cancellationToken);
+            return WaitForCompletion(OperationInternals<TOperations>.DefaultPollingInterval.Seconds, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -122,22 +134,6 @@ namespace Azure.ResourceManager.Core
 
                 Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);
             }
-        }
-
-        /// <inheritdoc/>
-        public override TOperations CreateResult(Response response, CancellationToken cancellationToken)
-        {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var method = typeof(TModel).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Deserialize", StringComparison.InvariantCulture) && !m.IsPublic && m.IsStatic);
-            return _converter(method.Invoke(null, new object[] { document.RootElement }) as TModel);
-        }
-
-        /// <inheritdoc/>
-        public async override ValueTask<TOperations> CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var method = typeof(TModel).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Deserialize", StringComparison.InvariantCulture) && !m.IsPublic && m.IsStatic);
-            return _converter(method.Invoke(null, new object[] { document.RootElement }) as TModel);
         }
     }
 }

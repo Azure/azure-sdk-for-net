@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core
     internal class UpdateResourceGroupOperation : ArmOperation<ResourceGroup>, IOperationSource<ResourceGroup>
     {
         private readonly ResourceOperationsBase _operations;
-        private readonly TempArmOperationHelper<ResourceGroup> _operationHelper;
+        private readonly OperationOrResponseInternals<ResourceGroup> _operationHelper;
 
         protected UpdateResourceGroupOperation()
         {
@@ -20,30 +20,7 @@ namespace Azure.ResourceManager.Core
 
         internal UpdateResourceGroupOperation(ResourceOperationsBase operations, ArmResponse<ResourceGroup> response)
         {
-            _operationHelper = new TempArmOperationHelper<ResourceGroup>(
-                response,
-                operations,
-                OperationFinalStateVia.Location,
-                "UpdateResourceGroupOperation");
-            _operations = operations;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateResourceGroupOperation"/> class.
-        /// </summary>
-        /// <param name="operations"> The arm operations object to copy from. </param>
-        /// <param name="request"> The original request. </param>
-        /// <param name="response"> The original response. </param>
-        internal UpdateResourceGroupOperation(ResourceOperationsBase operations, Request request, Response response)
-        {
-            _operationHelper = new TempArmOperationHelper<ResourceGroup>(
-                this,
-                new ClientDiagnostics(operations.ClientOptions),
-                ManagementPipelineBuilder.Build(operations.Credential, operations.BaseUri, operations.ClientOptions),
-                request,
-                response,
-                OperationFinalStateVia.Location,
-                "UpdateResourceGroupOperation");
+            _operationHelper = new OperationOrResponseInternals<ResourceGroup>(response);
             _operations = operations;
         }
 

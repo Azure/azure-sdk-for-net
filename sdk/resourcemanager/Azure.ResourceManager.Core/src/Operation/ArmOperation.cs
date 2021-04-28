@@ -1,102 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
     /// Abstract class for long-running or synchronous applications.
     /// </summary>
-    public abstract class ArmOperation : Operation<Response>, IOperationSource<Response>
+    public abstract class ArmOperation : Operation
     {
-        private readonly ArmOperationHelpers<Response> _operation;
-        private readonly Response _voidResponse;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmOperation"/> class for mocking.
         /// </summary>
         protected ArmOperation()
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmOperation"/> class.
-        /// </summary>
-        /// <param name="operations"> The operations to copy connection info from. </param>
-        /// <param name="request"> The original request. </param>
-        /// <param name="response"> The original response. </param>
-        /// <param name="finalStateVia"> Where the final state comes from. </param>
-        /// <param name="scopeName"> The scope name to use. </param>
-        internal ArmOperation(ResourceOperationsBase operations, Request request, Response response, OperationFinalStateVia finalStateVia, string scopeName)
-        {
-            var pipeline = ManagementPipelineBuilder.Build(operations.Credential, operations.BaseUri, operations.ClientOptions);
-            _operation = new ArmOperationHelpers<Response>(this, operations.Diagnostics, pipeline, request, response, finalStateVia, scopeName);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmOperation"/> class.
-        /// </summary>
-        /// <param name="response"></param>
-        protected ArmOperation(Response response)
-        {
-            if (response is null)
-                throw new ArgumentNullException(nameof(response));
-
-            _voidResponse = response;
-        }
-
-        /// <inheritdoc/>
-        private bool _doesWrapOperation => _voidResponse is null;
-
-        /// <inheritdoc/>
-        public override string Id => _operation?.Id;
-
-        /// <inheritdoc/>
-        public override Response Value => throw new InvalidOperationException();
-
-        /// <inheritdoc/>
-        public override bool HasCompleted => _doesWrapOperation ? _operation.HasCompleted : true;
-
-        /// <inheritdoc/>
-        public override bool HasValue => false;
-
-        /// <inheritdoc/>
-        public override Response GetRawResponse()
-        {
-            return _doesWrapOperation ? _operation.GetRawResponse() : _voidResponse;
-        }
-
-        /// <inheritdoc/>
-        public override Response UpdateStatus(CancellationToken cancellationToken = default)
-        {
-            return _doesWrapOperation ? _operation.UpdateStatus(cancellationToken) : _voidResponse;
-        }
-
-        /// <inheritdoc/>
-        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
-        {
-            return _doesWrapOperation
-                ? _operation.UpdateStatusAsync(cancellationToken)
-                : new ValueTask<Response>(_voidResponse);
-        }
-
-        /// <inheritdoc/>
-        public override async ValueTask<Response<Response>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
-        {
-            return await WaitForCompletionAsync(ArmOperationHelpers<Response>.DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc/>
-        public override async ValueTask<Response<Response>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
-        {
-            return _doesWrapOperation
-                ? await _operation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false)
-                : Response.FromValue(_voidResponse, _voidResponse);
         }
 
         /// <summary>
@@ -109,7 +29,7 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         public virtual Response WaitForCompletion(CancellationToken cancellationToken = default)
         {
-            return WaitForCompletion(ArmOperationHelpers<Response>.DefaultPollingInterval.Seconds, cancellationToken);
+            return WaitForCompletion(OperationInternals<Response>.DefaultPollingInterval.Seconds, cancellationToken);
         }
 
         /// <summary>
@@ -134,14 +54,6 @@ namespace Azure.ResourceManager.Core
                 Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);
             }
         }
-
-#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
-        /// <inheritdoc/>
-        public abstract Response CreateResult(Response response, CancellationToken cancellationToken);
-
-        /// <inheritdoc/>
-        public abstract ValueTask<Response> CreateResultAsync(Response response, CancellationToken cancellationToken);
-#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
     }
 
     /// <summary>
@@ -170,7 +82,7 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         public virtual Response<TOperations> WaitForCompletion(CancellationToken cancellationToken = default)
         {
-            return WaitForCompletion(ArmOperationHelpers<TOperations>.DefaultPollingInterval.Seconds, cancellationToken);
+            return WaitForCompletion(OperationInternals<TOperations>.DefaultPollingInterval.Seconds, cancellationToken);
         }
 
         /// <summary>
