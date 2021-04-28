@@ -582,8 +582,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="partition">The Event Hub partition whose processing should be started.</param>
-        /// <param name="startingPosition">The position within the event stream that processing should begin.</param>
         /// <param name="cancellationSource">A <see cref="CancellationTokenSource"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="startingPositionOverride">Allows for skipping partition initialization and directly overriding the position within the event stream where processing will begin.</param>
         ///
         /// <returns>The <see cref="PartitionProcessor" /> encapsulating the processing task, its cancellation token, and associated state.</returns>
         ///
@@ -592,8 +592,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </remarks>
         ///
         internal virtual PartitionProcessor CreatePartitionProcessor(TPartition partition,
-                                                                     EventPosition startingPosition,
-                                                                     CancellationTokenSource cancellationSource)
+                                                                     CancellationTokenSource cancellationSource,
+                                                                     EventPosition? startingPositionOverride = null)
         {
             cancellationSource.Token.ThrowIfCancellationRequested<TaskCanceledException>();
             var consumer = default(TransportConsumer);
@@ -629,6 +629,17 @@ namespace Azure.Messaging.EventHubs.Primitives
                 var lastEvent = default(EventData);
                 var failedAttemptCount = 0;
                 var failedConsumerCount = 0;
+
+                // Determine the position to start processing from; this will occur during
+                // partition initialization normally, but may be superseded if an override
+                // was passed.  In the event that initialization is run and encounters an
+                // exception, it takes responsibility for firing the error handler.
+
+                var startingPosition = startingPositionOverride switch
+                {
+                    _ when startingPositionOverride.HasValue => startingPositionOverride.Value,
+                    _ => await InitializePartitionForProcessingAsync(partition, cancellationSource.Token).ConfigureAwait(false)
+                };
 
                 // Create the connection to be used for spawning consumers; if the creation
                 // fails, then consider the processing task to be failed.  The main processing
@@ -1337,7 +1348,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 if ((claimedOwnership != default) && (!ActivePartitionProcessors.ContainsKey(claimedOwnership.PartitionId)))
                 {
-                    await TryStartProcessingPartitionAsync(claimedOwnership.PartitionId, cancellationToken).ConfigureAwait(false);
+                    TryStartProcessingPartition(claimedOwnership.PartitionId, cancellationToken);
                 }
             }
 
@@ -1363,7 +1374,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     if (!ActivePartitionProcessors.TryGetValue(partitionId, out var partitionProcessor) || partitionProcessor.ProcessingTask.IsCompleted)
                     {
                         await TryStopProcessingPartitionAsync(partitionId, ProcessingStoppedReason.OwnershipLost, cancellationToken).ConfigureAwait(false);
-                        await TryStartProcessingPartitionAsync(partitionId, cancellationToken).ConfigureAwait(false);
+                        TryStartProcessingPartition(partitionId, cancellationToken);
                     }
                 }))
                 .ConfigureAwait(false);
@@ -1382,6 +1393,58 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
+        ///   Performs the actions needed to initialize a partition for processing; this
+        ///   includes invoking the initialization handler and querying checkpoints.
+        /// </summary>
+        ///
+        /// <param name="partition">The partition to initialize.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The <see cref="EventPosition" /> to start processing from.</returns>
+        ///
+        /// <remarks>
+        ///   This method will invoke the error handler should an exception be encountered; the
+        ///   exception will then be bubbled to callers.
+        /// </remarks>
+        ///
+        private async Task<EventPosition> InitializePartitionForProcessingAsync(TPartition partition,
+                                                                                CancellationToken cancellationToken)
+        {
+            var operationDescription = Resources.OperationClaimOwnership;
+
+            try
+            {
+                // Initialize the partition context; the handler is responsible for initialing any custom fields of the partition type.
+
+                await OnInitializingPartitionAsync(partition, cancellationToken).ConfigureAwait(false);
+
+                // Query the available checkpoints for the partition.
+
+                operationDescription = Resources.OperationListCheckpoints;
+                var checkpoint = await GetCheckpointAsync(partition.PartitionId, cancellationToken).ConfigureAwait(false);
+
+                // Determine the starting position for processing the partition.
+
+                operationDescription = Resources.OperationClaimOwnership;
+
+                if (checkpoint != null)
+                {
+                    return checkpoint.StartingPosition;
+                }
+
+                return Options.DefaultStartingPosition;
+            }
+            catch (Exception ex)
+            {
+                // The error handler is invoked as a fire-and-forget task; the processor does not assume responsibility
+                // for observing or surfacing exceptions that may occur in the handler.
+
+                _ = InvokeOnProcessingErrorAsync(ex, partition, operationDescription, CancellationToken.None);
+                throw;
+            }
+        }
+
+        /// <summary>
         ///   Attempts to begin processing the requested partition in the background and update tracking state
         ///   so that processing can be stopped.
         /// </summary>
@@ -1397,44 +1460,22 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   as part of the load balancing cycle, which is failure-tolerant.
         /// </remarks>
         ///
-        private async Task<bool> TryStartProcessingPartitionAsync(string partitionId,
-                                                                  CancellationToken cancellationToken)
+        private bool TryStartProcessingPartition(string partitionId,
+                                                 CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.EventProcessorPartitionProcessingStart(partitionId, Identifier, EventHubName, ConsumerGroup);
 
             var partition = new TPartition { PartitionId = partitionId };
-            var operationDescription = Resources.OperationClaimOwnership;
-            var startingPosition = Options.DefaultStartingPosition;
             var cancellationSource = default(CancellationTokenSource);
 
             try
             {
-                // Initialize the partition context; the handler is responsible for initialing any custom fields of the partition type.
-
-                await OnInitializingPartitionAsync(partition, cancellationToken).ConfigureAwait(false);
-
-                // Query the available checkpoints for the partition.
-
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                operationDescription = Resources.OperationListCheckpoints;
-
-                // Determine the starting position for processing the partition.
-
-                var checkpoint = await GetCheckpointAsync(partitionId, cancellationToken).ConfigureAwait(false);
-                operationDescription = Resources.OperationClaimOwnership;
-                if (checkpoint != null)
-                {
-                    startingPosition = checkpoint.StartingPosition;
-                }
-
                 // Create and register the partition processor.  Ownership of the cancellationSource is transferred
                 // to the processor upon creation, including the responsibility for disposal.
 
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
                 cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-                var processor = CreatePartitionProcessor(partition, startingPosition, cancellationSource);
+                var processor = CreatePartitionProcessor(partition, cancellationSource);
 
                 ActivePartitionProcessors.AddOrUpdate(partitionId, processor, (key, value) => processor);
                 cancellationSource = null;
@@ -1446,7 +1487,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // The error handler is invoked as a fire-and-forget task; the processor does not assume responsibility
                 // for observing or surfacing exceptions that may occur in the handler.
 
-                _ = InvokeOnProcessingErrorAsync(ex, partition, operationDescription, CancellationToken.None);
+                _ = InvokeOnProcessingErrorAsync(ex, partition, Resources.OperationClaimOwnership, CancellationToken.None);
                 Logger.EventProcessorPartitionProcessingStartError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
 
                 cancellationSource?.Cancel();
@@ -1455,7 +1496,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             finally
             {
-                Logger.EventProcessorPartitionProcessingStartComplete(partitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString());
+                Logger.EventProcessorPartitionProcessingStartComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
             }
         }
 
