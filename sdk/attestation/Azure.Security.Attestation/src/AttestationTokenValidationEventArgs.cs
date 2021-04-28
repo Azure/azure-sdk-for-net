@@ -27,17 +27,17 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Returns the token which has been validated.
         /// </summary>
-        public AttestationToken Token { get; private set; }
+        public AttestationToken Token { get; }
 
         /// <summary>
         /// Returns the signer of the token.
         /// </summary>
-        public AttestationSigner Signer { get; private set; }
+        public AttestationSigner Signer { get; }
 
         /// <summary>
         /// Set by the event callback to "true" to indicate that the callback has validated the token, false otherwise.
         /// </summary>
         /// <remarks>The default value of IsValid is 'true'.</remarks>
-        public bool IsValid{get; set;}
+        public bool IsValid{ get; set; }
     }
 }
