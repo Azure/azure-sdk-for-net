@@ -1,6 +1,6 @@
 # Azure Monitor Query client library for .NET
 
-The `Azure.Monitor.Query` package provides an ability to query [Azure Monitor Logs](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-platform-logs) and [Azure Monitor Metrics](https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/data-platform-metrics) data.
+The `Azure.Monitor.Query` package provides an ability to query [Azure Monitor Logs](https://docs.microsoft.com/azure/azure-monitor/logs/data-platform-logs) and [Azure Monitor Metrics](https://docs.microsoft.com/azure/azure-monitor/essentials/data-platform-metrics) data.
 
 Azure Monitor Logs is a feature of Azure Monitor that collects and organizes log and performance data from monitored resources. Data from different sources such as platform logs from Azure services, log and performance data from virtual machines agents, and usage and performance data from applications can be consolidated into a single workspace so they can be analyzed together using a sophisticated query language that's capable of quickly analyzing millions of records.
 
@@ -20,14 +20,15 @@ dotnet add package Azure.Monitor.Query --prerelease
 ### Prerequisites
 * An [Azure subscription][azure_sub].
 * To be able to query logs you would need an existing Log Analytics workspace. You can create it in one of the following approaches:
-    * [Azure Portal](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/quick-create-workspace)
-    * [Azure CLI](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/quick-create-workspace-cli)
-    * [PowerShell](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/powershell-workspace-configuration)
+    * [Azure Portal](https://docs.microsoft.com/azure/azure-monitor/logs/quick-create-workspace)
+    * [Azure CLI](https://docs.microsoft.com/azure/azure-monitor/logs/quick-create-workspace-cli)
+    * [PowerShell](https://docs.microsoft.com/azure/azure-monitor/logs/powershell-workspace-configuration)
 
 * To be able to query metrics all you need is an Azure resource of any kind (Storage Account, KeyVault, CosmosDB etc.)
 
 ### Authenticate the Client
 
+In order to interact with the Azure Monitor service, you will need to create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class and pass it to the constructor of your `LogsClient` and `MetricsClient` class.
 
 ## Key concepts
 
