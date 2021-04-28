@@ -149,7 +149,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Json Web Token Body Issuer. See https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.1 for details.
         /// </summary>
-        public string Issuer { get => Payload.Issuer; }
+        public string Issuer => Payload.Issuer;
 
         /// <summary>
         /// An array of <see cref="X509Certificate"/> which represent a certificate chain used to sign the token.  <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6">RFC 7515 section 4.1.6</seealso> for details.
