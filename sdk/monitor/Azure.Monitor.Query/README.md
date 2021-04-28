@@ -8,7 +8,7 @@ Azure Monitor Metrics is a feature of Azure Monitor that collects numeric data f
 
 [Source code][query_client_src] | [Package (NuGet)][query_client_nuget_package]
 
-## Getting startedA
+## Getting started
 
 ### Install the package
 Install the Azure Monitor Query client library for .NET with [NuGet][query_client_nuget_package]:
