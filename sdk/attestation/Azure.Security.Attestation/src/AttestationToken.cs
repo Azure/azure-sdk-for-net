@@ -174,7 +174,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// The "thumbprint" of the certificate used to sign the request generated using the SHA256 algorithm. <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.8">RFC 7515 section 4.1.8</seealso> for details.
         /// </summary>
-        public string X509CertificateSha256Thumbprint { get => Header.X509CertificateSha256Thumbprint; }
+        public string X509CertificateSha256Thumbprint => Header.X509CertificateSha256Thumbprint;
 
         /// <summary>
         /// JSON Web Token Header "Critical". <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.11">RFC 7515 section 4.1.11</seealso> for details.
