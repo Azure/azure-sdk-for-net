@@ -19,6 +19,7 @@ steps:
     if (('$(Build.Reason)' -in 'Schedule', 'IndividualCI') -and ('$(System.TeamProject)' -eq 'internal')) {
       $setDailyDevBuild = "true"
     }
-    echo "##vso[task.setvariable variable=SetDevVersion]$setDailyDevBuild"
+    echo "##vso[task.setvariable variable=SetDevVersion;isOutput=true]$setDailyDevBuild"
+  name: SetupVersioningProperties
   displayName: "Setup Versioning Properties"
   condition: eq(variables['SetDevVersion'], '')
