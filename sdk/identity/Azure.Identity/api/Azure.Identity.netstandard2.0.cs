@@ -223,6 +223,14 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class OnBehalfOfFlowCredential : Azure.Core.TokenCredential
+    {
+        protected OnBehalfOfFlowCredential() { }
+        public OnBehalfOfFlowCredential(string tenantId, string clientId, string clientSecret, Azure.Identity.TokenCredentialOptions options = null) { }
+        public override bool SupportsCaching { get { throw null; } }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public partial class SharedTokenCacheCredential : Azure.Core.TokenCredential
     {
         public SharedTokenCacheCredential() { }
@@ -265,6 +273,12 @@ namespace Azure.Identity
         protected UnsafeTokenCacheOptions() { }
         protected internal abstract System.Threading.Tasks.Task<System.ReadOnlyMemory<byte>> RefreshCacheAsync();
         protected internal abstract System.Threading.Tasks.Task TokenCacheUpdatedAsync(Azure.Identity.TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
+    }
+    public partial class UserAssertionScope : System.IDisposable
+    {
+        public UserAssertionScope(Azure.Core.AccessToken accessToken) { }
+        public UserAssertionScope(string accessToken) { }
+        public void Dispose() { }
     }
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential
     {

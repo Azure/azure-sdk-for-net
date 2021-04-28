@@ -26,7 +26,6 @@ namespace Azure.Identity.Tests
         private string expectedTenantId;
         private string expectedReplyUri;
         private string clientSecret = Guid.NewGuid().ToString();
-        private Func<string[], string, string, AuthenticationAccount, ValueTask<AuthenticationResult>> silentFactory;
 
         public AuthorizationCodeCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -52,19 +51,21 @@ namespace Azure.Identity.Tests
                 Guid.NewGuid(),
                 null,
                 "Bearer");
-            silentFactory = (_, _tenantId, _replyUri, _) =>
-            {
-                Assert.AreEqual(expectedTenantId, _tenantId);
-                Assert.AreEqual(expectedReplyUri, _replyUri);
-                return new ValueTask<AuthenticationResult>(result);
-            };
-            mockMsalClient = new MockMsalConfidentialClient(silentFactory);
-            mockMsalClient.AuthcodeFactory = (_, _tenantId, _replyUri, _) =>
-            {
-                Assert.AreEqual(expectedTenantId, _tenantId);
-                Assert.AreEqual(expectedReplyUri, _replyUri);
-                return result;
-            };
+            mockMsalClient = new MockMsalConfidentialClient()
+                .WithSilentFactory(
+                    (_, _tenantId, _replyUri, _) =>
+                    {
+                        Assert.AreEqual(expectedTenantId, _tenantId);
+                        Assert.AreEqual(expectedReplyUri, _replyUri);
+                        return new ValueTask<AuthenticationResult>(result);
+                    })
+                .WithAuthCodeFactory(
+                    (_, _tenantId, _replyUri, _) =>
+                    {
+                        Assert.AreEqual(expectedTenantId, _tenantId);
+                        Assert.AreEqual(expectedReplyUri, _replyUri);
+                        return result;
+                    });
         }
 
         [Test]
@@ -97,7 +98,8 @@ namespace Azure.Identity.Tests
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, options.AllowMultiTenantAuthentication);
 
-            AuthorizationCodeCredential cred = InstrumentClient(new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, mockMsalClient));
+            AuthorizationCodeCredential cred = InstrumentClient(
+                new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, mockMsalClient));
 
             AccessToken token = await cred.GetTokenAsync(context);
 

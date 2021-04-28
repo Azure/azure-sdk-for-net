@@ -56,25 +56,25 @@ namespace Azure.Identity.Tests
             var tenantId = Guid.NewGuid().ToString();
             var clientId = Guid.NewGuid().ToString();
 
-            TokenRequestContext tokenContext = new TokenRequestContext(MockScopes.Default);
+            TokenRequestContext tokenContext = new(MockScopes.Default);
 
-            ClientCertificateCredential missingFileCredential = new ClientCertificateCredential(
+            ClientCertificateCredential missingFileCredential = new(
                 tenantId,
                 clientId,
                 Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "notfound.pem"));
-            ClientCertificateCredential invalidPemCredential = new ClientCertificateCredential(
+            ClientCertificateCredential invalidPemCredential = new(
                 tenantId,
                 clientId,
                 Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-invalid-data.pem"));
-            ClientCertificateCredential unknownFormatCredential = new ClientCertificateCredential(
+            ClientCertificateCredential unknownFormatCredential = new(
                 tenantId,
                 clientId,
                 Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.unknown"));
-            ClientCertificateCredential encryptedCredential = new ClientCertificateCredential(
+            ClientCertificateCredential encryptedCredential = new(
                 tenantId,
                 clientId,
                 Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-password-protected.pfx"));
-            ClientCertificateCredential unsupportedCertCredential = new ClientCertificateCredential(
+            ClientCertificateCredential unsupportedCertCredential = new(
                 tenantId,
                 clientId,
                 Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "ec-cert.pem"));
@@ -198,12 +198,12 @@ namespace Azure.Identity.Tests
                 null,
                 "Bearer");
 
-            Func<string[], string, AuthenticationResult> clientFactory = (_, _tenantId) =>
-            {
-                Assert.AreEqual(expectedTenantId, _tenantId);
-                return result;
-            };
-            mockMsalClient = new MockMsalConfidentialClient(clientFactory);
+            mockMsalClient = new MockMsalConfidentialClient().WithClientFactory(
+                (_, _tenantId) =>
+                {
+                    Assert.AreEqual(expectedTenantId, _tenantId);
+                    return result;
+                });
         }
     }
 }

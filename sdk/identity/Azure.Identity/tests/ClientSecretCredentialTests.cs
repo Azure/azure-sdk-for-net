@@ -2,15 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -114,12 +110,12 @@ namespace Azure.Identity.Tests
                 null,
                 "Bearer");
 
-            Func<string[], string, AuthenticationResult> clientFactory = (_, _tenantId) =>
-            {
-                Assert.AreEqual(expectedTenantId, _tenantId);
-                return result;
-            };
-            mockMsalClient = new MockMsalConfidentialClient(clientFactory);
+            mockMsalClient = new MockMsalConfidentialClient().WithClientFactory(
+                (_, _tenantId) =>
+                {
+                    Assert.AreEqual(expectedTenantId, _tenantId);
+                    return result;
+                });
         }
     }
 }
