@@ -30,6 +30,11 @@ namespace Azure.Security.Attestation
         private AttestationToken(string token, ClientDiagnostics diagnostics)
         {
             _token = token;
+            ConstructFromToken(_token);
+            ClientDiagnostics = diagnostics;
+        }
+        private void ConstructFromToken(string token)
+        {
             string[] decomposedToken = token.Split('.');
             if (decomposedToken.Length != 3)
             {
@@ -38,7 +43,6 @@ namespace Azure.Security.Attestation
             TokenHeaderBytes = Base64Url.Decode(decomposedToken[0]);
             TokenBodyBytes = Base64Url.Decode(decomposedToken[1]);
             TokenSignatureBytes = Base64Url.Decode(decomposedToken[2]);
-            ClientDiagnostics = diagnostics;
         }
 
         /// <summary>
@@ -55,6 +59,7 @@ namespace Azure.Security.Attestation
         public AttestationToken(BinaryData body)
         {
             _token = CreateUnsecuredJwt(body);
+            ConstructFromToken(_token);
         }
 
         /// <summary>
@@ -65,6 +70,7 @@ namespace Azure.Security.Attestation
         public AttestationToken(BinaryData body, AttestationTokenSigningKey signingKey)
         {
             _token = signingKey != null ? GenerateSecuredJsonWebToken(body, signingKey) : CreateUnsecuredJwt(body);
+            ConstructFromToken(_token);
         }
 
         /// <summary>
@@ -95,17 +101,17 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Decoded header for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public ReadOnlyMemory<byte> TokenHeaderBytes { get; }
+        public ReadOnlyMemory<byte> TokenHeaderBytes { get; private set; }
 
         /// <summary>
         /// Decoded body for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public ReadOnlyMemory<byte> TokenBodyBytes { get; }
+        public ReadOnlyMemory<byte> TokenBodyBytes { get; private set; }
 
         /// <summary>
         /// Decoded signature for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public ReadOnlyMemory<byte> TokenSignatureBytes { get; }
+        public ReadOnlyMemory<byte> TokenSignatureBytes { get; private set; }
 
         // Standard JSON Web Signature/Json Web Token header values.
 

@@ -148,7 +148,7 @@ namespace Azure.Security.Attestation.Tests
                     });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
-                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData);
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData.ToArray());
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
@@ -190,7 +190,7 @@ namespace Azure.Security.Attestation.Tests
             tokenValidationOptions.TokenValidated += (AttestationTokenValidationEventArgs args) =>
             {
                 // Verify that the callback can access the enclave held data field.
-                CollectionAssert.AreEqual(binaryRuntimeData, args.Token.GetBody<AttestationResult>().EnclaveHeldData);
+                CollectionAssert.AreEqual(binaryRuntimeData, args.Token.GetBody<AttestationResult>().EnclaveHeldData.ToArray());
 
                 // The MAA service always sends a Key ID for the signer.
                 Assert.IsNotNull(args.Signer.CertificateKeyId);
@@ -213,7 +213,7 @@ namespace Azure.Security.Attestation.Tests
                     });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
-                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData);
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData.ToArray());
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
@@ -241,7 +241,7 @@ namespace Azure.Security.Attestation.Tests
                     });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
-               CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData);
+               CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData.ToArray());
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
@@ -263,7 +263,7 @@ namespace Azure.Security.Attestation.Tests
             tokenValidationOptions.TokenValidated += (args) =>
             {
                 // Verify that the callback can access the enclave held data field.
-                CollectionAssert.AreEqual(binaryRuntimeData, args.Token.GetBody<AttestationResult>().EnclaveHeldData);
+                CollectionAssert.AreEqual(binaryRuntimeData, args.Token.GetBody<AttestationResult>().EnclaveHeldData.ToArray());
 
                 // The MAA service always sends a Key ID for the signer.
                 args.IsValid =
@@ -288,7 +288,7 @@ namespace Azure.Security.Attestation.Tests
                         RuntimeData = new AttestationData(BinaryData.FromBytes(binaryRuntimeData), false),
                     });
                 // Confirm that the attestation token contains the enclave held data we specified.
-                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData);
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData.ToArray());
 
 #pragma warning disable CS0618 // Type or member is obsolete
                 Assert.IsNotNull(attestationResult.Value.DeprecatedEnclaveHeldData);

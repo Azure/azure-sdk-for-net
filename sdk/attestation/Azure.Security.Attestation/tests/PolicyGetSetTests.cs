@@ -118,7 +118,7 @@ namespace Azure.Security.Attestation.Tests
 
                 Assert.AreEqual(200, policySetResult.GetRawResponse().Status);
                 Assert.AreEqual(PolicyModification.Updated, policySetResult.Value.PolicyResolution);
-                CollectionAssert.AreEqual(disallowDebuggingHash, policySetResult.Value.PolicyTokenHash);
+                CollectionAssert.AreEqual(disallowDebuggingHash, policySetResult.Value.PolicyTokenHash.ToArray());
             }
 
             {
@@ -185,7 +185,7 @@ namespace Azure.Security.Attestation.Tests
 
                 Assert.AreEqual(200, policySetResult.GetRawResponse().Status);
                 Assert.AreEqual(PolicyModification.Updated, policySetResult.Value.PolicyResolution);
-                CollectionAssert.AreEqual(disallowDebuggingHash, policySetResult.Value.PolicyTokenHash);
+                CollectionAssert.AreEqual(disallowDebuggingHash, policySetResult.Value.PolicyTokenHash.ToArray());
                 Assert.AreEqual(x509Certificate, policySetResult.Value.PolicySigner.SigningCertificates[0]);
             }
 

@@ -37,7 +37,7 @@ namespace Azure.Security.Attestation
     public partial class AttestationClientOptions : Azure.Core.ClientOptions
     {
         public AttestationClientOptions(Azure.Security.Attestation.AttestationClientOptions.ServiceVersion version = Azure.Security.Attestation.AttestationClientOptions.ServiceVersion.V2020_10_01, Azure.Security.Attestation.AttestationTokenValidationOptions tokenOptions = null) { }
-        public Azure.Security.Attestation.AttestationTokenValidationOptions TokenOptions { get { throw null; } set { } }
+        public Azure.Security.Attestation.AttestationTokenValidationOptions TokenOptions { get { throw null; } }
         public enum ServiceVersion
         {
             V2020_10_01 = 1,
@@ -48,6 +48,13 @@ namespace Azure.Security.Attestation
         public AttestationData(System.BinaryData data, bool dataIsJson) { }
         public System.BinaryData BinaryData { get { throw null; } }
         public bool DataIsJson { get { throw null; } }
+    }
+    public static partial class AttestationModelFactory
+    {
+        public static Azure.Security.Attestation.AttestationResponse<T> CreateAttestationResponse<T>(Azure.Response response, Azure.Security.Attestation.AttestationToken token, T body = null) where T : class { throw null; }
+        public static Azure.Security.Attestation.AttestationResult CreateAttestationResult(string jti = null, string issuer = null, System.DateTimeOffset issuedAt = default(System.DateTimeOffset), System.DateTimeOffset expiration = default(System.DateTimeOffset), System.DateTimeOffset notBefore = default(System.DateTimeOffset), object cnf = null, string nonce = null, string version = null, object runtimeClaims = null, object inittimeClaims = null, object policyClaims = null, string verifierType = null, Azure.Security.Attestation.AttestationSigner policySigner = null, System.BinaryData policyHash = null, bool? isDebuggable = default(bool?), float? productId = default(float?), string mrEnclave = null, string mrSigner = null, float? svn = default(float?), System.BinaryData enclaveHeldData = null, object sgxCollateral = null, string deprecatedVersion = null, bool? deprecatedIsDebuggable = default(bool?), object deprecatedSgxCollateral = null, System.BinaryData deprecatedEnclaveHeldData = null, System.BinaryData deprecatedEnclaveHeldData2 = null, float? deprecatedProductId = default(float?), string deprecatedMrEnclave = null, string deprecatedMrSigner = null, float? deprecatedSvn = default(float?), string deprecatedTee = null, Azure.Security.Attestation.AttestationSigner deprecatedPolicySigner = null, System.BinaryData deprecatedPolicyHash = null, string deprecatedRpData = null) { throw null; }
+        public static Azure.Security.Attestation.PolicyCertificatesModificationResult CreatePolicyCertificatesModificationResult(Azure.Security.Attestation.PolicyCertificateResolution certificateResolution, string certificateThumbprint) { throw null; }
+        public static Azure.Security.Attestation.PolicyModificationResult CreatePolicyModificationResult(Azure.Security.Attestation.PolicyModification policyModification, string policyHash, Azure.Security.Attestation.AttestationSigner signer) { throw null; }
     }
     public partial class AttestationRequest
     {
@@ -87,6 +94,9 @@ namespace Azure.Security.Attestation
         [System.ObsoleteAttribute("DeprecatedPolicyHash is deprecated, use PolicyHash instead")]
         public System.BinaryData DeprecatedPolicyHash { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("DeprecatedPolicySigner is deprecated, use PolicySigner instead")]
+        public Azure.Security.Attestation.AttestationSigner DeprecatedPolicySigner { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedProductId is deprecated, use ProductId instead")]
         public float? DeprecatedProductId { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -104,7 +114,7 @@ namespace Azure.Security.Attestation
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedVersion is deprecated, use Version instead")]
         public string DeprecatedVersion { get { throw null; } }
-        public byte[] EnclaveHeldData { get { throw null; } }
+        public System.BinaryData EnclaveHeldData { get { throw null; } }
         public System.DateTimeOffset Expiration { get { throw null; } }
         public object InittimeClaims { get { throw null; } }
         public bool? IsDebuggable { get { throw null; } }
@@ -115,7 +125,8 @@ namespace Azure.Security.Attestation
         public string Nonce { get { throw null; } }
         public System.DateTimeOffset NotBefore { get { throw null; } }
         public object PolicyClaims { get { throw null; } }
-        public byte[] PolicyHash { get { throw null; } }
+        public System.BinaryData PolicyHash { get { throw null; } }
+        public Azure.Security.Attestation.AttestationSigner PolicySigner { get { throw null; } }
         public float? ProductId { get { throw null; } }
         public object RuntimeClaims { get { throw null; } }
         public object SgxCollateral { get { throw null; } }
@@ -191,6 +202,7 @@ namespace Azure.Security.Attestation
         public bool ValidateNotBeforeTime { get { throw null; } set { } }
         public bool ValidateToken { get { throw null; } set { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Security.Attestation.AttestationTokenValidationEventArgs> TokenValidated { add { } remove { } }
+        public Azure.Security.Attestation.AttestationTokenValidationOptions Clone() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AttestationType : System.IEquatable<Azure.Security.Attestation.AttestationType>
@@ -231,9 +243,9 @@ namespace Azure.Security.Attestation
     }
     public partial class PolicyCertificatesModificationResult
     {
-        internal PolicyCertificatesModificationResult() { }
-        public Azure.Security.Attestation.PolicyCertificateResolution? CertificateResolution { get { throw null; } }
-        public string CertificateThumbprint { get { throw null; } }
+        public PolicyCertificatesModificationResult() { }
+        public Azure.Security.Attestation.PolicyCertificateResolution? CertificateResolution { get { throw null; } set { } }
+        public string CertificateThumbprint { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyModification : System.IEquatable<Azure.Security.Attestation.PolicyModification>

@@ -30,13 +30,13 @@ namespace Azure.Security.Attestation
             Optional<object> xMsPolicy = default;
             Optional<string> xMsAttestationType = default;
             Optional<JsonWebKey> xMsPolicySigner = default;
-            Optional<byte[]> xMsPolicyHash = default;
+            Optional<string> xMsPolicyHash = default;
             Optional<bool> xMsSgxIsDebuggable = default;
             Optional<float> xMsSgxProductId = default;
             Optional<string> xMsSgxMrenclave = default;
             Optional<string> xMsSgxMrsigner = default;
             Optional<float> xMsSgxSvn = default;
-            Optional<byte[]> xMsSgxEhd = default;
+            Optional<string> xMsSgxEhd = default;
             Optional<object> xMsSgxCollateral = default;
             Optional<string> ver = default;
             Optional<bool> isDebuggable = default;
@@ -160,12 +160,7 @@ namespace Azure.Security.Attestation
                 }
                 if (property.NameEquals("x-ms-policy-hash"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    xMsPolicyHash = property.Value.GetBytesFromBase64("U");
+                    xMsPolicyHash = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("x-ms-sgx-is-debuggable"))
@@ -210,12 +205,7 @@ namespace Azure.Security.Attestation
                 }
                 if (property.NameEquals("x-ms-sgx-ehd"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    xMsSgxEhd = property.Value.GetBytesFromBase64("U");
+                    xMsSgxEhd = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("x-ms-sgx-collateral"))

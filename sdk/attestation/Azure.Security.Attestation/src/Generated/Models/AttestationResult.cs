@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Security.Attestation
 {
     /// <summary> A Microsoft Azure Attestation response token body - the body of a response token issued by MAA. </summary>
@@ -27,13 +25,13 @@ namespace Azure.Security.Attestation
         /// <param name="policyClaims"> Policy Generated Claims. </param>
         /// <param name="verifierType"> The Attestation type being attested. </param>
         /// <param name="internalPolicySigner"> The certificate used to sign the policy object, if specified. </param>
-        /// <param name="policyHash"> The SHA256 hash of the BASE64URL encoded policy text used for attestation. </param>
+        /// <param name="internalPolicyHash"> The SHA256 hash of the BASE64URL encoded policy text used for attestation. </param>
         /// <param name="isDebuggable"> True if the enclave is debuggable, false otherwise. </param>
         /// <param name="productId"> The SGX Product ID for the enclave. </param>
         /// <param name="mrEnclave"> The HEX encoded SGX MRENCLAVE value for the enclave. </param>
         /// <param name="mrSigner"> The HEX encoded SGX MRSIGNER value for the enclave. </param>
         /// <param name="svn"> The SGX SVN value for the enclave. </param>
-        /// <param name="enclaveHeldData"> A copy of the RuntimeData specified as an input to the attest call. </param>
+        /// <param name="internalEnclaveHeldData"> A copy of the RuntimeData specified as an input to the attest call. </param>
         /// <param name="sgxCollateral"> The SGX SVN value for the enclave. </param>
         /// <param name="internalDeprecatedVersion"> DEPRECATED: Private Preview version of x-ms-ver claim. </param>
         /// <param name="internalDeprecatedIsDebuggable"> DEPRECATED: Private Preview version of x-ms-sgx-is-debuggable claim. </param>
@@ -48,7 +46,7 @@ namespace Azure.Security.Attestation
         /// <param name="internalDeprecatedPolicySigner"> DEPRECATED: Private Preview version of x-ms-policy-signer. </param>
         /// <param name="internalDeprecatedPolicyHash"> DEPRECATED: Private Preview version of x-ms-policy-hash. </param>
         /// <param name="internalDeprecatedRpData"> DEPRECATED: Private Preview version of nonce. </param>
-        internal AttestationResult(string internalJti, string internalIss, double? internalIat, double? internalExp, double? internalNbf, object internalCnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, JsonWebKey internalPolicySigner, byte[] policyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, byte[] enclaveHeldData, object sgxCollateral, string internalDeprecatedVersion, bool? internalDeprecatedIsDebuggable, object internalDeprecatedSgxCollateral, string internalDeprecatedEnclaveHeldData, string internalDeprecatedEnclaveHeldData2, float? internalDeprecatedProductId, string internalDeprecatedMrEnclave, string internalDeprecatedMrSigner, float? internalDeprecatedSvn, string internalDeprecatedTee, JsonWebKey internalDeprecatedPolicySigner, string internalDeprecatedPolicyHash, string internalDeprecatedRpData)
+        internal AttestationResult(string internalJti, string internalIss, double? internalIat, double? internalExp, double? internalNbf, object internalCnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, JsonWebKey internalPolicySigner, string internalPolicyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, string internalEnclaveHeldData, object sgxCollateral, string internalDeprecatedVersion, bool? internalDeprecatedIsDebuggable, object internalDeprecatedSgxCollateral, string internalDeprecatedEnclaveHeldData, string internalDeprecatedEnclaveHeldData2, float? internalDeprecatedProductId, string internalDeprecatedMrEnclave, string internalDeprecatedMrSigner, float? internalDeprecatedSvn, string internalDeprecatedTee, JsonWebKey internalDeprecatedPolicySigner, string internalDeprecatedPolicyHash, string internalDeprecatedRpData)
         {
             InternalJti = internalJti;
             InternalIss = internalIss;
@@ -63,13 +61,13 @@ namespace Azure.Security.Attestation
             PolicyClaims = policyClaims;
             VerifierType = verifierType;
             InternalPolicySigner = internalPolicySigner;
-            PolicyHash = policyHash;
+            InternalPolicyHash = internalPolicyHash;
             IsDebuggable = isDebuggable;
             ProductId = productId;
             MrEnclave = mrEnclave;
             MrSigner = mrSigner;
             Svn = svn;
-            EnclaveHeldData = enclaveHeldData;
+            InternalEnclaveHeldData = internalEnclaveHeldData;
             SgxCollateral = sgxCollateral;
             InternalDeprecatedVersion = internalDeprecatedVersion;
             InternalDeprecatedIsDebuggable = internalDeprecatedIsDebuggable;
@@ -97,8 +95,6 @@ namespace Azure.Security.Attestation
         public object PolicyClaims { get; }
         /// <summary> The Attestation type being attested. </summary>
         public string VerifierType { get; }
-        /// <summary> The SHA256 hash of the BASE64URL encoded policy text used for attestation. </summary>
-        public byte[] PolicyHash { get; }
         /// <summary> True if the enclave is debuggable, false otherwise. </summary>
         public bool? IsDebuggable { get; }
         /// <summary> The SGX Product ID for the enclave. </summary>
@@ -109,8 +105,6 @@ namespace Azure.Security.Attestation
         public string MrSigner { get; }
         /// <summary> The SGX SVN value for the enclave. </summary>
         public float? Svn { get; }
-        /// <summary> A copy of the RuntimeData specified as an input to the attest call. </summary>
-        public byte[] EnclaveHeldData { get; }
         /// <summary> The SGX SVN value for the enclave. </summary>
         public object SgxCollateral { get; }
     }

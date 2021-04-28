@@ -204,7 +204,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             tokenOptions.TokenValidated += (AttestationTokenValidationEventArgs args) => { args.IsValid = true; return Task.CompletedTask; };
             var client = new AttestationAdministrationClient(new Uri(TestEnvironment.AadAttestationUrl), new DefaultAzureCredential());
             var attestClient = new AttestationClient(new Uri(TestEnvironment.AadAttestationUrl), new DefaultAzureCredential(),
-                new AttestationClientOptions { TokenOptions = tokenOptions});
+                new AttestationClientOptions(tokenOptions:tokenOptions));
             ;
             IReadOnlyList<AttestationSigner> signingCertificates = attestClient.GetSigningCertificates().Value;
             var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
@@ -248,7 +248,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             using var shaHasher = SHA256Managed.Create();
             byte[] attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.Serialize()));
 
-            Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash));
+            Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash.ToArray()));
 #endregion
             var resetResult = client.ResetPolicy(AttestationType.SgxEnclave);
 

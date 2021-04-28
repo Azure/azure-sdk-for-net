@@ -54,6 +54,24 @@ namespace Azure.Security.Attestation
             get => InternalCnf;
         }
 
+        /// <summary>
+        /// A copy of the RuntimeData specified as an input to the attest call, if the <see cref="AttestationRequest.RuntimeData"/>'s <see cref="AttestationData"/> was specified as binary.
+        /// </summary>
+        public BinaryData EnclaveHeldData { get => InternalEnclaveHeldData != null ? BinaryData.FromBytes(Base64Url.Decode(InternalEnclaveHeldData)) : null; }
+
+        [CodeGenMember("EnclaveHeldData")]
+        private string InternalEnclaveHeldData { get; }
+
+        /// <summary>
+        /// The SHA256 hash of the BASE64URL encoded policy text used for attestation.
+        /// </summary>
+        public BinaryData PolicyHash { get => InternalPolicyHash != null ? BinaryData.FromBytes(Base64Url.Decode(InternalPolicyHash)) : null; }
+        [CodeGenMember("PolicyHash")]
+        private string InternalPolicyHash { get; }
+
+        /// <summary> If not null, represents the <see cref="AttestationSigner"/> which was used to sign the policy used in validating the attestation evidence.</summary>
+        public AttestationSigner PolicySigner { get => AttestationSigner.FromJsonWebKey(InternalPolicySigner); }
+
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-ehd claim. </summary>
         [Obsolete("DeprecatedEnclaveHeldData2 is deprecated, use EnclaveHeldData instead")]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -150,6 +168,11 @@ namespace Azure.Security.Attestation
         [Obsolete("DeprecatedIsDebuggable is deprecated, use IsDebuggable instead")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? DeprecatedIsDebuggable { get => InternalDeprecatedIsDebuggable; }
+
+        /// <summary> DEPRECATED: Private Preview version of x-ms-policy-signer claim. </summary>
+        [Obsolete("DeprecatedPolicySigner is deprecated, use PolicySigner instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AttestationSigner DeprecatedPolicySigner { get => AttestationSigner.FromJsonWebKey(InternalDeprecatedPolicySigner); }
 
         [CodeGenMember("DeprecatedIsDebuggable")]
         private bool? InternalDeprecatedIsDebuggable { get; }

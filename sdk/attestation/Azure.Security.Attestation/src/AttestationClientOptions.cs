@@ -16,7 +16,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Options used when validating tokens.
         /// </summary>
-        public AttestationTokenValidationOptions TokenOptions { get; set; }
+        public AttestationTokenValidationOptions TokenOptions { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttestationClientOptions"/>.</summary>
         public AttestationClientOptions(
@@ -37,7 +37,7 @@ namespace Azure.Security.Attestation
 
             // If the caller specified that they have token validation options, use them, otherwise
             // use the defaults.
-            TokenOptions = tokenOptions ?? new AttestationTokenValidationOptions();
+            TokenOptions = tokenOptions != null ? tokenOptions.Clone() :  new AttestationTokenValidationOptions();
         }
 
         /// <summary>

@@ -93,5 +93,24 @@ namespace Azure.Security.Attestation
         /// and the clock on the server.
         /// </summary>
         public long TimeValidationSlack { get; set; }
+
+        /// <summary>
+        /// Create a deep copy of the current attestation token.
+        /// </summary>
+        /// <returns></returns>
+        public AttestationTokenValidationOptions Clone()
+        {
+            var returnedToken = new AttestationTokenValidationOptions()
+            {
+                ValidateExpirationTime = this.ValidateExpirationTime,
+                ValidateIssuer = this.ValidateIssuer,
+                ExpectedIssuer = this.ExpectedIssuer,
+                TimeValidationSlack = this.TimeValidationSlack,
+                ValidateNotBeforeTime = this.ValidateNotBeforeTime,
+                ValidateToken = this.ValidateToken,
+            };
+            returnedToken.TokenValidated = this.TokenValidated;
+            return returnedToken;
+        }
     }
 }
