@@ -179,7 +179,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// JSON Web Token Header "Critical". <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.11">RFC 7515 section 4.1.11</seealso> for details.
         /// </summary>
-        public bool? Critical { get => Header.Critical; }
+        public bool? Critical => Header.Critical;
 
         /// <summary>
         /// Returns the standard properties in the JSON Web Token header. <seealso href="https://tools.ietf.org/html/rfc7515">RFC 7515</seealso> for more details.
