@@ -29,7 +29,7 @@ You could add the data source, along with start time and end time to a `ModelInf
 
 Call `TrainMultivariateModel` with the created data feed and extract the model ID from the response header. Afterwards, you can get the model info, including the model status, by calling `GetMultivariateModelAsync` with the model ID . Wait until the model status is ready. 
 
-```C# Snippet:TrainModel
+```C# Snippet:TrainMultivariateModel
 private async Task<Guid?> trainAsync(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
 {
     try
@@ -92,7 +92,7 @@ Guid model_id = model_id_raw.GetValueOrDefault();
 
 To detect anomalies using your newly trained model, create a private async Task named `detectAsync`. You will create a new `DetectionRequest`, pass that as a parameter to `DetectAnomalyAsync` and await the response. From the header of the response, you could extract the result ID. With the result ID, you could get the detection content and detection status by `GetDetectionResultAsync`. Return the detection content when the detection status is ready. 
 
-```C# Snippet:DetectAnomalies
+```C# Snippet:DetectMultivariateAnomaly
 private async Task<DetectionResult> detectAsync(AnomalyDetectorClient client, string datasource, Guid model_id,DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
 {
     try
@@ -143,7 +143,7 @@ if (result != null)
 
 To export the model you trained previously, create a private async Task named `exportAysnc`. You will use `ExportModelAsync` and pass the model ID of the model you wish to export.
 
-```C# Snippet:ExportModel
+```C# Snippet:ExportMultivariateModel
 private async Task exportAsync(AnomalyDetectorClient client, Guid model_id, string model_path = "model.zip")
 {
     try
@@ -170,7 +170,7 @@ await exportAsync(client, model_id).ConfigureAwait(false);
 
 To delete a model that you have created previously use `DeleteMultivariateModelAsync` and pass the model ID of the model you wish to delete. You can check the number of models after deletion with `getModelNumberAsync`.
 
-```C# Snippet:DeteleModel
+```C# Snippet:DeleteMultivariateModel
 private async Task deleteAsync(AnomalyDetectorClient client, Guid model_id)
 {
     await client.DeleteMultivariateModelAsync(model_id).ConfigureAwait(false);
