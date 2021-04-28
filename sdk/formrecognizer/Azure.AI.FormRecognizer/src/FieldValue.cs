@@ -222,6 +222,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as String.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueString;
@@ -242,6 +243,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as Integer.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueInteger;
@@ -249,7 +251,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueInteger.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Int64)} type. Consider using the 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to {nameof(FieldValueType.Int64)} type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
             }
 
             return _fieldValue.ValueInteger.Value;
@@ -267,6 +269,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as Float.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueNumber;
@@ -281,7 +284,7 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 else
                 {
-                    throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Float)} type. Consider using the 'ValueData.Text' property.");
+                    throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to {nameof(FieldValueType.Float)} type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
                 }
             }
 
@@ -300,6 +303,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as Date.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueDate;
@@ -307,7 +311,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueDate.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Date)} type. Consider using the 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to {nameof(FieldValueType.Date)} type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
             }
 
             return _fieldValue.ValueDate.Value.UtcDateTime;
@@ -325,6 +329,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as Time.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueTime;
@@ -332,7 +337,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueTime.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Time)} type. Consider using the 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to {nameof(FieldValueType.Time)} type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
             }
 
             return _fieldValue.ValueTime.Value;
@@ -350,6 +355,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as PhoneNumber.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueString;
@@ -370,6 +376,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as List.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueList;
@@ -396,6 +403,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as Dictionary.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueDictionary;
@@ -430,6 +438,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as SelectionMark.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueSelectionMark;
@@ -437,7 +446,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueSelectionMark.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.SelectionMark)} type. Consider using the 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to {nameof(FieldValueType.SelectionMark)} type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
             }
 
             return _fieldValue.ValueSelectionMark.Value;
@@ -455,6 +464,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as country code.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueString;
@@ -475,6 +485,7 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as gender.  Field value's type is {ValueType}.");
             }
 
+            // Use when mocking
             if (_fieldValue == null)
             {
                 return ValueGender;
@@ -482,7 +493,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueGender.HasValue)
             {
-                throw new InvalidOperationException($"Not able to parse to {nameof(FieldValueType.Gender)} type. Consider using the 'ValueData.Text' property.");
+                throw new InvalidOperationException($"Value was extracted from the form, but cannot be normalized to {nameof(FieldValueType.Gender)} type. Consider accessing the `ValueData.text` property for a textual representation of the value.");
             }
 
             return _fieldValue.ValueGender.Value;
