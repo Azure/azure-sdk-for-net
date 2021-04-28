@@ -56,7 +56,7 @@ In `Connect` and `Message` events, function will respect return values to send b
 
 ### Functions that uses Web PubSub input binding
 
-```C# Snippet:WebPubSubInputBindingFunction
+```cs
 [FunctionName("WebPubSubInputBindingFunction")]
 public static WebPubSubConnection Run(
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
@@ -69,7 +69,7 @@ public static WebPubSubConnection Run(
 
 ### Functions that uses Web PubSub output binding
 
-```c# Snippet:WebPubSubOutputBindingFunction
+```cs
 [FunctionName("WebPubSubOutputBindingFunction")]
 public static async Task RunAsync(
     [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
@@ -85,7 +85,7 @@ public static async Task RunAsync(
 
 ### Functions that uses Web PubSub trigger
 
-```C# Snippet:WebPubSubTriggerFunction
+```cs
 [FunctionName("WebPubSubTriggerFunction")]
 public static void Run(
     [WebPubSubTrigger("message", WebPubSubEventType.User)] 
@@ -101,7 +101,7 @@ public static void Run(
 
 ### Functions that uses Web PubSub trigger return value
 
-```C# Snippet:WebPubSubTriggerReturnValueFunction
+```cs
 [FunctionName("WebPubSubTriggerReturnValueFunction")]
 public static MessageResponse RunAsync(
     [WebPubSubTrigger("message", WebPubSubEventType.User)] ConnectionContext context)
