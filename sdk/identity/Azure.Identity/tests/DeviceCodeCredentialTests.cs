@@ -197,7 +197,6 @@ namespace Azure.Identity.Tests
         [Test]
         public void DisableAutomaticAuthenticationException()
         {
-            IdentityTestEnvironment testEnvironment = new IdentityTestEnvironment();
             var expectedCode = Guid.NewGuid().ToString();
 
             var cred = InstrumentClient(new DeviceCodeCredential(new DeviceCodeCredentialOptions { DisableAutomaticAuthentication = true, DeviceCodeCallback = (code, cancelToken) => VerifyDeviceCode(code, expectedCode) }));
