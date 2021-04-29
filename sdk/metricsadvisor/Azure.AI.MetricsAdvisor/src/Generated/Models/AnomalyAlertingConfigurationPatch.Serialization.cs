@@ -30,6 +30,16 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("crossMetricsOperator");
                 writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(SplitAlertByDimensions))
+            {
+                writer.WritePropertyName("splitAlertByDimensions");
+                writer.WriteStartArray();
+                foreach (var item in SplitAlertByDimensions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(HookIds))
             {
                 writer.WritePropertyName("hookIds");

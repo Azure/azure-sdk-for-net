@@ -506,7 +506,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @chlahav
 
 # PRLabel: %Search
-/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @Mohit-Chakraborty @tg-msft @heaths
+/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @Mohit-Chakraborty @tg-msft
 
 # ServiceLabel: %Search %Service Attention
 /sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy @tjacobhi @markheff @miwelsh
@@ -599,8 +599,8 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # ######## Management Plane ########
 
-/**/*Management*/                               @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
-/**/Azure.ResourceManager*/                     @allenjzhang @m-nash @markcowl @YalinLi0312 @bquantump @nisha-bhatia
+/**/*Management*/                               @allenjzhang @m-nash @markcowl @YalinLi0312 @nisha-bhatia
+/**/Azure.ResourceManager*/                     @allenjzhang @m-nash @markcowl @YalinLi0312 @nisha-bhatia
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                    @KrzysztofCwalina @tg-msft

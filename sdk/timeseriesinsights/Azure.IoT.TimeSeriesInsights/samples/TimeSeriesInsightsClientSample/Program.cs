@@ -41,6 +41,9 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             var tsiInstancesSamples = new InstancesSamples();
             await tsiInstancesSamples.RunSamplesAsync(tsiClient);
+
+            var tsiModelSettingsSamples = new ModelSettingsSamples();
+            await tsiModelSettingsSamples.RunSamplesAsync(tsiClient);
         }
 
         /// <summary>
