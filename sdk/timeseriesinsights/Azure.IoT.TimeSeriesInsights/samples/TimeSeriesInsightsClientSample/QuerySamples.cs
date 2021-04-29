@@ -18,6 +18,10 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         /// <summary>
         /// This sample demonstrates querying for raw events, series and aggregate series data from a Time Series Insights environment.
         /// </summary>
+        /// <remarks>
+        /// The Query APIs make use Time Series Expressions (TSX) to build filters, value and aggregation expressions. Visit
+        /// <see href="https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax"/> to learn more about TSX.
+        /// </remarks>
         public async Task RunSamplesAsync(TimeSeriesInsightsClient client, DeviceClient deviceClient)
         {
             PrintHeader("TIME SERIES INSIGHTS QUERY SAMPLE");
