@@ -66,7 +66,7 @@ namespace Azure.Data.Tables.Samples
             };
 
             // Create the batch.
-            List<TableTransactionAction> addEntitiesBatch = new();
+            List<TableTransactionAction> addEntitiesBatch = new List<TableTransactionAction>();
 
             // Add the entities to be added to the batch.
             addEntitiesBatch.AddRange(entityList.Select(e => new TableTransactionAction(TableTransactionActionType.Add, e)));
@@ -84,7 +84,7 @@ namespace Azure.Data.Tables.Samples
             #region Snippet:BatchMixed
 
             // Create a new batch.
-            List<TableTransactionAction> mixedBatch = new();
+            List<TableTransactionAction> mixedBatch = new List<TableTransactionAction>();
 
             // Add an entity for deletion to the batch.
             mixedBatch.Add(new TableTransactionAction(TableTransactionActionType.Delete, entityList[0]));
@@ -115,7 +115,7 @@ namespace Azure.Data.Tables.Samples
             #region Snippet:BatchDelete
 
             // Create a new batch.
-            List<TableTransactionAction> deleteEntitiesBatch = new();
+            List<TableTransactionAction> deleteEntitiesBatch = new List<TableTransactionAction>();
 
             // Add the entities for deletion to the batch.
             foreach (TableEntity entity in entityList)

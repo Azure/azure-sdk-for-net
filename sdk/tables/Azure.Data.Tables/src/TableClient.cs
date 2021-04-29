@@ -1239,28 +1239,28 @@ namespace Azure.Data.Tables
         /// Submits the batch transaction to the service for execution.
         /// The sub-operations contained in the batch will either succeed or fail together as a transaction.
         /// </summary>
-        /// <param name="batchOperations">The <see cref="IEnumerable{T}"/> containing the <see cref="TableTransactionAction"/>s to submit to the service.</param>
+        /// <param name="transactionActions">The <see cref="IEnumerable{T}"/> containing the <see cref="TableTransactionAction"/>s to submit to the service.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns><see cref="Response{T}"/> containing a <see cref="TableTransactionResult"/>.</returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
         public virtual async Task<Response<IReadOnlyList<Response>>> SubmitTransactionAsync(
-            IEnumerable<TableTransactionAction> batchOperations,
+            IEnumerable<TableTransactionAction> transactionActions,
             CancellationToken cancellationToken = default) =>
-            await SubmitTransactionInternalAsync(batchOperations, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), true, cancellationToken)
+            await SubmitTransactionInternalAsync(transactionActions, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), true, cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
         /// Submits the batch transaction to the service for execution.
         /// The sub-operations contained in the batch will either succeed or fail together as a transaction.
         /// </summary>
-        /// <param name="batchOperations">The <see cref="IEnumerable{T}"/> containing the <see cref="TableTransactionAction"/>s to submit to the service.</param>
+        /// <param name="transactionActions">The <see cref="IEnumerable{T}"/> containing the <see cref="TableTransactionAction"/>s to submit to the service.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns><see cref="Response{T}"/> containing a <see cref="TableTransactionResult"/>.</returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
-        public virtual Response<IReadOnlyList<Response>> SubmitTransaction(IEnumerable<TableTransactionAction> batchOperations, CancellationToken cancellationToken = default) =>
-            SubmitTransactionInternalAsync(batchOperations, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), false, cancellationToken).EnsureCompleted();
+        public virtual Response<IReadOnlyList<Response>> SubmitTransaction(IEnumerable<TableTransactionAction> transactionActions, CancellationToken cancellationToken = default) =>
+            SubmitTransactionInternalAsync(transactionActions, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), false, cancellationToken).EnsureCompleted();
 
         internal virtual async Task<Response<IReadOnlyList<Response>>> SubmitTransactionInternalAsync(
             IEnumerable<TableTransactionAction> transactionalBatch,
