@@ -33,8 +33,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scopes">Scopes to authenticate for.</param>
-        public ARMChallengeAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
-            : base(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
+        public ARMChallengeAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes) : base(credential, scopes)
         {
             _scopes = scopes.ToArray();
         }
