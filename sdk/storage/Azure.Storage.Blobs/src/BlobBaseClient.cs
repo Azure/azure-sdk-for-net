@@ -2804,6 +2804,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier: options?.AccessTier,
                 sourceConditions: options?.SourceConditions,
                 destinationConditions: options?.DestinationConditions,
+                sourceTokenCredential: options?.SourceTokenCredential,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -2854,6 +2855,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier: options?.AccessTier,
                 sourceConditions: options?.SourceConditions,
                 destinationConditions: options?.DestinationConditions,
+                sourceTokenCredential: options?.SourceTokenCredential,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -2896,6 +2898,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </param>
+        /// <param name="sourceTokenCredential">
+        /// Optional.  <see cref="TokenCredential"/> used to access the source blob.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2918,6 +2923,7 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier,
             BlobRequestConditions sourceConditions,
             BlobRequestConditions destinationConditions,
+            TokenCredential sourceTokenCredential,
             bool async,
             CancellationToken cancellationToken)
         {

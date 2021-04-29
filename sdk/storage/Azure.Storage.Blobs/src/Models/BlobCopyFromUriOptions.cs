@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -58,5 +59,10 @@ namespace Azure.Storage.Blobs.Models
         /// This parameter is not valid for synchronous copies.
         /// </summary>
         public bool? ShouldSealDestination { get; set; }
+
+        /// <summary>
+        /// Optional.  Token credential for accessing the source blob.
+        /// </summary>
+        public TokenCredential SourceTokenCredential { get; set; }
     }
 }
