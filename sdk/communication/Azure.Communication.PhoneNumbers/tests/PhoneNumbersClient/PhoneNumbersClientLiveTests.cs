@@ -175,15 +175,18 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var number = GetTestPhoneNumber();
 
             var client = CreateClient();
-            var updateOperation = await client.StartUpdateCapabilitiesAsync(number, PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.Outbound);
+            var phoneNumber = await client.GetPurchasedPhoneNumberAsync(number);
+            PhoneNumberCapabilityType callingCapabilityType = phoneNumber.Value.Capabilities.Calling == PhoneNumberCapabilityType.Inbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.Inbound;
+            PhoneNumberCapabilityType smsCapabilityType = phoneNumber.Value.Capabilities.Sms == PhoneNumberCapabilityType.InboundOutbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.InboundOutbound;
+
+            var updateOperation = await client.StartUpdateCapabilitiesAsync(number, callingCapabilityType, smsCapabilityType);
 
             await updateOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(updateOperation.HasCompleted);
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
-            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateOperation.Value.Capabilities.Calling);
-            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
         }
 
         [Test]
@@ -193,7 +196,11 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var number = GetTestPhoneNumber();
 
             var client = CreateClient();
-            var updateOperation = client.StartUpdateCapabilities(number, PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.Outbound);
+            var phoneNumber = client.GetPurchasedPhoneNumber(number);
+            PhoneNumberCapabilityType callingCapabilityType = phoneNumber.Value.Capabilities.Calling == PhoneNumberCapabilityType.Inbound? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.Inbound;
+            PhoneNumberCapabilityType smsCapabilityType = phoneNumber.Value.Capabilities.Sms == PhoneNumberCapabilityType.InboundOutbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.InboundOutbound;
+
+            var updateOperation = client.StartUpdateCapabilities(number, callingCapabilityType, smsCapabilityType);
 
             while (!updateOperation.HasCompleted)
             {
@@ -204,8 +211,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             Assert.IsTrue(updateOperation.HasCompleted);
             Assert.IsNotNull(updateOperation.Value);
             Assert.AreEqual(number, updateOperation.Value.PhoneNumber);
-            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateOperation.Value.Capabilities.Calling);
-            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(200, updateOperation.GetRawResponse().Status);
         }
     }
 }
