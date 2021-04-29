@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Tests
         {
             // Make sure we're not repeating Header/Query names already defined
             // in the base ClientOptions
-            SearchClientOptions options = new SearchClientOptions();
+            SearchClientOptions options = new SearchClientOptions(ServiceVersion);
             Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedHeaderNames));
             Assert.IsEmpty(GetDuplicates(options.Diagnostics.LoggedQueryParameters));
 
@@ -381,7 +381,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this);
 
-            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions());
+            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions(SearchClientOptions.LatestVersion));
             string skillsetName = Recording.Random.GetName();
 
             // Skills based on https://github.com/Azure-Samples/azure-search-sample-data/blob/master/hotelreviews/HotelReviews_skillset.json.
@@ -620,7 +620,7 @@ namespace Azure.Search.Documents.Tests
 
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
 
-            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions());
+            SearchIndexerClient client = resources.GetIndexerClient(new SearchClientOptions(SearchClientOptions.LatestVersion));
             string skillsetName = Recording.Random.GetName();
 
             // Enumerate all skills and create them with consistently fake input to test for nullability during deserialization.
