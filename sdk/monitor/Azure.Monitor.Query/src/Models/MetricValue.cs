@@ -7,8 +7,12 @@ namespace Azure.Monitor.Query.Models
 {
     public partial class MetricValue
     {
+        private string _toString;
+
         public override string ToString()
         {
+            if (_toString != null) return _toString;
+
             var builder = new StringBuilder();
             builder.Append($"{nameof(TimeStamp)}: {TimeStamp} ");
             if (Average != null)
@@ -32,7 +36,7 @@ namespace Azure.Monitor.Query.Models
                 builder.Append($"{nameof(Count)}: {Count} ");
             }
 
-            return builder.ToString();
+            return _toString = builder.ToString();
         }
     }
 }

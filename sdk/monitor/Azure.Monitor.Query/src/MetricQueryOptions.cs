@@ -45,18 +45,19 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Gets or sets the filter that is used to refine the set of metric data returned.
-        /// Example:
-        ///     Metric contains metadata A, B and C.
-        ///
-        ///     - Return all time series of C where A = a1 and B = b1 or b2:
-        ///         <c>A eq 'a1' and B eq 'b1' or B eq 'b2' and C eq '*'</c>
-        ///     - Invalid variant:
-        ///         <c>A eq 'a1' and B eq 'b1' and C eq '*' or B = 'b2'</c>
-        ///         This is invalid because the logical or operator cannot separate two different metadata names.
-        ///     - Return all time series where A = a1, B = b1 and C = c1:
-        ///         <c>A eq 'a1' and B eq 'b1' and C eq 'c1'</c>
-        ///     - Return all time series where A = a1
-        ///         <c>A eq 'a1' and B eq '*' and C eq '*'.</c>
+        /// <example>
+        /// Metric contains metadata A, B and C.<br/>
+        /// <br/>
+        ///     - Return all time series of C where A = a1 and B = b1 or b2:<br/>
+        ///         <c>A eq 'a1' and B eq 'b1' or B eq 'b2' and C eq '*'</c><br/>
+        ///     - Invalid variant:<br/>
+        ///         <c>A eq 'a1' and B eq 'b1' and C eq '*' or B = 'b2'</c><br/>
+        ///         This is invalid because the logical or operator cannot separate two different metadata names.<br/>
+        ///     - Return all time series where A = a1, B = b1 and C = c1:<br/>
+        ///         <c>A eq 'a1' and B eq 'b1' and C eq 'c1'</c><br/>
+        ///     - Return all time series where A = a1<br/>
+        ///         <c>A eq 'a1' and B eq '*' and C eq '*'.</c><br/>
+        /// </example>
         /// </summary>
         public string Filter { get; set; }
 
