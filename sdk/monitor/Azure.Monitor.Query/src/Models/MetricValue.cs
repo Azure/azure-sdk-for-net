@@ -9,6 +9,7 @@ namespace Azure.Monitor.Query.Models
     {
         private string _toString;
 
+        /// <inheritdoc />
         public override string ToString()
         {
             if (_toString != null) return _toString;

@@ -60,9 +60,8 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="resource">The resource name.
         /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
-        /// <param name="startTime">The start time for the metric query.</param>
-        /// <param name="endTime">The end time for the metric query.</param>
-        /// <param name="interval">The interval at which to sample the metrics.</param>
+        /// <param name="metrics">The list of metrics to query.</param>
+        /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="MetricQueryResult"/> instance containing the query results.</returns>
         public virtual Response<MetricQueryResult> Query(string resource, IEnumerable<string> metrics, MetricQueryOptions options = null, CancellationToken cancellationToken = default)
@@ -94,9 +93,8 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="resource">The resource name.
         /// For example: <c>/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]</c>.</param>
-        /// <param name="startTime">The start time for the metric query.</param>
-        /// <param name="endTime">The end time for the metric query.</param>
-        /// <param name="interval">The interval at which to sample the metrics.</param>
+        /// <param name="metrics">The list of metrics to query.</param>
+        /// <param name="options">The additional request options.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="MetricQueryResult"/> instance with query results.</returns>
         public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resource, IEnumerable<string> metrics, MetricQueryOptions options = null, CancellationToken cancellationToken = default)
