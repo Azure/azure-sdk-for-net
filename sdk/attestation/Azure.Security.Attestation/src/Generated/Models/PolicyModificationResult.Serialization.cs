@@ -12,10 +12,10 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    [JsonConverter(typeof(PolicyResultConverter))]
-    public partial class PolicyResult
+    [JsonConverter(typeof(PolicyModificationResultConverter))]
+    public partial class PolicyModificationResult
     {
-        internal static PolicyResult DeserializePolicyResult(JsonElement element)
+        internal static PolicyModificationResult DeserializePolicyModificationResult(JsonElement element)
         {
             Optional<PolicyModification> xMsPolicyResult = default;
             Optional<string> xMsPolicyTokenHash = default;
@@ -54,19 +54,19 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new PolicyResult(xMsPolicyResult, xMsPolicyTokenHash.Value, xMsPolicySigner.Value, xMsPolicy.Value);
+            return new PolicyModificationResult(xMsPolicyResult, xMsPolicyTokenHash.Value, xMsPolicySigner.Value, xMsPolicy.Value);
         }
 
-        internal partial class PolicyResultConverter : JsonConverter<PolicyResult>
+        internal partial class PolicyModificationResultConverter : JsonConverter<PolicyModificationResult>
         {
-            public override void Write(Utf8JsonWriter writer, PolicyResult model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, PolicyModificationResult model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
-            public override PolicyResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override PolicyModificationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializePolicyResult(document.RootElement);
+                return DeserializePolicyModificationResult(document.RootElement);
             }
         }
     }
