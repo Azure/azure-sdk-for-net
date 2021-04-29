@@ -78,6 +78,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRecoverableDatabasesOperations RecoverableDatabases { get; private set; }
 
         /// <summary>
+        /// Gets the IServerConnectionPoliciesOperations.
+        /// </summary>
+        public virtual IServerConnectionPoliciesOperations ServerConnectionPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IDataMaskingPoliciesOperations.
         /// </summary>
         public virtual IDataMaskingPoliciesOperations DataMaskingPolicies { get; private set; }
@@ -859,6 +864,7 @@ namespace Microsoft.Azure.Management.Sql
         private void Initialize()
         {
             RecoverableDatabases = new RecoverableDatabasesOperations(this);
+            ServerConnectionPolicies = new ServerConnectionPoliciesOperations(this);
             DataMaskingPolicies = new DataMaskingPoliciesOperations(this);
             DataMaskingRules = new DataMaskingRulesOperations(this);
             GeoBackupPolicies = new GeoBackupPoliciesOperations(this);

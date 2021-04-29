@@ -104,7 +104,6 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "RecoverableDatabases", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "RecoverableManagedDatabases", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ReplicationLinks", "2014-04-01"),
-                new Tuple<string, string, string>("Sql", "ReplicationLinks", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "RestorableDroppedDatabases", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "RestorableDroppedManagedDatabases", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "RestorePoints", "2020-11-01-preview"),
@@ -115,6 +114,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ServerAzureADOnlyAuthentications", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerBlobAuditingPolicies", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerCommunicationLinks", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "ServerConnectionPolicies", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ServerDevOpsAuditSettings", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerDnsAliases", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerKeys", "2020-11-01-preview"),
@@ -142,16 +142,5 @@ namespace Microsoft.Azure.Management.Sql
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=.";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "3cba7d6b8ffe73ff8c96be56b111317200d646b0";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
