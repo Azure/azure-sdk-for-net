@@ -96,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 { $"{ExtensionPath}:MaxConcurrentSessions", "123" },
                 { $"{ExtensionPath}:TransportType", "AmqpWebSockets" },
                 { $"{ExtensionPath}:WebProxy", "http://proxyserver:8080/" },
-                { $"{ExtensionPath}:RetryOptions:MaxRetries", "10" },
+                { $"{ExtensionPath}:ClientRetryOptions:MaxRetries", "10" },
             };
 
             ServiceBusOptions options = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(b =>
