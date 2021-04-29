@@ -17,7 +17,7 @@ namespace Azure.Data.Tables
         /// The index position of the <see cref="TableTransactionAction"/> collection submitted to <see cref="TableClient.SubmitTransaction"/> or
         /// <see cref="TableClient.SubmitTransactionAsync"/> which caused the transaction to fail.
         /// </summary>
-        public int? FailedTransactionActionIndex { get; set; }
+        public int? FailedTransactionActionIndex { get; internal set; }
 
         /// <summary>
         /// Initializes a new instances of a <see cref="TableTransactionFailedException"/>.
@@ -30,9 +30,9 @@ namespace Azure.Data.Tables
                 requestFailedException.ErrorCode,
                 requestFailedException.InnerException)
         {
-            foreach (KeyValuePair<string, string> keyValuePair in requestFailedException.Data)
+            foreach (var key in requestFailedException.Data.Keys)
             {
-                Data.Add(keyValuePair.Key, keyValuePair.Value);
+                Data.Add(key, requestFailedException.Data[key]);
             }
 
             try

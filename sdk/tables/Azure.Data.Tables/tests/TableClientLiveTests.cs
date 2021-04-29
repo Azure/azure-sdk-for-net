@@ -1136,14 +1136,13 @@ namespace Azure.Data.Tables.Tests
 
             // Add the entities to the batch.
             batch.AddRange(entitiesToCreate.Select(e => new TableTransactionAction(TableTransactionActionType.Add, e)));
-            TableTransactionResult response = await client.SubmitTransactionAsync(batch).ConfigureAwait(false);
+            var response = await client.SubmitTransactionAsync(batch).ConfigureAwait(false);
 
-            foreach (var entity in entitiesToCreate)
+            for (int i = 0; i < entitiesToCreate.Count; i++)
             {
-                Assert.That(response.GetResponseForEntity(entity.RowKey).Status, Is.EqualTo((int)HttpStatusCode.NoContent));
+                Assert.AreEqual((int)HttpStatusCode.NoContent, response.Value[i].Status);
             }
-
-            Assert.That(response.ResponseCount, Is.EqualTo(entitiesToCreate.Count));
+            Assert.That(response.Value.Count, Is.EqualTo(entitiesToCreate.Count));
 
             // Query the entities.
 
@@ -1191,14 +1190,14 @@ namespace Azure.Data.Tables.Tests
             batch.Add(new TableTransactionAction(TableTransactionActionType.Add, entitiesToCreate.Last()));
 
             // Submit the batch.
-            TableTransactionResult response = await client.SubmitTransactionAsync(batch).ConfigureAwait(false);
+            var response = await client.SubmitTransactionAsync(batch).ConfigureAwait(false);
 
             foreach (var entity in entitiesToCreate)
             {
-                Assert.That(response.GetResponseForEntity(entity.RowKey).Status, Is.EqualTo((int)HttpStatusCode.NoContent));
+                Assert.That(response.Value[entitiesToCreate.IndexOf(entity)].Status, Is.EqualTo((int)HttpStatusCode.NoContent));
             }
 
-            Assert.That(response.ResponseCount, Is.EqualTo(entitiesToCreate.Count));
+            Assert.That(response.Value.Count, Is.EqualTo(entitiesToCreate.Count));
 
             // Query the entities.
 
@@ -1243,21 +1242,22 @@ namespace Azure.Data.Tables.Tests
             // Add the entities to the batch
             batch.AddRange(entitiesToCreate.Select(e => new TableTransactionAction(TableTransactionActionType.Add, e)));
 
-            var ex = Assert.ThrowsAsync<RequestFailedException>(() => client.SubmitTransactionAsync(batch));
+            var ex = Assert.ThrowsAsync<TableTransactionFailedException>(() => client.SubmitTransactionAsync(batch));
 
             Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.EntityAlreadyExists.ToString()));
             Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
             Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
-            Assert.That(TableTransactionResult.TryGetFailedEntityFromException(ex, batch, out ITableEntity failedEntity), Is.True);
-            Assert.That(failedEntity.RowKey, Is.EqualTo(entitiesToCreate.Last().RowKey));
-            Assert.That(ex.Message.Contains(nameof(TableTransactionResult.TryGetFailedEntityFromException)));
+            Assert.AreEqual(ex.FailedTransactionActionIndex, entitiesToCreate.IndexOf(entitiesToCreate.Last()));
+            Assert.AreEqual(entitiesToCreate[ex.FailedTransactionActionIndex.Value].RowKey, entitiesToCreate.Last().RowKey);
+            Assert.That(ex.Message.Contains(nameof(TableTransactionFailedException.FailedTransactionActionIndex)));
 
             if (_endpointType != TableEndpointType.CosmosTable)
             {
                 // Try submitting a batch larger than 100 items
-                batch = new List<TableTransactionAction>(CreateTableEntities("error", 101).Select(e => new TableTransactionAction(TableTransactionActionType.Add, e)));
+                batch = new List<TableTransactionAction>(
+                    CreateTableEntities("error", 101).Select(e => new TableTransactionAction(TableTransactionActionType.Add, e)));
 
-                ex = Assert.ThrowsAsync<RequestFailedException>(() => client.SubmitTransactionAsync(batch));
+                ex = Assert.ThrowsAsync<TableTransactionFailedException>(() => client.SubmitTransactionAsync(batch));
                 Assert.That(ex.Message, Does.Contain("The batch request operation exceeds the maximum 100 changes per change set"));
             }
         }

@@ -72,11 +72,11 @@ namespace Azure.Data.Tables.Samples
             addEntitiesBatch.AddRange(entityList.Select(e => new TableTransactionAction(TableTransactionActionType.Add, e)));
 
             // Submit the batch.
-            TableTransactionResult response = await client.SubmitTransactionAsync(addEntitiesBatch).ConfigureAwait(false);
+            Response<IReadOnlyList<Response>> response = await client.SubmitTransactionAsync(addEntitiesBatch).ConfigureAwait(false);
 
-            foreach (TableEntity entity in entityList)
+            for (int i = 0; i < entityList.Count; i++)
             {
-                Console.WriteLine($"The ETag for the entity with RowKey: '{entity.RowKey}' is {response.GetResponseForEntity(entity.RowKey).Headers.ETag}");
+                Console.WriteLine($"The ETag for the entity with RowKey: '{entityList[i].RowKey}' is {response.Value[i].Headers.ETag}");
             }
 
             #endregion

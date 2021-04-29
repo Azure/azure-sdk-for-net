@@ -1244,7 +1244,7 @@ namespace Azure.Data.Tables
         /// <returns><see cref="Response{T}"/> containing a <see cref="TableTransactionResult"/>.</returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
-        public virtual async Task<Response<TableTransactionResult>> SubmitTransactionAsync(
+        public virtual async Task<Response<IReadOnlyList<Response>>> SubmitTransactionAsync(
             IEnumerable<TableTransactionAction> batchOperations,
             CancellationToken cancellationToken = default) =>
             await SubmitTransactionInternalAsync(batchOperations, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), true, cancellationToken)
@@ -1259,10 +1259,10 @@ namespace Azure.Data.Tables
         /// <returns><see cref="Response{T}"/> containing a <see cref="TableTransactionResult"/>.</returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
-        public virtual Response<TableTransactionResult> SubmitTransaction(IEnumerable<TableTransactionAction> batchOperations, CancellationToken cancellationToken = default) =>
+        public virtual Response<IReadOnlyList<Response>> SubmitTransaction(IEnumerable<TableTransactionAction> batchOperations, CancellationToken cancellationToken = default) =>
             SubmitTransactionInternalAsync(batchOperations, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), false, cancellationToken).EnsureCompleted();
 
-        internal virtual async Task<Response<TableTransactionResult>> SubmitTransactionInternalAsync(
+        internal virtual async Task<Response<IReadOnlyList<Response>>> SubmitTransactionInternalAsync(
             IEnumerable<TableTransactionAction> transactionalBatch,
             Guid batchId,
             Guid changesetId,
@@ -1285,22 +1285,9 @@ namespace Azure.Data.Tables
                 var _batch = BuildChangeSet(batchOperations, batchItems, requestLookup, batchId, changesetId);
                 var request = _tableOperations.CreateBatchRequest(_batch, null, null);
 
-                Response<List<Response>> response;
-                if (async)
-                {
-                    response = await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    response = _tableOperations.SendBatchRequest(request, cancellationToken);
-                }
-
-                for (int i = 0; i < response.Value.Count; i++)
-                {
-                    requestLookup[batchItems[i].Entity.RowKey].Response = response.Value[i];
-                }
-
-                return Response.FromValue(new TableTransactionResult(requestLookup), response.GetRawResponse());
+                return async ?
+                    await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false) :
+                    _tableOperations.SendBatchRequest(request, cancellationToken);
             }
             catch (Exception ex)
             {

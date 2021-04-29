@@ -16,7 +16,6 @@ namespace Azure.Data.Tables
 {
     internal partial class TableRestClient
     {
-        internal ClientDiagnostics clientDiagnostics => _clientDiagnostics;
         internal string endpoint => url;
         internal string clientVersion => version;
 
@@ -55,7 +54,7 @@ namespace Azure.Data.Tables
         /// <param name="message">The message to send.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public async Task<Response<List<Response>>> SendBatchRequestAsync(HttpMessage message, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<Response>>> SendBatchRequestAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
             if (message == null)
             {
@@ -78,10 +77,11 @@ namespace Azure.Data.Tables
                         var failedSubResponse = responses.FirstOrDefault(r => r.Status >= 400);
                         if (failedSubResponse == null)
                         {
-                            return Response.FromValue(responses.ToList(), message.Response);
+                            return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
                         }
 
-                        Exception rfex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(failedSubResponse).ConfigureAwait(false);
+                        RequestFailedException rfex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(failedSubResponse).ConfigureAwait(false);
+
                         var ex = new TableTransactionFailedException(rfex);
                         throw ex;
                     }
@@ -94,7 +94,7 @@ namespace Azure.Data.Tables
         /// <param name="message">The message to send.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public Response<List<Response>> SendBatchRequest(HttpMessage message, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<Response>> SendBatchRequest(HttpMessage message, CancellationToken cancellationToken = default)
         {
             if (message == null)
             {
@@ -117,10 +117,10 @@ namespace Azure.Data.Tables
                         var failedSubResponse = responses.FirstOrDefault(r => r.Status >= 400);
                         if (failedSubResponse == null)
                         {
-                            return Response.FromValue(responses.ToList(), message.Response);
+                            return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
                         }
 
-                        var rfex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
+                        RequestFailedException rfex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
                         var ex = new TableTransactionFailedException(rfex);
                         throw ex;
                     }
