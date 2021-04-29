@@ -33,7 +33,7 @@ namespace Azure.Monitor.Query.Tests
             await _testData.InitializeAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanListMetrics()
         {
             var client = CreateClient();
@@ -43,7 +43,7 @@ namespace Azure.Monitor.Query.Tests
             CollectionAssert.IsNotEmpty(results.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryMetrics()
         {
             var client = CreateClient();
@@ -64,7 +64,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.True(timeSeriesData.All(d=> d.Average != null));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryMetricsAllAggregations()
         {
             var client = CreateClient();
@@ -98,7 +98,7 @@ namespace Azure.Monitor.Query.Tests
                 d.Total != null));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryMetricsStartEnd()
         {
             var client = CreateClient();
@@ -119,7 +119,7 @@ namespace Azure.Monitor.Query.Tests
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryMetricsStartDuration()
         {
             var client = CreateClient();
@@ -140,7 +140,7 @@ namespace Azure.Monitor.Query.Tests
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryMetricsDurationEnd()
         {
             var client = CreateClient();
@@ -161,7 +161,7 @@ namespace Azure.Monitor.Query.Tests
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryMetricsNoTimespan()
         {
             var client = CreateClient();
@@ -178,7 +178,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.Greater(timeSeriesData.Count, 0);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryMetricsStartEndInterval()
         {
             var client = CreateClient();
@@ -200,7 +200,7 @@ namespace Azure.Monitor.Query.Tests
                 d.TimeStamp >= _testData.StartTime && d.TimeStamp <= _testData.EndTime));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanQueryMetricsFilter()
         {
             var client = CreateClient();
@@ -224,7 +224,7 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.AreEqual(_testData.Name1, timeSeries.Metadata["name"]);
         }
-        [Test]
+        [RecordedTest]
         public async Task CanQueryMetricsFilterTop()
         {
             var client = CreateClient();
@@ -248,7 +248,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual(1, results.Value.Metrics[0].Timeseries.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanListNamespacesMetrics()
         {
             var client = CreateClient();
