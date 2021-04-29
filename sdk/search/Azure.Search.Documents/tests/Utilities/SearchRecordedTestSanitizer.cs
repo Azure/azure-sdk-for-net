@@ -96,8 +96,7 @@ namespace Azure.Search.Documents.Tests
             if (SearchTestEnvironment.StorageAccountKeyVariableName.Equals(name, StringComparison.OrdinalIgnoreCase) ||
                 SearchTestEnvironment.ClientSecretVariableName.Equals(name, StringComparison.OrdinalIgnoreCase))
             {
-                // The secret content could be embedded within a string. Like -
-                // "DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix={StorageEndpointSuffix}"
+                // The secret content could be embedded within a string, so add it as-is.
                 secrets.Add(value);
 
                 // Or, the secret content could appear in JSON, for which certain common characters in account keys are escaped.
