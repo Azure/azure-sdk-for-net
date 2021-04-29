@@ -27,9 +27,9 @@ namespace Proto.Client
             // proto, this test relies on pre-created VMSS.
             // 1. Follow instruction here (CLI), https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/quick-create-cli
             // 2. Initiate a rolling upgrade az vmss rolling-upgrade start -g [RG] -n myScaleSet --debug
-            var vmss1 = client.DefaultSubscription
+            VirtualMachineScaleSet vmss1 = await client.DefaultSubscription
                 .GetResourceGroups().Get("azhang-test").Value
-                .GetVirtualMachineScaleSet().Get("myScaleSet").Value;
+                .GetVirtualMachineScaleSet().GetAsync("myScaleSet");
 
             var ru = vmss1.GetRollingUpgrade().Get().Value;
             Debug.Assert(ru.Data.Model != null);
