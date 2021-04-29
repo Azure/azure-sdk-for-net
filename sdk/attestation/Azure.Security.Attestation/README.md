@@ -10,7 +10,7 @@ Azure Attestation receives evidence from compute entities, turns them into a set
 
 > NOTE: This is a preview SDK for the Microsoft Azure Attestation service. It provides all the essential functionality to access the Azure Attestation service, it should be considered 'as-is" and is subject to changes in the future which may break compatibility with previous versions.
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/attestation) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Security.Attestation) | [API reference documentation][API_reference] | [Product documentation](https://docs.microsoft.com/azure/attestation/)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/attestation/Azure.Security.Attestation) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Security.Attestation) | [API reference documentation][API_reference] | [Product documentation](https://docs.microsoft.com/azure/attestation/)
 
 ## Getting started
 
@@ -335,6 +335,7 @@ See [CONTRIBUTING.md][contributing] for details on building, testing, and contri
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+[microsoft_code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [API_reference]: https://docs.microsoft.com/dotnet/api/azure.security.attestation?view=azure-dotnet-preview
 [attestation_admin_client]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationadministrationclient
 [attestation_client]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationclient
