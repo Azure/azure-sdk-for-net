@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Enables a topology to write/store media (video and audio) to a file on the Edge device. </summary>
+    /// <summary> File sink allows for video and audio content to be recorded on the file system on the edge device. </summary>
     public partial class FileSink : SinkNodeBase
     {
         /// <summary> Initializes a new instance of FileSink. </summary>
-        /// <param name="name"> The name to be used for the topology sink. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the pipeline topology, the outputs of which are used as input for this sink node. </param>
-        /// <param name="baseDirectoryPath"> Absolute directory for all outputs to the Edge device from this sink. </param>
-        /// <param name="fileNamePattern"> File name pattern for creating new files on the Edge device. The pattern must include at least one system variable. See the documentation for available variables and additional examples. </param>
-        /// <param name="maximumSizeMiB"> Maximum amount of disk space that can be used for storing files from this sink. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="baseDirectoryPath"> Absolute directory path where media files will be stored. </param>
+        /// <param name="fileNamePattern"> File name pattern for creating new files when performing event based recording. The pattern must include at least one system variable. </param>
+        /// <param name="maximumSizeMiB"> Maximum amount of disk space that can be used for storing files from this sink. Once this limit is reached, the oldest files from this sink will be automatically deleted. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="baseDirectoryPath"/>, <paramref name="fileNamePattern"/>, or <paramref name="maximumSizeMiB"/> is null. </exception>
         public FileSink(string name, IEnumerable<NodeInput> inputs, string baseDirectoryPath, string fileNamePattern, string maximumSizeMiB) : base(name, inputs)
         {
@@ -50,12 +50,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of FileSink. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="name"> The name to be used for the topology sink. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the pipeline topology, the outputs of which are used as input for this sink node. </param>
-        /// <param name="baseDirectoryPath"> Absolute directory for all outputs to the Edge device from this sink. </param>
-        /// <param name="fileNamePattern"> File name pattern for creating new files on the Edge device. The pattern must include at least one system variable. See the documentation for available variables and additional examples. </param>
-        /// <param name="maximumSizeMiB"> Maximum amount of disk space that can be used for storing files from this sink. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="baseDirectoryPath"> Absolute directory path where media files will be stored. </param>
+        /// <param name="fileNamePattern"> File name pattern for creating new files when performing event based recording. The pattern must include at least one system variable. </param>
+        /// <param name="maximumSizeMiB"> Maximum amount of disk space that can be used for storing files from this sink. Once this limit is reached, the oldest files from this sink will be automatically deleted. </param>
         internal FileSink(string type, string name, IList<NodeInput> inputs, string baseDirectoryPath, string fileNamePattern, string maximumSizeMiB) : base(type, name, inputs)
         {
             BaseDirectoryPath = baseDirectoryPath;
@@ -64,11 +64,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = type ?? "#Microsoft.VideoAnalyzer.FileSink";
         }
 
-        /// <summary> Absolute directory for all outputs to the Edge device from this sink. </summary>
+        /// <summary> Absolute directory path where media files will be stored. </summary>
         public string BaseDirectoryPath { get; set; }
-        /// <summary> File name pattern for creating new files on the Edge device. The pattern must include at least one system variable. See the documentation for available variables and additional examples. </summary>
+        /// <summary> File name pattern for creating new files when performing event based recording. The pattern must include at least one system variable. </summary>
         public string FileNamePattern { get; set; }
-        /// <summary> Maximum amount of disk space that can be used for storing files from this sink. </summary>
+        /// <summary> Maximum amount of disk space that can be used for storing files from this sink. Once this limit is reached, the oldest files from this sink will be automatically deleted. </summary>
         public string MaximumSizeMiB { get; set; }
     }
 }

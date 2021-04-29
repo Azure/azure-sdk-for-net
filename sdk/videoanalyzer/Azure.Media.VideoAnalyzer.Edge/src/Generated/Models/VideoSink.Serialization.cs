@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class AssetSink : IUtf8JsonSerializable
+    public partial class VideoSink : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("assetContainerSasUrl");
-            writer.WriteStringValue(AssetContainerSasUrl);
-            if (Optional.IsDefined(SegmentLength))
+            writer.WritePropertyName("videoName");
+            writer.WriteStringValue(VideoName);
+            if (Optional.IsDefined(VideoCreationProperties))
             {
-                writer.WritePropertyName("segmentLength");
-                writer.WriteStringValue(SegmentLength);
+                writer.WritePropertyName("videoCreationProperties");
+                writer.WriteObjectValue(VideoCreationProperties);
             }
             writer.WritePropertyName("localMediaCachePath");
             writer.WriteStringValue(LocalMediaCachePath);
@@ -41,10 +41,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteEndObject();
         }
 
-        internal static AssetSink DeserializeAssetSink(JsonElement element)
+        internal static VideoSink DeserializeVideoSink(JsonElement element)
         {
-            string assetContainerSasUrl = default;
-            Optional<string> segmentLength = default;
+            string videoName = default;
+            Optional<VideoCreationProperties> videoCreationProperties = default;
             string localMediaCachePath = default;
             string localMediaCacheMaximumSizeMiB = default;
             string type = default;
@@ -52,14 +52,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             IList<NodeInput> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assetContainerSasUrl"))
+                if (property.NameEquals("videoName"))
                 {
-                    assetContainerSasUrl = property.Value.GetString();
+                    videoName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("segmentLength"))
+                if (property.NameEquals("videoCreationProperties"))
                 {
-                    segmentLength = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    videoCreationProperties = VideoCreationProperties.DeserializeVideoCreationProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("localMediaCachePath"))
@@ -93,7 +98,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new AssetSink(type, name, inputs, assetContainerSasUrl, segmentLength.Value, localMediaCachePath, localMediaCacheMaximumSizeMiB);
+            return new VideoSink(type, name, inputs, videoName, videoCreationProperties.Value, localMediaCachePath, localMediaCacheMaximumSizeMiB);
         }
     }
 }

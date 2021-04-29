@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> A source node in a pipeline topology. </summary>
+    /// <summary> Base class for topology source nodes. </summary>
     public partial class SourceNodeBase
     {
         /// <summary> Initializes a new instance of SourceNodeBase. </summary>
-        /// <param name="name"> The name to be used for this source node. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SourceNodeBase(string name)
         {
@@ -26,17 +26,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of SourceNodeBase. </summary>
-        /// <param name="type"> The type of the source node. The discriminator for derived types. </param>
-        /// <param name="name"> The name to be used for this source node. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
         internal SourceNodeBase(string type, string name)
         {
             Type = type;
             Name = name;
         }
 
-        /// <summary> The type of the source node. The discriminator for derived types. </summary>
+        /// <summary> Type discriminator for the derived types. </summary>
         internal string Type { get; set; }
-        /// <summary> The name to be used for this source node. </summary>
+        /// <summary> Node name. Must be unique within the topology. </summary>
         public string Name { get; set; }
     }
 }

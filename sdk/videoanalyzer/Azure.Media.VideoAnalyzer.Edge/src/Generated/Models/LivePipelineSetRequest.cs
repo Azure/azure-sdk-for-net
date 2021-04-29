@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Represents the livePipelineSet request. </summary>
+    /// <summary> Creates a new live pipeline or updates an existing one. </summary>
     public partial class LivePipelineSetRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of LivePipelineSetRequest. </summary>
-        /// <param name="livePipeline"> Represents a unique live pipeline. </param>
+        /// <param name="livePipeline"> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="livePipeline"/> is null. </exception>
         public LivePipelineSetRequest(LivePipeline livePipeline)
         {
@@ -27,16 +27,16 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of LivePipelineSetRequest. </summary>
-        /// <param name="methodName"> method name. </param>
-        /// <param name="apiVersion"> api version. </param>
-        /// <param name="livePipeline"> Represents a unique live pipeline. </param>
+        /// <param name="methodName"> Direct method method name. </param>
+        /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="livePipeline"> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </param>
         internal LivePipelineSetRequest(string methodName, string apiVersion, LivePipeline livePipeline) : base(methodName, apiVersion)
         {
             LivePipeline = livePipeline;
             MethodName = methodName ?? "livePipelineSet";
         }
 
-        /// <summary> Represents a unique live pipeline. </summary>
+        /// <summary> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </summary>
         public LivePipeline LivePipeline { get; set; }
     }
 }

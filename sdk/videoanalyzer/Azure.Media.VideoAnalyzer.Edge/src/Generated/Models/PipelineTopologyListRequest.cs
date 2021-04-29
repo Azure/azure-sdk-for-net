@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Represents the pipelineTopologyList request. </summary>
+    /// <summary> List all existing pipeline topologies. </summary>
     public partial class PipelineTopologyListRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of PipelineTopologyListRequest. </summary>
@@ -17,8 +17,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of PipelineTopologyListRequest. </summary>
-        /// <param name="methodName"> method name. </param>
-        /// <param name="apiVersion"> api version. </param>
+        /// <param name="methodName"> Direct method method name. </param>
+        /// <param name="apiVersion"> Video Analyzer API version. </param>
         internal PipelineTopologyListRequest(string methodName, string apiVersion) : base(methodName, apiVersion)
         {
             MethodName = methodName ?? "pipelineTopologyList";

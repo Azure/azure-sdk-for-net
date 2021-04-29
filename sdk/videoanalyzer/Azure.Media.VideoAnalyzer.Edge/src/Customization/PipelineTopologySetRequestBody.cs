@@ -3,7 +3,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class PipelineTopologySetRequestBody
+    internal partial class PipelineTopologySetRequestBody
     {
     }
 }

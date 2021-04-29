@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Defines a Spatial Analysis operation eventing configuration. </summary>
+    /// <summary> Defines the Azure Cognitive Services Spatial Analysis operation eventing configuration. </summary>
     public partial class SpatialAnalysisOperationEventBase
     {
         /// <summary> Initializes a new instance of SpatialAnalysisOperationEventBase. </summary>

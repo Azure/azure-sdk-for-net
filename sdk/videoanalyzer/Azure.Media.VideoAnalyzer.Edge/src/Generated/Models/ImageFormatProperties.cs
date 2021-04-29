@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Encoding settings for an image. </summary>
+    /// <summary> Base class for image formatting properties. </summary>
     public partial class ImageFormatProperties
     {
         /// <summary> Initializes a new instance of ImageFormatProperties. </summary>
@@ -16,13 +16,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of ImageFormatProperties. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
         internal ImageFormatProperties(string type)
         {
             Type = type;
         }
 
-        /// <summary> The discriminator for derived types. </summary>
+        /// <summary> Type discriminator for the derived types. </summary>
         internal string Type { get; set; }
     }
 }

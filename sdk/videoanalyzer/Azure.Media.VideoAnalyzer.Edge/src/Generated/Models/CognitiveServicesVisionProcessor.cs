@@ -14,8 +14,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     public partial class CognitiveServicesVisionProcessor : ProcessorNodeBase
     {
         /// <summary> Initializes a new instance of CognitiveServicesVisionProcessor. </summary>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
         /// <param name="operation"> Describes the Spatial Analysis operation to be used in the Cognitive Services Vision processor. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/>, or <paramref name="operation"/> is null. </exception>
@@ -44,9 +44,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesVisionProcessor. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
         /// <param name="image"> Describes the parameters of the image that is sent as input to the endpoint. </param>
         /// <param name="samplingOptions"> Describes the sampling options to be applied when forwarding samples to the extension. </param>

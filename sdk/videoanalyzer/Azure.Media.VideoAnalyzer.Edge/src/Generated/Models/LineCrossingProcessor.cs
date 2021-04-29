@@ -11,12 +11,12 @@ using System.Linq;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> A node that accepts raw video as input, and detects when an object crosses a line. </summary>
+    /// <summary> Line crossing processor allows for the detection of tracked objects moving across one or more predefined lines. It must be downstream of an object tracker of downstream on an AI extension node that generates sequenceId for objects which are tracked across different frames of the video. Inference events are generated every time objects crosses from one side of the line to another. </summary>
     public partial class LineCrossingProcessor : ProcessorNodeBase
     {
         /// <summary> Initializes a new instance of LineCrossingProcessor. </summary>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="lines"> An array of lines used to compute line crossing events. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, or <paramref name="lines"/> is null. </exception>
         public LineCrossingProcessor(string name, IEnumerable<NodeInput> inputs, IEnumerable<NamedLineBase> lines) : base(name, inputs)
@@ -39,9 +39,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of LineCrossingProcessor. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="lines"> An array of lines used to compute line crossing events. </param>
         internal LineCrossingProcessor(string type, string name, IList<NodeInput> inputs, IList<NamedLineBase> lines) : base(type, name, inputs)
         {

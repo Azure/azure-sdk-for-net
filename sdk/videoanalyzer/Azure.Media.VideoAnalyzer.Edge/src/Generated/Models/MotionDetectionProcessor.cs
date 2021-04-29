@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> A node that accepts raw video as input, and detects if there are moving objects present. If so, then it emits an event, and allows frames where motion was detected to pass through. Other frames are blocked/dropped. </summary>
+    /// <summary> Motion detection processor allows for motion detection on the video stream. It generates motion events whenever motion is present on the video. </summary>
     public partial class MotionDetectionProcessor : ProcessorNodeBase
     {
         /// <summary> Initializes a new instance of MotionDetectionProcessor. </summary>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
         public MotionDetectionProcessor(string name, IEnumerable<NodeInput> inputs) : base(name, inputs)
         {
@@ -32,12 +32,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of MotionDetectionProcessor. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
-        /// <param name="sensitivity"> Enumeration that specifies the sensitivity of the motion detection processor. </param>
-        /// <param name="outputMotionRegion"> Indicates whether the processor should detect and output the regions, within the video frame, where motion was detected. Default is true. </param>
-        /// <param name="eventAggregationWindow"> Event aggregation window duration, or 0 for no aggregation. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="sensitivity"> Motion detection sensitivity: low, medium, high. </param>
+        /// <param name="outputMotionRegion"> Indicates whether the processor should detect and output the regions within the video frame where motion was detected. Default is true. </param>
+        /// <param name="eventAggregationWindow"> Time window duration on which events are aggregated before being emitted. Value must be specified in ISO8601 duration format (i.e. &quot;PT2S&quot; equals 2 seconds). Use 0 seconds for no aggregation. Default is 1 second. </param>
         internal MotionDetectionProcessor(string type, string name, IList<NodeInput> inputs, MotionDetectionSensitivity? sensitivity, bool? outputMotionRegion, string eventAggregationWindow) : base(type, name, inputs)
         {
             Sensitivity = sensitivity;
@@ -46,11 +46,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = type ?? "#Microsoft.VideoAnalyzer.MotionDetectionProcessor";
         }
 
-        /// <summary> Enumeration that specifies the sensitivity of the motion detection processor. </summary>
+        /// <summary> Motion detection sensitivity: low, medium, high. </summary>
         public MotionDetectionSensitivity? Sensitivity { get; set; }
-        /// <summary> Indicates whether the processor should detect and output the regions, within the video frame, where motion was detected. Default is true. </summary>
+        /// <summary> Indicates whether the processor should detect and output the regions within the video frame where motion was detected. Default is true. </summary>
         public bool? OutputMotionRegion { get; set; }
-        /// <summary> Event aggregation window duration, or 0 for no aggregation. </summary>
+        /// <summary> Time window duration on which events are aggregated before being emitted. Value must be specified in ISO8601 duration format (i.e. &quot;PT2S&quot; equals 2 seconds). Use 0 seconds for no aggregation. Default is 1 second. </summary>
         public string EventAggregationWindow { get; set; }
     }
 }

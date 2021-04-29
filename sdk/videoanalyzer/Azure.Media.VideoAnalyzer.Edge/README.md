@@ -92,6 +92,10 @@ private void SetParameters(PipelineTopologyProperties pipelineTopologyProperties
     {
         Description = "rtsp Url"
     });
+    pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("hubSinkOutputName", ParameterType.String)
+    {
+        Description = "hub sink output"
+    });
 }
 ```
 
@@ -100,9 +104,9 @@ private void SetParameters(PipelineTopologyProperties pipelineTopologyProperties
 private void SetSources(PipelineTopologyProperties pipelineTopologyProps)
 {
     pipelineTopologyProps.Sources.Add(new RtspSource("rtspSource", new UnsecuredEndpoint("${rtspUrl}")
-        {
-            Credentials = new UsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
-        })
+    {
+        Credentials = new UsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
+    })
     );
 }
 
@@ -113,12 +117,7 @@ private void SetSinks(PipelineTopologyProperties pipelineTopologyProps)
     {
         new NodeInput("rtspSource")
     };
-    var cachePath = "/var/lib/azuremediaservices/tmp/";
-    var cacheMaxSize = "2048";
-    pipelineTopologyProps.Sinks.Add(new AssetSink("assetSink", nodeInput, "sampleAsset-${System.GraphTopologyName}-${System.GraphInstanceName}", cachePath, cacheMaxSize)
-    {
-        SegmentLength = System.Xml.XmlConvert.ToString(TimeSpan.FromSeconds(30)),
-    });
+    pipelineTopologyProps.Sinks.Add(new IotHubMessageSink("msgSink", nodeInput, "${hubSinkOutputName}"));
 }
 ```
 
@@ -162,7 +161,7 @@ private LivePipeline BuildLivePipeline(string graphTopologyName)
 ### Invoking a graph method request
 To invoke a graph method on your device you need to first define the request using the lva sdk. Then send that method request using the iot sdk's `CloudToDeviceMethod`
 ```C# Snippet:Azure_MediaServices_Samples_InvokeDirectMethod
-var setPipelineTopRequest = new PipelineTopologySetRequest(graphTopology);
+var setPipelineTopRequest = new PipelineTopologySetRequest(pipelineTopology);
 
 var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
 directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());

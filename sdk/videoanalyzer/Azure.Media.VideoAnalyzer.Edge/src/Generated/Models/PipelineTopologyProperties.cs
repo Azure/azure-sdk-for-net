@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> A description of the properties of a pipeline topology. </summary>
+    /// <summary> Pipeline topology properties. </summary>
     public partial class PipelineTopologyProperties
     {
         /// <summary> Initializes a new instance of PipelineTopologyProperties. </summary>
@@ -23,11 +23,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of PipelineTopologyProperties. </summary>
-        /// <param name="description"> A description of a pipeline topology. It is recommended to use this to describe the expected use of the pipeline topology. </param>
-        /// <param name="parameters"> The list of parameters defined in the pipeline topology. The value for these parameters are supplied by streams of this pipeline topology. </param>
-        /// <param name="sources"> The list of source nodes in this pipeline topology. </param>
-        /// <param name="processors"> The list of processor nodes in this pipeline topology. </param>
-        /// <param name="sinks"> The list of sink nodes in this pipeline topology. </param>
+        /// <param name="description"> An optional description of the pipeline topology. It is recommended that the expected use of the topology to be described here. </param>
+        /// <param name="parameters"> List of the topology parameter declarations. Parameters declared here can be referenced throughout the topology nodes through the use of &quot;${PARAMETER_NAME}&quot; string pattern. Parameters can have optional default values and can later be defined in individual instances of the pipeline. </param>
+        /// <param name="sources"> List of the topology source nodes. Source nodes enable external data to be ingested by the pipeline. </param>
+        /// <param name="processors"> List of the topology processor nodes. Processor nodes enable pipeline data to be analyzed, processed or transformed. </param>
+        /// <param name="sinks"> List of the topology sink nodes. Sink nodes allow pipeline data to be stored or exported. </param>
         internal PipelineTopologyProperties(string description, IList<ParameterDeclaration> parameters, IList<SourceNodeBase> sources, IList<ProcessorNodeBase> processors, IList<SinkNodeBase> sinks)
         {
             Description = description;
@@ -37,15 +37,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Sinks = sinks;
         }
 
-        /// <summary> A description of a pipeline topology. It is recommended to use this to describe the expected use of the pipeline topology. </summary>
+        /// <summary> An optional description of the pipeline topology. It is recommended that the expected use of the topology to be described here. </summary>
         public string Description { get; set; }
-        /// <summary> The list of parameters defined in the pipeline topology. The value for these parameters are supplied by streams of this pipeline topology. </summary>
+        /// <summary> List of the topology parameter declarations. Parameters declared here can be referenced throughout the topology nodes through the use of &quot;${PARAMETER_NAME}&quot; string pattern. Parameters can have optional default values and can later be defined in individual instances of the pipeline. </summary>
         public IList<ParameterDeclaration> Parameters { get; }
-        /// <summary> The list of source nodes in this pipeline topology. </summary>
+        /// <summary> List of the topology source nodes. Source nodes enable external data to be ingested by the pipeline. </summary>
         public IList<SourceNodeBase> Sources { get; }
-        /// <summary> The list of processor nodes in this pipeline topology. </summary>
+        /// <summary> List of the topology processor nodes. Processor nodes enable pipeline data to be analyzed, processed or transformed. </summary>
         public IList<ProcessorNodeBase> Processors { get; }
-        /// <summary> The list of sink nodes in this pipeline topology. </summary>
+        /// <summary> List of the topology sink nodes. Sink nodes allow pipeline data to be stored or exported. </summary>
         public IList<SinkNodeBase> Sinks { get; }
     }
 }

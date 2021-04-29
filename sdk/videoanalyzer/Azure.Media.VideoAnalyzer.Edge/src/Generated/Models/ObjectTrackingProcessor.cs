@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> A node that accepts raw video as input, and detects objects. </summary>
+    /// <summary> Object tracker processor allows for continuous tracking of one of more objects over a finite sequence of video frames. It must be used downstream of an object detector extension node, thus allowing for the extension to be configured to to perform inferences on sparse frames through the use of the &apos;maximumSamplesPerSecond&apos; sampling property. The object tracker node will then track the detected objects over the frames in which the detector is not invoked resulting on a smother tracking of detected objects across the continuum of video frames. The tracker will stop tracking objects which are not subsequently detected by the upstream detector on the subsequent detections. </summary>
     public partial class ObjectTrackingProcessor : ProcessorNodeBase
     {
         /// <summary> Initializes a new instance of ObjectTrackingProcessor. </summary>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
         public ObjectTrackingProcessor(string name, IEnumerable<NodeInput> inputs) : base(name, inputs)
         {
@@ -32,17 +32,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of ObjectTrackingProcessor. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
-        /// <param name="accuracy"> Enumeration that controls the accuracy of the tracker. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="accuracy"> Object tracker accuracy: low, medium, high. Higher accuracy leads to higher CPU consumption in average. </param>
         internal ObjectTrackingProcessor(string type, string name, IList<NodeInput> inputs, ObjectTrackingAccuracy? accuracy) : base(type, name, inputs)
         {
             Accuracy = accuracy;
             Type = type ?? "#Microsoft.VideoAnalyzer.ObjectTrackingProcessor";
         }
 
-        /// <summary> Enumeration that controls the accuracy of the tracker. </summary>
+        /// <summary> Object tracker accuracy: low, medium, high. Higher accuracy leads to higher CPU consumption in average. </summary>
         public ObjectTrackingAccuracy? Accuracy { get; set; }
     }
 }

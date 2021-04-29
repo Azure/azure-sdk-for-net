@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> A processor that allows the pipeline topology to send video frames to an external inference container over a gRPC connection. This can be done using shared memory (for high frame rates), or over the network. Inference results are relayed to downstream nodes. </summary>
+    /// <summary> GRPC extension processor allows pipeline extension plugins to be connected to the pipeline through over a gRPC channel. Extension plugins must act as an gRPC server. Please see https://aka.ms/ava-extension-grpc for details. </summary>
     public partial class GrpcExtension : ExtensionProcessorBase
     {
         /// <summary> Initializes a new instance of GrpcExtension. </summary>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
-        /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
-        /// <param name="image"> Describes the parameters of the image that is sent as input to the endpoint. </param>
-        /// <param name="dataTransfer"> How media should be transferred to the inference engine. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="endpoint"> Endpoint details of the pipeline extension plugin. </param>
+        /// <param name="image"> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </param>
+        /// <param name="dataTransfer"> Specifies how media is transferred to the extension plugin. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/>, <paramref name="image"/>, or <paramref name="dataTransfer"/> is null. </exception>
         public GrpcExtension(string name, IEnumerable<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, GrpcExtensionDataTransfer dataTransfer) : base(name, inputs, endpoint, image)
         {
@@ -48,14 +48,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of GrpcExtension. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
-        /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
-        /// <param name="image"> Describes the parameters of the image that is sent as input to the endpoint. </param>
-        /// <param name="samplingOptions"> Describes the sampling options to be applied when forwarding samples to the extension. </param>
-        /// <param name="dataTransfer"> How media should be transferred to the inference engine. </param>
-        /// <param name="extensionConfiguration"> Optional configuration to pass to the gRPC extension. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="endpoint"> Endpoint details of the pipeline extension plugin. </param>
+        /// <param name="image"> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </param>
+        /// <param name="samplingOptions"> Media sampling parameters that define how often media is submitted to the extension plugin. </param>
+        /// <param name="dataTransfer"> Specifies how media is transferred to the extension plugin. </param>
+        /// <param name="extensionConfiguration"> An optional configuration string that is sent to the extension plugin. The configuration string is specific to each custom extension and it not understood neither validated by Video Analyzer. Please see https://aka.ms/ava-extension-grpc for details. </param>
         internal GrpcExtension(string type, string name, IList<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions, GrpcExtensionDataTransfer dataTransfer, string extensionConfiguration) : base(type, name, inputs, endpoint, image, samplingOptions)
         {
             DataTransfer = dataTransfer;
@@ -63,9 +63,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = type ?? "#Microsoft.VideoAnalyzer.GrpcExtension";
         }
 
-        /// <summary> How media should be transferred to the inference engine. </summary>
+        /// <summary> Specifies how media is transferred to the extension plugin. </summary>
         public GrpcExtensionDataTransfer DataTransfer { get; set; }
-        /// <summary> Optional configuration to pass to the gRPC extension. </summary>
+        /// <summary> An optional configuration string that is sent to the extension plugin. The configuration string is specific to each custom extension and it not understood neither validated by Video Analyzer. Please see https://aka.ms/ava-extension-grpc for details. </summary>
         public string ExtensionConfiguration { get; set; }
     }
 }

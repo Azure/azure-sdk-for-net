@@ -11,12 +11,12 @@ using System.Linq;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Enables a pipeline topology to write media data to a destination outside of the Azure Video Analyzer IoT Edge module. </summary>
+    /// <summary> Base class for topology sink nodes. </summary>
     public partial class SinkNodeBase
     {
         /// <summary> Initializes a new instance of SinkNodeBase. </summary>
-        /// <param name="name"> The name to be used for the topology sink. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the pipeline topology, the outputs of which are used as input for this sink node. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
         public SinkNodeBase(string name, IEnumerable<NodeInput> inputs)
         {
@@ -34,9 +34,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of SinkNodeBase. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="name"> The name to be used for the topology sink. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the pipeline topology, the outputs of which are used as input for this sink node. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         internal SinkNodeBase(string type, string name, IList<NodeInput> inputs)
         {
             Type = type;
@@ -44,11 +44,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Inputs = inputs;
         }
 
-        /// <summary> The discriminator for derived types. </summary>
+        /// <summary> Type discriminator for the derived types. </summary>
         internal string Type { get; set; }
-        /// <summary> The name to be used for the topology sink. </summary>
+        /// <summary> Node name. Must be unique within the topology. </summary>
         public string Name { get; set; }
-        /// <summary> An array of the names of the other nodes in the pipeline topology, the outputs of which are used as input for this sink node. </summary>
+        /// <summary> An array of upstream node references within the topology to be used as inputs for this node. </summary>
         public IList<NodeInput> Inputs { get; }
     }
 }

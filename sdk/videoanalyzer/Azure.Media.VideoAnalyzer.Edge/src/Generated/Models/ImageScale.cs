@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> The scaling mode for the image. </summary>
+    /// <summary> Image scaling mode. </summary>
     public partial class ImageScale
     {
         /// <summary> Initializes a new instance of ImageScale. </summary>
@@ -16,9 +16,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of ImageScale. </summary>
-        /// <param name="mode"> Describes the modes for scaling an input video frame into an image, before it is sent to an inference engine. </param>
-        /// <param name="width"> The desired output width of the image. </param>
-        /// <param name="height"> The desired output height of the image. </param>
+        /// <param name="mode"> Describes the image scaling mode to be applied. Default mode is &apos;pad&apos;. </param>
+        /// <param name="width"> The desired output image width. </param>
+        /// <param name="height"> The desired output image height. </param>
         internal ImageScale(ImageScaleMode? mode, string width, string height)
         {
             Mode = mode;
@@ -26,11 +26,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Height = height;
         }
 
-        /// <summary> Describes the modes for scaling an input video frame into an image, before it is sent to an inference engine. </summary>
+        /// <summary> Describes the image scaling mode to be applied. Default mode is &apos;pad&apos;. </summary>
         public ImageScaleMode? Mode { get; set; }
-        /// <summary> The desired output width of the image. </summary>
+        /// <summary> The desired output image width. </summary>
         public string Width { get; set; }
-        /// <summary> The desired output height of the image. </summary>
+        /// <summary> The desired output image height. </summary>
         public string Height { get; set; }
     }
 }

@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Represents the input to any node in a topology. </summary>
+    /// <summary> Describes an input signal to be used on a pipeline node. </summary>
     public partial class NodeInput
     {
         /// <summary> Initializes a new instance of NodeInput. </summary>
-        /// <param name="nodeName"> The name of another node in the pipeline topology, the output of which is used as input to this node. </param>
+        /// <param name="nodeName"> The name of the upstream node in the pipeline which output is used as input of the current node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public NodeInput(string nodeName)
         {
@@ -29,17 +29,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of NodeInput. </summary>
-        /// <param name="nodeName"> The name of another node in the pipeline topology, the output of which is used as input to this node. </param>
-        /// <param name="outputSelectors"> Allows for the selection of particular streams from another node. </param>
+        /// <param name="nodeName"> The name of the upstream node in the pipeline which output is used as input of the current node. </param>
+        /// <param name="outputSelectors"> Allows for the selection of specific data streams (eg. video only) from another node. </param>
         internal NodeInput(string nodeName, IList<OutputSelector> outputSelectors)
         {
             NodeName = nodeName;
             OutputSelectors = outputSelectors;
         }
 
-        /// <summary> The name of another node in the pipeline topology, the output of which is used as input to this node. </summary>
+        /// <summary> The name of the upstream node in the pipeline which output is used as input of the current node. </summary>
         public string NodeName { get; set; }
-        /// <summary> Allows for the selection of particular streams from another node. </summary>
+        /// <summary> Allows for the selection of specific data streams (eg. video only) from another node. </summary>
         public IList<OutputSelector> OutputSelectors { get; }
     }
 }

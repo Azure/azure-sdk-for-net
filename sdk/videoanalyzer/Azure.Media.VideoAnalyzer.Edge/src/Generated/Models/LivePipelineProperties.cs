@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Properties of a live pipeline. </summary>
+    /// <summary> Live pipeline properties. </summary>
     public partial class LivePipelineProperties
     {
         /// <summary> Initializes a new instance of LivePipelineProperties. </summary>
@@ -20,10 +20,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of LivePipelineProperties. </summary>
-        /// <param name="description"> An optional description for the live pipeline. </param>
-        /// <param name="topologyName"> The name of the pipeline topology that this live pipeline will run. A pipeline topology with this name should already have been set in the Edge module. </param>
-        /// <param name="parameters"> List of one or more live pipeline parameters. </param>
-        /// <param name="state"> Allowed states for a live pipeline. </param>
+        /// <param name="description"> An optional description of the live pipeline. </param>
+        /// <param name="topologyName"> The reference to an existing pipeline topology defined for real-time content processing. When activated, this live pipeline will process content according to the pipeline topology definition. </param>
+        /// <param name="parameters"> List of the instance level parameter values for the user-defined topology parameters. A pipeline can only define or override parameters values for parameters which have been declared in the referenced topology. Topology parameters without a default value must be defined. Topology parameters with a default value can be optionally be overridden. </param>
+        /// <param name="state"> Current pipeline state (read-only). </param>
         internal LivePipelineProperties(string description, string topologyName, IList<ParameterDefinition> parameters, LivePipelineState? state)
         {
             Description = description;
@@ -32,13 +32,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             State = state;
         }
 
-        /// <summary> An optional description for the live pipeline. </summary>
+        /// <summary> An optional description of the live pipeline. </summary>
         public string Description { get; set; }
-        /// <summary> The name of the pipeline topology that this live pipeline will run. A pipeline topology with this name should already have been set in the Edge module. </summary>
+        /// <summary> The reference to an existing pipeline topology defined for real-time content processing. When activated, this live pipeline will process content according to the pipeline topology definition. </summary>
         public string TopologyName { get; set; }
-        /// <summary> List of one or more live pipeline parameters. </summary>
+        /// <summary> List of the instance level parameter values for the user-defined topology parameters. A pipeline can only define or override parameters values for parameters which have been declared in the referenced topology. Topology parameters without a default value must be defined. Topology parameters with a default value can be optionally be overridden. </summary>
         public IList<ParameterDefinition> Parameters { get; }
-        /// <summary> Allowed states for a live pipeline. </summary>
+        /// <summary> Current pipeline state (read-only). </summary>
         public LivePipelineState? State { get; set; }
     }
 }

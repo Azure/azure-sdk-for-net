@@ -29,7 +29,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ItemNonSetRequestBase": return ItemNonSetRequestBase.DeserializeItemNonSetRequestBase(element);
+                    case "MethodRequestEmptyBodyBase": return MethodRequestEmptyBodyBase.DeserializeMethodRequestEmptyBodyBase(element);
                     case "PipelineTopologySetRequestBody": return PipelineTopologySetRequestBody.DeserializePipelineTopologySetRequestBody(element);
                     case "livePipelineActivate": return LivePipelineActivateRequest.DeserializeLivePipelineActivateRequest(element);
                     case "livePipelineDeactivate": return LivePipelineDeactivateRequest.DeserializeLivePipelineDeactivateRequest(element);

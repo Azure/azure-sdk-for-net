@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Represents a unique live pipeline. </summary>
+    /// <summary> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </summary>
     public partial class LivePipeline
     {
         /// <summary> Initializes a new instance of LivePipeline. </summary>
-        /// <param name="name"> The identifier for the live pipeline. </param>
+        /// <param name="name"> Live pipeline unique identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LivePipeline(string name)
         {
@@ -26,9 +26,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of LivePipeline. </summary>
-        /// <param name="name"> The identifier for the live pipeline. </param>
-        /// <param name="systemData"> The system data for a resource. </param>
-        /// <param name="properties"> The properties of the live pipeline. </param>
+        /// <param name="name"> Live pipeline unique identifier. </param>
+        /// <param name="systemData"> Read-only system metadata associated with this object. </param>
+        /// <param name="properties"> Live pipeline properties. </param>
         internal LivePipeline(string name, SystemData systemData, LivePipelineProperties properties)
         {
             Name = name;
@@ -36,11 +36,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Properties = properties;
         }
 
-        /// <summary> The identifier for the live pipeline. </summary>
+        /// <summary> Live pipeline unique identifier. </summary>
         public string Name { get; set; }
-        /// <summary> The system data for a resource. </summary>
+        /// <summary> Read-only system metadata associated with this object. </summary>
         public SystemData SystemData { get; set; }
-        /// <summary> The properties of the live pipeline. </summary>
+        /// <summary> Live pipeline properties. </summary>
         public LivePipelineProperties Properties { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> The pixel format that will be used to encode images. </summary>
+    /// <summary> Pixel format to be applied to the raw image. </summary>
     public readonly partial struct ImageFormatRawPixelFormat : IEquatable<ImageFormatRawPixelFormat>
     {
         private readonly string _value;

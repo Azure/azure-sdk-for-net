@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Describes the modes for scaling an input video frame into an image, before it is sent to an inference engine. </summary>
+    /// <summary> Describes the image scaling mode to be applied. Default mode is &apos;pad&apos;. </summary>
     public readonly partial struct ImageScaleMode : IEquatable<ImageScaleMode>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         private const string PadValue = "pad";
         private const string StretchValue = "stretch";
 
-        /// <summary> Use the same aspect ratio as the input frame. </summary>
+        /// <summary> Preserves the same aspect ratio as the input image. If only one image dimension is provided, the second dimension is calculated based on the input image aspect ratio. When 2 dimensions are provided, the image is resized to fit the most constraining dimension, considering the input image size and aspect ratio. </summary>
         public static ImageScaleMode PreserveAspectRatio { get; } = new ImageScaleMode(PreserveAspectRatioValue);
-        /// <summary> Center pad the input frame to match the given dimensions. </summary>
+        /// <summary> Pads the image with black horizontal stripes (letterbox) or black vertical stripes (pillar-box) so the image is resized to the specified dimensions while not altering the content aspect ratio. </summary>
         public static ImageScaleMode Pad { get; } = new ImageScaleMode(PadValue);
-        /// <summary> Stretch input frame to match given dimensions. </summary>
+        /// <summary> Stretches the original image so it resized to the specified dimensions. </summary>
         public static ImageScaleMode Stretch { get; } = new ImageScaleMode(StretchValue);
         /// <summary> Determines if two <see cref="ImageScaleMode"/> values are the same. </summary>
         public static bool operator ==(ImageScaleMode left, ImageScaleMode right) => left.Equals(right);

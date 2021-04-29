@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> The type of the parameter. </summary>
+    /// <summary> Type of the parameter. </summary>
     public readonly partial struct ParameterType : IEquatable<ParameterType>
     {
         private readonly string _value;
@@ -28,15 +28,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         private const string DoubleValue = "double";
         private const string BoolValue = "bool";
 
-        /// <summary> A string parameter value. </summary>
+        /// <summary> The parameter&apos;s value is a string. </summary>
         public static ParameterType String { get; } = new ParameterType(StringValue);
-        /// <summary> A string to hold sensitive information as parameter value. </summary>
+        /// <summary> The parameter&apos;s value is a string that holds sensitive information. </summary>
         public static ParameterType SecretString { get; } = new ParameterType(SecretStringValue);
-        /// <summary> A 32-bit signed integer as parameter value. </summary>
+        /// <summary> The parameter&apos;s value is a 32-bit signed integer. </summary>
         public static ParameterType Int { get; } = new ParameterType(IntValue);
-        /// <summary> A 64-bit double-precision floating point type as parameter value. </summary>
+        /// <summary> The parameter&apos;s value is a 64-bit double-precision floating point. </summary>
         public static ParameterType Double { get; } = new ParameterType(DoubleValue);
-        /// <summary> A boolean value that is either true or false. </summary>
+        /// <summary> The parameter&apos;s value is a boolean value that is either true or false. </summary>
         public static ParameterType Bool { get; } = new ParameterType(BoolValue);
         /// <summary> Determines if two <see cref="ParameterType"/> values are the same. </summary>
         public static bool operator ==(ParameterType left, ParameterType right) => left.Equals(right);

@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Defines a Spatial Analysis Person Count operation to be used in the Cognitive Services Vision processor. </summary>
+    /// <summary> Defines a Spatial Analysis person count operation. This requires the Azure Cognitive Services Spatial analysis module to be deployed alongside the Video Analyzer module, please see https://aka.ms/ava-spatial-analysis for more information. </summary>
     public partial class SpatialAnalysisPersonCountOperation : SpatialAnalysisTypedOperationBase
     {
         /// <summary> Initializes a new instance of SpatialAnalysisPersonCountOperation. </summary>
@@ -29,11 +29,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of SpatialAnalysisPersonCountOperation. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="debug"> Enables debugging for the Spatial Analysis operation. </param>
+        /// <param name="type"> The Type discriminator for the derived types. </param>
+        /// <param name="debug"> If set to &apos;true&apos;, enables debugging mode for this operation. </param>
         /// <param name="cameraConfiguration"> Advanced camera configuration. </param>
         /// <param name="detectorNodeConfiguration"> Advanced detector node configuration. </param>
-        /// <param name="enableFaceMaskClassifier"> Enables face mask detection. </param>
+        /// <param name="enableFaceMaskClassifier"> If set to &apos;true&apos;, enables face mask detection for this operation. </param>
         /// <param name="zones"> The list of zones and optional events. </param>
         internal SpatialAnalysisPersonCountOperation(string type, string debug, string cameraConfiguration, string detectorNodeConfiguration, string enableFaceMaskClassifier, IList<SpatialAnalysisPersonCountZoneEvents> zones) : base(type, debug, cameraConfiguration, detectorNodeConfiguration, enableFaceMaskClassifier)
         {

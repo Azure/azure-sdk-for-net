@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Encoding settings for Jpeg images. </summary>
+    /// <summary> JPEG image encoding. </summary>
     public partial class ImageFormatJpeg : ImageFormatProperties
     {
         /// <summary> Initializes a new instance of ImageFormatJpeg. </summary>
@@ -17,15 +17,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of ImageFormatJpeg. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="quality"> The image quality. Value must be between 0 to 100 (best quality). </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="quality"> Image quality value between 0 to 100 (best quality). </param>
         internal ImageFormatJpeg(string type, string quality) : base(type)
         {
             Quality = quality;
             Type = type ?? "#Microsoft.VideoAnalyzer.ImageFormatJpeg";
         }
 
-        /// <summary> The image quality. Value must be between 0 to 100 (best quality). </summary>
+        /// <summary> Image quality value between 0 to 100 (best quality). </summary>
         public string Quality { get; set; }
     }
 }

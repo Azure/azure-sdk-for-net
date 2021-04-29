@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> The operator to compare streams by. </summary>
+    /// <summary> The operator to compare properties by. </summary>
     public readonly partial struct OutputSelectorOperator : IEquatable<OutputSelectorOperator>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         private const string IsValue = "is";
         private const string IsNotValue = "isNot";
 
-        /// <summary> A media type is the same type or a subtype. </summary>
+        /// <summary> The property is of the type defined by value. </summary>
         public static OutputSelectorOperator Is { get; } = new OutputSelectorOperator(IsValue);
-        /// <summary> A media type is not the same type or a subtype. </summary>
+        /// <summary> The property is not of the type defined by value. </summary>
         public static OutputSelectorOperator IsNot { get; } = new OutputSelectorOperator(IsNotValue);
         /// <summary> Determines if two <see cref="OutputSelectorOperator"/> values are the same. </summary>
         public static bool operator ==(OutputSelectorOperator left, OutputSelectorOperator right) => left.Equals(right);

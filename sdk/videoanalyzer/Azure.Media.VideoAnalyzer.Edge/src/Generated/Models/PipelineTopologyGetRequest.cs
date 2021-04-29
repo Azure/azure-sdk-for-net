@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Represents the pipelineTopologyGet request. </summary>
-    public partial class PipelineTopologyGetRequest : ItemNonSetRequestBase
+    /// <summary> Retrieves an existing pipeline topology. </summary>
+    public partial class PipelineTopologyGetRequest : MethodRequestEmptyBodyBase
     {
         /// <summary> Initializes a new instance of PipelineTopologyGetRequest. </summary>
-        /// <param name="name"> method name. </param>
+        /// <param name="name"> Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PipelineTopologyGetRequest(string name) : base(name)
         {
@@ -26,9 +26,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of PipelineTopologyGetRequest. </summary>
-        /// <param name="methodName"> method name. </param>
-        /// <param name="apiVersion"> api version. </param>
-        /// <param name="name"> method name. </param>
+        /// <param name="methodName"> Direct method method name. </param>
+        /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="name"> Resource name. </param>
         internal PipelineTopologyGetRequest(string methodName, string apiVersion, string name) : base(methodName, apiVersion, name)
         {
             MethodName = methodName ?? "pipelineTopologyGet";

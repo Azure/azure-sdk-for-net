@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Describes the properties of an image frame. </summary>
+    /// <summary> Image transformations and formatting options to be applied to the video frame(s). </summary>
     public partial class ImageProperties
     {
         /// <summary> Initializes a new instance of ImageProperties. </summary>
@@ -16,17 +16,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of ImageProperties. </summary>
-        /// <param name="scale"> The scaling mode for the image. </param>
-        /// <param name="format"> Encoding settings for an image. </param>
+        /// <param name="scale"> Image scaling mode. </param>
+        /// <param name="format"> Base class for image formatting properties. </param>
         internal ImageProperties(ImageScale scale, ImageFormatProperties format)
         {
             Scale = scale;
             Format = format;
         }
 
-        /// <summary> The scaling mode for the image. </summary>
+        /// <summary> Image scaling mode. </summary>
         public ImageScale Scale { get; set; }
-        /// <summary> Encoding settings for an image. </summary>
+        /// <summary> Base class for image formatting properties. </summary>
         public ImageFormatProperties Format { get; set; }
     }
 }

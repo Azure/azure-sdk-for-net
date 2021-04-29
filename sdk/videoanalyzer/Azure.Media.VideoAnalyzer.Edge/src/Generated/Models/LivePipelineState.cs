@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Allowed states for a live pipeline. </summary>
+    /// <summary> Current pipeline state (read-only). </summary>
     public readonly partial struct LivePipelineState : IEquatable<LivePipelineState>
     {
         private readonly string _value;
@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static LivePipelineState Inactive { get; } = new LivePipelineState(InactiveValue);
         /// <summary> The live pipeline is transitioning into the active state. </summary>
         public static LivePipelineState Activating { get; } = new LivePipelineState(ActivatingValue);
-        /// <summary> The live pipeline is active and processing media. </summary>
+        /// <summary> The live pipeline is active and able to process media. If your data source is not available, for instance, if your RTSP camera is powered off or unreachable, the pipeline will still be active and periodically retrying the connection. Your Azure subscription will be billed for the duration in which the live pipeline is in the active state. </summary>
         public static LivePipelineState Active { get; } = new LivePipelineState(ActiveValue);
         /// <summary> The live pipeline is transitioning into the inactive state. </summary>
         public static LivePipelineState Deactivating { get; } = new LivePipelineState(DeactivatingValue);

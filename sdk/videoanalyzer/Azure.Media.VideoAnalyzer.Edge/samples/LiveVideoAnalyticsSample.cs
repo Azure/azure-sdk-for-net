@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.TestFramework;
-using Azure.Media.Video.Analyzer.Edge.Models;
+using Azure.Media.VideoAnalyzer.Edge.Models;
 using Microsoft.Azure.Devices;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
@@ -147,6 +147,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             {
                 Description = "rtsp Url"
             });
+            pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("hubSinkOutputName", ParameterType.String)
+            {
+                Description = "hub sink output"
+            });
         }
         #endregion Snippet:Azure_MediaServices_Samples_SetParameters
 
@@ -168,12 +172,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             {
                 new NodeInput("rtspSource")
             };
-            var cachePath = "/var/lib/azuremediaservices/tmp/";
-            var cacheMaxSize = "2048";
-            pipelineTopologyProps.Sinks.Add(new AssetSink("assetSink", nodeInput, "https://sampleAsset-${System.PipelineTopologyName}-${System.LivePipelineName}.com", cachePath, cacheMaxSize)
-            {
-                SegmentLength = System.Xml.XmlConvert.ToString(TimeSpan.FromSeconds(30)),
-            });
+            pipelineTopologyProps.Sinks.Add(new IotHubMessageSink("msgSink", nodeInput, "${hubSinkOutputName}"));
         }
         #endregion Snippet:Azure_MediaServices_Samples_SetSourcesSinks
     }

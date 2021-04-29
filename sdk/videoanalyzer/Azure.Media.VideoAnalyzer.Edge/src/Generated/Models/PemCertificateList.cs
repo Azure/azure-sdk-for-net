@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     public partial class PemCertificateList : CertificateSource
     {
         /// <summary> Initializes a new instance of PemCertificateList. </summary>
-        /// <param name="certificates"> PEM formatted public certificates one per entry. </param>
+        /// <param name="certificates"> PEM formatted public certificates. One certificate per entry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificates"/> is null. </exception>
         public PemCertificateList(IEnumerable<string> certificates)
         {
@@ -29,15 +29,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of PemCertificateList. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="certificates"> PEM formatted public certificates one per entry. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="certificates"> PEM formatted public certificates. One certificate per entry. </param>
         internal PemCertificateList(string type, IList<string> certificates) : base(type)
         {
             Certificates = certificates;
             Type = type ?? "#Microsoft.VideoAnalyzer.PemCertificateList";
         }
 
-        /// <summary> PEM formatted public certificates one per entry. </summary>
+        /// <summary> PEM formatted public certificates. One certificate per entry. </summary>
         public IList<string> Certificates { get; }
     }
 }

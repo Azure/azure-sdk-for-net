@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Describes the named line. </summary>
+    /// <summary> Base class for named lines. </summary>
     public partial class NamedLineBase
     {
         /// <summary> Initializes a new instance of NamedLineBase. </summary>
-        /// <param name="name"> The name of the line. </param>
+        /// <param name="name"> Line name. Must be unique within the node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public NamedLineBase(string name)
         {
@@ -26,17 +26,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of NamedLineBase. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="name"> The name of the line. </param>
+        /// <param name="type"> The Type discriminator for the derived types. </param>
+        /// <param name="name"> Line name. Must be unique within the node. </param>
         internal NamedLineBase(string type, string name)
         {
             Type = type;
             Name = name;
         }
 
-        /// <summary> The discriminator for derived types. </summary>
+        /// <summary> The Type discriminator for the derived types. </summary>
         internal string Type { get; set; }
-        /// <summary> The name of the line. </summary>
+        /// <summary> Line name. Must be unique within the node. </summary>
         public string Name { get; set; }
     }
 }

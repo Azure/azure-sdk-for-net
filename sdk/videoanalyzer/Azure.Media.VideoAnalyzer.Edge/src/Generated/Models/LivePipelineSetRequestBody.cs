@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Represents the livePipelineSet request body. </summary>
+    /// <summary> Live pipeline resource representation. </summary>
     internal partial class LivePipelineSetRequestBody : MethodRequest
     {
         /// <summary> Initializes a new instance of LivePipelineSetRequestBody. </summary>
-        /// <param name="name"> The identifier for the live pipeline. </param>
+        /// <param name="name"> Live pipeline unique identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LivePipelineSetRequestBody(string name)
         {
@@ -27,11 +27,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of LivePipelineSetRequestBody. </summary>
-        /// <param name="methodName"> method name. </param>
-        /// <param name="apiVersion"> api version. </param>
-        /// <param name="name"> The identifier for the live pipeline. </param>
-        /// <param name="systemData"> The system data for a resource. </param>
-        /// <param name="properties"> The properties of the live pipeline. </param>
+        /// <param name="methodName"> Direct method method name. </param>
+        /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="name"> Live pipeline unique identifier. </param>
+        /// <param name="systemData"> Read-only system metadata associated with this object. </param>
+        /// <param name="properties"> Live pipeline properties. </param>
         internal LivePipelineSetRequestBody(string methodName, string apiVersion, string name, SystemData systemData, LivePipelineProperties properties) : base(methodName, apiVersion)
         {
             Name = name;
@@ -40,11 +40,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             MethodName = methodName ?? "LivePipelineSetRequestBody";
         }
 
-        /// <summary> The identifier for the live pipeline. </summary>
+        /// <summary> Live pipeline unique identifier. </summary>
         public string Name { get; set; }
-        /// <summary> The system data for a resource. </summary>
+        /// <summary> Read-only system metadata associated with this object. </summary>
         public SystemData SystemData { get; set; }
-        /// <summary> The properties of the live pipeline. </summary>
+        /// <summary> Live pipeline properties. </summary>
         public LivePipelineProperties Properties { get; set; }
     }
 }

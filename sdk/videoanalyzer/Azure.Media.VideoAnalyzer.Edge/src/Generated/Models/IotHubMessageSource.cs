@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Enables a pipeline topology to receive messages via routes declared in the IoT Edge deployment manifest. </summary>
+    /// <summary> IoT Hub Message source allows for the pipeline to consume messages from the IoT Edge Hub. Messages can be routed from other IoT modules via routes declared in the IoT Edge deployment manifest. </summary>
     public partial class IotHubMessageSource : SourceNodeBase
     {
         /// <summary> Initializes a new instance of IotHubMessageSource. </summary>
-        /// <param name="name"> The name to be used for this source node. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public IotHubMessageSource(string name) : base(name)
         {
@@ -26,16 +26,16 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of IotHubMessageSource. </summary>
-        /// <param name="type"> The type of the source node. The discriminator for derived types. </param>
-        /// <param name="name"> The name to be used for this source node. </param>
-        /// <param name="hubInputName"> Name of the input path where messages can be routed to (via routes declared in the IoT Edge deployment manifest). </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="hubInputName"> Name of the IoT Edge Hub input from which messages will be consumed. </param>
         internal IotHubMessageSource(string type, string name, string hubInputName) : base(type, name)
         {
             HubInputName = hubInputName;
             Type = type ?? "#Microsoft.VideoAnalyzer.IotHubMessageSource";
         }
 
-        /// <summary> Name of the input path where messages can be routed to (via routes declared in the IoT Edge deployment manifest). </summary>
+        /// <summary> Name of the IoT Edge Hub input from which messages will be consumed. </summary>
         public string HubInputName { get; set; }
     }
 }

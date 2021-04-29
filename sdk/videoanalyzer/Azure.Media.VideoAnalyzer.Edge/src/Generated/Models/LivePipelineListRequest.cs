@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Represents the livePipelineList request. </summary>
+    /// <summary> List all existing live pipelines. </summary>
     public partial class LivePipelineListRequest : MethodRequest
     {
         /// <summary> Initializes a new instance of LivePipelineListRequest. </summary>
@@ -17,8 +17,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of LivePipelineListRequest. </summary>
-        /// <param name="methodName"> method name. </param>
-        /// <param name="apiVersion"> api version. </param>
+        /// <param name="methodName"> Direct method method name. </param>
+        /// <param name="apiVersion"> Video Analyzer API version. </param>
         internal LivePipelineListRequest(string methodName, string apiVersion) : base(methodName, apiVersion)
         {
             MethodName = methodName ?? "livePipelineList";

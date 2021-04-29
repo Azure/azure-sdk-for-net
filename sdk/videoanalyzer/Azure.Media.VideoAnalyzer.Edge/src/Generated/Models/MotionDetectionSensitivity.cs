@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Enumeration that specifies the sensitivity of the motion detection processor. </summary>
+    /// <summary> Motion detection sensitivity: low, medium, high. </summary>
     public readonly partial struct MotionDetectionSensitivity : IEquatable<MotionDetectionSensitivity>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         private const string MediumValue = "medium";
         private const string HighValue = "high";
 
-        /// <summary> Low Sensitivity. </summary>
+        /// <summary> Low sensitivity. </summary>
         public static MotionDetectionSensitivity Low { get; } = new MotionDetectionSensitivity(LowValue);
-        /// <summary> Medium Sensitivity. </summary>
+        /// <summary> Medium sensitivity. </summary>
         public static MotionDetectionSensitivity Medium { get; } = new MotionDetectionSensitivity(MediumValue);
-        /// <summary> High Sensitivity. </summary>
+        /// <summary> High sensitivity. </summary>
         public static MotionDetectionSensitivity High { get; } = new MotionDetectionSensitivity(HighValue);
         /// <summary> Determines if two <see cref="MotionDetectionSensitivity"/> values are the same. </summary>
         public static bool operator ==(MotionDetectionSensitivity left, MotionDetectionSensitivity right) => left.Equals(right);

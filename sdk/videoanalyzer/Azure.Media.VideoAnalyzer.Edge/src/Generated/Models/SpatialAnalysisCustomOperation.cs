@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Defines a custom Spatial Analysis operation to be used in the Cognitive Services Vision processor. </summary>
+    /// <summary> Defines a Spatial Analysis custom operation. This requires the Azure Cognitive Services Spatial analysis module to be deployed alongside the Video Analyzer module, please see https://aka.ms/ava-spatial-analysis for more information. </summary>
     public partial class SpatialAnalysisCustomOperation : SpatialAnalysisOperationBase
     {
         /// <summary> Initializes a new instance of SpatialAnalysisCustomOperation. </summary>
-        /// <param name="extensionConfiguration"> Custom configuration to pass to the Cognitive Services Vision processor. </param>
+        /// <param name="extensionConfiguration"> Custom configuration to pass to the Azure Cognitive Services Spatial Analysis module. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionConfiguration"/> is null. </exception>
         public SpatialAnalysisCustomOperation(string extensionConfiguration)
         {
@@ -27,15 +27,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of SpatialAnalysisCustomOperation. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="extensionConfiguration"> Custom configuration to pass to the Cognitive Services Vision processor. </param>
+        /// <param name="type"> The Type discriminator for the derived types. </param>
+        /// <param name="extensionConfiguration"> Custom configuration to pass to the Azure Cognitive Services Spatial Analysis module. </param>
         internal SpatialAnalysisCustomOperation(string type, string extensionConfiguration) : base(type)
         {
             ExtensionConfiguration = extensionConfiguration;
             Type = type ?? "#Microsoft.VideoAnalyzer.SpatialAnalysisCustomOperation";
         }
 
-        /// <summary> Custom configuration to pass to the Cognitive Services Vision processor. </summary>
+        /// <summary> Custom configuration to pass to the Azure Cognitive Services Spatial Analysis module. </summary>
         public string ExtensionConfiguration { get; set; }
     }
 }

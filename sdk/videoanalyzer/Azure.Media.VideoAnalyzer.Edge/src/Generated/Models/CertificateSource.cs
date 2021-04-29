@@ -16,13 +16,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of CertificateSource. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
         internal CertificateSource(string type)
         {
             Type = type;
         }
 
-        /// <summary> The discriminator for derived types. </summary>
+        /// <summary> Type discriminator for the derived types. </summary>
         internal string Type { get; set; }
     }
 }

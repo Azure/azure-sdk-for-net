@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> A key-value pair. A pipeline topology allows certain values to be parameterized. When a live pipeline is created, the parameters are supplied with arguments specific to that instance. This allows the same pipeline topology to be used as a blueprint for multiple streams with different values for the parameters. </summary>
+    /// <summary> Defines the parameter value of an specific pipeline topology parameter. See pipeline topology parameters for more information. </summary>
     public partial class ParameterDefinition
     {
         /// <summary> Initializes a new instance of ParameterDefinition. </summary>
-        /// <param name="name"> The name of the parameter defined in the pipeline topology. </param>
+        /// <param name="name"> Name of the parameter declared in the pipeline topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ParameterDefinition(string name)
         {
@@ -25,9 +25,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Name = name;
         }
 
-        /// <summary> The name of the parameter defined in the pipeline topology. </summary>
+        /// <summary> Name of the parameter declared in the pipeline topology. </summary>
         public string Name { get; set; }
-        /// <summary> The value to supply for the named parameter defined in the pipeline topology. </summary>
+        /// <summary> Parameter value to be applied on this specific live pipeline. </summary>
         public string Value { get; set; }
     }
 }

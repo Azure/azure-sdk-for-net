@@ -36,7 +36,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.VideoAnalyzer.AssetSink": return AssetSink.DeserializeAssetSink(element);
                     case "#Microsoft.VideoAnalyzer.FileSink": return FileSink.DeserializeFileSink(element);
                     case "#Microsoft.VideoAnalyzer.IotHubMessageSink": return IotHubMessageSink.DeserializeIotHubMessageSink(element);
                     case "#Microsoft.VideoAnalyzer.VideoSink": return VideoSink.DeserializeVideoSink(element);

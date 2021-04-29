@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Encoding settings for Bmp images. </summary>
+    /// <summary> BMP image encoding. </summary>
     public partial class ImageFormatBmp : ImageFormatProperties
     {
         /// <summary> Initializes a new instance of ImageFormatBmp. </summary>
@@ -17,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of ImageFormatBmp. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
         internal ImageFormatBmp(string type) : base(type)
         {
             Type = type ?? "#Microsoft.VideoAnalyzer.ImageFormatBmp";

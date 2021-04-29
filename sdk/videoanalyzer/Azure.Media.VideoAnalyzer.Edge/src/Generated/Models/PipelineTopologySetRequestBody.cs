@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Represents the pipelineTopologySet request body. </summary>
-    public partial class PipelineTopologySetRequestBody : MethodRequest
+    /// <summary> Pipeline topology resource representation. </summary>
+    internal partial class PipelineTopologySetRequestBody : MethodRequest
     {
         /// <summary> Initializes a new instance of PipelineTopologySetRequestBody. </summary>
-        /// <param name="name"> The identifier for the pipeline topology. </param>
+        /// <param name="name"> Pipeline topology unique identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PipelineTopologySetRequestBody(string name)
         {
@@ -27,11 +27,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of PipelineTopologySetRequestBody. </summary>
-        /// <param name="methodName"> method name. </param>
-        /// <param name="apiVersion"> api version. </param>
-        /// <param name="name"> The identifier for the pipeline topology. </param>
-        /// <param name="systemData"> The system data for a resource. </param>
-        /// <param name="properties"> The properties of the pipeline topology. </param>
+        /// <param name="methodName"> Direct method method name. </param>
+        /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="name"> Pipeline topology unique identifier. </param>
+        /// <param name="systemData"> Read-only system metadata associated with this object. </param>
+        /// <param name="properties"> Pipeline topology properties. </param>
         internal PipelineTopologySetRequestBody(string methodName, string apiVersion, string name, SystemData systemData, PipelineTopologyProperties properties) : base(methodName, apiVersion)
         {
             Name = name;
@@ -40,11 +40,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             MethodName = methodName ?? "PipelineTopologySetRequestBody";
         }
 
-        /// <summary> The identifier for the pipeline topology. </summary>
+        /// <summary> Pipeline topology unique identifier. </summary>
         public string Name { get; set; }
-        /// <summary> The system data for a resource. </summary>
+        /// <summary> Read-only system metadata associated with this object. </summary>
         public SystemData SystemData { get; set; }
-        /// <summary> The properties of the pipeline topology. </summary>
+        /// <summary> Pipeline topology properties. </summary>
         public PipelineTopologyProperties Properties { get; set; }
     }
 }

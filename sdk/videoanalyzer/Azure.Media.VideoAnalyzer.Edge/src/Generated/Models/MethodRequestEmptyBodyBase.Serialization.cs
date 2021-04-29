@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class ItemNonSetRequestBase : IUtf8JsonSerializable
+    public partial class MethodRequestEmptyBodyBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +25,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteEndObject();
         }
 
-        internal static ItemNonSetRequestBase DeserializeItemNonSetRequestBase(JsonElement element)
+        internal static MethodRequestEmptyBodyBase DeserializeMethodRequestEmptyBodyBase(JsonElement element)
         {
             if (element.TryGetProperty("methodName", out JsonElement discriminator))
             {
@@ -60,7 +60,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ItemNonSetRequestBase(methodName, apiVersion.Value, name);
+            return new MethodRequestEmptyBodyBase(methodName, apiVersion.Value, name);
         }
     }
 }

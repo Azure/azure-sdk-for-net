@@ -13,7 +13,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     public partial class EndpointBase
     {
         /// <summary> Initializes a new instance of EndpointBase. </summary>
-        /// <param name="url"> Url for the endpoint. </param>
+        /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public EndpointBase(string url)
         {
@@ -26,9 +26,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of EndpointBase. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="credentials"> Polymorphic credentials to be presented to the endpoint. </param>
-        /// <param name="url"> Url for the endpoint. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="credentials"> Credentials to be presented to the endpoint. </param>
+        /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
         internal EndpointBase(string type, CredentialsBase credentials, string url)
         {
             Type = type;
@@ -36,11 +36,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Url = url;
         }
 
-        /// <summary> The discriminator for derived types. </summary>
+        /// <summary> Type discriminator for the derived types. </summary>
         internal string Type { get; set; }
-        /// <summary> Polymorphic credentials to be presented to the endpoint. </summary>
+        /// <summary> Credentials to be presented to the endpoint. </summary>
         public CredentialsBase Credentials { get; set; }
-        /// <summary> Url for the endpoint. </summary>
+        /// <summary> The endpoint URL for Video Analyzer to connect to. </summary>
         public string Url { get; set; }
     }
 }

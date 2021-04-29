@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Base Class for Method Requests. </summary>
+    /// <summary> Base class for direct method calls. </summary>
     public partial class MethodRequest
     {
         /// <summary> Initializes a new instance of MethodRequest. </summary>
@@ -17,14 +17,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of MethodRequest. </summary>
-        /// <param name="methodName"> method name. </param>
-        /// <param name="apiVersion"> api version. </param>
+        /// <param name="methodName"> Direct method method name. </param>
+        /// <param name="apiVersion"> Video Analyzer API version. </param>
         internal MethodRequest(string methodName, string apiVersion)
         {
             MethodName = methodName;
             ApiVersion = apiVersion;
         }
-        /// <summary> api version. </summary>
+        /// <summary> Video Analyzer API version. </summary>
         public string ApiVersion { get; set; }
     }
 }

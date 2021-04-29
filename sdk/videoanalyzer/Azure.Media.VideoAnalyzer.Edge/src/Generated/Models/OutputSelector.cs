@@ -16,8 +16,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of OutputSelector. </summary>
-        /// <param name="property"> The stream property to compare with. </param>
-        /// <param name="operator"> The operator to compare streams by. </param>
+        /// <param name="property"> The property of the data stream to be used as the selection criteria. </param>
+        /// <param name="operator"> The operator to compare properties by. </param>
         /// <param name="value"> Value to compare against. </param>
         internal OutputSelector(OutputSelectorProperty? property, OutputSelectorOperator? @operator, string value)
         {
@@ -26,9 +26,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Value = value;
         }
 
-        /// <summary> The stream property to compare with. </summary>
+        /// <summary> The property of the data stream to be used as the selection criteria. </summary>
         public OutputSelectorProperty? Property { get; set; }
-        /// <summary> The operator to compare streams by. </summary>
+        /// <summary> The operator to compare properties by. </summary>
         public OutputSelectorOperator? Operator { get; set; }
         /// <summary> Value to compare against. </summary>
         public string Value { get; set; }

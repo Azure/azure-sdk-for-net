@@ -9,12 +9,12 @@ using System;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Http header service credentials. </summary>
+    /// <summary> HTTP header credentials. </summary>
     public partial class HttpHeaderCredentials : CredentialsBase
     {
         /// <summary> Initializes a new instance of HttpHeaderCredentials. </summary>
         /// <param name="headerName"> HTTP header name. </param>
-        /// <param name="headerValue"> HTTP header value. Please use a parameter so that the actual value is not returned on PUT or GET requests. </param>
+        /// <param name="headerValue"> HTTP header value. It is recommended that this value is parameterized as a secret string in order to prevent this value to be returned as part of the resource on API requests. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> or <paramref name="headerValue"/> is null. </exception>
         public HttpHeaderCredentials(string headerName, string headerValue)
         {
@@ -33,9 +33,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of HttpHeaderCredentials. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="headerName"> HTTP header name. </param>
-        /// <param name="headerValue"> HTTP header value. Please use a parameter so that the actual value is not returned on PUT or GET requests. </param>
+        /// <param name="headerValue"> HTTP header value. It is recommended that this value is parameterized as a secret string in order to prevent this value to be returned as part of the resource on API requests. </param>
         internal HttpHeaderCredentials(string type, string headerName, string headerValue) : base(type)
         {
             HeaderName = headerName;
@@ -45,7 +45,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> HTTP header name. </summary>
         public string HeaderName { get; set; }
-        /// <summary> HTTP header value. Please use a parameter so that the actual value is not returned on PUT or GET requests. </summary>
+        /// <summary> HTTP header value. It is recommended that this value is parameterized as a secret string in order to prevent this value to be returned as part of the resource on API requests. </summary>
         public string HeaderValue { get; set; }
     }
 }

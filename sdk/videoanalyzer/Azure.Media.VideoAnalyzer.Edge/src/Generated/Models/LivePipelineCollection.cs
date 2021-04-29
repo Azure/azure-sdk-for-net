@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> A collection of streams. </summary>
+    /// <summary> A collection of live pipelines. </summary>
     public partial class LivePipelineCollection
     {
         /// <summary> Initializes a new instance of LivePipelineCollection. </summary>
@@ -20,17 +20,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of LivePipelineCollection. </summary>
-        /// <param name="value"> A collection of live pipelines. </param>
-        /// <param name="continuationToken"> A continuation token to use in subsequent calls to enumerate through the live pipeline collection. This is used when the collection contains too many results to return in one response. </param>
+        /// <param name="value"> List of live pipelines. </param>
+        /// <param name="continuationToken"> A continuation token to be used in subsequent calls when enumerating through the collection. This is returned when the collection results won&apos;t fit in a single response. </param>
         internal LivePipelineCollection(IList<LivePipeline> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
         }
 
-        /// <summary> A collection of live pipelines. </summary>
+        /// <summary> List of live pipelines. </summary>
         public IList<LivePipeline> Value { get; }
-        /// <summary> A continuation token to use in subsequent calls to enumerate through the live pipeline collection. This is used when the collection contains too many results to return in one response. </summary>
+        /// <summary> A continuation token to be used in subsequent calls when enumerating through the collection. This is returned when the collection results won&apos;t fit in a single response. </summary>
         public string ContinuationToken { get; set; }
     }
 }

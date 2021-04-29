@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> The stream property to compare with. </summary>
+    /// <summary> The property of the data stream to be used as the selection criteria. </summary>
     public readonly partial struct OutputSelectorProperty : IEquatable<OutputSelectorProperty>
     {
         private readonly string _value;
@@ -24,7 +24,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         private const string MediaTypeValue = "mediaType";
 
-        /// <summary> The stream&apos;s MIME type or subtype. </summary>
+        /// <summary> The stream&apos;s MIME type or subtype: audio, video or application. </summary>
         public static OutputSelectorProperty MediaType { get; } = new OutputSelectorProperty(MediaTypeValue);
         /// <summary> Determines if two <see cref="OutputSelectorProperty"/> values are the same. </summary>
         public static bool operator ==(OutputSelectorProperty left, OutputSelectorProperty right) => left.Equals(right);

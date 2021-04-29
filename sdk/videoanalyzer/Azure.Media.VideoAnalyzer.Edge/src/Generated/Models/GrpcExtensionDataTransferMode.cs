@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> How frame data should be transmitted to the inference engine. </summary>
+    /// <summary> Data transfer mode: embedded or sharedMemory. </summary>
     public readonly partial struct GrpcExtensionDataTransferMode : IEquatable<GrpcExtensionDataTransferMode>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         private const string EmbeddedValue = "embedded";
         private const string SharedMemoryValue = "sharedMemory";
 
-        /// <summary> Frames are transferred embedded into the gRPC messages. </summary>
+        /// <summary> Media samples are embedded into the gRPC messages. This mode is less efficient but it requires a simpler implementations and can be used with plugins which are not on the same node as the Video Analyzer module. </summary>
         public static GrpcExtensionDataTransferMode Embedded { get; } = new GrpcExtensionDataTransferMode(EmbeddedValue);
-        /// <summary> Frames are transferred through shared memory. </summary>
+        /// <summary> Media samples are made available through shared memory. This mode enables efficient data transfers but it requires that the extension plugin to be co-located on the same node and sharing the same shared memory space. </summary>
         public static GrpcExtensionDataTransferMode SharedMemory { get; } = new GrpcExtensionDataTransferMode(SharedMemoryValue);
         /// <summary> Determines if two <see cref="GrpcExtensionDataTransferMode"/> values are the same. </summary>
         public static bool operator ==(GrpcExtensionDataTransferMode left, GrpcExtensionDataTransferMode right) => left.Equals(right);

@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Defines the Spatial Analysis operation to be used in the Cognitive Services Vision processor. </summary>
+    /// <summary> Base class for Azure Cognitive Services Spatial Analysis operations. </summary>
     public partial class SpatialAnalysisOperationBase
     {
         /// <summary> Initializes a new instance of SpatialAnalysisOperationBase. </summary>
@@ -16,13 +16,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of SpatialAnalysisOperationBase. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
+        /// <param name="type"> The Type discriminator for the derived types. </param>
         internal SpatialAnalysisOperationBase(string type)
         {
             Type = type;
         }
 
-        /// <summary> The discriminator for derived types. </summary>
+        /// <summary> The Type discriminator for the derived types. </summary>
         internal string Type { get; set; }
     }
 }

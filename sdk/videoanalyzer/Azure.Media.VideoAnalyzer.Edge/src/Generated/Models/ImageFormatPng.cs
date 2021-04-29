@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Encoding settings for Png images. </summary>
+    /// <summary> PNG image encoding. </summary>
     public partial class ImageFormatPng : ImageFormatProperties
     {
         /// <summary> Initializes a new instance of ImageFormatPng. </summary>
@@ -17,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of ImageFormatPng. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
         internal ImageFormatPng(string type) : base(type)
         {
             Type = type ?? "#Microsoft.VideoAnalyzer.ImageFormatPng";

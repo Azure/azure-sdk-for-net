@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Defines a Spatial Analysis Person Count operation eventing configuration. </summary>
+    /// <summary> Defines a Spatial Analysis person count operation eventing configuration. </summary>
     public partial class SpatialAnalysisPersonCountEvent : SpatialAnalysisOperationEventBase
     {
         /// <summary> Initializes a new instance of SpatialAnalysisPersonCountEvent. </summary>

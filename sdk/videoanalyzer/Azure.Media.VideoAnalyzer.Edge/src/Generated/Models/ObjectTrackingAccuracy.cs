@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Enumeration that controls the accuracy of the tracker. </summary>
+    /// <summary> Object tracker accuracy: low, medium, high. Higher accuracy leads to higher CPU consumption in average. </summary>
     public readonly partial struct ObjectTrackingAccuracy : IEquatable<ObjectTrackingAccuracy>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         private const string MediumValue = "medium";
         private const string HighValue = "high";
 
-        /// <summary> Low Accuracy. </summary>
+        /// <summary> Low accuracy. </summary>
         public static ObjectTrackingAccuracy Low { get; } = new ObjectTrackingAccuracy(LowValue);
-        /// <summary> Medium Accuracy. </summary>
+        /// <summary> Medium accuracy. </summary>
         public static ObjectTrackingAccuracy Medium { get; } = new ObjectTrackingAccuracy(MediumValue);
-        /// <summary> High Accuracy. </summary>
+        /// <summary> High accuracy. </summary>
         public static ObjectTrackingAccuracy High { get; } = new ObjectTrackingAccuracy(HighValue);
         /// <summary> Determines if two <see cref="ObjectTrackingAccuracy"/> values are the same. </summary>
         public static bool operator ==(ObjectTrackingAccuracy left, ObjectTrackingAccuracy right) => left.Equals(right);

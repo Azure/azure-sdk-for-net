@@ -10,14 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> A processor that allows the pipeline topology to send video frames (mostly at low frame rates e.g. &lt;5 fps) to an external inference container over an HTTP-based RESTful API. Inference results are relayed to downstream nodes. </summary>
+    /// <summary> HTTP extension processor allows pipeline extension plugins to be connected to the pipeline through over the HTTP protocol. Extension plugins must act as an HTTP server. Please see https://aka.ms/ava-extension-http for details. </summary>
     public partial class HttpExtension : ExtensionProcessorBase
     {
         /// <summary> Initializes a new instance of HttpExtension. </summary>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
-        /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
-        /// <param name="image"> Describes the parameters of the image that is sent as input to the endpoint. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="endpoint"> Endpoint details of the pipeline extension plugin. </param>
+        /// <param name="image"> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/>, or <paramref name="image"/> is null. </exception>
         public HttpExtension(string name, IEnumerable<NodeInput> inputs, EndpointBase endpoint, ImageProperties image) : base(name, inputs, endpoint, image)
         {
@@ -42,12 +42,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of HttpExtension. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
-        /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
-        /// <param name="image"> Describes the parameters of the image that is sent as input to the endpoint. </param>
-        /// <param name="samplingOptions"> Describes the sampling options to be applied when forwarding samples to the extension. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
+        /// <param name="endpoint"> Endpoint details of the pipeline extension plugin. </param>
+        /// <param name="image"> Image transformations and formatting options to be applied to the video frame(s) prior submission to the pipeline extension plugin. </param>
+        /// <param name="samplingOptions"> Media sampling parameters that define how often media is submitted to the extension plugin. </param>
         internal HttpExtension(string type, string name, IList<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions) : base(type, name, inputs, endpoint, image, samplingOptions)
         {
             Type = type ?? "#Microsoft.VideoAnalyzer.HttpExtension";

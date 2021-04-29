@@ -11,12 +11,12 @@ using System.Linq;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> A node that represents the desired processing of media in a topology. Takes media and/or events as inputs, and emits media and/or event as output. </summary>
+    /// <summary> Base class for topology processor nodes. </summary>
     public partial class ProcessorNodeBase
     {
         /// <summary> Initializes a new instance of ProcessorNodeBase. </summary>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
         public ProcessorNodeBase(string name, IEnumerable<NodeInput> inputs)
         {
@@ -34,9 +34,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of ProcessorNodeBase. </summary>
-        /// <param name="type"> The discriminator for derived types. </param>
-        /// <param name="name"> The name for this processor node. </param>
-        /// <param name="inputs"> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </param>
+        /// <param name="type"> Type discriminator for the derived types. </param>
+        /// <param name="name"> Node name. Must be unique within the topology. </param>
+        /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         internal ProcessorNodeBase(string type, string name, IList<NodeInput> inputs)
         {
             Type = type;
@@ -44,11 +44,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Inputs = inputs;
         }
 
-        /// <summary> The discriminator for derived types. </summary>
+        /// <summary> Type discriminator for the derived types. </summary>
         internal string Type { get; set; }
-        /// <summary> The name for this processor node. </summary>
+        /// <summary> Node name. Must be unique within the topology. </summary>
         public string Name { get; set; }
-        /// <summary> An array of the names of the other nodes in the topology, the outputs of which are used as input for this processor node. </summary>
+        /// <summary> An array of upstream node references within the topology to be used as inputs for this node. </summary>
         public IList<NodeInput> Inputs { get; }
     }
 }
