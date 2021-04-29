@@ -402,6 +402,14 @@
         "type": "string",
         "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob)]"
     },
+    "PRIMARY_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX": {
+        "type": "string",
+        "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.file)]"
+    },
+    "PRIMARY_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX": {
+        "type": "string",
+        "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.queue)]"
+    },
     "SECONDARY_STORAGE_ACCOUNT_NAME": {
       "type": "string",
       "value": "[variables('secondaryAccountName')]"
