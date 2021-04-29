@@ -216,8 +216,6 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         30)
                       .ConfigureAwait(false);
 
-                // Query for temperature events with two calculateions. First with the temperature value as is, and the second
-                // with the temperature value multiplied by 2.
                 DateTimeOffset now = Recording.UtcNow;
                 DateTimeOffset endTime = now.AddMinutes(10);
                 DateTimeOffset startTime = now.AddMinutes(-10);

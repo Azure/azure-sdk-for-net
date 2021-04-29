@@ -5,6 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Azure.Identity;
 using CommandLine;
+using Microsoft.Azure.Devices;
+using Microsoft.Azure.Devices.Client;
 
 namespace Azure.IoT.TimeSeriesInsights.Samples
 {
@@ -27,12 +29,15 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                         Environment.Exit(1);
                     });
 
-            // Instantiate the client
+            // Instantiate the Time Series Insights client
             TimeSeriesInsightsClient tsiClient = GetTimeSeriesInsightsClient(
                 options.TenantId,
                 options.ClientId,
                 options.ClientSecret,
                 options.TsiEnvironmentFqdn);
+
+            // Instantiate an IoT Hub device client client in order to send telemetry to the hub
+            DeviceClient deviceClient = await GetDeviceClientAsync(options.IoTHubConnectionString).ConfigureAwait(false);
 
             // Run the samples
 
@@ -44,6 +49,9 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             var tsiModelSettingsSamples = new ModelSettingsSamples();
             await tsiModelSettingsSamples.RunSamplesAsync(tsiClient);
+
+            var querySamples = new QuerySamples();
+            await querySamples.RunSamplesAsync(tsiClient, deviceClient);
         }
 
         /// <summary>
@@ -71,6 +79,27 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #endregion Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret
 
             return client;
+        }
+
+        private static async Task<DeviceClient> GetDeviceClientAsync(string iotHubConnectionString)
+        {
+            // Create a device
+            using var registryManager = RegistryManager.CreateFromConnectionString(iotHubConnectionString);
+            string deviceId = Guid.NewGuid().ToString();
+            var requestDevice = new Device(deviceId);
+
+            // Add the device to the device manager
+            Device device = await registryManager.AddDeviceAsync(requestDevice).ConfigureAwait(false);
+            await Task.Delay(5000).ConfigureAwait(false);
+            await registryManager.CloseAsync().ConfigureAwait(false);
+
+            // Create a device client
+            string iotHubHostName = HostNameHelper.GetHostName(iotHubConnectionString);
+            string deviceConnectinString = $"HostName={iotHubHostName};DeviceId={device.Id};SharedAccessKey={device.Authentication.SymmetricKey.PrimaryKey}";
+            DeviceClient deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectinString, Microsoft.Azure.Devices.Client.TransportType.Mqtt);
+            await deviceClient.OpenAsync().ConfigureAwait(false);
+
+            return deviceClient;
         }
     }
 }

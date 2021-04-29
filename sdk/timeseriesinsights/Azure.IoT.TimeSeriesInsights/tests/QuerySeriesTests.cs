@@ -52,7 +52,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 // Act
 
-                // Query for temperature events with two calculateions. First with the temperature value as is, and the second
+                // Query for temperature events with two calculations. First with the temperature value as is, and the second
                 // with the temperature value multiplied by 2.
                 DateTimeOffset now = Recording.UtcNow;
                 DateTimeOffset endTime = now.AddMinutes(10);
