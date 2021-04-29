@@ -61,7 +61,7 @@ namespace Azure.Monitor.Query
         public string Filter { get; set; }
 
         /// <summary>
-        /// Gets ot sets the aggregation to use for sorting results and the direction of the sort.
+        /// Gets or sets the aggregation to use for sorting results and the direction of the sort.
         /// Only one order can be specified.
         /// Examples: sum asc.
         /// </summary>
