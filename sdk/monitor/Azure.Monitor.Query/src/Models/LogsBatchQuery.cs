@@ -37,7 +37,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Adds query to the batch. Results can be retrieved after the query is submitted via the <see cref="SubmitAsync"/> call.
+        /// Adds the specified query to the batch. Results can be retrieved after the query is submitted via the <see cref="SubmitAsync"/> call.
         /// </summary>
         /// <param name="workspaceId">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
