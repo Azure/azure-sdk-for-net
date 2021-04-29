@@ -1049,7 +1049,38 @@ namespace Azure.Storage.Blobs.Models
            bool? isLatestVersion = default,
            IDictionary<string, string> metadata = default,
            IDictionary<string, string> tags = default,
-           List<ObjectReplicationPolicy> objectReplicationSourcePolicies = default)
+           List<ObjectReplicationPolicy> objectReplicationSourcePolicies = default,
+           bool? hasVersionsOnly = default)
+        {
+            return new BlobItem()
+            {
+                Name = name,
+                Deleted = deleted,
+                Properties = properties,
+                Snapshot = snapshot,
+                VersionId = versionId,
+                IsLatestVersion = isLatestVersion,
+                Metadata = metadata,
+                Tags = tags,
+                ObjectReplicationSourceProperties = objectReplicationSourcePolicies,
+                HasVersionsOnly = hasVersionsOnly
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobItem instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobItem BlobItem(
+           string name,
+           bool deleted,
+           BlobItemProperties properties,
+           string snapshot,
+           string versionId,
+           bool? isLatestVersion,
+           IDictionary<string, string> metadata,
+           IDictionary<string, string> tags,
+           List<ObjectReplicationPolicy> objectReplicationSourcePolicies)
         {
             return new BlobItem()
             {

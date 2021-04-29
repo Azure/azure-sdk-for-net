@@ -28,12 +28,12 @@ namespace Azure.Storage.Blobs
         /// <summary> Initializes a new instance of AppendBlobRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
+        /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="containerName"> The container name. </param>
         /// <param name="blob"> The blob name. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="containerName"/>, <paramref name="blob"/>, or <paramref name="version"/> is null. </exception>
-        public AppendBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string blob, string version = "2020-08-04")
+        public AppendBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string containerName, string blob, string version = "2020-10-02")
         {
             if (url == null)
             {

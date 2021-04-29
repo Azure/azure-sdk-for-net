@@ -41,6 +41,11 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// tags.
         /// </summary>
-        Tags
+        Tags,
+
+        /// <summary>
+        /// deleted with versions.
+        /// </summary>
+        DeletedWithVersions,
     }
 }
