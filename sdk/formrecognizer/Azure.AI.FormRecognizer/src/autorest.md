@@ -11,6 +11,25 @@ require:
     - https://github.com/Azure/azure-rest-api-specs/blob/5a260d47021d8278c26dd6f946f4e6b97e0cd023/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
 ```
 
+### Make the API version parameterized so we generate a multi-versioned API
+
+This should be fixed in the swagger, but we're working around it locally for now.
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-parameterized-host"]
+  transform: >
+    $.hostTemplate = "{endpoint}/formrecognizer/{apiVersion}";
+    $.parameters.push({
+      "name": "apiVersion",
+      "description": "Form Recognizer API version (for example: v2.0).",
+      "x-ms-parameter-location": "client",
+      "required": true,
+      "type": "string",
+      "in": "path",
+      "x-ms-skip-url-encoding": true
+    });
+```
 
 ### Make AnalyzeResult.readResult optional
 This is a temporary work-around
