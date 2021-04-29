@@ -37,10 +37,10 @@ The sample implements two scenarios:
   are then picked up from the dead-letter queue, are automatically corrected, and
   resubmitted.
 
-The sample code is further documented inline in the [Program.cs](Program.cs) C# file.
+The sample code is further documented inline in the `Program.cs` C# file.
 
 ## Prerequisites
-In order to run the sample, you will need a Service Bus Namespace. For more information on getting setup see the [Getting Started]((https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus#getting-started)) section of the Service Bus library Readme. Once you have a Service Bus Namespace, you will need to create a queue that can be used for the sample. 
+In order to run the sample, you will need a Service Bus Namespace. For more information on getting setup see the [Getting Started](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus#getting-started) section of the Service Bus library Readme. Once you have a Service Bus Namespace, you will need to create a queue that can be used for the sample. 
 
 ## Building the Sample
 
@@ -59,7 +59,7 @@ To build the sample:
 You can either run the executable you just build, or build and run the project at the same time. There are two ways to authenticate in the sample.
 
 ### Use Azure Activity Directory
-You can use any of the [authentication mechanisms](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme?view=azure-dotnet) that the `DefaultAzureCredential` from the Azure.Identity supports.
+You can use any of the [authentication mechanisms](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet) that the `DefaultAzureCredential` from the Azure.Identity supports.
 
 To run the sample using Managed Identity:
 
