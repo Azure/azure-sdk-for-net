@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Renames a sparkJobDefinition. </summary>
     public partial class SparkJobDefinitionRenameSparkJobDefinitionOperation : Operation<Response>, IOperationSource<Response>
     {
-        private readonly ArmOperationHelpers<Response> _operation;
+        private readonly OperationInternals<Response> _operation;
 
         /// <summary> Initializes a new instance of SparkJobDefinitionRenameSparkJobDefinitionOperation for mocking. </summary>
         protected SparkJobDefinitionRenameSparkJobDefinitionOperation()
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal SparkJobDefinitionRenameSparkJobDefinitionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SparkJobDefinitionRenameSparkJobDefinitionOperation");
+            _operation = new OperationInternals<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SparkJobDefinitionRenameSparkJobDefinitionOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;
