@@ -40,8 +40,6 @@ namespace Azure.Identity.Tests
     //
     public class UsernamePasswordCredentialLiveTests : IdentityRecordedTestBase
     {
-        private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
-
         public UsernamePasswordCredentialLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -64,6 +62,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task GetToken()
         {
+            var ClientId = TestEnvironment.IdentityClientId;
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
@@ -80,6 +79,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateNoContext()
         {
+            var ClientId = TestEnvironment.IdentityClientId;
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
@@ -99,6 +99,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithContext()
         {
+            var ClientId = TestEnvironment.IdentityClientId;
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
