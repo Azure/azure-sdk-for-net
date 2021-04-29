@@ -11,11 +11,13 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Azure.WebJobs.Host.Timers;
+using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.TestCommon
@@ -54,6 +56,24 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
 
             TOptions options = host.Services.GetRequiredService<IOptions<TOptions>>().Value;
             return options;
+        }
+
+        /// <summary>
+        /// Converts an options instance into a dictionary that can be passed into AddInMemoryCollection by
+        /// calling the options Format method, parsing into a JObject, and then collecting the child tokens of the
+        /// JObject.
+        /// </summary>
+        /// <param name="options">The options instance to convert.</param>
+        /// <param name="extensionPath">The extension path for the extension.</param>
+        /// <returns>A dictionary containing the configuration.</returns>
+        public static Dictionary<string, string> ToInMemoryCollection(this IOptionsFormatter options, string extensionPath)
+        {
+            string format = options.Format();
+            JObject jobj = JObject.Parse(format);
+            return jobj
+                .SelectTokens("$..*")
+                .Where(t => !t.HasValues)
+                .ToDictionary(t => $"{extensionPath}:{t.Path.Replace('.', ':')}", t => t.ToString());
         }
 
         // Test error if not reached within a timeout

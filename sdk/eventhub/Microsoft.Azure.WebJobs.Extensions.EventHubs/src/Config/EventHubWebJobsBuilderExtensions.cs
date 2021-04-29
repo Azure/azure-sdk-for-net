@@ -74,7 +74,7 @@ namespace Microsoft.Extensions.Hosting
                     }
 
                     var proxy = section.GetValue<string>("WebProxy");
-                    if (proxy != null)
+                    if (!string.IsNullOrEmpty(proxy))
                     {
                         options.WebProxy = new WebProxy(proxy);
                     }

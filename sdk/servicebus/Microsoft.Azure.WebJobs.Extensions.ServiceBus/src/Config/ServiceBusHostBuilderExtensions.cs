@@ -76,7 +76,7 @@ namespace Microsoft.Extensions.Hosting
                         options.MaxConcurrentSessions);
 
                     var proxy = section.GetValue<string>("WebProxy");
-                    if (proxy != null)
+                    if (!string.IsNullOrEmpty(proxy))
                     {
                         options.WebProxy = new WebProxy(proxy);
                     }

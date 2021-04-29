@@ -8,7 +8,6 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
-using Microsoft.Azure.WebJobs.Extensions.Amqp.Config;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -59,7 +58,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         ///   A proxy cannot be used for communication over TCP; if web sockets are not in
         ///   use, specifying a proxy is an invalid option.
         /// </remarks>
-        [JsonConverter(typeof(WebProxyConverter))]
         public IWebProxy WebProxy
         {
             get => ConnectionOptions.Proxy;
@@ -197,7 +195,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     { nameof(MaxBatchSize), MaxBatchSize },
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(TransportType),  TransportType.ToString()},
-                    { nameof(WebProxy),  WebProxy?.GetProxy(new Uri("https://servicebus.windows.net")).ToString() ?? string.Empty },
+                    { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },
+                    { nameof(CustomEndpointAddress), CustomEndpointAddress?.AbsoluteUri },
                     { nameof(ClientRetryOptions), ConstructRetryOptions() },
                     { nameof(TrackLastEnqueuedEventProperties), TrackLastEnqueuedEventProperties },
                     { nameof(PrefetchCount), PrefetchCount },

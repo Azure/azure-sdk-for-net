@@ -22,6 +22,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         private ILoggerFactory _loggerFactory;
         private TestLoggerProvider _loggerProvider;
         private readonly string _template = " An exception of type '{0}' was thrown. This exception type is typically a result of Event Hub processor rebalancing or a transient error and can be safely ignored.";
+        private const string ExtensionPath = "AzureWebJobs:Extensions:EventHubs";
 
         [SetUp]
         public void SetUp()
@@ -52,16 +53,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(EventHubsRetryMode.Fixed, options.ClientRetryOptions.Mode);
             Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, options.TransportType);
             Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)options.WebProxy).Address.AbsoluteUri);
+            Assert.AreEqual("http://customendpoint.com/", options.CustomEndpointAddress.ToString());
         }
 
         [Test]
         public void ConfigureOptions_Format_Returns_Expected()
         {
             EventHubOptions options = CreateOptionsFromConfig();
+            var dict = options.ToInMemoryCollection(ExtensionPath);
 
-            string format = ((IOptionsFormatter)options).Format();
-            JObject iObj = JObject.Parse(format);
-            EventHubOptions result = iObj.ToObject<EventHubOptions>();
+            EventHubOptions result = TestHelpers.GetConfiguredOptions<EventHubOptions>(b =>
+            {
+                b.AddEventHubs();
+            }, dict);
 
             Assert.AreEqual(123, result.MaxBatchSize);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
@@ -78,6 +82,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(EventHubsRetryMode.Fixed, result.ClientRetryOptions.Mode);
             Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, result.TransportType);
             Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)result.WebProxy).Address.AbsoluteUri);
+            Assert.AreEqual("http://customendpoint.com/", result.CustomEndpointAddress.AbsoluteUri);
         }
 
         [Test]
@@ -188,7 +193,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [Test]
         public void ParseInitialOffsetWithInvalidTime_ThrowsInvalidOperationException()
         {
-            string extensionPath = "AzureWebJobs:Extensions:EventHubs";
             Assert.That(
                 () => TestHelpers.GetConfiguredOptions<EventHubOptions>(
                     b =>
@@ -197,8 +201,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                     },
                     new Dictionary<string, string>
                     {
-                        { $"{extensionPath}:InitialOffsetOptions:Type", "fromEnqueuedTime" },
-                        { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUtc", "not a valid time" },
+                        { $"{ExtensionPath}:InitialOffsetOptions:Type", "fromEnqueuedTime" },
+                        { $"{ExtensionPath}:InitialOffsetOptions:EnqueuedTimeUtc", "not a valid time" },
                     }),
                 Throws.InvalidOperationException);
         }
@@ -224,6 +228,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:ClientRetryOptions:Mode", "0" },
                 { $"{extensionPath}:TransportType", "1" },
                 { $"{extensionPath}:WebProxy", "http://proxyserver:8080/" },
+                { $"{extensionPath}:CustomEndpointAddress", "http://customendpoint.com/" },
             };
 
             return TestHelpers.GetConfiguredOptions<EventHubOptions>(b =>
