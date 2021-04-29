@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
@@ -56,6 +58,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.AreEqual(123, options.MaxConcurrentCalls);
             Assert.False(options.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), options.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(ServiceBusTransportType.AmqpWebSockets, options.TransportType);
+            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)options.WebProxy).Address.AbsoluteUri);
         }
 
         [Test]
@@ -72,6 +76,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.AreEqual(123, result.MaxConcurrentCalls);
             Assert.False(result.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), result.MaxAutoLockRenewalDuration);
+            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)result.WebProxy).Address.AbsoluteUri);
         }
 
         private static ServiceBusOptions CreateOptionsFromConfig()
@@ -85,6 +90,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 { $"{extensionPath}:AutoCompleteMessages", "false" },
                 { $"{extensionPath}:MaxAutoLockRenewalDuration", "00:00:15" },
                 { $"{extensionPath}:MaxConcurrentSessions", "123" },
+                { $"{extensionPath}:TransportType", "AmqpWebSockets" },
+                { $"{extensionPath}:WebProxy", "http://proxyserver:8080/" },
             };
 
             ServiceBusOptions options = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(b =>

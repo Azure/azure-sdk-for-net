@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Net;
 using Azure.Messaging.EventHubs.Consumer;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.EventHubs;
@@ -70,6 +71,12 @@ namespace Microsoft.Extensions.Hosting
                     if (renewInterval != null)
                     {
                         options.LoadBalancingUpdateInterval = renewInterval.Value;
+                    }
+
+                    var proxy = section.GetValue<string>("WebProxy");
+                    if (proxy != null)
+                    {
+                        options.WebProxy = new WebProxy(proxy);
                     }
                 })
                 .BindOptions<EventHubOptions>();

@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Extensions.Amqp.Config;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         ///   A proxy cannot be used for communication over TCP; if web sockets are not in
         ///   use, specifying a proxy is an invalid option.
         /// </remarks>
-        ///
+        [JsonConverter(typeof(WebProxyConverter))]
         public IWebProxy WebProxy { get; set; }
 
         /// <summary>
@@ -160,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 { nameof(RetryOptions), retryOptions },
                 { nameof(TransportType),  TransportType.ToString()},
-                { nameof(WebProxy),  WebProxy?.ToString() ?? string.Empty },
+                { nameof(WebProxy),  WebProxy?.GetProxy(new Uri("https://servicebus.windows.net")).ToString() ?? string.Empty },
                 { nameof(AutoCompleteMessages), AutoCompleteMessages },
                 { nameof(PrefetchCount), PrefetchCount },
                 { nameof(MaxAutoLockRenewalDuration), MaxAutoLockRenewalDuration },

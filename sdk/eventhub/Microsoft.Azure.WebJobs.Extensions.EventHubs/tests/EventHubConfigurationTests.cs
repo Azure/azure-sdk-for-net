@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
@@ -49,7 +50,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(TimeSpan.FromMinutes(1), options.ClientRetryOptions.MaximumDelay);
             Assert.AreEqual(TimeSpan.FromSeconds(90), options.ClientRetryOptions.TryTimeout);
             Assert.AreEqual(EventHubsRetryMode.Fixed, options.ClientRetryOptions.Mode);
-            Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, options.ConnectionOptions.TransportType);
+            Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, options.TransportType);
+            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)options.WebProxy).Address.AbsoluteUri);
         }
 
         [Test]
@@ -74,7 +76,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(TimeSpan.FromMinutes(1), result.ClientRetryOptions.MaximumDelay);
             Assert.AreEqual(TimeSpan.FromSeconds(90), result.ClientRetryOptions.TryTimeout);
             Assert.AreEqual(EventHubsRetryMode.Fixed, result.ClientRetryOptions.Mode);
-            Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, result.ConnectionOptions.TransportType);
+            Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, result.TransportType);
+            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)result.WebProxy).Address.AbsoluteUri);
         }
 
         [Test]
@@ -219,7 +222,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:ClientRetryOptions:MaxDelay", "00:01:00" },
                 { $"{extensionPath}:ClientRetryOptions:TryTimeout", "00:01:30" },
                 { $"{extensionPath}:ClientRetryOptions:Mode", "0" },
-                { $"{extensionPath}:ConnectionOptions:TransportType", "1" },
+                { $"{extensionPath}:TransportType", "1" },
+                { $"{extensionPath}:WebProxy", "http://proxyserver:8080/" },
             };
 
             return TestHelpers.GetConfiguredOptions<EventHubOptions>(b =>
