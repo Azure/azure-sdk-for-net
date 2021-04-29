@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.Data.Tables.Tests
 {
-    [ClientTestFixture(serviceVersions: default, additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable })]
     /// <summary>
     /// The suite of tests for the <see cref="TableServiceClient"/> class.
     /// </summary>
@@ -18,6 +17,7 @@ namespace Azure.Data.Tables.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [ClientTestFixture(serviceVersions: default, additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
         public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
@@ -51,7 +51,7 @@ namespace Azure.Data.Tables.Tests
         protected string AccountName;
         protected string AccountKey;
         protected string ConnectionString;
-        private readonly Dictionary<string, string> _cosmosIgnoreTests = new Dictionary<string, string>
+        private readonly Dictionary<string, string> _cosmosIgnoreTests = new()
         {
             {"GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints."},
             {"GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints."},

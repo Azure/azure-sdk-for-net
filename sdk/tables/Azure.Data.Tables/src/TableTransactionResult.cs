@@ -10,17 +10,17 @@ namespace Azure.Data.Tables.Models
     /// <summary>
     /// The response from <see cref="TableClient.SubmitTransaction"/> or <see cref="TableClient.SubmitTransactionAsync"/>.
     /// </summary>
-    public class TableBatchResponse
+    public class TableTransactionResult
     {
         private readonly IDictionary<string, HttpMessage> _requestLookup;
 
-        internal TableBatchResponse(Dictionary<string, HttpMessage> requestLookup)
+        internal TableTransactionResult(Dictionary<string, HttpMessage> requestLookup)
         {
             _requestLookup = requestLookup;
         }
 
         /// <summary>
-        /// The number of batch sub-responses contained in this <see cref="TableBatchResponse"/>.
+        /// The number of batch sub-responses contained in this <see cref="TableTransactionResult"/>.
         /// </summary>
         public int ResponseCount => _requestLookup.Keys.Count;
 
@@ -43,11 +43,11 @@ namespace Azure.Data.Tables.Models
         /// Tries to get the entity that caused the batch operation failure from the <see cref="RequestFailedException"/>.
         /// </summary>
         /// <param name="exception">The exception thrown from <see cref="TableClient.SubmitTransaction"/> or <see cref="TableClient.SubmitTransactionAsync"/>.</param>
-        /// <param name="submittedBatchItems">The submitted list of <see cref="BatchItem"/>. This list should be unchanged since it was submitted via
+        /// <param name="submittedBatchItems">The submitted list of <see cref="TableTransactionAction"/>. This list should be unchanged since it was submitted via
         /// <see cref="TableClient.SubmitTransaction"/> or <see cref="TableClient.SubmitTransactionAsync"/> </param>
         /// <param name="failedEntity">If the return value is <c>true</c>, contains the <see cref="ITableEntity"/> that caused the batch operation to fail.</param>
         /// <returns><c>true</c> if the failed entity was retrieved from the exception, else <c>false</c>.</returns>
-        public static bool TryGetFailedEntityFromException(RequestFailedException exception, List<BatchItem> submittedBatchItems, out ITableEntity failedEntity)
+        public static bool TryGetFailedEntityFromException(RequestFailedException exception, IReadOnlyList<TableTransactionAction> submittedBatchItems, out ITableEntity failedEntity)
         {
             Argument.AssertNotNull(exception, nameof(exception));
             Argument.AssertNotNull(submittedBatchItems, nameof(submittedBatchItems));

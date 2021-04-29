@@ -62,7 +62,7 @@ namespace Azure.Core.Pipeline
                                     {
                                         additionalInfo ??= new Dictionary<string, string>();
                                         additionalInfo[TableConstants.ExceptionData.FailedEntityIndex] = failedEntityIndex.ToString(CultureInfo.InvariantCulture);
-                                        message += $"\nYou can retrieve the entity that caused the error by calling {nameof(TableBatchResponse.TryGetFailedEntityFromException)} and passing this exception instance to the method.";
+                                        message += $"\nYou can retrieve the entity that caused the error by calling {nameof(TableTransactionResult.TryGetFailedEntityFromException)} and passing this exception instance to the method.";
                                     }
                                     break;
                                 }

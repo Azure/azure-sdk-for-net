@@ -1239,13 +1239,13 @@ namespace Azure.Data.Tables
         /// Submits the batch transaction to the service for execution.
         /// The sub-operations contained in the batch will either succeed or fail together as a transaction.
         /// </summary>
-        /// <param name="batchOperations">The <see cref="IEnumerable{T}"/> containing the <see cref="BatchItem"/>s to submit to the service.</param>
+        /// <param name="batchOperations">The <see cref="IEnumerable{T}"/> containing the <see cref="TableTransactionAction"/>s to submit to the service.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns><see cref="Response{T}"/> containing a <see cref="TableBatchResponse"/>.</returns>
+        /// <returns><see cref="Response{T}"/> containing a <see cref="TableTransactionResult"/>.</returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
-        public virtual async Task<Response<TableBatchResponse>> SubmitTransactionAsync(
-            IEnumerable<BatchItem> batchOperations,
+        public virtual async Task<Response<TableTransactionResult>> SubmitTransactionAsync(
+            IEnumerable<TableTransactionAction> batchOperations,
             CancellationToken cancellationToken = default) =>
             await SubmitTransactionInternalAsync(batchOperations, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), true, cancellationToken)
                 .ConfigureAwait(false);
@@ -1254,16 +1254,16 @@ namespace Azure.Data.Tables
         /// Submits the batch transaction to the service for execution.
         /// The sub-operations contained in the batch will either succeed or fail together as a transaction.
         /// </summary>
-        /// <param name="batchOperations">The <see cref="IEnumerable{T}"/> containing the <see cref="BatchItem"/>s to submit to the service.</param>
+        /// <param name="batchOperations">The <see cref="IEnumerable{T}"/> containing the <see cref="TableTransactionAction"/>s to submit to the service.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns><see cref="Response{T}"/> containing a <see cref="TableBatchResponse"/>.</returns>
+        /// <returns><see cref="Response{T}"/> containing a <see cref="TableTransactionResult"/>.</returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
-        public virtual Response<TableBatchResponse> SubmitTransaction(IEnumerable<BatchItem> batchOperations, CancellationToken cancellationToken = default) =>
+        public virtual Response<TableTransactionResult> SubmitTransaction(IEnumerable<TableTransactionAction> batchOperations, CancellationToken cancellationToken = default) =>
             SubmitTransactionInternalAsync(batchOperations, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), false, cancellationToken).EnsureCompleted();
 
-        internal virtual async Task<Response<TableBatchResponse>> SubmitTransactionInternalAsync(
-            IEnumerable<BatchItem> transactionalBatch,
+        internal virtual async Task<Response<TableTransactionResult>> SubmitTransactionInternalAsync(
+            IEnumerable<TableTransactionAction> transactionalBatch,
             Guid batchId,
             Guid changesetId,
             bool async,
@@ -1274,7 +1274,7 @@ namespace Azure.Data.Tables
             try
             {
                 Argument.AssertNotNull(transactionalBatch, nameof(transactionalBatch));
-                List<BatchItem> batchItems = transactionalBatch.ToList();
+                List<TableTransactionAction> batchItems = transactionalBatch.ToList();
                 if (!batchItems.Any())
                 {
                     throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchIsEmpty);
@@ -1300,7 +1300,7 @@ namespace Azure.Data.Tables
                     requestLookup[batchItems[i].Entity.RowKey].Response = response.Value[i];
                 }
 
-                return Response.FromValue(new TableBatchResponse(requestLookup), response.GetRawResponse());
+                return Response.FromValue(new TableTransactionResult(requestLookup), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1312,11 +1312,10 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Builds an ordered list of <see cref="HttpMessage"/>s containing the batch sub-requests.
         /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns></returns>
         private MultipartContent BuildChangeSet(
             TableRestClient batchOperations,
-            IEnumerable<BatchItem> batch,
+            IEnumerable<TableTransactionAction> batch,
             Dictionary<string, HttpMessage> requestLookup,
             Guid batchId,
             Guid changesetId)
@@ -1326,25 +1325,25 @@ namespace Azure.Data.Tables
             foreach (var item in batch)
             {
                 //var item = batch._requestLookup[key];
-                HttpMessage message = item.BatchOperation switch
+                HttpMessage message = item.ActionType switch
                 {
-                    BatchOperation.Add => batchOperations.CreateInsertEntityRequest(
+                    TableTransactionActionType.Add => batchOperations.CreateInsertEntityRequest(
                         Name,
                         null,
                         _returnNoContent,
                         item.Entity.ToOdataAnnotatedDictionary(),
                         new QueryOptions { Format = _defaultQueryOptions.Format!.Value }),
-                    BatchOperation.Delete => batchOperations.CreateDeleteEntityRequest(
+                    TableTransactionActionType.Delete => batchOperations.CreateDeleteEntityRequest(
                         Name,
                         item.Entity.PartitionKey,
                         item.Entity.RowKey,
                         item.ETag == default ? ETag.All.ToString() : item.ETag.ToString(),
                         null,
                         new QueryOptions { Format = _defaultQueryOptions.Format!.Value }),
-                    BatchOperation.UpdateReplace => CreateUpdateOrMergeRequest(batchOperations, item.Entity, TableUpdateMode.Replace, item.ETag),
-                    BatchOperation.UpdateMerge => CreateUpdateOrMergeRequest(batchOperations, item.Entity, TableUpdateMode.Merge, item.ETag),
-                    BatchOperation.UpsertReplace => CreateUpdateOrMergeRequest(batchOperations, item.Entity, TableUpdateMode.Replace),
-                    BatchOperation.UpsertMerge => CreateUpdateOrMergeRequest(batchOperations, item.Entity, TableUpdateMode.Merge),
+                    TableTransactionActionType.UpdateReplace => CreateUpdateOrMergeRequest(batchOperations, item.Entity, TableUpdateMode.Replace, item.ETag),
+                    TableTransactionActionType.UpdateMerge => CreateUpdateOrMergeRequest(batchOperations, item.Entity, TableUpdateMode.Merge, item.ETag),
+                    TableTransactionActionType.UpsertReplace => CreateUpdateOrMergeRequest(batchOperations, item.Entity, TableUpdateMode.Replace),
+                    TableTransactionActionType.UpsertMerge => CreateUpdateOrMergeRequest(batchOperations, item.Entity, TableUpdateMode.Merge),
                     _ => throw new InvalidOperationException("Unknown request type.")
                 };
                 requestLookup[item.Entity.RowKey] = message;

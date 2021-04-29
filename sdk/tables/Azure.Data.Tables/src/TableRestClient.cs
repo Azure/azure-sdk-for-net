@@ -81,7 +81,8 @@ namespace Azure.Data.Tables
                             return Response.FromValue(responses.ToList(), message.Response);
                         }
 
-                        Exception ex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(failedSubResponse).ConfigureAwait(false);
+                        Exception rfex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(failedSubResponse).ConfigureAwait(false);
+                        var ex = new TableTransactionFailedException(rfex);
                         throw ex;
                     }
                 default:
@@ -119,7 +120,8 @@ namespace Azure.Data.Tables
                             return Response.FromValue(responses.ToList(), message.Response);
                         }
 
-                        var ex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
+                        var rfex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
+                        var ex = new TableTransactionFailedException(rfex);
                         throw ex;
                     }
                 default:

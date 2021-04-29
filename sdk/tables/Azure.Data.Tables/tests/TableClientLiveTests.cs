@@ -1131,12 +1131,12 @@ namespace Azure.Data.Tables.Tests
             var entitiesToCreate = CreateCustomTableEntities(PartitionKeyValue, 5);
 
             // Create the batch.
-            var batch = new List<BatchItem>();
+            var batch = new List<TableTransactionAction>();
             client.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
             // Add the entities to the batch.
-            batch.AddRange(entitiesToCreate.Select(e => new BatchItem(BatchOperation.Add, e)));
-            TableBatchResponse response = await client.SubmitTransactionAsync(batch).ConfigureAwait(false);
+            batch.AddRange(entitiesToCreate.Select(e => new TableTransactionAction(TableTransactionActionType.Add, e)));
+            TableTransactionResult response = await client.SubmitTransactionAsync(batch).ConfigureAwait(false);
 
             foreach (var entity in entitiesToCreate)
             {
@@ -1168,30 +1168,30 @@ namespace Azure.Data.Tables.Tests
             await client.AddEntityAsync(entitiesToCreate[2]).ConfigureAwait(false);
 
             // Create the batch.
-            List<BatchItem> batch = new();
+            List<TableTransactionAction> batch = new();
             client.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
             // Add a Merge operation to the entity we are adding.
             var mergeEntity = new TableEntity(PartitionKeyValue, entitiesToCreate[0].RowKey);
             mergeEntity.Add("MergedProperty", "foo");
-            batch.Add(new BatchItem(BatchOperation.UpdateMerge, mergeEntity, ETag.All));
+            batch.Add(new TableTransactionAction(TableTransactionActionType.UpdateMerge, mergeEntity, ETag.All));
 
             // Add a Delete operation.
             var entityToDelete = entitiesToCreate[1];
-            batch.Add(new BatchItem(BatchOperation.Delete, entityToDelete, ETag.All));
+            batch.Add(new TableTransactionAction(TableTransactionActionType.Delete, entityToDelete, ETag.All));
 
             // Add an Upsert operation to replace the entity with an updated value.
             entitiesToCreate[2].StringTypeProperty = updatedString;
-            batch.Add(new BatchItem(BatchOperation.UpsertReplace, entitiesToCreate[2]));
+            batch.Add(new TableTransactionAction(TableTransactionActionType.UpsertReplace, entitiesToCreate[2]));
 
             // Add an Upsert operation to add an entity.
-            batch.Add(new BatchItem(BatchOperation.UpsertReplace, entitiesToCreate[3]));
+            batch.Add(new TableTransactionAction(TableTransactionActionType.UpsertReplace, entitiesToCreate[3]));
 
             // Add the last entity.
-            batch.Add(new BatchItem(BatchOperation.Add, entitiesToCreate.Last()));
+            batch.Add(new TableTransactionAction(TableTransactionActionType.Add, entitiesToCreate.Last()));
 
             // Submit the batch.
-            TableBatchResponse response = await client.SubmitTransactionAsync(batch).ConfigureAwait(false);
+            TableTransactionResult response = await client.SubmitTransactionAsync(batch).ConfigureAwait(false);
 
             foreach (var entity in entitiesToCreate)
             {
@@ -1231,7 +1231,7 @@ namespace Azure.Data.Tables.Tests
             client.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
             // Create the batch.
-            List<BatchItem> batch = new();
+            List<TableTransactionAction> batch = new();
 
             // Sending an empty batch throws.
             var exception = Assert.ThrowsAsync<InvalidOperationException>(() => client.SubmitTransactionAsync(batch));
@@ -1241,21 +1241,21 @@ namespace Azure.Data.Tables.Tests
             await client.AddEntityAsync(entitiesToCreate.Last());
 
             // Add the entities to the batch
-            batch.AddRange(entitiesToCreate.Select(e => new BatchItem(BatchOperation.Add, e)));
+            batch.AddRange(entitiesToCreate.Select(e => new TableTransactionAction(TableTransactionActionType.Add, e)));
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(() => client.SubmitTransactionAsync(batch));
 
             Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.EntityAlreadyExists.ToString()));
             Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
             Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
-            Assert.That(TableBatchResponse.TryGetFailedEntityFromException(ex, batch, out ITableEntity failedEntity), Is.True);
+            Assert.That(TableTransactionResult.TryGetFailedEntityFromException(ex, batch, out ITableEntity failedEntity), Is.True);
             Assert.That(failedEntity.RowKey, Is.EqualTo(entitiesToCreate.Last().RowKey));
-            Assert.That(ex.Message.Contains(nameof(TableBatchResponse.TryGetFailedEntityFromException)));
+            Assert.That(ex.Message.Contains(nameof(TableTransactionResult.TryGetFailedEntityFromException)));
 
             if (_endpointType != TableEndpointType.CosmosTable)
             {
                 // Try submitting a batch larger than 100 items
-                batch = new List<BatchItem>(CreateTableEntities("error", 101).Select(e => new BatchItem(BatchOperation.Add, e)));
+                batch = new List<TableTransactionAction>(CreateTableEntities("error", 101).Select(e => new TableTransactionAction(TableTransactionActionType.Add, e)));
 
                 ex = Assert.ThrowsAsync<RequestFailedException>(() => client.SubmitTransactionAsync(batch));
                 Assert.That(ex.Message, Does.Contain("The batch request operation exceeds the maximum 100 changes per change set"));

@@ -32,7 +32,7 @@ namespace Azure.Data.Tables.Performance
 
         protected TablesTestEnvironment TestEnvironment => _environment;
 
-        protected List<BatchItem> GetBatch() => new();
+        protected List<TableTransactionAction> GetBatch() => new();
 
         protected TableClient Client { get; private set; }
 
@@ -135,12 +135,12 @@ namespace Azure.Data.Tables.Performance
 
         protected async Task BatchInsertEntitiesInternalAsync<T>(bool async, IEnumerable<T> entities, CancellationToken cancellationToken) where T : class, ITableEntity, new()
         {
-            List<BatchItem> batch = GetBatch();
+            List<TableTransactionAction> batch = GetBatch();
 
             int i = 1;
             foreach (T entity in entities)
             {
-                batch.Add(new BatchItem(BatchOperation.Add, entity));
+                batch.Add(new TableTransactionAction(TableTransactionActionType.Add, entity));
                 i++;
                 if (i % 100 == 0 || i == Options.Count)
                 {
