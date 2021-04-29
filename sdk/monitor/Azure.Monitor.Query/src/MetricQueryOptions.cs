@@ -44,7 +44,7 @@ namespace Azure.Monitor.Query
         public int? Top { get; set; }
 
         /// <summary>
-        /// Gets ot sets the  filter is used to reduce the set of metric data returned.
+        /// Gets or sets the filter that is used to refine the set of metric data returned.
         /// Example:
         ///     Metric contains metadata A, B and C.
         ///
