@@ -41,6 +41,9 @@ namespace Azure.Messaging.ServiceBus
             {
                 ReceiveMode = ProcessorOptions.ReceiveMode,
                 PrefetchCount = ProcessorOptions.PrefetchCount,
+                // Pass None for subqueue since the subqueue has already
+                // been taken into account when computing the EntityPath of the processor.
+                SubQueue = SubQueue.None
             };
             _maxReceiveWaitTime = ProcessorOptions.MaxReceiveWaitTime;
             _plugins = plugins;
