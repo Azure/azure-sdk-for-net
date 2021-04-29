@@ -40,13 +40,22 @@ namespace Azure.Monitor.Query
         {
         }
 
-        public virtual Response<MetricQueryResult> Query(string resource, DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan interval, CancellationToken cancellationToken = default)
+        public virtual Response<MetricQueryResult> Query(string resource, IEnumerable<string> metrics, MetricQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return _metricsRestClient.List(resource, GetTimespan(startTime, endTime), interval, cancellationToken: cancellationToken);
+                return _metricsRestClient.List(resource,
+                    timespan: GetTimespan(options),
+                    interval: options?.Interval,
+                    filter: options?.Filter,
+                    top: options?.Top,
+                    aggregation: GetAggregation(options),
+                    metricnames: string.Join(",", metrics),
+                    orderby: options?.OrderBy,
+                    metricnamespace: options?.MetricNamespace,
+                    cancellationToken: cancellationToken);
             }
             catch (Exception e)
             {
@@ -55,13 +64,22 @@ namespace Azure.Monitor.Query
             }
         }
 
-        public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resource, DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan interval, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resource, IEnumerable<string> metrics, MetricQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return await _metricsRestClient.ListAsync(resource, GetTimespan(startTime, endTime), interval, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await _metricsRestClient.ListAsync(resource,
+                    timespan: GetTimespan(options),
+                    interval: options?.Interval,
+                    filter: options?.Filter,
+                    top: options?.Top,
+                    aggregation: GetAggregation(options),
+                    metricnames: string.Join(",", metrics),
+                    orderby: options?.OrderBy,
+                    metricnamespace: options?.MetricNamespace,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -138,9 +156,42 @@ namespace Azure.Monitor.Query
             }
         }
 
-        private static string GetTimespan(DateTimeOffset startTime, DateTimeOffset endTime)
+        private static string GetTimespan(MetricQueryOptions options)
         {
-            return $"{TypeFormatters.ToString(startTime, "o")}/{TypeFormatters.ToString(endTime, "o")}";
+            var startTime = options?.StartTime != null ? TypeFormatters.ToString(options.StartTime.Value, "o") : null;
+            var endTime = options?.EndTime != null ? TypeFormatters.ToString(options.EndTime.Value, "o") : null;
+            var duration = options?.Duration != null ? TypeFormatters.ToString(options.Duration.Value, "P") : null;
+
+            switch (startTime, endTime, duration)
+            {
+                case (null, null, string):
+                    return duration;
+                case (string, string, null):
+                    return $"{startTime}/{endTime}";
+                case (string, null, string):
+                    return $"{startTime}/{duration}";
+                case (null, string, string):
+                    return $"{duration}/{endTime}";
+                case (null, null, null):
+                    return null;
+                default:
+                    throw new ArgumentException(
+                        $"The following combinations of {nameof(MetricQueryOptions.Duration)}, {nameof(MetricQueryOptions.StartTime)}, {nameof(MetricQueryOptions.EndTime)} are allowed: " + Environment.NewLine +
+                        $"  {nameof(MetricQueryOptions.Duration)}, " + Environment.NewLine +
+                        $"  {nameof(MetricQueryOptions.StartTime)} + {nameof(MetricQueryOptions.Duration)}" + Environment.NewLine +
+                        $"  {nameof(MetricQueryOptions.Duration)} + {nameof(MetricQueryOptions.EndTime)}" + Environment.NewLine +
+                        $"  {nameof(MetricQueryOptions.StartTime)} + {nameof(MetricQueryOptions.EndTime)}");
+            }
+        }
+
+        private static string GetAggregation(MetricQueryOptions options)
+        {
+            if (options?.Aggregations == null ||
+                options.Aggregations.Count == 0)
+            {
+                return null;
+            }
+            return string.Join(",", options.Aggregations);
         }
     }
 }
