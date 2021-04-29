@@ -82,11 +82,16 @@ namespace DeadLetterQueue
         {
             dynamic data = new[]
             {
-                new {name = "Einstein", firstName = "Albert"}, new {name = "Heisenberg", firstName = "Werner"},
-                new {name = "Curie", firstName = "Marie"}, new {name = "Hawking", firstName = "Steven"},
-                new {name = "Newton", firstName = "Isaac"}, new {name = "Bohr", firstName = "Niels"},
-                new {name = "Faraday", firstName = "Michael"}, new {name = "Galilei", firstName = "Galileo"},
-                new {name = "Kepler", firstName = "Johannes"}, new {name = "Kopernikus", firstName = "Nikolaus"}
+                new {name = "Einstein", firstName = "Albert"},
+                new {name = "Heisenberg", firstName = "Werner"},
+                new {name = "Curie", firstName = "Marie"},
+                new {name = "Hawking", firstName = "Steven"},
+                new {name = "Newton", firstName = "Isaac"},
+                new {name = "Bohr", firstName = "Niels"},
+                new {name = "Faraday", firstName = "Michael"},
+                new {name = "Galilei", firstName = "Galileo"},
+                new {name = "Kepler", firstName = "Johannes"},
+                new {name = "Kopernikus", firstName = "Nikolaus"}
             };
 
             // send a message for each data entry, but at most maxMessages
@@ -112,8 +117,8 @@ namespace DeadLetterQueue
                     Console.WriteLine($"Message sent: Id = {message.MessageId}");
                     Console.ResetColor();
                 }
-
-                ;
+                
+                // After the send task is complete, output this to the console.
                 tasks.Add(sender.SendMessageAsync(message).ContinueWith((t) =>
                 {
                     lock (Console.Out)
@@ -215,8 +220,9 @@ namespace DeadLetterQueue
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine(
-                            "\t\t\t\tMessage received: \n\t\t\t\t\t\tMessageId = {0}, \n\t\t\t\t\t\tSequenceNumber = {1}, \n\t\t\t\t\t\tEnqueuedTime = {2}," +
-                            "\n\t\t\t\t\t\tExpiresAt = {4}, \n\t\t\t\t\t\tContentType = \"{3}\", \n\t\t\t\t\t\tContent: [ firstName = {5}, name = {6} ]",
+                            "\t\t\t\tMessage received: \n\t\t\t\t\t\tMessageId = {0}, \n\t\t\t\t\t\tSequenceNumber = {1}," +
+                            " \n\t\t\t\t\t\tEnqueuedTime = {2}," + "\n\t\t\t\t\t\tExpiresAt = {4}, \n\t\t\t\t\t\tContentType = \"{3}\"," +
+                            " \n\t\t\t\t\t\tContent: [ firstName = {5}, name = {6} ]",
                             message.MessageId,
                             message.SequenceNumber,
                             message.EnqueuedTime,

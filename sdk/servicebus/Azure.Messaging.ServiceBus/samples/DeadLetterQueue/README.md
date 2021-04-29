@@ -61,12 +61,12 @@ You can either run the executable you just build, or build and run the project a
 ### Use Azure Activity Directory
 You can use any of the [authentication mechanisms](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet) that the `DefaultAzureCredential` from the Azure.Identity supports.
 
-To run the sample using Managed Identity:
+To run the sample using Azure Identity:
 
 ```bash
 dotnet run -- --namespace <fully qualified namespace> --queue <queue name>
 ```
-### Use Service Bus connection string
+### Use a Service Bus connection string
 The other way to run the sample is by specifying an environment variable that contains the connection string for the namespace you wish to use:
 
 ```bash

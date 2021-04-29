@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net5.0</TargetFramework>
@@ -7,7 +6,8 @@
 
     <ItemGroup>
       <PackageReference Include="Azure.Identity" Version="1.2.1" />
-      <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.2.0-beta.2" />
+<!--      Using project reference out until processor subqueue fix is released-->
+<!--      <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.2.0-beta.2" />-->
       <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21216.1" />
     </ItemGroup>
 
