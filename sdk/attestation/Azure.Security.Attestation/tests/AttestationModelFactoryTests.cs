@@ -24,7 +24,7 @@ namespace Azure.Security.Attestation.Tests
         {
             await Task.Yield();
             {
-                var modificationResult = AttestationModelFactory.CreatePolicyModificationResult(PolicyModification.Updated, "12344567", null);
+                var modificationResult = AttestationModelFactory.PolicyModificationResult(PolicyModification.Updated, "12344567", null);
                 Assert.AreEqual(PolicyModification.Updated, modificationResult.PolicyResolution);
                 CollectionAssert.AreEqual(new byte[] { 0xd7, 0x6d, 0xf8, 0xe3, 0x9e, 0xbb }, modificationResult.PolicyTokenHash.ToArray());
                 Assert.IsNull(modificationResult.PolicySigner);
@@ -32,7 +32,7 @@ namespace Azure.Security.Attestation.Tests
 
             {
                 AttestationSigner signer = new AttestationSigner(new List<X509Certificate2> { TestEnvironment.PolicyCertificate0, TestEnvironment.PolicyCertificate1, TestEnvironment.PolicyCertificate2 }, "KeyId4");
-                var modificationResult = AttestationModelFactory.CreatePolicyModificationResult(PolicyModification.Updated, "12345678", signer);
+                var modificationResult = AttestationModelFactory.PolicyModificationResult(PolicyModification.Updated, "12345678", signer);
                 Assert.AreEqual(PolicyModification.Updated, modificationResult.PolicyResolution);
                 CollectionAssert.AreEqual(new byte[] { 0xd7, 0x6d, 0xf8, 0xe7, 0xae, 0xfc }, modificationResult.PolicyTokenHash.ToArray());
                 Assert.AreEqual("KeyId4", modificationResult.PolicySigner.CertificateKeyId);

@@ -153,7 +153,7 @@ namespace Azure.Security.Attestation
         /// <param name="policyHash">The SHA256 hash of the policy token which was modified</param>
         /// <param name="signer">The signer which was used to sign the token which modified the policy.</param>
         /// <returns></returns>
-        public static PolicyModificationResult CreatePolicyModificationResult(PolicyModification policyModification, string policyHash, AttestationSigner signer)
+        public static PolicyModificationResult PolicyModificationResult(PolicyModification policyModification, string policyHash, AttestationSigner signer)
         {
             JsonWebKey jwk = JwkFromAttestationSigner(signer);
             return new PolicyModificationResult(policyModification, policyHash, jwk, null);
