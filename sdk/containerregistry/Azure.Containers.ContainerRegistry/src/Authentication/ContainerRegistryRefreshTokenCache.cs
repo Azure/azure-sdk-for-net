@@ -14,19 +14,19 @@ namespace Azure.Containers.ContainerRegistry
     internal class ContainerRegistryRefreshTokenCache
     {
         private readonly object _syncObj = new object();
-        private readonly TokenCredential _aadCredential;
+        private readonly TokenCredential _credential;
         private readonly TimeSpan _tokenRefreshOffset;
         private readonly TimeSpan _tokenRefreshRetryDelay;
 
-        private TokenRequestContext? _currentAadContext;
+        private TokenRequestContext? _currentContext;
         private TaskCompletionSource<RefreshTokenInfo>? _infoTcs;
         private TaskCompletionSource<RefreshTokenInfo>? _backgroundUpdateTcs;
-        public ContainerRegistryRefreshTokenCache(TokenCredential aadCredential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay, string[] initialAadScopes)
+        public ContainerRegistryRefreshTokenCache(TokenCredential credential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay, string[] initialAadScopes)
         {
-            _aadCredential = aadCredential;
+            _credential = credential;
             _tokenRefreshOffset = tokenRefreshOffset;
             _tokenRefreshRetryDelay = tokenRefreshRetryDelay;
-            _currentAadContext = new TokenRequestContext(initialAadScopes);
+            _currentContext = new TokenRequestContext(initialAadScopes);
         }
 
         public async ValueTask<string> GetRefreshTokenAsync(HttpMessage message, TokenRequestContext context, bool async)
@@ -130,7 +130,7 @@ namespace Azure.Containers.ContainerRegistry
                 // Initial state. GetTaskCompletionSources has been called for the first time
                 if (_infoTcs == null || RequestRequiresNewToken(context))
                 {
-                    _currentAadContext = context;
+                    _currentContext = context;
                     _infoTcs = new TaskCompletionSource<RefreshTokenInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
                     _backgroundUpdateTcs = default;
                     return (_infoTcs, _backgroundUpdateTcs, true);
@@ -172,9 +172,9 @@ namespace Azure.Containers.ContainerRegistry
 
         // must be called under lock (_syncObj)
         private bool RequestRequiresNewToken(TokenRequestContext context) =>
-            _currentAadContext == null ||
-            (context.Scopes != null && !context.Scopes.AsSpan().SequenceEqual(_currentAadContext.Value.Scopes.AsSpan())) ||
-            (context.Claims != null && !string.Equals(context.Claims, _currentAadContext.Value.Claims));
+            _currentContext == null ||
+            (context.Scopes != null && !context.Scopes.AsSpan().SequenceEqual(_currentContext.Value.Scopes.AsSpan())) ||
+            (context.Claims != null && !string.Equals(context.Claims, _currentContext.Value.Claims));
 
         private async ValueTask GetRefreshTokenFromCredentialInBackgroundAsync(TaskCompletionSource<RefreshTokenInfo> backgroundUpdateTcs, RefreshTokenInfo info, TokenRequestContext context, bool async)
         {
@@ -207,8 +207,8 @@ namespace Azure.Containers.ContainerRegistry
         private async ValueTask<RefreshTokenInfo> GetRefreshTokenFromCredentialAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
         {
             AccessToken token = async
-                ? await _aadCredential.GetTokenAsync(context, cancellationToken).ConfigureAwait(false)
-                : _aadCredential.GetToken(context, cancellationToken);
+                ? await _credential.GetTokenAsync(context, cancellationToken).ConfigureAwait(false)
+                : _credential.GetToken(context, cancellationToken);
 
             return new RefreshTokenInfo(token.Token, token.ExpiresOn, token.ExpiresOn - _tokenRefreshOffset);
         }
