@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-dbf2f195b9da7c4783b8ef1190d35b9c-fbe92a44c67b0646-00",
+        "traceparent": "00-b089ab70631b744fab83a7f7ad5581c5-007316496d54ce4a-00",
         "User-Agent": [
           "azsdk-net-Monitor.Query/1.0.0-alpha.20210429.1",
           "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
@@ -21,16 +21,16 @@
         "Cache-Control": "no-cache",
         "Content-Length": "795",
         "Content-Type": "application/json",
-        "Date": "Thu, 29 Apr 2021 17:51:42 GMT",
+        "Date": "Thu, 29 Apr 2021 21:03:07 GMT",
         "Request-Context": "appId=cid-v1:b021da79-5252-4375-9df5-2e17c1dcd822",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7ae37642-7fde-4ad4-9a8d-1922511e59f6",
-        "x-ms-ratelimit-remaining-subscription-reads": "11985",
-        "x-ms-request-id": "{7ae37642-7fde-4ad4-9a8d-1922511e59f6}",
-        "x-ms-routing-request-id": "WESTCENTRALUS:20210429T175142Z:7ae37642-7fde-4ad4-9a8d-1922511e59f6",
+        "x-ms-correlation-request-id": "4d31e828-bc3f-4875-a4ba-de428b72abbe",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "{4d31e828-bc3f-4875-a4ba-de428b72abbe}",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20210429T210307Z:4d31e828-bc3f-4875-a4ba-de428b72abbe",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -58,7 +58,7 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-29T10:51:42.0481100-07:00",
+    "DateTimeOffsetNow": "2021-04-29T14:03:06.3537249-07:00",
     "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon2/providers/Microsoft.OperationalInsights/workspaces/pakrymmon2-logs",
     "RandomSeed": "986176634"
   }

@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ff17cdfec97367458d274352c40c18a1-dd434c44a6b1984f-00",
+        "traceparent": "00-f0a2a106e9a9094fac604733b03f59c6-cd86b1979334de47-00",
         "User-Agent": [
           "azsdk-net-Monitor.Query/1.0.0-alpha.20210429.1",
           "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
@@ -21,16 +21,16 @@
         "Cache-Control": "no-cache",
         "Content-Length": "795",
         "Content-Type": "application/json",
-        "Date": "Thu, 29 Apr 2021 17:51:37 GMT",
+        "Date": "Thu, 29 Apr 2021 21:02:44 GMT",
         "Request-Context": "appId=cid-v1:b021da79-5252-4375-9df5-2e17c1dcd822",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d27e65ef-f7fc-47e7-a7bd-6613c130b684",
-        "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "{d27e65ef-f7fc-47e7-a7bd-6613c130b684}",
-        "x-ms-routing-request-id": "WESTCENTRALUS:20210429T175137Z:d27e65ef-f7fc-47e7-a7bd-6613c130b684",
+        "x-ms-correlation-request-id": "2c27e3c2-ba3e-4921-8d5e-0e981fa7ceae",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "{2c27e3c2-ba3e-4921-8d5e-0e981fa7ceae}",
+        "x-ms-routing-request-id": "WESTUS:20210429T210245Z:2c27e3c2-ba3e-4921-8d5e-0e981fa7ceae",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -58,7 +58,7 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-29T10:51:37.4946239-07:00",
+    "DateTimeOffsetNow": "2021-04-29T14:02:43.8334094-07:00",
     "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon2/providers/Microsoft.OperationalInsights/workspaces/pakrymmon2-logs",
     "RandomSeed": "573943417"
   }

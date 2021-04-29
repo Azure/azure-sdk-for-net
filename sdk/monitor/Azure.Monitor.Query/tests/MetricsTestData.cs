@@ -42,15 +42,11 @@ namespace Azure.Monitor.Query.Tests
 
             _initialized = true;
             var metricClient = new MetricsClient(_testEnvironment.Credential);
-            if (await MetricsPropagated(metricClient))
-            {
-                return;
-            }
-
-            await SendData();
 
             while (!await MetricsPropagated(metricClient))
             {
+                await SendData();
+
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
         }

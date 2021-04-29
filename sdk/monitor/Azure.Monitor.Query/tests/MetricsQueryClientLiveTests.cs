@@ -257,11 +257,15 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.GetMetricNamespacesAsync(
                 TestEnvironment.MetricsResource);
 
-            var ns = results.Value.Single();
+            Assert.True(results.Value.Any(ns =>
+                ns.Name == "Microsoft.OperationalInsights-workspaces" &&
+                ns.Type == "Microsoft.Insights/metricNamespaces" &&
+                ns.FullyQualifiedName == "Microsoft.OperationalInsights/workspaces"));
 
-            Assert.AreEqual(ns.Name, "Microsoft.OperationalInsights-workspaces");
-            Assert.AreEqual(ns.Type, "Microsoft.Insights/metricNamespaces");
-            Assert.AreEqual(ns.FullyQualifiedName, "Microsoft.OperationalInsights/workspaces");
+            Assert.True(results.Value.Any(ns =>
+                ns.Name == "Cows" &&
+                ns.Type == "Microsoft.Insights/metricNamespaces" &&
+                ns.FullyQualifiedName == "Cows"));
         }
     }
 }
