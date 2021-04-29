@@ -22,8 +22,8 @@ namespace Azure.Security.Attestation
         /// <param name="token">Attestation Token to be included in the response.</param>
         /// <param name="body">Optional body instance. If no body is provided, the body of the token is used.</param>
         /// <remarks>The <paramref name="body"/> parameter is provided to create an attestation response whose Value property is something other than the body of the token.</remarks>
-        /// <returns>An <see cref="AttestationResponse"/> object.</returns>
-        public static AttestationResponse<T> CreateAttestationResponse<T>(Response response, AttestationToken token, T body = default(T))
+        /// <returns>An <see cref="Attestation.AttestationResponse"/> object.</returns>
+        public static AttestationResponse<T> AttestationResponse<T>(Response response, AttestationToken token, T body = default(T))
             where T : class =>
             new AttestationResponse<T>(response, token, body);
 
@@ -62,8 +62,8 @@ namespace Azure.Security.Attestation
         /// <param name="deprecatedPolicySigner"> DEPRECATED: Private Preview version of x-ms-policy-signer. </param>
         /// <param name="deprecatedPolicyHash"> DEPRECATED: Private Preview version of x-ms-policy-hash. </param>
         /// <param name="deprecatedRpData"> DEPRECATED: Private Preview version of nonce. </param>
-        /// <returns>An <see cref="AttestationResult"/> object.</returns>
-        public static AttestationResult CreateAttestationResult(
+        /// <returns>An <see cref="Attestation.AttestationResult"/> object.</returns>
+        public static AttestationResult AttestationResult(
             string jti = null,
             string issuer = null,
             DateTimeOffset issuedAt = default,
@@ -138,12 +138,12 @@ namespace Azure.Security.Attestation
                 deprecatedRpData);
         }
         /// <summary>
-        /// Creates a new instance of <see cref="PolicyCertificatesModificationResult"/> for mocking purposes.
+        /// Creates a new instance of <see cref="Attestation.PolicyCertificatesModificationResult"/> for mocking purposes.
         /// </summary>
         /// <param name="certificateThumbprint">The thumbprint of the certificate which was modified.</param>
         /// <param name="certificateResolution">The modification which was performed.</param>
-        /// <returns>A <see cref="PolicyCertificatesModificationResult"/> object.</returns>
-        public static PolicyCertificatesModificationResult CreatePolicyCertificatesModificationResult(PolicyCertificateResolution certificateResolution, string certificateThumbprint) =>
+        /// <returns>A <see cref="Attestation.PolicyCertificatesModificationResult"/> object.</returns>
+        public static PolicyCertificatesModificationResult PolicyCertificatesModificationResult(PolicyCertificateResolution certificateResolution, string certificateThumbprint) =>
             new PolicyCertificatesModificationResult(certificateThumbprint, certificateResolution);
 
         /// <summary>
