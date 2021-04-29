@@ -49,7 +49,6 @@ private async Task<Guid?> trainAsync(AnomalyDetectorClient client, string dataso
         Response<Model> get_response = await client.GetMultivariateModelAsync(trained_model_id).ConfigureAwait(false);
         ModelStatus? model_status = null;
         int tryout_count = 0;
-        TimeSpan create_limit = new TimeSpan(0, 3, 0);
         while (tryout_count < max_tryout & model_status != ModelStatus.Ready)
         {
             System.Threading.Thread.Sleep(10000);
@@ -80,12 +79,6 @@ private async Task<Guid?> trainAsync(AnomalyDetectorClient client, string dataso
         throw new Exception(e.Message);
     }
 }
-TimeSpan offset = new TimeSpan(0);
-DateTimeOffset start_time = new DateTimeOffset(2021, 1, 1, 0, 0, 0, offset);
-DateTimeOffset end_time = new DateTimeOffset(2021, 1, 2, 12, 0, 0, offset);
-Guid? model_id_raw = null;
-model_id_raw = await trainAsync(client, datasource, start_time, end_time).ConfigureAwait(false);
-Guid model_id = model_id_raw.GetValueOrDefault();
 ```
 
 ## Detect anomalies
@@ -128,15 +121,6 @@ private async Task<DetectionResult> detectAsync(AnomalyDetectorClient client, st
         throw new Exception(e.Message);
     }
 }
-start_time = end_time;
-end_time = new DateTimeOffset(2021, 1, 3, 0, 0, 0, offset);
-DetectionResult result = await detectAsync(client, datasource, model_id, start_time, end_time).ConfigureAwait(false);
-if (result != null)
-{
-    Console.WriteLine(String.Format("result ID: {0}", result.ResultId));
-    Console.WriteLine(String.Format("Result summary: {0}", result.Summary));
-    Console.WriteLine(String.Format("Result length: {0}", result.Results.Count));
-}
 ```
 
 ## Export Model
@@ -163,7 +147,6 @@ private async Task exportAsync(AnomalyDetectorClient client, Guid model_id, stri
         throw new Exception(e.Message);
     }
 }
-await exportAsync(client, model_id).ConfigureAwait(false);
 ```
 
 ## Delete model
@@ -192,7 +175,6 @@ private async Task<int> getModelNumberAsync(AnomalyDetectorClient client, bool d
     }
     return count;
 }
-await deleteAsync(client, model_id).ConfigureAwait(false);
 ```
 
 To see the full example source files, see:
