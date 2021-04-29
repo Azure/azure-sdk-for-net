@@ -40,6 +40,7 @@ namespace Azure.Identity.Tests
     //
     public class UsernamePasswordCredentialLiveTests : IdentityRecordedTestBase
     {
+        private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
         public UsernamePasswordCredentialLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -62,7 +63,6 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task GetToken()
         {
-            var ClientId = TestEnvironment.ClientId;
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
@@ -71,7 +71,7 @@ namespace Azure.Identity.Tests
 
             var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
 
-            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { TestEnvironment.KeyvaultScope }));
+            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }));
 
             Assert.IsNotNull(token.Token);
         }
@@ -79,7 +79,6 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateNoContext()
         {
-            var ClientId = TestEnvironment.ClientId;
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
@@ -99,7 +98,6 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithContext()
         {
-            var ClientId = TestEnvironment.ClientId;
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
@@ -108,7 +106,7 @@ namespace Azure.Identity.Tests
 
             var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
 
-            AuthenticationRecord record = await cred.AuthenticateAsync(new TokenRequestContext(new[] { TestEnvironment.KeyvaultScope }));
+            AuthenticationRecord record = await cred.AuthenticateAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" }));
 
             Assert.IsNotNull(record);
 
