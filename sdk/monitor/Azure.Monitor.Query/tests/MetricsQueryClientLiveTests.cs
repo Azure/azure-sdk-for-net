@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
@@ -55,7 +56,11 @@ namespace Azure.Monitor.Query.Tests
             var results = await client.GetMetricNamespacesAsync(
                 TestEnvironment.MetricsResource);
 
-            CollectionAssert.IsNotEmpty(results.Value);
+            var ns = results.Value.Single();
+
+            Assert.AreEqual(ns.Name, "Microsoft.OperationalInsights-workspaces");
+            Assert.AreEqual(ns.Type, "Microsoft.Insights/metricNamespaces");
+            Assert.AreEqual(ns.FullyQualifiedName, "Microsoft.OperationalInsights/workspaces");
         }
     }
 }

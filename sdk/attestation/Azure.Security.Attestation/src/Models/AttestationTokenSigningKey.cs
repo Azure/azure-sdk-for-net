@@ -18,14 +18,14 @@ namespace Azure.Security.Attestation
     /// <para/>
     /// Note that the Attestation Service only supports validation of tokens which are signed with an X.509 certificate, it does not support arbitrary signing keys.
     /// </summary>
-    public class TokenSigningKey
+    public class AttestationTokenSigningKey
     {
         /// <summary>
-        /// Creates a new instance of a <see cref="TokenSigningKey"/>
+        /// Creates a new instance of a <see cref="AttestationTokenSigningKey"/>
         /// </summary>
         /// <param name="signer">The Signing Key which will be used to sign the generated token.</param>
         /// <param name="certificate">An X.509 Certificate which wraps the public key part of the <paramref name="signer"/>.</param>
-        public TokenSigningKey(AsymmetricAlgorithm signer, X509Certificate2 certificate)
+        public AttestationTokenSigningKey(AsymmetricAlgorithm signer, X509Certificate2 certificate)
         {
             Argument.AssertNotNull(signer, nameof(signer));
             Argument.AssertNotNull(certificate, nameof(certificate));
@@ -35,10 +35,10 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
-        /// Creates a new instance of a <see cref="TokenSigningKey"/>
+        /// Creates a new instance of a <see cref="AttestationTokenSigningKey"/>
         /// </summary>
         /// <param name="certificate">An X.509 Certificate with a private key.</param>
-        public TokenSigningKey(X509Certificate2 certificate)
+        public AttestationTokenSigningKey(X509Certificate2 certificate)
         {
             Argument.AssertNotNull(certificate, nameof(certificate));
             if (!certificate.HasPrivateKey)

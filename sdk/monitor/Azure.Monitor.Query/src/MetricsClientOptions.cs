@@ -5,6 +5,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query
 {
+    /// <summary>
+    /// Provides the client configuration options for connecting to Azure Monitor Metrics service.
+    /// </summary>
     public class MetricsClientOptions: ClientOptions
     {
         private readonly ServiceVersion _version;
@@ -33,6 +36,9 @@ namespace Azure.Monitor.Query
         public enum ServiceVersion
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
+            /// <summary>
+            /// Version 2018-01-01 of the service.
+            /// </summary>
             V2018_01_01
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
