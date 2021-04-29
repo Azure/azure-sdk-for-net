@@ -286,7 +286,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// // Get Time Series Insights instances by Id
         /// var timeSeriesIds = new List&lt;TimeSeriesId&gt;
         /// {
-        ///     instanceId,
+        ///     tsId,
         /// };
         ///
         /// Response&lt;InstancesOperationResult[]&gt; getByIdsResult = await client.Instances.GetAsync(timeSeriesIds).ConfigureAwait(false);
@@ -416,7 +416,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateInstance">
         /// // Create a Time Series Instance object with the default Time Series Insights type Id.
         /// // The default type Id can be obtained programmatically by using the ModelSettings client.
-        /// var instance = new TimeSeriesInstance(instanceId, defaultTypeId)
+        /// var instance = new TimeSeriesInstance(tsId, defaultTypeId)
         /// {
         ///     Name = &quot;instance1&quot;,
         /// };
@@ -560,7 +560,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// // Get Time Series Insights instances by Id
         /// var instanceIdsToGet = new List&lt;TimeSeriesId&gt;
         /// {
-        ///     instanceId,
+        ///     tsId,
         /// };
         ///
         /// Response&lt;InstancesOperationResult[]&gt; getInstancesByIdResult = await client.Instances.GetAsync(instanceIdsToGet).ConfigureAwait(false);
@@ -699,7 +699,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteInstanceById">
         /// var instancesToDelete = new List&lt;TimeSeriesId&gt;
         /// {
-        ///     instanceId,
+        ///     tsId,
         /// };
         ///
         /// Response&lt;TimeSeriesOperationError[]&gt; deleteInstanceErrors = await client
