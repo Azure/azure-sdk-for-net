@@ -21,6 +21,20 @@ namespace Azure.Messaging.ServiceBus
         private const string TransferDeadLetterQueueName = SubQueuePrefix + Transfer + PathDelimiter + DeadLetterQueueName;
 
         /// <summary>
+        /// Formats the entity path for a receiver or processor taking into account whether using a SubQueue.
+        /// </summary>
+        public static string FormatEntityPath(string entityPath, SubQueue subQueue)
+        {
+            return subQueue switch
+            {
+                SubQueue.None => entityPath,
+                SubQueue.DeadLetter => FormatDeadLetterPath(entityPath),
+                SubQueue.TransferDeadLetter => FormatTransferDeadLetterPath(entityPath),
+                _ => null
+            };
+        }
+
+        /// <summary>
         /// Formats the dead letter path for either a queue, or a subscription.
         /// </summary>
         /// <param name="entityPath">The name of the queue, or path of the subscription.</param>

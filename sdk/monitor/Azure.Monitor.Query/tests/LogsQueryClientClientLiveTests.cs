@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
@@ -426,6 +427,66 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.AreEqual("queryId", exception.ParamName);
             StringAssert.StartsWith("Query with ID '12345' wasn't part of the batch. Please use the return value of the LogsBatchQuery.AddQuery as the 'queryId' argument.", exception.Message);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanQueryWithStatistics(bool include)
+        {
+            var client = CreateClient();
+
+            var response = await client.QueryAsync(TestEnvironment.WorkspaceId, _logsTestData.TableAName, options: new LogsQueryOptions()
+            {
+                IncludeStatistics = include
+            });
+
+            if (include)
+            {
+                Assert.Greater(response.Value.Statistics.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
+            }
+            else
+            {
+                Assert.AreEqual(JsonValueKind.Undefined, response.Value.Statistics.ValueKind);
+            }
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanQueryWithStatisticsBatch(bool include)
+        {
+            var client = CreateClient();
+
+            LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
+            var queryId = batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName, options: new LogsQueryOptions()
+            {
+                IncludeStatistics = include
+            });
+            var batchResult = await batch.SubmitAsync();
+            var result = batchResult.Value.GetResult(queryId);
+
+            if (include)
+            {
+                Assert.Greater(result.Statistics.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
+            }
+            else
+            {
+                Assert.AreEqual(JsonValueKind.Undefined, result.Statistics.ValueKind);
+            }
+        }
+
+        [RecordedTest]
+        public async Task CanSetServiceTimeout()
+        {
+            var client = CreateClient();
+
+            var response = await client.QueryAsync(TestEnvironment.WorkspaceId, _logsTestData.TableAName, options: new LogsQueryOptions()
+            {
+                Timeout = TimeSpan.FromMinutes(10)
+            });
+
+            CollectionAssert.IsNotEmpty(response.Value.PrimaryTable.Rows);
         }
 
         private record TestModel

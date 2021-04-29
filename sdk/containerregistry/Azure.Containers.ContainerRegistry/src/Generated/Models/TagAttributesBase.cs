@@ -13,22 +13,27 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class TagAttributesBase
     {
         /// <summary> Initializes a new instance of TagAttributesBase. </summary>
-        /// <param name="createdOn"> Tag created time. </param>
-        /// <param name="lastUpdatedOn"> Tag last update time. </param>
-        internal TagAttributesBase(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
-        {
-            CreatedOn = createdOn;
-            LastUpdatedOn = lastUpdatedOn;
-        }
-
-        /// <summary> Initializes a new instance of TagAttributesBase. </summary>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="digest"/>, or <paramref name="writeableProperties"/> is null. </exception>
         internal TagAttributesBase(string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ContentProperties writeableProperties)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+            if (writeableProperties == null)
+            {
+                throw new ArgumentNullException(nameof(writeableProperties));
+            }
+
             Name = name;
             Digest = digest;
             CreatedOn = createdOn;

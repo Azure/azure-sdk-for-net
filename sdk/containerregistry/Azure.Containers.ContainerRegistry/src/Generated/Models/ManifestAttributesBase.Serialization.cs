@@ -20,8 +20,8 @@ namespace Azure.Containers.ContainerRegistry
             Optional<long> imageSize = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
-            Optional<string> architecture = default;
-            Optional<string> os = default;
+            Optional<ArtifactArchitecture?> architecture = default;
+            Optional<ArtifactOperatingSystem?> os = default;
             Optional<IReadOnlyList<ManifestAttributesManifestReferences>> references = default;
             Optional<IReadOnlyList<string>> tags = default;
             Optional<ContentProperties> changeableAttributes = default;
@@ -64,12 +64,22 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("architecture"))
                 {
-                    architecture = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        architecture = null;
+                        continue;
+                    }
+                    architecture = new ArtifactArchitecture(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("os"))
                 {
-                    os = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        os = null;
+                        continue;
+                    }
+                    os = new ArtifactOperatingSystem(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("references"))
@@ -113,7 +123,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture.Value, os.Value, Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
+            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
         }
     }
 }

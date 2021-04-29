@@ -23,9 +23,11 @@ namespace Azure.Core
             ApplicationId = DefaultApplicationId;
             LoggedHeaderNames = new List<string>()
             {
+                "x-ms-request-id",
                 "x-ms-client-request-id",
                 "x-ms-return-client-request-id",
                 "traceparent",
+                "MS-CV",
 
                 "Accept",
                 "Cache-Control",

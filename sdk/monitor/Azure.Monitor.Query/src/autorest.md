@@ -29,14 +29,14 @@ directive:
     }
 ```
 
-### Rename errors property
+### Rename errors property and add statistics
 
 ``` yaml
 directive:
 - from: swagger-document
   where: $.definitions.queryResults
   transform: >
+    $.properties["statistics"] = { "type": "object" };
     $.properties["error"] = $.properties["errors"];
     delete $.properties["errors"];
-    
 ```
