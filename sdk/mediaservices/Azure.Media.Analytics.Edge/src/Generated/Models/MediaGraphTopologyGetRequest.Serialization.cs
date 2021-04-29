@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Media.Analytics.Edge.Models
 {
-    public partial class ItemNonSetRequestBase : IUtf8JsonSerializable
+    public partial class MediaGraphTopologyGetRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,20 +25,8 @@ namespace Azure.Media.Analytics.Edge.Models
             writer.WriteEndObject();
         }
 
-        internal static ItemNonSetRequestBase DeserializeItemNonSetRequestBase(JsonElement element)
+        internal static MediaGraphTopologyGetRequest DeserializeMediaGraphTopologyGetRequest(JsonElement element)
         {
-            if (element.TryGetProperty("methodName", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "GraphInstanceActivate": return MediaGraphInstanceActivateRequest.DeserializeMediaGraphInstanceActivateRequest(element);
-                    case "GraphInstanceDeactivate": return MediaGraphInstanceDeActivateRequest.DeserializeMediaGraphInstanceDeActivateRequest(element);
-                    case "GraphInstanceDelete": return MediaGraphInstanceDeleteRequest.DeserializeMediaGraphInstanceDeleteRequest(element);
-                    case "GraphInstanceGet": return MediaGraphInstanceGetRequest.DeserializeMediaGraphInstanceGetRequest(element);
-                    case "GraphTopologyDelete": return MediaGraphTopologyDeleteRequest.DeserializeMediaGraphTopologyDeleteRequest(element);
-                    case "GraphTopologyGet": return MediaGraphTopologyGetRequest.DeserializeMediaGraphTopologyGetRequest(element);
-                }
-            }
             string name = default;
             string methodName = default;
             Optional<string> apiVersion = default;
@@ -60,7 +48,7 @@ namespace Azure.Media.Analytics.Edge.Models
                     continue;
                 }
             }
-            return new ItemNonSetRequestBase(methodName, apiVersion.Value, name);
+            return new MediaGraphTopologyGetRequest(methodName, apiVersion.Value, name);
         }
     }
 }

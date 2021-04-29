@@ -29,19 +29,19 @@ namespace Azure.Media.Analytics.Edge.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "GraphInstanceActivate": return MediaGraphInstanceActivateRequest.DeserializeMediaGraphInstanceActivateRequest(element);
+                    case "GraphInstanceDeactivate": return MediaGraphInstanceDeActivateRequest.DeserializeMediaGraphInstanceDeActivateRequest(element);
+                    case "GraphInstanceDelete": return MediaGraphInstanceDeleteRequest.DeserializeMediaGraphInstanceDeleteRequest(element);
+                    case "GraphInstanceGet": return MediaGraphInstanceGetRequest.DeserializeMediaGraphInstanceGetRequest(element);
+                    case "GraphInstanceList": return MediaGraphInstanceListRequest.DeserializeMediaGraphInstanceListRequest(element);
+                    case "GraphInstanceSet": return MediaGraphInstanceSetRequest.DeserializeMediaGraphInstanceSetRequest(element);
+                    case "GraphTopologyDelete": return MediaGraphTopologyDeleteRequest.DeserializeMediaGraphTopologyDeleteRequest(element);
+                    case "GraphTopologyGet": return MediaGraphTopologyGetRequest.DeserializeMediaGraphTopologyGetRequest(element);
+                    case "GraphTopologyList": return MediaGraphTopologyListRequest.DeserializeMediaGraphTopologyListRequest(element);
+                    case "GraphTopologySet": return MediaGraphTopologySetRequest.DeserializeMediaGraphTopologySetRequest(element);
                     case "ItemNonSetRequestBase": return ItemNonSetRequestBase.DeserializeItemNonSetRequestBase(element);
-                    case "PipelineTopologySetRequestBody": return PipelineTopologySetRequestBody.DeserializePipelineTopologySetRequestBody(element);
-                    case "livePipelineActivate": return LivePipelineActivateRequest.DeserializeLivePipelineActivateRequest(element);
-                    case "livePipelineDeactivate": return LivePipelineDeactivateRequest.DeserializeLivePipelineDeactivateRequest(element);
-                    case "livePipelineDelete": return LivePipelineDeleteRequest.DeserializeLivePipelineDeleteRequest(element);
-                    case "livePipelineGet": return LivePipelineGetRequest.DeserializeLivePipelineGetRequest(element);
-                    case "livePipelineList": return LivePipelineListRequest.DeserializeLivePipelineListRequest(element);
-                    case "livePipelineSet": return LivePipelineSetRequest.DeserializeLivePipelineSetRequest(element);
-                    case "pipelineTopologyDelete": return PipelineTopologyDeleteRequest.DeserializePipelineTopologyDeleteRequest(element);
-                    case "pipelineTopologyGet": return PipelineTopologyGetRequest.DeserializePipelineTopologyGetRequest(element);
-                    case "pipelineTopologyList": return PipelineTopologyListRequest.DeserializePipelineTopologyListRequest(element);
-                    case "pipelineTopologySet": return PipelineTopologySetRequest.DeserializePipelineTopologySetRequest(element);
-                    case "livePipelineSetRequestBody": return LivePipelineSetRequestBody.DeserializeLivePipelineSetRequestBody(element);
+                    case "MediaGraphTopologySetRequestBody": return MediaGraphTopologySetRequestBody.DeserializeMediaGraphTopologySetRequestBody(element);
+                    case "MediaGraphInstanceSetRequestBody": return MediaGraphInstanceSetRequestBody.DeserializeMediaGraphInstanceSetRequestBody(element);
                 }
             }
             string methodName = default;
