@@ -21,8 +21,17 @@ namespace Azure.ResourceManager.Core
         /// <param name="clientContext"></param>
         /// <param name="id"></param>
         internal SingletonOperationsBase(ClientContext clientContext, ResourceIdentifier id)
-            : base(clientContext, id)
+            : base(clientContext, ResourceIdentifier.RootResourceIdentifier)
         {
+            ParentId = id;
+        }
+
+        /// <summary>
+        /// The typed resource identifier for the underlying resource
+        /// </summary>
+        public ResourceIdentifier ParentId
+        {
+            get;
         }
     }
 
@@ -32,7 +41,7 @@ namespace Azure.ResourceManager.Core
     /// <typeparam name="TOperations"> The type of the class containing operations for the underlying resource. </typeparam>
     /// <typeparam name="TIdentifier"> The type of the resource identifier. </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "<Pending>")]
-    public abstract class SingletonOperationsBase<TIdentifier, TOperations> : OperationsBase
+    public abstract class SingletonOperationsBase<TIdentifier, TOperations> : SingletonOperationsBase
         where TOperations : SingletonOperationsBase<TIdentifier, TOperations>
         where TIdentifier : ResourceIdentifier
     {
@@ -47,18 +56,25 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ContainerBase{TOperations, TIdentifier}"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected SingletonOperationsBase(OperationsBase parent, ResourceIdentifier id)
-            : base(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri), id)
+        /// <param name="parentId"> The identifier of the resource that is the target of operations. </param>
+        protected SingletonOperationsBase(OperationsBase parent, TIdentifier parentId)
+            : base(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri, parent.Pipeline), parentId)
         {
+            Parent = parent;
+            ParentId = parentId;
         }
+
+        /// <summary>
+        /// Gets the parent resource of this resource.
+        /// </summary>
+        protected OperationsBase Parent { get; }
 
         /// <summary>
         /// The typed resource identifier for the underlying resource
         /// </summary>
-        public new virtual TIdentifier Id
+        protected new TIdentifier ParentId
         {
-            get { return base.Id as TIdentifier; }
+            get;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Proto.Compute
         /// Initializes a new instance of the <see cref="rollingUpgradeStatusInfo"/> class. 
         /// </summary>
         public RollingUpgradeStatusInfo(Azure.ResourceManager.Compute.Models.RollingUpgradeStatusInfo rollingUpgradeStatusInfo) 
-            : base(rollingUpgradeStatusInfo.Id, rollingUpgradeStatusInfo.Name, VirtualMachineScaleSetRollingUpgradeOperations.ResourceType)
+            : base(rollingUpgradeStatusInfo.Id, rollingUpgradeStatusInfo.Name, RollingUpgradeOperations.ResourceType)
         {
             Model = rollingUpgradeStatusInfo;
         }

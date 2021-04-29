@@ -46,7 +46,7 @@ namespace Proto.Compute
         /// <summary>
         /// Gets the resource type definition for a virtual machine.
         /// </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/VirtualMachineScaleSets";
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachineScaleSets";
 
         /// <summary>
         /// Gets the valid resources for virtual machines.
@@ -306,9 +306,9 @@ namespace Proto.Compute
         /// Gets a list of subnet in the virtual nerwork.
         /// </summary>
         /// <returns> An object representing collection of subnets and their operations over a virtual network. </returns>
-        public VirtualMachineScaleSetRollingUpgradeOperations GetRollingUpgrade()
+        public RollingUpgradeOperations GetRollingUpgrade()
         {
-            return new VirtualMachineScaleSetRollingUpgradeOperations(this, Id);
+            return new RollingUpgradeOperations(this, Id);
         }
     }
 }

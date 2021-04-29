@@ -12,7 +12,7 @@ using Azure.ResourceManager.Core;
 namespace Proto.Compute
 {
     /// <summary> A Class representing a VirtualMachineScaleSetRollingUpgrade along with the instance operations that can be performed on it. </summary>
-    public class VirtualMachineScaleSetRollingUpgrade : VirtualMachineScaleSetRollingUpgradeOperations
+    public class RollingUpgrade : RollingUpgradeOperations
     {
         /// <summary>
         /// Gets the data representing this VirtualMachine.
@@ -20,12 +20,12 @@ namespace Proto.Compute
         public RollingUpgradeStatusInfo Data { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="VirtualMachineScaleSetRollingUpgrade"/> class.
+        /// Initializes a new instance of the <see cref="RollingUpgrade"/> class.
         /// </summary>
         /// <param name="operations"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
-        internal VirtualMachineScaleSetRollingUpgrade(OperationsBase operations, RollingUpgradeStatusInfo resource)
-            : base(operations, resource.Id)
+        internal RollingUpgrade(OperationsBase operations, RollingUpgradeStatusInfo resource)
+            : base(operations, operations.Id as ResourceGroupResourceIdentifier)
         {
             Data = resource;
         }

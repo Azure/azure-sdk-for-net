@@ -1,12 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Core.Resources;
+using Proto.Compute.Convenience;
 
 namespace Proto.Compute
 {
@@ -62,7 +65,7 @@ namespace Proto.Compute
         /// <param name="resourceDetails"> Parameters supplied to the Create Virtual Machine operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{VirtualMachineScaleSet}"/> operation for this resource. </returns>
-        public async override Task<ArmResponse<VirtualMachineScaleSet>> CreateOrUpdateAsync(string name, VirtualMachineScaleSetData resourceDetails, CancellationToken cancellationToken = default)
+        public override async Task<ArmResponse<VirtualMachineScaleSet>> CreateOrUpdateAsync(string name, VirtualMachineScaleSetData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
@@ -71,16 +74,16 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc />
-        public override ArmResponse<VirtualMachineScaleSet> Get(string VirtualMachineScaleSetName, CancellationToken cancellationToken = default)
+        public override ArmResponse<VirtualMachineScaleSet> Get(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(Operations.Get(Id.ResourceGroupName, VirtualMachineScaleSetName, cancellationToken),
+            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(Operations.Get(Id.ResourceGroupName, virtualMachineScaleSetName, cancellationToken),
                 v => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(v)));
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<VirtualMachineScaleSet>> GetAsync(string VirtualMachineScaleSetName, CancellationToken cancellationToken = default)
+        public override async Task<ArmResponse<VirtualMachineScaleSet>> GetAsync(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(await Operations.GetAsync(Id.ResourceGroupName, VirtualMachineScaleSetName, cancellationToken),
+            return new PhArmResponse<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(await Operations.GetAsync(Id.ResourceGroupName, virtualMachineScaleSetName, cancellationToken),
                 v => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(v)));
         }
 
@@ -193,11 +196,60 @@ namespace Proto.Compute
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{VirtualMachineScaleSet}"/> that allows polling for completion of the operation. </returns>
-        public async override Task<ArmOperation<VirtualMachineScaleSet>> StartCreateOrUpdateAsync(string name, VirtualMachineScaleSetData resourceDetails, CancellationToken cancellationToken = default)
+        public override async Task<ArmOperation<VirtualMachineScaleSet>> StartCreateOrUpdateAsync(string name, VirtualMachineScaleSetData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false),
                 v => new VirtualMachineScaleSet(Parent, new VirtualMachineScaleSetData(v)));
+        }
+
+        /// <summary>
+        /// Construct an object used to create a VirtualMachine.
+        /// </summary>
+        /// <param name="hostName"> The hostname for the virtual machine. </param>
+        /// <param name="location"> The location to create the Virtual Machine. </param>
+        /// <returns> Object used to create a <see cref="VirtualMachine"/>. </returns>
+        public VirtualMachineScaleSetModelBuilder Construct(string hostName, LocationData location = null)
+        {
+            var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier, ResourceGroupOperations>();
+            var vmss = new Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet(location ?? parent.Data.Location)
+            {
+                // TODO SKU should not be hardcoded
+                Sku = new Azure.ResourceManager.Compute.Models.Sku() { Name = "Standard_DS1_v2", Capacity = 2 },
+                Overprovision = false,
+                VirtualMachineProfile = new Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVMProfile()
+                {
+                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile(),
+                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    {
+                        OsDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes.FromImage),
+                        ImageReference = new ImageReference()
+                        {
+                            Offer = "WindowsServer",
+                            Publisher = "MicrosoftWindowsServer",
+                            Sku = "2019-Datacenter",
+                            Version = "latest"
+                        },
+                    }
+                },
+                UpgradePolicy = new UpgradePolicy() {  Mode = UpgradeMode.Automatic },
+            };
+
+            var nicConfig = new VirtualMachineScaleSetNetworkConfiguration("scaleSetNic")
+            {
+                Primary = true,
+            };
+            var ipconfig = new VirtualMachineScaleSetIPConfiguration("scaleSetIPConfig")
+            {
+                Subnet = new ApiEntityReference() { Id = "" },
+            };
+            ipconfig.LoadBalancerBackendAddressPools.Add(null);
+            ipconfig.LoadBalancerInboundNatPools.Add(null);
+            nicConfig.IpConfigurations.Add(ipconfig);
+
+            vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Add(nicConfig);
+
+            return new VirtualMachineScaleSetModelBuilder(this, new VirtualMachineScaleSetData(vmss));
         }
     }
 }
