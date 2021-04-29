@@ -64,7 +64,7 @@ namespace Azure.Monitor.Query
         /// <param name="endTime">The end time for the metric query.</param>
         /// <param name="interval">The interval at which to sample the metrics.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="MetricQueryResult"/> instance with query results.</returns>
+        /// <returns>The <see cref="MetricQueryResult"/> instance containing the query results.</returns>
         public virtual Response<MetricQueryResult> Query(string resource, DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan interval, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");

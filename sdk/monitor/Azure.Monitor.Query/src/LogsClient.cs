@@ -34,7 +34,7 @@ namespace Azure.Monitor.Query
         /// Initializes a new instance of <see cref="LogsClient"/>.
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        /// <param name="options">The <see cref="LogsClientOptions"/> instance to as client configuration.</param>
+        /// <param name="options">The <see cref="LogsClientOptions"/> instance to use as client configuration.</param>
         public LogsClient(TokenCredential credential, LogsClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -94,7 +94,7 @@ namespace Azure.Monitor.Query
         /// <param name="timeSpan">The timespan over which to query data.</param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
+        /// <returns>The <see cref="LogsQueryResult"/> containing the query results.</returns>
         public virtual Response<LogsQueryResult> Query(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");

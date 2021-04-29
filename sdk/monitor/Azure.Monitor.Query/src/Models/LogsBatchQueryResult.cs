@@ -46,7 +46,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="queryId">The query identifier returned from the <see cref="LogsBatchQuery.AddQuery"/>.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
         /// <exception cref="ArgumentException">When the query with <paramref name="queryId"/> was not part of the batch.</exception>
-        /// <exception cref="RequestFailedException">When the query  <paramref name="queryId"/> failed.</exception>
+        /// <exception cref="RequestFailedException">When the query <paramref name="queryId"/> failed.</exception>
         public IReadOnlyList<T> GetResult<T>(string queryId)
         {
             return RowBinder.BindResults<T>(GetResult(queryId));

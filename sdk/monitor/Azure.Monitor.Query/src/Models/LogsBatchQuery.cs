@@ -30,7 +30,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Constructor to support mocking.
+        /// Initializes a new instance of <see cref="LogsBatchQuery"/> for mocking.
         /// </summary>
         protected LogsBatchQuery()
         {
@@ -66,7 +66,7 @@ namespace Azure.Monitor.Query
         /// Submits the batch.
         /// </summary>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="LogsBatchQueryResult"/> that allows retrieving query results.</returns>
+        /// <returns>The <see cref="LogsBatchQueryResult"/> containing the query identifier that has to be passed into <see cref="LogsBatchQueryResult.GetResult"/> to get the result.</returns>
         public virtual Response<LogsBatchQueryResult> Submit(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsBatchQuery)}.{nameof(Submit)}");

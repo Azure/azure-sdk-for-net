@@ -28,7 +28,7 @@ dotnet add package Azure.Monitor.Query --prerelease
 
 ### Authenticate the Client
 
-In order to interact with the Azure Monitor service, you will need to create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class and pass it to the constructor of your `LogsClient` and `MetricsClient` class.
+In order to interact with the Azure Monitor service, you will need to create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class and pass it to the constructor of your `LogsClient` or `MetricsClient` class.
 
 ## Key concepts
 
