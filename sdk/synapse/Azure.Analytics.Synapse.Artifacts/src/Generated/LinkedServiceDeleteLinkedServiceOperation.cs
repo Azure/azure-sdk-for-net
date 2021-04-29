@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Deletes a linked service. </summary>
     public partial class LinkedServiceDeleteLinkedServiceOperation : Operation<Response>, IOperationSource<Response>
     {
-        private readonly ArmOperationHelpers<Response> _operation;
+        private readonly OperationInternals<Response> _operation;
 
         /// <summary> Initializes a new instance of LinkedServiceDeleteLinkedServiceOperation for mocking. </summary>
         protected LinkedServiceDeleteLinkedServiceOperation()
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal LinkedServiceDeleteLinkedServiceOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LinkedServiceDeleteLinkedServiceOperation");
+            _operation = new OperationInternals<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LinkedServiceDeleteLinkedServiceOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;
