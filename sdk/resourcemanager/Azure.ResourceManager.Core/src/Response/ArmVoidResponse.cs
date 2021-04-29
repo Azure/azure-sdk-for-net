@@ -1,18 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
-    internal class VoidArmResponse : ArmResponse
+    internal class ArmVoidResponse : ArmResponse
     {
         private readonly Response _response;
 
-        public VoidArmResponse(Response response)
+        public ArmVoidResponse(Response response)
         {
+            if (response is null)
+                throw new ArgumentNullException(nameof(response));
+
             _response = response;
         }
 

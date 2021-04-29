@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// A calss representing an arm operation wrapper object.
+    /// A class representing an arm operation wrapper object.
     /// </summary>
     internal class PhValueArmOperation<TOperations> : ArmOperation<TOperations>
         where TOperations : class
@@ -17,10 +17,17 @@ namespace Azure.ResourceManager.Core
         private readonly Operation<TOperations> _wrappedOperation;
         private readonly OperationOrResponseInternals<TOperations> _wrappedResponseOperation;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PhValueArmOperation{TOperations}"/> class for mocking.
+        /// </summary>
         protected PhValueArmOperation()
         {
         }
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PhValueArmOperation{TOperations}"/>.
+        /// </summary>
+        /// <param name="wrapped"> The operation object to wrap. </param>
         public PhValueArmOperation(Operation<TOperations> wrapped)
         {
             if (wrapped is null)
@@ -30,9 +37,9 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="PhValueArmOperation{TOperations}"/>.
         /// </summary>
-        /// <param name="wrapped"></param>
+        /// <param name="wrapped"> The response object to wrap. </param>
         public PhValueArmOperation(Response<TOperations> wrapped)
         {
             if (wrapped is null)

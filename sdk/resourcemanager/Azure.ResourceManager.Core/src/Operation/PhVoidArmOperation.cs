@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// A calss representing an arm operation wrapper object.
+    /// A class representing an arm operation wrapper object.
     /// </summary>
     public class PhVoidArmOperation : ArmOperation
     {

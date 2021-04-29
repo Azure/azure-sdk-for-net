@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -11,7 +9,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// A calss representing an arm operation wrapper object.
+    /// A class representing an arm operation wrapper object.
     /// </summary>
     /// <typeparam name="TOperations"> The <see cref="ResourceOperationsBase"/> to convert TModel into. </typeparam>
     /// <typeparam name="TModel"> The model returned by existing Operation methods. </typeparam>
@@ -118,11 +116,11 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override Response<TOperations> WaitForCompletion(CancellationToken cancellationToken = default)
         {
-            return WaitForCompletion(OperationInternals<TOperations>.DefaultPollingInterval.Seconds, cancellationToken);
+            return WaitForCompletion(OperationInternals<TOperations>.DefaultPollingInterval, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public override Response<TOperations> WaitForCompletion(int pollingInterval, CancellationToken cancellationToken = default)
+        public override Response<TOperations> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
         {
             while (true)
             {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Core
             if (response is null)
                 throw new ArgumentNullException(nameof(response));
 
-            return new ValueArmResponse<TOperations>(response, value);
+            return new ArmValueResponse<TOperations>(response, value);
         }
 
         /// <summary>
@@ -40,7 +40,20 @@ namespace Azure.ResourceManager.Core
             if (response is null)
                 throw new ArgumentNullException(nameof(response));
 
-            return new VoidArmResponse(response);
+            return new ArmVoidResponse(response);
+        }
+
+        /// <summary>
+        /// Gets the correlation id from x-ms-correlation-id.
+        /// </summary>
+        public string CorrelationId
+        {
+            get
+            {
+                string correlationId = null;
+                Headers.TryGetValue("x-ms-correlation-id", out correlationId);
+                return correlationId;
+            }
         }
     }
 
@@ -56,5 +69,18 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="response">The <see cref="ArmResponse{TOperations}"/> instance.</param>
         public static implicit operator TOperations(ArmResponse<TOperations> response) => response.Value;
+
+        /// <summary>
+        /// Gets the correlation id from x-ms-correlation-id.
+        /// </summary>
+        public string CorrelationId
+        {
+            get
+            {
+                string correlationId = null;
+                GetRawResponse().Headers.TryGetValue("x-ms-correlation-id", out correlationId);
+                return correlationId;
+            }
+        }
     }
 }
