@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
-    internal partial class SubscriptionsRestOperations : SubscriptionOperations
+    internal partial class SubscriptionsRestOperations
     {
         private Uri endpoint;
         private ClientDiagnostics _clientDiagnostics;

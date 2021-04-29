@@ -4,8 +4,6 @@
 using System;
 using System.Threading;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
 {
@@ -28,10 +26,7 @@ namespace Azure.ResourceManager.Core
         internal SubscriptionContainer(ClientContext clientContext)
             : base(clientContext, null)
         {
-            ResourceManager.Resources.ResourcesManagementClientOptions options = new();
-            Operations = new SubscriptionsOperations(new ClientDiagnostics(options),
-                ManagementPipelineBuilder.Build(Credential, BaseUri, options),
-                BaseUri);
+            Operations = new SubscriptionOperations(clientContext, Id);
         }
 
         /// <summary>
@@ -42,7 +37,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the operations that can be performed on the container.
         /// </summary>
-        private SubscriptionsOperations Operations;
+        private SubscriptionOperations Operations;
 
         /// <summary>
         /// Lists all subscriptions in the current container.

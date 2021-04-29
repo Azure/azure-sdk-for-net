@@ -4,7 +4,6 @@
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
 {
@@ -21,10 +20,7 @@ namespace Azure.ResourceManager.Core
             : base(new ClientContext(subscriptionOperations.ClientOptions, subscriptionOperations.Credential, subscriptionOperations.BaseUri, subscriptionOperations.Pipeline), subscriptionOperations.Id)
         {
             Id = subscriptionOperations.Id;
-            ResourceManager.Resources.ResourcesManagementClientOptions options = new();
-            SubscriptionsClient = new SubscriptionsOperations(new ClientDiagnostics(options),
-                ManagementPipelineBuilder.Build(Credential, BaseUri, options),
-                BaseUri);
+            SubscriptionsClient = new SubscriptionOperations(new ClientContext(subscriptionOperations.ClientOptions, subscriptionOperations.Credential, subscriptionOperations.BaseUri, subscriptionOperations.Pipeline), subscriptionOperations.Id);
         }
 
         /// <inheritdoc/>
@@ -33,7 +29,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the subscription client.
         /// </summary>
-        private SubscriptionsOperations SubscriptionsClient;
+        private SubscriptionOperations SubscriptionsClient;
 
         /// <summary>
         /// The resource id
