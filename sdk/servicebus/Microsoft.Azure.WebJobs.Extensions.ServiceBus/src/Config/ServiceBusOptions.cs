@@ -34,16 +34,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// if so, the amount of time to wait between retry attempts.  These options also control the
         /// amount of time allowed for receiving messages and other interactions with the Service Bus service.
         /// </summary>
-        public ServiceBusRetryOptions RetryOptions
+        public ServiceBusRetryOptions ClientRetryOptions
         {
-            get => _retryOptions;
+            get => _clientRetryOptions;
             set
             {
-                Argument.AssertNotNull(value, nameof(RetryOptions));
-                _retryOptions = value;
+                Argument.AssertNotNull(value, nameof(ClientRetryOptions));
+                _clientRetryOptions = value;
             }
         }
-        private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
+        private ServiceBusRetryOptions _clientRetryOptions = new ServiceBusRetryOptions();
 
         /// <summary>
         ///   The type of protocol and transport that will be used for communicating with the Service Bus
@@ -148,16 +148,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             // Do not include ConnectionString in loggable options.
             var retryOptions = new JObject
             {
-                { nameof(ServiceBusClientOptions.RetryOptions.Mode), RetryOptions.Mode.ToString() },
-                { nameof(ServiceBusClientOptions.RetryOptions.TryTimeout), RetryOptions.TryTimeout },
-                { nameof(ServiceBusClientOptions.RetryOptions.Delay), RetryOptions.Delay },
-                { nameof(ServiceBusClientOptions.RetryOptions.MaxDelay), RetryOptions.MaxDelay },
-                { nameof(ServiceBusClientOptions.RetryOptions.MaxRetries), RetryOptions.MaxRetries },
+                { nameof(ServiceBusClientOptions.RetryOptions.Mode), ClientRetryOptions.Mode.ToString() },
+                { nameof(ServiceBusClientOptions.RetryOptions.TryTimeout), ClientRetryOptions.TryTimeout },
+                { nameof(ServiceBusClientOptions.RetryOptions.Delay), ClientRetryOptions.Delay },
+                { nameof(ServiceBusClientOptions.RetryOptions.MaxDelay), ClientRetryOptions.MaxDelay },
+                { nameof(ServiceBusClientOptions.RetryOptions.MaxRetries), ClientRetryOptions.MaxRetries },
             };
 
             JObject options = new JObject
             {
-                { nameof(RetryOptions), retryOptions },
+                { nameof(ClientRetryOptions), retryOptions },
                 { nameof(TransportType),  TransportType.ToString()},
                 { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },
                 { nameof(AutoCompleteMessages), AutoCompleteMessages },
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         internal ServiceBusClientOptions ToClientOptions() =>
             new ServiceBusClientOptions
             {
-                RetryOptions = RetryOptions,
+                RetryOptions = ClientRetryOptions,
                 WebProxy = WebProxy,
                 TransportType = TransportType
             };

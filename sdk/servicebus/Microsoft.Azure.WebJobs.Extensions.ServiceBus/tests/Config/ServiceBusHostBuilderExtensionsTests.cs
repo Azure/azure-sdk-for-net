@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.AreEqual(TimeSpan.FromSeconds(15), options.MaxAutoLockRenewalDuration);
             Assert.AreEqual(ServiceBusTransportType.AmqpWebSockets, options.TransportType);
             Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)options.WebProxy).Address.AbsoluteUri);
-            Assert.AreEqual(10, options.RetryOptions.MaxRetries);
+            Assert.AreEqual(10, options.ClientRetryOptions.MaxRetries);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.False(result.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), result.MaxAutoLockRenewalDuration);
             Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)result.WebProxy).Address.AbsoluteUri);
-            Assert.AreEqual(10, result.RetryOptions.MaxRetries);
+            Assert.AreEqual(10, result.ClientRetryOptions.MaxRetries);
         }
 
         private static ServiceBusOptions CreateOptionsFromConfig()
