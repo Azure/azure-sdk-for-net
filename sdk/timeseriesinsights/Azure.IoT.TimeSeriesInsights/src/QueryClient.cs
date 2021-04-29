@@ -46,10 +46,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Console.WriteLine(&quot;\n\nQuery for raw temperature events over the past 10 minutes.\n&quot;);
         ///
         /// // Get events from last 10 minute
-        /// DateTimeOffset now = DateTime.UtcNow;
-        /// DateTimeOffset endTime = now.AddMinutes(10);
-        /// DateTimeOffset startTime = now.AddMinutes(-10);
-        ///
+        /// DateTimeOffset endTime = DateTime.UtcNow;
+        /// DateTimeOffset startTime = endTime.AddMinutes(-10);
         ///
         /// QueryAnalyzer temperatureEventsQueryAnalyzer = client.Query.CreateEventsQueryAnalyzer(tsId, startTime, endTime);
         /// await foreach (TimeSeriesPoint point in temperatureEventsQueryAnalyzer.GetResultsAsync())
@@ -153,9 +151,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleQuerySeries">
         /// Console.WriteLine(&quot;\n\nQuery for temperature series in celsius and fahrenheit over the past 10 minutes.\n&quot;);
         ///
-        /// DateTimeOffset now = DateTime.UtcNow;
-        /// DateTimeOffset endTime = now.AddMinutes(10);
-        /// DateTimeOffset startTime = now.AddMinutes(-10);
+        /// DateTimeOffset endTime = DateTime.UtcNow;
+        /// DateTimeOffset startTime = endTime.AddMinutes(-10);
         ///
         /// var celsiusVariable = new NumericVariable(
         ///     new TimeSeriesExpression(&quot;$event.Temperature&quot;),
@@ -267,9 +264,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Console.WriteLine(&quot;\n\nCount the number of temperature vents over the past 3 minutes, in 1-minute time slots.\n&quot;);
         ///
         /// // Get the count of events in 60-second time slots over the past 3 minutes
-        /// DateTimeOffset now = DateTime.UtcNow;
-        /// DateTimeOffset endTime = now.AddMinutes(3);
-        /// DateTimeOffset startTime = now.AddMinutes(-3);
+        /// DateTimeOffset endTime = DateTime.UtcNow;
+        /// DateTimeOffset startTime = endTime.AddMinutes(-3);
         ///
         /// var aggregateVariable = new AggregateVariable(
         ///     new TimeSeriesExpression(&quot;count()&quot;));
