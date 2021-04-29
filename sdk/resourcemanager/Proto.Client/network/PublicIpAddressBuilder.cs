@@ -11,14 +11,14 @@ namespace Proto.Network
     /// <summary>
     /// A class representing a builder object used to create Azure resources.
     /// </summary>
-    public class SubnetBuilder
+    public class PublicIpAddressBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SubnetBuilder"/> class.
+        /// Initializes a new instance of the <see cref="PublicIpAddressBuilder"/> class.
         /// </summary>
         /// <param name="container"> The container object to create the resource in. </param>
         /// <param name="resource"> The resource to create. </param>
-        public SubnetBuilder(SubnetContainer container, SubnetData resource)
+        public PublicIpAddressBuilder(PublicIpAddressContainer container, PublicIPAddressData resource)
         {
             Resource = resource;
             UnTypedContainer = container;
@@ -27,7 +27,7 @@ namespace Proto.Network
         /// <summary>
         /// Gets the resource object to create.
         /// </summary>
-        protected SubnetData Resource { get; private set; }
+        protected PublicIPAddressData Resource { get; private set; }
 
         /// <summary>
         /// Gets the resource name.
@@ -37,13 +37,13 @@ namespace Proto.Network
         /// <summary>
         /// Gets the container object to create the resource in.
         /// </summary>
-        protected SubnetContainer UnTypedContainer { get; private set; }
+        protected PublicIpAddressContainer UnTypedContainer { get; private set; }
 
         /// <summary>
         /// Creates the resource object to send to the Azure API.
         /// </summary>
         /// <returns> The resource to create. </returns>
-        public SubnetData Build()
+        public PublicIPAddressData Build()
         {
             ThrowIfNotValid();
             OnBeforeBuild();
@@ -58,9 +58,9 @@ namespace Proto.Network
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{Subnet}"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="ArmResponse{PublicIpAddress}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public ArmResponse<Subnet> CreateOrUpdate(string name, CancellationToken cancellationToken = default)
+        public ArmResponse<PublicIpAddress> CreateOrUpdate(string name, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
@@ -76,9 +76,9 @@ namespace Proto.Network
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Subnet}"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{PublicIpAddress}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public async Task<ArmResponse<Subnet>> CreateOrUpdateAsync(
+        public async Task<ArmResponse<PublicIpAddress>> CreateOrUpdateAsync(
             string name,
             CancellationToken cancellationToken = default)
         {
@@ -96,12 +96,12 @@ namespace Proto.Network
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An <see cref="ArmOperation{Subnet}"/> that allows polling for completion of the operation. </returns>
+        /// <returns> An <see cref="ArmOperation{PublicIpAddress}"/> that allows polling for completion of the operation. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public ArmOperation<Subnet> StartCreateOrUpdate(string name, CancellationToken cancellationToken = default)
+        public ArmOperation<PublicIpAddress> StartCreateOrUpdate(string name, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
@@ -117,12 +117,12 @@ namespace Proto.Network
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{Subnet}"/> that allows polling for completion of the operation. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{PublicIpAddress}"/> that allows polling for completion of the operation. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public async Task<ArmOperation<Subnet>> StartCreateOrUpdateAsync(
+        public async Task<ArmOperation<PublicIpAddress>> StartCreateOrUpdateAsync(
             string name,
             CancellationToken cancellationToken = default)
         {
@@ -159,7 +159,6 @@ namespace Proto.Network
         /// </summary>
         protected virtual void OnBeforeBuild()
         {
-            Resource.Model.Name = ResourceName;
         }
 
         private static void InternalBuild()
