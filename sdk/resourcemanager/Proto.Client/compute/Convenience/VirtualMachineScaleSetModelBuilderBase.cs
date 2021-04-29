@@ -7,7 +7,7 @@ namespace Proto.Compute.Convenience
     /// <summary>
     /// A class representing a builder object to help create a virtual machine scale set.
     /// </summary>
-    public abstract class VirtualMachineScaleSetModelBuilderBase : ArmBuilder<ResourceGroupResourceIdentifier, VirtualMachineScaleSet, VirtualMachineScaleSetData>
+    public abstract class VirtualMachineScaleSetModelBuilderBase : VirtualMachineScaleSetBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineModelBuilderBase"/> class.
