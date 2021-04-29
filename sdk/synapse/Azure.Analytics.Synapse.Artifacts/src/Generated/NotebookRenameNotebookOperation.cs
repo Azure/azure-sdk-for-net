@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Renames a notebook. </summary>
     public partial class NotebookRenameNotebookOperation : Operation<Response>, IOperationSource<Response>
     {
-        private readonly ArmOperationHelpers<Response> _operation;
+        private readonly OperationInternals<Response> _operation;
 
         /// <summary> Initializes a new instance of NotebookRenameNotebookOperation for mocking. </summary>
         protected NotebookRenameNotebookOperation()
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal NotebookRenameNotebookOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebookRenameNotebookOperation");
+            _operation = new OperationInternals<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebookRenameNotebookOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

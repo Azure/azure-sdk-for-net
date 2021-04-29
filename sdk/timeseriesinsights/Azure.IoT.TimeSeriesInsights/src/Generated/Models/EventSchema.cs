@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Event schema of all events within a given search span. Event schema is a set of property definitions. Properties are identified by both name and type. Different events can have properties with same name, but different type. Event schema may not be contain all persisted properties when there are too many properties. </summary>
-    public partial class EventSchema
+    internal partial class EventSchema
     {
         /// <summary> Initializes a new instance of EventSchema. </summary>
         internal EventSchema()

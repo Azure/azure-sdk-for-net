@@ -139,7 +139,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 PrefetchCount = 5,
                 ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(60),
-                MaxReceiveWaitTime = TimeSpan.FromSeconds(10)
+                MaxReceiveWaitTime = TimeSpan.FromSeconds(10),
+                SubQueue = SubQueue.DeadLetter
             };
             var processor = client.CreateProcessor("queueName", options);
             Assert.AreEqual(options.AutoCompleteMessages, processor.AutoCompleteMessages);
@@ -149,6 +150,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
             Assert.AreEqual(options.MaxReceiveWaitTime, processor.MaxReceiveWaitTime);
             Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
+            Assert.AreEqual(EntityNameFormatter.FormatDeadLetterPath("queueName"), processor.EntityPath);
             Assert.IsFalse(processor.IsClosed);
             Assert.IsFalse(processor.IsProcessing);
         }

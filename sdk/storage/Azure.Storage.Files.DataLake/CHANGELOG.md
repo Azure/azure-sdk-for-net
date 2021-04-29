@@ -6,6 +6,7 @@
 - Added support for File Query Parquet input format.
 - DataLakeLeaseClient now remembers the Lease ID after a lease change.
 - Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a DataLakeSasBuilder parameter.
+- Deprecated property DataLakeSasBuilder.Version, so when generating SAS will always use the latest Storage Service SAS version.
 
 ## 12.7.0-beta.3 (2021-04-09)
 - Aligned storage URL parsing with other platforms.

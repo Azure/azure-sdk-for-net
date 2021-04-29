@@ -5,6 +5,7 @@ using System;
 using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace SnippetGenerator
 {
@@ -19,34 +20,30 @@ namespace SnippetGenerator
         private static readonly Regex _snippetExampleRegex = new Regex("^(?<indent>\\s*)\\/{3}\\s*<example snippet=\"(?<name>[\\w:]+)\">.*?\\s*<\\/example>",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
-        public static string Process(string markdown, Func<string, string> snippetProvider)
+        public static async ValueTask<string> ProcessAsync(string markdown, Func<string, ValueTask<string>> snippetProvider)
         {
-            string CodeTagFormatter(Match match)
+            async ValueTask<string> CodeTagFormatter(Match match)
             {
-                var name = BuildResult(snippetProvider, match, out var prefix, out var builder);
-
-                return string.Format(_snippetFormat, name, Environment.NewLine, builder, prefix);
+                return await BuildResult(snippetProvider, match, _snippetFormat);
             }
 
-            string ExampleTagFormatter(Match match)
+            async ValueTask<string> ExampleTagFormatter(Match match)
             {
-                var name = BuildResult(snippetProvider, match, out var prefix, out var builder);
-
-                return string.Format(_snippetExampleFormat, name, Environment.NewLine, builder, prefix);
+                return await BuildResult(snippetProvider, match, _snippetExampleFormat);
             }
 
-            string result = _snippetRegex.Replace(markdown, CodeTagFormatter);
-            return result != markdown ? result : _snippetExampleRegex.Replace(markdown, ExampleTagFormatter);
+            string result = await _snippetRegex.ReplaceAsync(markdown, CodeTagFormatter);
+            return result != markdown ? result : await _snippetExampleRegex.ReplaceAsync(markdown, ExampleTagFormatter);
         }
 
-        private static string BuildResult(Func<string, string> snippetProvider, Match match, out string prefix, out StringBuilder builder)
+        private static async ValueTask<string> BuildResult(Func<string, ValueTask<string>> snippetProvider, Match match, string format)
         {
             var name = match.Groups["name"].Value;
-            prefix = match.Groups["indent"].Value + "///";
+            var prefix = match.Groups["indent"].Value + "///";
 
-            var snippetText = snippetProvider(name);
+            var snippetText = await snippetProvider(name);
 
-            builder = new StringBuilder();
+            var builder = new StringBuilder();
             foreach (var line in snippetText.Split(Environment.NewLine))
             {
                 builder.Append(prefix);
@@ -63,7 +60,7 @@ namespace SnippetGenerator
                 builder.Length -= Environment.NewLine.Length;
             }
 
-            return name;
+            return string.Format(format, name, Environment.NewLine, builder, prefix);
         }
     }
 }

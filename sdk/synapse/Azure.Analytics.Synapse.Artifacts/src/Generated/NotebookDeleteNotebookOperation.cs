@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Deletes a Note book. </summary>
     public partial class NotebookDeleteNotebookOperation : Operation<Response>, IOperationSource<Response>
     {
-        private readonly ArmOperationHelpers<Response> _operation;
+        private readonly OperationInternals<Response> _operation;
 
         /// <summary> Initializes a new instance of NotebookDeleteNotebookOperation for mocking. </summary>
         protected NotebookDeleteNotebookOperation()
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal NotebookDeleteNotebookOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebookDeleteNotebookOperation");
+            _operation = new OperationInternals<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebookDeleteNotebookOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;
