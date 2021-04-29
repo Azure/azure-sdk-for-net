@@ -512,6 +512,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_08_04)]
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20758")]
         [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_ParquetConfiguration()
         {
@@ -543,6 +544,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_08_04)]
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20758")]
         [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_ParquetOutputError()
         {
