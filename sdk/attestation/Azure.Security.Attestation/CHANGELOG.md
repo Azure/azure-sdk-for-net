@@ -1,4 +1,5 @@
 # Release History
+
 ## 1.0.0-beta.3 (Unreleased)
 ### Changed
 - Hopefully the final changes for Azure Attestation Service for .Net. Mostly code cleanups, but significant improvements to the `AttestationToken` class.

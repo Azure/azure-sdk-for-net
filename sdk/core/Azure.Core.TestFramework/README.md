@@ -149,6 +149,15 @@ public class AppConfigurationTestEnvironment : TestEnvironment
 }
 ```
 
+## Test settings
+
+Test settings can be configured via `.runsettings` files. See [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/nunit.runsettings) for available knobs.
+
+There are two ways to work with `.runsettings`. Both are picked up by Visual Studio without restart.
+- You can edit [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/nunit.runsettings) locally to achieve desired configuration.
+- You can prepare few copies of `.runsettings` by cloning [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/nunit.runsettings).
+Load them in Visual Studio (`Test>Configure Run Settings` menu) and switch between them. This option requires setting an environment variable `AZURE_SKIP_DEFAULT_RUN_SETTINGS=true`.
+
 ## TokenCredential
 
 If a test or sample uses `TokenCredential` to construct the client use `TestEnvironment.Credential` to retrieve it.
