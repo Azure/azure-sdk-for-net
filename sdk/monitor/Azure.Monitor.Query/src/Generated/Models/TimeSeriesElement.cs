@@ -28,9 +28,6 @@ namespace Azure.Monitor.Query.Models
             Metadatavalues = metadatavalues;
             Data = data;
         }
-
-        /// <summary> the metadata values returned if $filter was specified in the call. </summary>
-        public IReadOnlyList<MetadataValue> Metadatavalues { get; }
         /// <summary> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </summary>
         public IReadOnlyList<MetricValue> Data { get; }
     }
