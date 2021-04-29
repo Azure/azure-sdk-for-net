@@ -34,9 +34,7 @@ namespace Azure.ResourceManager.Core
         internal SubscriptionOperations(ClientContext clientContext, string subscriptionGuid)
             : base(clientContext, new SubscriptionResourceIdentifier(subscriptionGuid))
         {
-            SubscriptionsRestOperations = new SubscriptionsRestOperations(new ClientDiagnostics(this.ClientOptions),
-                ManagementPipelineBuilder.Build(Credential, BaseUri, this.ClientOptions),
-                BaseUri);
+            SubscriptionsRestOperations = new SubscriptionsRestOperations(new ClientDiagnostics(this.ClientOptions), this.Pipeline, BaseUri);
         }
 
         /// <summary>
@@ -47,9 +45,7 @@ namespace Azure.ResourceManager.Core
         protected SubscriptionOperations(SubscriptionOperations subscription, SubscriptionResourceIdentifier id)
             : base(subscription, id)
         {
-            SubscriptionsRestOperations = new SubscriptionsRestOperations(new ClientDiagnostics(this.ClientOptions),
-                ManagementPipelineBuilder.Build(Credential, BaseUri, this.ClientOptions),
-                BaseUri);
+            SubscriptionsRestOperations = new SubscriptionsRestOperations(new ClientDiagnostics(this.ClientOptions), this.Pipeline, BaseUri);
         }
 
         /// <summary>
