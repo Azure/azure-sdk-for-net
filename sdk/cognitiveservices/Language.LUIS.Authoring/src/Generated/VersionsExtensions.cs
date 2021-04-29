@@ -13,6 +13,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     using Models;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -221,6 +222,82 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Imports a new version into a LUIS application.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='luisAppV2'>
+            /// A LUIS application structure.
+            /// </param>
+            /// <param name='versionId'>
+            /// The new versionId to import. If not specified, the versionId will be read
+            /// from the imported object.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> ImportV2AppAsync(this IVersions operations, System.Guid appId, LuisAppV2 luisAppV2, string versionId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ImportV2AppWithHttpMessagesAsync(appId, luisAppV2, versionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Imports a new version into a LUIS application.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='luisAppLu'>
+            /// An LU representing the LUIS application structure.
+            /// </param>
+            /// <param name='versionId'>
+            /// The new versionId to import. If not specified, the versionId will be read
+            /// from the imported object.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<string> ImportLuFormatAsync(this IVersions operations, System.Guid appId, string luisAppLu, string versionId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ImportLuFormatWithHttpMessagesAsync(appId, luisAppLu, versionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Exports a LUIS application to text format.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Stream> ExportLuFormatAsync(this IVersions operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.ExportLuFormatWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
             }
 
     }

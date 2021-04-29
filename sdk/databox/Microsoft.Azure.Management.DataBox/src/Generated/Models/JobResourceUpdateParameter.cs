@@ -35,16 +35,15 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Initializes a new instance of the JobResourceUpdateParameter class.
         /// </summary>
         /// <param name="details">Details of a job to be updated.</param>
-        /// <param name="destinationAccountDetails">Destination account
-        /// details.</param>
         /// <param name="tags">The list of key value pairs that describe the
         /// resource. These tags can be used in viewing and grouping this
         /// resource (across resource groups).</param>
-        public JobResourceUpdateParameter(UpdateJobDetails details = default(UpdateJobDetails), IList<DestinationAccountDetails> destinationAccountDetails = default(IList<DestinationAccountDetails>), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="identity">Msi identity of the resource</param>
+        public JobResourceUpdateParameter(UpdateJobDetails details = default(UpdateJobDetails), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity))
         {
             Details = details;
-            DestinationAccountDetails = destinationAccountDetails;
             Tags = tags;
+            Identity = identity;
             CustomInit();
         }
 
@@ -60,18 +59,18 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public UpdateJobDetails Details { get; set; }
 
         /// <summary>
-        /// Gets or sets destination account details.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.destinationAccountDetails")]
-        public IList<DestinationAccountDetails> DestinationAccountDetails { get; set; }
-
-        /// <summary>
         /// Gets or sets the list of key value pairs that describe the
         /// resource. These tags can be used in viewing and grouping this
         /// resource (across resource groups).
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets msi identity of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ResourceIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

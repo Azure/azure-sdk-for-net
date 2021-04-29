@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading;
 
 #nullable enable
 
@@ -13,6 +15,7 @@ namespace Azure.Core.Pipeline
     internal class DiagnosticScopeFactory
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
+        private static Dictionary<string, DiagnosticListener>? _listeners;
         private readonly string? _resourceProviderNamespace;
         private readonly DiagnosticListener? _source;
 
@@ -22,7 +25,16 @@ namespace Azure.Core.Pipeline
             IsActivityEnabled = isActivityEnabled;
             if (IsActivityEnabled)
             {
-                _source = new DiagnosticListener(clientNamespace);
+                var listeners = LazyInitializer.EnsureInitialized(ref _listeners);
+
+                lock (listeners!)
+                {
+                    if (!listeners.TryGetValue(clientNamespace, out _source))
+                    {
+                        _source = new DiagnosticListener(clientNamespace);
+                        listeners[clientNamespace] = _source;
+                    }
+                }
             }
         }
 

@@ -1,5 +1,9 @@
 {
   "msbuild-sdks": {
     "Microsoft.Build.Traversal": "1.0.45"
+  },
+  "sdk": {
+    "version": "5.0.200",
+    "rollForward": "feature"
   }
 }

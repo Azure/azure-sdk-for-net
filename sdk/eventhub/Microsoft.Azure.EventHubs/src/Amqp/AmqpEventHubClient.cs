@@ -45,7 +45,8 @@ namespace Microsoft.Azure.EventHubs.Amqp
             {
                 this.InternalTokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
             }
-            else if (!string.Equals(csb.Authentication, "Managed Identity", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(csb.Authentication, "ManagedIdentity", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(csb.Authentication, "Managed Identity", StringComparison.OrdinalIgnoreCase))
             {
                 this.InternalTokenProvider = TokenProvider.CreateManagedIdentityTokenProvider();
             }
@@ -208,7 +209,8 @@ namespace Microsoft.Azure.EventHubs.Amqp
             {
                 MaxFrameSize = maxFrameSize,
                 ContainerId = containerId,
-                HostName = hostName
+                HostName = hostName,
+                IdleTimeOut = (uint)AmqpClientConstants.ConnectionIdleTimeout.TotalMilliseconds
             };
 
             ClientInfo.Add(connectionSettings);

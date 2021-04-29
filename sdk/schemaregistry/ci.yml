@@ -1,0 +1,34 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+trigger:
+  branches:
+    include:
+    - master
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/schemaregistry/
+
+pr:
+  branches:
+    include:
+    - master
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/schemaregistry/
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: schemaregistry
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Data.SchemaRegistry
+      safeName: AzureDataSchemaRegistry
+    - name: Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
+      safeName: MicrosoftAzureDataSchemaRegistryApacheAvro

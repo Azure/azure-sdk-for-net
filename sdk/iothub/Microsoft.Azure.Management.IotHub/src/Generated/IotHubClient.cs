@@ -100,6 +100,16 @@ namespace Microsoft.Azure.Management.IotHub
         public virtual IIotHubOperations IotHub { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the IotHubClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -345,8 +355,10 @@ namespace Microsoft.Azure.Management.IotHub
             ResourceProviderCommon = new ResourceProviderCommonOperations(this);
             Certificates = new CertificatesOperations(this);
             IotHub = new IotHubOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-07-01-preview";
+            ApiVersion = "2020-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

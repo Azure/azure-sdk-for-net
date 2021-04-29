@@ -36,25 +36,21 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="deviceType">Device type to be used for the job.
         /// Possible values include: 'DataBox', 'DataBoxDisk',
         /// 'DataBoxHeavy'</param>
+        /// <param name="transferType">Type of the transfer. Possible values
+        /// include: 'ImportToAzure', 'ExportFromAzure'</param>
         /// <param name="country">ISO country code. Country for hardware
         /// shipment. For codes check:
         /// https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements</param>
         /// <param name="location">Location for data transfer. For locations
         /// check:
         /// https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01</param>
-        public SkuAvailabilityValidationRequest(SkuName deviceType, string country, string location)
+        public SkuAvailabilityValidationRequest(SkuName deviceType, TransferType transferType, string country, string location)
         {
             DeviceType = deviceType;
+            TransferType = transferType;
             Country = country;
             Location = location;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for SkuAvailabilityValidationRequest class.
-        /// </summary>
-        static SkuAvailabilityValidationRequest()
-        {
-            TransferType = "ImportToAzure";
         }
 
         /// <summary>
@@ -70,6 +66,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public SkuName DeviceType { get; set; }
 
         /// <summary>
+        /// Gets or sets type of the transfer. Possible values include:
+        /// 'ImportToAzure', 'ExportFromAzure'
+        /// </summary>
+        [JsonProperty(PropertyName = "transferType")]
+        public TransferType TransferType { get; set; }
+
+        /// <summary>
         /// Gets or sets ISO country code. Country for hardware shipment. For
         /// codes check:
         /// https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
@@ -83,12 +86,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
-
-        /// <summary>
-        /// Type of the transfer.
-        /// </summary>
-        [JsonProperty(PropertyName = "transferType")]
-        public static string TransferType { get; private set; }
 
         /// <summary>
         /// Validate the object.

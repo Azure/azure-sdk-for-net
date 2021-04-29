@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -15,22 +13,41 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void RecognizeEntities()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
-            #region Snippet:TextAnalyticsSample4CreateClient
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
-            #endregion
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:RecognizeEntities
-            string input = "Microsoft was founded by Bill Gates and Paul Allen.";
+            string document = @"We love this trail and make the trip every year. The views are breathtaking and well
+                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
+                                We tried again today and it was amazing. Everyone in my family liked the trail although
+                                it was too challenging for the less athletic among us.
+                                Not necessarily recommended for small children.
+                                A hotel close to the trail offers services for childcare in case you want that.";
 
-            IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(input).Value;
-
-            Console.WriteLine($"Recognized {entities.Count} entities:");
-            foreach (CategorizedEntity entity in entities)
+            try
             {
-                Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
+                Response<CategorizedEntityCollection> response = client.RecognizeEntities(document);
+                CategorizedEntityCollection entitiesInDocument = response.Value;
+
+                Console.WriteLine($"Recognized {entitiesInDocument.Count} entities:");
+                foreach (CategorizedEntity entity in entitiesInDocument)
+                {
+                    Console.WriteLine($"  Text: {entity.Text}");
+                    Console.WriteLine($"  Offset: {entity.Offset}");
+                    Console.WriteLine($"  Length: {entity.Length}");
+                    Console.WriteLine($"  Category: {entity.Category}");
+                    if (!string.IsNullOrEmpty(entity.SubCategory))
+                        Console.WriteLine($"  SubCategory: {entity.SubCategory}");
+                    Console.WriteLine($"  Confidence score: {entity.ConfidenceScore}");
+                    Console.WriteLine("");
+                }
+            }
+            catch (RequestFailedException exception)
+            {
+                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Message: {exception.Message}");
             }
             #endregion
         }

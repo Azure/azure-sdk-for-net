@@ -51,16 +51,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         string ApiVersion { get; }
 
         /// <summary>
-        /// The ID of the target subscription.
-        /// </summary>
-        string SubscriptionId1 { get; set; }
-
-        /// <summary>
-        /// The API version to use for this operation.
-        /// </summary>
-        string ApiVersion11 { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -93,6 +83,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets the IProvidersOperations.
         /// </summary>
         IProvidersOperations Providers { get; }
+
+        /// <summary>
+        /// Gets the IProviderResourceTypesOperations.
+        /// </summary>
+        IProviderResourceTypesOperations ProviderResourceTypes { get; }
 
         /// <summary>
         /// Gets the IResourcesOperations.

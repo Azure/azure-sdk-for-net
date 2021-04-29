@@ -52,23 +52,23 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the machine extension name.
+        /// Gets the machine extension name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets specifies the type of the extension; an example is
+        /// Gets specifies the type of the extension; an example is
         /// "CustomScriptExtension".
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets specifies the version of the script handler.
+        /// Gets specifies the version of the script handler.
         /// </summary>
         [JsonProperty(PropertyName = "typeHandlerVersion")]
-        public string TypeHandlerVersion { get; set; }
+        public string TypeHandlerVersion { get; private set; }
 
         /// <summary>
         /// Gets or sets instance view status.

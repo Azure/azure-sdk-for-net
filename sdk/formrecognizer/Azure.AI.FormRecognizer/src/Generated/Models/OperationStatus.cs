@@ -8,7 +8,7 @@
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Status of the queued operation. </summary>
-    public enum OperationStatus
+    internal enum OperationStatus
     {
         /// <summary> notStarted. </summary>
         NotStarted,

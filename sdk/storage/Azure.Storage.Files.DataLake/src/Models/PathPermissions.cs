@@ -199,12 +199,12 @@ namespace Azure.Storage.Files.DataLake.Models
             if (StickyBit)
             {
                 sb.Remove(8, 1);
-                sb.Append("t");
+                sb.Append('t');
             }
 
             if (ExtendedAcls)
             {
-                sb.Append("+");
+                sb.Append('+');
             }
 
             return sb.ToString();

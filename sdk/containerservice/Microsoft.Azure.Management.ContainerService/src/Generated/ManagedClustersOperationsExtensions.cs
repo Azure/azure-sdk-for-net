@@ -154,7 +154,12 @@ namespace Microsoft.Azure.Management.ContainerService
             /// </summary>
             /// <remarks>
             /// Gets the accessProfile for the specified role name of the managed cluster
-            /// with a specified resource group and name.
+            /// with a specified resource group and name. **WARNING**: This API will be
+            /// deprecated. Instead use
+            /// [ListClusterUserCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusterusercredentials)
+            /// or
+            /// [ListClusterAdminCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusteradmincredentials)
+            /// .
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -168,6 +173,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='roleName'>
             /// The name of the role for managed cluster accessProfile resource.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static ManagedClusterAccessProfile GetAccessProfile(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, string roleName)
             {
                 return operations.GetAccessProfileAsync(resourceGroupName, resourceName, roleName).GetAwaiter().GetResult();
@@ -178,7 +184,12 @@ namespace Microsoft.Azure.Management.ContainerService
             /// </summary>
             /// <remarks>
             /// Gets the accessProfile for the specified role name of the managed cluster
-            /// with a specified resource group and name.
+            /// with a specified resource group and name. **WARNING**: This API will be
+            /// deprecated. Instead use
+            /// [ListClusterUserCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusterusercredentials)
+            /// or
+            /// [ListClusterAdminCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusteradmincredentials)
+            /// .
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -195,6 +206,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task<ManagedClusterAccessProfile> GetAccessProfileAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, string roleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAccessProfileWithHttpMessagesAsync(resourceGroupName, resourceName, roleName, null, cancellationToken).ConfigureAwait(false))
@@ -294,6 +306,54 @@ namespace Microsoft.Azure.Management.ContainerService
             public static async Task<CredentialResults> ListClusterUserCredentialsAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListClusterUserCredentialsWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets cluster monitoring user credential of a managed cluster.
+            /// </summary>
+            /// <remarks>
+            /// Gets cluster monitoring user credential of the managed cluster with a
+            /// specified resource group and name.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            public static CredentialResults ListClusterMonitoringUserCredentials(this IManagedClustersOperations operations, string resourceGroupName, string resourceName)
+            {
+                return operations.ListClusterMonitoringUserCredentialsAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets cluster monitoring user credential of a managed cluster.
+            /// </summary>
+            /// <remarks>
+            /// Gets cluster monitoring user credential of the managed cluster with a
+            /// specified resource group and name.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CredentialResults> ListClusterMonitoringUserCredentialsAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListClusterMonitoringUserCredentialsWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -599,6 +659,101 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
+            /// Rotate certificates of a managed cluster.
+            /// </summary>
+            /// <remarks>
+            /// Rotate certificates of a managed cluster.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            public static void RotateClusterCertificates(this IManagedClustersOperations operations, string resourceGroupName, string resourceName)
+            {
+                operations.RotateClusterCertificatesAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Rotate certificates of a managed cluster.
+            /// </summary>
+            /// <remarks>
+            /// Rotate certificates of a managed cluster.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RotateClusterCertificatesAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RotateClusterCertificatesWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </summary>
+            /// <remarks>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            public static AgentPool UpgradeNodeImageVersion(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, string agentPoolName)
+            {
+                return operations.UpgradeNodeImageVersionAsync(resourceGroupName, resourceName, agentPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </summary>
+            /// <remarks>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AgentPool> UpgradeNodeImageVersionAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpgradeNodeImageVersionWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates a managed cluster.
             /// </summary>
             /// <remarks>
@@ -847,6 +1002,101 @@ namespace Microsoft.Azure.Management.ContainerService
             public static async Task BeginResetAADProfileAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, ManagedClusterAADProfile parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginResetAADProfileWithHttpMessagesAsync(resourceGroupName, resourceName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Rotate certificates of a managed cluster.
+            /// </summary>
+            /// <remarks>
+            /// Rotate certificates of a managed cluster.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            public static void BeginRotateClusterCertificates(this IManagedClustersOperations operations, string resourceGroupName, string resourceName)
+            {
+                operations.BeginRotateClusterCertificatesAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Rotate certificates of a managed cluster.
+            /// </summary>
+            /// <remarks>
+            /// Rotate certificates of a managed cluster.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRotateClusterCertificatesAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRotateClusterCertificatesWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </summary>
+            /// <remarks>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            public static AgentPool BeginUpgradeNodeImageVersion(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, string agentPoolName)
+            {
+                return operations.BeginUpgradeNodeImageVersionAsync(resourceGroupName, resourceName, agentPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </summary>
+            /// <remarks>
+            /// Upgrade node image version of an agent pool to the latest.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='agentPoolName'>
+            /// The name of the agent pool.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AgentPool> BeginUpgradeNodeImageVersionAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, string agentPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpgradeNodeImageVersionWithHttpMessagesAsync(resourceGroupName, resourceName, agentPoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

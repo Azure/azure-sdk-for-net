@@ -6,12 +6,12 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.StorageSync</PackageId>
         <Description>Provides management capabilities for Azure Storage Sync.</Description>
-        <Version>4.0.0</Version>
+        <Version>5.0.1</Version>
         <AssemblyName>Microsoft.Azure.Management.StorageSync</AssemblyName>    
         <PackageTags>Microsoft Azure StorageSync;StorageSync;Azure File Sync;AFS;Microsoft.StorageSync;Storage Sync Service</PackageTags>
         <PackageReleaseNotes>
         <![CDATA[
-            This version supports the StorageSync API version 2019-06-01 and includes support for cloud tiering health and recall status for server endpoints.
+            This version supports the StorageSync API version 2020-03-01 and includes support for private links, and additional cloud tiering status. This change includes the code generation changes for tiering policy properties.
         ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

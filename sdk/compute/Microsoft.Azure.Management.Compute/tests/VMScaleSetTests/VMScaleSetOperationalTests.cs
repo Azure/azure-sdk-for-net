@@ -420,5 +420,58 @@ namespace Compute.Tests
                 Assert.True(passed);
             }
         }
+
+        // Create VMScaleSet without single placement group
+        // Convert VMScaleSet to Single Placement Group
+        // Delete VMScaleSet
+        [Fact]
+        public void TestVMScaleSetOperations_ConvertToSinglePlacementGroup()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                // Create resource group
+                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                bool passed = false;
+                try
+                {
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        storageAccountOutput,
+                        imageRef,
+                        out inputVMScaleSet,
+                        createWithManagedDisks: true,
+                        singlePlacementGroup: false);
+                    Assert.False(vmScaleSet.SinglePlacementGroup);
+
+                    VMScaleSetConvertToSinglePlacementGroupInput parameters = new VMScaleSetConvertToSinglePlacementGroupInput("replacementId123");
+                    m_CrpClient.VirtualMachineScaleSets.ConvertToSinglePlacementGroup(rgName, vmScaleSet.Name);
+                    var vmScaleSetResult = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmScaleSet.Name);
+                    Assert.True(vmScaleSetResult.SinglePlacementGroup);
+
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmScaleSet.Name);
+
+                    passed = true;
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
     }
 }

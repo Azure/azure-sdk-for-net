@@ -1,0 +1,24 @@
+<Project>
+  <PropertyGroup>
+    <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
+    <IsClientLibrary>true</IsClientLibrary>
+  </PropertyGroup>
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props"
+          Condition="'$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))' != ''" />
+
+  <PropertyGroup>
+    <RootNamespace>AzureSamples.Security.KeyVault.Proxy</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <NoWarn>
+      $(NoWarn);
+      AZC0001
+    </NoWarn>
+    <IsShippingLibrary>false</IsShippingLibrary>
+  </PropertyGroup>
+
+  <!-- If building within the Azure/azure-sdk-for-net repo -->
+  <PropertyGroup Condition="'$(IsSample)' == 'true'">
+    <DefineConstants>STRONGNAME_SIGNED</DefineConstants>
+  </PropertyGroup>
+</Project>

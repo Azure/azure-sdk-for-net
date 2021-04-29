@@ -26,12 +26,10 @@ namespace Compute.Tests
         [Trait("Name", "TestProximityPlacementGroupsOperations")]
         public void TestProximityPlacementGroupsOperations()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 try
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                     EnsureClientsInitialized(context);
                     Initialize(context);
 
@@ -50,7 +48,6 @@ namespace Compute.Tests
                 }
                 finally
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     m_ResourcesClient.ResourceGroups.Delete(m_resourceGroup1Name);
                 }
             }
@@ -277,7 +274,7 @@ namespace Compute.Tests
             ValidateProximityPlacementGroup(expectedProximityPlacementGroup, outProximityPlacementGroup, ppgName);
 
             VirtualMachine inputVM;
-            VirtualMachine outVM = CreateVM(m_resourceGroup1Name, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: true, hasDiffDisks: false, vmSize: "Standard_A0",
+            VirtualMachine outVM = CreateVM(m_resourceGroup1Name, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: true, hasDiffDisks: false, vmSize: "Standard_A1_v2",
                 osDiskStorageAccountType: "Standard_LRS", dataDiskStorageAccountType: "Standard_LRS", writeAcceleratorEnabled: false, zones: null, ppgName: ppgName, diskEncryptionSetId: null);
 
             // Get and expect success.

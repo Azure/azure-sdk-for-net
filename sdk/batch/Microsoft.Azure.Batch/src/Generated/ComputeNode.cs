@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<NodeAgentInformation> NodeAgentInformationProperty;
             public readonly PropertyAccessor<IReadOnlyList<TaskInformation>> RecentTasksProperty;
             public readonly PropertyAccessor<int?> RunningTasksCountProperty;
+            public readonly PropertyAccessor<int?> RunningTaskSlotsCountProperty;
             public readonly PropertyAccessor<Common.SchedulingState?> SchedulingStateProperty;
             public readonly PropertyAccessor<StartTask> StartTaskProperty;
             public readonly PropertyAccessor<StartTaskInformation> StartTaskInformationProperty;
@@ -94,6 +95,10 @@ namespace Microsoft.Azure.Batch
                 this.RunningTasksCountProperty = this.CreatePropertyAccessor(
                     protocolObject.RunningTasksCount,
                     nameof(RunningTasksCount),
+                    BindingAccess.Read);
+                this.RunningTaskSlotsCountProperty = this.CreatePropertyAccessor(
+                    protocolObject.RunningTaskSlotsCount,
+                    nameof(RunningTaskSlotsCount),
                     BindingAccess.Read);
                 this.SchedulingStateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.SchedulingState, Common.SchedulingState>(protocolObject.SchedulingState),
@@ -276,6 +281,15 @@ namespace Microsoft.Azure.Batch
         public int? RunningTasksCount
         {
             get { return this.propertyContainer.RunningTasksCountProperty.Value; }
+        }
+
+        /// <summary>
+        /// Gets the total number of scheduling slots used by currently running Job Tasks on the Compute Node. This includes 
+        /// Job Manager Tasks and normal Tasks, but not Job Preparation, Job Release or Start Tasks.
+        /// </summary>
+        public int? RunningTaskSlotsCount
+        {
+            get { return this.propertyContainer.RunningTaskSlotsCountProperty.Value; }
         }
 
         /// <summary>

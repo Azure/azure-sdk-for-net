@@ -49,8 +49,8 @@ namespace DeploymentScripts.Tests
                 // Create deployment script object with minimal properties
                 var deploymentScriptName = TestUtilities.GetCurrentMethodName() + "--" + TestUtilities.GenerateName();
 
-                var deploymentScript = new AzurePowerShellScript(managedIdentity, LocationWestUs, RetentionInterval,
-                    AzurePowerShellVersion, scriptContent: ScriptContent, arguments: ScriptArguments);
+                var deploymentScript = new AzurePowerShellScript(LocationWestUs, RetentionInterval,
+                    AzurePowerShellVersion, identity: managedIdentity, scriptContent: ScriptContent, arguments: ScriptArguments);
 
                 var createDeploymentScriptResult =
                     client.DeploymentScripts.Create(ResourceGroupName, deploymentScriptName, deploymentScript) as
@@ -139,8 +139,8 @@ namespace DeploymentScripts.Tests
                 // Create deployment script object with minimal properties
                 var deploymentScriptName = TestUtilities.GetCurrentMethodName() + "--" + TestUtilities.GenerateName();
 
-                var deploymentScript = new AzurePowerShellScript(managedIdentity, LocationWestUs, RetentionInterval,
-                    AzurePowerShellVersion, scriptContent: ScriptContent, arguments: ScriptArguments);
+                var deploymentScript = new AzurePowerShellScript(LocationWestUs, RetentionInterval,
+                    AzurePowerShellVersion, identity: managedIdentity, scriptContent: ScriptContent, arguments: ScriptArguments);
 
                 var createDeploymentScriptResult =
                     client.DeploymentScripts.Create(ResourceGroupName, deploymentScriptName, deploymentScript) as
@@ -184,8 +184,8 @@ namespace DeploymentScripts.Tests
                 // Create deployment script object with minimal properties
                 var deploymentScriptName = TestUtilities.GetCurrentMethodName() + "--" + TestUtilities.GenerateName();
 
-                var deploymentScript = new AzurePowerShellScript(managedIdentity, LocationWestUs, RetentionInterval,
-                    AzurePowerShellVersion, scriptContent: MalformedScriptContent);
+                var deploymentScript = new AzurePowerShellScript(LocationWestUs, RetentionInterval,
+                    AzurePowerShellVersion, identity: managedIdentity, scriptContent: MalformedScriptContent);
 
                 var createDeploymentScriptResult =
                     client.DeploymentScripts.BeginCreate(ResourceGroupName, deploymentScriptName,
@@ -216,9 +216,9 @@ namespace DeploymentScripts.Tests
                 // Validate result
                 Assert.NotNull(getDeploymentScript);
                 Assert.NotNull(getDeploymentScript.Status.Error);
-                Assert.Equal(typeof(DefaultErrorResponse), getDeploymentScript.Status.Error.GetType());
+                Assert.Equal(typeof(ErrorResponse), getDeploymentScript.Status.Error.GetType());
 
-                // Delete deployments script 
+                // Delete deployment script 
                 client.DeploymentScripts.Delete(ResourceGroupName, deploymentScriptName);
                 var list = client.DeploymentScripts.ListByResourceGroup(ResourceGroupName);
                 Assert.Empty(list.Where(p => p.Name.Equals(deploymentScriptName)));

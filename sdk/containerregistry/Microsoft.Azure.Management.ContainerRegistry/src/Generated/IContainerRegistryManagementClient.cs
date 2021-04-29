@@ -64,14 +64,34 @@ namespace Microsoft.Azure.Management.ContainerRegistry
 
 
         /// <summary>
+        /// Gets the IExportPipelinesOperations.
+        /// </summary>
+        IExportPipelinesOperations ExportPipelines { get; }
+
+        /// <summary>
         /// Gets the IRegistriesOperations.
         /// </summary>
         IRegistriesOperations Registries { get; }
 
         /// <summary>
+        /// Gets the IImportPipelinesOperations.
+        /// </summary>
+        IImportPipelinesOperations ImportPipelines { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IPipelineRunsOperations.
+        /// </summary>
+        IPipelineRunsOperations PipelineRuns { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
 
         /// <summary>
         /// Gets the IReplicationsOperations.
@@ -84,14 +104,34 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         IWebhooksOperations Webhooks { get; }
 
         /// <summary>
+        /// Gets the IAgentPoolsOperations.
+        /// </summary>
+        IAgentPoolsOperations AgentPools { get; }
+
+        /// <summary>
         /// Gets the IRunsOperations.
         /// </summary>
         IRunsOperations Runs { get; }
 
         /// <summary>
+        /// Gets the ITaskRunsOperations.
+        /// </summary>
+        ITaskRunsOperations TaskRuns { get; }
+
+        /// <summary>
         /// Gets the ITasksOperations.
         /// </summary>
         ITasksOperations Tasks { get; }
+
+        /// <summary>
+        /// Gets the IScopeMapsOperations.
+        /// </summary>
+        IScopeMapsOperations ScopeMaps { get; }
+
+        /// <summary>
+        /// Gets the ITokensOperations.
+        /// </summary>
+        ITokensOperations Tokens { get; }
 
     }
 }

@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Testing;
+using Azure.AI.TextAnalytics.Tests;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -11,30 +12,32 @@ namespace Azure.AI.TextAnalytics.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    [LiveOnly]
-    public partial class Snippets
+    public partial class Snippets: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
         public void CreateTextAnalyticsClient()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
-
             #region Snippet:CreateTextAnalyticsClient
-            //@@ string endpoint = "<endpoint>";
-            //@@ string apiKey = "<apiKey>";
-            var credential = new TextAnalyticsApiKeyCredential(apiKey);
-            var client = new TextAnalyticsClient(new Uri(endpoint), credential);
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+#endif
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
         }
 
         [Test]
         public void CreateTextAnalyticsClientTokenCredential()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-
             #region Snippet:CreateTextAnalyticsClientTokenCredential
-            //@@ string endpoint = "<endpoint>";
+#if SNIPPET
+            string endpoint = "<endpoint>";
+#else
+            string endpoint = TestEnvironment.Endpoint;
+#endif
             var client = new TextAnalyticsClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
@@ -42,17 +45,17 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void BadRequestSnippet()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
-            var credentials = new TextAnalyticsApiKeyCredential(apiKey);
+            var credentials = new AzureKeyCredential(apiKey);
             var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
-            string input = "Este documento está en español.";
+            string document = "Este documento está en español.";
 
             #region Snippet:BadRequest
             try
             {
-                DetectedLanguage result = client.DetectLanguage(input);
+                DetectedLanguage result = client.DetectLanguage(document);
             }
             catch (RequestFailedException e)
             {

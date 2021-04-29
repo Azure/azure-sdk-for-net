@@ -1,0 +1,20 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://localhost/?api=V2",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "User-Agent": "azsdk-net-Core.Tests/1.0.0-alpha.20210310.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "310df70d817bc1bf9908dbde885585f0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {},
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "16931662"
+  }
+}

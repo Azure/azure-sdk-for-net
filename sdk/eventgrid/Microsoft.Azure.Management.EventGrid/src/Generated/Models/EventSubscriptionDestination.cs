@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about the destination for an event subscription
+    /// Information about the destination for an event subscription.
     /// </summary>
     public partial class EventSubscriptionDestination
     {

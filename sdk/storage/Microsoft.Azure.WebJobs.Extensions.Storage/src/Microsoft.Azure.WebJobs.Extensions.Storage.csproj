@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Version>5.0.0-beta.4</Version>
+    <Description>This extension adds bindings for Storage</Description>
+    <!-- This package is a metapackage. The flag below makes sure it doesn't include any DLL-->
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <!-- Remove once https://github.com/NuGet/Home/issues/8583 is fixed -->
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs\src\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.csproj" />
+    <ProjectReference Include="..\..\Microsoft.Azure.WebJobs.Extensions.Storage.Queues\src\Microsoft.Azure.WebJobs.Extensions.Storage.Queues.csproj" />
+  </ItemGroup>
+</Project>

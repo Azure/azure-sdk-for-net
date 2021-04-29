@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal static class FieldValueTypeExtensions
+    internal static partial class FieldValueTypeExtensions
     {
         public static string ToSerialString(this FieldValueType value) => value switch
         {
@@ -17,24 +17,30 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValueType.Date => "date",
             FieldValueType.Time => "time",
             FieldValueType.PhoneNumber => "phoneNumber",
-            FieldValueType.Number => "number",
-            FieldValueType.Integer => "integer",
-            FieldValueType.Array => "array",
-            FieldValueType.Object => "object",
+            FieldValueType.Float => "number",
+            FieldValueType.Int64 => "integer",
+            FieldValueType.List => "array",
+            FieldValueType.Dictionary => "object",
+            FieldValueType.SelectionMark => "selectionMark",
+            FieldValueType.Gender => "gender",
+            FieldValueType.Country => "country",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.")
         };
 
-        public static FieldValueType ToFieldValueType(this string value) => value switch
+        public static FieldValueType ToFieldValueType(this string value)
         {
-            "string" => FieldValueType.String,
-            "date" => FieldValueType.Date,
-            "time" => FieldValueType.Time,
-            "phoneNumber" => FieldValueType.PhoneNumber,
-            "number" => FieldValueType.Number,
-            "integer" => FieldValueType.Integer,
-            "array" => FieldValueType.Array,
-            "object" => FieldValueType.Object,
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.")
-        };
+            if (string.Equals(value, "string", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.String;
+            if (string.Equals(value, "date", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Date;
+            if (string.Equals(value, "time", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Time;
+            if (string.Equals(value, "phoneNumber", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.PhoneNumber;
+            if (string.Equals(value, "number", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Float;
+            if (string.Equals(value, "integer", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Int64;
+            if (string.Equals(value, "array", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.List;
+            if (string.Equals(value, "object", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Dictionary;
+            if (string.Equals(value, "selectionMark", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.SelectionMark;
+            if (string.Equals(value, "gender", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Gender;
+            if (string.Equals(value, "country", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Country;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.");
+        }
     }
 }

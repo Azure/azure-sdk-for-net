@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
 using NUnit;
 using NUnit.Framework;

@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <summary>
             /// Deletes specified backup policy from your Recovery Services Vault. This is
             /// an asynchronous operation. Status of the
-            /// operation can be fetched using GetPolicyOperationResult API.
+            /// operation can be fetched using GetProtectionPolicyOperationResult API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <summary>
             /// Deletes specified backup policy from your Recovery Services Vault. This is
             /// an asynchronous operation. Status of the
-            /// operation can be fetched using GetPolicyOperationResult API.
+            /// operation can be fetched using GetProtectionPolicyOperationResult API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -180,6 +180,55 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             public static async Task DeleteAsync(this IProtectionPoliciesOperations operations, string vaultName, string resourceGroupName, string policyName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(vaultName, resourceGroupName, policyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Deletes specified backup policy from your Recovery Services Vault. This is
+            /// an asynchronous operation. Status of the
+            /// operation can be fetched using GetProtectionPolicyOperationResult API.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='policyName'>
+            /// Backup policy to be deleted.
+            /// </param>
+            public static void BeginDelete(this IProtectionPoliciesOperations operations, string vaultName, string resourceGroupName, string policyName)
+            {
+                operations.BeginDeleteAsync(vaultName, resourceGroupName, policyName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes specified backup policy from your Recovery Services Vault. This is
+            /// an asynchronous operation. Status of the
+            /// operation can be fetched using GetProtectionPolicyOperationResult API.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the recovery services vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the recovery services vault is
+            /// present.
+            /// </param>
+            /// <param name='policyName'>
+            /// Backup policy to be deleted.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IProtectionPoliciesOperations operations, string vaultName, string resourceGroupName, string policyName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(vaultName, resourceGroupName, policyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

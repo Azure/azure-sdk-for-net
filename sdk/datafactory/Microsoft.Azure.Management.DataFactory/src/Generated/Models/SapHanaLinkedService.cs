@@ -35,8 +35,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the SapHanaLinkedService class.
         /// </summary>
-        /// <param name="server">Host name of the SAP HANA server. Type: string
-        /// (or Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -46,6 +44,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the linked service.</param>
         /// <param name="connectionString">SAP HANA ODBC connection string.
         /// Type: string, SecureString or AzureKeyVaultSecretReference.</param>
+        /// <param name="server">Host name of the SAP HANA server. Type: string
+        /// (or Expression with resultType string).</param>
         /// <param name="authenticationType">The authentication type to be used
         /// to connect to the SAP HANA server. Possible values include:
         /// 'Basic', 'Windows'</param>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public SapHanaLinkedService(object server, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+        public SapHanaLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), object server = default(object), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
@@ -125,10 +125,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Server == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Server");
-            }
         }
     }
 }

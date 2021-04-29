@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
     /// Describes a Machine Extension.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class MachineExtension : Resource
+    public partial class MachineExtension : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the MachineExtension class.
@@ -34,14 +34,15 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// <summary>
         /// Initializes a new instance of the MachineExtension class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="type1">The identity type.</param>
-        /// <param name="principalId">The identity's principal id.</param>
-        /// <param name="tenantId">The identity's tenant id.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="forceUpdateTag">How the extension handler should be
         /// forced to update even if the extension configuration has not
         /// changed.</param>
@@ -65,8 +66,8 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// appears in the response.</param>
         /// <param name="instanceView">The machine extension instance
         /// view.</param>
-        public MachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string type1 = default(string), string principalId = default(string), string tenantId = default(string), string forceUpdateTag = default(string), string publisher = default(string), string machineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), MachineExtensionInstanceView instanceView = default(MachineExtensionInstanceView))
-            : base(location, id, name, type, tags, type1, principalId, tenantId)
+        public MachineExtension(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string machineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), MachineExtensionPropertiesInstanceView instanceView = default(MachineExtensionPropertiesInstanceView))
+            : base(location, id, name, type, tags)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
@@ -143,7 +144,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// Gets or sets the machine extension instance view.
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceView")]
-        public MachineExtensionInstanceView InstanceView { get; set; }
+        public MachineExtensionPropertiesInstanceView InstanceView { get; set; }
 
         /// <summary>
         /// Validate the object.

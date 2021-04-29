@@ -137,16 +137,17 @@ namespace Microsoft.Azure.Management.IotHub
             /// <param name='certificateName'>
             /// The name of the certificate
             /// </param>
-            /// <param name='certificateDescription'>
-            /// The certificate body.
-            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Certificate. Do not specify for creating a brand new
             /// certificate. Required to update an existing certificate.
             /// </param>
-            public static CertificateDescription CreateOrUpdate(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string))
+            /// <param name='certificate'>
+            /// base-64 representation of the X509 leaf certificate .cer file or just .pem
+            /// file content.
+            /// </param>
+            public static CertificateDescription CreateOrUpdate(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch = default(string), string certificate = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, certificateName, certificateDescription, ifMatch).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, certificateName, ifMatch, certificate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -167,19 +168,20 @@ namespace Microsoft.Azure.Management.IotHub
             /// <param name='certificateName'>
             /// The name of the certificate
             /// </param>
-            /// <param name='certificateDescription'>
-            /// The certificate body.
-            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Certificate. Do not specify for creating a brand new
             /// certificate. Required to update an existing certificate.
             /// </param>
+            /// <param name='certificate'>
+            /// base-64 representation of the X509 leaf certificate .cer file or just .pem
+            /// file content.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateDescription> CreateOrUpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateDescription> CreateOrUpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch = default(string), string certificate = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, certificateName, certificateDescription, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, certificateName, ifMatch, certificate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -319,15 +321,16 @@ namespace Microsoft.Azure.Management.IotHub
             /// <param name='certificateName'>
             /// The name of the certificate
             /// </param>
-            /// <param name='certificateVerificationBody'>
-            /// The name of the certificate
-            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Certificate.
             /// </param>
-            public static CertificateDescription Verify(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CertificateVerificationDescription certificateVerificationBody, string ifMatch)
+            /// <param name='certificate'>
+            /// base-64 representation of X509 certificate .cer file or just .pem file
+            /// content.
+            /// </param>
+            public static CertificateDescription Verify(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch, string certificate = default(string))
             {
-                return operations.VerifyAsync(resourceGroupName, resourceName, certificateName, certificateVerificationBody, ifMatch).GetAwaiter().GetResult();
+                return operations.VerifyAsync(resourceGroupName, resourceName, certificateName, ifMatch, certificate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -349,18 +352,19 @@ namespace Microsoft.Azure.Management.IotHub
             /// <param name='certificateName'>
             /// The name of the certificate
             /// </param>
-            /// <param name='certificateVerificationBody'>
-            /// The name of the certificate
-            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Certificate.
+            /// </param>
+            /// <param name='certificate'>
+            /// base-64 representation of X509 certificate .cer file or just .pem file
+            /// content.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateDescription> VerifyAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CertificateVerificationDescription certificateVerificationBody, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateDescription> VerifyAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch, string certificate = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.VerifyWithHttpMessagesAsync(resourceGroupName, resourceName, certificateName, certificateVerificationBody, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.VerifyWithHttpMessagesAsync(resourceGroupName, resourceName, certificateName, ifMatch, certificate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

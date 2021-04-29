@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/$batch",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "148",
+        "Content-Type": "application/json",
+        "traceparent": "00-ea0ce86dac33974e95f271a9dd1d1f92-2c58d14c9685b945-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210422.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "6e01ed65a2d698f66d1915a5f9ba5732",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "requests": [
+          {
+            "id": "0",
+            "body": {
+              "query": "this won\u0027t work"
+            },
+            "path": "/query",
+            "method": "POST",
+            "workspace": "9a15b791-8d2f-436f-a734-25d128c72254"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Apr 2021 17:20:17 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "Via": "1.1 draft-oms-778c644d5b-k6t8c",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "responses": [
+          {
+            "id": "0",
+            "status": 400,
+            "body": {
+              "error": {
+                "message": "The request had some invalid properties",
+                "code": "BadArgumentError",
+                "correlationId": "a0df67e9-32ea-4781-b481-784d861467d6",
+                "innererror": {
+                  "code": "SyntaxError",
+                  "message": "Request is invalid and cannot be processed: Syntax error: SYN0001: I could not parse that, sorry. [line:position=0:0]. Query: \u0027let [\u0027emptyTable\u0027] = view () { datatable(column:string)[] };restrict access to (*);\r\nthis won\u0027t work\u0027"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-04-22T10:20:12.7477711-07:00",
+    "RandomSeed": "1611967510",
+    "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254"
+  }
+}

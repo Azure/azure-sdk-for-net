@@ -75,7 +75,7 @@ namespace Microsoft.Azure.ServiceBus
 
         internal static void CheckValidQueueName(string queueName, string paramName = "queuePath")
         {
-            CheckValidEntityName(queueName, ManagementClientConstants.QueueNameMaximumLength, true, paramName);
+            CheckValidEntityName(GetPathWithoutBaseUri(queueName), ManagementClientConstants.QueueNameMaximumLength, true, paramName);
         }
 
         internal static void CheckValidTopicName(string topicName, string paramName = "topicPath")
@@ -126,6 +126,21 @@ namespace Microsoft.Azure.ServiceBus
                     throw new ArgumentException($@"'{entityName}' contains character '{uriSchemeKey}' which is not allowed because it is reserved in the Uri scheme.", paramName);
                 }
             }
+        }
+
+        private static string GetPathWithoutBaseUri(string entityName)
+        {
+            // Note: on Linux/macOS, "/path" URLs are treated as valid absolute file URLs.
+            // To ensure relative queue paths are correctly rejected on these platforms,
+            // an additional check using IsWellFormedOriginalString() is made here.
+            // See https://github.com/dotnet/corefx/issues/22098 for more information.
+            if (Uri.TryCreate(entityName, UriKind.Absolute, out Uri uriValue) &&
+                uriValue.IsWellFormedOriginalString())
+            {
+                entityName = uriValue.PathAndQuery;
+                return entityName.TrimStart('/');
+            }
+            return entityName;
         }
     }
 }

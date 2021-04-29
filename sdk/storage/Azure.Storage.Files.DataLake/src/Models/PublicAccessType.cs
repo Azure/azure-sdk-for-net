@@ -3,7 +3,6 @@
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-
     /// <summary>
     /// Specifies whether data in the file system may be accessed publicly and the level of access
     /// </summary>

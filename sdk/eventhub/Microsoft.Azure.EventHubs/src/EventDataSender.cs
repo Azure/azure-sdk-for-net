@@ -24,6 +24,8 @@ namespace Microsoft.Azure.EventHubs
 
         public async Task SendAsync(IEnumerable<EventData> eventDatas, string partitionKey)
         {
+            this.ThrowIfClosed();
+
             var processedEvents = await this.ProcessEvents(eventDatas).ConfigureAwait(false);
 
             await this.OnSendAsync(processedEvents, partitionKey)

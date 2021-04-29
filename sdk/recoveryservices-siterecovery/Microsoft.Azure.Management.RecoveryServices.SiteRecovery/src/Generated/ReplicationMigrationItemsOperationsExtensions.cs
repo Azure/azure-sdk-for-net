@@ -37,9 +37,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='protectionContainerName'>
             /// Protection container name.
             /// </param>
-            public static IPage<MigrationItem> ListByReplicationProtectionContainers(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName)
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='skipToken'>
+            /// The pagination token.
+            /// </param>
+            /// <param name='takeToken'>
+            /// The page size.
+            /// </param>
+            public static IPage<MigrationItem> ListByReplicationProtectionContainers(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, ODataQuery<MigrationItemsQueryParameter> odataQuery = default(ODataQuery<MigrationItemsQueryParameter>), string skipToken = default(string), string takeToken = default(string))
             {
-                return operations.ListByReplicationProtectionContainersAsync(fabricName, protectionContainerName).GetAwaiter().GetResult();
+                return operations.ListByReplicationProtectionContainersAsync(fabricName, protectionContainerName, odataQuery, skipToken, takeToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -57,12 +66,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='protectionContainerName'>
             /// Protection container name.
             /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='skipToken'>
+            /// The pagination token.
+            /// </param>
+            /// <param name='takeToken'>
+            /// The page size.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<MigrationItem>> ListByReplicationProtectionContainersAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<MigrationItem>> ListByReplicationProtectionContainersAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, ODataQuery<MigrationItemsQueryParameter> odataQuery = default(ODataQuery<MigrationItemsQueryParameter>), string skipToken = default(string), string takeToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByReplicationProtectionContainersWithHttpMessagesAsync(fabricName, protectionContainerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByReplicationProtectionContainersWithHttpMessagesAsync(fabricName, protectionContainerName, odataQuery, skipToken, takeToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -344,6 +362,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
+            /// Resynchronizes replication.
+            /// </summary>
+            /// <remarks>
+            /// The operation to resynchronize replication of an ASR migration item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='migrationItemName'>
+            /// Migration item name.
+            /// </param>
+            /// <param name='input'>
+            /// Resync input.
+            /// </param>
+            public static MigrationItem Resync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, ResyncInput input)
+            {
+                return operations.ResyncAsync(fabricName, protectionContainerName, migrationItemName, input).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Resynchronizes replication.
+            /// </summary>
+            /// <remarks>
+            /// The operation to resynchronize replication of an ASR migration item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='migrationItemName'>
+            /// Migration item name.
+            /// </param>
+            /// <param name='input'>
+            /// Resync input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<MigrationItem> ResyncAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, ResyncInput input, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ResyncWithHttpMessagesAsync(fabricName, protectionContainerName, migrationItemName, input, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Test migrate item.
             /// </summary>
             /// <remarks>
@@ -471,9 +547,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='skipToken'>
             /// The pagination token.
             /// </param>
-            public static IPage<MigrationItem> List(this IReplicationMigrationItemsOperations operations, ODataQuery<MigrationItemsQueryParameter> odataQuery = default(ODataQuery<MigrationItemsQueryParameter>), string skipToken = default(string))
+            /// <param name='takeToken'>
+            /// The page size.
+            /// </param>
+            public static IPage<MigrationItem> List(this IReplicationMigrationItemsOperations operations, ODataQuery<MigrationItemsQueryParameter> odataQuery = default(ODataQuery<MigrationItemsQueryParameter>), string skipToken = default(string), string takeToken = default(string))
             {
-                return operations.ListAsync(odataQuery, skipToken).GetAwaiter().GetResult();
+                return operations.ListAsync(odataQuery, skipToken, takeToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -488,12 +567,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='skipToken'>
             /// The pagination token.
             /// </param>
+            /// <param name='takeToken'>
+            /// The page size.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<MigrationItem>> ListAsync(this IReplicationMigrationItemsOperations operations, ODataQuery<MigrationItemsQueryParameter> odataQuery = default(ODataQuery<MigrationItemsQueryParameter>), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<MigrationItem>> ListAsync(this IReplicationMigrationItemsOperations operations, ODataQuery<MigrationItemsQueryParameter> odataQuery = default(ODataQuery<MigrationItemsQueryParameter>), string skipToken = default(string), string takeToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, skipToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, skipToken, takeToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -723,6 +805,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<MigrationItem> BeginMigrateAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, MigrateInput migrateInput, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginMigrateWithHttpMessagesAsync(fabricName, protectionContainerName, migrationItemName, migrateInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Resynchronizes replication.
+            /// </summary>
+            /// <remarks>
+            /// The operation to resynchronize replication of an ASR migration item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='migrationItemName'>
+            /// Migration item name.
+            /// </param>
+            /// <param name='input'>
+            /// Resync input.
+            /// </param>
+            public static MigrationItem BeginResync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, ResyncInput input)
+            {
+                return operations.BeginResyncAsync(fabricName, protectionContainerName, migrationItemName, input).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Resynchronizes replication.
+            /// </summary>
+            /// <remarks>
+            /// The operation to resynchronize replication of an ASR migration item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='migrationItemName'>
+            /// Migration item name.
+            /// </param>
+            /// <param name='input'>
+            /// Resync input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<MigrationItem> BeginResyncAsync(this IReplicationMigrationItemsOperations operations, string fabricName, string protectionContainerName, string migrationItemName, ResyncInput input, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginResyncWithHttpMessagesAsync(fabricName, protectionContainerName, migrationItemName, input, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

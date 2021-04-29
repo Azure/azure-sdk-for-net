@@ -7,20 +7,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
-using Azure.Identity;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
-    public class ConfigurationLiveTests : RecordedTestBase
+    public class ConfigurationLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
     {
         private string specialChars = "~`!@#$^&()_+=[]{}|;\"'<>./-";
 
         public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
-            Sanitizer = new ConfigurationRecordedTestSanitizer();
-            Matcher = new ConfigurationRecordMatcher(Sanitizer);
         }
 
         private string GenerateKeyId(string prefix = null)
@@ -30,21 +27,19 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private ConfigurationClient GetClient()
         {
-            var connectionString = Recording.RequireVariableFromEnvironment("APPCONFIGURATION_CONNECTION_STRING");
-            if (Recording.Mode == RecordedTestMode.Playback)
+            if (string.IsNullOrEmpty(TestEnvironment.ConnectionString))
             {
-                connectionString = connectionString.Replace(";Secret=;", ";Secret=Kg==;");
+                throw new TestRecordingMismatchException();
             }
-
-            var options = Recording.InstrumentClientOptions(new ConfigurationClientOptions());
-            return InstrumentClient(new ConfigurationClient(connectionString, options));
+            var options = InstrumentClientOptions(new ConfigurationClientOptions());
+            return InstrumentClient(new ConfigurationClient(TestEnvironment.ConnectionString, options));
         }
 
         private ConfigurationClient GetAADClient()
         {
-            string endpoint = Recording.RequireVariableFromEnvironment("APPCONFIGURATION_ENDPOINT_STRING");
-            TokenCredential credential = Recording.GetCredential(new DefaultAzureCredential());
-            ConfigurationClientOptions options = Recording.InstrumentClientOptions(new ConfigurationClientOptions());
+            string endpoint = TestEnvironment.Endpoint;
+            TokenCredential credential = TestEnvironment.Credential;
+            ConfigurationClientOptions options = InstrumentClientOptions(new ConfigurationClientOptions());
             return InstrumentClient(new ConfigurationClient(new Uri(endpoint), credential, options));
         }
 
@@ -107,7 +102,7 @@ namespace Azure.Data.AppConfiguration.Tests
             return key;
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteSettingNotFound()
         {
             ConfigurationClient service = GetClient();
@@ -119,7 +114,7 @@ namespace Azure.Data.AppConfiguration.Tests
             response.Dispose();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteSetting()
         {
             ConfigurationClient service = GetClient();
@@ -134,7 +129,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(testSettingDiff);
 
                 // Test
-                await service.DeleteConfigurationSettingAsync(testSettingDiff.Key);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSettingDiff.Key));
 
                 //Try to get the non-existing setting
                 RequestFailedException e = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -146,11 +141,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteSettingWithLabel()
         {
             ConfigurationClient service = GetClient();
@@ -165,7 +160,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(testSettingDiff);
 
                 // Test
-                await service.DeleteConfigurationSettingAsync(testSettingDiff.Key, testSettingDiff.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSettingDiff.Key, testSettingDiff.Label));
 
                 //Try to get the non-existing setting
                 RequestFailedException e = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -177,11 +172,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteSettingReadOnly()
         {
             ConfigurationClient service = GetClient();
@@ -201,31 +196,21 @@ namespace Azure.Data.AppConfiguration.Tests
             finally
             {
                 await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfUnchangedSettingUnmodified()
         {
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
-            try
-            {
-                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
-
-                // Test
-                Response response = await service.DeleteConfigurationSettingAsync(setting, onlyIfUnchanged: true);
-                Assert.AreEqual(200, response.Status);
-            }
-            finally
-            {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
-            }
+            ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
+            AssertStatus200(await service.DeleteConfigurationSettingAsync(setting, onlyIfUnchanged: true));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfUnchangedSettingModified()
         {
             ConfigurationClient service = GetClient();
@@ -245,11 +230,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetSetting()
         {
             ConfigurationClient service = GetClient();
@@ -262,11 +247,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetExistingSetting()
         {
             ConfigurationClient service = GetClient();
@@ -281,11 +266,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetSettingReadOnly()
         {
             ConfigurationClient service = GetClient();
@@ -306,11 +291,11 @@ namespace Azure.Data.AppConfiguration.Tests
             finally
             {
                 await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetIfUnchangedSettingUnmodified()
         {
             ConfigurationClient service = GetClient();
@@ -329,11 +314,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetIfUnchangedSettingModified()
         {
             ConfigurationClient service = GetClient();
@@ -353,11 +338,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetKeyValue()
         {
             ConfigurationClient service = GetClient();
@@ -374,11 +359,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(key);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(key));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetKeyValueLabel()
         {
             ConfigurationClient service = GetClient();
@@ -397,11 +382,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(key, label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(key, label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetRequestId()
         {
             ConfigurationClient service = GetClient();
@@ -415,11 +400,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AddExistingSetting()
         {
             ConfigurationClient service = GetClient();
@@ -438,11 +423,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AddSetting()
         {
             ConfigurationClient service = GetClient();
@@ -455,11 +440,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AddSettingNoLabel()
         {
             ConfigurationClient service = GetClient();
@@ -475,11 +460,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AddKeyValue()
         {
             ConfigurationClient service = GetClient();
@@ -496,11 +481,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(key);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(key));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AddKeyValueLabel()
         {
             ConfigurationClient service = GetClient();
@@ -519,11 +504,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(key, label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(key, label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetRevisions()
         {
             // The service keeps revision history even after the key was removed
@@ -571,12 +556,12 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label);
-                await service.DeleteConfigurationSettingAsync(testSettingUpdate.Key, testSettingUpdate.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSettingUpdate.Key, testSettingUpdate.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetRevisionsByKeyAndLabel()
         {
             // The service keeps revision history even after the key was removed
@@ -610,12 +595,12 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label);
-                await service.DeleteConfigurationSettingAsync(testSettingUpdate.Key, testSettingUpdate.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSettingUpdate.Key, testSettingUpdate.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetSetting()
         {
             ConfigurationClient service = GetClient();
@@ -634,11 +619,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSettingNoLabel.Key);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSettingNoLabel.Key));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void GetSettingNotFound()
         {
             ConfigurationClient service = GetClient();
@@ -652,7 +637,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetSettingWithLabel()
         {
             ConfigurationClient service = GetClient();
@@ -673,12 +658,12 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
-                await service.DeleteConfigurationSettingAsync(testSettingNoLabel.Key);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSettingNoLabel.Key));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetWithAcceptDateTime()
         {
             ConfigurationClient service = GetClient();
@@ -695,11 +680,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetIfChangedSettingModified()
         {
             ConfigurationClient service = GetClient();
@@ -718,11 +703,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetIfChangedSettingUnmodified()
         {
             ConfigurationClient service = GetClient();
@@ -750,11 +735,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetSettingSpecialCharacters()
         {
             ConfigurationClient service = GetClient();
@@ -774,11 +759,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSettingNoLabel.Key);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSettingNoLabel.Key));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetSettingSpecialCharactersWithLabel()
         {
             ConfigurationClient service = GetClient();
@@ -794,11 +779,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingPagination()
         {
             ConfigurationClient service = GetClient();
@@ -818,7 +803,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual(expectedEvents, resultsReturned);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingAny()
         {
             ConfigurationClient service = GetClient();
@@ -840,11 +825,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingKeyLabel()
         {
             ConfigurationClient service = GetClient();
@@ -869,11 +854,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingOnlyKey()
         {
             ConfigurationClient service = GetClient();
@@ -892,11 +877,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingOnlyLabel()
         {
             ConfigurationClient service = GetClient();
@@ -919,11 +904,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingWithFields()
         {
             ConfigurationClient service = GetClient();
@@ -954,11 +939,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingWithReadOnly()
         {
             ConfigurationClient service = GetClient();
@@ -987,11 +972,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingWithAllFields()
         {
             ConfigurationClient service = GetClient();
@@ -1024,11 +1009,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingSpecialCharacters()
         {
             ConfigurationClient service = GetClient();
@@ -1049,11 +1034,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingStartsWith()
         {
             ConfigurationClient service = GetClient();
@@ -1077,11 +1062,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingsWithCommaInSelectorKey()
         {
             ConfigurationClient service = GetClient();
@@ -1104,12 +1089,12 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(abcSetting.Key);
-                await service.DeleteConfigurationSettingAsync(xyzSetting.Key);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(abcSetting.Key));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(xyzSetting.Key));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingsWithCommaInSelectorKeyDoesNotOr()
         {
             ConfigurationClient service = GetClient();
@@ -1130,12 +1115,12 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(abcSetting.Key);
-                await service.DeleteConfigurationSettingAsync(xyzSetting.Key);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(abcSetting.Key));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(xyzSetting.Key));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingsWithMultipleKeys()
         {
             ConfigurationClient service = GetClient();
@@ -1158,12 +1143,12 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(abcSetting.Key);
-                await service.DeleteConfigurationSettingAsync(xyzSetting.Key);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(abcSetting.Key));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(xyzSetting.Key));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetBatchSettingsWithMultipleLabels()
         {
             ConfigurationClient service = GetClient();
@@ -1186,12 +1171,12 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(abcSetting.Key, abcSetting.Label);
-                await service.DeleteConfigurationSettingAsync(xyzSetting.Key, xyzSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(abcSetting.Key, abcSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(xyzSetting.Key, xyzSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetReadOnlyOnSetting()
         {
             ConfigurationClient service = GetClient();
@@ -1206,30 +1191,64 @@ namespace Azure.Data.AppConfiguration.Tests
             finally
             {
                 await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
-        public async Task SetReadOnlySettingNotFound()
+        [RecordedTest]
+        public void SetReadOnlySettingNotFound()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => { await service.SetReadOnlyAsync(testSetting.Key, true); });
+        }
+
+        [RecordedTest]
+        public async Task ConfigurationClient_SetReadOnly_OnlyIfUnchanged_Unmodified([Values(true, false)] bool isReadOnly)
         {
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
             try
             {
-                Assert.ThrowsAsync<RequestFailedException>(async () =>
-                {
-                    await service.SetReadOnlyAsync(testSetting.Key, true);
-                });
+                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
+                setting = await service.SetReadOnlyAsync(setting, !isReadOnly, onlyIfUnchanged: true);
+                Assert.AreEqual(!isReadOnly, setting.IsReadOnly);
+                setting = await service.SetReadOnlyAsync(setting, isReadOnly, onlyIfUnchanged: true);
+                Assert.AreEqual(isReadOnly, setting.IsReadOnly);
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
         }
 
-        [Test]
+        [RecordedTest]
+        public async Task ConfigurationClient_SetReadOnly_OnlyIfUnchanged_Modified([Values(true, false)] bool isReadOnly)
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
+                ConfigurationSetting modifiedSetting = setting.Clone();
+                modifiedSetting.Value = "new_value";
+                await service.SetConfigurationSettingAsync(modifiedSetting);
+
+                // Test
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await service.SetReadOnlyAsync(setting, isReadOnly, onlyIfUnchanged: true));
+                Assert.AreEqual(412, exception.Status);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
+            }
+        }
+
+        [RecordedTest]
         public async Task ClearReadOnlyFromSetting()
         {
             ConfigurationClient service = GetClient();
@@ -1243,30 +1262,20 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
             }
         }
 
-        [Test]
-        public async Task ClearReadOnlySettingNotFound()
+        [RecordedTest]
+        public void ClearReadOnlySettingNotFound()
         {
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
-            try
-            {
-                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
-                {
-                    await service.SetReadOnlyAsync(testSetting.Key, true);
-                });
-            }
-            finally
-            {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
-            }
+            Assert.ThrowsAsync<RequestFailedException>(async () => { await service.SetReadOnlyAsync(testSetting.Key, true); });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AddSettingDefaultAAD()
         {
             ConfigurationClient service = GetAADClient();
@@ -1279,8 +1288,202 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             finally
             {
-                await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label);
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
             }
         }
+
+        [RecordedTest]
+        public async Task CanAddAndGetFeatureFlag()
+        {
+            ConfigurationClient service = GetClient();
+            var testSetting = new FeatureFlagConfigurationSetting(GenerateKeyId("feature 1"), true);
+
+            try
+            {
+                var settingResponse = await service.AddConfigurationSettingAsync(testSetting);
+                var setting = settingResponse.Value;
+
+                Assert.IsInstanceOf<FeatureFlagConfigurationSetting>(setting);
+                Assert.AreEqual(testSetting.Key, setting.Key);
+                Assert.AreEqual(testSetting.Value, setting.Value);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
+            }
+        }
+
+        [RecordedTest]
+        public async Task CanAddAndUpdateFeatureFlag()
+        {
+            ConfigurationClient service = GetClient();
+            var testSetting = new FeatureFlagConfigurationSetting(GenerateKeyId("feature 1"), true)
+            {
+                Description = "Feature description",
+                DisplayName = "Feature display name",
+                ClientFilters =
+                {
+                    new FeatureFlagFilter("FilterA"),
+                    new FeatureFlagFilter("Microsoft.TimeWindow", new Dictionary<string, object>()
+                    {
+                        { "Start", "Wed, 01 May 2019 13:59:59 GMT" },
+                        { "End", "Mon, 01 July 2019 00:00:00 GMT" }
+                    })
+                }
+            };
+
+            try
+            {
+                var settingResponse = await service.AddConfigurationSettingAsync(testSetting);
+
+                var setting = (FeatureFlagConfigurationSetting) settingResponse.Value;
+                Assert.True(setting.IsEnabled);
+                setting.IsEnabled = false;
+
+                await service.SetConfigurationSettingAsync(setting);
+
+                settingResponse = await service.GetConfigurationSettingAsync(setting.Key);
+                setting = (FeatureFlagConfigurationSetting) settingResponse.Value;
+
+                Assert.IsInstanceOf<FeatureFlagConfigurationSetting>(settingResponse.Value);
+                Assert.AreEqual("Feature description", setting.Description);
+                Assert.AreEqual("Feature display name", setting.DisplayName);
+                Assert.AreEqual(2, setting.ClientFilters.Count);
+                var filter1 = setting.ClientFilters[0];
+                Assert.AreEqual("FilterA", filter1.Name);
+                var filter2 = setting.ClientFilters[1];
+                Assert.AreEqual("Microsoft.TimeWindow", filter2.Name);
+                Assert.AreEqual(new Dictionary<string, object>()
+                {
+                    { "Start", "Wed, 01 May 2019 13:59:59 GMT" },
+                    { "End", "Mon, 01 July 2019 00:00:00 GMT" }
+                }, filter2.Parameters);
+                Assert.False(setting.IsEnabled);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
+            }
+        }
+
+        [RecordedTest]
+        public async Task CanAddAndGetMultipleFeatureFlags()
+        {
+            ConfigurationClient service = GetClient();
+
+            var testSetting1 = new FeatureFlagConfigurationSetting(GenerateKeyId("feature 1-2"), true)
+            {
+                Description = "Feature description"
+            };
+            var testSetting2 = new FeatureFlagConfigurationSetting(GenerateKeyId("feature 1-1"), true)
+            {
+                Description = "Feature description"
+            };
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(testSetting1);
+                await service.AddConfigurationSettingAsync(testSetting2);
+
+                var selectedSettings = await service.GetConfigurationSettingsAsync(
+                    new SettingSelector() { KeyFilter = FeatureFlagConfigurationSetting.KeyPrefix + "feature 1-*"})
+                    .ToEnumerableAsync();
+
+                Assert.AreEqual(2, selectedSettings.Count);
+                foreach (var setting in selectedSettings)
+                {
+                    FeatureFlagConfigurationSetting featureFlag = (FeatureFlagConfigurationSetting) setting;
+                    Assert.AreEqual("Feature description", featureFlag.Description);
+                }
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting1));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting2));
+            }
+        }
+
+        [RecordedTest]
+        public async Task CanAddAndGetSecretReference()
+        {
+            ConfigurationClient service = GetClient();
+            var testSetting = new SecretReferenceConfigurationSetting(GenerateKeyId("secret"), new Uri("http://secret1.com/"));
+
+            try
+            {
+                var settingResponse = await service.AddConfigurationSettingAsync(testSetting);
+                var setting = settingResponse.Value;
+
+                Assert.IsInstanceOf<SecretReferenceConfigurationSetting>(setting);
+                Assert.AreEqual(testSetting.Key, setting.Key);
+                Assert.AreEqual(testSetting.Value, setting.Value);
+                Assert.AreEqual("http://secret1.com/", ((SecretReferenceConfigurationSetting)setting).SecretId.AbsoluteUri);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
+            }
+        }
+
+        [RecordedTest]
+        public async Task CanAddAndUpdateSecretReference()
+        {
+            ConfigurationClient service = GetClient();
+            var testSetting = new SecretReferenceConfigurationSetting(GenerateKeyId("secret"), new Uri("http://secret1.com/"));
+
+            try
+            {
+                var settingResponse = await service.AddConfigurationSettingAsync(testSetting);
+
+                var setting = (SecretReferenceConfigurationSetting) settingResponse.Value;
+                setting.SecretId = new Uri("http://secret2.com/");
+
+                await service.SetConfigurationSettingAsync(setting);
+
+                settingResponse = await service.GetConfigurationSettingAsync(setting.Key);
+                setting = (SecretReferenceConfigurationSetting) settingResponse.Value;
+
+                Assert.IsInstanceOf<SecretReferenceConfigurationSetting>(settingResponse.Value);
+                Assert.AreEqual("http://secret2.com/", setting.SecretId.AbsoluteUri);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
+            }
+        }
+
+        [RecordedTest]
+        public async Task CanAddAndGetMultipleSecretReferences()
+        {
+            ConfigurationClient service = GetClient();
+
+            var testSetting1 = new SecretReferenceConfigurationSetting(GenerateKeyId("secret 1-1"), new Uri("http://secret1.com/"));
+            var testSetting2 = new SecretReferenceConfigurationSetting(GenerateKeyId("secret 1-2"), new Uri("http://secret2.com/"));
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(testSetting1);
+                await service.AddConfigurationSettingAsync(testSetting2);
+
+                var selectedSettings = await service.GetConfigurationSettingsAsync(
+                    new SettingSelector() { KeyFilter = "secret 1-*"})
+                    .ToEnumerableAsync();
+
+                Assert.AreEqual(2, selectedSettings.Count);
+                foreach (var setting in selectedSettings)
+                {
+                    SecretReferenceConfigurationSetting featureFlag = (SecretReferenceConfigurationSetting) setting;
+                    StringAssert.StartsWith("http://secret", featureFlag.SecretId.AbsoluteUri);
+                    StringAssert.EndsWith(".com/", featureFlag.SecretId.AbsoluteUri);
+                }
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting1));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting2));
+            }
+        }
+
+        private static void AssertStatus200(Response response) => Assert.AreEqual(200, response.Status);
     }
 }

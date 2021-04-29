@@ -5,21 +5,54 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary> Report for a custom model training document. </summary>
     public partial class TrainingDocumentInfo
     {
-        /// <summary> Training document name. </summary>
-        public string DocumentName { get; set; }
-        /// <summary> Total number of pages trained. </summary>
-        public int Pages { get; set; }
+        /// <summary> Initializes a new instance of TrainingDocumentInfo. </summary>
+        /// <param name="name"> Training document name. </param>
+        /// <param name="pageCount"> Total number of pages trained. </param>
+        /// <param name="errors"> List of errors. </param>
+        /// <param name="status"> Status of the training operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="errors"/> is null. </exception>
+        internal TrainingDocumentInfo(string name, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (errors == null)
+            {
+                throw new ArgumentNullException(nameof(errors));
+            }
+
+            Name = name;
+            PageCount = pageCount;
+            Errors = errors.ToList();
+            Status = status;
+        }
+
+        /// <summary> Initializes a new instance of TrainingDocumentInfo. </summary>
+        /// <param name="name"> Training document name. </param>
+        /// <param name="pageCount"> Total number of pages trained. </param>
+        /// <param name="errors"> List of errors. </param>
+        /// <param name="status"> Status of the training operation. </param>
+        internal TrainingDocumentInfo(string name, int pageCount, IReadOnlyList<FormRecognizerError> errors, TrainingStatus status)
+        {
+            Name = name;
+            PageCount = pageCount;
+            Errors = errors;
+            Status = status;
+        }
         /// <summary> List of errors. </summary>
-        public ICollection<FormRecognizerError> Errors { get; set; } = new List<FormRecognizerError>();
+        public IReadOnlyList<FormRecognizerError> Errors { get; }
         /// <summary> Status of the training operation. </summary>
-        public TrainStatus Status { get; set; }
+        public TrainingStatus Status { get; }
     }
 }

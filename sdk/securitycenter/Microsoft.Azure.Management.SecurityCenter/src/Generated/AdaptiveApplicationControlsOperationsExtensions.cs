@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Security
     public static partial class AdaptiveApplicationControlsOperationsExtensions
     {
             /// <summary>
-            /// Gets a list of application control VM/server groups for the subscription.
+            /// Gets a list of application control machine groups for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,13 +33,13 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='summary'>
             /// Return output in a summarized form
             /// </param>
-            public static AppWhitelistingGroups List(this IAdaptiveApplicationControlsOperations operations, bool? includePathRecommendations = default(bool?), bool? summary = default(bool?))
+            public static AdaptiveApplicationControlGroups List(this IAdaptiveApplicationControlsOperations operations, bool? includePathRecommendations = default(bool?), bool? summary = default(bool?))
             {
                 return operations.ListAsync(includePathRecommendations, summary).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a list of application control VM/server groups for the subscription.
+            /// Gets a list of application control machine groups for the subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppWhitelistingGroups> ListAsync(this IAdaptiveApplicationControlsOperations operations, bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AdaptiveApplicationControlGroups> ListAsync(this IAdaptiveApplicationControlsOperations operations, bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(includePathRecommendations, summary, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -68,9 +68,9 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='groupName'>
-            /// Name of an application control VM/server group
+            /// Name of an application control machine group
             /// </param>
-            public static AppWhitelistingGroup Get(this IAdaptiveApplicationControlsOperations operations, string groupName)
+            public static AdaptiveApplicationControlGroup Get(this IAdaptiveApplicationControlsOperations operations, string groupName)
             {
                 return operations.GetAsync(groupName).GetAwaiter().GetResult();
             }
@@ -82,12 +82,12 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='groupName'>
-            /// Name of an application control VM/server group
+            /// Name of an application control machine group
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppWhitelistingGroup> GetAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AdaptiveApplicationControlGroup> GetAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(groupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -96,43 +96,72 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Update an application control VM/server group
+            /// Update an application control machine group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='groupName'>
-            /// Name of an application control VM/server group
+            /// Name of an application control machine group
             /// </param>
             /// <param name='body'>
-            /// The updated VM/server group data
             /// </param>
-            public static AppWhitelistingGroup Put(this IAdaptiveApplicationControlsOperations operations, string groupName, AppWhitelistingPutGroupData body)
+            public static AdaptiveApplicationControlGroup Put(this IAdaptiveApplicationControlsOperations operations, string groupName, AdaptiveApplicationControlGroup body)
             {
                 return operations.PutAsync(groupName, body).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Update an application control VM/server group
+            /// Update an application control machine group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='groupName'>
-            /// Name of an application control VM/server group
+            /// Name of an application control machine group
             /// </param>
             /// <param name='body'>
-            /// The updated VM/server group data
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppWhitelistingGroup> PutAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, AppWhitelistingPutGroupData body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AdaptiveApplicationControlGroup> PutAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, AdaptiveApplicationControlGroup body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PutWithHttpMessagesAsync(groupName, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Delete an application control machine group
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupName'>
+            /// Name of an application control machine group
+            /// </param>
+            public static void Delete(this IAdaptiveApplicationControlsOperations operations, string groupName)
+            {
+                operations.DeleteAsync(groupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete an application control machine group
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupName'>
+            /// Name of an application control machine group
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(groupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

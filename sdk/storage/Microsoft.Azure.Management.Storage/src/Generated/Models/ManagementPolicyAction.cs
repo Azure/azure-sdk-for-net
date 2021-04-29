@@ -34,10 +34,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// blob</param>
         /// <param name="snapshot">The management policy action for
         /// snapshot</param>
-        public ManagementPolicyAction(ManagementPolicyBaseBlob baseBlob = default(ManagementPolicyBaseBlob), ManagementPolicySnapShot snapshot = default(ManagementPolicySnapShot))
+        /// <param name="version">The management policy action for
+        /// version</param>
+        public ManagementPolicyAction(ManagementPolicyBaseBlob baseBlob = default(ManagementPolicyBaseBlob), ManagementPolicySnapShot snapshot = default(ManagementPolicySnapShot), ManagementPolicyVersion version = default(ManagementPolicyVersion))
         {
             BaseBlob = baseBlob;
             Snapshot = snapshot;
+            Version = version;
             CustomInit();
         }
 
@@ -59,6 +62,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         public ManagementPolicySnapShot Snapshot { get; set; }
 
         /// <summary>
+        /// Gets or sets the management policy action for version
+        /// </summary>
+        [JsonProperty(PropertyName = "version")]
+        public ManagementPolicyVersion Version { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -73,6 +82,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (Snapshot != null)
             {
                 Snapshot.Validate();
+            }
+            if (Version != null)
+            {
+                Version.Validate();
             }
         }
     }

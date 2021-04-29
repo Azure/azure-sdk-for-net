@@ -39,7 +39,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <param name="userData">User specified data. Length should not
         /// exceed 16KB.</param>
         /// <param name="recognitionModel">Possible values include:
-        /// 'recognition_01', 'recognition_02'</param>
+        /// 'recognition_01', 'recognition_02', 'recognition_03',
+        /// 'recognition_04'</param>
         /// <param name="persistedFaces">Persisted faces within the face
         /// list.</param>
         public FaceList(string faceListId, string name = default(string), string userData = default(string), string recognitionModel = default(string), IList<PersistedFace> persistedFaces = default(IList<PersistedFace>))

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
 using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Sas
@@ -10,7 +12,10 @@ namespace Azure.Storage.Sas
     /// <summary>
     /// <see cref="ShareSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for an Azure Storage share, directory, or file.
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
+    ///
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+    /// Creating a Service SAS</see>.
     /// </summary>
     public class ShareSasBuilder
     {
@@ -19,6 +24,13 @@ namespace Azure.Storage.Sas
         /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
+        /// <remarks>
+        /// This property has been deprecated and we will always use the latest
+        /// storage SAS version of the Storage service supported. This change
+        /// does not have any impact on how your application generates or makes
+        /// use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
 
         /// <summary>
@@ -121,6 +133,61 @@ namespace Azure.Storage.Sas
         public string ContentType { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ShareSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor has been deprecated. Please consider using
+        /// <see cref="ShareSasBuilder(ShareSasPermissions, DateTimeOffset)"/>
+        /// to create a Service SAS. This change does not have any impact on how
+        /// your application generates or makes use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ShareSasBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareSasBuilder"/>
+        /// class to create a Blob Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public ShareSasBuilder(ShareFileSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareSasBuilder"/>
+        /// class to create a Blob Container Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        public ShareSasBuilder(ShareSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+        }
+
+        /// <summary>
         /// Sets the permissions for a file SAS.
         /// </summary>
         /// <param name="permissions">
@@ -156,11 +223,49 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Sets the permissions for the SAS using a raw permissions string.
         /// </summary>
+        /// <param name="rawPermissions">
+        /// Raw permissions string for the SAS.
+        /// </param>
+        /// <param name="normalize">
+        /// If the permissions should be validated and correctly ordered.
+        /// </param>
+        public void SetPermissions(
+            string rawPermissions,
+            bool normalize = default)
+        {
+            if (normalize)
+            {
+                rawPermissions = SasExtensions.ValidateAndSanitizeRawPermissions(
+                    permissions: rawPermissions,
+                    validPermissionsInOrder: s_validPermissionsInOrder);
+            }
+
+            SetPermissions(rawPermissions);
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
         /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
         public void SetPermissions(string rawPermissions)
         {
             Permissions = rawPermissions;
         }
+
+        private static readonly List<char> s_validPermissionsInOrder = new List<char>
+        {
+            Constants.Sas.Permissions.Read,
+            Constants.Sas.Permissions.Add,
+            Constants.Sas.Permissions.Create,
+            Constants.Sas.Permissions.Write,
+            Constants.Sas.Permissions.Delete,
+            Constants.Sas.Permissions.DeleteBlobVersion,
+            Constants.Sas.Permissions.List,
+            Constants.Sas.Permissions.Tag,
+            Constants.Sas.Permissions.Update,
+            Constants.Sas.Permissions.Process,
+            Constants.Sas.Permissions.FilterByTags,
+        };
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
@@ -284,10 +389,27 @@ namespace Azure.Storage.Sas
                 Resource = Constants.Sas.Resource.File;
             }
 
-            if (string.IsNullOrEmpty(Version))
-            {
-                Version = SasQueryParameters.DefaultSasVersion;
-            }
+            Version = SasQueryParametersInternals.DefaultSasVersionInternal;
         }
+
+        internal static ShareSasBuilder DeepCopy(ShareSasBuilder originalShareSasBuilder)
+            => new ShareSasBuilder
+            {
+                Version = originalShareSasBuilder.Version,
+                Protocol = originalShareSasBuilder.Protocol,
+                StartsOn = originalShareSasBuilder.StartsOn,
+                ExpiresOn = originalShareSasBuilder.ExpiresOn,
+                Permissions = originalShareSasBuilder.Permissions,
+                IPRange = originalShareSasBuilder.IPRange,
+                Identifier = originalShareSasBuilder.Identifier,
+                ShareName = originalShareSasBuilder.ShareName,
+                FilePath = originalShareSasBuilder.FilePath,
+                Resource = originalShareSasBuilder.Resource,
+                CacheControl = originalShareSasBuilder.CacheControl,
+                ContentDisposition = originalShareSasBuilder.ContentDisposition,
+                ContentEncoding = originalShareSasBuilder.ContentEncoding,
+                ContentLanguage = originalShareSasBuilder.ContentLanguage,
+                ContentType = originalShareSasBuilder.ContentType
+            };
     }
 }

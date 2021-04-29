@@ -239,6 +239,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         /// <summary>
         /// Sends a list of messages to the entity as described by <see cref="Path"/>.
+        /// When called on partitioned entities, messages meant for different partitions cannot be batched together.
         /// </summary>
         public async Task SendAsync(IList<Message> messageList)
         {
@@ -746,7 +747,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 audience = new string[] { endpointUri.AbsoluteUri };
             }
 
-            string[] claims = { ClaimConstants.Manage, ClaimConstants.Send };
+            string[] claims = { ClaimConstants.Send };
             var amqpRequestResponseLinkCreator = new AmqpRequestResponseLinkCreator(
                 entityPath,
                 this.ServiceBusConnection,

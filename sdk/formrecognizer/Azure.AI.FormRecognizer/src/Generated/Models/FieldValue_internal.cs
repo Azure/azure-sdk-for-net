@@ -5,40 +5,55 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Recognized field value. </summary>
     internal partial class FieldValue_internal
     {
+        /// <summary> Initializes a new instance of FieldValue_internal. </summary>
+        /// <param name="type"> Type of field value. </param>
+        internal FieldValue_internal(FieldValueType type)
+        {
+            Type = type;
+            ValueArray = new ChangeTrackingList<FieldValue_internal>();
+            ValueObject = new ChangeTrackingDictionary<string, FieldValue_internal>();
+            BoundingBox = new ChangeTrackingList<float>();
+            Elements = new ChangeTrackingList<string>();
+        }
+
         /// <summary> Type of field value. </summary>
-        public FieldValueType Type { get; set; }
+        public FieldValueType Type { get; }
         /// <summary> String value. </summary>
-        public string ValueString { get; set; }
+        public string ValueString { get; }
         /// <summary> Date value. </summary>
-        public string ValueDate { get; set; }
+        public DateTimeOffset? ValueDate { get; }
         /// <summary> Time value. </summary>
-        public string ValueTime { get; set; }
+        public TimeSpan? ValueTime { get; }
         /// <summary> Phone number value. </summary>
-        public string ValuePhoneNumber { get; set; }
+        public string ValuePhoneNumber { get; }
         /// <summary> Floating point value. </summary>
-        public float? ValueNumber { get; set; }
-        /// <summary> Integer value. </summary>
-        public int? ValueInteger { get; set; }
+        public float? ValueNumber { get; }
         /// <summary> Array of field values. </summary>
-        public ICollection<FieldValue_internal> ValueArray { get; set; }
+        public IReadOnlyList<FieldValue_internal> ValueArray { get; }
         /// <summary> Dictionary of named field values. </summary>
-        public IDictionary<string, FieldValue_internal> ValueObject { get; set; }
+        public IReadOnlyDictionary<string, FieldValue_internal> ValueObject { get; }
+        /// <summary> Gender value: M, F, or X. </summary>
+        public FieldValueGender? ValueGender { get; }
+        /// <summary> 3-letter country code (ISO 3166-1 alpha-3). </summary>
+        public string ValueCountry { get; }
         /// <summary> Text content of the extracted field. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
         /// <summary> Bounding box of the field value, if appropriate. </summary>
-        public ICollection<float> BoundingBox { get; set; }
+        public IReadOnlyList<float> BoundingBox { get; }
         /// <summary> Confidence score. </summary>
-        public float? Confidence { get; set; }
+        public float? Confidence { get; }
         /// <summary> When includeTextDetails is set to true, a list of references to the text elements constituting this field. </summary>
-        public ICollection<string> Elements { get; set; }
+        public IReadOnlyList<string> Elements { get; }
         /// <summary> The 1-based page number in the input document. </summary>
-        public int? Page { get; set; }
+        public int? Page { get; }
     }
 }

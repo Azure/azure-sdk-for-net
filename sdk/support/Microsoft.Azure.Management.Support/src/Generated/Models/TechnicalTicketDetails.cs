@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <summary>
         /// Initializes a new instance of the TechnicalTicketDetails class.
         /// </summary>
-        /// <param name="resourceId">This is the resource id of the Azure
+        /// <param name="resourceId">This is the resource Id of the Azure
         /// service resource (For example: A virtual machine resource or an
         /// HDInsight resource) for which the support ticket is
         /// created.</param>
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Support.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets this is the resource id of the Azure service resource
+        /// Gets or sets this is the resource Id of the Azure service resource
         /// (For example: A virtual machine resource or an HDInsight resource)
         /// for which the support ticket is created.
         /// </summary>

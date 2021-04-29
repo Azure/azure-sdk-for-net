@@ -32,21 +32,43 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="ruleIndex">Order index</param>
         /// <param name="unixReadOnly">Read only access</param>
         /// <param name="unixReadWrite">Read and write access</param>
+        /// <param name="kerberos5ReadOnly">Kerberos5 Read only access. To be
+        /// use with swagger version 2020-05-01 or later</param>
+        /// <param name="kerberos5ReadWrite">Kerberos5 Read and write access.
+        /// To be use with swagger version 2020-05-01 or later</param>
+        /// <param name="kerberos5iReadOnly">Kerberos5i Read only access. To be
+        /// use with swagger version 2020-05-01 or later</param>
+        /// <param name="kerberos5iReadWrite">Kerberos5i Read and write access.
+        /// To be use with swagger version 2020-05-01 or later</param>
+        /// <param name="kerberos5pReadOnly">Kerberos5p Read only access. To be
+        /// use with swagger version 2020-05-01 or later</param>
+        /// <param name="kerberos5pReadWrite">Kerberos5p Read and write access.
+        /// To be use with swagger version 2020-05-01 or later</param>
         /// <param name="cifs">Allows CIFS protocol</param>
-        /// <param name="nfsv3">Allows NFSv3 protocol</param>
-        /// <param name="nfsv41">Allows NFSv4.1 protocol</param>
+        /// <param name="nfsv3">Allows NFSv3 protocol. Enable only for NFSv3
+        /// type volumes</param>
+        /// <param name="nfsv41">Allows NFSv4.1 protocol. Enable only for
+        /// NFSv4.1 type volumes</param>
         /// <param name="allowedClients">Client ingress specification as comma
         /// separated string with IPv4 CIDRs, IPv4 host addresses and host
         /// names</param>
-        public ExportPolicyRule(int? ruleIndex = default(int?), bool? unixReadOnly = default(bool?), bool? unixReadWrite = default(bool?), bool? cifs = default(bool?), bool? nfsv3 = default(bool?), bool? nfsv41 = default(bool?), string allowedClients = default(string))
+        /// <param name="hasRootAccess">Has root access to volume</param>
+        public ExportPolicyRule(int? ruleIndex = default(int?), bool? unixReadOnly = default(bool?), bool? unixReadWrite = default(bool?), bool? kerberos5ReadOnly = default(bool?), bool? kerberos5ReadWrite = default(bool?), bool? kerberos5iReadOnly = default(bool?), bool? kerberos5iReadWrite = default(bool?), bool? kerberos5pReadOnly = default(bool?), bool? kerberos5pReadWrite = default(bool?), bool? cifs = default(bool?), bool? nfsv3 = default(bool?), bool? nfsv41 = default(bool?), string allowedClients = default(string), bool? hasRootAccess = default(bool?))
         {
             RuleIndex = ruleIndex;
             UnixReadOnly = unixReadOnly;
             UnixReadWrite = unixReadWrite;
+            Kerberos5ReadOnly = kerberos5ReadOnly;
+            Kerberos5ReadWrite = kerberos5ReadWrite;
+            Kerberos5iReadOnly = kerberos5iReadOnly;
+            Kerberos5iReadWrite = kerberos5iReadWrite;
+            Kerberos5pReadOnly = kerberos5pReadOnly;
+            Kerberos5pReadWrite = kerberos5pReadWrite;
             Cifs = cifs;
             Nfsv3 = nfsv3;
             Nfsv41 = nfsv41;
             AllowedClients = allowedClients;
+            HasRootAccess = hasRootAccess;
             CustomInit();
         }
 
@@ -74,19 +96,63 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public bool? UnixReadWrite { get; set; }
 
         /// <summary>
+        /// Gets or sets kerberos5 Read only access. To be use with swagger
+        /// version 2020-05-01 or later
+        /// </summary>
+        [JsonProperty(PropertyName = "kerberos5ReadOnly")]
+        public bool? Kerberos5ReadOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets kerberos5 Read and write access. To be use with
+        /// swagger version 2020-05-01 or later
+        /// </summary>
+        [JsonProperty(PropertyName = "kerberos5ReadWrite")]
+        public bool? Kerberos5ReadWrite { get; set; }
+
+        /// <summary>
+        /// Gets or sets kerberos5i Read only access. To be use with swagger
+        /// version 2020-05-01 or later
+        /// </summary>
+        [JsonProperty(PropertyName = "kerberos5iReadOnly")]
+        public bool? Kerberos5iReadOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets kerberos5i Read and write access. To be use with
+        /// swagger version 2020-05-01 or later
+        /// </summary>
+        [JsonProperty(PropertyName = "kerberos5iReadWrite")]
+        public bool? Kerberos5iReadWrite { get; set; }
+
+        /// <summary>
+        /// Gets or sets kerberos5p Read only access. To be use with swagger
+        /// version 2020-05-01 or later
+        /// </summary>
+        [JsonProperty(PropertyName = "kerberos5pReadOnly")]
+        public bool? Kerberos5pReadOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets kerberos5p Read and write access. To be use with
+        /// swagger version 2020-05-01 or later
+        /// </summary>
+        [JsonProperty(PropertyName = "kerberos5pReadWrite")]
+        public bool? Kerberos5pReadWrite { get; set; }
+
+        /// <summary>
         /// Gets or sets allows CIFS protocol
         /// </summary>
         [JsonProperty(PropertyName = "cifs")]
         public bool? Cifs { get; set; }
 
         /// <summary>
-        /// Gets or sets allows NFSv3 protocol
+        /// Gets or sets allows NFSv3 protocol. Enable only for NFSv3 type
+        /// volumes
         /// </summary>
         [JsonProperty(PropertyName = "nfsv3")]
         public bool? Nfsv3 { get; set; }
 
         /// <summary>
-        /// Gets or sets allows NFSv4.1 protocol
+        /// Gets or sets allows NFSv4.1 protocol. Enable only for NFSv4.1 type
+        /// volumes
         /// </summary>
         [JsonProperty(PropertyName = "nfsv41")]
         public bool? Nfsv41 { get; set; }
@@ -97,6 +163,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "allowedClients")]
         public string AllowedClients { get; set; }
+
+        /// <summary>
+        /// Gets or sets has root access to volume
+        /// </summary>
+        [JsonProperty(PropertyName = "hasRootAccess")]
+        public bool? HasRootAccess { get; set; }
 
     }
 }

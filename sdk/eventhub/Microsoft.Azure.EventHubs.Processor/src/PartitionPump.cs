@@ -94,6 +94,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         {
             ProcessorEventSource.Log.PartitionPumpCloseStart(this.Host.HostName, this.PartitionContext.PartitionId, reason.ToString());
             this.PumpStatus = PartitionPumpStatus.Closing;
+
             try
             {
                 this.cancellationTokenSource.Cancel();
@@ -120,18 +121,22 @@ namespace Microsoft.Azure.EventHubs.Processor
                 // Report the failure to the general error handler instead.
                 this.Host.EventProcessorOptions.NotifyOfException(this.Host.HostName, this.PartitionContext.PartitionId, e, "Closing Event Processor");
             }
-
-            if (reason != CloseReason.LeaseLost)
+            finally
             {
-                // Since this pump is dead, release the lease.
-                try
+                // Release the lease regardless of result from pump's close call above.
+                // Increase the chance of a healthy host grabbing the lease here.
+                if (reason != CloseReason.LeaseLost)
                 {
-                    await this.Host.LeaseManager.ReleaseLeaseAsync(this.PartitionContext.Lease).ConfigureAwait(false);
-                }
-                catch (Exception e)
-                {
-                    // Log and ignore any failure since expired lease will be picked by another host.
-                    this.Host.EventProcessorOptions.NotifyOfException(this.Host.HostName, this.PartitionContext.PartitionId, e, EventProcessorHostActionStrings.ReleasingLease);
+                    // Since this pump is dead, release the lease.
+                    try
+                    {
+                        await this.Host.LeaseManager.ReleaseLeaseAsync(this.PartitionContext.Lease).ConfigureAwait(false);
+                    }
+                    catch (Exception e)
+                    {
+                        // Log and ignore any failure since expired lease will be picked by another host.
+                        this.Host.EventProcessorOptions.NotifyOfException(this.Host.HostName, this.PartitionContext.PartitionId, e, EventProcessorHostActionStrings.ReleasingLease);
+                    }
                 }
             }
 

@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXM/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
+      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices?api-version=2019-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9kYXRhU2VydmljZXM/YXBpLXZlcnNpb249MjAxOS0wNi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5b073c32-d084-45e2-ac2d-3cec0bb722f9"
+          "23af7f48-27fe-4aa3-b6e2-7045b784b6f9"
         ],
         "accept-language": [
           "en-US"
@@ -15,8 +15,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18875.",
-          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/0.9.0.preview"
+          "OSVersion/Microsoft.Windows.10.0.19555.",
+          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/1.0.1.preview"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Apr 2019 09:13:09 GMT"
+          "Wed, 05 Feb 2020 04:24:46 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,22 +33,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "57db9751-58ff-4c3d-8ff0-6e0b0b38bd4d"
+          "c905d1e6-d175-4917-815a-e09905df1bec"
         ],
         "x-ms-client-request-id": [
-          "5b073c32-d084-45e2-ac2d-3cec0bb722f9"
+          "23af7f48-27fe-4aa3-b6e2-7045b784b6f9"
         ],
         "X-Powered-By": [
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "a5f8ff14-6705-43a9-89fa-77374f9cd5b0"
+          "d789915f-5bf7-46dc-a7f2-93ffe4648445"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190410T091309Z:a5f8ff14-6705-43a9-89fa-77374f9cd5b0"
+          "SOUTHINDIA:20200205T042447Z:d789915f-5bf7-46dc-a7f2-93ffe4648445"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

@@ -36,10 +36,15 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// Windows VMs.</param>
         /// <param name="adminPassword">The administrator password to use for
         /// Windows VMs.</param>
-        public ManagedClusterWindowsProfile(string adminUsername, string adminPassword = default(string))
+        /// <param name="licenseType">The licenseType to use for Windows VMs.
+        /// Windows_Server is used to enable Azure Hybrid User Benefits for
+        /// Windows VMs. Possible values include: 'None',
+        /// 'Windows_Server'</param>
+        public ManagedClusterWindowsProfile(string adminUsername, string adminPassword = default(string), string licenseType = default(string))
         {
             AdminUsername = adminUsername;
             AdminPassword = adminPassword;
+            LicenseType = licenseType;
             CustomInit();
         }
 
@@ -59,6 +64,14 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "adminPassword")]
         public string AdminPassword { get; set; }
+
+        /// <summary>
+        /// Gets or sets the licenseType to use for Windows VMs. Windows_Server
+        /// is used to enable Azure Hybrid User Benefits for Windows VMs.
+        /// Possible values include: 'None', 'Windows_Server'
+        /// </summary>
+        [JsonProperty(PropertyName = "licenseType")]
+        public string LicenseType { get; set; }
 
         /// <summary>
         /// Validate the object.

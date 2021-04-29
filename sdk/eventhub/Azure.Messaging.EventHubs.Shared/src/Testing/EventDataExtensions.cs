@@ -47,8 +47,8 @@ namespace Azure.Messaging.EventHubs.Tests
             // If the contents of each body is not equal, the events are not
             // equal.
 
-            var instanceBody = instance.Body.ToArray();
-            var otherBody = other.Body.ToArray();
+            var instanceBody = instance.EventBody.ToArray();
+            var otherBody = other.EventBody.ToArray();
 
             if (instanceBody.Length != otherBody.Length)
             {
@@ -56,6 +56,17 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             if (!Enumerable.SequenceEqual(instanceBody, otherBody))
+            {
+                return false;
+            }
+
+            // Verify that the stand-alone system properties are equivalent.
+
+            if ((considerSystemProperties)
+                && ((instance.Offset != other.Offset)
+                    || (instance.EnqueuedTime != other.EnqueuedTime)
+                    || (instance.PartitionKey != other.PartitionKey)
+                    || (instance.SequenceNumber != other.SequenceNumber)))
             {
                 return false;
             }
@@ -70,14 +81,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 if (instance.SystemProperties.Count != other.SystemProperties.Count)
-                {
-                    return false;
-                }
-
-                if ((instance.Offset != other.Offset)
-                    || (instance.EnqueuedTime != other.EnqueuedTime)
-                    || (instance.PartitionKey != other.PartitionKey)
-                    || (instance.SequenceNumber != other.SequenceNumber))
                 {
                     return false;
                 }

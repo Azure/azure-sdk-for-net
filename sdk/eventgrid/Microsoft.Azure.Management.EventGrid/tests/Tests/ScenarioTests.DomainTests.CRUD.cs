@@ -75,6 +75,10 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Equal(location, getDomainResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Contains(getDomainResponse.Tags, tag => tag.Key == "originalTag1");
 
+                //// Diable test as identity is not part of GA Version yet.
+                //// Assert.Null(getDomainResponse.Identity);
+                Assert.Null(getDomainResponse.InboundIpRules);
+
                 // Get all domains created within a resourceGroup
                 IPage<Domain> domainsInResourceGroupPage = this.EventGridManagementClient.Domains.ListByResourceGroupAsync(resourceGroup).Result;
                 var domainsInResourceGroupList = new List<Domain>();
@@ -155,26 +159,29 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.DoesNotContain(replaceDomainResponse.Tags, tag => tag.Key == "originalTag1");
 
                 // Update the domain with tags & allow traffic from all ips
-                var domainUpdateParameters = new DomainUpdateParameters();
-                domainUpdateParameters.Tags = new Dictionary<string, string>()
+                var domainUpdateParameters = new DomainUpdateParameters()
                 {
-                    { "updatedTag1", "updatedValue1" },
-                    { "updatedTag2", "updatedValue2" }
+                    Tags = new Dictionary<string, string>()
+                    {
+                        { "updatedTag1", "updatedValue1" },
+                        { "updatedTag2", "updatedValue2" }
+                    },
+                    PublicNetworkAccess = PublicNetworkAccess.Enabled,
                 };
-                domain.AllowTrafficFromAllIPs = true;
+
                 var updateDomainResponse = this.EventGridManagementClient.Domains.UpdateAsync(resourceGroup, domainName, domainUpdateParameters).Result;
                 Assert.Contains(updateDomainResponse.Tags, tag => tag.Key == "updatedTag1");
                 Assert.DoesNotContain(updateDomainResponse.Tags, tag => tag.Key == "replacedTag1");
-                Assert.True(updateDomainResponse.AllowTrafficFromAllIPs);
+                Assert.True(updateDomainResponse.PublicNetworkAccess == PublicNetworkAccess.Enabled);
                 Assert.Null(updateDomainResponse.InboundIpRules);
 
                 // Update the Topic with IP filtering feature
-                domain.AllowTrafficFromAllIPs = false;
+                domain.PublicNetworkAccess = PublicNetworkAccess.Disabled;
                 domain.InboundIpRules = new List<InboundIpRule>();
                 domain.InboundIpRules.Add(new InboundIpRule() { Action = IpActionType.Allow, IpMask = "12.35.67.98" });
                 domain.InboundIpRules.Add(new InboundIpRule() { Action = IpActionType.Allow, IpMask = "12.35.90.100" });
                 var updateDomainResponseWithIpFilteringFeature = this.EventGridManagementClient.Domains.CreateOrUpdateAsync(resourceGroup, domainName, domain).Result;
-                Assert.False(updateDomainResponseWithIpFilteringFeature.AllowTrafficFromAllIPs);
+                Assert.False(updateDomainResponseWithIpFilteringFeature.PublicNetworkAccess == PublicNetworkAccess.Enabled);
                 Assert.True(updateDomainResponseWithIpFilteringFeature.InboundIpRules.Count() == 2);
 
                 // Create domain topic manually.

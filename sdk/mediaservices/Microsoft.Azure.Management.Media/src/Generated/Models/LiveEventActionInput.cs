@@ -29,8 +29,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the LiveEventActionInput class.
         /// </summary>
-        /// <param name="removeOutputsOnStop">The flag indicates if remove
-        /// LiveOutputs on Stop.</param>
+        /// <param name="removeOutputsOnStop">The flag indicates whether live
+        /// outputs are automatically deleted when live event is being stopped.
+        /// Deleting live outputs do not delete the underlying assets.</param>
         public LiveEventActionInput(bool? removeOutputsOnStop = default(bool?))
         {
             RemoveOutputsOnStop = removeOutputsOnStop;
@@ -43,7 +44,9 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the flag indicates if remove LiveOutputs on Stop.
+        /// Gets or sets the flag indicates whether live outputs are
+        /// automatically deleted when live event is being stopped. Deleting
+        /// live outputs do not delete the underlying assets.
         /// </summary>
         [JsonProperty(PropertyName = "removeOutputsOnStop")]
         public bool? RemoveOutputsOnStop { get; set; }

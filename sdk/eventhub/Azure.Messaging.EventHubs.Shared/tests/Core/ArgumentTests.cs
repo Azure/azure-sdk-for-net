@@ -99,8 +99,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(0, 1)]
         [TestCase(1000, 2000)]
         [TestCase(-1001, -1000)]
-        public void ArgumentAtLeastEnforcesInvariants(long value,
-                                                      long minValue)
+        public void ArgumentAtLeastEnforcesInvariantsForLongs(long value,
+                                                             long minValue)
         {
             Assert.That(() => Argument.AssertAtLeast(value, minValue, nameof(value)), Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
@@ -116,8 +116,40 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(99, 0)]
         [TestCase(0, 0)]
         [TestCase(100, 0)]
-        public void ArgumentAtLeastAllowsValidValues(long value,
-                                                     long minValue)
+        public void ArgumentAtLeastAllowsValidValuesForLongs(long value,
+                                                             long minValue)
+        {
+            Assert.That(() => Argument.AssertAtLeast(value, minValue, nameof(value)), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Argument.AssertAtLeast" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(2, 3)]
+        [TestCase(0, 1)]
+        [TestCase(1000, 2000)]
+        [TestCase(-1001, -1000)]
+        public void ArgumentAtLeastEnforcesInvariantsForInts(int value,
+                                                             int minValue)
+        {
+            Assert.That(() => Argument.AssertAtLeast(value, minValue, nameof(value)), Throws.InstanceOf<ArgumentOutOfRangeException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Argument.AssertAtLeast" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(1, 0)]
+        [TestCase(10, -100)]
+        [TestCase(-5, -10)]
+        [TestCase(99, 0)]
+        [TestCase(0, 0)]
+        [TestCase(100, 0)]
+        public void ArgumentAtLeastAllowsValidValuesForInts(int value,
+                                                            int minValue)
         {
             Assert.That(() => Argument.AssertAtLeast(value, minValue, nameof(value)), Throws.Nothing);
         }
@@ -196,6 +228,40 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var target = "test";
             Assert.That(() => Argument.AssertNotClosed(true, target), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed).And.Message.Contains(target));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Argument.AssertWellFormedFullyQualifiedNamespace" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("sb://myhub.servicebus.windows")]
+        [TestCase("sb://192.168.1.15")]
+        [TestCase("amqps://myhub.servicebus.windows")]
+        [TestCase("amqps://192.168.1.15")]
+        [TestCase("http://myhub.servicebus.windows")]
+        [TestCase("https://192.168.1.15")]
+        public void AssertWellFormedFullyQualifiedNamespaceEnforcesInvariants(string value)
+        {
+            Assert.That(() => Argument.AssertWellFormedEventHubsNamespace(value, nameof(value)), Throws.ArgumentException.And.Property(nameof(ArgumentException.ParamName)).EqualTo(nameof(value)));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="Argument.AssertWellFormedFullyQualifiedNamespace" /> method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("myhub")]
+        [TestCase("myhub.servicebus.windows.com")]
+        [TestCase("myhub.servicebus.microsoft.ca")]
+        [TestCase("myhub.place.jp")]
+        [TestCase("192.168.1.12")]
+        [TestCase("2001:0000:3238:DFE1:0063:0000:0000:FEFB")]
+        public void AssertWellFormedFullyQualifiedNamespaceAllowsValidValues(string value)
+        {
+            Assert.That(() => Argument.AssertWellFormedEventHubsNamespace(value, nameof(value)), Throws.Nothing);
         }
     }
 }

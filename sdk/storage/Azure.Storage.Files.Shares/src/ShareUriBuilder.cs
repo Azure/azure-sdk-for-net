@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -15,7 +16,9 @@ namespace Azure.Storage.Files.Shares
     /// modify the contents of a <see cref="System.Uri"/> instance to point to
     /// different Azure Storage resources like an account, share, or file.
     ///
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata" />.
+    /// For more information, see
+    /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-shares--directories--files--and-metadata">
+    /// Naming and Referencing Shares, Directories, Files, and Metadata</see>.
     /// </summary>
     public class ShareUriBuilder
     {
@@ -27,10 +30,9 @@ namespace Azure.Storage.Files.Shares
         private Uri _uri;
 
         /// <summary>
-        /// Whether the Uri is an IP Uri as determined by
-        /// <see cref="UriExtensions.IsHostIPEndPointStyle"/>.
+        /// Whether the Uri is a path-style Uri (i.e. it is an IP Uri or the domain includes a port that is used by the local emulator).
         /// </summary>
-        private readonly bool _isIPStyleUri;
+        private readonly bool _isPathStyleUri;
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.
@@ -98,7 +100,11 @@ namespace Azure.Storage.Files.Shares
         public string DirectoryOrFilePath
         {
             get => _directoryOrFilePath;
-            set { ResetUri(); _directoryOrFilePath = value.TrimEnd('/'); }
+            set
+            {
+                ResetUri();
+                _directoryOrFilePath = value;
+            }
         }
         private string _directoryOrFilePath;
 
@@ -151,6 +157,8 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         public ShareUriBuilder(Uri uri)
         {
+            uri = uri ?? throw new ArgumentNullException(nameof(uri));
+
             Scheme = uri.Scheme;
             Host = uri.Host;
             Port = uri.Port;
@@ -166,14 +174,13 @@ namespace Azure.Storage.Files.Shares
             if (!string.IsNullOrEmpty(uri.AbsolutePath))
             {
                 // If path starts with a slash, remove it
-
                 var path = uri.GetPath();
 
                 var startIndex = 0;
 
                 if (uri.IsHostIPEndPointStyle())
                 {
-                    _isIPStyleUri = true;
+                    _isPathStyleUri = true;
                     var accountEndIndex = path.IndexOf("/", StringComparison.InvariantCulture);
 
                     // Slash not found; path has account name & no share name
@@ -198,12 +205,16 @@ namespace Azure.Storage.Files.Shares
                 var shareEndIndex = path.IndexOf("/", startIndex, StringComparison.InvariantCulture);
                 if (shareEndIndex == -1)
                 {
-                    ShareName = path.Substring(startIndex); // Slash not found; path has share name & no directory/file path
+                    // Slash not found; path has share name & no directory/file path
+                    ShareName = path.Substring(startIndex);
                 }
                 else
                 {
-                    ShareName = path.Substring(startIndex, shareEndIndex - startIndex); // The share name is the part between the slashes
-                    DirectoryOrFilePath = path.Substring(shareEndIndex + 1);   // The directory/file path name is after the share slash
+                    // The share name is the part between the slashes
+                    ShareName = path.Substring(startIndex, shareEndIndex - startIndex);
+
+                    // The directory/file path name is after the share slash
+                    DirectoryOrFilePath = path.Substring(shareEndIndex + 1).Trim('/').UnescapePath();
                 }
             }
 
@@ -211,12 +222,12 @@ namespace Azure.Storage.Files.Shares
 
             var paramsMap = new UriQueryParamsCollection(uri.Query);
 
-            if (paramsMap.TryGetValue(Constants.SnapshotParameterName, out var snapshotTime))
+            if (paramsMap.TryGetValue(Constants.File.SnapshotParameterName, out var snapshotTime))
             {
                 Snapshot = snapshotTime;
 
                 // If we recognized the query parameter, remove it from the map
-                paramsMap.Remove(Constants.SnapshotParameterName);
+                paramsMap.Remove(Constants.File.SnapshotParameterName);
             }
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
@@ -270,16 +281,16 @@ namespace Azure.Storage.Files.Shares
             var path = new StringBuilder("");
             // only append the account name to the path for Ip style Uri.
             // regular style Uri will already have account name in domain
-            if (_isIPStyleUri && !string.IsNullOrWhiteSpace(AccountName))
+            if (_isPathStyleUri && !string.IsNullOrWhiteSpace(AccountName))
             {
-                path.Append("/").Append(AccountName);
+                path.Append('/').Append(AccountName);
             }
             if (!string.IsNullOrWhiteSpace(ShareName))
             {
-                path.Append("/").Append(ShareName);
-                if (!string.IsNullOrWhiteSpace(DirectoryOrFilePath))
+                path.Append('/').Append(ShareName);
+                if (!string.IsNullOrWhiteSpace(_directoryOrFilePath))
                 {
-                    path.Append("/").Append(DirectoryOrFilePath);
+                    path.Append('/').Append(_directoryOrFilePath.EscapePath());
                 }
             }
 
@@ -287,13 +298,13 @@ namespace Azure.Storage.Files.Shares
             var query = new StringBuilder(Query);
             if (!string.IsNullOrWhiteSpace(Snapshot))
             {
-                if (query.Length > 0) { query.Append("&"); }
-                query.Append(Constants.SnapshotParameterName).Append("=").Append(Snapshot);
+                if (query.Length > 0) { query.Append('&'); }
+                query.Append(Constants.File.SnapshotParameterName).Append('=').Append(Snapshot);
             }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {
-                if (query.Length > 0) { query.Append("&"); }
+                if (query.Length > 0) { query.Append('&'); }
                 query.Append(sas);
             }
 

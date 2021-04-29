@@ -7,10 +7,10 @@ namespace Azure.Messaging.EventHubs.Producer
 {
     /// <summary>
     ///   The set of options that can be specified to influence the way in which events
-    ///   are sent to the Event Hubs service.
+    ///   are published to the Event Hubs service.
     /// </summary>
     ///
-    internal class SendEventOptions
+    public class SendEventOptions
     {
         /// <summary>
         ///   Allows a hashing key to be provided for the batch of events, which instructs the Event Hubs
@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="partitionKey">The hashing key to use for influencing the partition to which the events are routed.</param>
         ///
         internal SendEventOptions(string partitionId,
-                             string partitionKey)
+                                  string partitionKey)
         {
             PartitionId = partitionId;
             PartitionKey = partitionKey;
@@ -114,5 +114,18 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="SendEventOptions" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <returns>A new copy of <see cref="SendEventOptions" />.</returns>
+        ///
+        internal SendEventOptions Clone() =>
+            new SendEventOptions
+            {
+                PartitionId = PartitionId,
+                PartitionKey = PartitionKey
+            };
     }
 }

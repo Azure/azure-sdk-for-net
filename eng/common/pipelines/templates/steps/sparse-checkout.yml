@@ -1,0 +1,36 @@
+parameters:
+  - name: Paths
+    type: object
+    default: []
+  - name: Repositories
+    type: object
+    default:
+      - Name: $(Build.Repository.Name)
+        Commitish: $(Build.SourceVersion)
+        WorkingDirectory: $(System.DefaultWorkingDirectory)
+  - name: SkipDefaultCheckout
+    type: boolean
+    default: false
+
+steps:
+  - ${{ if not(parameters.SkipDefaultCheckout) }}:
+    - checkout: none
+
+  - ${{ each repo in parameters.Repositories }}:
+    - pwsh: |
+        $dir = "${{ coalesce(repo.WorkingDirectory, format('{0}/{1}', '$(System.DefaultWorkingDirectory)', repo.Name)) }}"
+        New-Item $dir -ItemType Directory -Force
+
+    - pwsh: |
+        git clone --no-checkout --filter=tree:0 git://github.com/${{ repo.Name }} .
+        git sparse-checkout init
+        $paths = ('${{ convertToJson(parameters.Paths) }}' | ConvertFrom-Json) -Join ' '
+        Invoke-Expression -Command "git sparse-checkout set eng $paths"
+        Write-Host "Set sparse checkout paths to:"
+        Get-Content .git/info/sparse-checkout
+      displayName: Init sparse checkout ${{ repo.Name }}
+      workingDirectory: ${{ coalesce(repo.WorkingDirectory, format('{0}/{1}', '$(System.DefaultWorkingDirectory)', repo.Name)) }}
+
+    - pwsh: git checkout ${{ repo.Commitish }}
+      displayName: Sparse checkout at ${{ repo.Commitish }}
+      workingDirectory: ${{ coalesce(repo.WorkingDirectory, format('{0}/{1}', '$(System.DefaultWorkingDirectory)', repo.Name)) }}

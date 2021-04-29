@@ -334,7 +334,7 @@ namespace DataFactory.Tests.UnitTests
                 client.LinkedServices.Delete(RGN(example), FN(example), LSN(example));
             });
         }
-        
+
         [Fact]
         public void Triggers_Create()
         {
@@ -668,6 +668,124 @@ namespace DataFactory.Tests.UnitTests
             });
         }
 
+        [Fact]
+        public void ManagedVirtualNetwork_Create()
+        {
+            RunTest("ManagedVirtualNetworks_Create", (example, client, responseCode) =>
+            {
+                ManagedVirtualNetworkResource resource = client.ManagedVirtualNetworks.CreateOrUpdate(RGN(example), FN(example), MVN(example), MVR(example, client));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
+        public void ManagedVirtualNetwork_ListByFactory()
+        {
+            RunTest("ManagedVirtualNetworks_ListByFactory", (example, client, responseCode) =>
+            {
+                IPage<ManagedVirtualNetworkResource> resources = client.ManagedVirtualNetworks.ListByFactory(RGN(example), FN(example));
+                CheckResponseBody(example, client, responseCode, (Page<ManagedVirtualNetworkResource>)resources);
+            });
+        }
+
+        [Fact]
+        public void ManagedVirtualNetwork_Get()
+        {
+            RunTest("ManagedVirtualNetworks_Get", (example, client, responseCode) =>
+            {
+                ManagedVirtualNetworkResource resource = client.ManagedVirtualNetworks.Get(RGN(example), FN(example), MVN(example));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
+        public void ManagedPrivateEndpoint_Create()
+        {
+            RunTest("ManagedPrivateEndpoints_Create", (example, client, responseCode) =>
+            {
+                ManagedPrivateEndpointResource resource = client.ManagedPrivateEndpoints.CreateOrUpdate(RGN(example), FN(example), MVN(example), MPEN(example), MPER(example, client));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
+        public void ManagedPrivateEndpoint_ListByFactory()
+        {
+            RunTest("ManagedPrivateEndpoints_ListByFactory", (example, client, responseCode) =>
+            {
+                IPage<ManagedPrivateEndpointResource> resources = client.ManagedPrivateEndpoints.ListByFactory(RGN(example), FN(example), MVN(example));
+                CheckResponseBody(example, client, responseCode, (Page<ManagedPrivateEndpointResource>)resources);
+            });
+        }
+
+        [Fact]
+        public void ManagedPrivateEndpoint_Get()
+        {
+            RunTest("ManagedPrivateEndpoints_Get", (example, client, responseCode) =>
+            {
+                ManagedPrivateEndpointResource resource = client.ManagedPrivateEndpoints.Get(RGN(example), FN(example), MVN(example), MPEN(example));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
+        public void ManagedPrivateEndpoint_Delete()
+        {
+            RunTest("ManagedPrivateEndpoints_Delete", (example, client, responseCode) =>
+            {
+                client.ManagedPrivateEndpoints.Delete(RGN(example), FN(example), MVN(example), MPEN(example));
+            });
+        }
+
+        [Fact]
+        public void PrivateEndpointConnection_Create()
+        {
+            RunTest("PrivateEndpointConnection_Create", (example, client, responseCode) =>
+            {
+                PrivateEndpointConnectionResource resource = client.PrivateEndpointConnection.CreateOrUpdate(RGN(example), FN(example), PEC(example), PLR(example, client));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
+        public void PrivateEndpointConnection_ListByFactory()
+        {
+            RunTest("PrivateEndpointConnections_ListByFactory", (example, client, responseCode) =>
+            {
+                IPage<PrivateEndpointConnectionResource> resources = client.PrivateEndPointConnections.ListByFactory(RGN(example), FN(example));
+                CheckResponseBody(example, client, responseCode, (Page<PrivateEndpointConnectionResource>)resources);
+            });
+        }
+
+        [Fact]
+        public void PrivateEndpointConnection_Get()
+        {
+            RunTest("PrivateEndpointConnection_Get", (example, client, responseCode) =>
+            {
+                PrivateEndpointConnectionResource resource = client.PrivateEndpointConnection.Get(RGN(example), FN(example), PEC(example));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
+        public void PrivateEndpointConnection_Delete()
+        {
+            RunTest("PrivateEndpointConnection_Delete", (example, client, responseCode) =>
+            {
+                client.PrivateEndpointConnection.Delete(RGN(example), FN(example), PEC(example));
+            });
+        }
+
+        [Fact]
+        public void PrivateLinkResources_Get()
+        {
+            RunTest("PrivateLinkResources_Get", (example, client, responseCode) =>
+            {
+                PrivateLinkResourcesWrapper resource = client.PrivateLinkResources.Get(RGN(example), FN(example));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
         private List<HttpResponseMessage> GetResponses(Example example)
         {
             List<HttpResponseMessage> messages = new List<HttpResponseMessage>();
@@ -768,7 +886,7 @@ namespace DataFactory.Tests.UnitTests
             JToken actualJToken = JToken.Parse(actualJson);
 
 
-            Assert.True(JToken.DeepEquals(expectedJToken, actualJToken), 
+            Assert.True(JToken.DeepEquals(expectedJToken, actualJToken),
                 string.Format(CultureInfo.InvariantCulture, "CheckResponseBody failed for example {0} response code {1}", example.Name, responseCode));
         }
 
@@ -807,6 +925,19 @@ namespace DataFactory.Tests.UnitTests
         private string LN(Example example)
         {
             return (string)example.Parameters["locationId"];
+        }
+        private string MPEN(Example example)
+        {
+            return (string)example.Parameters["managedPrivateEndpointName"];
+        }
+        private string MVN(Example example)
+        {
+            return (string)example.Parameters["managedVirtualNetworkName"];
+        }
+
+        private string PEC(Example example)
+        {
+            return (string)example.Parameters["privateEndpointConnectionName"];
         }
 
         private T GetTypedObject<T>(IDataFactoryManagementClient client, object objectRaw)
@@ -860,6 +991,21 @@ namespace DataFactory.Tests.UnitTests
         private DataFlowResource DFR(Example example, IDataFactoryManagementClient client)
         {
             return GetTypedParameter<DataFlowResource>(example, client, "dataFlow");
+        }
+
+        private ManagedPrivateEndpointResource MPER(Example example, IDataFactoryManagementClient client)
+        {
+            return GetTypedParameter<ManagedPrivateEndpointResource>(example, client, "managedPrivateEndpoint");
+        }
+
+        private ManagedVirtualNetworkResource MVR(Example example, IDataFactoryManagementClient client)
+        {
+            return GetTypedParameter<ManagedVirtualNetworkResource>(example, client, "managedVirtualNetwork");
+        }
+
+        private PrivateLinkConnectionApprovalRequestResource PLR(Example example, IDataFactoryManagementClient client)
+        {
+            return GetTypedParameter<PrivateLinkConnectionApprovalRequestResource>(example, client, "privateEndpointWrapper");
         }
     }
 }

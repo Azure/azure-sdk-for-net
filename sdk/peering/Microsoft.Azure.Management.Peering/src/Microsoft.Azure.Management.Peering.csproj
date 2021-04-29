@@ -7,10 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.Peering</PackageId>
 		<Description>Microsoft Azure Management Peering library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Peering</AssemblyName>
-		<Version>2.0.1-preview</Version>
+		<Version>2.1.1</Version>
 		<PackageTags></PackageTags>
     <PackageReleaseNotes><![CDATA[
-- Made microsoft session address non-readonly
+- Add cdnPeeringPrefixes functionality for peerings
+- Add microsoftTrackingId for peering direct connection
 ]]>
 </PackageReleaseNotes>
   </PropertyGroup>

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -46,18 +46,6 @@ namespace Azure.Core.Tests
             var httpMessage = new HttpMessage(new MockRequest(), new ResponseClassifier());
 
             Assert.True(httpMessage.ResponseClassifier.IsRetriable(httpMessage, new OperationCanceledException()));
-        }
-
-        [Test]
-        public void TreatsAll4xAnd5xAsErrors()
-        {
-            var classifier = new ResponseClassifier();
-            var httpMessage = new HttpMessage(new MockRequest(), new ResponseClassifier());
-            for (int i = 400; i < 600; i++)
-            {
-                httpMessage.Response = new MockResponse(i);
-                Assert.True(classifier.IsErrorResponse(httpMessage));
-            }
         }
     }
 }

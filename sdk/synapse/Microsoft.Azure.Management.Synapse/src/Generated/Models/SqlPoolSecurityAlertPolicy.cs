@@ -38,12 +38,12 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// is enabled or disabled or a policy has not been applied yet on the
         /// specific Sql pool. Possible values include: 'New', 'Enabled',
         /// 'Disabled'</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="disabledAlerts">Specifies an array of alerts that are
         /// disabled. Allowed values are: Sql_Injection,
         /// Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration,

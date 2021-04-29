@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
         {
             this.fixture = fixture;
             this.testOutputHelper = testOutputHelper;
+            testOutputHelper.WriteLine(fixture.notes.ToString());
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 Cache response = this.fixture.CacheHelper.Get(this.fixture.Cache.Name);
                 Assert.Equal(this.fixture.Cache.Name, response.Name);
@@ -59,6 +60,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 Assert.Equal(this.fixture.Cache.Subnet, response.Subnet);
                 Assert.Equal(this.fixture.Cache.Sku.Name, response.Sku.Name);
                 Assert.Equal(this.fixture.Cache.Id, response.Id);
+                Assert.Equal(this.fixture.Cache.Identity.Type, response.Identity.Type);
+                Assert.Equal(this.fixture.Cache.Identity.PrincipalId, response.Identity.PrincipalId);
+                Assert.Equal(this.fixture.Cache.Identity.TenantId, response.Identity.TenantId);
+                Assert.Equal(1500, this.fixture.Cache.NetworkSettings.Mtu);
+                Assert.Equal("time.windows.com", this.fixture.Cache.NetworkSettings.NtpServer);
             }
         }
 
@@ -72,7 +78,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 IList<Cache> cacheListResponse = client.Caches.List().Value;
                 Assert.True(cacheListResponse.Count >= 1);
                 bool found = false;
@@ -104,9 +110,10 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.testOutputHelper.WriteLine("Looking for cache in resource group {0}.", this.fixture.ResourceGroup.Name);
                 IList<Cache> cacheListResponse = client.Caches.ListByResourceGroup(this.fixture.ResourceGroup.Name).Value;
+                testOutputHelper.WriteLine($"Caches found {cacheListResponse.Count}");
                 Assert.True(cacheListResponse.Count >= 1);
                 bool found = false;
                 foreach (Cache response in cacheListResponse)
@@ -137,7 +144,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 client.Caches.Flush(this.fixture.ResourceGroup.Name, this.fixture.Cache.Name);
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
                 if (HttpMockServer.Mode == HttpRecorderMode.Record)
@@ -146,7 +153,8 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                         this.fixture.CacheHelper.GetCacheHealthState,
                         this.fixture.Cache.Name,
                         "Flushing",
-                        timeout: 120, polling_delay: 5).GetAwaiter().GetResult();
+                        timeout: 120,
+                        polling_delay: 5).GetAwaiter().GetResult();
                     this.fixture.CacheHelper.WaitForCacheState(
                         this.fixture.CacheHelper.GetCacheHealthState,
                         this.fixture.Cache.Name,
@@ -166,12 +174,12 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
-
+                var cacheIdentity = new CacheIdentity() { Type = CacheIdentityType.SystemAssigned };
                 CloudErrorException ex = Assert.Throws<CloudErrorException>(
                     () =>
-                    this.fixture.CacheHelper.Create("InvalidCache", this.fixture.Cache.Sku.Name, 10));
+                    this.fixture.CacheHelper.Create("InvalidCache", this.fixture.Cache.Sku.Name, 10, identity: cacheIdentity));
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
                 Assert.Equal("InvalidParameter", ex.Body.Error.Code);
                 Assert.Equal("cacheSizeGB", ex.Body.Error.Target);
@@ -188,11 +196,12 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                var cacheIdentity = new CacheIdentity() { Type = CacheIdentityType.SystemAssigned };
                 CloudErrorException ex = Assert.Throws<CloudErrorException>(
                     () =>
-                    this.fixture.CacheHelper.Create("InvalidCacheSku", "InvalidSku", 3072));
+                    this.fixture.CacheHelper.Create("InvalidCacheSku", "InvalidSku", 3072, identity: cacheIdentity));
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
                 Assert.Equal("InvalidParameter", ex.Body.Error.Code);
                 Assert.Equal("sku", ex.Body.Error.Target);
@@ -209,12 +218,13 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
             using (StorageCacheTestContext context = new StorageCacheTestContext(this))
             {
                 var client = context.GetClient<StorageCacheManagementClient>();
-                client.ApiVersion = Constants.DefaultAPIVersion;
+                client.ApiVersion = StorageCacheTestEnvironmentUtilities.APIVersion;
                 client.SubscriptionId = "4525f627-2e14-411c-96b9-7df2be6eeb93";
                 this.fixture.CacheHelper.StoragecacheManagementClient = client;
+                var cacheIdentity = new CacheIdentity() { Type = CacheIdentityType.SystemAssigned };
                 CloudErrorException ex = Assert.Throws<CloudErrorException>(
                     () =>
-                    this.fixture.CacheHelper.Create("InvalidSubscriptionId", this.fixture.Cache.Sku.Name, 3072, true));
+                    this.fixture.CacheHelper.Create("InvalidSubscriptionId", this.fixture.Cache.Sku.Name, 3072, identity: cacheIdentity, skipGet: true));
                 this.testOutputHelper.WriteLine($"{ex.Body.Error.Message}");
                 Assert.Equal("SubscriptionNotFound", ex.Body.Error.Code);
                 client.SubscriptionId = this.fixture.SubscriptionID;

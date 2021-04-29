@@ -193,5 +193,21 @@ namespace ResourceGroups.Tests
 
             Assert.Throws<Microsoft.Rest.ValidationException>(() => client.Providers.Unregister(null));
         }
+
+        [Fact]
+        public void ProviderManangementGroupRegisterValidate()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            var client = GetResourceManagementClient(handler);
+
+            var groupId = "TestGroup1Child1Child1";
+
+            client.Providers.RegisterAtManagementGroupScope("Microsoft.Websites", groupId);
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Post, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+        }
     }
 }

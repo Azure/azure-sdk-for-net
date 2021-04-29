@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Throws<ValidationException>(() => client.BatchAccount.Create("foo", "bar", null));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Create("invalid+", "account", new BatchAccountCreateParameters()));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Create("rg", "invalid%", new BatchAccountCreateParameters()));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Create("rg", "INVALID", new BatchAccountCreateParameters()));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Create("rg", "/invalid", new BatchAccountCreateParameters()));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Create("rg", "s", new BatchAccountCreateParameters()));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Create("rg", "account_name_that_is_too_long", new BatchAccountCreateParameters()));
@@ -48,12 +49,12 @@ namespace Microsoft.Azure.Batch.Tests
             var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
-                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname',
                                 'type' : 'Microsoft.Batch/batchAccounts',
-                                'name': 'acctName',
+                                'name': 'accountname',
                                 'location': 'South Central US',
                                 'properties': {
-                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'accountEndpoint' : 'http://acctname.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded'
                                 },
                                 'tags' : {
@@ -72,7 +73,7 @@ namespace Microsoft.Azure.Batch.Tests
 
             var result = Task.Factory.StartNew(() => client.BatchAccount.CreateWithHttpMessagesAsync(
                 "foo",
-                "acctName",
+                "accountname",
                 new BatchAccountCreateParameters
                 {
                     Location = "South Central US",
@@ -105,12 +106,12 @@ namespace Microsoft.Azure.Batch.Tests
             var okResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
-                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname',
                                 'type' : 'Microsoft.Batch/batchAccounts',
-                                'name': 'acctName',
+                                'name': 'accountname',
                                 'location': 'South Central US',
                                 'properties': {
-                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'accountEndpoint' : 'http://acctname.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded',
                                     'autoStorage' :{
                                         'storageAccountId' : '//storageAccount1',
@@ -124,7 +125,7 @@ namespace Microsoft.Azure.Batch.Tests
 
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            var result = client.BatchAccount.Create("resourceGroupName", "acctName", new BatchAccountCreateParameters
+            var result = client.BatchAccount.Create("resourceGroupName", "accountname", new BatchAccountCreateParameters
             {
                 Location = "South Central US",
                 AutoStorage = new AutoStorageBaseProperties()
@@ -146,12 +147,12 @@ namespace Microsoft.Azure.Batch.Tests
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
-                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname',
                                 'type' : 'Microsoft.Batch/batchAccounts',
-                                'name': 'acctName',
+                                'name': 'acctname',
                                 'location': 'South Central US',
                                 'properties': {
-                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'accountEndpoint' : 'http://acctname.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded',
                                     'autoStorage' : {
                                         'storageAccountId' : '//StorageAccountId',
@@ -172,7 +173,7 @@ namespace Microsoft.Azure.Batch.Tests
             tags.Add("tag1", "value for tag1");
             tags.Add("tag2", "value for tag2");
 
-            var result = client.BatchAccount.Update("foo", "acctName", new BatchAccountUpdateParameters
+            var result = client.BatchAccount.Update("foo", "acctname", new BatchAccountUpdateParameters
             {
                 Tags = tags,
             });
@@ -196,12 +197,12 @@ namespace Microsoft.Azure.Batch.Tests
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
-                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname',
                                 'type' : 'Microsoft.Batch/batchAccounts',
-                                'name': 'acctName',
+                                'name': 'accountname',
                                 'location': 'South Central US',
                                 'properties': {
-                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'accountEndpoint' : 'http://acctname.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded'
                                 },
                                 'tags' : {
@@ -218,7 +219,7 @@ namespace Microsoft.Azure.Batch.Tests
             tags.Add("tag1", "value for tag1");
             tags.Add("tag2", "value for tag2");
 
-            var result = client.BatchAccount.Create("foo", "acctName", new BatchAccountCreateParameters("westus")
+            var result = client.BatchAccount.Create("foo", "accountname", new BatchAccountCreateParameters("westus")
             {
                 Tags = tags,
                 AutoStorage = new AutoStorageBaseProperties()
@@ -244,12 +245,12 @@ namespace Microsoft.Azure.Batch.Tests
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
-                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname',
                                 'type' : 'Microsoft.Batch/batchAccounts',
-                                'name': 'acctName',
+                                'name': 'acctname',
                                 'location': 'South Central US',
                                 'properties': {
-                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'accountEndpoint' : 'http://acctname.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded'
                                 },
                                 'tags' : {
@@ -266,7 +267,7 @@ namespace Microsoft.Azure.Batch.Tests
             tags.Add("tag1", "value for tag1");
             tags.Add("tag2", "value for tag2");
 
-            var result = client.BatchAccount.Update("foo", "acctName", new BatchAccountUpdateParameters
+            var result = client.BatchAccount.Update("foo", "acctname", new BatchAccountUpdateParameters
             {
                 Tags = tags,
                 AutoStorage = new AutoStorageBaseProperties()
@@ -319,7 +320,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { acceptedResponse, okResponse, okResponse });
 
             var client = BatchTestHelper.GetBatchManagementClient(handler);
-            client.BatchAccount.Delete("resGroup", "acctName");
+            client.BatchAccount.Delete("resGroup", "acctname");
 
             // Validate headers
             Assert.Equal(HttpMethod.Delete, handler.Requests[0].Method);
@@ -348,7 +349,7 @@ namespace Microsoft.Azure.Batch.Tests
             var result = Assert.Throws<CloudException>(() => Task.Factory.StartNew(() =>
                 client.BatchAccount.DeleteWithHttpMessagesAsync(
                 "resGroup",
-                "acctName")).Unwrap().GetAwaiter().GetResult());
+                "acctname")).Unwrap().GetAwaiter().GetResult());
 
             // Validate headers
             Assert.Equal(HttpMethod.Delete, handler.Requests[0].Method);
@@ -368,7 +369,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(noContentResponse);
 
             var client = BatchTestHelper.GetBatchManagementClient(handler);
-            client.BatchAccount.Delete("resGroup", "acctName");
+            client.BatchAccount.Delete("resGroup", "acctname");
 
             // Validate headers
             Assert.Equal(HttpMethod.Delete, handler.Requests[0].Method);
@@ -392,12 +393,12 @@ namespace Microsoft.Azure.Batch.Tests
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
-                    'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                    'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname',
                     'type' : 'Microsoft.Batch/batchAccounts',
-                    'name': 'acctName',
+                    'name': 'acctname',
                     'location': 'South Central US',
                     'properties': {
-                        'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                        'accountEndpoint' : 'http://acctname.batch.core.windows.net/',
                         'provisioningState' : 'Succeeded',
                         'dedicatedCoreQuota' : '20',
                         'lowPriorityCoreQuota' : '50',
@@ -415,7 +416,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            var result = client.BatchAccount.Get("foo", "acctName");
+            var result = client.BatchAccount.Get("foo", "acctname");
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -423,8 +424,8 @@ namespace Microsoft.Azure.Batch.Tests
 
             // Validate result
             Assert.Equal("South Central US", result.Location);
-            Assert.Equal("acctName", result.Name);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", result.Id);
+            Assert.Equal("acctname", result.Name);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname", result.Id);
             Assert.NotEmpty(result.AccountEndpoint);
             Assert.Equal(20, result.DedicatedCoreQuota);
             Assert.Equal(50, result.LowPriorityCoreQuota);
@@ -455,12 +456,12 @@ namespace Microsoft.Azure.Batch.Tests
                             'value':
                             [
                                 {
-                                    'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                    'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname',
                                     'type' : 'Microsoft.Batch/batchAccounts',
-                                    'name': 'acctName',
+                                    'name': 'acctname',
                                     'location': 'West US',
                                     'properties': {
-                                        'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                        'accountEndpoint' : 'http://acctname.batch.core.windows.net/',
                                         'provisioningState' : 'Succeeded',
                                         'dedicatedCoreQuota' : '20',
                                         'lowPriorityCoreQuota' : '50',
@@ -473,12 +474,12 @@ namespace Microsoft.Azure.Batch.Tests
                                     }
                                 },
                                 {
-                                    'id': '/subscriptions/12345/resourceGroups/bar/providers/Microsoft.Batch/batchAccounts/acctName1',
+                                    'id': '/subscriptions/12345/resourceGroups/bar/providers/Microsoft.Batch/batchAccounts/acctname1',
                                     'type' : 'Microsoft.Batch/batchAccounts',
-                                    'name': 'acctName1',
+                                    'name': 'acctname1',
                                     'location': 'South Central US',
                                     'properties': {
-                                        'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
+                                        'accountEndpoint' : 'http://acctname1.batch.core.windows.net/',
                                         'provisioningState' : 'Succeeded',
                                         'dedicatedCoreQuota' : '20',
                                         'lowPriorityCoreQuota' : '50',
@@ -502,12 +503,12 @@ namespace Microsoft.Azure.Batch.Tests
                         'value':
                         [
                             {
-                                'id': '/subscriptions/12345/resourceGroups/resGroup/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'id': '/subscriptions/12345/resourceGroups/resGroup/providers/Microsoft.Batch/batchAccounts/acctname',
                                 'type' : 'Microsoft.Batch/batchAccounts',
-                                'name': 'acctName',
+                                'name': 'acctname',
                                 'location': 'West US',
                                 'properties': {
-                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'accountEndpoint' : 'http://acctname.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded',
                                     'dedicatedCoreQuota' : '20',
                                     'lowPriorityCoreQuota' : '50',
@@ -520,12 +521,12 @@ namespace Microsoft.Azure.Batch.Tests
                                 }
                             },
                             {
-                                'id': '/subscriptions/12345/resourceGroups/resGroup/providers/Microsoft.Batch/batchAccounts/acctName1',
+                                'id': '/subscriptions/12345/resourceGroups/resGroup/providers/Microsoft.Batch/batchAccounts/acctname1',
                                 'type' : 'Microsoft.Batch/batchAccounts',
-                                'name': 'acctName1',
+                                'name': 'acctname1',
                                 'location': 'South Central US',
                                 'properties': {
-                                    'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
+                                    'accountEndpoint' : 'http://acctname1.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded'
                                 },
                                 'tags' : {
@@ -534,7 +535,7 @@ namespace Microsoft.Azure.Batch.Tests
                                 }
                             }
                         ],
-                        'nextLink' : 'https://fake.net/subscriptions/12345/resourceGroups/resGroup/providers/Microsoft.Batch/batchAccounts/acctName?$skipToken=opaqueStringThatYouShouldntCrack'
+                        'nextLink' : 'https://fake.net/subscriptions/12345/resourceGroups/resGroup/providers/Microsoft.Batch/batchAccounts/acctname?$skipToken=opaqueStringThatYouShouldntCrack'
                     }
                  ")
             };
@@ -547,12 +548,12 @@ namespace Microsoft.Azure.Batch.Tests
                         'value':
                         [
                             {
-                                'id': '/subscriptions/12345/resourceGroups/resGroup/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'id': '/subscriptions/12345/resourceGroups/resGroup/providers/Microsoft.Batch/batchAccounts/acctname',
                                 'type' : 'Microsoft.Batch/batchAccounts',
-                                'name': 'acctName',
+                                'name': 'acctname',
                                 'location': 'West US',
                                 'properties': {
-                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'accountEndpoint' : 'http://acctname.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded',
                                     'dedicatedCoreQuota' : '20',
                                     'lowPriorityCoreQuota' : '50',
@@ -566,12 +567,12 @@ namespace Microsoft.Azure.Batch.Tests
                                 }
                             },
                             {
-                                'id': '/subscriptions/12345/resourceGroups/resGroup/providers/Microsoft.Batch/batchAccounts/acctName1',
+                                'id': '/subscriptions/12345/resourceGroups/resGroup/providers/Microsoft.Batch/batchAccounts/acctname1',
                                 'type' : 'Microsoft.Batch/batchAccounts',
-                                'name': 'acctName1',
+                                'name': 'acctname1',
                                 'location': 'South Central US',
                                 'properties': {
-                                    'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
+                                    'accountEndpoint' : 'http://acctname1.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded',
                                     'dedicatedCoreQuota' : '20',
                                     'lowPriorityCoreQuota' : '50',
@@ -584,7 +585,7 @@ namespace Microsoft.Azure.Batch.Tests
                                 }
                             }
                         ],
-                        'nextLink' : 'https://fake.net/subscriptions/12345/resourceGroups/resGroup/providers/Microsoft.Batch/batchAccounts/acctName?$skipToken=opaqueStringThatYouShouldntCrack'
+                        'nextLink' : 'https://fake.net/subscriptions/12345/resourceGroups/resGroup/providers/Microsoft.Batch/batchAccounts/acctname?$skipToken=opaqueStringThatYouShouldntCrack'
                     }
                  ")
             };
@@ -614,9 +615,9 @@ namespace Microsoft.Azure.Batch.Tests
             var account1 = result.Body.ElementAt(0);
             var account2 = result.Body.ElementAt(1);
             Assert.Equal("West US", account1.Location);
-            Assert.Equal("acctName", account1.Name);
-            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", account1.Id);
-            Assert.Equal("/subscriptions/12345/resourceGroups/bar/providers/Microsoft.Batch/batchAccounts/acctName1", account2.Id);
+            Assert.Equal("acctname", account1.Name);
+            Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname", account1.Id);
+            Assert.Equal("/subscriptions/12345/resourceGroups/bar/providers/Microsoft.Batch/batchAccounts/acctname1", account2.Id);
             Assert.NotEmpty(account1.AccountEndpoint);
             Assert.Equal(20, account1.DedicatedCoreQuota);
             Assert.Equal(50, account1.LowPriorityCoreQuota);
@@ -656,12 +657,12 @@ namespace Microsoft.Azure.Batch.Tests
                         'value':
                         [
                             {
-                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName',
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname',
                                 'type' : 'Microsoft.Batch/batchAccounts',
-                                'name': 'acctName',
+                                'name': 'acctname',
                                 'location': 'West US',
                                 'properties': {
-                                    'accountEndpoint' : 'http://acctName.batch.core.windows.net/',
+                                    'accountEndpoint' : 'http://acctname.batch.core.windows.net/',
                                     'provisioningState' : 'Succeeded',
                                     'dedicatedCoreQuota' : '20',
                                     'lowPriorityCoreQuota' : '50',
@@ -674,12 +675,12 @@ namespace Microsoft.Azure.Batch.Tests
                                 }
                             },
                             {
-                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName1',
+                                'id': '/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname1',
                                 'type' : 'Microsoft.Batch/batchAccounts',
-                                'name': 'acctName1',
+                                'name': 'acctname1',
                                 'location': 'South Central US',
                                 'properties': {
-                                    'accountEndpoint' : 'http://acctName1.batch.core.windows.net/',
+                                    'accountEndpoint' : 'http://acctname1.batch.core.windows.net/',
                                     'provisioningState' : 'Failed',
                                     'dedicatedCoreQuota' : '10',
                                     'lowPriorityCoreQuota' : '50',
@@ -712,9 +713,9 @@ namespace Microsoft.Azure.Batch.Tests
             var account2 = result.ElementAt(1);
 
             Assert.Equal("West US", account1.Location);
-            Assert.Equal("acctName", account1.Name);
-            Assert.Equal( @"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName", account1.Id);
-            Assert.Equal(@"http://acctName.batch.core.windows.net/", account1.AccountEndpoint);
+            Assert.Equal("acctname", account1.Name);
+            Assert.Equal( @"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname", account1.Id);
+            Assert.Equal(@"http://acctname.batch.core.windows.net/", account1.AccountEndpoint);
             Assert.Equal(ProvisioningState.Succeeded, account1.ProvisioningState);
             Assert.Equal(20, account1.DedicatedCoreQuota);
             Assert.Equal(50, account1.LowPriorityCoreQuota);
@@ -722,9 +723,9 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal(200, account1.ActiveJobAndJobScheduleQuota);
 
             Assert.Equal("South Central US", account2.Location);
-            Assert.Equal("acctName1", account2.Name);
-            Assert.Equal(@"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctName1", account2.Id);
-            Assert.Equal(@"http://acctName1.batch.core.windows.net/", account2.AccountEndpoint);
+            Assert.Equal("acctname1", account2.Name);
+            Assert.Equal(@"/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Batch/batchAccounts/acctname1", account2.Id);
+            Assert.Equal(@"http://acctname1.batch.core.windows.net/", account2.AccountEndpoint);
             Assert.Equal(ProvisioningState.Failed, account2.ProvisioningState);
             Assert.Equal(10, account2.DedicatedCoreQuota);
             Assert.Equal(50, account2.LowPriorityCoreQuota);
@@ -767,7 +768,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            var result = client.BatchAccount.GetKeys("foo", "acctName");
+            var result = client.BatchAccount.GetKeys("foo", "acctname");
 
             // Validate headers - User-Agent for certs, Authorization for tokens
             Assert.Equal(HttpMethod.Post, handler.Method);
@@ -810,7 +811,7 @@ namespace Microsoft.Azure.Batch.Tests
 
             var result = client.BatchAccount.RegenerateKey(
                 "foo",
-                "acctName",
+                "acctname",
                 AccountKeyType.Primary);
 
             // Validate headers - User-Agent for certs, Authorization for tokens

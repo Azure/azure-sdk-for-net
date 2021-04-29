@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="vnetSubnetName">Subnet of the Virtual Network.</param>
         /// <param name="internalLoadBalancingMode">Specifies which endpoints
         /// to serve internally in the Virtual Network for the App Service
-        /// Environment. Possible values include: 'None', 'Web',
-        /// 'Publishing'</param>
+        /// Environment. Possible values include: 'None', 'Web', 'Publishing',
+        /// 'Web,Publishing'</param>
         /// <param name="multiSize">Front-end VM size, e.g. "Medium",
         /// "Large".</param>
         /// <param name="multiRoleCount">Number of front-end instances.</param>
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Environment default SSL certificate</param>
         /// <param name="sslCertKeyVaultSecretName">Key Vault Secret Name for
         /// ILB App Service Environment default SSL certificate</param>
-        public AppServiceEnvironmentResource(string location, string appServiceEnvironmentResourceName, string appServiceEnvironmentResourceLocation, VirtualNetworkProfile virtualNetwork, IList<WorkerPool> workerPools, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ProvisioningState? provisioningState = default(ProvisioningState?), HostingEnvironmentStatus? status = default(HostingEnvironmentStatus?), string vnetName = default(string), string vnetResourceGroupName = default(string), string vnetSubnetName = default(string), InternalLoadBalancingMode? internalLoadBalancingMode = default(InternalLoadBalancingMode?), string multiSize = default(string), int? multiRoleCount = default(int?), int? ipsslAddressCount = default(int?), string databaseEdition = default(string), string databaseServiceObjective = default(string), int? upgradeDomains = default(int?), string subscriptionId = default(string), string dnsSuffix = default(string), string lastAction = default(string), string lastActionResult = default(string), string allowedMultiSizes = default(string), string allowedWorkerSizes = default(string), int? maximumNumberOfMachines = default(int?), IList<VirtualIPMapping> vipMappings = default(IList<VirtualIPMapping>), IList<StampCapacity> environmentCapacities = default(IList<StampCapacity>), IList<NetworkAccessControlEntry> networkAccessControlList = default(IList<NetworkAccessControlEntry>), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), string resourceGroup = default(string), int? frontEndScaleFactor = default(int?), int? defaultFrontEndScaleFactor = default(int?), string apiManagementAccountId = default(string), bool? suspended = default(bool?), bool? dynamicCacheEnabled = default(bool?), IList<NameValuePair> clusterSettings = default(IList<NameValuePair>), IList<string> userWhitelistedIpRanges = default(IList<string>), bool? hasLinuxWorkers = default(bool?), string sslCertKeyVaultId = default(string), string sslCertKeyVaultSecretName = default(string))
+        public AppServiceEnvironmentResource(string location, string appServiceEnvironmentResourceName, string appServiceEnvironmentResourceLocation, VirtualNetworkProfile virtualNetwork, IList<WorkerPool> workerPools, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ProvisioningState? provisioningState = default(ProvisioningState?), HostingEnvironmentStatus? status = default(HostingEnvironmentStatus?), string vnetName = default(string), string vnetResourceGroupName = default(string), string vnetSubnetName = default(string), string internalLoadBalancingMode = default(string), string multiSize = default(string), int? multiRoleCount = default(int?), int? ipsslAddressCount = default(int?), string databaseEdition = default(string), string databaseServiceObjective = default(string), int? upgradeDomains = default(int?), string subscriptionId = default(string), string dnsSuffix = default(string), string lastAction = default(string), string lastActionResult = default(string), string allowedMultiSizes = default(string), string allowedWorkerSizes = default(string), int? maximumNumberOfMachines = default(int?), IList<VirtualIPMapping> vipMappings = default(IList<VirtualIPMapping>), IList<StampCapacity> environmentCapacities = default(IList<StampCapacity>), IList<NetworkAccessControlEntry> networkAccessControlList = default(IList<NetworkAccessControlEntry>), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), string resourceGroup = default(string), int? frontEndScaleFactor = default(int?), int? defaultFrontEndScaleFactor = default(int?), string apiManagementAccountId = default(string), bool? suspended = default(bool?), bool? dynamicCacheEnabled = default(bool?), IList<NameValuePair> clusterSettings = default(IList<NameValuePair>), IList<string> userWhitelistedIpRanges = default(IList<string>), bool? hasLinuxWorkers = default(bool?), string sslCertKeyVaultId = default(string), string sslCertKeyVaultSecretName = default(string))
             : base(location, id, name, kind, type, tags)
         {
             AppServiceEnvironmentResourceName = appServiceEnvironmentResourceName;
@@ -234,10 +234,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Gets or sets specifies which endpoints to serve internally in the
         /// Virtual Network for the App Service Environment. Possible values
-        /// include: 'None', 'Web', 'Publishing'
+        /// include: 'None', 'Web', 'Publishing', 'Web,Publishing'
         /// </summary>
         [JsonProperty(PropertyName = "properties.internalLoadBalancingMode")]
-        public InternalLoadBalancingMode? InternalLoadBalancingMode { get; set; }
+        public string InternalLoadBalancingMode { get; set; }
 
         /// <summary>
         /// Gets or sets front-end VM size, e.g. "Medium", "Large".

@@ -15,6 +15,7 @@ namespace IotCentral.Tests.ScenarioTests
     using Newtonsoft.Json.Linq;
     using Xunit;
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
 
     public class IotCentralLifeCycleTests : IotCentralTestBase
     {
@@ -65,16 +66,8 @@ namespace IotCentral.Tests.ScenarioTests
                 // Get all Iot Apps in a subscription
                 var iotAppsBySubscription = this.iotCentralClient.Apps.ListBySubscription().ToList();
 
-                // Get all of the available IoT Apps REST API operations
-                var operationList = this.iotCentralClient.Operations.List().ToList();
-
-                // Get IoT Central Apps REST API read operation
-                var readOperation = operationList.Where(e => e.Name.Equals("Microsoft.IoTCentral/IotApps/Read", StringComparison.OrdinalIgnoreCase)).ToList();
-
                 Assert.True(iotAppsByResourceGroup.Count > 0);
                 Assert.True(iotAppsBySubscription.Count > 0);
-                Assert.True(operationList.Count > 0);
-                Assert.True(readOperation.Count.Equals(1));
             }
         }
 
@@ -90,6 +83,9 @@ namespace IotCentral.Tests.ScenarioTests
 
                 // Create App
                 var app = CreateIotCentral(resourceGroup, IotCentralTestUtilities.DefaultLocation, IotCentralTestUtilities.DefaultUpdateResourceName, IotCentralTestUtilities.DefaultUpdateSubdomain);
+
+                // Validate the default sku
+                Assert.Equal(app.Sku.Name, AppSku.ST1);
 
                 // Validate resourceName and subdomain are taken
                 this.CheckAppNameAndSubdomainTaken(app.Name, app.Subdomain);
@@ -108,7 +104,8 @@ namespace IotCentral.Tests.ScenarioTests
                 {
                     Tags = tags,
                     DisplayName = newDisplayName,
-                    Subdomain = newSubDomain
+                    Subdomain = newSubDomain,
+                    Sku = new AppSkuInfo(AppSku.ST2),
                 };
 
                 app = UpdateIotCentral(resourceGroup, appPatch, IotCentralTestUtilities.DefaultUpdateResourceName);
@@ -121,6 +118,7 @@ namespace IotCentral.Tests.ScenarioTests
                 Assert.Equal(newDisplayName, app.DisplayName);
                 Assert.True(app.Tags.Count().Equals(2));
                 Assert.Equal("value2", app.Tags["key2"]);
+                Assert.Equal(app.Sku.Name, AppSku.ST2);
             }
         }
 
@@ -135,32 +133,6 @@ namespace IotCentral.Tests.ScenarioTests
                     Location = IotCentralTestUtilities.DefaultLocation,
                     Sku = new AppSkuInfo(),
                     Subdomain = IotCentralTestUtilities.DefaultUpdateSubdomain,
-                    DisplayName = IotCentralTestUtilities.DefaultUpdateResourceName
-                };
-                app.Validate();
-            }
-            catch (Exception ex)
-            {
-                exceptionThrown = true;
-                Assert.Equal(typeof(ValidationException), ex.GetType());
-            }
-            Assert.True(exceptionThrown);
-        }
-
-        [Fact]
-        public void TestAppWhenInvalidSubdomain()
-        {
-            var exceptionThrown = false;
-            try
-            {
-                App app = new App()
-                {
-                    Location = IotCentralTestUtilities.DefaultLocation,
-                    Sku = new AppSkuInfo()
-                    {
-                        Name = "ST1"
-                    },
-                    Subdomain = "SOME-INVALID-SUBDOMAIN",
                     DisplayName = IotCentralTestUtilities.DefaultUpdateResourceName
                 };
                 app.Validate();
@@ -208,24 +180,6 @@ namespace IotCentral.Tests.ScenarioTests
         }
 
         [Fact]
-        public void TestOperationInputsWhenInvalidInput()
-        {
-            var exceptionThrown = false;
-            try
-            {
-                var nameInput = "SOMEINVALIDINPUT";
-                OperationInputs operationInput = new OperationInputs(nameInput);
-                operationInput.Validate();
-            }
-            catch (Exception ex)
-            {
-                exceptionThrown = true;
-                Assert.Equal(typeof(ValidationException), ex.GetType());
-            }
-            Assert.True(exceptionThrown);
-        }
-
-        [Fact]
         public void TestResourceWhenNullLocation()
         {
             var exceptionThrown = false;
@@ -240,6 +194,52 @@ namespace IotCentral.Tests.ScenarioTests
                 Assert.Equal(typeof(ValidationException), ex.GetType());
             }
             Assert.True(exceptionThrown);
+        }
+
+        [Fact]
+        public void TestAppTemplateNameField()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Initialize(context);
+                
+                var iotAppsTemplates = this.iotCentralClient.Apps.ListTemplates().ToList();
+                
+                Assert.True(iotAppsTemplates.Count > 0);
+                Assert.NotNull(iotAppsTemplates[0].Name);
+                Assert.Equal("Store Analytics – Condition Monitoring", iotAppsTemplates[0].Name);
+                Assert.NotNull(iotAppsTemplates[0].Industry);
+                Assert.Equal("Retail", iotAppsTemplates[0].Industry);
+                Assert.True(iotAppsTemplates[0].Locations.Count > 0);
+                Assert.NotNull(iotAppsTemplates[0].Locations[0].Id);
+                Assert.Equal("unitedstates", iotAppsTemplates[0].Locations[0].Id);
+                Assert.NotNull(iotAppsTemplates[0].Locations[0].DisplayName);
+                Assert.Equal("United States", iotAppsTemplates[0].Locations[0].DisplayName);
+            }
+        }
+
+        [Fact]
+        public void TestIotCentralOperationsApi()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Initialize(context);
+                
+                // Get all of the available IoT Apps REST API operations
+                var operationList = this.iotCentralClient.Operations.List().ToList();
+
+                Assert.True(operationList.Count > 0);
+
+                // Get IoT Central Apps REST API read operation
+                var readOperation = operationList.Where(e => e.Name.Equals("Microsoft.IoTCentral/IotApps/Read", StringComparison.OrdinalIgnoreCase)).ToList();
+                // Get IoT Central Apps REST API read metricDefinitions operation
+                var readMetricDefinitionsOperation = operationList.Where(e => e.Name.Equals("Microsoft.IoTCentral/IoTApps/providers/Microsoft.Insights/metricDefinitions/read", StringComparison.OrdinalIgnoreCase)).ToList();
+
+                Assert.True(readOperation.Count.Equals(1));
+                Assert.True(readMetricDefinitionsOperation.Count.Equals(1));
+                Assert.NotNull(readMetricDefinitionsOperation[0].Origin);
+                Assert.NotNull(readMetricDefinitionsOperation[0].Properties);
+            }
         }
 
         private void CheckAppNameAndSubdomainTaken(string resourceName, string subdomain)

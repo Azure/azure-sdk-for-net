@@ -1,11 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -16,35 +15,70 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void ExtractKeyPhrasesBatchConvenience()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
-
-            var inputs = new List<string>
-            {
-                "Microsoft was founded by Bill Gates and Paul Allen.",
-                "Text Analytics is one of the Azure Cognitive Services.",
-                "My cat might need to see a veterinarian.",
-            };
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample3ExtractKeyPhrasesConvenience
-            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(inputs);
-            #endregion
+            string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
+                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
+                                We tried again today and it was amazing. Everyone in my family liked the trail although
+                                it was too challenging for the less athletic among us.
+                                Not necessarily recommended for small children.
+                                A hotel close to the trail offers services for childcare in case you want that.";
 
-            Debug.WriteLine($"Extracted key phrases for each input are:");
-            int i = 0;
-            foreach (ExtractKeyPhrasesResult result in results)
+            string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
+                                our anniversary so they helped me organize a little surprise for my partner.
+                                The room was clean and with the decoration I requested. It was perfect!";
+
+            string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
+                                They had great amenities that included an indoor pool, a spa, and a bar.
+                                The spa offered couples massages which were really good. 
+                                The spa was clean and felt very peaceful. Overall the whole experience was great.
+                                We will definitely come back.";
+
+            string documentD = string.Empty;
+
+            var documents = new List<string>
             {
-                Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {result.KeyPhrases.Count()} key phrases were found: ");
+                documentA,
+                documentB,
+                documentC,
+                documentD
+            };
 
-                foreach (string keyPhrase in result.KeyPhrases)
+            Response<ExtractKeyPhrasesResultCollection> response = client.ExtractKeyPhrasesBatch(documents);
+            ExtractKeyPhrasesResultCollection keyPhrasesInDocuments = response.Value;
+
+            int i = 0;
+            Console.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{keyPhrasesInDocuments.ModelVersion}\"");
+            Console.WriteLine("");
+
+            foreach (ExtractKeyPhrasesResult keyPhrases in keyPhrasesInDocuments)
+            {
+                Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
+                Console.WriteLine("");
+
+                if (keyPhrases.HasError)
                 {
-                    Debug.WriteLine($"    {keyPhrase}");
+                    Console.WriteLine("  Error!");
+                    Console.WriteLine($"  Document error: {keyPhrases.Error.ErrorCode}.");
+                    Console.WriteLine($"  Message: {keyPhrases.Error.Message}");
                 }
+                else
+                {
+                    Console.WriteLine($"  Extracted the following {keyPhrases.KeyPhrases.Count()} key phrases:");
+
+                    foreach (string keyPhrase in keyPhrases.KeyPhrases)
+                    {
+                        Console.WriteLine($"    {keyPhrase}");
+                    }
+                }
+                Console.WriteLine("");
             }
+            #endregion
         }
     }
 }

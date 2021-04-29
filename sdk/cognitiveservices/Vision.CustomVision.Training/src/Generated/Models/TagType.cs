@@ -18,5 +18,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     {
         public const string Regular = "Regular";
         public const string Negative = "Negative";
+        public const string GeneralProduct = "GeneralProduct";
     }
 }

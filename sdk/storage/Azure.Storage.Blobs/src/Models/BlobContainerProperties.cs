@@ -1,27 +1,98 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobContainerProperties
+    /// <summary>
+    /// Properties of a container.
+    /// </summary>
+    public class BlobContainerProperties
     {
         /// <summary>
-        /// Update the Metadata property based on the value stored
-        /// in the parent XML node
+        /// Last-Modified.
         /// </summary>
-        /// <param name="element">XML element</param>
-        /// <param name="value">value for element</param>
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobContainerProperties value)
+        public DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// LeaseStatus.
+        /// </summary>
+        public LeaseStatus? LeaseStatus { get; internal set; }
+
+        /// <summary>
+        /// LeaseState.
+        /// </summary>
+        public LeaseState? LeaseState { get; internal set; }
+
+        /// <summary>
+        /// LeaseDuration.
+        /// </summary>
+        public LeaseDurationType? LeaseDuration { get; internal set; }
+
+        /// <summary>
+        /// PublicAccess.
+        /// </summary>
+        public PublicAccessType? PublicAccess { get; internal set; }
+
+        /// <summary>
+        /// HasImmutabilityPolicy.
+        /// </summary>
+        public bool? HasImmutabilityPolicy { get; internal set; }
+
+        /// <summary>
+        /// HasLegalHold.
+        /// </summary>
+        public bool? HasLegalHold { get; internal set; }
+
+        /// <summary>
+        /// DefaultEncryptionScope.
+        /// </summary>
+        public string DefaultEncryptionScope { get; internal set; }
+
+        /// <summary>
+        /// DenyEncryptionScopeOverride.
+        /// </summary>
+        public bool? PreventEncryptionScopeOverride { get; internal set; }
+
+        /// <summary>
+        /// DeletedTime.
+        /// </summary>
+        public DateTimeOffset? DeletedOn { get; internal set; }
+
+        /// <summary>
+        /// RemainingRetentionDays.
+        /// </summary>
+        public int? RemainingRetentionDays { get; internal set; }
+
+        /// <summary>
+        /// ETag.
+        /// </summary>
+        public ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Metadata.
+        /// </summary>
+        public IDictionary<string, string> Metadata { get; internal set; }
+
+        /// <summary>
+        /// Creates a new BlobContainerProperties instance.
+        /// </summary>
+        internal BlobContainerProperties()
+            : this(false)
         {
-            System.Xml.Linq.XElement parent = element.Parent;
-            value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            System.Xml.Linq.XElement child = parent.Element(System.Xml.Linq.XName.Get("Metadata", ""));
-            if (child != null)
+        }
+
+        /// <summary>
+        /// Creates a new BlobContainerProperties instance.
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobContainerProperties(bool skipInitialization)
+        {
+            if (!skipInitialization)
             {
-                foreach (System.Xml.Linq.XElement _pair in child.Elements())
-                {
-                    value.Metadata[_pair.Name.LocalName] = _pair.Value;
-                }
+                Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             }
         }
     }

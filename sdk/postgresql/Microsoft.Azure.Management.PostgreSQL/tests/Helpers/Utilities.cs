@@ -10,6 +10,7 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using FlexibleServers = Microsoft.Azure.Management.PostgreSQL.FlexibleServers;
 
 namespace PostgreSQL.Tests.Helpers
 {
@@ -59,6 +60,23 @@ namespace PostgreSQL.Tests.Helpers
             {
                 handler.IsPassThrough = true;
                 dmClient = context.GetServiceClient<PostgreSQLManagementClient>(handlers: handler);
+            }
+            return dmClient;
+        }
+
+        public static FlexibleServers.PostgreSQLManagementClient GetPostgreSQLFlexibleServersManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        {
+            FlexibleServers.PostgreSQLManagementClient dmClient;
+            if (IsTestTenant)
+            {
+                dmClient = new FlexibleServers.PostgreSQLManagementClient(new TokenCredentials("xyz"), GetHandler());
+                dmClient.SubscriptionId = testSubscription;
+                dmClient.BaseUri = testUri;
+            }
+            else
+            {
+                handler.IsPassThrough = true;
+                dmClient = context.GetServiceClient<FlexibleServers.PostgreSQLManagementClient>(handlers: handler);
             }
             return dmClient;
         }

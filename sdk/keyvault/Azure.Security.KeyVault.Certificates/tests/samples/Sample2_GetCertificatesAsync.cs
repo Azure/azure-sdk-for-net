@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
@@ -15,19 +14,18 @@ namespace Azure.Security.KeyVault.Certificates.Samples
     /// and list deleted certificates in a soft delete-enabled key vault
     /// using the synchronous methods of the CertificateClient.
     /// </summary>
-    [LiveOnly]
     public partial class GetCertificates
     {
         [Test]
         public async Task GetCertificatesAsync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             // Instantiate a certificate client that will be used to call the service. Notice that the client is using default Azure
             // credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
             // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
-            var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            CertificateClient client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
             // Let's create two self-signed certificates using the default policy
             string certName1 = $"defaultCert-{Guid.NewGuid()}";

@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.DataBox
             Jobs = new JobsOperations(this);
             Service = new ServiceOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-09-01";
+            ApiVersion = "2020-11-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -363,8 +363,8 @@ namespace Microsoft.Azure.Management.DataBox
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopyLogDetails>("copyLogDetailsType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopyLogDetails>("copyLogDetailsType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DestinationAccountDetails>("dataDestinationType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DestinationAccountDetails>("dataDestinationType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataAccountDetails>("dataAccountType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataAccountDetails>("dataAccountType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobDetails>("jobDetailsType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobDetails>("jobDetailsType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobSecrets>("jobSecretsType"));

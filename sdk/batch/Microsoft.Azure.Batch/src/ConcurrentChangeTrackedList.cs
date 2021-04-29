@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Batch
     {
         protected readonly IList<T> _list;
         protected readonly object _listLock = new object();
-        
-        protected bool _hasBeenModified = false;
-        
+
+        protected bool _hasBeenModified;
+
         public ConcurrentChangeTrackedList()
         {
             this._list = new List<T>();
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Batch
         public ConcurrentChangeTrackedList(IEnumerable<T> other, bool isReadOnly = false)
         {
             this._list = new List<T>();
-            
+
             foreach (T item in other)
             {
                 this._list.Add(item);
@@ -73,11 +73,11 @@ namespace Microsoft.Azure.Batch
         #endregion
 
         #region IList
-        
+
         public void Add(T item)
         {
             this.ThrowOnReadOnly();
-            
+
             lock (this._listLock)
             {
                 this._list.Add(item);
@@ -125,8 +125,8 @@ namespace Microsoft.Azure.Batch
             }
         }
 
-        public int Count 
-        { 
+        public int Count
+        {
             get
             {
                 lock (this._listLock)
@@ -170,8 +170,8 @@ namespace Microsoft.Azure.Batch
 
         public T this[int index]
         {
-            get 
-            { 
+            get
+            {
                 lock (this._listLock)
                 {
                     T result = this._list[index];
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Batch
                 }
             }
 
-            set 
+            set
             {
                 this.ThrowOnReadOnly();
 
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Batch
 
         public IReadOnlyList<T> AsReadOnly()
         {
-            //As per http://msdn.microsoft.com/en-us/library/ms132474%28v=vs.110%29.aspx this is a wrapper around the collection, which will disallow modification but 
+            //As per http://msdn.microsoft.com/en-us/library/ms132474%28v=vs.110%29.aspx this is a wrapper around the collection, which will disallow modification but
             //will reflect any changes made to the underlying list
             return new ReadOnlyCollection<T>(this._list);
         }

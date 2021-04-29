@@ -3,17 +3,14 @@
 
 using System;
 using System.ComponentModel;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Gets the entity category inferred by the Text Analytics service's named entity recognition model.
-    /// The list of available categories is described at <see href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
+    /// The list of available categories is described at <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types">Supported entity categories in Named Entity Recognition v3</see>.
     /// </summary>
-    [JsonConverter(typeof(EntityCategoryJsonConverter))]
     public readonly struct EntityCategory : IEquatable<EntityCategory>
     {
         /// <summary>
@@ -81,6 +78,11 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public static readonly EntityCategory Quantity = new EntityCategory("Quantity");
 
+        /// <summary>
+        /// Specifies that the entity contains an address.
+        /// </summary>
+        public static readonly EntityCategory Address = new EntityCategory("Address");
+
         private readonly string _value;
 
         private EntityCategory(string category)
@@ -146,18 +148,5 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <returns>The EntityCategory as a string.</returns>
         public override string ToString() => _value;
-    }
-
-    internal class EntityCategoryJsonConverter : JsonConverter<EntityCategory>
-    {
-        public override EntityCategory Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            return reader.GetString();
-        }
-
-        public override void Write(Utf8JsonWriter writer, EntityCategory value, JsonSerializerOptions options)
-        {
-            writer.WriteStringValue((string)value);
-        }
     }
 }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// The Policy.
+    /// A policy.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Policy : Resource
@@ -35,14 +35,16 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="marketplacePurchases">The marketplace purchases are
-        /// free, allowed or not allowed. Possible values include:
-        /// 'AllAllowed', 'OnlyFreeAllowed', 'NotAllowed'</param>
-        /// <param name="reservationPurchases">The reservation purchases
-        /// allowed or not. Possible values include: 'Allowed',
+        /// <param name="marketplacePurchases">The policy that controls whether
+        /// Azure marketplace purchases are allowed for a billing profile.
+        /// Possible values include: 'AllAllowed', 'OnlyFreeAllowed',
         /// 'NotAllowed'</param>
-        /// <param name="viewCharges">Who can view charges. Possible values
-        /// include: 'Allowed', 'NotAllowed'</param>
+        /// <param name="reservationPurchases">The policy that controls whether
+        /// Azure reservation purchases are allowed for a billing profile.
+        /// Possible values include: 'Allowed', 'NotAllowed'</param>
+        /// <param name="viewCharges">The policy that controls whether users
+        /// with Azure RBAC access to a subscription can view its charges.
+        /// Possible values include: 'Allowed', 'NotAllowed'</param>
         public Policy(string id = default(string), string name = default(string), string type = default(string), string marketplacePurchases = default(string), string reservationPurchases = default(string), string viewCharges = default(string))
             : base(id, name, type)
         {
@@ -58,23 +60,25 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the marketplace purchases are free, allowed or not
-        /// allowed. Possible values include: 'AllAllowed', 'OnlyFreeAllowed',
-        /// 'NotAllowed'
+        /// Gets or sets the policy that controls whether Azure marketplace
+        /// purchases are allowed for a billing profile. Possible values
+        /// include: 'AllAllowed', 'OnlyFreeAllowed', 'NotAllowed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.marketplacePurchases")]
         public string MarketplacePurchases { get; set; }
 
         /// <summary>
-        /// Gets or sets the reservation purchases allowed or not. Possible
-        /// values include: 'Allowed', 'NotAllowed'
+        /// Gets or sets the policy that controls whether Azure reservation
+        /// purchases are allowed for a billing profile. Possible values
+        /// include: 'Allowed', 'NotAllowed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.reservationPurchases")]
         public string ReservationPurchases { get; set; }
 
         /// <summary>
-        /// Gets or sets who can view charges. Possible values include:
-        /// 'Allowed', 'NotAllowed'
+        /// Gets or sets the policy that controls whether users with Azure RBAC
+        /// access to a subscription can view its charges. Possible values
+        /// include: 'Allowed', 'NotAllowed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.viewCharges")]
         public string ViewCharges { get; set; }

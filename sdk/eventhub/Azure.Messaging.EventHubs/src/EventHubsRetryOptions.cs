@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
@@ -36,6 +37,8 @@ namespace Azure.Messaging.EventHubs
         ///   to have failed.
         /// </summary>
         ///
+        /// <value>The default retry limit is 3.</value>
+        ///
         public int MaximumRetries
         {
             get => _maximumRetries;
@@ -52,6 +55,8 @@ namespace Azure.Messaging.EventHubs
         ///   on which to base calculations for a backoff-based approach.
         /// </summary>
         ///
+        /// <value>The default delay is 0.8 seconds.</value>
+        ///
         public TimeSpan Delay
         {
             get => _delay;
@@ -66,6 +71,8 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   The maximum permissible delay between retry attempts.
         /// </summary>
+        ///
+        /// <value>The default maximum delay is 60 seconds.</value>
         ///
         public TimeSpan MaximumDelay
         {
@@ -83,6 +90,9 @@ namespace Azure.Messaging.EventHubs
         ///   attempt or a retry.
         /// </summary>
         ///
+        /// <value>The default timeout is 60 seconds.</value>
+        ///
+        [SuppressMessage("Usage", "CA2208:Instantiate argument exceptions correctly", Justification = "We believe using the property name instead of 'value' is more intuitive")]
         public TimeSpan TryTimeout
         {
             get => _tryTimeout;

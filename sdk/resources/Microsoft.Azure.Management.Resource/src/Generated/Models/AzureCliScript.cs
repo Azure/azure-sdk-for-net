@@ -35,9 +35,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the AzureCliScript class.
         /// </summary>
-        /// <param name="identity">Managed identity to be used for this
-        /// deployment script. Currently, only user-assigned MSI is
-        /// supported.</param>
         /// <param name="location">The location of the ACI and the storage
         /// account for the deployment script.</param>
         /// <param name="retentionInterval">Interval for which the service
@@ -50,7 +47,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Azure.</param>
         /// <param name="name">Name of this resource.</param>
         /// <param name="type">Type of this resource.</param>
+        /// <param name="identity">Optional property. Managed identity to be
+        /// used for this deployment script. Currently, only user-assigned MSI
+        /// is supported.</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="systemData">The system metadata related to this
+        /// resource.</param>
+        /// <param name="containerSettings">Container settings.</param>
+        /// <param name="storageAccountSettings">Storage Account
+        /// settings.</param>
         /// <param name="cleanupPreference">The clean up preference when the
         /// script execution gets in a terminal state. Default setting is
         /// 'Always'. Possible values include: 'Always', 'OnSuccess',
@@ -77,9 +82,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// changed. Can be current time stamp or a GUID.</param>
         /// <param name="timeout">Maximum allowed script execution time
         /// specified in ISO 8601 format. Default value is PT1H</param>
-        public AzureCliScript(ManagedServiceIdentity identity, string location, System.TimeSpan retentionInterval, string azCliVersion, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string cleanupPreference = default(string), string provisioningState = default(string), ScriptStatus status = default(ScriptStatus), IDictionary<string, object> outputs = default(IDictionary<string, object>), string primaryScriptUri = default(string), IList<string> supportingScriptUris = default(IList<string>), string scriptContent = default(string), string arguments = default(string), IList<EnvironmentVariable> environmentVariables = default(IList<EnvironmentVariable>), string forceUpdateTag = default(string), System.TimeSpan? timeout = default(System.TimeSpan?))
-            : base(identity, location, id, name, type, tags)
+        public AzureCliScript(string location, System.TimeSpan retentionInterval, string azCliVersion, string id = default(string), string name = default(string), string type = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), IDictionary<string, string> tags = default(IDictionary<string, string>), SystemData systemData = default(SystemData), ContainerConfiguration containerSettings = default(ContainerConfiguration), StorageAccountConfiguration storageAccountSettings = default(StorageAccountConfiguration), string cleanupPreference = default(string), string provisioningState = default(string), ScriptStatus status = default(ScriptStatus), IDictionary<string, object> outputs = default(IDictionary<string, object>), string primaryScriptUri = default(string), IList<string> supportingScriptUris = default(IList<string>), string scriptContent = default(string), string arguments = default(string), IList<EnvironmentVariable> environmentVariables = default(IList<EnvironmentVariable>), string forceUpdateTag = default(string), System.TimeSpan? timeout = default(System.TimeSpan?))
+            : base(location, id, name, type, identity, tags, systemData)
         {
+            ContainerSettings = containerSettings;
+            StorageAccountSettings = storageAccountSettings;
             CleanupPreference = cleanupPreference;
             ProvisioningState = provisioningState;
             Status = status;
@@ -100,6 +107,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets container settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.containerSettings")]
+        public ContainerConfiguration ContainerSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets storage Account settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.storageAccountSettings")]
+        public StorageAccountConfiguration StorageAccountSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the clean up preference when the script execution gets
@@ -205,6 +224,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             if (AzCliVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AzCliVersion");
+            }
+            if (ContainerSettings != null)
+            {
+                ContainerSettings.Validate();
             }
             if (ScriptContent != null)
             {

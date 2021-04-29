@@ -76,6 +76,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ActionSuggested', 'Invalid'</param>
         /// <param name="healthDetails">Health details on this backup
         /// item.</param>
+        /// <param name="kpisHealths">Health details of different KPIs</param>
         /// <param name="lastBackupStatus">Last backup operation
         /// status.</param>
         /// <param name="lastBackupTime">Timestamp of the last backup operation
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// item.</param>
         /// <param name="extendedInfo">Additional information for this backup
         /// item.</param>
-        public AzureIaaSVMProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string virtualMachineId = default(string), string protectionStatus = default(string), string protectionState = default(string), string healthStatus = default(string), IList<AzureIaaSVMHealthDetails> healthDetails = default(IList<AzureIaaSVMHealthDetails>), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), string protectedItemDataId = default(string), AzureIaaSVMProtectedItemExtendedInfo extendedInfo = default(AzureIaaSVMProtectedItemExtendedInfo), ExtendedProperties extendedProperties = default(ExtendedProperties))
+        public AzureIaaSVMProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string virtualMachineId = default(string), string protectionStatus = default(string), string protectionState = default(string), string healthStatus = default(string), IList<AzureIaaSVMHealthDetails> healthDetails = default(IList<AzureIaaSVMHealthDetails>), IDictionary<string, KPIResourceHealthDetails> kpisHealths = default(IDictionary<string, KPIResourceHealthDetails>), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), string protectedItemDataId = default(string), AzureIaaSVMProtectedItemExtendedInfo extendedInfo = default(AzureIaaSVMProtectedItemExtendedInfo), ExtendedProperties extendedProperties = default(ExtendedProperties))
             : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate)
         {
             FriendlyName = friendlyName;
@@ -93,6 +94,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             ProtectionState = protectionState;
             HealthStatus = healthStatus;
             HealthDetails = healthDetails;
+            KpisHealths = kpisHealths;
             LastBackupStatus = lastBackupStatus;
             LastBackupTime = lastBackupTime;
             ProtectedItemDataId = protectedItemDataId;
@@ -146,6 +148,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "healthDetails")]
         public IList<AzureIaaSVMHealthDetails> HealthDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets health details of different KPIs
+        /// </summary>
+        [JsonProperty(PropertyName = "kpisHealths")]
+        public IDictionary<string, KPIResourceHealthDetails> KpisHealths { get; set; }
 
         /// <summary>
         /// Gets or sets last backup operation status.

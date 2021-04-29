@@ -1,48 +1,48 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/ResourceGroup-CUS/providers/Microsoft.Security/iotSecuritySolutions/IotHub-CUS/analyticsModels?api-version=2019-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDc1NDIzZTktN2QzMy00MTY2LThiZGYtMzkyMGIwNGUzNzM1L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXAtQ1VTL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvaW90U2VjdXJpdHlTb2x1dGlvbnMvSW90SHViLUNVUy9hbmFseXRpY3NNb2RlbHM/YXBpLXZlcnNpb249MjAxOS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/IOT-ResourceGroup-CUS/providers/Microsoft.Security/iotSecuritySolutions/securitySolution/analyticsModels?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Jlc291cmNlR3JvdXBzL0lPVC1SZXNvdXJjZUdyb3VwLUNVUy9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2lvdFNlY3VyaXR5U29sdXRpb25zL3NlY3VyaXR5U29sdXRpb24vYW5hbHl0aWNzTW9kZWxzP2FwaS12ZXJzaW9uPTIwMTktMDgtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f7d71e83-51ca-4030-981b-dfb9cff8b1f8"
+          "cc7349b8-9e8a-4853-b334-7ecf1a6001dc"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.0.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/2.1.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Thu, 07 Nov 2019 14:20:50 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
-        "Server": [
-          "Kestrel"
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:fe5cd4dd-bd6b-4202-a1f7-a9d691c1bc09"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
           "749"
         ],
         "x-ms-request-id": [
-          "c691eea7-dd82-4aeb-be60-f4079e49e862"
+          "4b062eb5-89f1-4f2c-87c7-d967270a77c5"
         ],
         "x-ms-correlation-request-id": [
-          "c691eea7-dd82-4aeb-be60-f4079e49e862"
+          "4b062eb5-89f1-4f2c-87c7-d967270a77c5"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20191107T142051Z:c691eea7-dd82-4aeb-be60-f4079e49e862"
+          "UKSOUTH:20201104T174654Z:4b062eb5-89f1-4f2c-87c7-d967270a77c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -50,8 +50,11 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Wed, 04 Nov 2020 17:46:54 GMT"
+        ],
         "Content-Length": [
-          "735"
+          "469"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -60,12 +63,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default\",\r\n      \"name\": \"/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/resourcegroup-cus/providers/Microsoft.Security/IoTSecuritySolutions/Locations/centralus/default\",\r\n      \"type\": \"Microsoft.Security/IoTSecuritySolutionAnalyticsModel\",\r\n      \"properties\": {\r\n        \"metrics\": {\r\n          \"high\": 0,\r\n          \"medium\": 2,\r\n          \"low\": 0\r\n        },\r\n        \"unhealthyDeviceCount\": 2,\r\n        \"devicesMetrics\": [],\r\n        \"topAlertedDevices\": [],\r\n        \"mostPrevalentDeviceAlerts\": [],\r\n        \"mostPrevalentDeviceRecommendations\": [\r\n          {\r\n            \"recommendationDisplayName\": \"Permissive firewall policy in one of the chains\",\r\n            \"devicesCount\": 2,\r\n            \"reportedSeverity\": \"Medium\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/IOT-ResourceGroup-CUS/providers/Microsoft.Security/iotSecuritySolutions/securitySolution/analyticsModels/\",\r\n      \"type\": \"Microsoft.Security/iotSecuritySolutions/analyticsModels\",\r\n      \"name\": \"default\",\r\n      \"properties\": {\r\n        \"metrics\": {\r\n          \"high\": 0,\r\n          \"medium\": 0,\r\n          \"low\": 0\r\n        },\r\n        \"unhealthyDeviceCount\": 0,\r\n        \"devicesMetrics\": [],\r\n        \"topAlertedDevices\": [],\r\n        \"mostPrevalentDeviceAlerts\": [],\r\n        \"mostPrevalentDeviceRecommendations\": []\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "075423e9-7d33-4166-8bdf-3920b04e3735"
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
   }
 }

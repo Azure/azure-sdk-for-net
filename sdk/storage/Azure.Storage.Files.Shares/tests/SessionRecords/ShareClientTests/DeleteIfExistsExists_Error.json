@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://seandevtest.file.core.windows.net/test-share-38613734-2c2a-938c-6663-9253e8ffe65f?restype=share",
@@ -12,7 +12,8 @@
         "x-ms-client-request-id": "ff1c9f13-4448-590f-9d29-8c9fda82afc5",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-07-07",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -30,9 +31,9 @@
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EResourceNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified resource does not exist.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ResourceNotFound</Code><Message>The specified resource does not exist.\n",
         "RequestId:3d66551d-b01a-0019-0341-e82662000000\n",
-        "Time:2020-02-20T23:00:09.4729197Z\u003C/Message\u003E\u003C/Error\u003E"
+        "Time:2020-02-20T23:00:09.4729197Z</Message></Error>"
       ]
     }
   ],
