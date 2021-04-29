@@ -62,7 +62,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task GetToken()
         {
-            var ClientId = TestEnvironment.IdentityClientId;
+            var ClientId = TestEnvironment.ClientId;
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
@@ -79,7 +79,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateNoContext()
         {
-            var ClientId = TestEnvironment.IdentityClientId;
+            var ClientId = TestEnvironment.ClientId;
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
@@ -99,7 +99,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithContext()
         {
-            var ClientId = TestEnvironment.IdentityClientId;
+            var ClientId = TestEnvironment.ClientId;
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
