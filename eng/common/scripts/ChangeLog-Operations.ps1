@@ -124,10 +124,12 @@ function Confirm-ChangeLogEntry {
         if ($status -ne ($releaseDate.ToString($CHANGELOG_DATE_FORMAT)))
         {
           LogError "Date must be in the format $($CHANGELOG_DATE_FORMAT)"
+          return $false
         }
         if (((Get-Date).AddMonths(-1) -gt $releaseDate) -or ($releaseDate -gt (Get-Date).AddMonths(1)))
         {
           LogError "The date must be within +/- one month from today."
+          return $false
         }
       }
       catch {
