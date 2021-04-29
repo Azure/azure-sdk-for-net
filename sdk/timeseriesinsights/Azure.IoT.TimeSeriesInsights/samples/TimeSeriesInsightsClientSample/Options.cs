@@ -37,7 +37,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         /// <summary>
         /// The IoT hub connection string.
         /// </summary>
-        [Option('c', "iotHubConnectionString", Required = false, HelpText = "IoT Hub connection string.")]
+        [Option('c', "iotHubConnectionString", Required = false, HelpText = "IoT Hub connection string. Required for the Query sample.")]
         public string IoTHubConnectionString { get; set; }
     }
 }
