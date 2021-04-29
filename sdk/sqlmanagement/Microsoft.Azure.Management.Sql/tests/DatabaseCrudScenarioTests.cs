@@ -397,7 +397,7 @@ namespace Sql.Tests
                 }
             }
         }
-
+        
         [Fact]
         public void TestRemoveDatabaseFromPool()
         {
@@ -418,7 +418,6 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
                     DatabaseDtuMax = 5,
                     DatabaseDtuMin = 0
@@ -446,7 +445,7 @@ namespace Sql.Tests
                 Assert.Equal(null, dbResult.ElasticPoolName);
             }
         }
-
+        
         [Fact]
         public void TestDatabaseTransparentDataEncryptionConfiguration()
         {
@@ -468,10 +467,10 @@ namespace Sql.Tests
                 // Get TDE config
                 // Recently changed to be enabled by default
                 var config = sqlClient.TransparentDataEncryptions.Get(resourceGroup.Name, server.Name, dbName);
-                Assert.Equal(TransparentDataEncryptionStatus.Enabled, config.Status);
+                Assert.Equal(TransparentDataEncryptionState.Enabled, config.State);
 
                 // Update TDE config
-                config.Status = TransparentDataEncryptionStatus.Disabled;
+                config.State = TransparentDataEncryptionState.Disabled;
 
                 // Sometimes the config is still being updated from the previous PUT, so execute with retry
 
@@ -485,7 +484,7 @@ namespace Sql.Tests
                     return e.Response.StatusCode == HttpStatusCode.Conflict;
                 });
 
-                Assert.Equal(TransparentDataEncryptionStatus.Disabled, config.Status);
+                Assert.Equal(TransparentDataEncryptionState.Disabled, config.State);
             }
         }
     }
