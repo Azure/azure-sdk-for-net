@@ -788,6 +788,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.Size);
             Assert.AreEqual(0, contentRange.Start);
             Assert.AreEqual((long)Int32.MaxValue + 1, contentRange.End);
-        }        
+        }
     }
 }
