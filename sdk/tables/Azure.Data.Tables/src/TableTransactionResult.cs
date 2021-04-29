@@ -2,26 +2,25 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
     /// <summary>
-    /// The response from <see cref="TableTransactionalBatch.SubmitBatch(System.Threading.CancellationToken)"/> or <see cref="TableTransactionalBatch.SubmitBatchAsync(System.Threading.CancellationToken)"/>.
+    /// The response from <see cref="TableClient.SubmitTransaction"/> or <see cref="TableClient.SubmitTransactionAsync"/>.
     /// </summary>
-    public class TableBatchResponse
+    public class TableTransactionResult
     {
-        internal IDictionary<string, (HttpMessage Message, RequestType RequestType)> _requestLookup;
+        private readonly IDictionary<string, HttpMessage> _requestLookup;
 
-        internal TableBatchResponse(ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)> requestLookup)
+        internal TableTransactionResult(Dictionary<string, HttpMessage> requestLookup)
         {
             _requestLookup = requestLookup;
         }
 
         /// <summary>
-        /// The number of batch sub-responses contained in this <see cref="TableBatchResponse"/>.
+        /// The number of batch sub-responses contained in this <see cref="TableTransactionResult"/>.
         /// </summary>
         public int ResponseCount => _requestLookup.Keys.Count;
 
@@ -32,12 +31,12 @@ namespace Azure.Data.Tables.Models
         /// <returns></returns>
         public Response GetResponseForEntity(string rowKey)
         {
-            if (!_requestLookup.TryGetValue(rowKey, out (HttpMessage Message, RequestType RequestType) tuple))
+            if (!_requestLookup.TryGetValue(rowKey, out HttpMessage message))
             {
                 throw new InvalidOperationException("The batch operation did not contain an entity with the specified rowKey");
             }
 
-            return tuple.Message.Response;
+            return message.Response;
         }
     }
 }
