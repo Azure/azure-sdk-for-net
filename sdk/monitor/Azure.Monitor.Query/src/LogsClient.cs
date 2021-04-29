@@ -59,7 +59,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="workspaceId">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
-        /// <param name="timeSpan">The timespan over which to query data.</param>
+        /// <param name="timeSpan">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
@@ -75,7 +75,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="workspaceId">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
-        /// <param name="timeSpan">The timespan over which to query data.</param>
+        /// <param name="timeSpan">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
@@ -91,7 +91,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="workspaceId">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
-        /// <param name="timeSpan">The timespan over which to query data.</param>
+        /// <param name="timeSpan">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> containing the query results.</returns>
@@ -115,7 +115,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="workspaceId">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
-        /// <param name="timeSpan">The timespan over which to query data.</param>
+        /// <param name="timeSpan">The timespan over which to query data. Logs would be filtered to include entries produced starting at <c>Now - timeSpan</c>. </param>
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>

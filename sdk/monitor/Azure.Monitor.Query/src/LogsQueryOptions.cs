@@ -7,8 +7,7 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// Options for <see cref="LogsClient.QueryAsync"/> that allow specifying the service timeout or whether to include
-    /// the query execution statistics.
+    /// Options for <see cref="LogsClient.QueryAsync"/> and <see cref="LogsBatchQuery.AddQuery"/> methods.
     /// </summary>
     public class LogsQueryOptions
     {
@@ -20,6 +19,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Gets or sets the value indicating whether to include query execution statistics as part of the response.
         /// Statistics can be retrieved via the <see cref="LogsQueryResult.Statistics"/> property.
+        /// Defaults to <c>false</c>.
         /// </summary>
         public bool IncludeStatistics { get; set; }
     }

@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Models
 
 #pragma warning disable AZC0014
         /// <summary>
-        /// Returns the query statistics.
+        /// Returns the query statistics if the <see cref="LogsQueryOptions.IncludeStatistics"/> is set to <c>true</c>.
         /// </summary>
         public JsonElement Statistics { get; }
 #pragma warning restore AZC0014
