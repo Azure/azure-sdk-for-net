@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class LogSenderClientOptions : ClientOptions
+    public class SenderClientOptions : ClientOptions
     {
     }
 }

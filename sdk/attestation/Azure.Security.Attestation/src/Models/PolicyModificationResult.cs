@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Azure.Core;
 using System.Runtime.CompilerServices;
+using System;
 
 namespace Azure.Security.Attestation
 {
@@ -14,12 +15,12 @@ namespace Azure.Security.Attestation
     /// Represents a Policy Get or Set or Reset result.
     /// </summary>
     [CodeGenModel("PolicyResult")]
-    public partial class PolicyResult
+    public partial class PolicyModificationResult
     {
         /// <summary>
-        /// Creates a new instance of a <see cref="PolicyResult"/> object.
+        /// Creates a new instance of a <see cref="PolicyModificationResult"/> object.
         /// </summary>
-        public PolicyResult()
+        public PolicyModificationResult()
         {
         }
 
@@ -47,6 +48,11 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
+        /// Hash of the Base64Url encoded policy text. Calculated as SHA256(PolicySetToken).
+        /// </summary>
+        public BinaryData PolicyTokenHash { get => BasePolicyTokenHash != null ? BinaryData.FromBytes(Base64Url.Decode(BasePolicyTokenHash)) : null; }
+
+        /// <summary>
         /// JSON Web Token containing the policy retrieved.
         /// </summary>
         [CodeGenMember("Policy")]
@@ -55,15 +61,10 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// JSON Web Token containing the policy retrieved.
         /// </summary>
-        internal AttestationToken PolicyToken { get => new AttestationToken(BasePolicy); }
+        internal AttestationToken PolicyToken { get => AttestationToken.Deserialize(BasePolicy); }
 
         [CodeGenMember("PolicyTokenHash")]
         internal string BasePolicyTokenHash { get; private set; }
-
-        /// <summary>
-        /// Hash of the Base64Url encoded policy text. Calculated as SHA256(PolicySetToken).
-        /// </summary>
-        public byte[] PolicyTokenHash { get => BasePolicyTokenHash != null ? Base64Url.Decode(BasePolicyTokenHash) : null; }
 
         /// <summary>
         /// X.509 certificate used to sign the policy document.

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -40,6 +40,16 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesHierarchy}"/> of Time Series hierarchies with the http response.</returns>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetAllHierarchies">
+        /// // Get all Time Series hierarchies in the environment
+        /// AsyncPageable&lt;TimeSeriesHierarchy&gt; getAllHierarchies = client.Hierarchies.GetAsync();
+        /// await foreach (TimeSeriesHierarchy hierarchy in getAllHierarchies)
+        /// {
+        ///     Console.WriteLine($&quot;Retrieved Time Series Insights hierarchy with Id: &apos;{hierarchy.Id}&apos; and Name: &apos;{hierarchy.Name}&apos;.&quot;);
+        /// }
+        /// </code>
+        /// </example>
         public virtual AsyncPageable<TimeSeriesHierarchy> GetAsync(
             CancellationToken cancellationToken = default)
         {
@@ -274,6 +284,33 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
         /// </exception>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetHierarchiesById">
+        /// var tsiHierarchyIds = new List&lt;string&gt;
+        /// {
+        ///     &quot;sampleHierarchyId&quot;
+        /// };
+        ///
+        /// Response&lt;TimeSeriesHierarchyOperationResult[]&gt; getHierarchiesByIdsResult = await client
+        ///             .Hierarchies
+        ///             .GetByIdAsync(tsiHierarchyIds)
+        ///             .ConfigureAwait(false);
+        ///
+        /// // The response of calling the API contains a list of hieararchy or error objects corresponding by position to the input parameter array in the request.
+        /// // If the error object is set to null, this means the operation was a success.
+        /// for (int i = 0; i &lt; getHierarchiesByIdsResult.Value.Length; i++)
+        /// {
+        ///     if (getHierarchiesByIdsResult.Value[i].Error == null)
+        ///     {
+        ///         Console.WriteLine($&quot;Retrieved Time Series hieararchy with Id: &apos;{getHierarchiesByIdsResult.Value[i].Hierarchy.Id}&apos;.&quot;);
+        ///     }
+        ///     else
+        ///     {
+        ///         Console.WriteLine($&quot;Failed to retrieve a Time Series hieararchy due to &apos;{getHierarchiesByIdsResult.Value[i].Error.Message}&apos;.&quot;);
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> GetByIdAsync(
             IEnumerable<string> timeSeriesHierarchyIds,
             CancellationToken cancellationToken = default)
@@ -377,6 +414,42 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesHierarchies"/> is empty.
         /// </exception>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateHierarchies">
+        /// var tsiHierarchyName = &quot;sampleHierarchy&quot;;
+        /// var tsiInstanceField1 = &quot;hierarchyLevel1&quot;;
+        /// var hierarchySource = new TimeSeriesHierarchySource();
+        /// hierarchySource.InstanceFieldNames.Add(tsiInstanceField1);
+        ///
+        /// var tsiHierarchy = new TimeSeriesHierarchy(tsiHierarchyName, hierarchySource);
+        /// tsiHierarchy.Id = &quot;sampleHierarchyId&quot;;
+        ///
+        /// var timeSeriesHierarchies = new List&lt;TimeSeriesHierarchy&gt;
+        /// {
+        ///     tsiHierarchy
+        /// };
+        ///
+        /// // Create Time Series hierarchies
+        /// Response&lt;TimeSeriesHierarchyOperationResult[]&gt; createHierarchiesResult = await client
+        ///     .Hierarchies
+        ///     .CreateOrReplaceAsync(timeSeriesHierarchies)
+        ///     .ConfigureAwait(false);
+        ///
+        /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
+        /// // If the error object is set to null, this means the operation was a success.
+        /// for (int i = 0; i &lt; createHierarchiesResult.Value.Length; i++)
+        /// {
+        ///     if (createHierarchiesResult.Value[i].Error == null)
+        ///     {
+        ///         Console.WriteLine($&quot;Created Time Series hierarchy successfully.&quot;);
+        ///     }
+        ///     else
+        ///     {
+        ///         Console.WriteLine($&quot;Failed to create a Time Series hierarchy: {createHierarchiesResult.Value[i].Error.Message}.&quot;);
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> CreateOrReplaceAsync(
             IEnumerable<TimeSeriesHierarchy> timeSeriesHierarchies,
             CancellationToken cancellationToken = default)
@@ -579,6 +652,34 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
         /// </exception>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteHierarchiesById">
+        /// // Delete Time Series hierarchies with Ids
+        /// var tsiHierarchyIdsToDelete = new List&lt;string&gt;
+        /// {
+        ///     &quot;sampleHiearchyId&quot;
+        /// };
+        ///
+        /// Response&lt;TimeSeriesOperationError[]&gt; deleteHierarchiesResponse = await client
+        ///         .Hierarchies
+        ///         .DeleteByIdAsync(tsiHierarchyIdsToDelete)
+        ///         .ConfigureAwait(false);
+        ///
+        /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter
+        /// // array in the request. If the error object is set to null, this means the operation was a success.
+        /// foreach (TimeSeriesOperationError result in deleteHierarchiesResponse.Value)
+        /// {
+        ///     if (result != null)
+        ///     {
+        ///         Console.WriteLine($&quot;Failed to delete a Time Series Insights hierarchy: {result.Message}.&quot;);
+        ///     }
+        ///     else
+        ///     {
+        ///         Console.WriteLine($&quot;Deleted a Time Series Insights hierarchy successfully.&quot;);
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteByIdAsync(
             IEnumerable<string> timeSeriesHierarchyIds,
             CancellationToken cancellationToken = default)

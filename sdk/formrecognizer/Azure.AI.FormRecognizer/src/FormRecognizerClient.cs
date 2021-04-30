@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri, FormRecognizerClientOptions.GetVersionString(options.Version));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.AI.FormRecognizer
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri, FormRecognizerClientOptions.GetVersionString(options.Version));
         }
 
         /// <summary>

@@ -56,7 +56,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <param name="credential">The shared access signature credential used to sign requests.</param>
         public TableServiceClient(Uri endpoint, AzureSasCredential credential)
-            : this(endpoint, credential, options: null)
+            : this(endpoint, credential, null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
         }
@@ -74,7 +74,7 @@ namespace Azure.Data.Tables
         /// Configure Azure Storage connection strings</see>.
         /// </param>
         public TableServiceClient(string connectionString)
-            : this(connectionString, options: null)
+            : this(connectionString, null)
         { }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options = null)
+        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options)
             : this(endpoint, new TableSharedKeyPipelinePolicy(credential), default, options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
