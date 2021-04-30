@@ -32,12 +32,14 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            #region Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
+#if SNIPPET
+            string modelId = "<modelId>";
+            Uri formUri = <formUri>;
+#else
             Uri formUri = FormRecognizerTestEnvironment.CreateUri("Form_1.jpg");
             string modelId = model.ModelId;
-
-            #region Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
-            //@@ string modelId = "<modelId>";
-            //@@ Uri formUri = <formUri>;
+#endif
 
             RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri);
             Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();

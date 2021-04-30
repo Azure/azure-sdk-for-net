@@ -121,6 +121,11 @@ namespace Azure.Messaging.ServiceBus
         private int _maxConcurrentCalls = 1;
 
         /// <summary>
+        /// Gets or sets the subqueue to connect the processor to. By default, the processor will not connect to a subqueue.
+        /// </summary>
+        public SubQueue SubQueue { get; set; } = SubQueue.None;
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
@@ -163,6 +168,7 @@ namespace Azure.Messaging.ServiceBus
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = MaxReceiveWaitTime,
                 MaxConcurrentCalls = MaxConcurrentCalls,
+                SubQueue = SubQueue
             };
         }
     }

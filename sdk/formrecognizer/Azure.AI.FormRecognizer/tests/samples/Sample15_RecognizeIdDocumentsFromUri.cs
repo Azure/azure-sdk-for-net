@@ -21,10 +21,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            Uri sourceUri = FormRecognizerTestEnvironment.CreateUri("license.jpg");
-
             #region Snippet:FormRecognizerSampleRecognizeIdDocumentsUri
-            //@@ string sourceUri = "<sourceUri>";
+#if SNIPPET
+            Uri sourceUri = "<sourceUri>";
+#else
+            Uri sourceUri = FormRecognizerTestEnvironment.CreateUri("license.jpg");
+#endif
 
             RecognizeIdDocumentsOperation operation = await client.StartRecognizeIdDocumentsFromUriAsync(sourceUri);
             Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();

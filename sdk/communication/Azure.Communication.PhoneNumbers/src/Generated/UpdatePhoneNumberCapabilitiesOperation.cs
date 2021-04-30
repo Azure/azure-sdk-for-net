@@ -18,7 +18,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Updates the capabilities of a phone number. </summary>
     public partial class UpdatePhoneNumberCapabilitiesOperation : Operation<PurchasedPhoneNumber>, IOperationSource<PurchasedPhoneNumber>
     {
-        private readonly ArmOperationHelpers<PurchasedPhoneNumber> _operation;
+        private readonly OperationInternals<PurchasedPhoneNumber> _operation;
 
         /// <summary> Initializes a new instance of UpdatePhoneNumberCapabilitiesOperation for mocking. </summary>
         protected UpdatePhoneNumberCapabilitiesOperation()

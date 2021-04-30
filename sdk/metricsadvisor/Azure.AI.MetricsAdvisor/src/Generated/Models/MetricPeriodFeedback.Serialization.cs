@@ -16,11 +16,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValueInternal))
-            {
-                writer.WritePropertyName("value");
-                writer.WriteObjectValue(ValueInternal);
-            }
+            writer.WritePropertyName("value");
+            writer.WriteObjectValue(ValueInternal);
             writer.WritePropertyName("feedbackType");
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("metricId");
@@ -32,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MetricPeriodFeedback DeserializeMetricPeriodFeedback(JsonElement element)
         {
-            Optional<PeriodFeedbackValue> value = default;
+            PeriodFeedbackValue value = default;
             FeedbackType feedbackType = default;
             Optional<string> feedbackId = default;
             Optional<DateTimeOffset> createdTime = default;
@@ -43,11 +40,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("value"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     value = PeriodFeedbackValue.DeserializePeriodFeedbackValue(property.Value);
                     continue;
                 }
@@ -87,7 +79,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricPeriodFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, value.Value);
+            return new MetricPeriodFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, value);
         }
     }
 }

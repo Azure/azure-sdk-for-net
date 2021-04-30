@@ -133,9 +133,13 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='galleryName'>
             /// The name of the Shared Image Gallery.
             /// </param>
-            public static Gallery Get(this IGalleriesOperations operations, string resourceGroupName, string galleryName)
+            /// <param name='select'>
+            /// The select expression to apply on the operation. Possible values include:
+            /// 'Permissions'
+            /// </param>
+            public static Gallery Get(this IGalleriesOperations operations, string resourceGroupName, string galleryName, string select = default(string))
             {
-                return operations.GetAsync(resourceGroupName, galleryName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, galleryName, select).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -150,12 +154,16 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='galleryName'>
             /// The name of the Shared Image Gallery.
             /// </param>
+            /// <param name='select'>
+            /// The select expression to apply on the operation. Possible values include:
+            /// 'Permissions'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Gallery> GetAsync(this IGalleriesOperations operations, string resourceGroupName, string galleryName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Gallery> GetAsync(this IGalleriesOperations operations, string resourceGroupName, string galleryName, string select = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, galleryName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, galleryName, select, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

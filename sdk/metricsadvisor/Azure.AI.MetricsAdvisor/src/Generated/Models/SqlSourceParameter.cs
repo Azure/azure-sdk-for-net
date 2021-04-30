@@ -11,9 +11,16 @@ namespace Azure.AI.MetricsAdvisor.Models
     internal partial class SqlSourceParameter
     {
         /// <summary> Initializes a new instance of SqlSourceParameter. </summary>
+        /// <param name="query"> Query script. </param>
+        public SqlSourceParameter(string query)
+        {
+            Query = query;
+        }
+
+        /// <summary> Initializes a new instance of SqlSourceParameter. </summary>
         /// <param name="connectionString"> Database connection string. </param>
         /// <param name="query"> Query script. </param>
-        public SqlSourceParameter(string connectionString, string query)
+        internal SqlSourceParameter(string connectionString, string query)
         {
             ConnectionString = connectionString;
             Query = query;

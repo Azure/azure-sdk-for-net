@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// VMware provider specific settings
+    /// VMware provider specific settings.
     /// </summary>
     [Newtonsoft.Json.JsonObject("VMwareVirtualMachine")]
     public partial class VMwareVirtualMachineDetails : ConfigurationSettings

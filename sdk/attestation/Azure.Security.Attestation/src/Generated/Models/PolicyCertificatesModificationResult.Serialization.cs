@@ -13,12 +13,28 @@ using Azure.Core;
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(PolicyCertificatesModificationResultConverter))]
-    public partial class PolicyCertificatesModificationResult
+    public partial class PolicyCertificatesModificationResult : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CertificateThumbprint))
+            {
+                writer.WritePropertyName("x-ms-certificate-thumbprint");
+                writer.WriteStringValue(CertificateThumbprint);
+            }
+            if (Optional.IsDefined(CertificateResolution))
+            {
+                writer.WritePropertyName("x-ms-policycertificates-result");
+                writer.WriteStringValue(CertificateResolution.Value.ToString());
+            }
+            writer.WriteEndObject();
+        }
+
         internal static PolicyCertificatesModificationResult DeserializePolicyCertificatesModificationResult(JsonElement element)
         {
             Optional<string> xMsCertificateThumbprint = default;
-            Optional<CertificateModification> xMsPolicycertificatesResult = default;
+            Optional<PolicyCertificateResolution> xMsPolicycertificatesResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-certificate-thumbprint"))
@@ -33,7 +49,7 @@ namespace Azure.Security.Attestation
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    xMsPolicycertificatesResult = new CertificateModification(property.Value.GetString());
+                    xMsPolicycertificatesResult = new PolicyCertificateResolution(property.Value.GetString());
                     continue;
                 }
             }
@@ -44,7 +60,7 @@ namespace Azure.Security.Attestation
         {
             public override void Write(Utf8JsonWriter writer, PolicyCertificatesModificationResult model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override PolicyCertificatesModificationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
