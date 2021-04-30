@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Core
         internal SubscriptionContainer(ClientContext clientContext)
             : base(clientContext, null)
         {
-            Operations = new SubscriptionOperations(clientContext, Id);
+            Operations = new SubscriptionOperations(clientContext, Guid.NewGuid().ToString());
         }
 
         /// <summary>

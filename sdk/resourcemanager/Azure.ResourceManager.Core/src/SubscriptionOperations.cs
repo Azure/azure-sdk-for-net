@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Core
         internal SubscriptionOperations(ClientContext clientContext, string subscriptionGuid)
             : base(clientContext, new SubscriptionResourceIdentifier(subscriptionGuid))
         {
-            SubscriptionsRestOperations = new SubscriptionsRestOperations(new ClientDiagnostics(this.ClientOptions), this.Pipeline, BaseUri);
         }
 
         /// <summary>
@@ -45,7 +44,6 @@ namespace Azure.ResourceManager.Core
         protected SubscriptionOperations(SubscriptionOperations subscription, SubscriptionResourceIdentifier id)
             : base(subscription, id)
         {
-            SubscriptionsRestOperations = new SubscriptionsRestOperations(new ClientDiagnostics(this.ClientOptions), this.Pipeline, BaseUri);
         }
 
         /// <summary>
@@ -75,7 +73,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private SubscriptionsRestOperations SubscriptionsRestOperations;
+        private SubscriptionsRestOperations SubscriptionsRestOperations => new SubscriptionsRestOperations(new ClientDiagnostics(this.ClientOptions), this.Pipeline, BaseUri);
 
         /// <summary>
         /// Gets the resource group container under this subscription.
