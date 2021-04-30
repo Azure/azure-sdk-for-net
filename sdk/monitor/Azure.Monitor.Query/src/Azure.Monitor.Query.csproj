@@ -5,10 +5,13 @@
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure Monitor Query</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- TODO: Remove before shipping -->
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -25,7 +28,5 @@
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
-
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
 </Project>

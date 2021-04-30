@@ -6,9 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 title: Query
 input-file:
     - https://github.com/Azure/azure-sdk-for-java/blob/1d14101ba93c6e616899c2ded93fbecb54699f84/sdk/monitor/azure-monitor-query/swagger/log_query_swagger.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ca0869b49176e7bc3866debbab9d32999661c4cb/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metrics_API.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/cf33826d06605cde127d2241e54dd6df55e9145f/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metricDefinitions_API.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/cf33826d06605cde127d2241e54dd6df55e9145f/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-12-01-preview/metricNamespaces_API.json
+    - https://github.com/Azure/azure-sdk-for-java/blob/1d14101ba93c6e616899c2ded93fbecb54699f84/sdk/monitor/azure-monitor-query/swagger/metrics_definitions.json
+    - https://github.com/Azure/azure-sdk-for-java/blob/1d14101ba93c6e616899c2ded93fbecb54699f84/sdk/monitor/azure-monitor-query/swagger/metrics_namespaces.json
+    - https://github.com/Azure/azure-sdk-for-java/blob/1d14101ba93c6e616899c2ded93fbecb54699f84/sdk/monitor/azure-monitor-query/swagger/metrics_swagger.json
 modelerfour:
     lenient-model-deduplication: true
 ```
@@ -29,14 +29,14 @@ directive:
     }
 ```
 
-### Rename errors property
+### Rename errors property and add statistics
 
 ``` yaml
 directive:
 - from: swagger-document
   where: $.definitions.queryResults
   transform: >
+    $.properties["statistics"] = { "type": "object" };
     $.properties["error"] = $.properties["errors"];
     delete $.properties["errors"];
-    
 ```

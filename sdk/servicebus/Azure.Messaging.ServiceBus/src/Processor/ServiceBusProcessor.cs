@@ -197,7 +197,7 @@ namespace Azure.Messaging.ServiceBus
 
             Options = options?.Clone() ?? new ServiceBusProcessorOptions();
             Connection = connection;
-            EntityPath = entityPath;
+            EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, Options.SubQueue);
             Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
 
             ReceiveMode = Options.ReceiveMode;
@@ -225,7 +225,6 @@ namespace Azure.Messaging.ServiceBus
 
             AutoCompleteMessages = Options.AutoCompleteMessages;
 
-            EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
             _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
             _plugins = plugins;

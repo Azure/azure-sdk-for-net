@@ -33,5 +33,11 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         /// </summary>
         [Option('s', "clientSecret", Required = false, HelpText = "Application client secret. Only applicable when using LoginMethod of AppId.")]
         public string ClientSecret { get; set; }
+
+        /// <summary>
+        /// The IoT hub connection string.
+        /// </summary>
+        [Option('c', "iotHubConnectionString", Required = false, HelpText = "IoT Hub connection string. Required for the Query sample.")]
+        public string IoTHubConnectionString { get; set; }
     }
 }

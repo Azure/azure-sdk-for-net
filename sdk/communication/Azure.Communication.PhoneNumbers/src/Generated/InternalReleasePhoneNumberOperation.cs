@@ -17,7 +17,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Releases a purchased phone number. </summary>
     internal partial class InternalReleasePhoneNumberOperation : Operation<Response>, IOperationSource<Response>
     {
-        private readonly ArmOperationHelpers<Response> _operation;
+        private readonly OperationInternals<Response> _operation;
 
         /// <summary> Initializes a new instance of InternalReleasePhoneNumberOperation for mocking. </summary>
         protected InternalReleasePhoneNumberOperation()

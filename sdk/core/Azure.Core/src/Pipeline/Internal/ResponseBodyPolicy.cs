@@ -15,7 +15,6 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal class ResponseBodyPolicy : HttpPipelinePolicy
     {
-        private const string NetworkTimeoutOverrideProperty = "NetworkTimeoutOverride";
         // Same value as Stream.CopyTo uses by default
         private const int DefaultCopyBufferSize = 81920;
 
@@ -39,8 +38,7 @@ namespace Azure.Core.Pipeline
 
             var networkTimeout = _networkTimeout;
 
-            if (message.TryGetProperty(NetworkTimeoutOverrideProperty, out var networkTimeoutValue) &&
-                networkTimeoutValue is TimeSpan networkTimeoutOverride)
+            if (message.NetworkTimeout is TimeSpan networkTimeoutOverride)
             {
                 networkTimeout = networkTimeoutOverride;
             }

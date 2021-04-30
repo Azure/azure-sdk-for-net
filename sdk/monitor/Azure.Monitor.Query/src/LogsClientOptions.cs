@@ -5,6 +5,9 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query
 {
+    /// <summary>
+    /// Provides the client configuration options for connecting to Azure Monitor Logs service.
+    /// </summary>
     public class LogsClientOptions: ClientOptions
     {
         private readonly ServiceVersion _version;
@@ -27,11 +30,14 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// The versions of Azure Monitor Query service supported by this client
+        /// The versions of Azure Monitor Logs service supported by this client
         /// library.
         /// </summary>
         public enum ServiceVersion
         {
+            /// <summary>
+            /// The V1 version of the service
+            /// </summary>
             V1
         }
     }

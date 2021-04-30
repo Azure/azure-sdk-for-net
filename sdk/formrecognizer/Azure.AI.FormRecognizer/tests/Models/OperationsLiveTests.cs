@@ -24,8 +24,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="OperationsLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public OperationsLiveTests(bool isAsync)
-            : base(isAsync)
+        public OperationsLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
         {
         }
 
@@ -60,6 +60,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task RecognizeInvoicesOperationCanPollFromNewObject()
         {
             var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
@@ -75,6 +76,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task RecognizeIdDocumentsOperationCanPollFromNewObject()
         {
             var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
@@ -126,6 +128,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task CreateComposedModelOperationCanPollFromNewObject()
         {
             var client = CreateFormTrainingClient(out var nonInstrumentedClient);

@@ -47,7 +47,6 @@ namespace Azure.Storage.Test
             public string KeyValue { get; } = Convert.ToBase64String(Encoding.UTF8.GetBytes("value"));
             public SasProtocol Protocol { get; } = SasProtocol.Https;
 
-            public string Version { get; protected internal set; }
             public string Account { get; protected internal set; }
             public string Identifier { get; protected internal set; }
             public string CacheControl { get; protected internal set; }
@@ -79,7 +78,6 @@ namespace Azure.Storage.Test
 
                 Sas = new SasConstants
                 {
-                    Version = test.GetNewString(),
                     Account = test.GetNewString(),
                     Identifier = test.GetNewString(),
                     CacheControl = test.GetNewString(),

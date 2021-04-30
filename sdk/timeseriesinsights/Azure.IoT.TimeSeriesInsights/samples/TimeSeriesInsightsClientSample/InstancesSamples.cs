@@ -21,16 +21,10 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         {
             PrintHeader("TIME SERIES INSIGHTS INSTANCES SAMPLE");
 
-            // Figure out how many keys make up the Time Series Id
+            // Figure out what keys make up the Time Series Id
             TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
 
-            TimeSeriesId instanceId = modelSettings.TimeSeriesIdProperties.Count switch
-            {
-                1 => new TimeSeriesId("key1"),
-                2 => new TimeSeriesId("key1", "key2"),
-                3 => new TimeSeriesId("key1", "key2", "key3"),
-                _ => throw new Exception($"Invalid number of Time Series Insights Id properties."),
-            };
+            TimeSeriesId tsId = TimeSeriesIdHelper.CreateTimeSeriesId(modelSettings);
 
             string defaultTypeId = modelSettings.DefaultTypeId;
 
@@ -38,7 +32,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             // Create a Time Series Instance object with the default Time Series Insights type Id.
             // The default type Id can be obtained programmatically by using the ModelSettings client.
-            var instance = new TimeSeriesInstance(instanceId, defaultTypeId)
+            var instance = new TimeSeriesInstance(tsId, defaultTypeId)
             {
                 Name = "instance1",
             };
@@ -87,7 +81,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             // Get Time Series Insights instances by Id
             var instanceIdsToGet = new List<TimeSeriesId>
             {
-                instanceId,
+                tsId,
             };
 
             Response<InstancesOperationResult[]> getInstancesByIdResult = await client.Instances.GetAsync(instanceIdsToGet).ConfigureAwait(false);
@@ -130,7 +124,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             // Get Time Series Insights instances by Id
             var timeSeriesIds = new List<TimeSeriesId>
             {
-                instanceId,
+                tsId,
             };
 
             Response<InstancesOperationResult[]> getByIdsResult = await client.Instances.GetAsync(timeSeriesIds).ConfigureAwait(false);
@@ -160,7 +154,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
                 var instancesToDelete = new List<TimeSeriesId>
                 {
-                    instanceId,
+                    tsId,
                 };
 
                 Response<TimeSeriesOperationError[]> deleteInstanceErrors = await client

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -40,6 +40,17 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesType}"/> of Time Series types with the http response.</returns>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetAllTypes">
+        /// // Get all Time Series types in the environment
+        /// AsyncPageable&lt;TimeSeriesType&gt; getAllTypesResponse = client.Types.GetTypesAsync();
+        ///
+        /// await foreach (TimeSeriesType tsiType in getAllTypesResponse)
+        /// {
+        ///     Console.WriteLine($&quot;Retrieved Time Series Insights type with Id: &apos;{tsiType?.Id}&apos; and Name: &apos;{tsiType?.Name}&apos;&quot;);
+        /// }
+        /// </code>
+        /// </example>
         public virtual AsyncPageable<TimeSeriesType> GetTypesAsync(
             CancellationToken cancellationToken = default)
         {
@@ -274,6 +285,32 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
         /// </exception>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetTypeById">
+        /// // Code snippet below shows getting a default Type using Id
+        /// // The default type Id can be obtained programmatically by using the ModelSettings client.
+        ///
+        /// TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
+        /// Response&lt;TimeSeriesTypeOperationResult[]&gt; getTypeByIdResults = await client
+        ///     .Types
+        ///     .GetByIdAsync(new string[] { modelSettings.DefaultTypeId })
+        ///     .ConfigureAwait(false);
+        ///
+        /// // The response of calling the API contains a list of type or error objects corresponding by position to the input parameter array in the request.
+        /// // If the error object is set to null, this means the operation was a success.
+        /// for (int i = 0; i &lt; getTypeByIdResults.Value.Length; i++)
+        /// {
+        ///     if (getTypeByIdResults.Value[i].Error == null)
+        ///     {
+        ///         Console.WriteLine($&quot;Retrieved Time Series type with Id: &apos;{getTypeByIdResults.Value[i].TimeSeriesType.Id}&apos;.&quot;);
+        ///     }
+        ///     else
+        ///     {
+        ///         Console.WriteLine($&quot;Failed to retrieve a Time Series type due to &apos;{getTypeByIdResults.Value[i].Error.Message}&apos;.&quot;);
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetByIdAsync(
             IEnumerable<string> timeSeriesTypeIds,
             CancellationToken cancellationToken = default)
@@ -377,6 +414,52 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesTypes"/> is empty.
         /// </exception>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateType">
+        /// // Create an aggregate type
+        /// var timeSeriesTypes = new List&lt;TimeSeriesType&gt;();
+        ///
+        /// var countExpression = new TimeSeriesExpression(&quot;count()&quot;);
+        /// var aggregateVariable = new AggregateVariable(countExpression);
+        /// var variables = new Dictionary&lt;string, TimeSeriesVariable&gt;();
+        /// var variableName = &quot;aggregateVariable&quot;;
+        /// variables.Add(variableName, aggregateVariable);
+        ///
+        /// var timeSeriesTypesProperties = new Dictionary&lt;string, string&gt;
+        /// {
+        ///     { &quot;Type1&quot;, &quot;Type1Id&quot;},
+        ///     { &quot;Type2&quot;, &quot;Type2Id&quot;}
+        /// };
+        ///
+        /// foreach (KeyValuePair&lt;string, string&gt; property in timeSeriesTypesProperties)
+        /// {
+        ///     var type = new TimeSeriesType(property.Key, variables)
+        ///     {
+        ///         Id = property.Value
+        ///     };
+        ///     timeSeriesTypes.Add(type);
+        /// }
+        ///
+        /// Response&lt;TimeSeriesTypeOperationResult[]&gt; createTypesResult = await client
+        ///     .Types
+        ///     .CreateOrReplaceAsync(timeSeriesTypes)
+        ///     .ConfigureAwait(false);
+        ///
+        /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
+        /// // If the error object is set to null, this means the operation was a success.
+        /// for (int i = 0; i &lt; createTypesResult.Value.Length; i++)
+        /// {
+        ///     if (createTypesResult.Value[i].Error == null)
+        ///     {
+        ///         Console.WriteLine($&quot;Created Time Series type successfully.&quot;);
+        ///     }
+        ///     else
+        ///     {
+        ///         Console.WriteLine($&quot;Failed to create a Time Series Insights type: {createTypesResult.Value[i].Error.Message}.&quot;);
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> CreateOrReplaceAsync(
             IEnumerable<TimeSeriesType> timeSeriesTypes,
             CancellationToken cancellationToken = default)
@@ -579,6 +662,31 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
         /// </exception>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteTypeById">
+        /// // Delete Time Series types with Ids
+        ///
+        /// var typesIdsToDelete = new List&lt;string&gt; { &quot;Type1Id&quot;, &quot; Type2Id&quot; };
+        /// Response&lt;TimeSeriesOperationError[]&gt; deleteTypesResponse = await client
+        ///     .Types
+        ///     .DeleteByIdAsync(typesIdsToDelete)
+        ///     .ConfigureAwait(false);
+        ///
+        /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter
+        /// // array in the request. If the error object is set to null, this means the operation was a success.
+        /// foreach (var result in deleteTypesResponse.Value)
+        /// {
+        ///     if (result != null)
+        ///     {
+        ///         Console.WriteLine($&quot;Failed to delete a Time Series Insights type: {result.Message}.&quot;);
+        ///     }
+        ///     else
+        ///     {
+        ///         Console.WriteLine($&quot;Deleted a Time Series Insights type successfully.&quot;);
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteByIdAsync(
             IEnumerable<string> timeSeriesTypeIds,
             CancellationToken cancellationToken = default)

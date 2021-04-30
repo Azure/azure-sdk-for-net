@@ -54,7 +54,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 // Act
 
-                // Get events from last 1 minute
+                // Get events from last 10 minute
                 DateTimeOffset now = Recording.UtcNow;
                 DateTimeOffset endTime = now.AddMinutes(10);
                 DateTimeOffset startTime = now.AddMinutes(-10);

@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Deletes a data flow. </summary>
     public partial class DataFlowDeleteDataFlowOperation : Operation<Response>, IOperationSource<Response>
     {
-        private readonly ArmOperationHelpers<Response> _operation;
+        private readonly OperationInternals<Response> _operation;
 
         /// <summary> Initializes a new instance of DataFlowDeleteDataFlowOperation for mocking. </summary>
         protected DataFlowDeleteDataFlowOperation()
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal DataFlowDeleteDataFlowOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DataFlowDeleteDataFlowOperation");
+            _operation = new OperationInternals<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DataFlowDeleteDataFlowOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

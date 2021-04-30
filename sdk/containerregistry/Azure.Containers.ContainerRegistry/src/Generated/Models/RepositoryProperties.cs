@@ -16,11 +16,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
         /// <param name="lastUpdatedOn"> Image last update time. </param>
-        /// <param name="registryArtifactCount"> Number of the manifests. </param>
+        /// <param name="manifestCount"> Number of the manifests. </param>
         /// <param name="tagCount"> Number of the tags. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="writeableProperties"/> is null. </exception>
-        internal RepositoryProperties(string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int registryArtifactCount, int tagCount, ContentProperties writeableProperties)
+        internal RepositoryProperties(string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount, ContentProperties writeableProperties)
         {
             if (name == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
             Name = name;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
-            RegistryArtifactCount = registryArtifactCount;
+            ManifestCount = manifestCount;
             TagCount = tagCount;
             WriteableProperties = writeableProperties;
         }
@@ -46,7 +46,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Image last update time. </summary>
         public DateTimeOffset LastUpdatedOn { get; }
         /// <summary> Number of the manifests. </summary>
-        public int RegistryArtifactCount { get; }
+        public int ManifestCount { get; }
         /// <summary> Number of the tags. </summary>
         public int TagCount { get; }
         /// <summary> Writeable properties of the resource. </summary>

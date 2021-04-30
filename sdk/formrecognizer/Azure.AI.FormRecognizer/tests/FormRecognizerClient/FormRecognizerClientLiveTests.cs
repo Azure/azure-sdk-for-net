@@ -25,12 +25,13 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormRecognizerClientLiveTests(bool isAsync)
-            : base(isAsync)
+        public FormRecognizerClientLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion)
         {
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void FormRecognizerClientCannotAuthenticateWithFakeApiKey()
         {
             var client = CreateFormRecognizerClient(apiKey: "fakeKey");
@@ -45,6 +46,7 @@ namespace Azure.AI.FormRecognizer.Tests
         #region StartRecognizeContent
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -72,6 +74,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentPopulatesFormPagePdf(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -179,6 +182,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentPopulatesFormPageJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -292,6 +296,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -331,6 +336,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -354,6 +360,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentCanParseMultipageFormWithBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -393,6 +400,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeContentThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -411,6 +419,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeContentFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -423,6 +432,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentWithSelectionMarks(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -453,6 +463,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase("1", 1)]
         [TestCase("1-2", 2)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentWithOnePageArgument(string pages, int expected)
         {
             var client = CreateFormRecognizerClient();
@@ -472,6 +483,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase("1", "3", 2)]
         [TestCase("1-2", "3", 3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentWithMultiplePageArgument(string page1, string page2, int expected)
         {
             var client = CreateFormRecognizerClient();
@@ -489,6 +501,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentWithLanguage()
         {
             var client = CreateFormRecognizerClient();
@@ -506,6 +519,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeContentWithNoSupporttedLanguage()
         {
             var client = CreateFormRecognizerClient();
@@ -516,6 +530,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentWithReadingOrder()
         {
             var client = CreateFormRecognizerClient();
@@ -549,6 +564,7 @@ namespace Azure.AI.FormRecognizer.Tests
         #region StartRecognizeReceipts
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeReceiptsCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -581,6 +597,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -692,6 +709,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -806,6 +824,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -860,6 +879,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeReceiptsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -891,6 +911,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeReceiptsCanParseMultipageFormWithBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -943,6 +964,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeReceiptsThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -961,6 +983,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeReceiptsFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -971,6 +994,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeReceiptsWithSupportedLocale()
         {
             var client = CreateFormRecognizerClient();
@@ -1007,6 +1031,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeReceiptsWithWrongLocale()
         {
             var client = CreateFormRecognizerClient();
@@ -1024,6 +1049,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase("1", 1)]
         [TestCase("1-2", 2)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeReceiptsWithOnePageArgument(string pages, int expected)
         {
             var client = CreateFormRecognizerClient();
@@ -1043,6 +1069,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase("1", "3", 2)]
         [TestCase("1-2", "3", 3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeReceiptsWithMultiplePageArgument(string page1, string page2, int expected)
         {
             var client = CreateFormRecognizerClient();
@@ -1064,6 +1091,7 @@ namespace Azure.AI.FormRecognizer.Tests
         #region StartRecognizeBusinessCards
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeBusinessCardsCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -1092,6 +1120,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1199,6 +1228,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1304,6 +1334,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeBusinessCardsIncludeFieldElements()
         {
             var client = CreateFormRecognizerClient();
@@ -1328,6 +1359,7 @@ namespace Azure.AI.FormRecognizer.Tests
        }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeBusinessCardsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -1360,6 +1392,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeBusinessCardsThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -1378,6 +1411,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeBusinessCardsFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -1390,6 +1424,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeBusinessCardsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1450,6 +1485,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeBusinessCardsWithSupportedLocale()
         {
             var client = CreateFormRecognizerClient();
@@ -1486,6 +1522,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeBusinessCardsWithWrongLocale()
         {
             var client = CreateFormRecognizerClient();
@@ -1503,6 +1540,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase("1", 1)]
         [TestCase("1-2", 2)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeBusinessCardsWithOnePageArgument(string pages, int expected)
         {
             var client = CreateFormRecognizerClient();
@@ -1522,6 +1560,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase("1", "3", 2)]
         [TestCase("1-2", "3", 3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeBusinessCardsWithMultiplePageArgument(string page1, string page2, int expected)
         {
             var client = CreateFormRecognizerClient();
@@ -1543,6 +1582,7 @@ namespace Azure.AI.FormRecognizer.Tests
         #region StartRecognizeInvoices
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeInvoicesCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -1571,6 +1611,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeInvoicesPopulatesExtractedJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1729,6 +1770,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeInvoicesIncludeFieldElements()
         {
             var client = CreateFormRecognizerClient();
@@ -1753,6 +1795,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeInvoicesCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -1786,6 +1829,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeInvoicesCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1845,6 +1889,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeInvoicesThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -1863,6 +1908,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeInvoicesFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -1873,6 +1919,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeInvoicesWithSupportedLocale()
         {
             var client = CreateFormRecognizerClient();
@@ -1909,6 +1956,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeInvoicesWithWrongLocale()
         {
             var client = CreateFormRecognizerClient();
@@ -1926,6 +1974,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase("1", 1)]
         [TestCase("1-2", 2)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeInvoicesWithOnePageArgument(string pages, int expected)
         {
             var client = CreateFormRecognizerClient();
@@ -1946,6 +1995,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase("1", "3", 2)]
         [TestCase("1-2", "3", 3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeInvoicesWithMultiplePageArgument(string page1, string page2, int expected)
         {
             var client = CreateFormRecognizerClient();
@@ -1968,6 +2018,7 @@ namespace Azure.AI.FormRecognizer.Tests
         #region StartRecognizeIdDocuments
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeIdDocumentsCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -1996,6 +2047,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeIdDocumentsPopulatesExtractedIdDocumentJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -2063,6 +2115,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeIdDocumentsIncludeFieldElements()
         {
             var client = CreateFormRecognizerClient();
@@ -2087,6 +2140,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeIdDocumentsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -2104,6 +2158,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeIdDocumentsThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -2122,6 +2177,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeIdDocumentsFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -2138,6 +2194,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsCanAuthenticateWithTokenCredential(bool useTrainingLabels)
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -2187,6 +2244,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(true, false)]
         [TestCase(false, true)]
         [TestCase(false, false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithLabels(bool useStream, bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
@@ -2244,6 +2302,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithLabelsAndSelectionMarks(bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
@@ -2287,6 +2346,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -2344,6 +2404,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -2379,6 +2440,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageFormWithBlankPage(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -2432,6 +2494,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseDifferentTypeOfForm()
         {
             var client = CreateFormRecognizerClient();
@@ -2469,6 +2532,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(true, false)]
         [TestCase(false, true)]
         [TestCase(false, false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithoutLabels(bool useStream, bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
@@ -2529,6 +2593,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -2583,6 +2648,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -2619,6 +2685,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -2683,6 +2750,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsThrowsForDamagedFile(bool useTrainingLabels)
         {
             var client = CreateFormRecognizerClient();
@@ -2705,6 +2773,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
         {
             var client = CreateFormRecognizerClient();
@@ -2724,6 +2793,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase("1", 1)]
         [TestCase("1-2", 2)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithOnePageArgument(string pages, int expected)
         {
             var client = CreateFormRecognizerClient();
@@ -2745,6 +2815,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase("1", "3", 2)]
         [TestCase("1-2", "3", 3)]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithMultiplePageArgument(string page1, string page2, int expected)
         {
             var client = CreateFormRecognizerClient();
@@ -2764,6 +2835,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithTableVariableRows()
         {
             var client = CreateFormRecognizerClient();
@@ -2791,6 +2863,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithTableFixedRows()
         {
             var client = CreateFormRecognizerClient();

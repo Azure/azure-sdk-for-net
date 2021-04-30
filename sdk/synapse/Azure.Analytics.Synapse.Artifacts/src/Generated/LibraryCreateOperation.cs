@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates a library with the library name. </summary>
     public partial class LibraryCreateOperation : Operation<Response>, IOperationSource<Response>
     {
-        private readonly ArmOperationHelpers<Response> _operation;
+        private readonly OperationInternals<Response> _operation;
 
         /// <summary> Initializes a new instance of LibraryCreateOperation for mocking. </summary>
         protected LibraryCreateOperation()
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal LibraryCreateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LibraryCreateOperation");
+            _operation = new OperationInternals<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LibraryCreateOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;
