@@ -16,16 +16,16 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: communication
-    Clouds: ACS_Public
     CloudConfig:
-      ACS_Public:
-        SubscriptionConfiguration: $(sub-config-communication-services-cloud-test-resources)
+     Public:
+        SubscriptionConfigurations:
+          - $(sub-config-azure-cloud-test-resources)
+          - $(sub-config-communication-services-cloud-test-resources-test)
+          - $(sub-config-communication-services-cloud-test-resources-net)
+      Int:
+        SubscriptionConfiguration: $(sub-config-communication-int-test-resources)
+    Clouds: Public,Int
     EnvVars:
-      AZURE_TENANT_ID: $(COMMUNICATION_TENANT_ID)
-      AZURE_CLIENT_ID: $(COMMUNICATION_CLIENT_ID)
-      AZURE_CLIENT_SECRET: $(COMMUNICATION_CLIENT_SECRET)
-      AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING: $(communication-livetest-connection-string)
-      AZURE_PHONE_NUMBER: $(net-communication-livetest-phone-number)
       # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
       SKIP_PHONENUMBER_LIVE_TESTS: TRUE
       TEST_PACKAGES_ENABLED: ${{ parameters.TestPackagesEnabled }}
