@@ -30,21 +30,24 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         /// <param name="dataCollectionRuleId">The resource ID of the data
         /// collection rule that is to be associated.</param>
+        /// <param name="dataCollectionEndpointId">The resource ID of the data
+        /// collection endpoint that is to be associated.</param>
         /// <param name="description">Description of the association.</param>
-        /// <param name="provisioningState">The resource provisioning state.
-        /// Possible values include: 'Creating', 'Updating', 'Deleting',
-        /// 'Succeeded', 'Failed'</param>
         /// <param name="id">Fully qualified ID of the resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        /// <param name="etag">Resource entity tag (ETag).</param>
-        public DataCollectionRuleAssociationProxyOnlyResource(string dataCollectionRuleId, string description = default(string), string provisioningState = default(string), string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
+        public DataCollectionRuleAssociationProxyOnlyResource(
+            string dataCollectionRuleId,
+            string dataCollectionEndpointId = default(string),
+            string description = default(string), 
+            string id = default(string), 
+            string name = default(string), 
+            string type = default(string))
             : base(id, name, type)
         {
             Description = description;
             DataCollectionRuleId = dataCollectionRuleId;
-            ProvisioningState = provisioningState;
-            Etag = etag;
+            DataCollectionEndpointId = dataCollectionEndpointId;
             CustomInit();
         }
 
@@ -67,6 +70,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string DataCollectionRuleId { get; set; }
 
         /// <summary>
+        /// Gets or sets the resource ID of the data collection endpoint that
+        /// is to be associated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataCollectionEndpointId")]
+        public string DataCollectionEndpointId { get; set; }
+
+        /// <summary>
         /// Gets the resource provisioning state. Possible values include:
         /// 'Creating', 'Updating', 'Deleting', 'Succeeded', 'Failed'
         /// </summary>
@@ -78,6 +88,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

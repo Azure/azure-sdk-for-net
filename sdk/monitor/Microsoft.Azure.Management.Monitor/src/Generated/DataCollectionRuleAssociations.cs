@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Monitor
                     throw new ValidationException(ValidationRules.MinLength, "resourceUri", 1);
                 }
             }
-            string apiVersion = "2019-11-01-preview";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -281,22 +281,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dataCollectionRuleName");
             }
-            if (dataCollectionRuleName != null)
-            {
-                if (dataCollectionRuleName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "dataCollectionRuleName", 64);
-                }
-                if (dataCollectionRuleName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "dataCollectionRuleName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCollectionRuleName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "dataCollectionRuleName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
-            string apiVersion = "2019-11-01-preview";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -432,7 +417,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='associationName'>
-        /// The name of the association.
+        /// The name of the association. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -472,22 +457,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "associationName");
             }
-            if (associationName != null)
-            {
-                if (associationName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "associationName", 64);
-                }
-                if (associationName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "associationName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(associationName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "associationName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
-            string apiVersion = "2019-11-01-preview";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -622,7 +592,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='associationName'>
-        /// The name of the association.
+        /// The name of the association. The name is case insensitive.
         /// </param>
         /// <param name='body'>
         /// The payload
@@ -665,26 +635,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "associationName");
             }
-            if (associationName != null)
-            {
-                if (associationName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "associationName", 64);
-                }
-                if (associationName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "associationName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(associationName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "associationName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
-            if (body != null)
-            {
-                body.Validate();
-            }
-            string apiVersion = "2019-11-01-preview";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -844,7 +795,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='associationName'>
-        /// The name of the association.
+        /// The name of the association. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -881,22 +832,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "associationName");
             }
-            if (associationName != null)
-            {
-                if (associationName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "associationName", 64);
-                }
-                if (associationName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "associationName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(associationName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "associationName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
-            string apiVersion = "2019-11-01-preview";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

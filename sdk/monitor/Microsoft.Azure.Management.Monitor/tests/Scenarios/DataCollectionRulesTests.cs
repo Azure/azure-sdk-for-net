@@ -181,7 +181,6 @@ namespace Monitor.Tests.Scenarios
                                 {
                                     Name = "perfCounterDataSource1",
                                     Streams = new List<string> { "Microsoft-InsightsMetrics" },
-                                    ScheduledTransferPeriod = "PT1M",
                                     SamplingFrequencyInSeconds = 10,
                                     CounterSpecifiers = new List<string>
                                     {
@@ -313,7 +312,6 @@ namespace Monitor.Tests.Scenarios
                 Assert.Equal(exp.CounterSpecifiers.ToJson(), act.CounterSpecifiers.ToJson());
                 Assert.Equal(exp.Name, act.Name);
                 Assert.Equal(exp.SamplingFrequencyInSeconds, act.SamplingFrequencyInSeconds);
-                Assert.Equal(exp.ScheduledTransferPeriod, act.ScheduledTransferPeriod);
                 Assert.Equal(exp.Streams.ToJson(), act.Streams.ToJson());
             }
         }
@@ -323,7 +321,6 @@ namespace Monitor.Tests.Scenarios
             if (exp != null)
             {
                 Assert.Equal(exp.Name, act.Name);
-                Assert.Equal(exp.ScheduledTransferPeriod, act.ScheduledTransferPeriod);
                 Assert.Equal(exp.Streams.ToJson(), act.Streams.ToJson());
                 Assert.Equal(exp.XPathQueries.ToJson(), act.XPathQueries.ToJson());
             }

@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='associationName'>
-        /// The name of the association.
+        /// The name of the association. The name is case insensitive.
         /// </param>
         public static DataCollectionRuleAssociationProxyOnlyResource Get(this IDataCollectionRuleAssociations operations, string resourceUri, string associationName)
         {
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='associationName'>
-        /// The name of the association.
+        /// The name of the association. The name is case insensitive.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='associationName'>
-        /// The name of the association.
+        /// The name of the association. The name is case insensitive.
         /// </param>
         /// <param name='body'>
         /// The payload
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='associationName'>
-        /// The name of the association.
+        /// The name of the association. The name is case insensitive.
         /// </param>
         /// <param name='body'>
         /// The payload
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='associationName'>
-        /// The name of the association.
+        /// The name of the association. The name is case insensitive.
         /// </param>
         public static void Delete(this IDataCollectionRuleAssociations operations, string resourceUri, string associationName)
         {
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='associationName'>
-        /// The name of the association.
+        /// The name of the association. The name is case insensitive.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.

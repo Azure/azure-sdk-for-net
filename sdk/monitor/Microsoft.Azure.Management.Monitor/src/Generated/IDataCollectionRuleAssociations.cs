@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='associationName'>
-        /// The name of the association.
+        /// The name of the association. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='associationName'>
-        /// The name of the association.
+        /// The name of the association. The name is case insensitive.
         /// </param>
         /// <param name='body'>
         /// The payload
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// The identifier of the resource.
         /// </param>
         /// <param name='associationName'>
-        /// The name of the association.
+        /// The name of the association. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

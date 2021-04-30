@@ -49,12 +49,10 @@ namespace Monitor.Tests.BasicTests
                     location: "eastus", 
                     description: "Second DCR", 
                     dataSources: new DataCollectionRuleDataSources(), 
-                    provisioningState: null, 
                     tags: null, 
                     id: null, 
                     name: null, 
-                    type: null, 
-                    etag: null
+                    type: null
                 ));
 
             AreEqual(expectedResult, result);
@@ -318,7 +316,6 @@ namespace Monitor.Tests.BasicTests
                 Assert.Equal(exp.CounterSpecifiers.ToJson(), act.CounterSpecifiers.ToJson());
                 Assert.Equal(exp.Name, act.Name);
                 Assert.Equal(exp.SamplingFrequencyInSeconds, act.SamplingFrequencyInSeconds);
-                Assert.Equal(exp.ScheduledTransferPeriod, act.ScheduledTransferPeriod);
                 Assert.Equal(exp.Streams.ToJson(), act.Streams.ToJson());
             }
         }
@@ -328,7 +325,6 @@ namespace Monitor.Tests.BasicTests
             if (exp != null)
             {
                 Assert.Equal(exp.Name, act.Name);
-                Assert.Equal(exp.ScheduledTransferPeriod, act.ScheduledTransferPeriod);
                 Assert.Equal(exp.Streams.ToJson(), act.Streams.ToJson());
                 Assert.Equal(exp.XPathQueries.ToJson(), act.XPathQueries.ToJson());
             }
@@ -479,11 +475,9 @@ namespace Monitor.Tests.BasicTests
             return new DataCollectionRuleAssociationProxyOnlyResource(
                     dataCollectionRuleId: "/subscriptions/xxxxxxx-xxxx-xxxx/resourceGroups/rgGroup/providers/Microsoft.Insights/dataCollectionRules/dcrName",
                     description: "Associate VM to DCR",
-                    provisioningState: null,
                     id: id,
                     name: "dcrBcdrTestAssoc",
-                    type: "Microsoft.Insights/dataCollectionRuleAssociations",
-                    etag: null
+                    type: "Microsoft.Insights/dataCollectionRuleAssociations"
                 );
         }
 
