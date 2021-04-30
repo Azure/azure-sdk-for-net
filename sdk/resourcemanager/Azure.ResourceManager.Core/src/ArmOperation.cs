@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         public Response<TOperations> WaitForCompletion(CancellationToken cancellationToken = default)
         {
-            return WaitForCompletion(ArmOperationHelpers<TOperations>.DefaultPollingInterval.Seconds, cancellationToken);
+            return WaitForCompletion(OperationHelpers.DefaultPollingInterval.Seconds, cancellationToken);
         }
 
         /// <summary>
