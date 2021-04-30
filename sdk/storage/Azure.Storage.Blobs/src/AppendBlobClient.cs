@@ -1464,7 +1464,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// conditions on the copying of data from this source blob.
         /// </param>
         /// <param name="sourceBearerToken">
-        /// Optional. Source token token used to access the source blob.
+        /// Optional. Source bearer token used to access the source blob.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
