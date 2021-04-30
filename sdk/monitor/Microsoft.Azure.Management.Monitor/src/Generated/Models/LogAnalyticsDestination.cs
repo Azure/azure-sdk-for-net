@@ -50,6 +50,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string WorkspaceResourceId { get; set; }
 
         /// <summary>
+        /// Gets the Customer ID of the Log Analytics workspace.
+        /// </summary>
+        [JsonProperty(PropertyName = "workspaceId")]
+        public string WorkspaceId { get; private set; }
+
+        /// <summary>
         /// Gets or sets a friendly name for the destination.
         /// This name should be unique across all destinations (regardless of
         /// type) within the data collection rule.

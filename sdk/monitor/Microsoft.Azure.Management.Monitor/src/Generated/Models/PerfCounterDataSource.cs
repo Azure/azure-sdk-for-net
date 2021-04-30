@@ -36,10 +36,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// A stream indicates what schema will be used for this data and
         /// usually what table in Log Analytics the data will be sent
         /// to.</param>
-        /// <param name="scheduledTransferPeriod">The interval between data
-        /// uploads (scheduled transfers), rounded up to the nearest minute.
-        /// Possible values include: 'PT1M', 'PT5M', 'PT15M', 'PT30M',
-        /// 'PT60M'</param>
         /// <param name="samplingFrequencyInSeconds">The number of seconds
         /// between consecutive counter measurements (samples).</param>
         /// <param name="counterSpecifiers">A list of specifier names of the
@@ -50,10 +46,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="name">A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of
         /// type) within the data collection rule.</param>
-        public PerfCounterDataSource(IList<string> streams, string scheduledTransferPeriod, int samplingFrequencyInSeconds, IList<string> counterSpecifiers, string name)
+        public PerfCounterDataSource(
+            IList<string> streams, 
+            int samplingFrequencyInSeconds, 
+            IList<string> counterSpecifiers, 
+            string name)
         {
             Streams = streams;
-            ScheduledTransferPeriod = scheduledTransferPeriod;
             SamplingFrequencyInSeconds = samplingFrequencyInSeconds;
             CounterSpecifiers = counterSpecifiers;
             Name = name;
@@ -72,14 +71,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "streams")]
         public IList<string> Streams { get; set; }
-
-        /// <summary>
-        /// Gets or sets the interval between data uploads (scheduled
-        /// transfers), rounded up to the nearest minute. Possible values
-        /// include: 'PT1M', 'PT5M', 'PT15M', 'PT30M', 'PT60M'
-        /// </summary>
-        [JsonProperty(PropertyName = "scheduledTransferPeriod")]
-        public string ScheduledTransferPeriod { get; set; }
 
         /// <summary>
         /// Gets or sets the number of seconds between consecutive counter
@@ -117,10 +108,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
             if (Streams == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Streams");
-            }
-            if (ScheduledTransferPeriod == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ScheduledTransferPeriod");
             }
             if (CounterSpecifiers == null)
             {

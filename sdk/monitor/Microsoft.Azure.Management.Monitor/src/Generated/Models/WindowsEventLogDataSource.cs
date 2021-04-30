@@ -35,19 +35,17 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// A stream indicates what schema will be used for this data and
         /// usually what table in Log Analytics the data will be sent
         /// to.</param>
-        /// <param name="scheduledTransferPeriod">The interval between data
-        /// uploads (scheduled transfers), rounded up to the nearest minute.
-        /// Possible values include: 'PT1M', 'PT5M', 'PT15M', 'PT30M',
-        /// 'PT60M'</param>
         /// <param name="xPathQueries">A list of Windows Event Log queries in
         /// XPATH format.</param>
         /// <param name="name">A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of
         /// type) within the data collection rule.</param>
-        public WindowsEventLogDataSource(IList<string> streams, string scheduledTransferPeriod, IList<string> xPathQueries, string name)
+        public WindowsEventLogDataSource(
+            IList<string> streams, 
+            IList<string> xPathQueries, 
+            string name)
         {
             Streams = streams;
-            ScheduledTransferPeriod = scheduledTransferPeriod;
             XPathQueries = xPathQueries;
             Name = name;
             CustomInit();
@@ -65,14 +63,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "streams")]
         public IList<string> Streams { get; set; }
-
-        /// <summary>
-        /// Gets or sets the interval between data uploads (scheduled
-        /// transfers), rounded up to the nearest minute. Possible values
-        /// include: 'PT1M', 'PT5M', 'PT15M', 'PT30M', 'PT60M'
-        /// </summary>
-        [JsonProperty(PropertyName = "scheduledTransferPeriod")]
-        public string ScheduledTransferPeriod { get; set; }
 
         /// <summary>
         /// Gets or sets a list of Windows Event Log queries in XPATH format.
@@ -99,10 +89,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
             if (Streams == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Streams");
-            }
-            if (ScheduledTransferPeriod == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ScheduledTransferPeriod");
             }
             if (XPathQueries == null)
             {

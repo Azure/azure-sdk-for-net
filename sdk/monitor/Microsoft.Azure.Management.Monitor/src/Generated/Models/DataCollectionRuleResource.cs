@@ -7,8 +7,13 @@
 namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
+
     using Newtonsoft.Json;
+
+    using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Definition of ARM tracked top level resource.
@@ -37,24 +42,31 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="dataSources">The specification of data sources.
         /// This property is optional and can be omitted if the rule is meant
         /// to be used via direct calls to the provisioned endpoint.</param>
-        /// <param name="provisioningState">The resource provisioning state.
-        /// Possible values include: 'Creating', 'Updating', 'Deleting',
-        /// 'Succeeded', 'Failed'</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="kind">The kind of the resource. Possible values
+        /// include: 'Linux', 'Windows'</param>
         /// <param name="id">Fully qualified ID of the resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        /// <param name="etag">Resource entity tag (ETag).</param>
-        public DataCollectionRuleResource(DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, string location, string description = default(string), DataCollectionRuleDataSources dataSources = default(DataCollectionRuleDataSources), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
+        public DataCollectionRuleResource(
+            DataCollectionRuleDestinations destinations,
+            IList<DataFlow> dataFlows,
+            string location,
+            string description = default(string),
+            DataCollectionRuleDataSources dataSources = default(DataCollectionRuleDataSources),
+            IDictionary<string, string> tags = default(IDictionary<string, string>),
+            string kind = default(string),
+            string id = default(string),
+            string name = default(string),
+            string type = default(string))
             : base(location, id, name, type, tags)
         {
             Description = description;
             DataSources = dataSources;
             Destinations = destinations;
             DataFlows = dataFlows;
-            ProvisioningState = provisioningState;
             Location = location;
-            Etag = etag;
+            Kind = kind;
             CustomInit();
         }
 
@@ -68,6 +80,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets the immutable ID of this data collection rule. This property
+        /// is READ-ONLY.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.immutableId")]
+        public string ImmutableId { get; private set; }
 
         /// <summary>
         /// Gets or sets the specification of data sources.
@@ -96,11 +115,26 @@ namespace Microsoft.Azure.Management.Monitor.Models
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
+
+        /// <summary>
+        /// Gets or sets the kind of the resource. Possible values include:
+        /// 'Linux', 'Windows'
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
+
         /// <summary>
         /// Gets resource entity tag (ETag).
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets metadata pertaining to creation and last modification of the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

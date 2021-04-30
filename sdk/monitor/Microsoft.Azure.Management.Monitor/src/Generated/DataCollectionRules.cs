@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Monitor
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            string apiVersion = "2019-11-01-preview";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.Monitor
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            string apiVersion = "2019-11-01-preview";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -463,22 +463,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dataCollectionRuleName");
             }
-            if (dataCollectionRuleName != null)
-            {
-                if (dataCollectionRuleName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "dataCollectionRuleName", 64);
-                }
-                if (dataCollectionRuleName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "dataCollectionRuleName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCollectionRuleName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "dataCollectionRuleName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
-            string apiVersion = "2019-11-01-preview";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -676,26 +661,12 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dataCollectionRuleName");
             }
-            if (dataCollectionRuleName != null)
-            {
-                if (dataCollectionRuleName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "dataCollectionRuleName", 64);
-                }
-                if (dataCollectionRuleName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "dataCollectionRuleName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCollectionRuleName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "dataCollectionRuleName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
+
             if (body != null)
             {
                 body.Validate();
             }
-            string apiVersion = "2019-11-01-preview";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -918,22 +889,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dataCollectionRuleName");
             }
-            if (dataCollectionRuleName != null)
-            {
-                if (dataCollectionRuleName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "dataCollectionRuleName", 64);
-                }
-                if (dataCollectionRuleName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "dataCollectionRuleName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCollectionRuleName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "dataCollectionRuleName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
-            string apiVersion = "2019-11-01-preview";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1132,22 +1088,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dataCollectionRuleName");
             }
-            if (dataCollectionRuleName != null)
-            {
-                if (dataCollectionRuleName.Length > 64)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "dataCollectionRuleName", 64);
-                }
-                if (dataCollectionRuleName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "dataCollectionRuleName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(dataCollectionRuleName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "dataCollectionRuleName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
-            string apiVersion = "2019-11-01-preview";
+            string apiVersion = "2021-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

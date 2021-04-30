@@ -42,11 +42,19 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// type) within the data collection rule.</param>
         /// <param name="extensionSettings">The extension settings. The format
         /// is specific for particular extension.</param>
-        public ExtensionDataSource(IList<string> streams, string extensionName, string name, object extensionSettings = default(object))
+        /// <param name="inputDataSources">The list of data sources this
+        /// extension needs data from.</param>
+        public ExtensionDataSource(
+            IList<string> streams,
+            string extensionName,
+            string name,
+            object extensionSettings = default(object), 
+            IList<string> inputDataSources = default(IList<string>))
         {
             Streams = streams;
             ExtensionName = extensionName;
             ExtensionSettings = extensionSettings;
+            InputDataSources = inputDataSources;
             Name = name;
             CustomInit();
         }
@@ -76,6 +84,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "extensionSettings")]
         public object ExtensionSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of data sources this extension needs data
+        /// from.
+        /// </summary>
+        [JsonProperty(PropertyName = "inputDataSources")]
+        public IList<string> InputDataSources { get; set; }
 
         /// <summary>
         /// Gets or sets a friendly name for the data source.
