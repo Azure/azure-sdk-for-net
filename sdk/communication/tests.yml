@@ -17,14 +17,12 @@ extends:
   parameters:
     ServiceDirectory: communication
     CloudConfig:
-    Public:
-      SubscriptionConfigurations:
-        - $(sub-config-azure-cloud-test-resources)
-        - $(sub-config-communication-services-cloud-test-resources-test)
-        - $(sub-config-communication-services-cloud-test-resources-net)
-    Int:
-      SubscriptionConfiguration: $(sub-config-communication-int-test-resources)
-    Clouds: Public,Int
+      Public:
+        SubscriptionConfigurations:
+          - $(sub-config-azure-cloud-test-resources)
+          - $(sub-config-communication-services-cloud-test-resources-test)
+          - $(sub-config-communication-services-cloud-test-resources-net)
+    Clouds: Public
     EnvVars:
       # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
       SKIP_PHONENUMBER_LIVE_TESTS: TRUE
