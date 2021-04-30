@@ -189,7 +189,7 @@
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.8.0" />
