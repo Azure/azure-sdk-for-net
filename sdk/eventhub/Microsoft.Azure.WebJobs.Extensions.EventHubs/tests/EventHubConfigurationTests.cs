@@ -53,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(EventHubsRetryMode.Fixed, options.ClientRetryOptions.Mode);
             Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, options.TransportType);
             Assert.AreEqual("http://proxyserver:8080/", ((WebProxy) options.WebProxy).Address.AbsoluteUri);
-            Assert.AreEqual("http://customendpoint.com/", options.CustomEndpointAddress.ToString());
+            Assert.AreEqual("http://www.customendpoint.com/", options.CustomEndpointAddress.ToString());
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(EventHubsRetryMode.Fixed, result.ClientRetryOptions.Mode);
             Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, result.TransportType);
             Assert.AreEqual("http://proxyserver:8080/", ((WebProxy) result.WebProxy).Address.AbsoluteUri);
-            Assert.AreEqual("http://customendpoint.com/", result.CustomEndpointAddress.AbsoluteUri);
+            Assert.AreEqual("http://www.customendpoint.com/", result.CustomEndpointAddress.AbsoluteUri);
         }
 
         [Test]
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:ClientRetryOptions:Mode", "0" },
                 { $"{extensionPath}:TransportType", "1" },
                 { $"{extensionPath}:WebProxy", "http://proxyserver:8080/" },
-                { $"{extensionPath}:CustomEndpointAddress", "http://customendpoint.com/" },
+                { $"{extensionPath}:CustomEndpointAddress", "http://www.customendpoint.com/" },
             };
 
             return TestHelpers.GetConfiguredOptions<EventHubOptions>(b =>

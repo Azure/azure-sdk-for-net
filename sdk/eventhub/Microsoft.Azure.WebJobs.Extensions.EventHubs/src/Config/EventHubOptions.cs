@@ -195,9 +195,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     { nameof(MaxBatchSize), MaxBatchSize },
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(TransportType),  TransportType.ToString()},
-                    // use ToString for the URI as this is intended for display only
-                    { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.ToString() : string.Empty },
-                    { nameof(CustomEndpointAddress), CustomEndpointAddress?.ToString() },
+                    { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },
+                    { nameof(CustomEndpointAddress), CustomEndpointAddress?.AbsoluteUri },
                     { nameof(ClientRetryOptions), ConstructRetryOptions() },
                     { nameof(TrackLastEnqueuedEventProperties), TrackLastEnqueuedEventProperties },
                     { nameof(PrefetchCount), PrefetchCount },
