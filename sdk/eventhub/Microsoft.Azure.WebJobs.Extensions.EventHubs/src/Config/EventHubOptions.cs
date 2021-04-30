@@ -196,7 +196,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(TransportType),  TransportType.ToString()},
                     { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },
-                    { nameof(CustomEndpointAddress), CustomEndpointAddress?.AbsoluteUri },
                     { nameof(ClientRetryOptions), ConstructRetryOptions() },
                     { nameof(TrackLastEnqueuedEventProperties), TrackLastEnqueuedEventProperties },
                     { nameof(PrefetchCount), PrefetchCount },
@@ -205,6 +204,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     { nameof(LoadBalancingUpdateInterval), LoadBalancingUpdateInterval },
                     { nameof(InitialOffsetOptions), ConstructInitialOffsetOptions() },
                 };
+            // Only include if not null since it would otherwise not round-trip correctly due to
+            // https://github.com/dotnet/runtime/issues/36510. Once this issue is fixed, it can be included
+            // unconditionally.
+            if (CustomEndpointAddress != null)
+            {
+                options.Add(nameof(CustomEndpointAddress), CustomEndpointAddress?.AbsoluteUri);
+            }
+
             return options.ToString(Formatting.Indented);
         }
 
