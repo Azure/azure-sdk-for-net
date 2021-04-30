@@ -71,24 +71,6 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             return options;
         }
 
-        /// <summary>
-        /// Converts an options instance into a dictionary that can be passed into AddInMemoryCollection by
-        /// calling the options Format method, parsing into a JObject, and then collecting the child tokens of the
-        /// JObject.
-        /// </summary>
-        /// <param name="options">The options instance to convert.</param>
-        /// <param name="extensionPath">The extension path for the extension.</param>
-        /// <returns>A dictionary containing the configuration.</returns>
-        public static Dictionary<string, string> ToInMemoryCollection(this IOptionsFormatter options, string extensionPath)
-        {
-            string format = options.Format();
-            JObject jobj = JObject.Parse(format);
-            return jobj
-                .SelectTokens("$..*")
-                .Where(t => !t.HasValues)
-                .ToDictionary(t => $"{extensionPath}:{t.Path.Replace('.', ':')}", t => t.ToString());
-        }
-
         // Test error if not reached within a timeout
         public static Task<TResult> AwaitWithTimeout<TResult>(this TaskCompletionSource<TResult> taskSource)
         {
