@@ -2819,6 +2819,11 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response;
 
+                    if (options?.SourceBearerToken != null)
+                    {
+                        options.SourceBearerToken = $"Bearer {options.SourceBearerToken}";
+                    }
+
                     if (async)
                     {
                         response = await BlockBlobRestClient.PutBlobFromUrlAsync(
@@ -2851,6 +2856,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceContentMD5: options?.ContentHash,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
+                            copySourceAuthorization: options?.SourceBearerToken,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2886,6 +2892,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceContentMD5: options?.ContentHash,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
+                            copySourceAuthorization: options?.SourceBearerToken,
                             cancellationToken: cancellationToken);
                     }
 

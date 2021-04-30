@@ -3470,6 +3470,67 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task SyncUploadFromUriAsync_SourceBearerToken()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            string sourceBearerToken = await GetAuthToken();
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
+            {
+                SourceBearerToken = sourceBearerToken
+            };
+
+            // Act
+            await destBlob.SyncUploadFromUriAsync(
+                copySource: sourceBlob.Uri,
+                options: options);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task SyncUploadFromUriAsync_SourceBearerTokenFail()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
+            {
+                SourceBearerToken = string.Empty
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.SyncUploadFromUriAsync(
+                    copySource: sourceBlob.Uri,
+                    options: options),
+                e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task WithCustomerProvidedKey()
         {
             // Arrange

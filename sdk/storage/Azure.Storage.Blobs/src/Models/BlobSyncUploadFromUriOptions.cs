@@ -64,5 +64,10 @@ namespace Azure.Storage.Blobs.Models
         /// operation will fail.
         /// </summary>
         public byte[] ContentHash { get; set; }
+
+        /// <summary>
+        /// Optional.  Bearer token used to access the source blob.
+        /// </summary>
+        public string SourceBearerToken { get; set; }
     }
 }
