@@ -1316,6 +1316,69 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task AppendBlockFromUriAsync_SourceBearerToken()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+            AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await sourceBlob.CreateIfNotExistsAsync();
+            await sourceBlob.AppendBlockAsync(stream);
+
+            AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await destBlob.CreateIfNotExistsAsync();
+
+            string sourceBearerToken = await GetAuthToken();
+            AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+            {
+                SourceBearerToken = sourceBearerToken
+            };
+
+            // Act
+            await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri, options);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task AppendBlockFromUriAsync_SourceBearerTokenFail()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+            AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await sourceBlob.CreateIfNotExistsAsync();
+            await sourceBlob.AppendBlockAsync(stream);
+
+            AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await destBlob.CreateIfNotExistsAsync();
+
+            AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
+            {
+                SourceBearerToken = string.Empty
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.AppendBlockFromUriAsync(
+                    sourceUri: sourceBlob.Uri,
+                    options: options),
+                e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task AppendBlockAsync_NullStream_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

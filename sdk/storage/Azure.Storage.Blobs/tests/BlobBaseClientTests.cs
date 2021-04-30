@@ -3197,6 +3197,65 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task SyncCopyFromUri_SourceBearerToken()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            string sourceBearerToken = await GetAuthToken();
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                SourceBearerToken = sourceBearerToken
+            };
+
+            // Act
+            Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(
+                source: srcBlob.Uri,
+                options: options);
+
+            // Check that destBlob actually exists
+            await destBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(copyResponse.Value.ETag);
+            Assert.IsNotNull(copyResponse.Value.LastModified);
+            Assert.IsNotNull(copyResponse.Value.CopyId);
+            Assert.AreEqual(CopyStatus.Success, copyResponse.Value.CopyStatus);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task SyncCopyFromUri_SourceBearerTokenFail()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            string sourceTokenCredential = await GetAuthToken();
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                SourceBearerToken = string.Empty
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.SyncCopyFromUriAsync(
+                    source: srcBlob.Uri,
+                    options: options),
+                e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task DeleteAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

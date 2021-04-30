@@ -2804,7 +2804,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier: options?.AccessTier,
                 sourceConditions: options?.SourceConditions,
                 destinationConditions: options?.DestinationConditions,
-                sourceTokenCredential: options?.SourceTokenCredential,
+                sourceBearerToken: options?.SourceBearerToken,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -2855,7 +2855,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier: options?.AccessTier,
                 sourceConditions: options?.SourceConditions,
                 destinationConditions: options?.DestinationConditions,
-                sourceTokenCredential: options?.SourceTokenCredential,
+                sourceBearerToken: options?.SourceBearerToken,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -2898,8 +2898,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </param>
-        /// <param name="sourceTokenCredential">
-        /// Optional.  <see cref="TokenCredential"/> used to access the source blob.
+        /// <param name="sourceBearerToken">
+        /// Optional. Source token token used to access the source blob.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2923,7 +2923,7 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier,
             BlobRequestConditions sourceConditions,
             BlobRequestConditions destinationConditions,
-            TokenCredential sourceTokenCredential,
+            string sourceBearerToken,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2945,6 +2945,11 @@ namespace Azure.Storage.Blobs.Specialized
 
                     ResponseWithHeaders<BlobCopyFromURLHeaders> response;
 
+                    if (sourceBearerToken != null)
+                    {
+                        sourceBearerToken = $"Bearer {sourceBearerToken}";
+                    }
+
                     if (async)
                     {
                         response = await BlobRestClient.CopyFromURLAsync(
@@ -2962,6 +2967,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             leaseId: destinationConditions?.LeaseId,
                             blobTagsString: tags?.ToTagsString(),
+                            copySourceAuthorization: sourceBearerToken,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2982,6 +2988,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             leaseId: destinationConditions?.LeaseId,
                             blobTagsString: tags?.ToTagsString(),
+                            copySourceAuthorization: sourceBearerToken,
                             cancellationToken: cancellationToken);
                     }
 

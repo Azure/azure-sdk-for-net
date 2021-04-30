@@ -15,6 +15,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
@@ -689,6 +690,20 @@ namespace Azure.Storage.Test.Shared
                 Assert.AreEqual(_expectedBlobQueryError.Description, blobQueryError.Description);
                 Assert.AreEqual(_expectedBlobQueryError.Position, blobQueryError.Position);
             }
+        }
+
+        public async Task<string> GetAuthToken()
+        {
+            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(TestConfigOAuth.ActiveDirectoryApplicationId)
+                .WithAuthority(AzureCloudInstance.AzurePublic, TestConfigOAuth.ActiveDirectoryTenantId)
+                .WithClientSecret(TestConfigOAuth.ActiveDirectoryApplicationSecret)
+                .Build();
+
+            string[] scopes = new string[] { "https://storage.azure.com/.default" };
+
+            AcquireTokenForClientParameterBuilder result = application.AcquireTokenForClient(scopes);
+            AuthenticationResult authenticationResult = await result.ExecuteAsync();
+            return authenticationResult.AccessToken;
         }
     }
 }
