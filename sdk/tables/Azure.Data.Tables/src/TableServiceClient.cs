@@ -89,7 +89,7 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        public TableServiceClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
+        public TableServiceClient(Uri endpoint, AzureSasCredential credential, TablesClientOptions options = null)
             : this(endpoint, default, credential, options)
         {
             if (endpoint.Scheme != Uri.UriSchemeHttps)
@@ -125,7 +125,7 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options)
+        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TablesClientOptions options)
             : this(endpoint, new TableSharedKeyPipelinePolicy(credential), default, options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -146,14 +146,14 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        public TableServiceClient(string connectionString, TableClientOptions options = null)
+        public TableServiceClient(string connectionString, TablesClientOptions options = null)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
 
             TableConnectionString connString = TableConnectionString.Parse(connectionString);
             _accountName = connString._accountName;
 
-            options ??= new TableClientOptions();
+            options ??= new TablesClientOptions();
             var endpointString = connString.TableStorageUri.PrimaryUri.AbsoluteUri;
             var secondaryEndpoint = connString.TableStorageUri.SecondaryUri?.AbsoluteUri;
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
@@ -164,7 +164,11 @@ namespace Azure.Data.Tables
                 TableSharedKeyCredential credential => new TableSharedKeyPipelinePolicy(credential),
                 _ => default
             };
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { policy }, new ResponseClassifier());
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: perCallPolicies,
+                perRetryPolicies: new[] { policy },
+                new ResponseClassifier());
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
@@ -173,12 +177,12 @@ namespace Azure.Data.Tables
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);
         }
 
-        internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
+        internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TablesClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             _endpoint = endpoint;
-            options ??= new TableClientOptions();
+            options ??= new TablesClientOptions();
             _isCosmosEndpoint = IsPremiumEndpoint(endpoint);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             var endpointString = endpoint.AbsoluteUri;
@@ -189,7 +193,11 @@ namespace Azure.Data.Tables
                 null => policy,
                 _ => new AzureSasCredentialSynchronousPolicy(sasCredential)
             };
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { authPolicy }, new ResponseClassifier());
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: perCallPolicies,
+                perRetryPolicies: new[] { authPolicy },
+                new ResponseClassifier());
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
@@ -221,7 +229,10 @@ namespace Azure.Data.Tables
         /// <param name="resourceTypes"><see cref="TableAccountSasResourceTypes"/> containing the accessible resource types.</param>
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
         /// <returns>An instance of <see cref="TableAccountSasBuilder"/>.</returns>
-        public virtual TableAccountSasBuilder GetSasBuilder(TableAccountSasPermissions permissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
+        public virtual TableAccountSasBuilder GetSasBuilder(
+            TableAccountSasPermissions permissions,
+            TableAccountSasResourceTypes resourceTypes,
+            DateTimeOffset expiresOn)
         {
             return new TableAccountSasBuilder(permissions, resourceTypes, expiresOn) { Version = _version };
         }
@@ -253,19 +264,22 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Gets a list of tables from the storage account.
         /// </summary>
-        /// <param name="filter">Returns only tables that satisfy the specified filter.</param>
+        /// <param name="filter">
+        /// Returns only tables that satisfy the specified filter.
+        /// For example, the following would filter tables with a Name of 'foo': <c>"TableName eq 'foo'"</c>.
+        /// </param>
         /// <param name="maxPerPage">
         /// The maximum number of tables that will be returned per page.
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of <see cref="TableItem"/>s.</returns>
-        public virtual AsyncPageable<TableItem> GetTablesAsync(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TableItem> QueryAsync(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateAsyncEnumerable(
                 async pageSizeHint =>
                 {
-                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(Query)}");
                     scope.Start();
                     try
                     {
@@ -284,7 +298,7 @@ namespace Azure.Data.Tables
                 },
                 async (nextLink, pageSizeHint) =>
                 {
-                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(Query)}");
                     scope.Start();
                     try
                     {
@@ -307,19 +321,22 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Gets a list of tables from the storage account.
         /// </summary>
-        /// <param name="filter">Returns only tables that satisfy the specified filter.</param>
+        /// <param name="filter">
+        /// Returns only tables that satisfy the specified filter.
+        /// For example, the following would filter tables with a Name of 'foo': <c>"TableName eq 'foo'"</c>.
+        /// </param>
         /// <param name="maxPerPage">
         /// The maximum number tables that will be returned per page.
         /// Note: This value does not limit the total number of results if the result is fully enumerated.
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="Pageable{T}"/> containing a collection of <see cref="TableItem"/>.</returns>
-        public virtual Pageable<TableItem> GetTables(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TableItem> Query(string filter = null, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateEnumerable(
                 pageSizeHint =>
                 {
-                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(Query)}");
                     scope.Start();
                     try
                     {
@@ -337,12 +354,12 @@ namespace Azure.Data.Tables
                 },
                 (nextLink, pageSizeHint) =>
                 {
-                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(GetTables)}");
+                    using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(Query)}");
                     scope.Start();
                     try
                     {
                         var response = _tableOperations.Query(
-                            nextTableName: nextLink,
+                            nextLink,
                             new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
                             cancellationToken);
                         return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
@@ -361,6 +378,66 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="filter">
         /// Returns only tables that satisfy the specified filter expression.
+        /// For example, the following would filter tables with a Name of 'foo': <c>"TableName eq {someStringVariable}"</c>.
+        /// The filter string will be properly quoted and escaped.
+        /// </param>
+        /// <param name="maxPerPage">
+        /// The maximum number of entities that will be returned per page.
+        /// Note: This value does not limit the total number of results if the result is fully enumerated.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of <see cref="TableItem"/>s.</returns>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual AsyncPageable<TableItem> QueryAsync(FormattableString filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return QueryAsync(TableOdataFilter.Create(filter), maxPerPage, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of tables from the storage account.
+        /// </summary>
+        /// <param name="filter">
+        /// Returns only tables that satisfy the specified filter expression.
+        /// For example, the following would filter tables with a Name of 'foo': <c>"TableName eq {someStringVariable}"</c>.
+        /// The filter string will be properly quoted and escaped.
+        /// </param>
+        /// <param name="maxPerPage">
+        /// The maximum number of entities that will be returned per page.
+        /// Note: This value does not limit the total number of results if the result is fully enumerated.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="Pageable{T}"/> containing a collection of <see cref="TableItem"/>.</returns>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Pageable<TableItem> Query(FormattableString filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return Query(TableOdataFilter.Create(filter), maxPerPage, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of tables from the storage account.
+        /// </summary>
+        /// <param name="filter">
+        /// Returns only tables that satisfy the specified filter expression.
         /// For example, the following expression would filter tables with a Name of 'foo': <c>e => e.Name == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
@@ -370,13 +447,16 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of <see cref="TableItem"/>s.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual AsyncPageable<TableItem> GetTablesAsync(Expression<Func<TableItem, bool>> filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TableItem> QueryAsync(
+            Expression<Func<TableItem, bool>> filter,
+            int? maxPerPage = null,
+            CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetTables)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return GetTablesAsync(TableClient.Bind(filter), maxPerPage, cancellationToken);
+                return QueryAsync(TableClient.Bind(filter), maxPerPage, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -399,13 +479,13 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="Pageable{T}"/> containing a collection of <see cref="TableItem"/>.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Pageable<TableItem> GetTables(Expression<Func<TableItem, bool>> filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TableItem> Query(Expression<Func<TableItem, bool>> filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetTables)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return GetTables(TableClient.Bind(filter), maxPerPage, cancellationToken);
+                return Query(TableClient.Bind(filter), maxPerPage, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -427,7 +507,11 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(
+                    new TableProperties() { TableName = tableName },
+                    null,
+                    queryOptions: _defaultQueryOptions,
+                    cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -450,7 +534,12 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(
+                        new TableProperties() { TableName = tableName },
+                        null,
+                        queryOptions: _defaultQueryOptions,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -473,7 +562,11 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = tableName }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(
+                    new TableProperties() { TableName = tableName },
+                    null,
+                    queryOptions: _defaultQueryOptions,
+                    cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -500,7 +593,12 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = tableName }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(
+                        new TableProperties() { TableName = tableName },
+                        null,
+                        queryOptions: _defaultQueryOptions,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)

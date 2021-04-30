@@ -59,9 +59,9 @@ namespace Azure.Data.Tables
         bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> item) => _properties.Remove(item);
 
         /// <inheritdoc />
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => _properties.GetEnumerator();
+        IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator() => _properties.GetEnumerator();
 
         /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => _properties.GetEnumerator();
     }
 }
