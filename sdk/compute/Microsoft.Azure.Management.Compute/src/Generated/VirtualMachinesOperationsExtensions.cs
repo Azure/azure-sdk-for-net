@@ -258,8 +258,12 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView', 'userData'
+            /// The expand expression to apply on the operation. 'InstanceView' retrieves a
+            /// snapshot of the runtime properties of the virtual machine that is managed
+            /// by the platform and can change outside of control plane operations.
+            /// 'UserData' retrieves the UserData property as part of the VM model view
+            /// that was provided by the user during the VM Create/Update operation.
+            /// Possible values include: 'instanceView', 'userData'
             /// </param>
             public static VirtualMachine Get(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, InstanceViewTypes? expand = default(InstanceViewTypes?))
             {
@@ -280,8 +284,12 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
-            /// 'instanceView', 'userData'
+            /// The expand expression to apply on the operation. 'InstanceView' retrieves a
+            /// snapshot of the runtime properties of the virtual machine that is managed
+            /// by the platform and can change outside of control plane operations.
+            /// 'UserData' retrieves the UserData property as part of the VM model view
+            /// that was provided by the user during the VM Create/Update operation.
+            /// Possible values include: 'instanceView', 'userData'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

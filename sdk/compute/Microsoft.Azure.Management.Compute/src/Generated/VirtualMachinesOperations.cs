@@ -356,8 +356,12 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the virtual machine.
         /// </param>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation. Possible values include:
-        /// 'instanceView', 'userData'
+        /// The expand expression to apply on the operation. 'InstanceView' retrieves a
+        /// snapshot of the runtime properties of the virtual machine that is managed
+        /// by the platform and can change outside of control plane operations.
+        /// 'UserData' retrieves the UserData property as part of the VM model view
+        /// that was provided by the user during the VM Create/Update operation.
+        /// Possible values include: 'instanceView', 'userData'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -5038,7 +5042,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2020-12-01";
+            string apiVersion = "2021-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

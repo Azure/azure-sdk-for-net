@@ -292,7 +292,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The instance ID of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
+            /// The expand expression to apply on the operation. 'InstanceView' will
+            /// retrieve the instance view of the virtual machine. 'UserData' will retrieve
+            /// the UserData of the virtual machine. Possible values include:
             /// 'instanceView', 'userData'
             /// </param>
             public static VirtualMachineScaleSetVM Get(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, InstanceViewTypes? expand = default(InstanceViewTypes?))
@@ -316,7 +318,9 @@ namespace Microsoft.Azure.Management.Compute
             /// The instance ID of the virtual machine.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. Possible values include:
+            /// The expand expression to apply on the operation. 'InstanceView' will
+            /// retrieve the instance view of the virtual machine. 'UserData' will retrieve
+            /// the UserData of the virtual machine. Possible values include:
             /// 'instanceView', 'userData'
             /// </param>
             /// <param name='cancellationToken'>

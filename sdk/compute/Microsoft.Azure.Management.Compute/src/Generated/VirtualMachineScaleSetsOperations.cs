@@ -328,7 +328,9 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the VM scale set.
         /// </param>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation. Possible values include:
+        /// The expand expression to apply on the operation. 'UserData' retrieves the
+        /// UserData property of the VM scale set that was provided by the user during
+        /// the VM scale set Create/Update operation. Possible values include:
         /// 'userData'
         /// </param>
         /// <param name='customHeaders'>
