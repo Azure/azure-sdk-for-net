@@ -623,12 +623,17 @@ namespace Azure.Storage.Blobs.Test
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
+            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            {
+                SourceRange = new HttpRange(256, 256)
+            };
+
             // Act
             await RetryAsync(
                 async () => await destBlob.StageBlockFromUriAsync(
-                    sourceBlob.Uri,
-                    ToBase64(GetNewBlockName()),
-                    new HttpRange(256, 256)),
+                    sourceUri: sourceBlob.Uri,
+                    base64BlockId: ToBase64(GetNewBlockName()),
+                    options: options),
                 _retryStageBlockFromUri);
             Response<BlockList> getBlockListResult = await destBlob.GetBlockListAsync(BlockListTypes.All);
 
@@ -653,12 +658,17 @@ namespace Azure.Storage.Blobs.Test
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
+            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            {
+                SourceContentHash = MD5.Create().ComputeHash(data)
+            };
+
             // Act
             await RetryAsync(
                 async () => await destBlob.StageBlockFromUriAsync(
-                    sourceBlob.Uri,
-                    ToBase64(GetNewBlockName()),
-                    sourceContentHash: MD5.Create().ComputeHash(data)),
+                    sourceUri: sourceBlob.Uri,
+                    base64BlockId: ToBase64(GetNewBlockName()),
+                    options: options),
                 _retryStageBlockFromUri);
         }
 
@@ -679,13 +689,18 @@ namespace Azure.Storage.Blobs.Test
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
+            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            {
+                SourceContentHash = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 RetryAsync(
                     async () => await destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
                         base64BlockId: ToBase64(GetNewBlockName()),
-                        sourceContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
+                        options: options),
                     _retryStageBlockFromUri),
                 actualException => Assert.AreEqual("Md5Mismatch", actualException.ErrorCode)
             );
@@ -711,9 +726,14 @@ namespace Azure.Storage.Blobs.Test
                 await destBlob.UploadAsync(stream);
             }
 
-            var leaseAccessConditions = new BlobRequestConditions
+            BlobRequestConditions leaseAccessConditions = new BlobRequestConditions
             {
                 LeaseId = await SetupBlobLeaseCondition(destBlob, ReceivedLeaseId, garbageLeaseId)
+            };
+
+            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            {
+                DestinationConditions = leaseAccessConditions
             };
 
             // Act
@@ -721,7 +741,7 @@ namespace Azure.Storage.Blobs.Test
                 async () => await destBlob.StageBlockFromUriAsync(
                     sourceUri: sourceBlob.Uri,
                     base64BlockId: ToBase64(GetNewBlockName()),
-                    conditions: leaseAccessConditions),
+                    options: options),
                 _retryStageBlockFromUri);
         }
 
@@ -745,9 +765,14 @@ namespace Azure.Storage.Blobs.Test
                 await destBlob.UploadAsync(stream);
             }
 
-            var leaseAccessConditions = new BlobRequestConditions
+            BlobRequestConditions leaseAccessConditions = new BlobRequestConditions
             {
                 LeaseId = garbageLeaseId
+            };
+
+            BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+            {
+                DestinationConditions = leaseAccessConditions
             };
 
             // Act
@@ -756,7 +781,7 @@ namespace Azure.Storage.Blobs.Test
                     async () => await destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
                         base64BlockId: ToBase64(GetNewBlockName()),
-                        conditions: leaseAccessConditions),
+                        options: options),
                     _retryStageBlockFromUri),
                 actualException => Assert.AreEqual("LeaseNotPresentWithBlobOperation", actualException.ErrorCode)
             );
@@ -784,12 +809,17 @@ namespace Azure.Storage.Blobs.Test
 
                 BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
+                BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+                {
+                    SourceConditions = sourceAccessConditions
+                };
+
                 // Act
                 await RetryAsync(
                     async () => await destBlob.StageBlockFromUriAsync(
                         sourceUri: sourceBlob.Uri,
                         base64BlockId: ToBase64(GetNewBlockName()),
-                        sourceConditions: sourceAccessConditions),
+                        options: options),
                     _retryStageBlockFromUri);
             }
         }
@@ -816,13 +846,18 @@ namespace Azure.Storage.Blobs.Test
 
                 BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
+                BlockBlobStageBlockFromUriOptions options = new BlockBlobStageBlockFromUriOptions
+                {
+                    SourceConditions = sourceAccessConditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     RetryAsync(
                         async () => await destBlob.StageBlockFromUriAsync(
                             sourceUri: sourceBlob.Uri,
                             base64BlockId: ToBase64(GetNewBlockName()),
-                            sourceConditions: sourceAccessConditions),
+                            options: options),
                         _retryStageBlockFromUri),
                     e => { });
             }
