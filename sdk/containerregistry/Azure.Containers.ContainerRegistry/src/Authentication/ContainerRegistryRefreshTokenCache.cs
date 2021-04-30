@@ -22,6 +22,7 @@ namespace Azure.Containers.ContainerRegistry
         private TokenRequestContext? _currentAadContext;
         private TaskCompletionSource<RefreshTokenInfo>? _infoTcs;
         private TaskCompletionSource<RefreshTokenInfo>? _backgroundUpdateTcs;
+
         public ContainerRegistryRefreshTokenCache(TokenCredential aadTokenCredential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay, string[] initialAadScopes, IContainerRegistryAuthenticationClient authClient)
         {
             _aadTokenCredential = aadTokenCredential;
@@ -32,7 +33,7 @@ namespace Azure.Containers.ContainerRegistry
             _tokenRefreshRetryDelay = tokenRefreshRetryDelay;
         }
 
-        public async ValueTask<string> GetRefreshTokenAsync(HttpMessage message, TokenRequestContext context, string service, bool async)
+        public async ValueTask<string> GetAcrRefreshTokenAsync(HttpMessage message, TokenRequestContext context, string service, bool async)
         {
             bool getTokenFromCredential;
             TaskCompletionSource<RefreshTokenInfo> refreshTokenTcs;
