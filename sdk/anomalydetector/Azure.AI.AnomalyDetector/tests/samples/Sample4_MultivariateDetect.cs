@@ -73,7 +73,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 throw new Exception(msg);
             }
         }
-        
+
         #region Snippet:TrainMultivariateModel
         private async Task<Guid?> trainAsync(AnomalyDetectorClient client, string datasource, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
         {
