@@ -12,22 +12,21 @@ using Azure.Core.Pipeline;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// Time Series Insights instances client that can be used to perform operations such as creating, listing, replacing and deleting
-    /// Time Series instances.
+    /// Perform operations such as creating, listing, replacing and deleting Time Series instances.
     /// </summary>
-    public class TimeSeriesInstances
+    public class TimeSeriesInsightsInstances
     {
         private readonly TimeSeriesInstancesRestClient _instancesRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of TimeSeriesInstances. This constructor should only be used for mocking purposes.
+        /// Initializes a new instance of TimeSeriesInsightsInstances. This constructor should only be used for mocking purposes.
         /// </summary>
-        protected TimeSeriesInstances()
+        protected TimeSeriesInsightsInstances()
         {
         }
 
-        internal TimeSeriesInstances(TimeSeriesInstancesRestClient instancesRestClient, ClientDiagnostics clientDiagnostics)
+        internal TimeSeriesInsightsInstances(TimeSeriesInstancesRestClient instancesRestClient, ClientDiagnostics clientDiagnostics)
         {
             Argument.AssertNotNull(instancesRestClient, nameof(instancesRestClient));
             Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));

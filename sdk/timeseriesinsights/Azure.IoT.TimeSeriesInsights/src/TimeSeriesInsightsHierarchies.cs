@@ -12,21 +12,21 @@ using Azure.Core.Pipeline;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// Hierarchies client that can be used to perform operations such as creating, listing, replacing and deleting Time Series hierarchies.
+    /// Perform operations such as creating, listing, replacing and deleting Time Series hierarchies.
     /// </summary>
-    public class HierarchiesClient
+    public class TimeSeriesInsightsHierarchies
     {
         private readonly TimeSeriesHierarchiesRestClient _hierarchiesRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of HierarchiesClient. This constructor should only be used for mocking purposes.
+        /// Initializes a new instance of TimeSeriesInsightsHierarchies. This constructor should only be used for mocking purposes.
         /// </summary>
-        protected HierarchiesClient()
+        protected TimeSeriesInsightsHierarchies()
         {
         }
 
-        internal HierarchiesClient(TimeSeriesHierarchiesRestClient hierarchiesRestClient, ClientDiagnostics clientDiagnostics)
+        internal TimeSeriesInsightsHierarchies(TimeSeriesHierarchiesRestClient hierarchiesRestClient, ClientDiagnostics clientDiagnostics)
         {
             Argument.AssertNotNull(hierarchiesRestClient, nameof(hierarchiesRestClient));
             Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));

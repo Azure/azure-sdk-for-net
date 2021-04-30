@@ -29,27 +29,27 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary>
         /// Client to get and update model settings.
         /// </summary>
-        public virtual ModelSettingsClient ModelSettings { get; private set; }
+        public virtual TimeSeriesInsightsModelSettings ModelSettings { get; private set; }
 
         /// <summary>
         /// Instances client to perform various Time Series Insights instances operations.
         /// </summary>
-        public virtual TimeSeriesInstances Instances { get; private set; }
+        public virtual TimeSeriesInsightsInstances Instances { get; private set; }
 
         /// <summary>
         /// Types client to perform various Time Series Insights types operations.
         /// </summary>
-        public virtual TimeSeriesTypes Types { get; private set; }
+        public virtual TimeSeriesInsightsTypes Types { get; private set; }
 
         /// <summary>
         /// Hierarchies client to perform various Time Series Insights hierarchies operations.
         /// </summary>
-        public virtual HierarchiesClient Hierarchies { get; private set; }
+        public virtual TimeSeriesInsightsHierarchies Hierarchies { get; private set; }
 
         /// <summary>
         /// Query client that can be used to perform query operations on Time Series Insights.
         /// </summary>
-        public virtual TimeSeriesQuery Query { get; private set; }
+        public virtual TimeSeriesInsightsQuery Query { get; private set; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="TimeSeriesInsightsClient"/> class.
@@ -112,11 +112,11 @@ namespace Azure.IoT.TimeSeriesInsights
             _timeSeriesHierarchiesRestClient = new TimeSeriesHierarchiesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
 
-            ModelSettings = new ModelSettingsClient(_modelSettingsRestClient, _clientDiagnostics);
-            Instances = new TimeSeriesInstances(_timeSeriesInstancesRestClient, _clientDiagnostics);
-            Types = new TimeSeriesTypes(_timeSeriesTypesRestClient, _clientDiagnostics);
-            Hierarchies = new HierarchiesClient(_timeSeriesHierarchiesRestClient, _clientDiagnostics);
-            Query = new TimeSeriesQuery(_queryRestClient, _clientDiagnostics);
+            ModelSettings = new TimeSeriesInsightsModelSettings(_modelSettingsRestClient, _clientDiagnostics);
+            Instances = new TimeSeriesInsightsInstances(_timeSeriesInstancesRestClient, _clientDiagnostics);
+            Types = new TimeSeriesInsightsTypes(_timeSeriesTypesRestClient, _clientDiagnostics);
+            Hierarchies = new TimeSeriesInsightsHierarchies(_timeSeriesHierarchiesRestClient, _clientDiagnostics);
+            Query = new TimeSeriesInsightsQuery(_queryRestClient, _clientDiagnostics);
         }
 
         /// <summary>

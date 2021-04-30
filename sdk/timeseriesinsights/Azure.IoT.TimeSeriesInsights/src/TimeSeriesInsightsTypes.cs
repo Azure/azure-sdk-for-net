@@ -14,19 +14,19 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary>
     /// Types client that can be used to perform operations such as creating, listing, replacing and deleting Time Series types.
     /// </summary>
-    public class TimeSeriesTypes
+    public class TimeSeriesInsightsTypes
     {
         private readonly TimeSeriesTypesRestClient _typesRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of TimeSeriesTypes. This constructor should only be used for mocking purposes.
+        /// Initializes a new instance of TimeSeriesInsightsTypes. This constructor should only be used for mocking purposes.
         /// </summary>
-        protected TimeSeriesTypes()
+        protected TimeSeriesInsightsTypes()
         {
         }
 
-        internal TimeSeriesTypes(TimeSeriesTypesRestClient typesRestClient, ClientDiagnostics clientDiagnostics)
+        internal TimeSeriesInsightsTypes(TimeSeriesTypesRestClient typesRestClient, ClientDiagnostics clientDiagnostics)
         {
             Argument.AssertNotNull(typesRestClient, nameof(typesRestClient));
             Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
