@@ -3,6 +3,7 @@
 
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -242,7 +243,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 RegisterForCleanup(certName);
 
                 using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
-                TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 2);
+                TimeSpan pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : KeyVaultTestEnvironment.DefaultPollingInterval;
 
                 while (!operation.HasCompleted)
                 {
@@ -335,7 +336,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             // Need to call the real async wait method or the sync version of this test fails because it's using the instrumented Client directly.
             using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
-            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 2);
+            TimeSpan pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : KeyVaultTestEnvironment.DefaultPollingInterval;
 
             await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
 
@@ -892,7 +893,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await WaitForCompletion(operation, TimeSpan.FromSeconds(5));
+            await WaitForCompletion(operation, KeyVaultTestEnvironment.DefaultPollingInterval);
 
             // Sign data remotely.
             byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));
@@ -944,7 +945,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
             RegisterForCleanup(name);
 
-            await WaitForCompletion(operation, TimeSpan.FromSeconds(5));
+            await WaitForCompletion(operation, KeyVaultTestEnvironment.DefaultPollingInterval);
 
             // Download the certificate and sign data locally.
             byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));

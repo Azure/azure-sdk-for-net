@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     [NonParallelizable]
     public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        protected readonly TimeSpan PollingInterval = KeyVaultTestEnvironment.DefaultPollingInterval;
         private readonly CertificateClientOptions.ServiceVersion _serviceVersion;
 
         public CertificateClient Client { get; set; }
@@ -204,8 +204,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation, TimeSpan? pollingInterval = null)
         {
-            pollingInterval ??= TimeSpan.FromSeconds(1);
-            return await operation.WaitForCompletionAsync(pollingInterval.Value, default).TimeoutAfter(TimeSpan.FromMinutes(1));
+            // Service sends Retry-After header of 10s, so no reason to poll more frequently.
+            pollingInterval ??= TimeSpan.FromSeconds(10);
+            return await operation.WaitForCompletionAsync(pollingInterval.Value, default).TimeoutAfter(TimeSpan.FromMinutes(2));
         }
 
         protected Task WaitForDeletedCertificate(string name)
