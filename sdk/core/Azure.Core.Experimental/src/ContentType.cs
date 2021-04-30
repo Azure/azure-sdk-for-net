@@ -61,7 +61,7 @@ namespace Azure.Core
 
         /// <inheritdoc />
         public override int GetHashCode()
-            => _contentType==null?0:_contentType.GetHashCode();
+            => _contentType?.GetHashCode() ?? 0;
 
         /// <summary>
         /// Compares equality of two <see cref="ContentType"/> instances.
