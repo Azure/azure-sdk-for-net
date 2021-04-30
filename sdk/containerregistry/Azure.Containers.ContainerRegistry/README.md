@@ -9,7 +9,7 @@ Use the client library for Azure Container Registry to:
 - Set read/write/delete properties on registry items
 - Delete images and artifacts, repositories and tags
 
-[Source code][source] | [Package (NuGet)]<!--[package]--> | [API reference documentation]<!--[docs]--> | [REST API documentation][rest_docs] | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
 
 ## Getting started
 
