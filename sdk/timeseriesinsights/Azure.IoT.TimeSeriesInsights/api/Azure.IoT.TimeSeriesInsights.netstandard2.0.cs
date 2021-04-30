@@ -2,23 +2,18 @@ namespace Azure.IoT.TimeSeriesInsights
 {
     public partial class AggregateSeries
     {
-        public AggregateSeries(System.Collections.Generic.IEnumerable<object> timeSeriesId, Azure.IoT.TimeSeriesInsights.DateTimeRange searchSpan, System.TimeSpan interval) { }
+        public AggregateSeries(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, Azure.IoT.TimeSeriesInsights.DateTimeRange searchSpan, System.TimeSpan interval) { }
         public Azure.IoT.TimeSeriesInsights.TimeSeriesExpression Filter { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.IoT.TimeSeriesInsights.TimeSeriesVariable> InlineVariables { get { throw null; } }
         public System.TimeSpan Interval { get { throw null; } }
         public System.Collections.Generic.IList<string> ProjectedVariables { get { throw null; } }
         public Azure.IoT.TimeSeriesInsights.DateTimeRange SearchSpan { get { throw null; } }
-        public System.Collections.Generic.IList<object> TimeSeriesId { get { throw null; } }
+        public Azure.IoT.TimeSeriesInsights.TimeSeriesId TimeSeriesId { get { throw null; } }
     }
     public partial class AggregateVariable : Azure.IoT.TimeSeriesInsights.TimeSeriesVariable
     {
         public AggregateVariable(Azure.IoT.TimeSeriesInsights.TimeSeriesExpression aggregation) { }
         public Azure.IoT.TimeSeriesInsights.TimeSeriesExpression Aggregation { get { throw null; } set { } }
-    }
-    public partial class AvailabilityResponse
-    {
-        internal AvailabilityResponse() { }
-        public Azure.IoT.TimeSeriesInsights.EventAvailability Availability { get { throw null; } }
     }
     public partial class CategoricalVariable : Azure.IoT.TimeSeriesInsights.TimeSeriesVariable
     {
@@ -34,23 +29,11 @@ namespace Azure.IoT.TimeSeriesInsights
         public System.DateTimeOffset From { get { throw null; } set { } }
         public System.DateTimeOffset To { get { throw null; } set { } }
     }
-    public partial class EventAvailability
-    {
-        internal EventAvailability() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, int> Distribution { get { throw null; } }
-        public System.TimeSpan? IntervalSize { get { throw null; } }
-        public Azure.IoT.TimeSeriesInsights.DateTimeRange Range { get { throw null; } }
-    }
     public partial class EventProperty
     {
         public EventProperty() { }
         public string Name { get { throw null; } set { } }
         public Azure.IoT.TimeSeriesInsights.PropertyTypes? Type { get { throw null; } set { } }
-    }
-    public partial class EventSchema
-    {
-        internal EventSchema() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.IoT.TimeSeriesInsights.EventProperty> Properties { get { throw null; } }
     }
     public partial class GetEvents
     {
@@ -60,11 +43,6 @@ namespace Azure.IoT.TimeSeriesInsights
         public Azure.IoT.TimeSeriesInsights.DateTimeRange SearchSpan { get { throw null; } }
         public int? Take { get { throw null; } set { } }
         public Azure.IoT.TimeSeriesInsights.TimeSeriesId TimeSeriesId { get { throw null; } }
-    }
-    public partial class GetEventSchemaRequest
-    {
-        public GetEventSchemaRequest(Azure.IoT.TimeSeriesInsights.DateTimeRange searchSpan) { }
-        public Azure.IoT.TimeSeriesInsights.DateTimeRange SearchSpan { get { throw null; } }
     }
     public partial class GetHierarchiesPage : Azure.IoT.TimeSeriesInsights.PagedResponse
     {
@@ -121,37 +99,11 @@ namespace Azure.IoT.TimeSeriesInsights
         public virtual Azure.Response<Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchyOperationResult[]> GetByName(System.Collections.Generic.IEnumerable<string> timeSeriesHierarchyNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchyOperationResult[]>> GetByNameAsync(System.Collections.Generic.IEnumerable<string> timeSeriesHierarchyNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class HierarchiesExpandParameter
-    {
-        public HierarchiesExpandParameter() { }
-        public Azure.IoT.TimeSeriesInsights.Models.HierarchiesExpandKind? Kind { get { throw null; } set { } }
-    }
     public partial class HierarchiesRequestBatchGetDelete
     {
         public HierarchiesRequestBatchGetDelete() { }
         public System.Collections.Generic.IList<string> HierarchyIds { get { throw null; } }
         public System.Collections.Generic.IList<string> Names { get { throw null; } }
-    }
-    public partial class HierarchiesSortParameter
-    {
-        public HierarchiesSortParameter() { }
-        public Azure.IoT.TimeSeriesInsights.Models.HierarchiesSortBy? By { get { throw null; } set { } }
-    }
-    public partial class HierarchyHit
-    {
-        internal HierarchyHit() { }
-        public int? CumulativeInstanceCount { get { throw null; } }
-        public Azure.IoT.TimeSeriesInsights.SearchHierarchyNodesResponse HierarchyNodes { get { throw null; } }
-        public string Name { get { throw null; } }
-    }
-    public partial class InstanceHit
-    {
-        internal InstanceHit() { }
-        public System.Collections.Generic.IReadOnlyList<string> HierarchyIds { get { throw null; } }
-        public Azure.IoT.TimeSeriesInsights.Models.InstanceHitHighlights Highlights { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<object> TimeSeriesId { get { throw null; } }
-        public string TypeId { get { throw null; } }
     }
     public partial class InstancesBatchRequest
     {
@@ -184,8 +136,6 @@ namespace Azure.IoT.TimeSeriesInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.IoT.TimeSeriesInsights.InstancesOperationResult[]>> GetAsync(System.Collections.Generic.IEnumerable<Azure.IoT.TimeSeriesInsights.TimeSeriesId> timeSeriesIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.IoT.TimeSeriesInsights.InstancesOperationResult[]>> GetAsync(System.Collections.Generic.IEnumerable<string> timeSeriesNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.IoT.TimeSeriesInsights.TimeSeriesInstance> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.IoT.TimeSeriesInsights.SearchSuggestion[]> GetSearchSuggestions(string searchString, int? maxNumberOfSuggestions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.IoT.TimeSeriesInsights.SearchSuggestion[]>> GetSearchSuggestionsAsync(string searchString, int? maxNumberOfSuggestions = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.IoT.TimeSeriesInsights.InstancesOperationResult[]> Replace(System.Collections.Generic.IEnumerable<Azure.IoT.TimeSeriesInsights.TimeSeriesInstance> timeSeriesInstances, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.IoT.TimeSeriesInsights.InstancesOperationResult[]>> ReplaceAsync(System.Collections.Generic.IEnumerable<Azure.IoT.TimeSeriesInsights.TimeSeriesInstance> timeSeriesInstances, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -200,22 +150,6 @@ namespace Azure.IoT.TimeSeriesInsights
         public InstancesRequestBatchGetOrDelete() { }
         public System.Collections.Generic.IList<string> Names { get { throw null; } }
         public System.Collections.Generic.IList<Azure.IoT.TimeSeriesInsights.TimeSeriesId> TimeSeriesIds { get { throw null; } }
-    }
-    public partial class InstancesSortParameter
-    {
-        public InstancesSortParameter() { }
-        public Azure.IoT.TimeSeriesInsights.Models.InstancesSortBy? By { get { throw null; } set { } }
-    }
-    public partial class InstancesSuggestRequest
-    {
-        public InstancesSuggestRequest(string searchString) { }
-        public string SearchString { get { throw null; } }
-        public int? Take { get { throw null; } set { } }
-    }
-    public partial class InstancesSuggestResponse
-    {
-        internal InstancesSuggestResponse() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.IoT.TimeSeriesInsights.SearchSuggestion> Suggestions { get { throw null; } }
     }
     public partial class InterpolationOperation
     {
@@ -275,23 +209,35 @@ namespace Azure.IoT.TimeSeriesInsights
     public partial class PropertyValues : Azure.IoT.TimeSeriesInsights.EventProperty
     {
         public PropertyValues() { }
-        public System.Collections.Generic.IList<object> Values { get { throw null; } }
+        public Azure.IoT.TimeSeriesInsights.TimeSeriesValue[] Values { get { throw null; } }
+    }
+    public partial class QueryAggregateSeriesRequestOptions : Azure.IoT.TimeSeriesInsights.QueryRequestOptions
+    {
+        public QueryAggregateSeriesRequestOptions() { }
+        public System.Collections.Generic.IDictionary<string, Azure.IoT.TimeSeriesInsights.TimeSeriesVariable> InlineVariables { get { throw null; } }
+        public System.Collections.Generic.List<string> ProjectedVariables { get { throw null; } }
+    }
+    public partial class QueryAnalyzer
+    {
+        internal QueryAnalyzer() { }
+        public double? Progress { get { throw null; } }
+        public Azure.Pageable<Azure.IoT.TimeSeriesInsights.TimeSeriesPoint> GetResults() { throw null; }
+        public Azure.AsyncPageable<Azure.IoT.TimeSeriesInsights.TimeSeriesPoint> GetResultsAsync() { throw null; }
     }
     public partial class QueryClient
     {
         protected QueryClient() { }
-        public virtual Azure.Pageable<Azure.IoT.TimeSeriesInsights.QueryResultPage> GetEvents(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.IoT.TimeSeriesInsights.QueryEventsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.IoT.TimeSeriesInsights.QueryResultPage> GetEvents(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.TimeSpan timeSpan, System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.IoT.TimeSeriesInsights.QueryEventsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.IoT.TimeSeriesInsights.QueryResultPage> GetEventsAsync(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.IoT.TimeSeriesInsights.QueryEventsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.IoT.TimeSeriesInsights.QueryResultPage> GetEventsAsync(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.TimeSpan timeSpan, System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.IoT.TimeSeriesInsights.QueryEventsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.IoT.TimeSeriesInsights.QueryResultPage> GetSeries(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.IoT.TimeSeriesInsights.QuerySeriesRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.IoT.TimeSeriesInsights.QueryResultPage> GetSeries(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.TimeSpan timeSpan, System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.IoT.TimeSeriesInsights.QuerySeriesRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.IoT.TimeSeriesInsights.QueryResultPage> GetSeriesAsync(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.IoT.TimeSeriesInsights.QuerySeriesRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.IoT.TimeSeriesInsights.QueryResultPage> GetSeriesAsync(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.TimeSpan timeSpan, System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.IoT.TimeSeriesInsights.QuerySeriesRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.IoT.TimeSeriesInsights.QueryAnalyzer CreateAggregateSeriesQueryAnalyzer(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.TimeSpan interval, Azure.IoT.TimeSeriesInsights.QueryAggregateSeriesRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.IoT.TimeSeriesInsights.QueryAnalyzer CreateAggregateSeriesQueryAnalyzer(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.TimeSpan interval, System.TimeSpan timeSpan, System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.IoT.TimeSeriesInsights.QueryAggregateSeriesRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.IoT.TimeSeriesInsights.QueryAnalyzer CreateEventsQueryAnalyzer(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.IoT.TimeSeriesInsights.QueryEventsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.IoT.TimeSeriesInsights.QueryAnalyzer CreateEventsQueryAnalyzer(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.TimeSpan timeSpan, System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.IoT.TimeSeriesInsights.QueryEventsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.IoT.TimeSeriesInsights.QueryAnalyzer CreateSeriesQueryAnalyzer(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.IoT.TimeSeriesInsights.QuerySeriesRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.IoT.TimeSeriesInsights.QueryAnalyzer CreateSeriesQueryAnalyzer(Azure.IoT.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.TimeSpan timeSpan, System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.IoT.TimeSeriesInsights.QuerySeriesRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class QueryEventsRequestOptions : Azure.IoT.TimeSeriesInsights.QueryRequestOptions
     {
         public QueryEventsRequestOptions() { }
+        public int? MaximumNumberOfEvents { get { throw null; } set { } }
         public System.Collections.Generic.List<Azure.IoT.TimeSeriesInsights.EventProperty> ProjectedProperties { get { throw null; } }
     }
     public partial class QueryRequest
@@ -305,7 +251,6 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         protected QueryRequestOptions() { }
         public string Filter { get { throw null; } set { } }
-        public int? MaximumNumberOfEvents { get { throw null; } set { } }
         public Azure.IoT.TimeSeriesInsights.StoreType StoreType { get { throw null; } set { } }
     }
     public partial class QueryResultPage : Azure.IoT.TimeSeriesInsights.PagedResponse
@@ -319,56 +264,8 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         public QuerySeriesRequestOptions() { }
         public System.Collections.Generic.IDictionary<string, Azure.IoT.TimeSeriesInsights.TimeSeriesVariable> InlineVariables { get { throw null; } }
+        public int? MaximumNumberOfEvents { get { throw null; } set { } }
         public System.Collections.Generic.List<string> ProjectedVariables { get { throw null; } }
-    }
-    public partial class SearchHierarchyNodesResponse
-    {
-        internal SearchHierarchyNodesResponse() { }
-        public string ContinuationToken { get { throw null; } }
-        public int? HitCount { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.IoT.TimeSeriesInsights.HierarchyHit> Hits { get { throw null; } }
-    }
-    public partial class SearchInstancesHierarchiesParameters
-    {
-        public SearchInstancesHierarchiesParameters() { }
-        public Azure.IoT.TimeSeriesInsights.HierarchiesExpandParameter Expand { get { throw null; } set { } }
-        public int? PageSize { get { throw null; } set { } }
-        public Azure.IoT.TimeSeriesInsights.HierarchiesSortParameter Sort { get { throw null; } set { } }
-    }
-    public partial class SearchInstancesParameters
-    {
-        public SearchInstancesParameters() { }
-        public bool? Highlights { get { throw null; } set { } }
-        public int? PageSize { get { throw null; } set { } }
-        public bool? Recursive { get { throw null; } set { } }
-        public Azure.IoT.TimeSeriesInsights.InstancesSortParameter Sort { get { throw null; } set { } }
-    }
-    public partial class SearchInstancesRequest
-    {
-        public SearchInstancesRequest(string searchString) { }
-        public Azure.IoT.TimeSeriesInsights.SearchInstancesHierarchiesParameters Hierarchies { get { throw null; } set { } }
-        public Azure.IoT.TimeSeriesInsights.SearchInstancesParameters Instances { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Path { get { throw null; } }
-        public string SearchString { get { throw null; } }
-    }
-    public partial class SearchInstancesResponse
-    {
-        internal SearchInstancesResponse() { }
-        public string ContinuationToken { get { throw null; } }
-        public int? HitCount { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.IoT.TimeSeriesInsights.InstanceHit> Hits { get { throw null; } }
-    }
-    public partial class SearchInstancesResponsePage
-    {
-        internal SearchInstancesResponsePage() { }
-        public Azure.IoT.TimeSeriesInsights.SearchHierarchyNodesResponse HierarchyNodes { get { throw null; } }
-        public Azure.IoT.TimeSeriesInsights.SearchInstancesResponse Instances { get { throw null; } }
-    }
-    public partial class SearchSuggestion
-    {
-        internal SearchSuggestion() { }
-        public string HighlightedSearchString { get { throw null; } }
-        public string SearchString { get { throw null; } }
     }
     public partial class StoreType
     {
@@ -488,6 +385,16 @@ namespace Azure.IoT.TimeSeriesInsights
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct TimeSeriesPoint
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public TimeSeriesPoint(System.DateTimeOffset timestamp, System.Collections.Generic.IDictionary<string, Azure.IoT.TimeSeriesInsights.PropertyValues> propertyNameToPageValues, int index) { throw null; }
+        public System.DateTimeOffset Timestamp { get { throw null; } }
+        public string[] GetUniquePropertyNames() { throw null; }
+        public Azure.IoT.TimeSeriesInsights.TimeSeriesValue GetValue(string propertyName) { throw null; }
+    }
     public partial class TimeSeriesType
     {
         public TimeSeriesType(string name, System.Collections.Generic.IDictionary<string, Azure.IoT.TimeSeriesInsights.TimeSeriesVariable> variables) { }
@@ -501,6 +408,47 @@ namespace Azure.IoT.TimeSeriesInsights
         internal TimeSeriesTypeOperationResult() { }
         public Azure.IoT.TimeSeriesInsights.TimeSeriesOperationError Error { get { throw null; } }
         public Azure.IoT.TimeSeriesInsights.TimeSeriesType TimeSeriesType { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TimeSeriesValue
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TimeSeriesValue(bool value) { throw null; }
+        public TimeSeriesValue(byte[] utf8, int index, int count) { throw null; }
+        public TimeSeriesValue(System.DateTimeOffset value) { throw null; }
+        public TimeSeriesValue(double value) { throw null; }
+        public TimeSeriesValue(int value) { throw null; }
+        public TimeSeriesValue(bool? value) { throw null; }
+        public TimeSeriesValue(System.DateTimeOffset? value) { throw null; }
+        public TimeSeriesValue(double? value) { throw null; }
+        public TimeSeriesValue(int? value) { throw null; }
+        public TimeSeriesValue(System.TimeSpan? value) { throw null; }
+        public TimeSeriesValue(string value) { throw null; }
+        public TimeSeriesValue(System.TimeSpan value) { throw null; }
+        public System.Type Type { get { throw null; } }
+        public static explicit operator bool (Azure.IoT.TimeSeriesInsights.TimeSeriesValue variant) { throw null; }
+        public static explicit operator System.DateTimeOffset (Azure.IoT.TimeSeriesInsights.TimeSeriesValue variant) { throw null; }
+        public static explicit operator double (Azure.IoT.TimeSeriesInsights.TimeSeriesValue variant) { throw null; }
+        public static explicit operator int (Azure.IoT.TimeSeriesInsights.TimeSeriesValue variant) { throw null; }
+        public static explicit operator bool? (Azure.IoT.TimeSeriesInsights.TimeSeriesValue variant) { throw null; }
+        public static explicit operator System.DateTimeOffset? (Azure.IoT.TimeSeriesInsights.TimeSeriesValue variant) { throw null; }
+        public static explicit operator double? (Azure.IoT.TimeSeriesInsights.TimeSeriesValue variant) { throw null; }
+        public static explicit operator int? (Azure.IoT.TimeSeriesInsights.TimeSeriesValue variant) { throw null; }
+        public static explicit operator System.TimeSpan? (Azure.IoT.TimeSeriesInsights.TimeSeriesValue variant) { throw null; }
+        public static explicit operator string (Azure.IoT.TimeSeriesInsights.TimeSeriesValue variant) { throw null; }
+        public static explicit operator System.TimeSpan (Azure.IoT.TimeSeriesInsights.TimeSeriesValue variant) { throw null; }
+        public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (bool value) { throw null; }
+        public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (System.DateTimeOffset value) { throw null; }
+        public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (double value) { throw null; }
+        public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (int value) { throw null; }
+        public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (bool? value) { throw null; }
+        public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (System.DateTimeOffset? value) { throw null; }
+        public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (double? value) { throw null; }
+        public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (int? value) { throw null; }
+        public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (System.TimeSpan? value) { throw null; }
+        public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (string value) { throw null; }
+        public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (System.TimeSpan value) { throw null; }
     }
     public partial class TimeSeriesVariable
     {

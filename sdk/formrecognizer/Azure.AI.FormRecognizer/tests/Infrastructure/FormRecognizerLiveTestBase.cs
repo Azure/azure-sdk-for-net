@@ -9,11 +9,21 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.Tests
 {
+    [ClientTestFixture(
+    FormRecognizerClientOptions.ServiceVersion.V2_0,
+    FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
     public class FormRecognizerLiveTestBase : RecordedTestBase<FormRecognizerTestEnvironment>
     {
-        public FormRecognizerLiveTestBase(bool isAsync)
+        /// <summary>
+        /// The version of the REST API to test against.  This will be passed
+        /// to the .ctor via ClientTestFixture's values.
+        /// </summary>
+        private readonly FormRecognizerClientOptions.ServiceVersion _serviceVersion;
+
+        public FormRecognizerLiveTestBase(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
             : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
             Sanitizer = new FormRecognizerRecordedTestSanitizer();
         }
 
@@ -39,7 +49,7 @@ namespace Azure.AI.FormRecognizer.Tests
         protected FormRecognizerClient CreateFormRecognizerClient(out FormRecognizerClient nonInstrumentedClient, bool useTokenCredential = false, string apiKey = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var options = InstrumentClientOptions(new FormRecognizerClientOptions());
+            var options = InstrumentClientOptions(new FormRecognizerClientOptions(_serviceVersion));
 
             if (useTokenCredential)
             {
@@ -77,7 +87,7 @@ namespace Azure.AI.FormRecognizer.Tests
         protected FormTrainingClient CreateFormTrainingClient(out FormTrainingClient nonInstrumentedClient, bool useTokenCredential = false, string apiKey = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var options = InstrumentClientOptions(new FormRecognizerClientOptions());
+            var options = InstrumentClientOptions(new FormRecognizerClientOptions(_serviceVersion));
 
             if (useTokenCredential)
             {
@@ -109,6 +119,8 @@ namespace Azure.AI.FormRecognizer.Tests
                 ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
                 ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrl,
                 ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrl,
+                ContainerType.TableVariableRows => TestEnvironment.TableVariableRowsContainerSasUrl,
+                ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrl,
                 _ => TestEnvironment.BlobContainerSasUrl,
             };
             var trainingFilesUri = new Uri(trainingFiles);
@@ -120,7 +132,9 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             Singleforms,
             MultipageFiles,
-            SelectionMarks
+            SelectionMarks,
+            TableVariableRows,
+            TableFixedRows
         }
     }
 }

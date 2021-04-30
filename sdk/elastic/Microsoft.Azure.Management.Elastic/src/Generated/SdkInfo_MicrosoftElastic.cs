@@ -24,6 +24,9 @@ namespace Microsoft.Azure.Management.Elastic
                 new Tuple<string, string, string>("Elastic", "Monitors", "2020-07-01-preview"),
                 new Tuple<string, string, string>("Elastic", "Operations", "2020-07-01-preview"),
                 new Tuple<string, string, string>("Elastic", "TagRules", "2020-07-01-preview"),
+                new Tuple<string, string, string>("Elastic", "VMCollection", "2020-07-01-preview"),
+                new Tuple<string, string, string>("Elastic", "VMHost", "2020-07-01-preview"),
+                new Tuple<string, string, string>("Elastic", "VMIngestion", "2020-07-01-preview"),
               }.AsEnumerable();
           }
       }
@@ -33,7 +36,7 @@ namespace Microsoft.Azure.Management.Elastic
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/elastic/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\vakuncha\\source\\repos\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "9fbd9c69e95c30c0805b34d8b6e23a385dc0d6cc";
+      public static readonly String GithubCommidId = "603b7448345a960ac28d88664692d1e0aade1864";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

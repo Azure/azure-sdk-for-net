@@ -5,8 +5,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
+using System.Text.Json;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -16,19 +15,15 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of PropertyValues. </summary>
         public PropertyValues()
         {
-            Values = new ChangeTrackingList<object>();
         }
 
         /// <summary> Initializes a new instance of PropertyValues. </summary>
         /// <param name="name"> The name of the property. </param>
         /// <param name="type"> The type of the property. </param>
-        /// <param name="values"> Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property. </param>
-        internal PropertyValues(string name, PropertyTypes? type, IList<object> values) : base(name, type)
+        /// <param name="valuesInternal"> Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property. </param>
+        internal PropertyValues(string name, PropertyTypes? type, JsonElement valuesInternal) : base(name, type)
         {
-            Values = values;
+            ValuesInternal = valuesInternal;
         }
-
-        /// <summary> Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property. </summary>
-        public IList<object> Values { get; }
     }
 }

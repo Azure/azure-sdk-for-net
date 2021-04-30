@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Stops a trigger. </summary>
     public partial class TriggerStopTriggerOperation : Operation<Response>, IOperationSource<Response>
     {
-        private readonly ArmOperationHelpers<Response> _operation;
+        private readonly OperationInternals<Response> _operation;
 
         /// <summary> Initializes a new instance of TriggerStopTriggerOperation for mocking. </summary>
         protected TriggerStopTriggerOperation()
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal TriggerStopTriggerOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TriggerStopTriggerOperation");
+            _operation = new OperationInternals<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TriggerStopTriggerOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

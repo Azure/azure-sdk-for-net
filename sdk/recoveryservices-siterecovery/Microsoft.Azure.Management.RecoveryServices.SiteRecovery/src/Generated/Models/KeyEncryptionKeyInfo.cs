@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the KeyEncryptionKeyInfo class.
         /// </summary>
-        /// <param name="keyIdentifier">The key url / identifier.</param>
-        /// <param name="keyVaultResourceArmId">The KeyVault resource ARM id
+        /// <param name="keyIdentifier">The key URL / identifier.</param>
+        /// <param name="keyVaultResourceArmId">The KeyVault resource ARM Id
         /// for key.</param>
         public KeyEncryptionKeyInfo(string keyIdentifier = default(string), string keyVaultResourceArmId = default(string))
         {
@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the key url / identifier.
+        /// Gets or sets the key URL / identifier.
         /// </summary>
         [JsonProperty(PropertyName = "keyIdentifier")]
         public string KeyIdentifier { get; set; }
 
         /// <summary>
-        /// Gets or sets the KeyVault resource ARM id for key.
+        /// Gets or sets the KeyVault resource ARM Id for key.
         /// </summary>
         [JsonProperty(PropertyName = "keyVaultResourceArmId")]
         public string KeyVaultResourceArmId { get; set; }

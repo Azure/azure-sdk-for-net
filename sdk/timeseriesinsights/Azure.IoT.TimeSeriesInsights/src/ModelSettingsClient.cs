@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -41,6 +41,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The model settings which includes model display name, Time Series Id properties and default type Id with the
         /// http response <see cref="Response{TimeSeriesModelSettings}"/>.
         /// </returns>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleGetModelSettings">
+        /// Response&lt;TimeSeriesModelSettings&gt; getModelSettingsResponse = await client.ModelSettings.GetAsync();
+        /// Console.WriteLine($&quot;Retrieved Time Series Insights model settings:\n{JsonSerializer.Serialize(getModelSettingsResponse.Value)}&quot;);
+        /// </code>
+        /// </example>
         public virtual async Task<Response<TimeSeriesModelSettings>> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
@@ -65,6 +71,9 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The model settings which includes model display name, Time Series Id properties and default type Id with the
         /// http response <see cref="Response{TimeSeriesModelSettings}"/>.
         /// </returns>
+        /// <seealso cref="GetAsync(CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
         public virtual Response<TimeSeriesModelSettings> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
@@ -87,6 +96,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="name">Model display name which is mutable by the user. Initial value is &quot;DefaultModel&quot;.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName">
+        /// Response&lt;TimeSeriesModelSettings&gt; updateModelSettingsNameResponse = await client.ModelSettings.UpdateNameAsync(&quot;NewModelSettingsName&quot;);
+        /// Console.WriteLine($&quot;Updated Time Series Insights model settings name:\n&quot; +
+        ///     $&quot;{JsonSerializer.Serialize(updateModelSettingsNameResponse.Value)}&quot;);
+        /// </code>
+        /// </example>
         public virtual async Task<Response<TimeSeriesModelSettings>> UpdateNameAsync(string name, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateName)}");
@@ -110,6 +126,9 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="name">Model display name which is mutable by the user. Initial value is &quot;DefaultModel&quot;.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        /// <seealso cref="UpdateNameAsync(string, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
         public virtual Response<TimeSeriesModelSettings> UpdateName(string name, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateName)}");
@@ -134,6 +153,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="defaultTypeId">Default type Id of the model that new instances will automatically belong to.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        /// <example>
+        /// <code snippet="Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType">
+        /// Response&lt;TimeSeriesModelSettings&gt; updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
+        /// Console.WriteLine($&quot;Updated Time Series Insights model settings default type Id:\n&quot; +
+        ///     $&quot;{JsonSerializer.Serialize(updateDefaultTypeIdResponse.Value)}&quot;);
+        /// </code>
+        /// </example>
         public virtual async Task<Response<TimeSeriesModelSettings>> UpdateDefaultTypeIdAsync(string defaultTypeId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateDefaultTypeId)}");
@@ -157,6 +183,9 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="defaultTypeId">Default type Id of the model that new instances will automatically belong to.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        /// <seealso cref="UpdateDefaultTypeIdAsync(string, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
         public virtual Response<TimeSeriesModelSettings> UpdateDefaultTypeId(string defaultTypeId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateDefaultTypeId)}");

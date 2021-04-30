@@ -1,0 +1,82 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon2/providers/Microsoft.OperationalInsights/workspaces/pakrymmon2-logs/providers/microsoft.insights/metrics?timespan=2021-04-29T17%3A30%3A00.0000000Z%2FPT3M\u0026metricnames=CowsHappiness\u0026api-version=2018-01-01\u0026metricnamespace=Cows",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d15e0cc3ef02e34386fe9cfa7c1cfd22-e5b1e7138b1ec54d-00",
+        "User-Agent": [
+          "azsdk-net-Monitor.Query/1.0.0-alpha.20210429.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "df7775edb4762b4c410ebe8367cd7956",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "693",
+        "Content-Type": "application/json",
+        "Date": "Thu, 29 Apr 2021 17:51:38 GMT",
+        "Request-Context": "appId=cid-v1:b021da79-5252-4375-9df5-2e17c1dcd822",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ab9b9e13-f3f2-4b9d-8faa-76c6154e8726",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "{ab9b9e13-f3f2-4b9d-8faa-76c6154e8726}",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20210429T175138Z:ab9b9e13-f3f2-4b9d-8faa-76c6154e8726",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "cost": 2,
+        "timespan": "2021-04-29T17:30:00Z/2021-04-29T17:33:00Z",
+        "interval": "PT1M",
+        "value": [
+          {
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon2/providers/Microsoft.OperationalInsights/workspaces/pakrymmon2-logs/providers/Microsoft.Insights/metrics/CowsHappiness",
+            "type": "Microsoft.Insights/metrics",
+            "name": {
+              "value": "CowsHappiness",
+              "localizedValue": "CowsHappiness"
+            },
+            "unit": "Unspecified",
+            "timeseries": [
+              {
+                "metadatavalues": [],
+                "data": [
+                  {
+                    "timeStamp": "2021-04-29T17:30:00Z",
+                    "average": 0.0
+                  },
+                  {
+                    "timeStamp": "2021-04-29T17:31:00Z",
+                    "average": 15.0
+                  },
+                  {
+                    "timeStamp": "2021-04-29T17:32:00Z",
+                    "average": 20.0
+                  }
+                ]
+              }
+            ],
+            "errorCode": "Success"
+          }
+        ],
+        "namespace": "Cows",
+        "resourceregion": "westus2"
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-04-29T10:51:37.9135980-07:00",
+    "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon2/providers/Microsoft.OperationalInsights/workspaces/pakrymmon2-logs",
+    "RandomSeed": "2009786302"
+  }
+}
