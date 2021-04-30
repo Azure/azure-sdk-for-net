@@ -159,7 +159,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 { nameof(ClientRetryOptions), retryOptions },
                 { nameof(TransportType),  TransportType.ToString()},
-                { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },
+                // use ToString for the URI as this is intended for display only
+                { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.ToString() : string.Empty },
                 { nameof(AutoCompleteMessages), AutoCompleteMessages },
                 { nameof(PrefetchCount), PrefetchCount },
                 { nameof(MaxAutoLockRenewalDuration), MaxAutoLockRenewalDuration },
