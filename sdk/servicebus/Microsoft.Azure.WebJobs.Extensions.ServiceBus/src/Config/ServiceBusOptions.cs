@@ -143,7 +143,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// Formats the options as JSON objects for display.
         /// </summary>
         /// <returns>Options formatted as JSON.</returns>
-        public string Format()
+        string IOptionsFormatter.Format()
         {
             // Do not include ConnectionString in loggable options.
             var retryOptions = new JObject

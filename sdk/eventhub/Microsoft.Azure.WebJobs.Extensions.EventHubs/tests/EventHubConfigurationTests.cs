@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(TimeSpan.FromSeconds(90), options.ClientRetryOptions.TryTimeout);
             Assert.AreEqual(EventHubsRetryMode.Fixed, options.ClientRetryOptions.Mode);
             Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, options.TransportType);
-            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)options.WebProxy).Address.AbsoluteUri);
+            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy) options.WebProxy).Address.AbsoluteUri);
             Assert.AreEqual("http://customendpoint.com/", options.CustomEndpointAddress.ToString());
         }
 
@@ -60,12 +60,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         public void ConfigureOptions_Format_Returns_Expected()
         {
             EventHubOptions options = CreateOptionsFromConfig();
-            var dict = options.ToInMemoryCollection(ExtensionPath);
-
-            EventHubOptions result = TestHelpers.GetConfiguredOptions<EventHubOptions>(b =>
+            JObject jObject = new JObject
             {
-                b.AddEventHubs();
-            }, dict);
+                {ExtensionPath, JObject.Parse(((IOptionsFormatter) options).Format())}
+            };
+
+            EventHubOptions result = TestHelpers.GetConfiguredOptions<EventHubOptions>(
+                b => { b.AddEventHubs(); },
+                jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
             Assert.AreEqual(123, result.MaxBatchSize);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
@@ -81,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(TimeSpan.FromSeconds(90), result.ClientRetryOptions.TryTimeout);
             Assert.AreEqual(EventHubsRetryMode.Fixed, result.ClientRetryOptions.Mode);
             Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, result.TransportType);
-            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)result.WebProxy).Address.AbsoluteUri);
+            Assert.AreEqual("http://proxyserver:8080/", ((WebProxy) result.WebProxy).Address.AbsoluteUri);
             Assert.AreEqual("http://customendpoint.com/", result.CustomEndpointAddress.AbsoluteUri);
         }
 
@@ -105,9 +107,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             EventHubOptions options = CreateOptionsFromConfigBackCompat();
 
-            string format = ((IOptionsFormatter)options).Format();
-            JObject iObj = JObject.Parse(format);
-            EventHubOptions result = iObj.ToObject<EventHubOptions>();
+            JObject jObject = new JObject
+            {
+                {ExtensionPath, JObject.Parse(((IOptionsFormatter) options).Format())}
+            };
+
+            EventHubOptions result = TestHelpers.GetConfiguredOptions<EventHubOptions>(
+                b => { b.AddEventHubs(); },
+                jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
             Assert.AreEqual(123, result.MaxBatchSize);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);

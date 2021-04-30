@@ -9,10 +9,12 @@ using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Azure.WebJobs.ServiceBus.Config;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
@@ -36,12 +38,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         public void ConfigureOptions_Format_Returns_Expected_BackCompat()
         {
             ServiceBusOptions options = CreateOptionsFromConfigBackCompat();
-            var dict = options.ToInMemoryCollection(ExtensionPath);
-
-            ServiceBusOptions result = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(b =>
+            JObject jObject = new JObject
             {
-                b.AddServiceBus();
-            }, dict);
+                { ExtensionPath, JObject.Parse(((IOptionsFormatter)options).Format()) }
+            };
+
+            ServiceBusOptions result = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(
+                b =>
+                {
+                    b.AddServiceBus();
+                },
+                jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
             Assert.AreEqual(123, result.PrefetchCount);
 
@@ -68,12 +75,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         public void ConfigureOptions_Format_Returns_Expected()
         {
             ServiceBusOptions options = CreateOptionsFromConfig();
-            var dict = options.ToInMemoryCollection(ExtensionPath);
-
-            ServiceBusOptions result = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(b =>
+            JObject jObject = new JObject
             {
-                b.AddServiceBus();
-            }, dict);
+                { ExtensionPath, JObject.Parse(((IOptionsFormatter)options).Format()) }
+            };
+
+            ServiceBusOptions result = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(
+                b =>
+                {
+                    b.AddServiceBus();
+                },
+                jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
             Assert.AreEqual(123, result.PrefetchCount);
 

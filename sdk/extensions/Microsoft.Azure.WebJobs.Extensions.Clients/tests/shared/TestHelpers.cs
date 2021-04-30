@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -40,8 +41,13 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
         /// <typeparam name="TOptions">The options type to configure.</typeparam>
         /// <param name="configure">Delegate used to configure the target extension.</param>
         /// <param name="configValues">Set of test configuration values to apply.</param>
+        /// <param name="jsonStream">A stream containing configuration in JSON format.</param>
         /// <returns></returns>
-        public static TOptions GetConfiguredOptions<TOptions>(Action<IWebJobsBuilder> configure, Dictionary<string, string> configValues) where TOptions : class, new()
+        public static TOptions GetConfiguredOptions<TOptions>(
+            Action<IWebJobsBuilder> configure,
+            Dictionary<string, string> configValues = default,
+            Stream jsonStream = default)
+            where TOptions : class, new()
         {
             IHost host = new HostBuilder()
                 .ConfigureDefaultTestHost<TestProgram>(b =>
@@ -50,7 +56,14 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
                 })
                 .ConfigureAppConfiguration(cb =>
                 {
-                    cb.AddInMemoryCollection(configValues);
+                    if (configValues != null)
+                    {
+                        cb.AddInMemoryCollection(configValues);
+                    }
+                    if (jsonStream != null)
+                    {
+                        cb.AddJsonStream(jsonStream);
+                    }
                 })
                 .Build();
 
