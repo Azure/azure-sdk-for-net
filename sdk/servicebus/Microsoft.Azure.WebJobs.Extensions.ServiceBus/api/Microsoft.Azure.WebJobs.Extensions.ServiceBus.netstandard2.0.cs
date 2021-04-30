@@ -93,7 +93,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public System.TimeSpan? SessionIdleTimeout { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } set { } }
         public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
-        public string Format() { throw null; }
+        string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
     }
     public partial class ServiceBusSessionMessageActions : Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions
     {
