@@ -11,9 +11,9 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Tracks the status of a long-running operation for recognizing values from ID documents.
+    /// Tracks the status of a long-running operation for recognizing values from identity documents.
     /// </summary>
-    public class RecognizeIdDocumentsOperation : Operation<RecognizedFormCollection>
+    public class RecognizeIdentityDocumentsOperation : Operation<RecognizedFormCollection>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly FormRecognizerRestClient _serviceClient;
@@ -72,18 +72,18 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <remarks>
         /// The last response returned from the server during the lifecycle of this instance.
-        /// An instance of <see cref="RecognizeIdDocumentsOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// An instance of <see cref="RecognizeIdentityDocumentsOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
         public override Response GetRawResponse() => _response;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeIdDocumentsOperation"/> class which
-        /// tracks the status of a long-running operation for recognizing values from ID documents.
+        /// Initializes a new instance of the <see cref="RecognizeIdentityDocumentsOperation"/> class which
+        /// tracks the status of a long-running operation for recognizing values from identity documents.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        public RecognizeIdDocumentsOperation(string operationId, FormRecognizerClient client)
+        public RecognizeIdentityDocumentsOperation(string operationId, FormRecognizerClient client)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -93,12 +93,12 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeIdDocumentsOperation"/> class.
+        /// Initializes a new instance of the <see cref="RecognizeIdentityDocumentsOperation"/> class.
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        internal RecognizeIdDocumentsOperation(FormRecognizerRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
+        internal RecognizeIdentityDocumentsOperation(FormRecognizerRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
@@ -109,10 +109,10 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeIdDocumentsOperation"/> class. This constructor
+        /// Initializes a new instance of the <see cref="RecognizeIdentityDocumentsOperation"/> class. This constructor
         /// is intended to be used for mocking only.
         /// </summary>
-        protected RecognizeIdDocumentsOperation()
+        protected RecognizeIdentityDocumentsOperation()
         {
         }
 
@@ -175,7 +175,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             if (!_hasCompleted)
             {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(RecognizeIdDocumentsOperation)}.{nameof(UpdateStatus)}");
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(RecognizeIdentityDocumentsOperation)}.{nameof(UpdateStatus)}");
                 scope.Start();
 
                 try

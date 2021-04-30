@@ -5,6 +5,9 @@
 ### New Features
 - Updated the `FormRecognizerModelFactory` class to support missing model types for mocking.
 
+### Breaking changes
+- Renamed `Id` for `Identity` in all the `StartRecognizeIdDocuments` functionalities. For example, the name of the method is now `StartRecognizeIdentityDocuments`.
+
 ## 3.0.1 (2021-04-09)
 
 ### Key Bug Fixes

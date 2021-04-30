@@ -10,7 +10,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 /// <summary>
-/// The suite of tests for the `StartRecognizeIdDocuments` methods in the <see cref="FormRecognizerClient"/> class.
+/// The suite of tests for the `StartRecognizeIdentityDocuments` methods in the <see cref="FormRecognizerClient"/> class.
 /// </summary>
 /// <remarks>
 /// These tests have a dependency on live Azure services and may incur costs for the associated
@@ -19,23 +19,23 @@ using NUnit.Framework;
 namespace Azure.AI.FormRecognizer.Tests
 {
     [ClientTestFixture(FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
-    public class RecognizeIdDocumentsLiveTests : FormRecognizerLiveTestBase
+    public class RecognizeIdentityDocumentsLiveTests : FormRecognizerLiveTestBase
     {
-        public RecognizeIdDocumentsLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
+        public RecognizeIdentityDocumentsLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion)
         {
         }
 
         [RecordedTest]
-        public async Task StartRecognizeIdDocumentsCanAuthenticateWithTokenCredential()
+        public async Task StartRecognizeIdentityDocumentsCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
-            RecognizeIdDocumentsOperation operation;
+            RecognizeIdentityDocumentsOperation operation;
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.DriverLicenseJpg);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartRecognizeIdDocumentsAsync(stream);
+                operation = await client.StartRecognizeIdentityDocumentsAsync(stream);
             }
 
             // Sanity check to make sure we got an actual response back from the service.
@@ -55,23 +55,23 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartRecognizeIdDocumentsPopulatesExtractedIdDocumentJpg(bool useStream)
+        public async Task StartRecognizeIdentityDocumentsPopulatesExtractedIdDocumentJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
-            RecognizeIdDocumentsOperation operation;
+            RecognizeIdentityDocumentsOperation operation;
 
             if (useStream)
             {
                 using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.DriverLicenseJpg);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartRecognizeIdDocumentsAsync(stream);
+                    operation = await client.StartRecognizeIdentityDocumentsAsync(stream);
                 }
             }
             else
             {
                 var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.DriverLicenseJpg);
-                operation = await client.StartRecognizeIdDocumentsFromUriAsync(uri);
+                operation = await client.StartRecognizeIdentityDocumentsFromUriAsync(uri);
             }
 
             await operation.WaitForCompletionAsync();
@@ -122,16 +122,16 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        public async Task StartRecognizeIdDocumentsIncludeFieldElements()
+        public async Task StartRecognizeIdentityDocumentsIncludeFieldElements()
         {
             var client = CreateFormRecognizerClient();
-            var options = new RecognizeIdDocumentsOptions() { IncludeFieldElements = true };
-            RecognizeIdDocumentsOperation operation;
+            var options = new RecognizeIdentityDocumentsOptions() { IncludeFieldElements = true };
+            RecognizeIdentityDocumentsOperation operation;
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.DriverLicenseJpg);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartRecognizeIdDocumentsAsync(stream, options);
+                operation = await client.StartRecognizeIdentityDocumentsAsync(stream, options);
             }
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
@@ -146,15 +146,15 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        public async Task StartRecognizeIdDocumentsCanParseBlankPage()
+        public async Task StartRecognizeIdentityDocumentsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
-            RecognizeIdDocumentsOperation operation;
+            RecognizeIdentityDocumentsOperation operation;
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartRecognizeIdDocumentsAsync(stream);
+                operation = await client.StartRecognizeIdentityDocumentsAsync(stream);
             }
 
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
@@ -163,7 +163,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        public void StartRecognizeIdDocumentsThrowsForDamagedFile()
+        public void StartRecognizeIdentityDocumentsThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
 
@@ -172,7 +172,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
             using var stream = new MemoryStream(damagedFile);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeIdDocumentsAsync(stream));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeIdentityDocumentsAsync(stream));
             Assert.AreEqual("BadArgument", ex.ErrorCode);
         }
 
@@ -181,12 +181,12 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
-        public void StartRecognizeIdDocumentsFromUriThrowsForNonExistingContent()
+        public void StartRecognizeIdentityDocumentsFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeIdDocumentsFromUriAsync(invalidUri));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeIdentityDocumentsFromUriAsync(invalidUri));
             Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
         }
     }

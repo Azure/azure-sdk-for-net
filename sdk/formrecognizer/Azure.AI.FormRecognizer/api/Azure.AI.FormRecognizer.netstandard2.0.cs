@@ -28,10 +28,10 @@ namespace Azure.AI.FormRecognizer
         public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeCustomFormsOperation> StartRecognizeCustomFormsAsync(string modelId, System.IO.Stream form, Azure.AI.FormRecognizer.RecognizeCustomFormsOptions recognizeCustomFormsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.FormRecognizer.Models.RecognizeCustomFormsOperation StartRecognizeCustomFormsFromUri(string modelId, System.Uri formUri, Azure.AI.FormRecognizer.RecognizeCustomFormsOptions recognizeCustomFormsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeCustomFormsOperation> StartRecognizeCustomFormsFromUriAsync(string modelId, System.Uri formUri, Azure.AI.FormRecognizer.RecognizeCustomFormsOptions recognizeCustomFormsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AI.FormRecognizer.Models.RecognizeIdDocumentsOperation StartRecognizeIdDocuments(System.IO.Stream idDocument, Azure.AI.FormRecognizer.RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeIdDocumentsOperation> StartRecognizeIdDocumentsAsync(System.IO.Stream idDocument, Azure.AI.FormRecognizer.RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AI.FormRecognizer.Models.RecognizeIdDocumentsOperation StartRecognizeIdDocumentsFromUri(System.Uri idDocumentUri, Azure.AI.FormRecognizer.RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeIdDocumentsOperation> StartRecognizeIdDocumentsFromUriAsync(System.Uri idDocumentUri, Azure.AI.FormRecognizer.RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.Models.RecognizeIdentityDocumentsOperation StartRecognizeIdentityDocuments(System.IO.Stream identityDocument, Azure.AI.FormRecognizer.RecognizeIdentityDocumentsOptions recognizeIdentityDocumentsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeIdentityDocumentsOperation> StartRecognizeIdentityDocumentsAsync(System.IO.Stream identityDocument, Azure.AI.FormRecognizer.RecognizeIdentityDocumentsOptions recognizeIdentityDocumentsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.Models.RecognizeIdentityDocumentsOperation StartRecognizeIdentityDocumentsFromUri(System.Uri identityDocumentUri, Azure.AI.FormRecognizer.RecognizeIdentityDocumentsOptions recognizeIdentityDocumentsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeIdentityDocumentsOperation> StartRecognizeIdentityDocumentsFromUriAsync(System.Uri identityDocumentUri, Azure.AI.FormRecognizer.RecognizeIdentityDocumentsOptions recognizeIdentityDocumentsOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.FormRecognizer.Models.RecognizeInvoicesOperation StartRecognizeInvoices(System.IO.Stream invoice, Azure.AI.FormRecognizer.RecognizeInvoicesOptions recognizeInvoicesOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeInvoicesOperation> StartRecognizeInvoicesAsync(System.IO.Stream invoice, Azure.AI.FormRecognizer.RecognizeInvoicesOptions recognizeInvoicesOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.FormRecognizer.Models.RecognizeInvoicesOperation StartRecognizeInvoicesFromUri(System.Uri invoiceUri, Azure.AI.FormRecognizer.RecognizeInvoicesOptions recognizeInvoicesOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -200,9 +200,9 @@ namespace Azure.AI.FormRecognizer
         public bool IncludeFieldElements { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Pages { get { throw null; } }
     }
-    public partial class RecognizeIdDocumentsOptions
+    public partial class RecognizeIdentityDocumentsOptions
     {
-        public RecognizeIdDocumentsOptions() { }
+        public RecognizeIdentityDocumentsOptions() { }
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
         public bool IncludeFieldElements { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Pages { get { throw null; } }
@@ -498,10 +498,10 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal RecognizedFormCollection() : base (default(System.Collections.Generic.IList<Azure.AI.FormRecognizer.Models.RecognizedForm>)) { }
     }
-    public partial class RecognizeIdDocumentsOperation : Azure.Operation<Azure.AI.FormRecognizer.Models.RecognizedFormCollection>
+    public partial class RecognizeIdentityDocumentsOperation : Azure.Operation<Azure.AI.FormRecognizer.Models.RecognizedFormCollection>
     {
-        protected RecognizeIdDocumentsOperation() { }
-        public RecognizeIdDocumentsOperation(string operationId, Azure.AI.FormRecognizer.FormRecognizerClient client) { }
+        protected RecognizeIdentityDocumentsOperation() { }
+        public RecognizeIdentityDocumentsOperation(string operationId, Azure.AI.FormRecognizer.FormRecognizerClient client) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
