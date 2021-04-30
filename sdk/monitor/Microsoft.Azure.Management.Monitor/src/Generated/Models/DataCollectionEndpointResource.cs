@@ -7,64 +7,51 @@
 namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
 
     using Newtonsoft.Json;
 
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Definition of ARM tracked top level resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DataCollectionRuleResource : Resource
+    public partial class DataCollectionEndpointResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the DataCollectionRuleResource class.
+        /// Initializes a new instance of the DataCollectionEndpointResource
+        /// class.
         /// </summary>
-        public DataCollectionRuleResource()
+        public DataCollectionEndpointResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataCollectionRuleResource class.
+        /// Initializes a new instance of the DataCollectionEndpointResource
+        /// class.
         /// </summary>
-        /// <param name="destinations">The specification of
-        /// destinations.</param>
-        /// <param name="dataFlows">The specification of data flows.</param>
         /// <param name="location">The geo-location where the resource
         /// lives.</param>
         /// <param name="description">Description of the data collection
-        /// rule.</param>
-        /// <param name="dataSources">The specification of data sources.
-        /// This property is optional and can be omitted if the rule is meant
-        /// to be used via direct calls to the provisioned endpoint.</param>
+        /// endpoint.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="kind">The kind of the resource. Possible values
         /// include: 'Linux', 'Windows'</param>
         /// <param name="id">Fully qualified ID of the resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        public DataCollectionRuleResource(
-            DataCollectionRuleDestinations destinations,
-            IList<DataFlow> dataFlows,
-            string location,
-            string description = default(string),
-            DataCollectionRuleDataSources dataSources = default(DataCollectionRuleDataSources),
-            IDictionary<string, string> tags = default(IDictionary<string, string>),
-            string kind = default(string),
-            string id = default(string),
-            string name = default(string),
+        public DataCollectionEndpointResource(
+            string location, 
+            string description = default(string), 
+            IDictionary<string, string> tags = default(IDictionary<string, string>), 
+            string kind = default(string), 
+            string id = default(string), 
+            string name = default(string), 
             string type = default(string))
             : base(location, id, name, type, tags)
         {
             Description = description;
-            DataSources = dataSources;
-            Destinations = destinations;
-            DataFlows = dataFlows;
             Kind = kind;
             CustomInit();
         }
@@ -75,45 +62,44 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets description of the data collection rule.
+        /// Gets or sets description of the data collection endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets the immutable ID of this data collection rule. This property
-        /// is READ-ONLY.
+        /// Gets or sets the immutable ID of this data collection endpoint
+        /// resource. This property is READ-ONLY.
         /// </summary>
         [JsonProperty(PropertyName = "properties.immutableId")]
         public string ImmutableId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the specification of data sources.
-        /// This property is optional and can be omitted if the rule is meant
-        /// to be used via direct calls to the provisioned endpoint.
+        /// Gets or sets the endpoint used by agents to access their
+        /// configuration.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.dataSources")]
-        public DataCollectionRuleDataSources DataSources { get; set; }
+        [JsonProperty(PropertyName = "properties.configurationAccess")]
+        public DataCollectionEndpointConfigurationAccess ConfigurationAccess { get; set; }
 
         /// <summary>
-        /// Gets or sets the specification of destinations.
+        /// Gets or sets the endpoint used by clients to ingest logs.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.destinations")]
-        public DataCollectionRuleDestinations Destinations { get; set; }
+        [JsonProperty(PropertyName = "properties.logsIngestion")]
+        public DataCollectionEndpointLogsIngestion LogsIngestion { get; set; }
 
         /// <summary>
-        /// Gets or sets the specification of data flows.
+        /// Gets or sets network access control rules for the endpoints.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.dataFlows")]
-        public IList<DataFlow> DataFlows { get; set; }
+        [JsonProperty(PropertyName = "properties.networkAcls")]
+        public DataCollectionEndpointNetworkAcls NetworkAcls { get; set; }
 
         /// <summary>
-        /// Gets the resource provisioning state. Possible values include:
-        /// 'Creating', 'Updating', 'Deleting', 'Succeeded', 'Failed'
+        /// Gets the resource provisioning state. This property is READ-ONLY.
+        /// Possible values include: 'Creating', 'Updating', 'Deleting',
+        /// 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
-
 
         /// <summary>
         /// Gets or sets the kind of the resource. Possible values include:
@@ -143,29 +129,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </exception>
         public override void Validate()
         {
-            base.Validate();
-
-            if (Destinations == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Destinations");
-            }
-            if (DataFlows == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DataFlows");
-            }
             if (Location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-            if (DataFlows != null)
-            {
-                foreach (var element in DataFlows)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }
