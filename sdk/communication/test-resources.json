@@ -17,6 +17,10 @@
             "defaultValue": ".communication.azure.com",
             "type": "string"
         },
+        "subscriptionId": {
+            "defaultValue": "[subscription().subscriptionId]",
+            "type": "string"
+        },
         "testApplicationOid": {
             "type": "string",
             "metadata": {
