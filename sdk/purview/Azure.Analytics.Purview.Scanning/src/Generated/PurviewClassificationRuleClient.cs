@@ -16,62 +16,66 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Scanning
 {
-    /// <summary> The ClassificationRules service client. </summary>
-    public partial class ClassificationRulesClient
+    /// <summary> The PurviewClassificationRule service client. </summary>
+    public partial class PurviewClassificationRuleClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private Uri endpoint;
+        private string classificationRuleName;
         private readonly string apiVersion;
 
-        /// <summary> Initializes a new instance of ClassificationRulesClient for mocking. </summary>
-        protected ClassificationRulesClient()
+        /// <summary> Initializes a new instance of PurviewClassificationRuleClient for mocking. </summary>
+        protected PurviewClassificationRuleClient()
         {
         }
 
-        /// <summary> Initializes a new instance of ClassificationRulesClient. </summary>
+        /// <summary> Initializes a new instance of PurviewClassificationRuleClient. </summary>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
+        /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public ClassificationRulesClient(Uri endpoint, TokenCredential credential, ScanningClientOptions options = null)
+        public PurviewClassificationRuleClient(Uri endpoint, string classificationRuleName, TokenCredential credential, PurviewScanningServiceClientOptions options = null)
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (classificationRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(classificationRuleName));
             }
             if (credential == null)
             {
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new ScanningClientOptions();
+            options ??= new PurviewScanningServiceClientOptions();
             Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
             this.endpoint = endpoint;
+            this.classificationRuleName = classificationRuleName;
             apiVersion = options.Version;
         }
 
         /// <summary> Get a classification rule. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetAsync(string classificationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetRequest(classificationRuleName);
+            Request req = CreateGetPropertiesRequest();
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a classification rule. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Get(string classificationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response GetProperties(CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetRequest(classificationRuleName);
+            Request req = CreateGetPropertiesRequest();
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
-        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
-        private Request CreateGetRequest(string classificationRuleName)
+        /// <summary> Create Request for <see cref="GetProperties"/> and <see cref="GetPropertiesAsync"/> operations. </summary>
+        private Request CreateGetPropertiesRequest()
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -87,29 +91,26 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Creates or Updates a classification rule. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateOrUpdateAsync(string classificationRuleName, RequestContent requestBody, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
         {
-            Request req = CreateCreateOrUpdateRequest(classificationRuleName, requestBody);
+            Request req = CreateCreateOrUpdateRequest(requestBody);
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Creates or Updates a classification rule. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateOrUpdate(string classificationRuleName, RequestContent requestBody, CancellationToken cancellationToken = default)
+        public virtual Response CreateOrUpdate(RequestContent requestBody, CancellationToken cancellationToken = default)
         {
-            Request req = CreateCreateOrUpdateRequest(classificationRuleName, requestBody);
+            Request req = CreateCreateOrUpdateRequest(requestBody);
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
         /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateCreateOrUpdateRequest(string classificationRuleName, RequestContent requestBody)
+        private Request CreateCreateOrUpdateRequest(RequestContent requestBody)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -127,26 +128,23 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Deletes a classification rule. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(string classificationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            Request req = CreateDeleteRequest(classificationRuleName);
+            Request req = CreateDeleteRequest();
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Deletes a classification rule. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(string classificationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
-            Request req = CreateDeleteRequest(classificationRuleName);
+            Request req = CreateDeleteRequest();
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
         /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
-        private Request CreateDeleteRequest(string classificationRuleName)
+        private Request CreateDeleteRequest()
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -161,58 +159,24 @@ namespace Azure.Analytics.Purview.Scanning
             return request;
         }
 
-        /// <summary> List classification rules in Account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ListAllAsync(CancellationToken cancellationToken = default)
-        {
-            Request req = CreateListAllRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> List classification rules in Account. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ListAll(CancellationToken cancellationToken = default)
-        {
-            Request req = CreateListAllRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
-        }
-
-        /// <summary> Create Request for <see cref="ListAll"/> and <see cref="ListAllAsync"/> operations. </summary>
-        private Request CreateListAllRequest()
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/classificationrules", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return request;
-        }
-
         /// <summary> Lists the rule versions of a classification rule. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ListVersionsByClassificationRuleNameAsync(string classificationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetVersionsAsync(CancellationToken cancellationToken = default)
         {
-            Request req = CreateListVersionsByClassificationRuleNameRequest(classificationRuleName);
+            Request req = CreateGetVersionsRequest();
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Lists the rule versions of a classification rule. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ListVersionsByClassificationRuleName(string classificationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response GetVersions(CancellationToken cancellationToken = default)
         {
-            Request req = CreateListVersionsByClassificationRuleNameRequest(classificationRuleName);
+            Request req = CreateGetVersionsRequest();
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
-        /// <summary> Create Request for <see cref="ListVersionsByClassificationRuleName"/> and <see cref="ListVersionsByClassificationRuleNameAsync"/> operations. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
-        private Request CreateListVersionsByClassificationRuleNameRequest(string classificationRuleName)
+        /// <summary> Create Request for <see cref="GetVersions"/> and <see cref="GetVersionsAsync"/> operations. </summary>
+        private Request CreateGetVersionsRequest()
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -229,32 +193,29 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Sets Classification Action on a specific classification rule version. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="classificationRuleVersion"> The Integer to use. </param>
         /// <param name="action"> The ClassificationAction to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> TagClassificationVersionAsync(string classificationRuleName, int classificationRuleVersion, string action, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, CancellationToken cancellationToken = default)
         {
-            Request req = CreateTagClassificationVersionRequest(classificationRuleName, classificationRuleVersion, action);
+            Request req = CreateTagVersionRequest(classificationRuleVersion, action);
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Sets Classification Action on a specific classification rule version. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
         /// <param name="classificationRuleVersion"> The Integer to use. </param>
         /// <param name="action"> The ClassificationAction to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response TagClassificationVersion(string classificationRuleName, int classificationRuleVersion, string action, CancellationToken cancellationToken = default)
+        public virtual Response TagVersion(int classificationRuleVersion, string action, CancellationToken cancellationToken = default)
         {
-            Request req = CreateTagClassificationVersionRequest(classificationRuleName, classificationRuleVersion, action);
+            Request req = CreateTagVersionRequest(classificationRuleVersion, action);
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
-        /// <summary> Create Request for <see cref="TagClassificationVersion"/> and <see cref="TagClassificationVersionAsync"/> operations. </summary>
-        /// <param name="classificationRuleName"> The String to use. </param>
+        /// <summary> Create Request for <see cref="TagVersion"/> and <see cref="TagVersionAsync"/> operations. </summary>
         /// <param name="classificationRuleVersion"> The Integer to use. </param>
         /// <param name="action"> The ClassificationAction to use. </param>
-        private Request CreateTagClassificationVersionRequest(string classificationRuleName, int classificationRuleVersion, string action)
+        private Request CreateTagVersionRequest(int classificationRuleVersion, string action)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
