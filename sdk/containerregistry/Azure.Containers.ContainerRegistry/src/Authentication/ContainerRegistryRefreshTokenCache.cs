@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,6 +14,10 @@ namespace Azure.Containers.ContainerRegistry
 {
     internal class ContainerRegistryRefreshTokenCache
     {
+        private readonly TimeSpan DefaultTokenRefreshOffset = TimeSpan.FromMinutes(5);
+        private readonly TimeSpan DefaultTokenRefreshRetryDelay = TimeSpan.FromSeconds(30);
+        private readonly TimeSpan DefaultTokenExpiryOffset = TimeSpan.FromHours(2);
+
         private readonly object _syncObj = new object();
         private readonly TokenCredential _aadTokenCredential;
         private readonly TimeSpan _tokenRefreshOffset;
@@ -20,20 +25,18 @@ namespace Azure.Containers.ContainerRegistry
         private readonly TimeSpan _tokenExpiryOffset;
         private readonly IContainerRegistryAuthenticationClient _authenticationRestClient;
 
-        private TokenRequestContext? _currentAadContext;
         private string? _currentTokenService;
         private TaskCompletionSource<RefreshTokenInfo>? _infoTcs;
         private TaskCompletionSource<RefreshTokenInfo>? _backgroundUpdateTcs;
 
-        public ContainerRegistryRefreshTokenCache(TokenCredential aadTokenCredential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay, TimeSpan tokenExpiryOffset, string[] initialAadScopes, IContainerRegistryAuthenticationClient authClient)
+        public ContainerRegistryRefreshTokenCache(TokenCredential aadTokenCredential, IContainerRegistryAuthenticationClient authClient, TimeSpan? tokenRefreshOffset = null, TimeSpan? tokenRefreshRetryDelay = null, TimeSpan? tokenExpiryOffset = null)
         {
             _aadTokenCredential = aadTokenCredential;
-            _currentAadContext = new TokenRequestContext(initialAadScopes);
             _authenticationRestClient = authClient;
 
-            _tokenRefreshOffset = tokenRefreshOffset;
-            _tokenRefreshRetryDelay = tokenRefreshRetryDelay;
-            _tokenExpiryOffset = tokenExpiryOffset;
+            _tokenRefreshOffset = tokenRefreshOffset ?? DefaultTokenRefreshOffset;
+            _tokenRefreshRetryDelay = tokenRefreshRetryDelay ?? DefaultTokenRefreshRetryDelay;
+            _tokenExpiryOffset = tokenExpiryOffset ?? DefaultTokenExpiryOffset;
         }
 
         public async ValueTask<string> GetAcrRefreshTokenAsync(HttpMessage message, TokenRequestContext context, string service, bool async)
@@ -45,7 +48,7 @@ namespace Azure.Containers.ContainerRegistry
 
             while (true)
             {
-                (refreshTokenTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context, service);
+                (refreshTokenTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(service);
                 RefreshTokenInfo info;
                 if (getTokenFromCredential)
                 {
@@ -61,6 +64,9 @@ namespace Azure.Containers.ContainerRegistry
                             info = refreshTokenTcs.Task.EnsureCompleted();
 #pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
                         }
+
+                        Debug.WriteLine("🌷🌷 ** Starting new bg task");
+
                         _ = Task.Run(() => GetRefreshTokenFromCredentialInBackgroundAsync(backgroundUpdateTcs, info, context, service, async));
                         return info.RefreshToken;
                     }
@@ -130,14 +136,15 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        private (TaskCompletionSource<RefreshTokenInfo> InfoTcs, TaskCompletionSource<RefreshTokenInfo>? BackgroundUpdateTcs, bool GetTokenFromCredential) GetTaskCompletionSources(TokenRequestContext context, string service)
+        private (TaskCompletionSource<RefreshTokenInfo> InfoTcs, TaskCompletionSource<RefreshTokenInfo>? BackgroundUpdateTcs, bool GetTokenFromCredential) GetTaskCompletionSources(string service)
         {
             lock (_syncObj)
             {
                 // Initial state. GetTaskCompletionSources has been called for the first time
                 if (_infoTcs == null || RequestRequiresNewToken(service))
                 {
-                    _currentAadContext = context;
+                    Debug.WriteLine("🌷🌷 ** 1. Starting fresh, or getting new");
+
                     _currentTokenService = service;
                     _infoTcs = new TaskCompletionSource<RefreshTokenInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
                     _backgroundUpdateTcs = default;
@@ -147,21 +154,33 @@ namespace Azure.Containers.ContainerRegistry
                 // Getting new access token is in progress, wait for it
                 if (!_infoTcs.Task.IsCompleted)
                 {
+                    Debug.WriteLine("🌷🌷 ** 2. Waiting for it ");
+
                     _backgroundUpdateTcs = default;
                     return (_infoTcs, _backgroundUpdateTcs, false);
                 }
 
                 DateTimeOffset now = DateTimeOffset.UtcNow;
+
+                Debug.WriteLine($"🌸🌸 ** Checking bg is not null: {_backgroundUpdateTcs != null}");
+                Debug.WriteLine($"🌸🌸 ** Checking bg ran to completion: {_backgroundUpdateTcs != null && _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion}");
+                Debug.WriteLine($"🌸🌸 ** Checking bg result expired: {_backgroundUpdateTcs != null && _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion && _backgroundUpdateTcs.Task.Result.ExpiresOn > now}");
+
                 // Access token has been successfully acquired in background and it is not expired yet, use it instead of current one
                 if (_backgroundUpdateTcs != null && _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion && _backgroundUpdateTcs.Task.Result.ExpiresOn > now)
                 {
+                    Debug.WriteLine("🌷🌷 ** 3. Getting from bg: switching info & bg ");
+
                     _infoTcs = _backgroundUpdateTcs;
                     _backgroundUpdateTcs = default;
+                    return (_infoTcs, default, false);
                 }
 
                 // Attempt to get access token has failed or it has already expired. Need to get a new one
                 if (_infoTcs.Task.Status != TaskStatus.RanToCompletion || now >= _infoTcs.Task.Result.ExpiresOn)
                 {
+                    Debug.WriteLine("🌷🌷 ** 4. Getting because expired ");
+
                     _infoTcs = new TaskCompletionSource<RefreshTokenInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
                     return (_infoTcs, default, true);
                 }
@@ -169,10 +188,13 @@ namespace Azure.Containers.ContainerRegistry
                 // Access token is still valid but is about to expire, try to get it in background
                 if (now >= _infoTcs.Task.Result.RefreshOn && _backgroundUpdateTcs == null)
                 {
+                    Debug.WriteLine("🌷🌷 ** 5. Getting because expiring soon ");
+
                     _backgroundUpdateTcs = new TaskCompletionSource<RefreshTokenInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
                     return (_infoTcs, _backgroundUpdateTcs, true);
                 }
 
+                Debug.WriteLine("🌷🌷 ** 6. Using the valid token - no new request");
                 // Access token is valid, use it
                 return (_infoTcs, default, false);
             }
@@ -219,7 +241,12 @@ namespace Azure.Containers.ContainerRegistry
             AcrRefreshToken acrRefreshToken = async ? await _authenticationRestClient.ExchangeAadAccessTokenForAcrRefreshTokenAsync(service, aadAccessToken.Token, cancellationToken).ConfigureAwait(false) :
                 _authenticationRestClient.ExchangeAadAccessTokenForAcrRefreshToken(service, aadAccessToken.Token, cancellationToken);
 
-            DateTime expiresOn = DateTime.UtcNow + _tokenExpiryOffset;
+            DateTime now = DateTime.UtcNow;
+            DateTime expiresOn = now + _tokenExpiryOffset;
+
+            Debug.WriteLine($"🐨🐨 ** Now is {now}");
+            Debug.WriteLine($"🐨🐨 ** Setting expires on to {expiresOn}");
+            Debug.WriteLine($"🐨🐨 ** Setting refresh on to {expiresOn - _tokenRefreshOffset}");
             return new RefreshTokenInfo(acrRefreshToken.RefreshToken, expiresOn, expiresOn - _tokenRefreshOffset);
         }
 

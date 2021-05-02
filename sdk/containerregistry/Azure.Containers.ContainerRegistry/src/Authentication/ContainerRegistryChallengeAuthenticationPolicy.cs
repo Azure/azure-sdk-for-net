@@ -37,13 +37,18 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ContainerRegistryRefreshTokenCache _refreshTokenCache;
 
         public ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, IContainerRegistryAuthenticationClient authenticationClient)
+            : this(credential, aadScope, authenticationClient, null, null, null)
+        {
+        }
+
+        internal ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, IContainerRegistryAuthenticationClient authenticationClient, TimeSpan? tokenRefreshOffset = null, TimeSpan? tokenRefreshRetryDelay = null, TimeSpan? tokenExpiryOffset = null)
             : base(credential, aadScope)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(aadScope, nameof(aadScope));
 
             _authenticationClient = authenticationClient;
-            _refreshTokenCache = new ContainerRegistryRefreshTokenCache(credential, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30), new[] { aadScope }, authenticationClient);
+            _refreshTokenCache = new ContainerRegistryRefreshTokenCache(credential, authenticationClient, tokenRefreshOffset, tokenRefreshRetryDelay, tokenExpiryOffset);
         }
 
         protected override Task AuthorizeRequestAsync(HttpMessage message, bool async)
