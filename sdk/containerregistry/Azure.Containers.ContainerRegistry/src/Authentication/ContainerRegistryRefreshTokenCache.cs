@@ -65,8 +65,6 @@ namespace Azure.Containers.ContainerRegistry
 #pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
                         }
 
-                        Debug.WriteLine("🌷🌷 ** Starting new bg task");
-
                         _ = Task.Run(() => GetRefreshTokenFromCredentialInBackgroundAsync(backgroundUpdateTcs, info, context, service, async));
                         return info.RefreshToken;
                     }
@@ -143,8 +141,6 @@ namespace Azure.Containers.ContainerRegistry
                 // Initial state. GetTaskCompletionSources has been called for the first time
                 if (_infoTcs == null || RequestRequiresNewToken(service))
                 {
-                    Debug.WriteLine("🌷🌷 ** 1. Starting fresh, or getting new");
-
                     _currentTokenService = service;
                     _infoTcs = new TaskCompletionSource<RefreshTokenInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
                     _backgroundUpdateTcs = default;
@@ -154,23 +150,15 @@ namespace Azure.Containers.ContainerRegistry
                 // Getting new access token is in progress, wait for it
                 if (!_infoTcs.Task.IsCompleted)
                 {
-                    Debug.WriteLine("🌷🌷 ** 2. Waiting for it ");
-
                     _backgroundUpdateTcs = default;
                     return (_infoTcs, _backgroundUpdateTcs, false);
                 }
 
                 DateTimeOffset now = DateTimeOffset.UtcNow;
 
-                Debug.WriteLine($"🌸🌸 ** Checking bg is not null: {_backgroundUpdateTcs != null}");
-                Debug.WriteLine($"🌸🌸 ** Checking bg ran to completion: {_backgroundUpdateTcs != null && _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion}");
-                Debug.WriteLine($"🌸🌸 ** Checking bg result expired: {_backgroundUpdateTcs != null && _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion && _backgroundUpdateTcs.Task.Result.ExpiresOn > now}");
-
                 // Access token has been successfully acquired in background and it is not expired yet, use it instead of current one
                 if (_backgroundUpdateTcs != null && _backgroundUpdateTcs.Task.Status == TaskStatus.RanToCompletion && _backgroundUpdateTcs.Task.Result.ExpiresOn > now)
                 {
-                    Debug.WriteLine("🌷🌷 ** 3. Getting from bg: switching info & bg ");
-
                     _infoTcs = _backgroundUpdateTcs;
                     _backgroundUpdateTcs = default;
                     return (_infoTcs, default, false);
@@ -179,8 +167,6 @@ namespace Azure.Containers.ContainerRegistry
                 // Attempt to get access token has failed or it has already expired. Need to get a new one
                 if (_infoTcs.Task.Status != TaskStatus.RanToCompletion || now >= _infoTcs.Task.Result.ExpiresOn)
                 {
-                    Debug.WriteLine("🌷🌷 ** 4. Getting because expired ");
-
                     _infoTcs = new TaskCompletionSource<RefreshTokenInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
                     return (_infoTcs, default, true);
                 }
@@ -188,13 +174,10 @@ namespace Azure.Containers.ContainerRegistry
                 // Access token is still valid but is about to expire, try to get it in background
                 if (now >= _infoTcs.Task.Result.RefreshOn && _backgroundUpdateTcs == null)
                 {
-                    Debug.WriteLine("🌷🌷 ** 5. Getting because expiring soon ");
-
                     _backgroundUpdateTcs = new TaskCompletionSource<RefreshTokenInfo>(TaskCreationOptions.RunContinuationsAsynchronously);
                     return (_infoTcs, _backgroundUpdateTcs, true);
                 }
 
-                Debug.WriteLine("🌷🌷 ** 6. Using the valid token - no new request");
                 // Access token is valid, use it
                 return (_infoTcs, default, false);
             }
@@ -244,9 +227,6 @@ namespace Azure.Containers.ContainerRegistry
             DateTime now = DateTime.UtcNow;
             DateTime expiresOn = now + _tokenExpiryOffset;
 
-            Debug.WriteLine($"🐨🐨 ** Now is {now}");
-            Debug.WriteLine($"🐨🐨 ** Setting expires on to {expiresOn}");
-            Debug.WriteLine($"🐨🐨 ** Setting refresh on to {expiresOn - _tokenRefreshOffset}");
             return new RefreshTokenInfo(acrRefreshToken.RefreshToken, expiresOn, expiresOn - _tokenRefreshOffset);
         }
 
