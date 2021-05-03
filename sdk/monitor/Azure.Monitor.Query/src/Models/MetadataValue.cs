@@ -5,14 +5,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetadataValue
+    internal partial class MetadataValue
     {
-        [CodeGenMember("Name")]
-        private LocalizableString LocalizedName { get; }
-
-        /// <summary>
-        /// Gets the name of the metadata value.
-        /// </summary>
-        public string Name => LocalizedName.Value;
     }
 }
