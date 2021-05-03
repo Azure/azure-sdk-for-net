@@ -23,5 +23,8 @@
     "*.pri"
   ],
   "words": [],
+  "overrides": [
+    { "filename": "**/sdk/formrecognizer/**/*.cs", "words": ["ZhHant"] }
+  ],
   "allowCompoundWords": true
 }
