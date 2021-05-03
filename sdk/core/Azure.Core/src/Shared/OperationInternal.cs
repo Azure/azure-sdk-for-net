@@ -19,6 +19,8 @@ namespace Azure.Core
 
         private TResult _value;
 
+        private RequestFailedException _operationFailedException;
+
         public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation) : this(clientDiagnostics)
         {
             _operation = operation;
@@ -75,7 +77,19 @@ namespace Azure.Core
 
         protected ClientDiagnostics ClientDiagnostics { get; }
 
-        protected RequestFailedException OperationFailedException { get; set; }
+        private RequestFailedException OperationFailedException
+        {
+            get => _operationFailedException;
+            set
+            {
+                if (value is null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                _operationFailedException = value;
+            }
+        }
 
         public async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken) =>
             await UpdateStatusAsync(async: true, cancellationToken).ConfigureAwait(false);
@@ -83,24 +97,8 @@ namespace Azure.Core
         public Response UpdateStatus(CancellationToken cancellationToken) =>
             UpdateStatusAsync(async: false, cancellationToken).EnsureCompleted();
 
-        public async ValueTask<Response<TResult>> WaitForCompletionAsync(CancellationToken cancellationToken)
-        {
-            while (true)
-            {
-                Response response = await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-
-                if (HasCompleted)
-                {
-                    return Response.FromValue(Value, response);
-                }
-
-                var pollingInterval = response.Headers.TryGetValue(RetryAfterHeaderName, out string retryAfterValue)
-                    && int.TryParse(retryAfterValue, out int delayInSeconds)
-                    ? TimeSpan.FromSeconds(delayInSeconds) : DefaultPollingInterval;
-
-                await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
-            }
-        }
+        public async ValueTask<Response<TResult>> WaitForCompletionAsync(CancellationToken cancellationToken) =>
+            await WaitForCompletionAsync(DefaultPollingInterval, cancellationToken).ConfigureAwait(false);
 
         public async ValueTask<Response<TResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
@@ -113,7 +111,14 @@ namespace Azure.Core
                     return Response.FromValue(Value, response);
                 }
 
-                await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
+                var serverDelay = response.Headers.TryGetValue(RetryAfterHeaderName, out string retryAfterValue)
+                    && int.TryParse(retryAfterValue, out int serverDelayInSeconds)
+                    ? TimeSpan.FromSeconds(serverDelayInSeconds) : TimeSpan.Zero;
+
+                var delay = serverDelay > pollingInterval
+                    ? serverDelay : pollingInterval;
+
+                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
             }
         }
 
