@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the parent resource of this resource.
         /// </summary>
-        protected OperationsBase Parent { get; set; }
+        protected OperationsBase Parent { get; }
 
         /// <summary>
         /// The typed resource identifier for the underlying resource
