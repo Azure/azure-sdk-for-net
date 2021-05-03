@@ -209,7 +209,7 @@ namespace Proto.Compute
         /// <param name="hostName"> The hostname for the virtual machine. </param>
         /// <param name="location"> The location to create the Virtual Machine. </param>
         /// <returns> Object used to create a <see cref="VirtualMachine"/>. </returns>
-        public VirtualMachineScaleSetModelBuilder Construct(string hostName, LocationData location = null)
+        public VirtualMachineScaleSetBuilder Construct(string hostName, LocationData location = null)
         {
             var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier, ResourceGroupOperations>();
             var vmss = new Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet(location ?? parent.Data.Location)
@@ -249,7 +249,7 @@ namespace Proto.Compute
 
             vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Add(nicConfig);
 
-            return new VirtualMachineScaleSetModelBuilder(this, new VirtualMachineScaleSetData(vmss));
+            return new VirtualMachineScaleSetBuilder(this, new VirtualMachineScaleSetData(vmss));
         }
     }
 }

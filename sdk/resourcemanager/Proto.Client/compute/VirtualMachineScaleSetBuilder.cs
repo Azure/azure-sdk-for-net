@@ -11,8 +11,10 @@ namespace Proto.Compute
     /// <summary>
     /// A class representing a builder object used to create Azure resources.
     /// </summary>
-    public class VirtualMachineScaleSetBuilder
+    public partial class VirtualMachineScaleSetBuilder
     {
+        private VirtualMachineScaleSetData _model;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineScaleSetBuilder"/> class.
         /// </summary>
@@ -22,6 +24,7 @@ namespace Proto.Compute
         {
             Resource = resource;
             VirtualMachineScaleSetContainer = container;
+            _model = resource;
         }
 
         /// <summary>

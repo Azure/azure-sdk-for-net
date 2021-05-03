@@ -4,28 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.ResourceManager.Compute.Models;
 
-namespace Proto.Compute.Convenience
+namespace Proto.Compute
 {
     /// <summary>
     /// A class representing a builder object to help create a virtual machine.
     /// </summary>
-    public class VirtualMachineScaleSetModelBuilder : VirtualMachineScaleSetModelBuilderBase
+    public partial class VirtualMachineScaleSetBuilder
     {
-        private VirtualMachineScaleSetData _model;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VirtualMachineModelBuilder"/> class.
-        /// </summary>
-        /// <param name="containerOperations"> The container to create the virtual machine in. </param>
-        /// <param name="model"> The data model representing the virtual machine to create. </param>
-        public VirtualMachineScaleSetModelBuilder(VirtualMachineScaleSetContainer containerOperations, VirtualMachineScaleSetData model) 
-            : base(containerOperations, model)
-        {
-            // TODO: GENERATOR Update Builder after models are incorporated in generated models
-            _model = model;
-        }
-
-        public override VirtualMachineScaleSetModelBuilderBase WithUseWindowsImage(string computerNamePrefix, string adminUser, string password)
+        public VirtualMachineScaleSetBuilder WithUseWindowsImage(string computerNamePrefix, string adminUser, string password)
         {
             _model.VirtualMachineProfile.OsProfile = new VirtualMachineScaleSetOSProfile()
             {
@@ -38,7 +24,7 @@ namespace Proto.Compute.Convenience
             return this;
         }
 
-        public override VirtualMachineScaleSetModelBuilderBase WithUseLinuxImage(string computerNamePrefix, string adminUser, string password)
+        public VirtualMachineScaleSetBuilder WithUseLinuxImage(string computerNamePrefix, string adminUser, string password)
         {
             _model.VirtualMachineProfile.OsProfile = new VirtualMachineScaleSetOSProfile()
             {
@@ -55,7 +41,7 @@ namespace Proto.Compute.Convenience
             return this;
         }
 
-        public override VirtualMachineScaleSetModelBuilderBase WithRequiredPrimaryNetworkInterface(
+        public VirtualMachineScaleSetBuilder WithRequiredPrimaryNetworkInterface(
             string name,
             ResourceIdentifier subNetResourceId,
             ICollection<ResourceIdentifier> backendAddressPoolResourceIds,
@@ -87,7 +73,7 @@ namespace Proto.Compute.Convenience
             return this;
         }
 
-        public override VirtualMachineScaleSetModelBuilderBase WithRequiredLoadBalancer(ResourceIdentifier asetResourceId)
+        public VirtualMachineScaleSetBuilder WithRequiredLoadBalancer(ResourceIdentifier asetResourceId)
         {
             return this;
         }
