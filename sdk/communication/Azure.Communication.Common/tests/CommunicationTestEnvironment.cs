@@ -35,7 +35,7 @@ namespace Azure.Communication.Tests
 
         public bool ShouldIgnoreTests => TestPackagesEnabled != TestPackagesEnabledDefaultValue
             && TestPackagesEnabled != ExpectedTestPackagesEnabled
-            && !bool.Parse(SkipSmsTestEnvironmentVariableName);
+            || bool.Parse(SkipSmsTestEnvironmentVariableName);
 
         public string TestPackagesEnabled => GetTestPackageEnabled();
 
