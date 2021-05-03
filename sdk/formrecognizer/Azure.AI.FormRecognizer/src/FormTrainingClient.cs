@@ -288,6 +288,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelIds">List of model ids to use in the composed model.</param>
         /// <param name="modelName">An optional, user-defined name to associate with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>
         /// <para>A <see cref="CreateComposedModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the composed model.</para>
@@ -326,6 +329,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelIds">List of model ids to use in the composed model.</param>
         /// <param name="modelName">An optional, user-defined name to associate with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>
         /// <para>A <see cref="CreateComposedModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the composed model.</para>
