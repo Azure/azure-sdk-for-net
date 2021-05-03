@@ -15,7 +15,7 @@ This sample shows how to apply topic filters to subscriptions.
 
 ## What is a Topic filter?
 
-[Topic filters](https://docs.microsoft.com/en-us/azure/service-bus-messaging/topic-filters), or rules, can be applied to subscriptions to allow subscribers to define which messages they want to receive from a topic.
+[Topic filters](https://docs.microsoft.com/azure/service-bus-messaging/topic-filters), or rules, can be applied to subscriptions to allow subscribers to define which messages they want to receive from a topic.
 
 ## Sample Code
 
