@@ -813,3 +813,20 @@ directive:
         }
       }
 ```
+
+### Correct Security to be separately defined
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $
+  transform: >
+    $.security = [
+      {
+        "apim_key": []
+      },
+      {
+        "ma_api_key": []
+      }
+    ]
+```
