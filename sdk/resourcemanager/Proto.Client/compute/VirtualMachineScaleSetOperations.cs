@@ -308,7 +308,7 @@ namespace Proto.Compute
         /// <returns> An object representing collection of subnets and their operations over a virtual network. </returns>
         public RollingUpgradeOperations GetRollingUpgrade()
         {
-            return new RollingUpgradeOperations(this, Id);
+            return new RollingUpgradeOperations(this);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Proto.Compute
         public VirtualMachineScaleSetBuilder(VirtualMachineScaleSetContainer container, VirtualMachineScaleSetData resource)
         {
             Resource = resource;
-            UnTypedContainer = container;
+            VirtualMachineScaleSetContainer = container;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Proto.Compute
         /// <summary>
         /// Gets the container object to create the resource in.
         /// </summary>
-        protected VirtualMachineScaleSetContainer UnTypedContainer { get; private set; }
+        protected VirtualMachineScaleSetContainer VirtualMachineScaleSetContainer { get; private set; }
 
         /// <summary>
         /// Creates the resource object to send to the Azure API.
@@ -68,7 +68,7 @@ namespace Proto.Compute
             ResourceName = name;
             Resource = Build();
 
-            return UnTypedContainer.CreateOrUpdate(name, Resource, cancellationToken);
+            return VirtualMachineScaleSetContainer.CreateOrUpdate(name, Resource, cancellationToken);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Proto.Compute
             ResourceName = name;
             Resource = Build();
 
-            return await UnTypedContainer.CreateOrUpdateAsync(name, Resource, cancellationToken).ConfigureAwait(false);
+            return await VirtualMachineScaleSetContainer.CreateOrUpdateAsync(name, Resource, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Proto.Compute
             ResourceName = name;
             Resource = Build();
 
-            return UnTypedContainer.StartCreateOrUpdate(name, Resource, cancellationToken);
+            return VirtualMachineScaleSetContainer.StartCreateOrUpdate(name, Resource, cancellationToken);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Proto.Compute
             ResourceName = name;
             Resource = Build();
 
-            return await UnTypedContainer.StartCreateOrUpdateAsync(name, Resource, cancellationToken).ConfigureAwait(false);
+            return await VirtualMachineScaleSetContainer.StartCreateOrUpdateAsync(name, Resource, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

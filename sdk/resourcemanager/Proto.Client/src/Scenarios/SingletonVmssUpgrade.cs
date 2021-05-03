@@ -26,7 +26,9 @@ namespace Proto.Client
             // NOTE: due to full test involves creating LB which have another 3-5 resources needs to be in
             // proto, this test relies on pre-created VMSS.
             // 1. Follow instruction here (CLI), https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/quick-create-cli
-            // 2. Initiate a rolling upgrade az vmss rolling-upgrade start -g [RG] -n myScaleSet --debug
+            //      az group create --name azhang-test --location eastus
+            //      az vmss create --resource-group azhang-test --name myScaleSet --image UbuntuLTS --upgrade-policy-mode automatic --admin-username azureuser --generate-ssh-keys
+            // 2. Initiate a rolling upgrade az vmss rolling-upgrade start -g azhang-test -n myScaleSet --debug
             VirtualMachineScaleSet vmss1 = await client.DefaultSubscription
                 .GetResourceGroups().Get("azhang-test").Value
                 .GetVirtualMachineScaleSet().GetAsync("myScaleSet");

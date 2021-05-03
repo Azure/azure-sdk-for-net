@@ -25,7 +25,7 @@ namespace Proto.Compute
         /// <param name="operations"> The client parameters to use in these operations. </param>
         /// <param name="resource"> The resource that is the target of operations. </param>
         internal RollingUpgrade(OperationsBase operations, RollingUpgradeStatusInfo resource)
-            : base(operations, operations.Id as ResourceGroupResourceIdentifier)
+            : base(operations)
         {
             Data = resource;
         }

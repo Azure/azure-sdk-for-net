@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
@@ -18,13 +20,18 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="SingletonOperationsBase"/> class.
         /// </summary>
-        /// <param name="clientContext"></param>
-        /// <param name="id"></param>
-        internal SingletonOperationsBase(ClientContext clientContext, ResourceIdentifier id)
-            : base(clientContext, ResourceIdentifier.RootResourceIdentifier)
+        /// <param name="parent"></param>
+        internal SingletonOperationsBase(OperationsBase parent)
+            : base(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri, parent.Pipeline), ResourceIdentifier.RootResourceIdentifier)
         {
-            ParentId = id;
+            Parent = parent;
+            ParentId = parent.Id;
         }
+
+        /// <summary>
+        /// Gets the parent resource of this resource.
+        /// </summary>
+        protected OperationsBase Parent { get; set; }
 
         /// <summary>
         /// The typed resource identifier for the underlying resource
@@ -56,18 +63,15 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ContainerBase{TOperations, TIdentifier}"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
-        /// <param name="parentId"> The identifier of the resource that is the target of operations. </param>
-        protected SingletonOperationsBase(OperationsBase parent, TIdentifier parentId)
-            : base(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri, parent.Pipeline), parentId)
+        protected SingletonOperationsBase(OperationsBase parent)
+            : base(parent)
         {
-            Parent = parent;
-            ParentId = parentId;
+            ParentId = parent.Id as TIdentifier;
+            if (string.IsNullOrWhiteSpace(ParentId))
+            {
+                throw new InvalidOperationException();
+            }
         }
-
-        /// <summary>
-        /// Gets the parent resource of this resource.
-        /// </summary>
-        protected OperationsBase Parent { get; }
 
         /// <summary>
         /// The typed resource identifier for the underlying resource
