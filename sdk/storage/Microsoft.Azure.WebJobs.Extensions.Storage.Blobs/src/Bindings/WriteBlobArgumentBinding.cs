@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             ValueBindingContext context, IBlobWrittenWatcher blobWrittenWatcher, IFunctionDataCache functionDataCache)
         {
             Stream blobStream = await BindStreamAsync(blob, context, blobWrittenWatcher).ConfigureAwait(false);
-            return new CacheObjectAndBlobStream(blob, context.SharedMemoryMetadata, blobStream, functionDataCache);
+            return new CacheableWriteBlob(blob, context.SharedMemoryMetadata, blobStream, functionDataCache);
         }
     }
 }

@@ -20,41 +20,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             return TryBindStreamAsync(blob, context.CancellationToken);
         }
 
-        public static async Task<Stream> TryBindStreamAsync(BlobBaseClient blob, CancellationToken cancellationToken)
+        public static async Task<Stream> TryBindStreamAsync(BlobBaseClient blob, CancellationToken cancellationToken, string eTag = null)
         {
             Stream rawStream;
             try
             {
-                rawStream = await blob.OpenReadAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException exception)
-            {
-                // Testing generic error case since specific error codes are not available for FetchAttributes
-                // (HEAD request), including OpenRead.
-                if (!exception.IsNotFound())
+                if (eTag != null)
                 {
-                    throw;
-                }
-
-                return null;
-            }
-
-            return rawStream;
-        }
-
-        public static async Task<Stream> TryBindStreamAsync(BlobBaseClient blob, string eTag, CancellationToken cancellationToken)
-        {
-            Stream rawStream;
-            try
-            {
-                BlobOpenReadOptions readOptions = new BlobOpenReadOptions(allowModifications: false)
-                {
-                    Conditions = new BlobRequestConditions()
+                    BlobOpenReadOptions readOptions = new BlobOpenReadOptions(allowModifications: false)
                     {
-                        IfMatch = new ETag(eTag),
-                    },
-                };
-                rawStream = await blob.OpenReadAsync(readOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                        Conditions = new BlobRequestConditions()
+                        {
+                            IfMatch = new ETag(eTag),
+                        },
+                    };
+                    rawStream = await blob.OpenReadAsync(readOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    rawStream = await blob.OpenReadAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
             }
             catch (RequestFailedException exception)
             {
@@ -86,13 +71,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 if (functionDataCache.TryGet(cacheKey, isIncrementActiveReference: true, out SharedMemoryMetadata sharedMemoryMeta))
                 {
                     // CACHE HIT
-                    return new CacheObjectOrBlobStream(cacheKey, sharedMemoryMeta, functionDataCache);
+                    return new CacheableReadBlob(cacheKey, sharedMemoryMeta, functionDataCache);
                 }
 
                 // CACHE MISS
                 // Wrap the blob's stream along with the cache key so it can be inserted in the cache later using the above generated key for this blob
-                Stream innerStream = await TryBindStreamAsync(blob.BlobClient, cacheKey.Version, context.CancellationToken).ConfigureAwait(false);
-                return new CacheObjectOrBlobStream(cacheKey, innerStream, functionDataCache);
+                Stream innerStream = await TryBindStreamAsync(blob.BlobClient, context.CancellationToken, cacheKey.Version).ConfigureAwait(false);
+                return new CacheableReadBlob(cacheKey, innerStream, functionDataCache);
             }
             catch (RequestFailedException exception)
             {

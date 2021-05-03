@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
     /// This object needs to be persisted to storage using the associated Stream.
     /// Once it is persisted, it needs to be inserted into the <see cref="IFunctionDataCache"/>.
     /// </summary>
-    internal class CacheObjectAndBlobStream : ICacheAwareWriteObject
+    internal class CacheableWriteBlob : ICacheAwareWriteObject
     {
         /// <summary>
         /// Cache in which to put this object when required.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
         /// <param name="cacheObject">Desribes the shared memory region containing this object.</param>
         /// <param name="blobStream">Stream to use for writing this object to storage.</param>
         /// <param name="functionDataCache">Cache in which to put this object when required.</param>
-        public CacheObjectAndBlobStream(BlobWithContainer<BlobBaseClient> blob, SharedMemoryMetadata cacheObject, Stream blobStream, IFunctionDataCache functionDataCache)
+        public CacheableWriteBlob(BlobWithContainer<BlobBaseClient> blob, SharedMemoryMetadata cacheObject, Stream blobStream, IFunctionDataCache functionDataCache)
         {
             _cacheObject = cacheObject;
             _functionDataCache = functionDataCache;
@@ -66,6 +66,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             // generated an eTag but another operation on the blob may have modified that eTag between the Dispose call
             // and this call. How do we ensure we have the final eTag when the BlobStream was disposed/closed?
             BlobProperties properties = await _blob.BlobClient.FetchPropertiesOrNullIfNotExistAsync().ConfigureAwait(false);
+            if (properties == null)
+            {
+                return false;
+            }
+
             return TryPutToFunctionDataCacheCore(properties, isDeleteOnFailure);
         }
 

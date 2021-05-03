@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
     /// true and the object can be read from shared memory using the <see cref="CacheObject"/> property.
     /// Otherwise, the object can be read from storage using the <see cref="BlobStream"/> property.
     /// </summary>
-    internal class CacheObjectOrBlobStream : ICacheAwareReadObject
+    internal class CacheableReadBlob : ICacheAwareReadObject
     {
 #pragma warning disable CA2213 // Disposable fields should be disposed
         /// <summary>
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
         /// <param name="cacheKey">Key associated to this object to address it in the <see cref="IFunctionDataCache"/>.</param>
         /// <param name="cacheObject">Desribes the shared memory region containing this object.</param>
         /// <param name="functionDataCache">Cache in which to put this object when required.</param>
-        public CacheObjectOrBlobStream(FunctionDataCacheKey cacheKey, SharedMemoryMetadata cacheObject, IFunctionDataCache functionDataCache)
+        public CacheableReadBlob(FunctionDataCacheKey cacheKey, SharedMemoryMetadata cacheObject, IFunctionDataCache functionDataCache)
         {
             IsCacheHit = true;
             CacheKey = cacheKey;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
         /// <param name="cacheKey">Key associated to this object to address it in the <see cref="IFunctionDataCache"/>.</param>
         /// <param name="blobStream">Stream to use for writing this object to storage.</param>
         /// <param name="functionDataCache">Cache in which to put this object when required.</param>
-        public CacheObjectOrBlobStream(FunctionDataCacheKey cacheKey, Stream blobStream, IFunctionDataCache functionDataCache)
+        public CacheableReadBlob(FunctionDataCacheKey cacheKey, Stream blobStream, IFunctionDataCache functionDataCache)
         {
             IsCacheHit = false;
             CacheKey = cacheKey;
@@ -93,6 +93,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
         /// <returns>True if the object was successfully put into the cache, false otherwise.</returns>
         public bool TryPutToCache(SharedMemoryMetadata cacheObject, bool isIncrementActiveReference)
         {
+            if (IsCacheHit)
+            {
+                // The object is already cached
+                return false;
+            }
+
             if (!_functionDataCache.TryPut(CacheKey, cacheObject, isIncrementActiveReference: isIncrementActiveReference, isDeleteOnFailure: false))
             {
                 return false;
