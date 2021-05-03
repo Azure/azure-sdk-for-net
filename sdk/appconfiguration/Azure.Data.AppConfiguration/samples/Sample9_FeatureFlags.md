@@ -51,3 +51,5 @@ if (response.Value is FeatureFlagConfigurationSetting featureFlag)
     Console.WriteLine($"Feature flag {featureFlag.FeatureId} IsEnabled: {featureFlag.IsEnabled}");
 }
 ```
+## update a Feature Flag
+create UpdateFeatureFlagConfigurationSetting
