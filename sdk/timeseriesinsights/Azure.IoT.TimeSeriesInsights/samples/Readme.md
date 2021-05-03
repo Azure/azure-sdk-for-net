@@ -2,7 +2,7 @@
 
 Azure Time Series Insights provides data exploration and telemetry tools to help you improve operational analysis. It's a fully managed analytics, storage, and visualization service where you can explore and analyze billions of Internet of Things (IoT) events simultaneously.
 
-Azure Time Series Insights gives you a global view of your data, so you can quickly validate your IoT solution and avoid costly downtime to mission-critical devices. It can help you discover hidden trends, spot anomalies, and conduct root-cause analyses in near real time.
+Azure Time Series Insights gives you a global view of your data, so you can quickly validate your IoT solution and avoid costly downtime to mission-critical devices. It can help you discover hidden trends, spot anomalies, and conduct root-cause analysis in near real time.
 
 If you are new to Azure Time Series Insights and would like to learn more about the platform, please make sure you check out the Azure Time Series Insights official documentation page.
 
@@ -43,6 +43,7 @@ var client = new TimeSeriesInsightsClient(
 You can use the following snippet to create instance Id using `TimeSeriesId`.
 
 ```csharp
+you can use the Model Settings client to learn more about what the Time Series Id is composed of in the environment.
 TimeSeriesId instanceId = modelSettings.TimeSeriesIdProperties.Count switch
 {
     1 => new TimeSeriesId("key1"),
@@ -90,7 +91,7 @@ for (int i = 0; i < createInstanceErrors.Value.Length; i++)
 
 ### Get instances
 
-Using `Instances.GetAsync`, all created instances are returned as `AsyncPageable<TimeSeriesInstance>`.
+Use `Instances.GetAsync` to get all created instances as `AsyncPageable<TimeSeriesInstance>`.
 ```C# Snippet:TimeSeriesInsightsGetAllInstances
 // Get all instances for the Time Series Insigths environment
 AsyncPageable<TimeSeriesInstance> tsiInstances = client.Instances.GetAsync();
@@ -254,7 +255,7 @@ for (int i = 0; i < createTypesResult.Value.Length; i++)
 
 ### Get types
 
-Using `Types.GetTypesAsync`, all created types or errors are returned as `AsyncPageable<TimeSeriesType>`.
+Using `Types.GetTypesAsync`, all created types are returned as `AsyncPageable<TimeSeriesType>`.
 ```C# Snippet:TimeSeriesInsightsSampleGetAllTypes
 // Get all Time Series types in the environment
 AsyncPageable<TimeSeriesType> getAllTypesResponse = client.Types.GetTypesAsync();
@@ -265,7 +266,7 @@ await foreach (TimeSeriesType tsiType in getAllTypesResponse)
 }
 ```
 
-Use `Types.GetByIdAsync` with list of types unique identifiers or names to get a list of specific types.
+Use `Types.GetByIdAsync` with list of types' unique identifiers or names to get a list of specific types.
 ```C# Snippet:TimeSeriesInsightsSampleGetTypeById
 // Code snippet below shows getting a default Type using Id
 // The default type Id can be obtained programmatically by using the ModelSettings client.
@@ -293,7 +294,7 @@ for (int i = 0; i < getTypeByIdResults.Value.Length; i++)
 
 ### Replace types
 
-To replace types, pass in a list of `TimeSeriesType`.
+To replace types, use `Types.CreateOrReplaceAsync` with a list of `TimeSeriesType`.
 ```C# Snippet:TimeSeriesInsightsSampleReplaceType
 // Update variables with adding a new variable
 foreach (TimeSeriesType type in timeSeriesTypes)
@@ -323,7 +324,7 @@ for (int i = 0; i < updateTypesResult.Value.Length; i++)
 
 ### Delete types
 
-To delete types, pass in a list of type Ids or names for the types you want to delete.
+To delete types, use `Types.DeleteByIdAsync` and pass in a list of type Ids or names for the types you want to delete.
 ```C# Snippet:TimeSeriesInsightsSampleDeleteTypeById
 // Delete Time Series types with Ids
 
