@@ -3762,7 +3762,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_08_04)]
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20758")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20758")]
         [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_ParquetConfigurationInput()
         {
@@ -3794,7 +3794,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_08_04)]
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20758")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/20758")]
         [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
         public async Task QueryAsync_ParquetConfigurationOutputError()
         {
