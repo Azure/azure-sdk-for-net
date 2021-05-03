@@ -26,7 +26,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -276,7 +275,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -316,7 +314,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -340,7 +337,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeContentCanParseMultipageFormWithBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -380,7 +376,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeContentThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -399,7 +394,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public void StartRecognizeContentFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
