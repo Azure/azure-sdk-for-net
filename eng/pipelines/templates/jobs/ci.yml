@@ -33,6 +33,9 @@ parameters:
 - name: MatrixReplace
   type: object
   default: []
+- name: SpellCheckPublicApiSurface
+  type: boolean
+  default: false
 
 jobs:
   - job: Build
@@ -101,9 +104,7 @@ jobs:
       vmImage: MMSUbuntu18.04
     steps:
       - pwsh: |
-          npx cspell lint `
-            --config ./.vscode/cspell.json `
-            ./sdk/${{ parameters.ServiceDirectory }}/*/api/*.cs
+
         displayName: Check spelling of public API surface
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -140,6 +141,7 @@ jobs:
           arguments: >
            -ServiceDirectory ${{ parameters.ServiceToTest }}
            -SDKType ${{ parameters.SDKType }}
+           -SpellCheckPublicApiSurface:$${{ parameters.SpellCheckPublicApiSurface }}
           pwsh: true
           failOnStderr:  false
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
