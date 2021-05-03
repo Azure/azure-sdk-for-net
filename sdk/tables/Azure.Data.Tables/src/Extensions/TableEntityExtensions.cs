@@ -21,7 +21,7 @@ namespace Azure.Data.Tables
                 return dictEntity.ToOdataAnnotatedDictionary();
             }
 
-            var properties = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            var properties = entity.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
             var annotatedDictionary = new Dictionary<string, object>(properties.Length * 2);
 
             foreach (var prop in properties)

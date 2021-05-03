@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.IoT.TimeSeriesInsights.Models;
 
 namespace Azure.IoT.TimeSeriesInsights
 {

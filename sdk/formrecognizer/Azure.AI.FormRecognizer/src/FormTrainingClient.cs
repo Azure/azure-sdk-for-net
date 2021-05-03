@@ -25,6 +25,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         internal readonly ClientDiagnostics Diagnostics;
 
+        /// <summary>Service version used in this client.</summary>
+        internal readonly FormRecognizerClientOptions.ServiceVersion ServiceVersion = FormRecognizerClientOptions.LatestVersion;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FormTrainingClient"/> class.
         /// </summary>
@@ -65,8 +68,9 @@ namespace Azure.AI.FormRecognizer.Training
             Argument.AssertNotNull(options, nameof(options));
 
             Diagnostics = new ClientDiagnostics(options);
+            ServiceVersion = options.Version;
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri, FormRecognizerClientOptions.GetVersionString(options.Version));
+            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri, FormRecognizerClientOptions.GetVersionString(ServiceVersion));
         }
 
         /// <summary>
@@ -100,8 +104,9 @@ namespace Azure.AI.FormRecognizer.Training
             Argument.AssertNotNull(options, nameof(options));
 
             Diagnostics = new ClientDiagnostics(options);
+            ServiceVersion = options.Version;
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri, FormRecognizerClientOptions.GetVersionString(options.Version));
+            ServiceClient = new FormRecognizerRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri, FormRecognizerClientOptions.GetVersionString(ServiceVersion));
         }
 
         #region Training
@@ -139,7 +144,7 @@ namespace Azure.AI.FormRecognizer.Training
                 };
 
                 ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest, cancellationToken);
-                return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
+                return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics, ServiceVersion);
             }
             catch (Exception e)
             {
@@ -182,7 +187,7 @@ namespace Azure.AI.FormRecognizer.Training
                 };
 
                 ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest, cancellationToken).ConfigureAwait(false);
-                return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
+                return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics, ServiceVersion);
             }
             catch (Exception e)
             {
@@ -223,7 +228,7 @@ namespace Azure.AI.FormRecognizer.Training
                 };
 
                 ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = ServiceClient.TrainCustomModelAsync(trainRequest, cancellationToken);
-                return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
+                return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics, ServiceVersion);
             }
             catch (Exception e)
             {
@@ -264,7 +269,7 @@ namespace Azure.AI.FormRecognizer.Training
                 };
 
                 ResponseWithHeaders<FormRecognizerTrainCustomModelAsyncHeaders> response = await ServiceClient.TrainCustomModelAsyncAsync(trainRequest, cancellationToken).ConfigureAwait(false);
-                return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics);
+                return new TrainingOperation(response.Headers.Location, ServiceClient, Diagnostics, ServiceVersion);
             }
             catch (Exception e)
             {
@@ -306,7 +311,7 @@ namespace Azure.AI.FormRecognizer.Training
                 composeRequest.ModelName = modelName;
 
                 ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = ServiceClient.ComposeCustomModelsAsync(composeRequest, cancellationToken);
-                return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
+                return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics, ServiceVersion);
             }
             catch (Exception e)
             {
@@ -344,7 +349,7 @@ namespace Azure.AI.FormRecognizer.Training
                 composeRequest.ModelName = modelName;
 
                 ResponseWithHeaders<FormRecognizerComposeCustomModelsAsyncHeaders> response = await ServiceClient.ComposeCustomModelsAsyncAsync(composeRequest, cancellationToken).ConfigureAwait(false);
-                return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics);
+                return new CreateComposedModelOperation(response.Headers.Location, ServiceClient, Diagnostics, ServiceVersion);
             }
             catch (Exception e)
             {
@@ -376,7 +381,7 @@ namespace Azure.AI.FormRecognizer.Training
                 Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
 
                 Response<Model> response = ServiceClient.GetCustomModel(guid, includeKeys: true, cancellationToken);
-                return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomFormModel(response.Value, ServiceVersion), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -404,7 +409,7 @@ namespace Azure.AI.FormRecognizer.Training
                 Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
 
                 Response<Model> response = await ServiceClient.GetCustomModelAsync(guid, includeKeys: true, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
+                return Response.FromValue(new CustomFormModel(response.Value, ServiceVersion), response.GetRawResponse());
             }
             catch (Exception e)
             {
