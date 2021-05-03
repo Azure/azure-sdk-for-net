@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.Scanning
 {
-    /// <summary> Client options for ScanningClient. </summary>
-    public partial class ScanningClientOptions : ClientOptions
+    /// <summary> Client options for PurviewScanningServiceClient. </summary>
+    public partial class PurviewScanningServiceClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2018_12_01_preview;
 
@@ -24,8 +24,8 @@ namespace Azure.Analytics.Purview.Scanning
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of ScanningClientOptions. </summary>
-        public ScanningClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of PurviewScanningServiceClientOptions. </summary>
+        public PurviewScanningServiceClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

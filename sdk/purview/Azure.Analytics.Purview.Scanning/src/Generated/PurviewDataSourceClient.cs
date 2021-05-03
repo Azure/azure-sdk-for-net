@@ -16,65 +16,69 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Scanning
 {
-    /// <summary> The DataSources service client. </summary>
-    public partial class DataSourcesClient
+    /// <summary> The PurviewDataSource service client. </summary>
+    public partial class PurviewDataSourceClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private Uri endpoint;
+        private string dataSourceName;
         private readonly string apiVersion;
 
-        /// <summary> Initializes a new instance of DataSourcesClient for mocking. </summary>
-        protected DataSourcesClient()
+        /// <summary> Initializes a new instance of PurviewDataSourceClient for mocking. </summary>
+        protected PurviewDataSourceClient()
         {
         }
 
-        /// <summary> Initializes a new instance of DataSourcesClient. </summary>
+        /// <summary> Initializes a new instance of PurviewDataSourceClient. </summary>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
+        /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public DataSourcesClient(Uri endpoint, TokenCredential credential, ScanningClientOptions options = null)
+        public PurviewDataSourceClient(Uri endpoint, string dataSourceName, TokenCredential credential, PurviewScanningServiceClientOptions options = null)
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (dataSourceName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceName));
             }
             if (credential == null)
             {
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new ScanningClientOptions();
+            options ??= new PurviewScanningServiceClientOptions();
             Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
             this.endpoint = endpoint;
+            this.dataSourceName = dataSourceName;
             apiVersion = options.Version;
         }
 
         /// <summary> Creates or Updates a data source. </summary>
-        /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateOrUpdateAsync(string dataSourceName, RequestContent requestBody, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
         {
-            Request req = CreateCreateOrUpdateRequest(dataSourceName, requestBody);
+            Request req = CreateCreateOrUpdateRequest(requestBody);
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Creates or Updates a data source. </summary>
-        /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateOrUpdate(string dataSourceName, RequestContent requestBody, CancellationToken cancellationToken = default)
+        public virtual Response CreateOrUpdate(RequestContent requestBody, CancellationToken cancellationToken = default)
         {
-            Request req = CreateCreateOrUpdateRequest(dataSourceName, requestBody);
+            Request req = CreateCreateOrUpdateRequest(requestBody);
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
         /// <summary> Create Request for <see cref="CreateOrUpdate"/> and <see cref="CreateOrUpdateAsync"/> operations. </summary>
-        /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateCreateOrUpdateRequest(string dataSourceName, RequestContent requestBody)
+        private Request CreateCreateOrUpdateRequest(RequestContent requestBody)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -92,26 +96,23 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get a data source. </summary>
-        /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetAsync(string dataSourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetRequest(dataSourceName);
+            Request req = CreateGetPropertiesRequest();
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a data source. </summary>
-        /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Get(string dataSourceName, CancellationToken cancellationToken = default)
+        public virtual Response GetProperties(CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetRequest(dataSourceName);
+            Request req = CreateGetPropertiesRequest();
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
-        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
-        /// <param name="dataSourceName"> The String to use. </param>
-        private Request CreateGetRequest(string dataSourceName)
+        /// <summary> Create Request for <see cref="GetProperties"/> and <see cref="GetPropertiesAsync"/> operations. </summary>
+        private Request CreateGetPropertiesRequest()
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -127,26 +128,23 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Deletes a data source. </summary>
-        /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(string dataSourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            Request req = CreateDeleteRequest(dataSourceName);
+            Request req = CreateDeleteRequest();
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Deletes a data source. </summary>
-        /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(string dataSourceName, CancellationToken cancellationToken = default)
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
-            Request req = CreateDeleteRequest(dataSourceName);
+            Request req = CreateDeleteRequest();
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
         /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
-        /// <param name="dataSourceName"> The String to use. </param>
-        private Request CreateDeleteRequest(string dataSourceName)
+        private Request CreateDeleteRequest()
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -161,58 +159,24 @@ namespace Azure.Analytics.Purview.Scanning
             return request;
         }
 
-        /// <summary> List data sources in Data catalog. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ListByAccountAsync(CancellationToken cancellationToken = default)
-        {
-            Request req = CreateListByAccountRequest();
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> List data sources in Data catalog. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ListByAccount(CancellationToken cancellationToken = default)
-        {
-            Request req = CreateListByAccountRequest();
-            return Pipeline.SendRequest(req, cancellationToken);
-        }
-
-        /// <summary> Create Request for <see cref="ListByAccount"/> and <see cref="ListByAccountAsync"/> operations. </summary>
-        private Request CreateListByAccountRequest()
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
-            uri.AppendPath("/datasources", false);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return request;
-        }
-
         /// <summary> Lists the children of the collection. </summary>
-        /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ListChildrenByCollectionAsync(string dataSourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetChildrenAsync(CancellationToken cancellationToken = default)
         {
-            Request req = CreateListChildrenByCollectionRequest(dataSourceName);
+            Request req = CreateGetChildrenRequest();
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Lists the children of the collection. </summary>
-        /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ListChildrenByCollection(string dataSourceName, CancellationToken cancellationToken = default)
+        public virtual Response GetChildren(CancellationToken cancellationToken = default)
         {
-            Request req = CreateListChildrenByCollectionRequest(dataSourceName);
+            Request req = CreateGetChildrenRequest();
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
-        /// <summary> Create Request for <see cref="ListChildrenByCollection"/> and <see cref="ListChildrenByCollectionAsync"/> operations. </summary>
-        /// <param name="dataSourceName"> The String to use. </param>
-        private Request CreateListChildrenByCollectionRequest(string dataSourceName)
+        /// <summary> Create Request for <see cref="GetChildren"/> and <see cref="GetChildrenAsync"/> operations. </summary>
+        private Request CreateGetChildrenRequest()
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -222,6 +186,39 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendPath("/datasources/", false);
             uri.AppendPath(dataSourceName, true);
             uri.AppendPath("/listChildren", false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return request;
+        }
+
+        /// <summary> List scans in data source. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> GetScansAsync(CancellationToken cancellationToken = default)
+        {
+            Request req = CreateGetScansRequest();
+            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> List scans in data source. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response GetScans(CancellationToken cancellationToken = default)
+        {
+            Request req = CreateGetScansRequest();
+            return Pipeline.SendRequest(req, cancellationToken);
+        }
+
+        /// <summary> Create Request for <see cref="GetScans"/> and <see cref="GetScansAsync"/> operations. </summary>
+        private Request CreateGetScansRequest()
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendPath("/datasources/", false);
+            uri.AppendPath(dataSourceName, true);
+            uri.AppendPath("/scans", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
