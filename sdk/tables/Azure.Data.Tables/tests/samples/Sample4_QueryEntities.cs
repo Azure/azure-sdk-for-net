@@ -61,11 +61,11 @@ namespace Azure.Data.Tables.Samples
             #endregion
 
             #region Snippet:TablesSample4QueryEntitiesFilterWithQueryFilter
+            // The CreateQueryFilter method is also available to assist with properly formatting and escaping OData queries.
 #if SNIPPET
-            // The TablesFilter class is also available to assist with properly formatting odata queries.
-            Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: TablesFilter.Create($"PartitionKey eq {partitionKey}"));
+            Pageable<TableEntity> queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
 #else
-            queryResultsFilter = tableClient.Query<TableEntity>(filter: TablesFilter.Create($"PartitionKey eq {partitionKey}"));
+            queryResultsFilter = tableClient.Query<TableEntity>(filter: TableClient.CreateQueryFilter($"PartitionKey eq {partitionKey}"));
 #endif
             // Iterate the <see cref="Pageable"> to access all queried entities.
 

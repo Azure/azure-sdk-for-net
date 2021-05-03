@@ -56,7 +56,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <param name="credential">The shared access signature credential used to sign requests.</param>
         public TableServiceClient(Uri endpoint, AzureSasCredential credential)
-            : this(endpoint, credential, options: null)
+            : this(endpoint, credential, null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
         }
@@ -74,7 +74,7 @@ namespace Azure.Data.Tables
         /// Configure Azure Storage connection strings</see>.
         /// </param>
         public TableServiceClient(string connectionString)
-            : this(connectionString, options: null)
+            : this(connectionString, null)
         { }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.Data.Tables
         public TableServiceClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
             : this(endpoint, default, credential, options)
         {
-            if (endpoint.Scheme != "https")
+            if (endpoint.Scheme != Uri.UriSchemeHttps)
             {
                 throw new ArgumentException("Cannot use TokenCredential without HTTPS.", nameof(endpoint));
             }
@@ -125,7 +125,7 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options = null)
+        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options)
             : this(endpoint, new TableSharedKeyPipelinePolicy(credential), default, options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -681,5 +681,12 @@ namespace Azure.Data.Tables
         /// <param name="filter">A filter expression.</param>
         /// <returns>The string representation of the filter expression.</returns>
         public static string CreateQueryFilter(Expression<Func<TableItem, bool>> filter) => TableClient.Bind(filter);
+
+        /// <summary>
+        /// Create an OData filter expression from an interpolated string.  The interpolated values will be quoted and escaped as necessary.
+        /// </summary>
+        /// <param name="filter">An interpolated filter string.</param>
+        /// <returns>A valid OData filter expression.</returns>
+        public static string CreateQueryFilter(FormattableString filter) => TableOdataFilter.Create(filter);
     }
 }

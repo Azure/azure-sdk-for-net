@@ -2163,6 +2163,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 deletionId: deletionId);
 
             // Assert
+            Assert.AreEqual(typeof(DataLakeDirectoryClient), restoredPathClient.GetType());
             await restoredPathClient.GetPropertiesAsync();
         }
 
@@ -2342,7 +2343,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -2374,7 +2375,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void CanGenerateSas_GetFileClient()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -2409,7 +2410,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void CanGenerateSas_GetDirectoryClient()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -2461,7 +2462,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             DataLakeFileSystemSasPermissions permissions = DataLakeFileSystemSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
@@ -2496,7 +2497,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_Builder()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             DataLakeFileSystemSasPermissions permissions = DataLakeFileSystemSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
@@ -2537,7 +2538,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateSas_BuilderNullName()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
             DataLakeFileSystemSasPermissions permissions = DataLakeFileSystemSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
@@ -2579,7 +2580,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_BuilderWrongName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string fileSystemName = GetNewFileSystemName();
 
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");

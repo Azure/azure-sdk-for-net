@@ -110,7 +110,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-4d75e38c-3c36-a042-f132-c37f933784d5/test-blob-ea1e7025-ce8d-8575-99e4-949e83cbf5ad?versionid=2021-02-17T18%3A44%3A43.4348666Z\u0026sv=2020-06-12\u0026ss=b\u0026srt=sco\u0026st=2021-02-17T17%3A44%3A43Z\u0026se=2021-02-17T19%3A44%3A43Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-4d75e38c-3c36-a042-f132-c37f933784d5/test-blob-ea1e7025-ce8d-8575-99e4-949e83cbf5ad?versionid=2021-02-17T18%3A44%3A43.4348666Z\u0026sv=2020-08-04\u0026ss=b\u0026srt=sco\u0026st=2021-02-17T17%3A44%3A43Z\u0026se=2021-02-17T19%3A44%3A43Z\u0026sp=rwdxlacuptf\u0026sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/xml",

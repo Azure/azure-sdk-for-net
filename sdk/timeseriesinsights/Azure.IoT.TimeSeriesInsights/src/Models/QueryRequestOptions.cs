@@ -24,11 +24,5 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <see href="https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax">here.</see>.
         /// </remarks>
         public string Filter { get; set; }
-
-        /// <summary>
-        /// The maximum number of property values in the whole response set, not the maximum number of property values per page.
-        /// Defaults to 10,000 when not set. Maximum value of take can be 250,000.
-        /// </summary>
-        public int? MaximumNumberOfEvents { get; set; }
     }
 }

@@ -2874,9 +2874,21 @@ namespace Azure.Storage.Files.DataLake
                             cancellationToken: cancellationToken);
                     }
 
-                    return Response.FromValue(
-                        pathClient,
-                        response.GetRawResponse());
+                    DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathClient.Uri);
+                    if (response.Headers.ResourceType == Constants.DataLake.DirectoryResourceType)
+                    {
+                        DataLakeDirectoryClient directoryClient = GetDirectoryClient(uriBuilder.DirectoryOrFilePath);
+                        return Response.FromValue(
+                            (DataLakePathClient)directoryClient,
+                            response.GetRawResponse());
+                    }
+                    else
+                    {
+                        DataLakeFileClient fileClient = GetFileClient(uriBuilder.DirectoryOrFilePath);
+                        return Response.FromValue(
+                            (DataLakePathClient)fileClient,
+                            response.GetRawResponse());
+                    }
                 }
                 catch (Exception ex)
                 {

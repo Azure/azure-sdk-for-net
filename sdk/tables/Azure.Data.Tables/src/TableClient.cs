@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
@@ -26,9 +27,11 @@ namespace Azure.Data.Tables
         private readonly string _version;
         private readonly bool _isCosmosEndpoint;
         private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
-        private readonly QueryOptions _defaultQueryOptions = new QueryOptions() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata };
+        private readonly QueryOptions _defaultQueryOptions = new() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata };
         private string _accountName;
         private readonly Uri _endpoint;
+        private Guid? _batchGuid;
+        private Guid? _changesetGuid;
 
         /// <summary>
         /// The name of the table with which this client instance will interact.
@@ -54,26 +57,47 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> <see cref="AzureSasCredential"/>.
+        /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> which contains a SAS token.
         /// See <see cref="GetSasBuilder(TableSasPermissions, DateTimeOffset)" /> for creating a SAS token.
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
-        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/{table_name}?{sas_token}" or
+        /// "https://{account_name}.table.cosmos.azure.com/{table_name}?{sas_token}".
         /// </param>
-        /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
+        /// </param>
+        /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
+        public TableClient(Uri endpoint, TableClientOptions options = null)
+            : this(endpoint, null, default, options)
+        {
+            if (endpoint.Scheme != Uri.UriSchemeHttps)
+            {
+                throw new ArgumentException("Cannot a use SAS token credential without HTTPS.", nameof(endpoint));
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> and <see cref="AzureSasCredential"/>.
+        /// See <see cref="GetSasBuilder(TableSasPermissions, DateTimeOffset)" /> for creating a SAS token.
+        /// </summary>
+        /// <param name="endpoint">
+        /// A <see cref="Uri"/> referencing the table service account.
+        /// This is likely to be similar to "https://{account_name}.table.core.windows.net/{table_name}"
+        /// or "https://{account_name}.table.cosmos.azure.com/{table_name}".
+        /// </param>
         /// <param name="credential">The shared access signature credential used to sign requests.</param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
-        public TableClient(Uri endpoint, string tableName, AzureSasCredential credential, TableClientOptions options = null)
-            : this(endpoint, tableName, default, credential, options)
+        public TableClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
+            : this(endpoint, null, default, credential, options)
         {
-            Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            if (endpoint.Scheme != "https")
+            if (endpoint.Scheme != Uri.UriSchemeHttps)
             {
                 throw new ArgumentException("Cannot a use SAS token credential without HTTPS.", nameof(endpoint));
             }
@@ -92,7 +116,6 @@ namespace Azure.Data.Tables
         public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential)
             : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), default, null)
         {
-            Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(credential, nameof(credential));
         }
 
@@ -112,7 +135,6 @@ namespace Azure.Data.Tables
         public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential, TableClientOptions options = null)
             : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), default, options)
         {
-            Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(credential, nameof(credential));
         }
 
@@ -121,7 +143,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="connectionString">
         /// A connection string includes the authentication information
-        /// required for your application to access data in an Azure Storage
+        /// required for your application to access data in an Azure Table
         /// account at runtime.
         ///
         /// For more information,
@@ -168,7 +190,8 @@ namespace Azure.Data.Tables
                 _ => default
             };
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { policy }, new ResponseClassifier());
+            HttpPipeline pipeline =
+                HttpPipelineBuilder.Build(options, perCallPolicies, new HttpPipelinePolicy[] { policy }, new ResponseClassifier());
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
@@ -178,8 +201,23 @@ namespace Azure.Data.Tables
 
         internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
         {
-            Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            // If we were provided no tableName, try to parse it from the endpoint.
+            if (string.IsNullOrEmpty(tableName))
+            {
+                tableName = new TableSasBuilder(endpoint).TableName;
+            }
+
+            // If the sasCredential is provided, we can extract the tableName from it.
+            if (string.IsNullOrEmpty(tableName) && sasCredential != null)
+            {
+                var builder = new UriBuilder(endpoint);
+                builder.Query = sasCredential.Signature;
+                tableName = new TableSasBuilder(builder.Uri).TableName;
+            }
+
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             _endpoint = endpoint;
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
@@ -191,7 +229,11 @@ namespace Azure.Data.Tables
                 null => policy,
                 _ => new AzureSasCredentialSynchronousPolicy(sasCredential)
             };
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { authPolicy }, new ResponseClassifier());
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: perCallPolicies,
+                perRetryPolicies: new[] { authPolicy },
+                new ResponseClassifier());
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
@@ -257,7 +299,11 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = Name }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(
+                    new TableProperties() { TableName = Name },
+                    null,
+                    queryOptions: _defaultQueryOptions,
+                    cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -279,7 +325,12 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = Name }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(
+                        new TableProperties() { TableName = Name },
+                        null,
+                        queryOptions: _defaultQueryOptions,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -301,7 +352,11 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = Name }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(
+                    new TableProperties() { TableName = Name },
+                    null,
+                    queryOptions: _defaultQueryOptions,
+                    cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -327,7 +382,12 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = Name }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(
+                        new TableProperties() { TableName = Name },
+                        null,
+                        queryOptions: _defaultQueryOptions,
+                        cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -399,7 +459,8 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.InsertEntityAsync(Name,
+                var response = await _tableOperations.InsertEntityAsync(
+                        Name,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         responsePreference: _returnNoContent,
                         queryOptions: _defaultQueryOptions,
@@ -432,7 +493,8 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.InsertEntity(Name,
+                var response = _tableOperations.InsertEntity(
+                    Name,
                     tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                     responsePreference: _returnNoContent,
                     queryOptions: _defaultQueryOptions,
@@ -458,7 +520,8 @@ namespace Azure.Data.Tables
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
-        public virtual Response<T> GetEntity<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Response<T> GetEntity<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
+            where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull("message", nameof(partitionKey));
             Argument.AssertNotNull("message", nameof(rowKey));
@@ -497,7 +560,11 @@ namespace Azure.Data.Tables
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
-        public virtual async Task<Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual async Task<Response<T>> GetEntityAsync<T>(
+            string partitionKey,
+            string rowKey,
+            IEnumerable<string> select = null,
+            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull("message", nameof(partitionKey));
             Argument.AssertNotNull("message", nameof(rowKey));
@@ -531,11 +598,15 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="entity">The entity to upsert.</param>
-        /// <param name="mode">Determines the behavior of the upsert operation when the entity already exists in the table. See <see cref="TableUpdateMode"/> for more details.</param>
+        /// <param name="mode">Determines the behavior of the upsert operation when the entity already exists in the table.
+        /// See <see cref="TableUpdateMode"/> for more details.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpsertEntityAsync<T>(T entity, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual async Task<Response> UpsertEntityAsync<T>(
+            T entity,
+            TableUpdateMode mode = TableUpdateMode.Merge,
+            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -544,30 +615,26 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                if (mode == TableUpdateMode.Replace)
+                return mode switch
                 {
-                    return await _tableOperations.UpdateEntityAsync(Name,
-                            entity.PartitionKey,
+                    TableUpdateMode.Replace => await _tableOperations.UpdateEntityAsync(
+                            Name,
+                            entity!.PartitionKey,
                             entity.RowKey,
                             tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                             queryOptions: _defaultQueryOptions,
                             cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                else if (mode == TableUpdateMode.Merge)
-                {
-                    return await _tableOperations.MergeEntityAsync(Name,
-                            entity.PartitionKey,
+                        .ConfigureAwait(false),
+                    TableUpdateMode.Merge => await _tableOperations.MergeEntityAsync(
+                            Name,
+                            entity!.PartitionKey,
                             entity.RowKey,
                             tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                             queryOptions: _defaultQueryOptions,
                             cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-                }
-                else
-                {
-                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
-                }
+                        .ConfigureAwait(false),
+                    _ => throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}")
+                };
             }
             catch (Exception ex)
             {
@@ -581,11 +648,13 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="entity">The entity to upsert.</param>
-        /// <param name="mode">Determines the behavior of the update operation when the entity already exists in the table. See <see cref="TableUpdateMode"/> for more details.</param>
+        /// <param name="mode">Determines the behavior of the update operation when the entity already exists in the table.
+        /// See <see cref="TableUpdateMode"/> for more details.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpsertEntity<T>(T entity, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Response UpsertEntity<T>(T entity, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
+            where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
             Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
@@ -594,28 +663,24 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                if (mode == TableUpdateMode.Replace)
+                return mode switch
                 {
-                    return _tableOperations.UpdateEntity(Name,
-                        entity.PartitionKey,
+                    TableUpdateMode.Replace => _tableOperations.UpdateEntity(
+                        Name,
+                        entity!.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         queryOptions: _defaultQueryOptions,
-                        cancellationToken: cancellationToken);
-                }
-                else if (mode == TableUpdateMode.Merge)
-                {
-                    return _tableOperations.MergeEntity(Name,
-                        entity.PartitionKey,
+                        cancellationToken: cancellationToken),
+                    TableUpdateMode.Merge => _tableOperations.MergeEntity(
+                        Name,
+                        entity!.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                         queryOptions: _defaultQueryOptions,
-                        cancellationToken: cancellationToken);
-                }
-                else
-                {
-                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
-                }
+                        cancellationToken: cancellationToken),
+                    _ => throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}")
+                };
             }
             catch (Exception ex)
             {
@@ -627,7 +692,8 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Updates the specified table entity of type <typeparamref name="T"/>, if it exists.
         /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Replace"/>, the entity will be replaced.
-        /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Merge"/>, the property values present in the <paramref name="entity"/> will be merged with the existing entity.
+        /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Merge"/>, the property values present in the <paramref name="entity"/>
+        /// will be merged with the existing entity.
         /// </summary>
         /// <remarks>
         /// See <see cref="TableUpdateMode"/> for more information about the behavior of the <paramref name="mode"/>.
@@ -637,17 +703,22 @@ namespace Azure.Data.Tables
         /// <param name="ifMatch">
         /// The If-Match value to be used for optimistic concurrency.
         /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
-        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed) if the <see cref="ETag"/> value of the entity in the table does not match.
+        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed)
+        /// if the <see cref="ETag"/> value of the entity in the table does not match.
         /// </param>
         /// <param name="mode">Determines the behavior of the Update operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpdateEntityAsync<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual async Task<Response> UpdateEntityAsync<T>(
+            T entity,
+            ETag ifMatch,
+            TableUpdateMode mode = TableUpdateMode.Merge,
+            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
-            Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
-            Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
+            Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));
+            Argument.AssertNotNull(entity.RowKey, nameof(entity.RowKey));
             Argument.AssertNotDefault(ref ifMatch, nameof(ifMatch));
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpdateEntity)}");
@@ -656,7 +727,8 @@ namespace Azure.Data.Tables
             {
                 if (mode == TableUpdateMode.Replace)
                 {
-                    return await _tableOperations.UpdateEntityAsync(Name,
+                    return await _tableOperations.UpdateEntityAsync(
+                            Name,
                             entity.PartitionKey,
                             entity.RowKey,
                             tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -665,10 +737,11 @@ namespace Azure.Data.Tables
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
-                else if (mode == TableUpdateMode.Merge)
+                if (mode == TableUpdateMode.Merge)
                 {
-                    return await _tableOperations.MergeEntityAsync(Name,
-                            entity.PartitionKey,
+                    return await _tableOperations.MergeEntityAsync(
+                            Name,
+                            entity!.PartitionKey,
                             entity.RowKey,
                             tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
                             ifMatch: ifMatch.ToString(),
@@ -676,10 +749,7 @@ namespace Azure.Data.Tables
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
-                else
-                {
-                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
-                }
+                throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
             }
             catch (Exception ex)
             {
@@ -691,7 +761,8 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Updates the specified table entity of type <typeparamref name="T"/>, if it exists.
         /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Replace"/>, the entity will be replaced.
-        /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Merge"/>, the property values present in the <paramref name="entity"/> will be merged with the existing entity.
+        /// If the <paramref name="mode"/> is <see cref="TableUpdateMode.Merge"/>, the property values present in the
+        /// <paramref name="entity"/> will be merged with the existing entity.
         /// </summary>
         /// <remarks>
         /// See <see cref="TableUpdateMode"/> for more information about the behavior of the <paramref name="mode"/>.
@@ -701,17 +772,19 @@ namespace Azure.Data.Tables
         /// <param name="ifMatch">
         /// The If-Match value to be used for optimistic concurrency.
         /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
-        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed) if the <see cref="ETag"/> value of the entity in the table does not match.
+        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed)
+        /// if the <see cref="ETag"/> value of the entity in the table does not match.
         /// </param>
         /// <param name="mode">Determines the behavior of the Update operation.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response UpdateEntity<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Response UpdateEntity<T>(T entity, ETag ifMatch, TableUpdateMode mode = TableUpdateMode.Merge, CancellationToken cancellationToken = default)
+            where T : class, ITableEntity, new()
         {
             Argument.AssertNotNull(entity, nameof(entity));
-            Argument.AssertNotNull(entity?.PartitionKey, nameof(entity.PartitionKey));
-            Argument.AssertNotNull(entity?.RowKey, nameof(entity.RowKey));
+            Argument.AssertNotNull(entity.PartitionKey, nameof(entity.PartitionKey));
+            Argument.AssertNotNull(entity.RowKey, nameof(entity.RowKey));
             Argument.AssertNotDefault(ref ifMatch, nameof(ifMatch));
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(UpdateEntity)}");
@@ -720,7 +793,19 @@ namespace Azure.Data.Tables
             {
                 if (mode == TableUpdateMode.Replace)
                 {
-                    return _tableOperations.UpdateEntity(Name,
+                    return _tableOperations.UpdateEntity(
+                        Name,
+                        entity!.PartitionKey,
+                        entity!.RowKey,
+                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
+                        ifMatch: ifMatch.ToString(),
+                        queryOptions: _defaultQueryOptions,
+                        cancellationToken: cancellationToken);
+                }
+                if (mode == TableUpdateMode.Merge)
+                {
+                    return _tableOperations.MergeEntity(
+                        Name,
                         entity.PartitionKey,
                         entity.RowKey,
                         tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
@@ -728,20 +813,7 @@ namespace Azure.Data.Tables
                         queryOptions: _defaultQueryOptions,
                         cancellationToken: cancellationToken);
                 }
-                else if (mode == TableUpdateMode.Merge)
-                {
-                    return _tableOperations.MergeEntity(Name,
-                        entity.PartitionKey,
-                        entity.RowKey,
-                        tableEntityProperties: entity.ToOdataAnnotatedDictionary(),
-                        ifMatch: ifMatch.ToString(),
-                        queryOptions: _defaultQueryOptions,
-                        cancellationToken: cancellationToken);
-                }
-                else
-                {
-                    throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
-                }
+                throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
             }
             catch (Exception ex)
             {
@@ -769,7 +841,11 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of entity models serialized as type <typeparamref name="T"/>.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual AsyncPageable<T> QueryAsync<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual AsyncPageable<T> QueryAsync<T>(
+            Expression<Func<T, bool>> filter,
+            int? maxPerPage = null,
+            IEnumerable<string> select = null,
+            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
@@ -803,7 +879,11 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Pageable{T}"/> containing a collection of entity models serialized as type <typeparamref name="T"/>.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Pageable<T> Query<T>(Expression<Func<T, bool>> filter, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Pageable<T> Query<T>(
+            Expression<Func<T, bool>> filter,
+            int? maxPerPage = null,
+            IEnumerable<string> select = null,
+            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
@@ -837,7 +917,11 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of entity models serialized as type <typeparamref name="T"/>.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual AsyncPageable<T> QueryAsync<T>(string filter = null, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual AsyncPageable<T> QueryAsync<T>(
+            string filter = null,
+            int? maxPerPage = null,
+            IEnumerable<string> select = null,
+            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             string selectArg = select == null ? null : string.Join(",", select);
 
@@ -854,7 +938,8 @@ namespace Azure.Data.Tables
                                 cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
-                        return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                        return Page.FromValues(
+                            response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
                     }
@@ -880,7 +965,8 @@ namespace Azure.Data.Tables
                                 cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
-                        return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                        return Page.FromValues(
+                            response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
                     }
@@ -912,7 +998,11 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Pageable{T}"/> containing a collection of entity models serialized as type <typeparamref name="T"/>.</returns>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Pageable<T> Query<T>(string filter = null, int? maxPerPage = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+        public virtual Pageable<T> Query<T>(
+            string filter = null,
+            int? maxPerPage = null,
+            IEnumerable<string> select = null,
+            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
         {
             string selectArg = select == null ? null : string.Join(",", select);
 
@@ -925,7 +1015,8 @@ namespace Azure.Data.Tables
                     {
                         var queryOptions = new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg };
 
-                        var response = _tableOperations.QueryEntities(Name,
+                        var response = _tableOperations.QueryEntities(
+                            Name,
                             queryOptions: queryOptions,
                             cancellationToken: cancellationToken);
 
@@ -957,7 +1048,8 @@ namespace Azure.Data.Tables
                             nextRowKey: NextRowKey,
                             cancellationToken: cancellationToken);
 
-                        return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
+                        return Page.FromValues(
+                            response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
                     }
@@ -978,13 +1070,18 @@ namespace Azure.Data.Tables
         /// <param name="ifMatch">
         /// The If-Match value to be used for optimistic concurrency.
         /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
-        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed) if the <see cref="ETag"/> value of the entity in the table does not match.
+        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed)
+        /// if the <see cref="ETag"/> value of the entity in the table does not match.
         /// The default is to delete unconditionally.
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> DeleteEntityAsync(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteEntityAsync(
+            string partitionKey,
+            string rowKey,
+            ETag ifMatch = default,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
@@ -992,7 +1089,8 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteEntityAsync(Name,
+                return await _tableOperations.DeleteEntityAsync(
+                        Name,
                         partitionKey,
                         rowKey,
                         ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
@@ -1015,7 +1113,8 @@ namespace Azure.Data.Tables
         /// <param name="ifMatch">
         /// The If-Match value to be used for optimistic concurrency.
         /// If <see cref="ETag.All"/> is specified, the operation will be executed unconditionally.
-        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed) if the <see cref="ETag"/> value of the entity in the table does not match.
+        /// If the <see cref="ITableEntity.ETag"/> value is specified, the operation will fail with a status of 412 (Precondition Failed)
+        /// if the <see cref="ETag"/> value of the entity in the table does not match.
         /// The default is to delete unconditionally.
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1029,7 +1128,8 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return _tableOperations.DeleteEntity(Name,
+                return _tableOperations.DeleteEntity(
+                    Name,
                     partitionKey,
                     rowKey,
                     ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
@@ -1122,26 +1222,179 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Creates an OData filter query string from the provided expression.
         /// </summary>
-        /// <typeparam name="T">The type of the entity being queried. Typically this will be derived from <see cref="ITableEntity"/> or <see cref="Dictionary{String, Object}"/>.</typeparam>
+        /// <typeparam name="T">The type of the entity being queried. Typically this will be derived from <see cref="ITableEntity"/>
+        /// or <see cref="Dictionary{String, Object}"/>.</typeparam>
         /// <param name="filter">A filter expression.</param>
         /// <returns>The string representation of the filter expression.</returns>
         public static string CreateQueryFilter<T>(Expression<Func<T, bool>> filter) => Bind(filter);
 
         /// <summary>
-        /// Create a <see cref="TableTransactionalBatch" /> for the given <paramref name="partitionKey"/> value.
+        /// Create an OData filter expression from an interpolated string.  The interpolated values will be quoted and escaped as necessary.
         /// </summary>
-        /// <param name="partitionKey">The partitionKey context for the batch.</param>
-        /// <returns>An instance of <see cref="TableTransactionalBatch"/>.</returns>
-        public virtual TableTransactionalBatch CreateTransactionalBatch(string partitionKey)
+        /// <param name="filter">An interpolated filter string.</param>
+        /// <returns>A valid OData filter expression.</returns>
+        public static string CreateQueryFilter(FormattableString filter) => TableOdataFilter.Create(filter);
+
+        /// <summary>
+        /// Submits the batch transaction to the service for execution.
+        /// The sub-operations contained in the batch will either succeed or fail together as a transaction.
+        /// </summary>
+        /// <param name="transactionActions">The <see cref="IEnumerable{T}"/> containing the <see cref="TableTransactionAction"/>s to submit to the service.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns><see cref="Response{T}"/> containing a <see cref="TableTransactionResult"/>.</returns>
+        /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
+        /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
+        public virtual async Task<Response<IReadOnlyList<Response>>> SubmitTransactionAsync(
+            IEnumerable<TableTransactionAction> transactionActions,
+            CancellationToken cancellationToken = default) =>
+            await SubmitTransactionInternalAsync(transactionActions, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), true, cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Submits the batch transaction to the service for execution.
+        /// The sub-operations contained in the batch will either succeed or fail together as a transaction.
+        /// </summary>
+        /// <param name="transactionActions">The <see cref="IEnumerable{T}"/> containing the <see cref="TableTransactionAction"/>s to submit to the service.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns><see cref="Response{T}"/> containing a <see cref="TableTransactionResult"/>.</returns>
+        /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
+        /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
+        public virtual Response<IReadOnlyList<Response>> SubmitTransaction(IEnumerable<TableTransactionAction> transactionActions, CancellationToken cancellationToken = default) =>
+            SubmitTransactionInternalAsync(transactionActions, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), false, cancellationToken).EnsureCompleted();
+
+        internal virtual async Task<Response<IReadOnlyList<Response>>> SubmitTransactionInternalAsync(
+            IEnumerable<TableTransactionAction> transactionalBatch,
+            Guid batchId,
+            Guid changesetId,
+            bool async,
+            CancellationToken cancellationToken = default)
         {
-            return new TableTransactionalBatch(Name, partitionKey, _tableOperations, _defaultQueryOptions.Format.Value, _isCosmosEndpoint);
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SubmitTransaction)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(transactionalBatch, nameof(transactionalBatch));
+                List<TableTransactionAction> batchItems = transactionalBatch.ToList();
+                if (!batchItems.Any())
+                {
+                    throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchIsEmpty);
+                }
+                Dictionary<string, HttpMessage> requestLookup = new();
+
+                var batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
+                var _batch = BuildChangeSet(batchOperations, batchItems, requestLookup, batchId, changesetId);
+                var request = _tableOperations.CreateBatchRequest(_batch, null, null);
+
+                return async ?
+                    await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false) :
+                    _tableOperations.SendBatchRequest(request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Builds an ordered list of <see cref="HttpMessage"/>s containing the batch sub-requests.
+        /// </summary>
+        /// <returns></returns>
+        private MultipartContent BuildChangeSet(
+            TableRestClient batchOperations,
+            IEnumerable<TableTransactionAction> batch,
+            Dictionary<string, HttpMessage> requestLookup,
+            Guid batchId,
+            Guid changesetId)
+        {
+            var batchContent = TableRestClient.CreateBatchContent(batchId);
+            var changeset = batchContent.AddChangeset(changesetId);
+            foreach (var item in batch)
+            {
+                //var item = batch._requestLookup[key];
+                HttpMessage message = item.ActionType switch
+                {
+                    TableTransactionActionType.Add => batchOperations.CreateInsertEntityRequest(
+                        Name,
+                        null,
+                        _returnNoContent,
+                        item.Entity.ToOdataAnnotatedDictionary(),
+                        new QueryOptions { Format = _defaultQueryOptions.Format!.Value }),
+                    TableTransactionActionType.Delete => batchOperations.CreateDeleteEntityRequest(
+                        Name,
+                        item.Entity.PartitionKey,
+                        item.Entity.RowKey,
+                        item.ETag == default ? ETag.All.ToString() : item.ETag.ToString(),
+                        null,
+                        new QueryOptions { Format = _defaultQueryOptions.Format!.Value }),
+                    TableTransactionActionType.UpdateReplace => CreateUpdateOrMergeRequest(batchOperations, item.Entity, TableUpdateMode.Replace, item.ETag),
+                    TableTransactionActionType.UpdateMerge => CreateUpdateOrMergeRequest(batchOperations, item.Entity, TableUpdateMode.Merge, item.ETag),
+                    TableTransactionActionType.UpsertReplace => CreateUpdateOrMergeRequest(batchOperations, item.Entity, TableUpdateMode.Replace),
+                    TableTransactionActionType.UpsertMerge => CreateUpdateOrMergeRequest(batchOperations, item.Entity, TableUpdateMode.Merge),
+                    _ => throw new InvalidOperationException("Unknown request type.")
+                };
+                requestLookup[item.Entity.RowKey] = message;
+                changeset.AddContent(new RequestRequestContent(message!.Request));
+            }
+            return batchContent;
+        }
+
+        private HttpMessage CreateUpdateOrMergeRequest(TableRestClient batchOperations, ITableEntity entity, TableUpdateMode mode, ETag ifMatch = default)
+        {
+            HttpMessage msg = mode switch
+            {
+                TableUpdateMode.Replace => batchOperations.CreateUpdateEntityRequest(
+                    Name,
+                    entity.PartitionKey,
+                    entity.RowKey,
+                    null,
+                    ifMatch == default ? null : ifMatch.ToString(),
+                    entity.ToOdataAnnotatedDictionary(),
+                    new QueryOptions { Format = _defaultQueryOptions.Format!.Value }),
+                TableUpdateMode.Merge => batchOperations.CreateMergeEntityRequest(
+                    Name,
+                    entity.PartitionKey,
+                    entity.RowKey,
+                    null,
+                    ifMatch == default ? null : ifMatch.ToString(),
+                    entity.ToOdataAnnotatedDictionary(),
+                    new QueryOptions { Format = _defaultQueryOptions.Format!.Value }),
+                _ => throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}")
+            };
+
+            if (_isCosmosEndpoint && mode == TableUpdateMode.Merge)
+            {
+                CosmosPatchTransformPolicy.TransformPatchToCosmosPost(msg);
+            }
+
+            return msg;
+        }
+
+        /// <summary>
+        /// Creates a pipeline to use for processing sub-operations before they are combined into a single multipart request.
+        /// </summary>
+        /// <returns>A pipeline to use for processing sub-operations.</returns>
+        private static HttpPipeline CreateBatchPipeline()
+        {
+            // Configure the options to use minimal policies
+            var options = new TableClientOptions();
+            options.Diagnostics.IsLoggingEnabled = false;
+            options.Diagnostics.IsTelemetryEnabled = false;
+            options.Diagnostics.IsDistributedTracingEnabled = false;
+            options.Retry.MaxRetries = 0;
+
+            // Use an empty transport so requests aren't sent
+            options.Transport = new MemoryTransport();
+
+            // Use the same authentication mechanism
+            return HttpPipelineBuilder.Build(options);
         }
 
         internal static string Bind(Expression expression)
         {
             Argument.AssertNotNull(expression, nameof(expression));
 
-            Dictionary<Expression, Expression> normalizerRewrites = new Dictionary<Expression, Expression>(ReferenceEqualityComparer<Expression>.Instance);
+            Dictionary<Expression, Expression> normalizerRewrites = new(ReferenceEqualityComparer<Expression>.Instance);
 
             // Evaluate any local valid expressions ( lambdas etc)
             Expression partialEvaluatedExpression = Evaluator.PartialEval(expression);
@@ -1150,7 +1403,7 @@ namespace Azure.Data.Tables
             Expression normalizedExpression = ExpressionNormalizer.Normalize(partialEvaluatedExpression, normalizerRewrites);
 
             // Parse the Bound expression into an OData filter.
-            ExpressionParser parser = new ExpressionParser();
+            ExpressionParser parser = new();
             parser.Translate(normalizedExpression);
 
             // Return the FilterString.
@@ -1163,10 +1416,7 @@ namespace Azure.Data.Tables
             {
                 return null;
             }
-            else
-            {
-                return $"{headers.XMsContinuationNextPartitionKey} {headers.XMsContinuationNextRowKey}";
-            }
+            return $"{headers.XMsContinuationNextPartitionKey} {headers.XMsContinuationNextRowKey}";
         }
 
         internal static (string NextPartitionKey, string NextRowKey) ParseContinuationToken(string continuationToken)
@@ -1179,6 +1429,17 @@ namespace Azure.Data.Tables
 
             var tokens = continuationToken.Split(ContinuationTokenSplit, 2);
             return (tokens[0], tokens.Length > 1 && tokens[1].Length > 0 ? tokens[1] : null);
+        }
+
+        /// <summary>
+        /// Re-initializes the batch with the specified Guids for testing purposes.
+        /// </summary>
+        /// <param name="batchGuid">The batch boundary Guid.</param>
+        /// <param name="changesetGuid">The changeset boundary Guid.</param>
+        internal virtual void SetBatchGuids(Guid batchGuid, Guid changesetGuid)
+        {
+            _batchGuid = batchGuid;
+            _changesetGuid = changesetGuid;
         }
     }
 }

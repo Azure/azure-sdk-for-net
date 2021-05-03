@@ -324,15 +324,16 @@ As you can see in the example below, we want to use the `Azure.Data.Tables` vers
 
 ## Preparing a new library release
 
-To prepare a package for release you should make use of `.\eng\common\scripts\Prepare-Release.ps1` script passing it appropriate arguments for the package intended for release as well as the release date. This script will correctly update the package version in the repo as well as update DevOps release work items for that release. 
+To prepare a package for release you should make use of `.\eng\common\scripts\Prepare-Release.ps1` script passing it appropriate arguments for the package intended for release. This script will correctly update the package version and changelog in the repo as well as update the DevOps release work items for that release. 
 
-If you are releasing out-of-band please use the `-ReleaseDate` parameter to specify the release data. `ReleaseDate` should be in `yyyy-MM-dd` format.
-
-Example invocations:
-
-```powershell
-.\eng\scripts\Prepare-Release.ps1 -PackageName "Azure.Core" -SerivceDirectory "core" -ReleaseDate "2020-10-01"
 ```
+.\eng\common\scripts\Prepare-Release.ps1 <PackageName> [<ServiceDirectory>] [<ReleaseDate>] [-ReleaseTrackingOnly]
+```
+
+- `<PackageName>` - Should match the full exact package name for the given ecosystem (i.e. "Azure.Core", "azure-core", "@azure/core", etc).
+- `<SerivceDirectory>` - Optional: Should be the exact directory name where the package resides in the repo. This is usually the same as the service name in most cases (i.e. "sdk<service_directory>" e.g. "core"). The parameter is optional and if provided will help speed-up the number of projects we have to parse to find the matching package project.
+- `<ReleaseDate>` - Optional: provide a specific date for when you plan to release the package. If one isn't given then one will be calculated based on the normal monthly shipping schedule.
+- `<ReleaseTrackingOnly>` - Optional: Switch that if passed will only update the release tracking data in DevOps and not update any versioning info or do validation in the local repo.
 
 ## On-boarding New Libraries
 
