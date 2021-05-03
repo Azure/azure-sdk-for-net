@@ -1,6 +1,6 @@
-# Recognize ID Documents
+# Recognize Identity Documents
 
-This sample demonstrates how to recognize and extract common fields from ID documents, using a pre-trained model. For a suggested approach to extracting information from ID documents, see [strongly-typing a recognized form][strongly_typing_a_recognized_form].
+This sample demonstrates how to recognize and extract common fields from identity documents, using a pre-trained model. For a suggested approach to extracting information from identity documents, see [strongly-typing a recognized form][strongly_typing_a_recognized_form].
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -17,25 +17,25 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new FormRecognizerClient(new Uri(endpoint), credential);
 ```
 
-## Recognize ID documents from a URI
+## Recognize identity documents from a URI
 
-To recognize ID documents from a URI, use the `StartRecognizeIdDocumentsFromUriAsync` method.
+To recognize identity documents from a URI, use the `StartRecognizeIdentityDocumentsFromUriAsync` method.
 
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/iddocumentfields).
 
-```C# Snippet:FormRecognizerSampleRecognizeIdDocumentsUri
+```C# Snippet:FormRecognizerSampleRecognizeIdentityDocumentsUri
 Uri sourceUri = "<sourceUri>";
 
-RecognizeIdDocumentsOperation operation = await client.StartRecognizeIdDocumentsFromUriAsync(sourceUri);
+RecognizeIdentityDocumentsOperation operation = await client.StartRecognizeIdentityDocumentsFromUriAsync(sourceUri);
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
-RecognizedFormCollection idDocuments = operationResponse.Value;
+RecognizedFormCollection identityDocuments = operationResponse.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types, consult:
 // https://aka.ms/formrecognizer/iddocumentfields
 
-RecognizedForm idDocument = idDocuments.Single();
+RecognizedForm identityDocument = identityDocuments.Single();
 
-if (idDocument.Fields.TryGetValue("Address", out FormField addressField))
+if (identityDocument.Fields.TryGetValue("Address", out FormField addressField))
 {
     if (addressField.Value.ValueType == FieldValueType.String)
     {
@@ -44,7 +44,7 @@ if (idDocument.Fields.TryGetValue("Address", out FormField addressField))
     }
 }
 
-if (idDocument.Fields.TryGetValue("Country", out FormField countryField))
+if (identityDocument.Fields.TryGetValue("Country", out FormField countryField))
 {
     if (countryField.Value.ValueType == FieldValueType.Country)
     {
@@ -53,7 +53,7 @@ if (idDocument.Fields.TryGetValue("Country", out FormField countryField))
     }
 }
 
-if (idDocument.Fields.TryGetValue("DateOfBirth", out FormField dateOfBirthField))
+if (identityDocument.Fields.TryGetValue("DateOfBirth", out FormField dateOfBirthField))
 {
     if (dateOfBirthField.Value.ValueType == FieldValueType.Date)
     {
@@ -62,7 +62,7 @@ if (idDocument.Fields.TryGetValue("DateOfBirth", out FormField dateOfBirthField)
     }
 }
 
-if (idDocument.Fields.TryGetValue("DateOfExpiration", out FormField dateOfExpirationField))
+if (identityDocument.Fields.TryGetValue("DateOfExpiration", out FormField dateOfExpirationField))
 {
     if (dateOfExpirationField.Value.ValueType == FieldValueType.Date)
     {
@@ -71,7 +71,7 @@ if (idDocument.Fields.TryGetValue("DateOfExpiration", out FormField dateOfExpira
     }
 }
 
-if (idDocument.Fields.TryGetValue("DocumentNumber", out FormField documentNumberField))
+if (identityDocument.Fields.TryGetValue("DocumentNumber", out FormField documentNumberField))
 {
     if (documentNumberField.Value.ValueType == FieldValueType.String)
     {
@@ -80,7 +80,7 @@ if (idDocument.Fields.TryGetValue("DocumentNumber", out FormField documentNumber
     }
 }
 
-if (idDocument.Fields.TryGetValue("FirstName", out FormField firstNameField))
+if (identityDocument.Fields.TryGetValue("FirstName", out FormField firstNameField))
 {
     if (firstNameField.Value.ValueType == FieldValueType.String)
     {
@@ -89,7 +89,7 @@ if (idDocument.Fields.TryGetValue("FirstName", out FormField firstNameField))
     }
 }
 
-if (idDocument.Fields.TryGetValue("LastName", out FormField lastNameField))
+if (identityDocument.Fields.TryGetValue("LastName", out FormField lastNameField))
 {
     if (lastNameField.Value.ValueType == FieldValueType.String)
     {
@@ -98,7 +98,7 @@ if (idDocument.Fields.TryGetValue("LastName", out FormField lastNameField))
     }
 }
 
-if (idDocument.Fields.TryGetValue("Region", out FormField regionfield))
+if (identityDocument.Fields.TryGetValue("Region", out FormField regionfield))
 {
     if (regionfield.Value.ValueType == FieldValueType.String)
     {
@@ -108,27 +108,27 @@ if (idDocument.Fields.TryGetValue("Region", out FormField regionfield))
 }
 ```
 
-## Recognize ID documents from a given file
+## Recognize identity documents from a given file
 
-To recognize ID documents from a given file, use the `StartRecognizeIdDocumentsAsync` method.
+To recognize identity documents from a given file, use the `StartRecognizeIdentityDocumentsAsync` method.
 
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/iddocumentfields).
 
-```C# Snippet:FormRecognizerSampleRecognizeIdDocumentsFileStream
+```C# Snippet:FormRecognizerSampleRecognizeIdentityDocumentsFileStream
 string sourcePath = "<sourcePath>";
 
 using var stream = new FileStream(sourcePath, FileMode.Open);
 
-RecognizeIdDocumentsOperation operation = await client.StartRecognizeIdDocumentsAsync(stream);
+RecognizeIdentityDocumentsOperation operation = await client.StartRecognizeIdentityDocumentsAsync(stream);
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
-RecognizedFormCollection idDocuments = operationResponse.Value;
+RecognizedFormCollection identityDocuments = operationResponse.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types, consult:
 // https://aka.ms/formrecognizer/iddocumentfields
 
-RecognizedForm idDocument = idDocuments.Single();
+RecognizedForm identityDocument = identityDocuments.Single();
 
-if (idDocument.Fields.TryGetValue("Address", out FormField addressField))
+if (identityDocument.Fields.TryGetValue("Address", out FormField addressField))
 {
     if (addressField.Value.ValueType == FieldValueType.String)
     {
@@ -137,7 +137,7 @@ if (idDocument.Fields.TryGetValue("Address", out FormField addressField))
     }
 }
 
-if (idDocument.Fields.TryGetValue("Country", out FormField countryField))
+if (identityDocument.Fields.TryGetValue("Country", out FormField countryField))
 {
     if (countryField.Value.ValueType == FieldValueType.Country)
     {
@@ -146,7 +146,7 @@ if (idDocument.Fields.TryGetValue("Country", out FormField countryField))
     }
 }
 
-if (idDocument.Fields.TryGetValue("DateOfBirth", out FormField dateOfBirthField))
+if (identityDocument.Fields.TryGetValue("DateOfBirth", out FormField dateOfBirthField))
 {
     if (dateOfBirthField.Value.ValueType == FieldValueType.Date)
     {
@@ -155,7 +155,7 @@ if (idDocument.Fields.TryGetValue("DateOfBirth", out FormField dateOfBirthField)
     }
 }
 
-if (idDocument.Fields.TryGetValue("DateOfExpiration", out FormField dateOfExpirationField))
+if (identityDocument.Fields.TryGetValue("DateOfExpiration", out FormField dateOfExpirationField))
 {
     if (dateOfExpirationField.Value.ValueType == FieldValueType.Date)
     {
@@ -164,7 +164,7 @@ if (idDocument.Fields.TryGetValue("DateOfExpiration", out FormField dateOfExpira
     }
 }
 
-if (idDocument.Fields.TryGetValue("DocumentNumber", out FormField documentNumberField))
+if (identityDocument.Fields.TryGetValue("DocumentNumber", out FormField documentNumberField))
 {
     if (documentNumberField.Value.ValueType == FieldValueType.String)
     {
@@ -173,7 +173,7 @@ if (idDocument.Fields.TryGetValue("DocumentNumber", out FormField documentNumber
     }
 }
 
-if (idDocument.Fields.TryGetValue("FirstName", out FormField firstNameField))
+if (identityDocument.Fields.TryGetValue("FirstName", out FormField firstNameField))
 {
     if (firstNameField.Value.ValueType == FieldValueType.String)
     {
@@ -182,7 +182,7 @@ if (idDocument.Fields.TryGetValue("FirstName", out FormField firstNameField))
     }
 }
 
-if (idDocument.Fields.TryGetValue("LastName", out FormField lastNameField))
+if (identityDocument.Fields.TryGetValue("LastName", out FormField lastNameField))
 {
     if (lastNameField.Value.ValueType == FieldValueType.String)
     {
@@ -191,7 +191,7 @@ if (idDocument.Fields.TryGetValue("LastName", out FormField lastNameField))
     }
 }
 
-if (idDocument.Fields.TryGetValue("Region", out FormField regionfield))
+if (identityDocument.Fields.TryGetValue("Region", out FormField regionfield))
 {
     if (regionfield.Value.ValueType == FieldValueType.String)
     {
@@ -203,8 +203,8 @@ if (idDocument.Fields.TryGetValue("Region", out FormField regionfield))
 
 To see the full example source files, see:
 
-* [Recognize ID documents from URI](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample15_RecognizeIdDocumentsFromUri.cs)
-* [Recognize ID documents from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample15_RecognizeIdDocumentsFromFile.cs)
+* [Recognize identity documents from URI](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample14_RecognizeIdentityDocumentsFromUri.cs)
+* [Recognize identity documents from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample14_RecognizeIdentityDocumentsFromFile.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md

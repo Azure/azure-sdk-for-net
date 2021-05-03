@@ -14,30 +14,30 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
-        public async Task RecognizeIdDocumentsFromUri()
+        public async Task RecognizeIdentityDocumentsFromUri()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:FormRecognizerSampleRecognizeIdDocumentsUri
+            #region Snippet:FormRecognizerSampleRecognizeIdentityDocumentsUri
 #if SNIPPET
             Uri sourceUri = "<sourceUri>";
 #else
             Uri sourceUri = FormRecognizerTestEnvironment.CreateUri("license.jpg");
 #endif
 
-            RecognizeIdDocumentsOperation operation = await client.StartRecognizeIdDocumentsFromUriAsync(sourceUri);
+            RecognizeIdentityDocumentsOperation operation = await client.StartRecognizeIdentityDocumentsFromUriAsync(sourceUri);
             Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
-            RecognizedFormCollection idDocuments = operationResponse.Value;
+            RecognizedFormCollection identityDocuments = operationResponse.Value;
 
             // To see the list of all the supported fields returned by service and its corresponding types, consult:
             // https://aka.ms/formrecognizer/iddocumentfields
 
-            RecognizedForm idDocument = idDocuments.Single();
+            RecognizedForm identityDocument = identityDocuments.Single();
 
-            if (idDocument.Fields.TryGetValue("Address", out FormField addressField))
+            if (identityDocument.Fields.TryGetValue("Address", out FormField addressField))
             {
                 if (addressField.Value.ValueType == FieldValueType.String)
                 {
@@ -46,7 +46,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
             }
 
-            if (idDocument.Fields.TryGetValue("Country", out FormField countryField))
+            if (identityDocument.Fields.TryGetValue("Country", out FormField countryField))
             {
                 if (countryField.Value.ValueType == FieldValueType.Country)
                 {
@@ -55,7 +55,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
             }
 
-            if (idDocument.Fields.TryGetValue("DateOfBirth", out FormField dateOfBirthField))
+            if (identityDocument.Fields.TryGetValue("DateOfBirth", out FormField dateOfBirthField))
             {
                 if (dateOfBirthField.Value.ValueType == FieldValueType.Date)
                 {
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
             }
 
-            if (idDocument.Fields.TryGetValue("DateOfExpiration", out FormField dateOfExpirationField))
+            if (identityDocument.Fields.TryGetValue("DateOfExpiration", out FormField dateOfExpirationField))
             {
                 if (dateOfExpirationField.Value.ValueType == FieldValueType.Date)
                 {
@@ -73,7 +73,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
             }
 
-            if (idDocument.Fields.TryGetValue("DocumentNumber", out FormField documentNumberField))
+            if (identityDocument.Fields.TryGetValue("DocumentNumber", out FormField documentNumberField))
             {
                 if (documentNumberField.Value.ValueType == FieldValueType.String)
                 {
@@ -82,7 +82,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
             }
 
-            if (idDocument.Fields.TryGetValue("FirstName", out FormField firstNameField))
+            if (identityDocument.Fields.TryGetValue("FirstName", out FormField firstNameField))
             {
                 if (firstNameField.Value.ValueType == FieldValueType.String)
                 {
@@ -91,7 +91,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
             }
 
-            if (idDocument.Fields.TryGetValue("LastName", out FormField lastNameField))
+            if (identityDocument.Fields.TryGetValue("LastName", out FormField lastNameField))
             {
                 if (lastNameField.Value.ValueType == FieldValueType.String)
                 {
@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
             }
 
-            if (idDocument.Fields.TryGetValue("Region", out FormField regionfield))
+            if (identityDocument.Fields.TryGetValue("Region", out FormField regionfield))
             {
                 if (regionfield.Value.ValueType == FieldValueType.String)
                 {
