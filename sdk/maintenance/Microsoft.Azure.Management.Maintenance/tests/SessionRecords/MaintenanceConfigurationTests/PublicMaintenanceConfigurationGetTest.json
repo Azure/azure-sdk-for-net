@@ -67,8 +67,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg1854/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk3255?api-version=2020-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnMTg1NC9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvbWFpbnRlbmFuY2VzZGszMjU1P2FwaS12ZXJzaW9uPTIwMjAtMDctMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg1854/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk3255?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnMTg1NC9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvbWFpbnRlbmFuY2VzZGszMjU1P2FwaS12ZXJzaW9uPTIwMjEtMDUtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"maintenanceScope\": \"SQLDB\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -133,8 +133,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/maintenancesdk3255?api-version=2020-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFpbnRlbmFuY2UvcHVibGljTWFpbnRlbmFuY2VDb25maWd1cmF0aW9ucy9tYWludGVuYW5jZXNkazMyNTU/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/maintenancesdk3255?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFpbnRlbmFuY2UvcHVibGljTWFpbnRlbmFuY2VDb25maWd1cmF0aW9ucy9tYWludGVuYW5jZXNkazMyNTU/YXBpLXZlcnNpb249MjAyMS0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
