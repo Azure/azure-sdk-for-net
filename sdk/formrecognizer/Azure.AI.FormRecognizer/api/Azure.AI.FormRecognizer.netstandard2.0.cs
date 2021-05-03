@@ -9,6 +9,11 @@ namespace Azure.AI.FormRecognizer
         Tiff = 4,
         Bmp = 5,
     }
+    public enum FormReadingOrder
+    {
+        Basic = 0,
+        Natural = 1,
+    }
     public partial class FormRecognizerClient
     {
         protected FormRecognizerClient() { }
@@ -172,11 +177,6 @@ namespace Azure.AI.FormRecognizer
         public static System.Threading.Tasks.Task<Azure.Response<Azure.AI.FormRecognizer.Training.CustomFormModel>> WaitForCompletionAsync(this System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Training.CreateComposedModelOperation> operation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.AI.FormRecognizer.Training.CustomFormModel>> WaitForCompletionAsync(this System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Training.TrainingOperation> operation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public enum ReadingOrder
-    {
-        Basic = 0,
-        Natural = 1,
-    }
     public partial class RecognizeBusinessCardsOptions
     {
         public RecognizeBusinessCardsOptions() { }
@@ -191,7 +191,7 @@ namespace Azure.AI.FormRecognizer
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.FormRecognizerLanguage? Language { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Pages { get { throw null; } }
-        public Azure.AI.FormRecognizer.ReadingOrder? ReadingOrder { get { throw null; } set { } }
+        public Azure.AI.FormRecognizer.FormReadingOrder? ReadingOrder { get { throw null; } set { } }
     }
     public partial class RecognizeCustomFormsOptions
     {

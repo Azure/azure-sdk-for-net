@@ -511,8 +511,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
             RecognizeContentOperation basicOrderOperation, naturalOrderOperation;
 
-            basicOrderOperation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { ReadingOrder = ReadingOrder.Basic });
-            naturalOrderOperation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { ReadingOrder = ReadingOrder.Natural });
+            basicOrderOperation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { ReadingOrder = FormReadingOrder.Basic });
+            naturalOrderOperation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { ReadingOrder = FormReadingOrder.Natural });
 
             await basicOrderOperation.WaitForCompletionAsync();
             Assert.IsTrue(basicOrderOperation.HasValue);
