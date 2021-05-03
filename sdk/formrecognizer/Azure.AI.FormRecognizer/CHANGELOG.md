@@ -7,6 +7,7 @@
 
 ### Breaking changes
 - Renamed `Id` for `Identity` in all the `StartRecognizeIdDocuments` functionalities. For example, the name of the method is now `StartRecognizeIdentityDocuments`.
+- Renamed the model `ReadingOrder` to `FormReadingOrder`.
 
 ## 3.0.1 (2021-04-09)
 
