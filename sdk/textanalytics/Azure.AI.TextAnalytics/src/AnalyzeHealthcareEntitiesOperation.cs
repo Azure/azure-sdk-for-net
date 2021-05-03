@@ -319,31 +319,32 @@ namespace Azure.AI.TextAnalytics
 
         OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>> IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>, HealthcareJobState>.UpdateState(Response<HealthcareJobState> response)
         {
-            var state = new OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>();
-
+            // Add lock to avoid race condition?
             _status = response.Value.Status;
             _createdOn = response.Value.CreatedDateTime;
             _expiresOn = response.Value.ExpirationDateTime;
             _lastModified = response.Value.LastUpdateDateTime;
 
-            if (_status == TextAnalyticsOperationStatus.Succeeded)
+            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
             {
                 var nextLink = response.Value.NextLink;
                 var value = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(response.Value.Results, _idToIndexMap);
                 _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { value }, nextLink, response.GetRawResponse());
 
-                state.Succeeded = true;
-                state.Value = CreateOperationValueAsync();
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Success(CreateOperationValueAsync());
             }
-            else if (_status == TextAnalyticsOperationStatus.Failed || _status == TextAnalyticsOperationStatus.Cancelled)
+            else if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
             {
-                state.Succeeded = false;
-                state.OperationFailedException = response.Value.Status == TextAnalyticsOperationStatus.Cancelled
-                    ? new RequestFailedException("The operation was canceled so no value is available.")
-                    : ClientCommon.CreateExceptionForFailedOperationAsync(async: false, _diagnostics, response.GetRawResponse(), response.Value.Errors).EnsureCompleted();
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(ClientCommon
+                    .CreateExceptionForFailedOperationAsync(async: false, _diagnostics, response.GetRawResponse(), response.Value.Errors)
+                    .EnsureCompleted());
+            }
+            else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+            {
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(new RequestFailedException("The operation was canceled so no value is available."));
             }
 
-            return state;
+            return default;
         }
     }
 }

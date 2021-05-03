@@ -157,23 +157,20 @@ namespace Azure.AI.FormRecognizer.Models
 
         OperationState<FormPageCollection> IOperation<FormPageCollection, AnalyzeOperationResult>.UpdateState(Response<AnalyzeOperationResult> response)
         {
-            var state = new OperationState<FormPageCollection>();
             var status = response.Value.Status;
 
             if (status == OperationStatus.Succeeded)
             {
-                state.Succeeded = true;
-                state.Value = ConvertValue(response.Value.AnalyzeResult.PageResults, response.Value.AnalyzeResult.ReadResults);
+                return OperationState<FormPageCollection>.Success(ConvertValue(response.Value.AnalyzeResult.PageResults, response.Value.AnalyzeResult.ReadResults));
             }
             else if (status == OperationStatus.Failed)
             {
-                state.Succeeded = false;
-                state.OperationFailedException = ClientCommon
+                return OperationState<FormPageCollection>.Failure(ClientCommon
                     .CreateExceptionForFailedOperationAsync(async: false, _diagnostics, response.GetRawResponse(), response.Value.AnalyzeResult.Errors)
-                    .EnsureCompleted();
+                    .EnsureCompleted());
             }
 
-            return state;
+            return default;
         }
 
         private static FormPageCollection ConvertValue(IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults)

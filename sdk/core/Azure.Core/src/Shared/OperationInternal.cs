@@ -230,12 +230,31 @@ namespace Azure.Core
         OperationState<TResult> UpdateState(Response<TResponseType> response);
     }
 
-    internal struct OperationState<TResult>
+    internal readonly struct OperationState<TResult>
     {
-        public bool? Succeeded { get; set; }
+        private OperationState(TResult value)
+        {
+            Succeeded = true;
+            Value = value;
+            OperationFailedException = default;
+        }
 
-        public TResult Value { get; set; }
+        private OperationState(RequestFailedException operationFailedException)
+        {
+            Succeeded = false;
+            Value = default;
+            OperationFailedException = operationFailedException;
+        }
 
-        public RequestFailedException OperationFailedException { get; set; }
+        public bool? Succeeded { get; }
+
+        public TResult Value { get; }
+
+        public RequestFailedException OperationFailedException { get; }
+
+        public static OperationState<TResult> Success(TResult value) => new OperationState<TResult>(value);
+
+        public static OperationState<TResult> Failure(RequestFailedException operationFailedException) =>
+            new OperationState<TResult>(operationFailedException);
     }
 }

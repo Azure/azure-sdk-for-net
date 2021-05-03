@@ -79,18 +79,14 @@ namespace Azure.Security.KeyVault.Keys
 
         OperationState<KeyVaultKey> IOperation<KeyVaultKey>.UpdateState(Response response)
         {
-            var state = new OperationState<KeyVaultKey>();
-
             switch (response.Status)
             {
                 case 200:
                 case 403: // Access denied but proof the key was recovered.
-                    state.Succeeded = true;
-                    state.Value = Value;
-                    return state;
+                    return OperationState<KeyVaultKey>.Success(Value);
 
                 case 404:
-                    return state;
+                    return default;
 
                 default:
                     throw _pipeline.Diagnostics.CreateRequestFailedException(response);

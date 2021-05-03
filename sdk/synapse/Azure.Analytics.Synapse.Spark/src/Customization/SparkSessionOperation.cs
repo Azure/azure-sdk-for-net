@@ -106,23 +106,19 @@ namespace Azure.Analytics.Synapse.Spark
 
         OperationState<SparkSession> IOperation<SparkSession, SparkSession>.UpdateState(Response<SparkSession> response)
         {
-            var state = new OperationState<SparkSession>();
-
             if (IsJobComplete(response.Value.Result.ToString(), response.Value.State))
             {
                 if (StringComparer.OrdinalIgnoreCase.Equals("error", response?.Value?.State))
                 {
-                    state.Succeeded = false;
-                    state.OperationFailedException = new RequestFailedException("SparkBatchOperation ended in state error");
+                    return OperationState<SparkSession>.Failure(new RequestFailedException("SparkBatchOperation ended in state error"));
                 }
                 else
                 {
-                    state.Succeeded = true;
-                    state.Value = _value;
+                    return OperationState<SparkSession>.Success(_value);
                 }
             }
 
-            return state;
+            return default;
         }
     }
 }
