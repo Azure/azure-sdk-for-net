@@ -32,6 +32,7 @@ namespace Azure.Data.Tables
         private readonly Uri _endpoint;
         private Guid? _batchGuid;
         private Guid? _changesetGuid;
+        private readonly HttpPipeline _pipeline;
 
         /// <summary>
         /// The name of the table with which this client instance will interact.
@@ -229,7 +230,7 @@ namespace Azure.Data.Tables
                 null => policy,
                 _ => new AzureSasCredentialSynchronousPolicy(sasCredential)
             };
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies,
                 new[] { authPolicy },
@@ -237,11 +238,18 @@ namespace Azure.Data.Tables
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.AbsoluteUri, _version);
+            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpoint.AbsoluteUri, _version);
             Name = tableName;
         }
 
-        internal TableClient(string table, TableRestClient tableOperations, string version, ClientDiagnostics diagnostics, bool isPremiumEndpoint, Uri endpoint)
+        internal TableClient(
+            string table,
+            TableRestClient tableOperations,
+            string version,
+            ClientDiagnostics diagnostics,
+            bool isPremiumEndpoint,
+            Uri endpoint,
+            HttpPipeline pipeline)
         {
             _tableOperations = tableOperations;
             _version = version;
@@ -249,6 +257,7 @@ namespace Azure.Data.Tables
             _diagnostics = diagnostics;
             _isCosmosEndpoint = isPremiumEndpoint;
             _endpoint = endpoint;
+            _pipeline = pipeline;
         }
 
         /// <summary>
@@ -412,11 +421,17 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return _tableOperations.Delete(Name, cancellationToken);
-            }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
-            {
-                return default;
+                using var message = _tableOperations.CreateDeleteRequest(Name);
+                _pipeline.Send(message, cancellationToken);
+
+                switch (message.Response.Status)
+                {
+                    case 404:
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                }
             }
             catch (Exception ex)
             {
@@ -436,11 +451,17 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteAsync(Name, cancellationToken).ConfigureAwait(false);
-            }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
-            {
-                return default;
+                using var message = _tableOperations.CreateDeleteRequest(Name);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                switch (message.Response.Status)
+                {
+                    case 404:
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                }
             }
             catch (Exception ex)
             {
@@ -1084,7 +1105,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>If the entity exists, the <see cref="Response"/> indicating the result of the operation. If the entity does not exist, <c>null</c></returns>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual async Task<Response> DeleteEntityAsync(
             string partitionKey,
             string rowKey,
@@ -1097,18 +1118,18 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteEntityAsync(
-                        Name,
-                        partitionKey,
-                        rowKey,
-                        ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
-                        queryOptions: _defaultQueryOptions,
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
-            {
-                return default;
+                var etag = ifMatch == default ? ETag.All.ToString() : ifMatch.ToString();
+                using var message = _tableOperations.CreateDeleteEntityRequest(Name, partitionKey, rowKey, etag, null, _defaultQueryOptions);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                switch (message.Response.Status)
+                {
+                    case 404:
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                }
             }
             catch (Exception ex)
             {
@@ -1140,17 +1161,18 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return _tableOperations.DeleteEntity(
-                    Name,
-                    partitionKey,
-                    rowKey,
-                    ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
-                    queryOptions: _defaultQueryOptions,
-                    cancellationToken: cancellationToken);
-            }
-            catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.NotFound)
-            {
-                return default;
+                var etag = ifMatch == default ? ETag.All.ToString() : ifMatch.ToString();
+                using var message = _tableOperations.CreateDeleteEntityRequest(Name, partitionKey, rowKey, etag, null, _defaultQueryOptions);
+                _pipeline.Send(message, cancellationToken);
+
+                switch (message.Response.Status)
+                {
+                    case 404:
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                }
             }
             catch (Exception ex)
             {
@@ -1275,8 +1297,11 @@ namespace Azure.Data.Tables
         /// <returns><see cref="Response{T}"/> containing a <see cref="TableTransactionResult"/>.</returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
-        public virtual Response<IReadOnlyList<Response>> SubmitTransaction(IEnumerable<TableTransactionAction> transactionActions, CancellationToken cancellationToken = default) =>
-            SubmitTransactionInternalAsync(transactionActions, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), false, cancellationToken).EnsureCompleted();
+        public virtual Response<IReadOnlyList<Response>> SubmitTransaction(
+            IEnumerable<TableTransactionAction> transactionActions,
+            CancellationToken cancellationToken = default) =>
+            SubmitTransactionInternalAsync(transactionActions, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), false, cancellationToken)
+                .EnsureCompleted();
 
         internal virtual async Task<Response<IReadOnlyList<Response>>> SubmitTransactionInternalAsync(
             IEnumerable<TableTransactionAction> transactionalBatch,
@@ -1301,9 +1326,9 @@ namespace Azure.Data.Tables
                 var _batch = BuildChangeSet(batchOperations, batchItems, requestLookup, batchId, changesetId);
                 var request = _tableOperations.CreateBatchRequest(_batch, null, null);
 
-                return async ?
-                    await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false) :
-                    _tableOperations.SendBatchRequest(request, cancellationToken);
+                return async
+                    ? await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false)
+                    : _tableOperations.SendBatchRequest(request, cancellationToken);
             }
             catch (Exception ex)
             {

@@ -28,6 +28,7 @@ namespace Azure.Data.Tables
         private readonly QueryOptions _defaultQueryOptions = new QueryOptions() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata };
         private string _accountName;
         private readonly Uri _endpoint;
+        private readonly HttpPipeline _pipeline;
 
         /// <summary>
         /// The name of the table account with which this client instance will interact.
@@ -164,7 +165,7 @@ namespace Azure.Data.Tables
                 TableSharedKeyCredential credential => new TableSharedKeyPipelinePolicy(credential),
                 _ => default
             };
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new[] { policy },
@@ -172,9 +173,9 @@ namespace Azure.Data.Tables
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
-            _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString, _version);
-            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);
+            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
+            _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
+            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
         }
 
         internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TablesClientOptions options)
@@ -193,7 +194,7 @@ namespace Azure.Data.Tables
                 null => policy,
                 _ => new AzureSasCredentialSynchronousPolicy(sasCredential)
             };
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
                 perRetryPolicies: new[] { authPolicy },
@@ -201,9 +202,9 @@ namespace Azure.Data.Tables
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
-            _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString, _version);
-            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);
+            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpointString, _version);
+            _serviceOperations = new ServiceRestClient(_diagnostics, _pipeline, endpointString, _version);
+            _secondaryServiceOperations = new ServiceRestClient(_diagnostics, _pipeline, secondaryEndpoint, _version);
         }
 
         /// <summary>
@@ -258,7 +259,7 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
 
-            return new TableClient(tableName, _tableOperations, _version, _diagnostics, _isCosmosEndpoint, _endpoint);
+            return new TableClient(tableName, _tableOperations, _version, _diagnostics, _isCosmosEndpoint, _endpoint, _pipeline);
         }
 
         /// <summary>
@@ -620,11 +621,22 @@ namespace Azure.Data.Tables
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response DeleteTable(string tableName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tableName, nameof(tableName));
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(DeleteTable)}");
             scope.Start();
             try
             {
-                return _tableOperations.Delete(tableName, cancellationToken: cancellationToken);
+                using var message = _tableOperations.CreateDeleteRequest(tableName);
+                _pipeline.Send(message, cancellationToken);
+
+                switch (message.Response.Status)
+                {
+                    case 404:
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                }
             }
             catch (Exception ex)
             {
@@ -641,11 +653,22 @@ namespace Azure.Data.Tables
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual async Task<Response> DeleteTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tableName, nameof(tableName));
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(DeleteTable)}");
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteAsync(tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                using var message = _tableOperations.CreateDeleteRequest(tableName);
+               await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                switch (message.Response.Status)
+                {
+                    case 404:
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                }
             }
             catch (Exception ex)
             {
