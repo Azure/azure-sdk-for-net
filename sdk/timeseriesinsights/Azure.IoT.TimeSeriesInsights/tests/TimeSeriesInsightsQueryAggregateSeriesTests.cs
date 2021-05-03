@@ -8,7 +8,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.IoT.TimeSeriesInsights.Models;
 using FluentAssertions;
 using Microsoft.Azure.Devices.Client;
 using NUnit.Framework;

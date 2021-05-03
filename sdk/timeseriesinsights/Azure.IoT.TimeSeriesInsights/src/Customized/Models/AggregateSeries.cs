@@ -13,7 +13,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// </summary>
     [CodeGenModel("AggregateSeries")]
     [CodeGenSuppress("AggregateSeries", typeof(IEnumerable<object>), typeof(DateTimeRange), typeof(TimeSpan))]
-    public partial class AggregateSeries
+    internal partial class AggregateSeries
     {
         // Autorest does not support changing type for properties. In order to turn TimeSeriesId
         // from a list of objects to a strongly typed object, TimeSeriesId has been renamed to

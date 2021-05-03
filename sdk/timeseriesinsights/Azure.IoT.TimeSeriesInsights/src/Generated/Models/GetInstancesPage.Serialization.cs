@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class GetInstancesPage
+    internal partial class GetInstancesPage
     {
         internal static GetInstancesPage DeserializeGetInstancesPage(JsonElement element)
         {

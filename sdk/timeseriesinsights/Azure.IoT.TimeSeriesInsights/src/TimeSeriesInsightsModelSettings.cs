@@ -10,21 +10,21 @@ using Azure.Core.Pipeline;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// Model Settings client that can be used to perform operations such as getting and updating Time Series Model configuration settings.
+    /// Perform operations such as getting and updating Time Series Model configuration settings.
     /// </summary>
-    public class ModelSettingsClient
+    public class TimeSeriesInsightsModelSettings
     {
         private readonly ModelSettingsRestClient _modelSettingsRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of ModelSettings. This constructor should only be used for mocking purposes.
+        /// Initializes a new instance of TimeSeriesInsightsModelSettings. This constructor should only be used for mocking purposes.
         /// </summary>
-        protected ModelSettingsClient()
+        protected TimeSeriesInsightsModelSettings()
         {
         }
 
-        internal ModelSettingsClient(ModelSettingsRestClient modelSettingsRestClient, ClientDiagnostics clientDiagnostics)
+        internal TimeSeriesInsightsModelSettings(ModelSettingsRestClient modelSettingsRestClient, ClientDiagnostics clientDiagnostics)
         {
             Argument.AssertNotNull(modelSettingsRestClient, nameof(modelSettingsRestClient));
             Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
