@@ -5,6 +5,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
 {
+    [ExcludeFromCodeCoverage]
     [CodeGenModel("SendMessageRequest")]
     internal partial class SendMessageRequest
     {
