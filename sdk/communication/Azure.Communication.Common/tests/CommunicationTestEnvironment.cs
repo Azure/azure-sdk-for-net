@@ -34,6 +34,8 @@ namespace Azure.Communication.Tests
         public virtual string ExpectedTestPackagesEnabled { get { return TestPackagesEnabledDefaultValue; } }
 
         public bool ShouldIgnoreTests => TestPackagesEnabled != TestPackagesEnabledDefaultValue
+            && TestPackagesEnabled != ExpectedTestPackagesEnabled;
+        public bool ShouldIgnoreSMSTests => TestPackagesEnabled != TestPackagesEnabledDefaultValue
             && TestPackagesEnabled != ExpectedTestPackagesEnabled
             || bool.Parse(SkipSmsTest);
 
