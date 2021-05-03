@@ -2,11 +2,11 @@
 page_type: sample
 languages:
 - csharp
-  products:
+products:
 - azure
 - azure-service-bus
-  name: Explore deadlettering in Azure Service Bus
-  description: This sample shows how to move messages to the Dead-letter queue, how to retrieve messages from it, and resubmit corrected message back into the main queue.
+name: Explore deadlettering in Azure Service Bus
+description: This sample shows how to move messages to the Dead-letter queue, how to retrieve messages from it, and resubmit corrected message back into the main queue.
 ---
 
 # Dead-Letter Queues
