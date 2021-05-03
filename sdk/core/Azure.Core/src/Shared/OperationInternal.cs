@@ -75,7 +75,7 @@ namespace Azure.Core
 
         public TimeSpan DefaultPollingInterval { get; set; }
 
-        protected ClientDiagnostics ClientDiagnostics { get; }
+        private ClientDiagnostics ClientDiagnostics { get; }
 
         private RequestFailedException OperationFailedException
         {
@@ -122,40 +122,6 @@ namespace Azure.Core
             }
         }
 
-        protected virtual async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
-        {
-            Response response = async
-                ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
-                : _operation.GetResponse(cancellationToken);
-
-            var state = _operation.UpdateState(response);
-
-            SetState(state, response);
-
-            return response;
-        }
-
-        protected void SetState(OperationState<TResult> state, Response response)
-        {
-            lock (SetStateLock)
-            {
-                RawResponse = response;
-
-                if (state.Succeeded == true)
-                {
-                    Value = state.Value;
-                    HasCompleted = true;
-                }
-                else if (state.Succeeded == false)
-                {
-                    OperationFailedException = state.OperationFailedException;
-                    HasCompleted = true;
-
-                    throw OperationFailedException;
-                }
-            }
-        }
-
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{OperationTypeName}.UpdateStatus");
@@ -183,68 +149,49 @@ namespace Azure.Core
                 throw requestFailedException;
             }
         }
-    }
 
-#pragma warning disable SA1402 // File may only contain a single type
-    internal class OperationInternal<TResult, TResponseType> : OperationInternal<TResult>
-#pragma warning restore SA1402 // File may only contain a single type
-    {
-        private readonly IOperation<TResult, TResponseType> _operation;
-
-        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult, TResponseType> operation) : base(clientDiagnostics)
+        private async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            _operation = operation;
-            OperationTypeName = operation.GetType().Name;
-        }
+            var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
 
-        protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
-        {
-            Response<TResponseType> response = async
-                ? await _operation.GetResponseAsync(cancellationToken).ConfigureAwait(false)
-                : _operation.GetResponse(cancellationToken);
+            lock (SetStateLock)
+            {
+                RawResponse = state.RawResponse;
 
-            var state = _operation.UpdateState(response);
-            var rawResponse = response.GetRawResponse();
+                if (state.Succeeded == true)
+                {
+                    Value = state.Value;
+                    HasCompleted = true;
+                }
+                else if (state.Succeeded == false)
+                {
+                    OperationFailedException = state.OperationFailedException;
+                    HasCompleted = true;
 
-            SetState(state, rawResponse);
+                    throw OperationFailedException;
+                }
+            }
 
-            return rawResponse;
+            return state.RawResponse;
         }
     }
 
     internal interface IOperation<TResult>
     {
-        Task<Response> GetResponseAsync(CancellationToken cancellationToken);
-
-        Response GetResponse(CancellationToken cancellationToken);
-
-        OperationState<TResult> UpdateState(Response response);
-    }
-
-    internal interface IOperation<TResult, TResponseType>
-    {
-        Task<Response<TResponseType>> GetResponseAsync(CancellationToken cancellationToken);
-
-        Response<TResponseType> GetResponse(CancellationToken cancellationToken);
-
-        OperationState<TResult> UpdateState(Response<TResponseType> response);
+        ValueTask<OperationState<TResult>> UpdateStateAsync(bool async, CancellationToken cancellationToken);
     }
 
     internal readonly struct OperationState<TResult>
     {
-        private OperationState(TResult value)
+        private OperationState(Response rawResponse, bool? succeeded, TResult value, RequestFailedException operationFailedException)
         {
-            Succeeded = true;
+            RawResponse = rawResponse;
+            Succeeded = succeeded;
             Value = value;
-            OperationFailedException = default;
-        }
-
-        private OperationState(RequestFailedException operationFailedException)
-        {
-            Succeeded = false;
-            Value = default;
             OperationFailedException = operationFailedException;
         }
+
+        public Response RawResponse { get; }
 
         public bool? Succeeded { get; }
 
@@ -252,9 +199,13 @@ namespace Azure.Core
 
         public RequestFailedException OperationFailedException { get; }
 
-        public static OperationState<TResult> Success(TResult value) => new OperationState<TResult>(value);
+        public static OperationState<TResult> Success(Response rawResponse, TResult value) =>
+            new OperationState<TResult>(rawResponse, true, value, default);
 
-        public static OperationState<TResult> Failure(RequestFailedException operationFailedException) =>
-            new OperationState<TResult>(operationFailedException);
+        public static OperationState<TResult> Failure(Response rawResponse, RequestFailedException operationFailedException) =>
+            new OperationState<TResult>(rawResponse, false, default, operationFailedException);
+
+        public static OperationState<TResult> Pending(Response rawResponse) =>
+            new OperationState<TResult>(rawResponse, default, default, default);
     }
 }

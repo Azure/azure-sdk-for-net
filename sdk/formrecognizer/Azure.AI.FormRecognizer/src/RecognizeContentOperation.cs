@@ -15,9 +15,9 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Tracks the status of a long-running operation for recognizing layout elements from forms.
     /// </summary>
-    public class RecognizeContentOperation : Operation<FormPageCollection>, IOperation<FormPageCollection, AnalyzeOperationResult>
+    public class RecognizeContentOperation : Operation<FormPageCollection>, IOperation<FormPageCollection>
     {
-        private readonly OperationInternal<FormPageCollection, AnalyzeOperationResult> _operationInternal;
+        private readonly OperationInternal<FormPageCollection> _operationInternal;
 
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly FormRecognizerRestClient _serviceClient;
@@ -149,28 +149,30 @@ namespace Azure.AI.FormRecognizer.Models
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
-        async Task<Response<AnalyzeOperationResult>> IOperation<FormPageCollection, AnalyzeOperationResult>.GetResponseAsync(CancellationToken cancellationToken) =>
-            await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false);
-
-        Response<AnalyzeOperationResult> IOperation<FormPageCollection, AnalyzeOperationResult>.GetResponse(CancellationToken cancellationToken) =>
-            _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
-
-        OperationState<FormPageCollection> IOperation<FormPageCollection, AnalyzeOperationResult>.UpdateState(Response<AnalyzeOperationResult> response)
+        async ValueTask<OperationState<FormPageCollection>> IOperation<FormPageCollection>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
+            var response = async
+                ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
+                : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
+
             var status = response.Value.Status;
+            var rawResponse = response.GetRawResponse();
 
             if (status == OperationStatus.Succeeded)
             {
-                return OperationState<FormPageCollection>.Success(ConvertValue(response.Value.AnalyzeResult.PageResults, response.Value.AnalyzeResult.ReadResults));
+                return OperationState<FormPageCollection>.Success(rawResponse,
+                    ConvertValue(response.Value.AnalyzeResult.PageResults, response.Value.AnalyzeResult.ReadResults));
             }
             else if (status == OperationStatus.Failed)
             {
-                return OperationState<FormPageCollection>.Failure(ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async: false, _diagnostics, response.GetRawResponse(), response.Value.AnalyzeResult.Errors)
-                    .EnsureCompleted());
+                var requestFailedException = await ClientCommon
+                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.AnalyzeResult.Errors)
+                    .ConfigureAwait(false);
+
+                return OperationState<FormPageCollection>.Failure(rawResponse, requestFailedException);
             }
 
-            return default;
+            return OperationState<FormPageCollection>.Pending(rawResponse);
         }
 
         private static FormPageCollection ConvertValue(IReadOnlyList<PageResult> pageResults, IReadOnlyList<ReadResult> readResults)
