@@ -2,11 +2,11 @@
 page_type: sample
 languages:
 - csharp
-  products:
+products:
 - azure
 - azure-service-bus
-  name: Explore topic filters in Azure Service Bus
-  description: This sample shows how to apply topic filters to subscriptions.
+name: Explore topic filters in Azure Service Bus
+description: This sample shows how to apply topic filters to subscriptions.
 ---
 
 # 
