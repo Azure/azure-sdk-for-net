@@ -180,7 +180,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
             PhoneNumberCapabilityType smsCapabilityType = phoneNumber.Value.Capabilities.Sms == PhoneNumberCapabilityType.InboundOutbound ? PhoneNumberCapabilityType.Outbound : PhoneNumberCapabilityType.InboundOutbound;
 
             var updateOperation = await client.StartUpdateCapabilitiesAsync(number, callingCapabilityType, smsCapabilityType);
-
             await updateOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(updateOperation.HasCompleted);
