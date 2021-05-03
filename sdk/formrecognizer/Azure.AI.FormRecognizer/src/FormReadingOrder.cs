@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer
     /// business logic should be built upon the actual line location instead of order.
     /// </summary>
     [CodeGenModel("ReadingOrder")]
-    public enum ReadingOrder
+    public enum FormReadingOrder
     {
         /// <summary>
         /// The lines are sorted top to bottom, left to right, although in certain cases
