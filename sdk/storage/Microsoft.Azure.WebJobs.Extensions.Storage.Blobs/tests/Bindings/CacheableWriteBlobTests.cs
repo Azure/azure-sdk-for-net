@@ -11,7 +11,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Bindings
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
 {
     public class CacheableWriteBlobTests
     {
@@ -26,6 +26,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Bindings
             _blobServiceClient.GetBlobContainerClient(ContainerName).DeleteIfExists();
         }
 
+        /// <summary>
+        /// Verify that <see cref="CacheableWriteBlob.TryPutToCacheAsync"/> returns appropriate value
+        /// depending on the output of <see cref="IFunctionDataCache.TryPut"/>.
+        /// </summary>
+        /// <param name="expected">Output of <see cref="IFunctionDataCache.TryPut"/></param>
         [TestCase(false)]
         [TestCase(true)]
         public async Task TryPutToCache_VerifyResultMatchesResultOfCacheOperation(bool expected)
@@ -54,6 +59,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Bindings
             cacheMock.Verify();
         }
 
+        /// <summary>
+        /// Verify that <see cref="CacheableWriteBlob.TryPutToCacheAsync"/> returns <see cref="false"/> if
+        /// a valid cache object is not passed to it upon creation.
+        /// </summary>
         [Test]
         public async Task TryPutToCache_CacheObjectNull_VerifyFailure()
         {
@@ -74,9 +83,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Bindings
             bool result = await cacheableWriteBlob.TryPutToCacheAsync(isDeleteOnFailure);
 
             // Assert
-            Assert.AreEqual(false, result);
+            Assert.IsFalse(result);
         }
 
+        /// <summary>
+        /// Verify that <see cref="CacheableWriteBlob.TryPutToCacheAsync"/> returns <see cref="false"/> if
+        /// the appropriate blob's properties are not found (e.g. if the blob does not exist).
+        /// </summary>
         [Test]
         public async Task TryPutToCache_BlobPropertiesNotFound_VerifyFailure()
         {
@@ -99,9 +112,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Bindings
             bool result = await cacheableWriteBlob.TryPutToCacheAsync(isDeleteOnFailure);
 
             // Assert
-            Assert.AreEqual(false, result);
+            Assert.IsFalse(result);
         }
 
+        /// <summary>
+        /// Get a reference to a blob to be used for the test.
+        /// </summary>
+        /// <param name="containerName">Name of blob container.</param>
+        /// <param name="blobName">Name of blob.</param>
+        /// <param name="createBlob">If <see cref="true"/>, the blob will be created if it does not already exist.</param>
+        /// <returns>Reference to the blob.</returns>
         private BlobWithContainer<BlobBaseClient> CreateBlobReference(string containerName, string blobName, bool createBlob = true)
         {
             var container = _blobServiceClient.GetBlobContainerClient(containerName);
@@ -115,21 +135,41 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Bindings
             return new BlobWithContainer<BlobBaseClient>(container, blobClient);
         }
 
+        /// <summary>
+        /// Create a mock <see cref="IFunctionDataCache"/>.
+        /// </summary>
+        /// <returns>Mock <see cref="IFunctionDataCache"/>.</returns>
         private static Mock<IFunctionDataCache> CreateMockFunctionDataCache()
         {
             return new Mock<IFunctionDataCache>(MockBehavior.Strict);
         }
 
+        /// <summary>
+        /// Create a mock <see cref="Stream"/>.
+        /// </summary>
+        /// <returns>Mock <see cref="Stream"/>.</returns>
         private static Mock<Stream> CreateMockBlobStream()
         {
             return new Mock<Stream>(MockBehavior.Strict);
         }
 
+        /// <summary>
+        /// Create a mock <see cref="SharedMemoryMetadata"/> describing a fake shared memory region.
+        /// </summary>
+        /// <returns>Mock <see cref="SharedMemoryMetadata"/>.</returns>
         private static Mock<SharedMemoryMetadata> CreateMockSharedMemoryMetadata()
         {
             return new Mock<SharedMemoryMetadata>(MockBehavior.Strict, "mockname", 10);
         }
 
+        /// <summary>
+        /// Create a <see cref="CacheableWriteBlob"/> to use for a test.
+        /// </summary>
+        /// <param name="blob">Blob for this object in storage.</param>
+        /// <param name="cacheObject">Desribes the shared memory region containing this object.</param>
+        /// <param name="blobStream">Stream to use for writing this object to storage.</param>
+        /// <param name="functionDataCache">Cache in which to put this object when required.</param>
+        /// <returns>A <see cref="CacheableWriteBlob"/> object to use for a test.</returns>
         private static CacheableWriteBlob CreateProductUnderTest(BlobWithContainer<BlobBaseClient> blob, SharedMemoryMetadata cacheObject, Stream blobStream, IFunctionDataCache functionDataCache)
         {
             return new CacheableWriteBlob(blob, cacheObject, blobStream, functionDataCache);
