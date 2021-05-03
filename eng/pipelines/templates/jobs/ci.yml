@@ -103,9 +103,6 @@ jobs:
       name: azsdk-pool-mms-ubuntu-1804-general
       vmImage: MMSUbuntu18.04
     steps:
-      - pwsh: |
-
-        displayName: Check spelling of public API surface
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
         inputs:
