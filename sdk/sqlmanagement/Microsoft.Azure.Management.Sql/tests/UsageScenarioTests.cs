@@ -32,6 +32,7 @@ namespace Sql.Tests
             }
         }
 
+        /*
         [Fact]
         public void TestGetUsageData()
         {
@@ -56,5 +57,6 @@ namespace Sql.Tests
                 Assert.True(databaseUsages.Where(db => db.Name == dbName).Count() == 1);
             }
         }
+        */
     }
 }

@@ -473,10 +473,11 @@ namespace Sql.Tests
                 config.State = TransparentDataEncryptionState.Disabled;
 
                 // Sometimes the config is still being updated from the previous PUT, so execute with retry
+                LogicalDatabaseTransparentDataEncryption config2 = null;
 
                 SqlManagementTestUtilities.ExecuteWithRetry(() =>
                 {
-                    config = sqlClient.TransparentDataEncryptions.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, config);
+                     config2 = sqlClient.TransparentDataEncryptions.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, config);
                 },
                 TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(5),
                 (CloudException e) =>
@@ -484,7 +485,7 @@ namespace Sql.Tests
                     return e.Response.StatusCode == HttpStatusCode.Conflict;
                 });
 
-                Assert.Equal(TransparentDataEncryptionState.Disabled, config.State);
+                Assert.Equal(TransparentDataEncryptionState.Disabled, config2.State);
             }
         }
     }
