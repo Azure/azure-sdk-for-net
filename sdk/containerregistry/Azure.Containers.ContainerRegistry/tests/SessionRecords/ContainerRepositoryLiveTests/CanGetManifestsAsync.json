@@ -5,8 +5,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210502.1",
+          "(.NET Core 4.6.29916.01; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "4898e8d95939400f4e46ff4176369e5c",
         "x-ms-return-client-request-id": "true"
       },
@@ -22,16 +24,16 @@
         "Connection": "keep-alive",
         "Content-Length": "221",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 23 Apr 2021 20:09:37 GMT",
+        "Date": "Mon, 03 May 2021 16:53:03 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains",
           "max-age=31536000; includeSubDomains"
         ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr01.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr01.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022,error=\u0022invalid_token\u0022",
+        "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr01.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr01.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "4eead3b7-acb1-4a27-b0d3-0fffaf767035"
+        "X-Ms-Correlation-Request-Id": "b7fe82a5-0ded-4530-a12a-efbe59998e96"
       },
       "ResponseBody": {
         "errors": [
@@ -56,7 +58,10 @@
         "Accept": "application/json",
         "Content-Length": "80",
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210502.1",
+          "(.NET Core 4.6.29916.01; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "b99986b1169a9c65a255ea43b7617554",
         "x-ms-return-client-request-id": "true"
       },
@@ -65,12 +70,12 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 23 Apr 2021 20:09:37 GMT",
+        "Date": "Mon, 03 May 2021 16:53:03 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "28244512-6971-45d6-8589-3f2db4bca066",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.25"
+        "X-Ms-Correlation-Request-Id": "91ae1aaf-8d97-41fe-9596-bb55cbf2db53",
+        "x-ms-ratelimit-remaining-calls-per-second": "165.766667"
       },
       "ResponseBody": {
         "refresh_token": "Sanitized"
@@ -83,7 +88,10 @@
         "Accept": "application/json",
         "Content-Length": "139",
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210502.1",
+          "(.NET Core 4.6.29916.01; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "4868963ee7672f0cd833749cb841042b",
         "x-ms-return-client-request-id": "true"
       },
@@ -92,12 +100,12 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 23 Apr 2021 20:09:37 GMT",
+        "Date": "Mon, 03 May 2021 16:53:03 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "423e3464-12e8-41c6-9e9b-bb264640aaca",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.233333"
+        "X-Ms-Correlation-Request-Id": "ecce5ba2-9b49-4178-ba52-3e2abe2740de",
+        "x-ms-ratelimit-remaining-calls-per-second": "165.75"
       },
       "ResponseBody": {
         "access_token": "Sanitized"
@@ -109,7 +117,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210502.1",
+          "(.NET Core 4.6.29916.01; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "4898e8d95939400f4e46ff4176369e5c",
         "x-ms-return-client-request-id": "true"
       },
@@ -124,7 +135,7 @@
         ],
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 23 Apr 2021 20:09:37 GMT",
+        "Date": "Mon, 03 May 2021 16:53:03 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -133,7 +144,7 @@
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "9c6765f9-b001-4cb0-9e1d-a752f166e4a0"
+        "X-Ms-Correlation-Request-Id": "5a3bf2d1-b92d-4dc8-b22c-68e12a574556"
       },
       "ResponseBody": {
         "registry": "localtestacr01.azurecr.io",
@@ -141,9 +152,9 @@
         "manifests": [
           {
             "digest": "sha256:1b26826f602946860c279fce658f31050cff2c596583af237d971f4629b57792",
-            "imageSize": 0,
-            "createdTime": "2021-04-23T18:32:20.8237433Z",
-            "lastUpdateTime": "2021-04-23T18:32:20.8237433Z",
+            "imageSize": 525,
+            "createdTime": "2021-05-03T16:52:54.0965754Z",
+            "lastUpdateTime": "2021-05-03T16:52:54.0965754Z",
             "architecture": "amd64",
             "os": "linux",
             "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
@@ -157,9 +168,9 @@
           },
           {
             "digest": "sha256:50b8560ad574c779908da71f7ce370c0a2471c098d44d1c8f6b513c5a55eeeb1",
-            "imageSize": 0,
-            "createdTime": "2021-04-23T18:32:21.8004016Z",
-            "lastUpdateTime": "2021-04-23T18:32:21.8004016Z",
+            "imageSize": 525,
+            "createdTime": "2021-05-03T16:52:53.3680627Z",
+            "lastUpdateTime": "2021-05-03T16:52:53.3680627Z",
             "architecture": "arm",
             "os": "linux",
             "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
@@ -173,9 +184,9 @@
           },
           {
             "digest": "sha256:88b2e00179bd6c4064612403c8d42a13de7ca809d61fee966ce9e129860a8a90",
-            "imageSize": 0,
-            "createdTime": "2021-04-23T18:32:20.9240517Z",
-            "lastUpdateTime": "2021-04-23T18:32:20.9240517Z",
+            "imageSize": 525,
+            "createdTime": "2021-05-03T16:52:54.5718587Z",
+            "lastUpdateTime": "2021-05-03T16:52:54.5718587Z",
             "architecture": "mips64le",
             "os": "linux",
             "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
@@ -189,9 +200,9 @@
           },
           {
             "digest": "sha256:963612c5503f3f1674f315c67089dee577d8cc6afc18565e0b4183ae355fb343",
-            "imageSize": 0,
-            "createdTime": "2021-04-23T18:32:20.3113299Z",
-            "lastUpdateTime": "2021-04-23T18:32:20.3113299Z",
+            "imageSize": 525,
+            "createdTime": "2021-05-03T16:52:53.43741Z",
+            "lastUpdateTime": "2021-05-03T16:52:53.43741Z",
             "architecture": "arm64",
             "os": "linux",
             "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
@@ -205,9 +216,9 @@
           },
           {
             "digest": "sha256:bb7ab0fa94fdd78aca84b27a1bd46c4b811051f9b69905d81f5f267fc6546a9d",
-            "imageSize": 0,
-            "createdTime": "2021-04-23T18:32:21.1240623Z",
-            "lastUpdateTime": "2021-04-23T18:32:21.1240623Z",
+            "imageSize": 525,
+            "createdTime": "2021-05-03T16:52:53.5762744Z",
+            "lastUpdateTime": "2021-05-03T16:52:53.5762744Z",
             "architecture": "ppc64le",
             "os": "linux",
             "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
@@ -221,9 +232,9 @@
           },
           {
             "digest": "sha256:cb55d8f7347376e1ba38ca740904b43c9a52f66c7d2ae1ef1a0de1bc9f40df98",
-            "imageSize": 0,
-            "createdTime": "2021-04-23T18:32:20.7655954Z",
-            "lastUpdateTime": "2021-04-23T18:32:20.7655954Z",
+            "imageSize": 525,
+            "createdTime": "2021-05-03T16:52:53.9504977Z",
+            "lastUpdateTime": "2021-05-03T16:52:53.9504977Z",
             "architecture": "386",
             "os": "linux",
             "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
@@ -237,9 +248,9 @@
           },
           {
             "digest": "sha256:e49abad529e5d9bd6787f3abeab94e09ba274fe34731349556a850b9aebbf7bf",
-            "imageSize": 0,
-            "createdTime": "2021-04-23T18:32:21.3351841Z",
-            "lastUpdateTime": "2021-04-23T18:32:21.3351841Z",
+            "imageSize": 525,
+            "createdTime": "2021-05-03T16:52:53.3293787Z",
+            "lastUpdateTime": "2021-05-03T16:52:53.3293787Z",
             "architecture": "s390x",
             "os": "linux",
             "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
@@ -253,9 +264,9 @@
           },
           {
             "digest": "sha256:e5785cb0c62cebbed4965129bae371f0589cadd6d84798fb58c2c5f9e237efd9",
-            "imageSize": 0,
-            "createdTime": "2021-04-23T18:32:20.3983424Z",
-            "lastUpdateTime": "2021-04-23T18:32:20.3983424Z",
+            "imageSize": 525,
+            "createdTime": "2021-05-03T16:52:53.5375764Z",
+            "lastUpdateTime": "2021-05-03T16:52:53.5375764Z",
             "architecture": "arm",
             "os": "linux",
             "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
@@ -269,9 +280,9 @@
           },
           {
             "digest": "sha256:ea0cfb27fd41ea0405d3095880c1efa45710f5bcdddb7d7d5a7317ad4825ae14",
-            "imageSize": 0,
-            "createdTime": "2021-04-23T18:32:21.2523432Z",
-            "lastUpdateTime": "2021-04-23T18:32:21.2523432Z",
+            "imageSize": 1125,
+            "createdTime": "2021-05-03T16:52:53.6101433Z",
+            "lastUpdateTime": "2021-05-03T16:52:53.6101433Z",
             "architecture": "amd64",
             "os": "windows",
             "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
@@ -285,13 +296,12 @@
           },
           {
             "digest": "sha256:f2266cbfc127c960fd30e76b7c792dc23b588c0db76233517e1891a4e357d519",
-            "imageSize": 0,
-            "createdTime": "2021-04-23T18:32:20.0014168Z",
-            "lastUpdateTime": "2021-04-23T18:32:20.0014168Z",
+            "imageSize": 5325,
+            "createdTime": "2021-05-03T16:52:52.8353991Z",
+            "lastUpdateTime": "2021-05-03T16:52:52.8353991Z",
             "mediaType": "application/vnd.docker.distribution.manifest.list.v2\u002Bjson",
             "tags": [
               "latest",
-              "newest",
               "v1",
               "v2",
               "v3",
