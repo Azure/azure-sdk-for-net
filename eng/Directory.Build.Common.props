@@ -3,7 +3,7 @@
   <!-- Setup project type properties -->
   <PropertyGroup>
     <IsMgmtLibrary Condition="'$(IsMgmtLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.ResourceManager.'))">true</IsMgmtLibrary>
-    <MgmtAutorestVersion>3.0.0-beta.20210319.1</MgmtAutorestVersion>
+    <MgmtAutorestVersion>3.0.0-beta.20210504.1</MgmtAutorestVersion>
 
     <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
