@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
         public void InitialState()
         {
             var testOperation = new TestOperation();
-            var operationInternal = testOperation.OperationInternal;
+            var operationInternal = testOperation.MockOperationInternal;
 
             Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.DefaultPollingInterval);
             Assert.AreEqual(nameof(TestOperation), operationInternal.OperationTypeName);
@@ -44,7 +44,7 @@ namespace Azure.Core.Tests
             {
                 OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
             };
-            var operationInternal = testOperation.OperationInternal;
+            var operationInternal = testOperation.MockOperationInternal;
 
             var operationResponse = async
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
@@ -69,7 +69,7 @@ namespace Azure.Core.Tests
             {
                 OnUpdateState = _ => OperationState<int>.Success(mockResponse, expectedValue)
             };
-            var operationInternal = testOperation.OperationInternal;
+            var operationInternal = testOperation.MockOperationInternal;
 
             var operationResponse = async
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
@@ -94,7 +94,7 @@ namespace Azure.Core.Tests
             {
                 OnUpdateState = _ => OperationState<int>.Failure(mockResponse, originalException)
             };
-            var operationInternal = testOperation.OperationInternal;
+            var operationInternal = testOperation.MockOperationInternal;
 
             var thrownException = async
                 ? Assert.ThrowsAsync<RequestFailedException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
@@ -120,7 +120,7 @@ namespace Azure.Core.Tests
             {
                 OnUpdateState = _ => throw originalException
             };
-            var operationInternal = testOperation.OperationInternal;
+            var operationInternal = testOperation.MockOperationInternal;
 
             var thrownException = async
                 ? Assert.ThrowsAsync<RequestFailedException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
@@ -153,7 +153,7 @@ namespace Azure.Core.Tests
             {
                 OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
             };
-            var operationInternal = testOperation.OperationInternal;
+            var operationInternal = testOperation.MockOperationInternal;
 
             operationInternal.OperationTypeName = expectedTypeName;
 
@@ -182,7 +182,7 @@ namespace Azure.Core.Tests
             {
                 OnUpdateState = _ => OperationState<int>.Failure(mockResponse, originalException)
             };
-            var operationInternal = testOperation.OperationInternal;
+            var operationInternal = testOperation.MockOperationInternal;
 
             try
             {
@@ -210,7 +210,7 @@ namespace Azure.Core.Tests
             {
                 OnUpdateState = _ => throw originalException
             };
-            var operationInternal = testOperation.OperationInternal;
+            var operationInternal = testOperation.MockOperationInternal;
 
             try
             {
@@ -245,7 +245,7 @@ namespace Azure.Core.Tests
                     return OperationState<int>.Pending(mockResponse);
                 }
             };
-            var operationInternal = testOperation.OperationInternal;
+            var operationInternal = testOperation.MockOperationInternal;
 
             _ = async
                 ? await operationInternal.UpdateStatusAsync(originalToken)
@@ -269,7 +269,7 @@ namespace Azure.Core.Tests
                     ? OperationState<int>.Success(mockResponse, expectedValue)
                     : OperationState<int>.Pending(mockResponse)
             };
-            var operationInternal = testOperation.OperationInternal;
+            var operationInternal = testOperation.MockOperationInternal;
 
             operationInternal.DefaultPollingInterval = TimeSpan.Zero;
 
@@ -284,6 +284,85 @@ namespace Azure.Core.Tests
             Assert.True(operationInternal.HasCompleted);
             Assert.True(operationInternal.HasValue);
             Assert.AreEqual(expectedValue, operationInternal.Value);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task WaitForCompletionUsesRightPollingInterval(bool useDefaultPollingInterval)
+        {
+            var expectedDelay = TimeSpan.FromMilliseconds(100);
+            TimeSpan passedDelay = default;
+
+            var callsCount = 0;
+            var mockResponse = new MockResponse(200);
+            var testOperation = new TestOperation()
+            {
+                OnUpdateState = _ => ++callsCount >= 2
+                    ? OperationState<int>.Success(mockResponse, 50)
+                    : OperationState<int>.Pending(mockResponse)
+            };
+            var operationInternal = testOperation.MockOperationInternal;
+
+            operationInternal.OnWait = delay => passedDelay = delay;
+
+            if (useDefaultPollingInterval)
+            {
+                operationInternal.DefaultPollingInterval = expectedDelay;
+                await operationInternal.WaitForCompletionAsync(CancellationToken.None);
+            }
+            else
+            {
+                await operationInternal.WaitForCompletionAsync(expectedDelay, CancellationToken.None);
+            }
+
+            Assert.AreEqual(expectedDelay, passedDelay);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task WaitForCompletionUsesRetryAfterHeader(bool useDefaultPollingInterval)
+        {
+            var originalDelay = TimeSpan.FromSeconds(2);
+            var shortDelay = originalDelay.Subtract(TimeSpan.FromSeconds(1));
+            var longDelay = originalDelay.Add(TimeSpan.FromSeconds(1));
+            var passedDelays = new List<TimeSpan>();
+
+            var shortDelayMockResponse = new MockResponse(200);
+            shortDelayMockResponse.AddHeader(new HttpHeader("Retry-After", shortDelay.Seconds.ToString()));
+
+            var longDelayMockResponse = new MockResponse(200);
+            longDelayMockResponse.AddHeader(new HttpHeader("Retry-After", longDelay.Seconds.ToString()));
+
+            var callsCount = 0;
+            var testOperation = new TestOperation()
+            {
+                OnUpdateState = _ => ++callsCount switch
+                {
+                    1 => OperationState<int>.Pending(shortDelayMockResponse),
+                    2 => OperationState<int>.Pending(longDelayMockResponse),
+                    _ => OperationState<int>.Success(new MockResponse(200), 50)
+                }
+            };
+            var operationInternal = testOperation.MockOperationInternal;
+
+            operationInternal.OnWait = delay => passedDelays.Add(delay);
+
+            if (useDefaultPollingInterval)
+            {
+                operationInternal.DefaultPollingInterval = originalDelay;
+                await operationInternal.WaitForCompletionAsync(CancellationToken.None);
+            }
+            else
+            {
+                await operationInternal.WaitForCompletionAsync(originalDelay, CancellationToken.None);
+            }
+
+            // Algorithm must choose the longest delay between the two.
+            Assert.AreEqual(2, passedDelays.Count);
+            Assert.AreEqual(originalDelay, passedDelays[0]);
+            Assert.AreEqual(longDelay, passedDelays[1]);
         }
 
         [Test]
@@ -304,7 +383,7 @@ namespace Azure.Core.Tests
                     return OperationState<int>.Success(mockResponse, default);
                 }
             };
-            var operationInternal = testOperation.OperationInternal;
+            var operationInternal = testOperation.MockOperationInternal;
 
             operationInternal.DefaultPollingInterval = TimeSpan.Zero;
 
@@ -330,7 +409,7 @@ namespace Azure.Core.Tests
             {
                 OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
             };
-            var operationInternal = testOperation.OperationInternal;
+            var operationInternal = testOperation.MockOperationInternal;
 
             operationInternal.DefaultPollingInterval = TimeSpan.Zero;
 
@@ -343,15 +422,31 @@ namespace Azure.Core.Tests
         {
             public TestOperation()
             {
-                OperationInternal = new OperationInternal<int>(ClientDiagnostics, this);
+                MockOperationInternal = new MockOperationInternal<int>(ClientDiagnostics, this);
             }
 
-            public OperationInternal<int> OperationInternal { get; }
+            public MockOperationInternal<int> MockOperationInternal { get; }
 
             public Func<CancellationToken, OperationState<int>> OnUpdateState { get; set; }
 
             ValueTask<OperationState<int>> IOperation<int>.UpdateStateAsync(bool async, CancellationToken cancellationToken) =>
                 new ValueTask<OperationState<int>>(OnUpdateState(cancellationToken));
+        }
+
+        private class MockOperationInternal<TResult> : OperationInternal<TResult>
+        {
+            public MockOperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation)
+                : base(clientDiagnostics, operation)
+            {
+            }
+
+            public Action<TimeSpan> OnWait { get; set; }
+
+            protected override async Task WaitAsync(TimeSpan delay, CancellationToken cancellationToken)
+            {
+                OnWait(delay);
+                await base.WaitAsync(delay, cancellationToken);
+            }
         }
 
         private class TestClientOption : ClientOptions

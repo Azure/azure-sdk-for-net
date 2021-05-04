@@ -114,9 +114,12 @@ namespace Azure.Core
                 var delay = serverDelay > pollingInterval
                     ? serverDelay : pollingInterval;
 
-                await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
+                await WaitAsync(delay, cancellationToken).ConfigureAwait(false);
             }
         }
+
+        protected virtual async Task WaitAsync(TimeSpan delay, CancellationToken cancellationToken) =>
+            await Task.Delay(delay, cancellationToken);
 
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
