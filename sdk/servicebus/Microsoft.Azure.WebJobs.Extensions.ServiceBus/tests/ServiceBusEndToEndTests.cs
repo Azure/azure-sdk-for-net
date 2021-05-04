@@ -426,7 +426,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"MaxConcurrentSessions\": 8,",
                 "  \"MaxMessages\": 1000,",
                 "  \"SessionIdleTimeout\": \"\"",
-                "  \"RetryOptions\": {",
+                "  \"ClientRetryOptions\": {",
                 "       \"Mode\": \"Exponential\",",
                 "       \"TryTimeout\": \"00:00:10\",",
                 "       \"Delay\": \"00:00:00.8000000\",",

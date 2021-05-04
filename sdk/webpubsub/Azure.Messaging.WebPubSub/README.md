@@ -39,8 +39,8 @@ In order to interact with the service, you'll need to create an instance of the 
 
 ### Create a `WebPubSubServiceClient`
 
-```csharp
-var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new AzureKeyCredential("<access-key>"));
+```C# Snippet:WebPubSubAuthenticate
+var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 ```
 
 ## Key concepts
@@ -69,18 +69,21 @@ Using this library, you can send messages to the client connections. A message c
 
 ### Broadcast a text message to all clients
 
-```csharp
-var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new AzureKeyCredential("<access-key>"));
-await serviceClient.SendToAll("Hello world!");
+```C# Snippet:WebPubSubHelloWorld
+var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+
+serviceClient.SendToAll("Hello World!");
 ```
 
 ### Broadcast a JSON message to all clients
 
-```csharp
-var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new AzureKeyCredential("<access-key>"));
-await serviceClient.SendToAll(
+```C# Snippet:WebPubSubSendJson
+var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+
+serviceClient.SendToAll(
     RequestContent.Create(
-        new {
+        new
+        {
             Foo = "Hello World!",
             Bar = 42
         }));
@@ -88,13 +91,13 @@ await serviceClient.SendToAll(
 
 ### Broadcast a binary message to all clients
 
-```csharp
-var serviceClient = new WebPubSubServiceClient(new Uri("<endpoint>"), "<hub>", new AzureKeyCredential("<access-key>"));
+```C# Snippet:WebPubSubSendBinary
+var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
 
-client.SendToAll(
-    RequestContent.Create(new byte[] {0x1, 0x2, 0x3}), 
-    HttpHeader.Common.OctetStreamContentType.Value
-);
+Stream stream = BinaryData.FromString("Hello World!").ToStream();
+serviceClient.SendToAll(
+    RequestContent.Create(stream),
+    HttpHeader.Common.OctetStreamContentType.Value);
 ```
 
 ## Troubleshooting
