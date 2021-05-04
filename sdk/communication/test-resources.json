@@ -13,10 +13,6 @@
             "defaultValue": "communication",
             "type": "string"
         },
-        "subscriptionId": {
-            "defaultValue": "[subscription().subscriptionId]",
-            "type": "string"
-        },
         "testApplicationOid": {
             "type": "string",
             "metadata": {

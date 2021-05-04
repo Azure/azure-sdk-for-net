@@ -304,7 +304,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         private async ValueTask<KeyVaultCertificateWithPolicy> WaitForOperationAsync(CertificateOperation operation)
         {
-            return await operation.WaitForCompletionAsync();
+            return await operation.WaitForCompletionAsync(TimeSpan.Zero, default);
         }
 
         public class MockCredential : TokenCredential

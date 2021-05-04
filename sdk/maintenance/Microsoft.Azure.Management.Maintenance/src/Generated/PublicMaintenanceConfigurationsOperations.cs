@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Get Public Maintenance Configuration record
         /// </summary>
         /// <param name='resourceName'>
-        /// Resource Identifier
+        /// Maintenance Configuration Name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

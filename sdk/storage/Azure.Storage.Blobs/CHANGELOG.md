@@ -2,7 +2,6 @@
 
 ## 12.9.0-beta.4 (Unreleased)
 - Added support for service version 2020-08-04.
-- Added support for Blob Query Parquet input format.
 - Added WithCustomerProvidedKey() and WithEncryptionScope() to BlobClient, BlobBaseClient, AppendBlobClient, and PageBlobClient.
 - BlobLeaseClient now remembers the Lease ID after a lease change.
 - Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a BlobSasBuilder parameter.
