@@ -14,37 +14,28 @@ namespace Azure.ResourceManager.Core.Tests
         [Test]
         public void SerializationTestType1()
         {
-            string expected = "{\"properties\":{\"kind\":\"KindForResource\"," +
-                "\"location\":\"eastus\",\"managedBy\":\"ManagedByForResource\"," +
-                "\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\"," +
-                "\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\"," +
-                "\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\"," +
-                "\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{}}}";
+            string expected = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "GenericResourceData", "SerializationTestType1.json"));
             ResourceGroupResourceIdentifier id = Id;
             Plan plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
             Sku sku = new Sku("NameForSku", "TierForSku", "FamilyForSku", "SizeForSku", 15464547);
             GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, LocationData.EastUS, null, plan, null, "KindForResource", "ManagedByForResource", sku, null);
             var stream = new MemoryStream();
-            Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
+            var options = new JsonWriterOptions();
+            options.Indented = true;
+            Utf8JsonWriter writer = new(stream, options);
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteObjectValue(data);
             writer.WriteEndObject();
             writer.Flush();
             string json = Encoding.UTF8.GetString(stream.ToArray());
-            Assert.IsTrue(expected.Equals(json));
+            Assert.AreEqual(expected, json);
         }
 
         [Test]
         public void SerializationTestType2()
         {
-            string expected = "{\"properties\":{\"kind\":\"KindForResource\"," +
-                "\"managedBy\":\"ManagedByForResource\",\"plan\":{\"name\":\"NameForPlan\"," +
-                "\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\"," +
-                "\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}," +
-                "\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\"," +
-                "\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{\"key1\":\"value1\"," +
-                "\"key2\":\"value2\"}}}";
+            string expected = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "GenericResourceData", "SerializationTestType2.json"));
             GenericResourceData genericResource = new()
             {
                 Plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan"),
@@ -55,20 +46,22 @@ namespace Azure.ResourceManager.Core.Tests
             genericResource.Tags.Add("key1", "value1");
             genericResource.Tags.Add("key2", "value2");
             var stream = new MemoryStream();
-            Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
+            var options = new JsonWriterOptions();
+            options.Indented = true;
+            Utf8JsonWriter writer = new(stream, options);
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteObjectValue(genericResource);
             writer.WriteEndObject();
             writer.Flush();
             string json = Encoding.UTF8.GetString(stream.ToArray());
-            Assert.IsTrue(expected.Equals(json));
+            Assert.AreEqual(expected, json);
         }
 
         [Test]
         public void InvalidSerializationTest()
         {
-            string expected = "{\"properties\":{\"location\":\"eastus\",\"tags\":{}}}";
+            string expected = "{\"properties\":{\"location\":\"East US\",\"tags\":{}}}";
             ResourceGroupResourceIdentifier id = Id;
             GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, LocationData.EastUS, null, null, null, null, null, null, null);
 
@@ -80,7 +73,7 @@ namespace Azure.ResourceManager.Core.Tests
             writer.WriteEndObject();
             writer.Flush();
             string json = Encoding.UTF8.GetString(stream.ToArray());
-            Assert.IsTrue(expected.Equals(json));
+            Assert.AreEqual(expected, json);
         }
 
         [Test]
@@ -89,9 +82,9 @@ namespace Azure.ResourceManager.Core.Tests
             string json = "{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"kind\":\"KindForResource\",\"location\":\"eastus\",\"managedBy\":\"ManagedByForResource\",\"name\":\"account1\",\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{},\"type\":\"Microsoft.ClassicStorage/storageAccounts\"}";
             JsonElement element = JsonDocument.Parse(json).RootElement;
             GenericResourceData data = GenericResourceData.DeserializeGenericResource(element);
-            Assert.IsTrue(data.Name.Equals("account1"));
-            Assert.IsTrue(data.Location == LocationData.EastUS);
-            Assert.IsTrue(data.Plan.PromotionCode.Equals("PromotionCodeForPlan"));
+            Assert.AreEqual("account1", data.Name);
+            Assert.AreEqual(LocationData.EastUS, data.Location);
+            Assert.AreEqual("PromotionCodeForPlan", data.Plan.PromotionCode);
         }
 
         [Test]
@@ -100,8 +93,8 @@ namespace Azure.ResourceManager.Core.Tests
             string json = "{\"notId\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"location\":\"eastus\",\"managedBy\":\"ManagedByForResource\",\"name\":\"account1\",\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{},\"type\":\"Microsoft.ClassicStorage/storageAccounts\"}";
             JsonElement element = JsonDocument.Parse(json).RootElement;
             GenericResourceData data = GenericResourceData.DeserializeGenericResource(element);
-            Assert.IsTrue(data.Id == null);
-            Assert.IsTrue(data.Kind == null);
+            Assert.IsNull(data.Id);
+            Assert.IsNull(data.Kind);
         }
     }
 }
