@@ -9,6 +9,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <EnableApiCompat>false</EnableApiCompat>
   </PropertyGroup>
 
   <ItemGroup>
