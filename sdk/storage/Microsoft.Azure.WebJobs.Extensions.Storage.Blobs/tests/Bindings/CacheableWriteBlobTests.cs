@@ -3,7 +3,6 @@
 
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Moq;
 using NUnit.Framework;

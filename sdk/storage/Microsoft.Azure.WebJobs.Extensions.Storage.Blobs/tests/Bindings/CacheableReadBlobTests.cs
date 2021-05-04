@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.IO;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings;
 using Moq;
 using NUnit.Framework;
 using System;
