@@ -1,0 +1,35 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://lyshi-sdk-ledger-2.eastus.cloudapp.azure.com/app/users/3c1303ad-140b-493c-ab45-bed8ddbfa72c?api-version=0.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-75aeb47a427500409537a321443127c7-234df7cf9b6a674b-00",
+        "User-Agent": [
+          "azsdk-net-Storage.ConfidentialLedger/1.0.1-alpha.20210504.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "8fac3b3f3d2acfddffb0caf7644148fc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "80",
+        "Content-Type": "application/json",
+        "x-ms-ccf-transaction-id": "8.4037"
+      },
+      "ResponseBody": {
+        "assignedRole": "Administrator",
+        "userId": "3c1303ad-140b-493c-ab45-bed8ddbfa72c"
+      }
+    }
+  ],
+  "Variables": {
+    "CONFIDENTIALLEDGER_IDENTITY_URL": "https://identity.accledger.azure.com/ledgerIdentity/lyshi-sdk-ledger-2",
+    "CONFIDENTIALLEDGER_URL": "https://lyshi-sdk-ledger-2.eastus.cloudapp.azure.com",
+    "RandomSeed": "1269807889"
+  }
+}
