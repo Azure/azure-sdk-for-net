@@ -54,7 +54,7 @@ namespace Avs.Tests
                 var hcxPage = client.HcxEnterpriseSites.List(rgName, privateCloud.Name);
                 Assert.True(hcxPage.Count() == 0);
 
-                var hcxSite = client.HcxEnterpriseSites.CreateOrUpdate(rgName, privateCloud.Name, hcxEnterpriseSiteName, new object());
+                var hcxSite = client.HcxEnterpriseSites.CreateOrUpdate(rgName, privateCloud.Name, hcxEnterpriseSiteName);
 
                 client.HcxEnterpriseSites.Get(rgName, privateCloud.Name, hcxSite.Name);
 
@@ -70,7 +70,7 @@ namespace Avs.Tests
                 var authPage = client.Authorizations.List(rgName, privateCloud.Name);
                 Assert.True(authPage.Count() == 0);
 
-                var auth = client.Authorizations.CreateOrUpdate(rgName, privateCloud.Name, authName, new object());
+                var auth = client.Authorizations.CreateOrUpdate(rgName, privateCloud.Name, authName);
 
                 client.Authorizations.Get(rgName, privateCloud.Name, auth.Name);
 

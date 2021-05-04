@@ -10,15 +10,14 @@
 
 namespace Microsoft.Azure.Management.Avs.Models
 {
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The properties of a default cluster
+    /// The properties of a management cluster
     /// </summary>
-    public partial class ManagementCluster : ClusterUpdateProperties
+    public partial class ManagementCluster : CommonClusterProperties
     {
         /// <summary>
         /// Initializes a new instance of the ManagementCluster class.
@@ -31,18 +30,15 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <summary>
         /// Initializes a new instance of the ManagementCluster class.
         /// </summary>
-        /// <param name="clusterSize">The cluster size</param>
         /// <param name="provisioningState">The state of the cluster
         /// provisioning. Possible values include: 'Succeeded', 'Failed',
         /// 'Cancelled', 'Deleting', 'Updating'</param>
+        /// <param name="clusterSize">The cluster size</param>
         /// <param name="clusterId">The identity</param>
         /// <param name="hosts">The hosts</param>
-        public ManagementCluster(int? clusterSize = default(int?), string provisioningState = default(string), int? clusterId = default(int?), IList<string> hosts = default(IList<string>))
-            : base(clusterSize)
+        public ManagementCluster(string provisioningState = default(string), int? clusterSize = default(int?), int? clusterId = default(int?), IList<string> hosts = default(IList<string>))
+            : base(provisioningState, clusterSize, clusterId, hosts)
         {
-            ProvisioningState = provisioningState;
-            ClusterId = clusterId;
-            Hosts = hosts;
             CustomInit();
         }
 
@@ -50,25 +46,6 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the state of the cluster provisioning. Possible values
-        /// include: 'Succeeded', 'Failed', 'Cancelled', 'Deleting', 'Updating'
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
-
-        /// <summary>
-        /// Gets the identity
-        /// </summary>
-        [JsonProperty(PropertyName = "clusterId")]
-        public int? ClusterId { get; private set; }
-
-        /// <summary>
-        /// Gets the hosts
-        /// </summary>
-        [JsonProperty(PropertyName = "hosts")]
-        public IList<string> Hosts { get; private set; }
 
     }
 }

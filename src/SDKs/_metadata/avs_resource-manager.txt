@@ -1,0 +1,11 @@
+2021-05-04 16:30:44 UTC
+
+1) azure-rest-api-specs repository information
+GitHub user: Azure
+Branch:      AVS/2021-06
+Commit:      478077c17e112091c6dc13c37a64bc8480d3a710
+
+2) AutoRest information
+Requested version: latest
+Bootstrapper version:    C:\Users\cataggar\AppData\Local\Temp\fnm_multishell_22916_1620145844369 `-- autorest@3.2.0  
+Latest installed version:    
