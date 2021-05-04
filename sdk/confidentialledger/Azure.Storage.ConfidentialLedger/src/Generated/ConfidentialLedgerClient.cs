@@ -14,10 +14,10 @@ using Azure.Core.Pipeline;
 
 #pragma warning disable AZC0007
 
-namespace Azure.Data.ConfidentialLedger
+namespace Azure.Storage.ConfidentialLedger
 {
-    /// <summary> The AzureDataConfidentialLedger service client. </summary>
-    public partial class AzureDataConfidentialLedgerClient
+    /// <summary> The ConfidentialLedger service client. </summary>
+    public partial class ConfidentialLedgerClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -26,17 +26,17 @@ namespace Azure.Data.ConfidentialLedger
         private string identityServiceBaseUrl;
         private readonly string apiVersion;
 
-        /// <summary> Initializes a new instance of AzureDataConfidentialLedgerClient for mocking. </summary>
-        protected AzureDataConfidentialLedgerClient()
+        /// <summary> Initializes a new instance of ConfidentialLedgerClient for mocking. </summary>
+        protected ConfidentialLedgerClient()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDataConfidentialLedgerClient. </summary>
+        /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerBaseUrl"> The Confidential Ledger URL, for example https://contoso.eastus.cloudapp.azure.com. </param>
         /// <param name="identityServiceBaseUrl"> The Identity Service URL, for example https://identity.accledger.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public AzureDataConfidentialLedgerClient(string ledgerBaseUrl, string identityServiceBaseUrl, TokenCredential credential, AzureDataConfidentialLedgerClientOptions options = null)
+        public ConfidentialLedgerClient(string ledgerBaseUrl, string identityServiceBaseUrl, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
         {
             if (ledgerBaseUrl == null)
             {
@@ -51,7 +51,7 @@ namespace Azure.Data.ConfidentialLedger
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new AzureDataConfidentialLedgerClientOptions();
+            options ??= new ConfidentialLedgerClientOptions();
             Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
             this.ledgerBaseUrl = ledgerBaseUrl;
             this.identityServiceBaseUrl = identityServiceBaseUrl;

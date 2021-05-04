@@ -8,15 +8,14 @@ using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Data.ConfidentialLedger;
 using Azure.Identity;
 
-namespace Azure.Template.Tests
+namespace Azure.Storage.ConfidentialLedger.Tests
 {
     public class ConfidentialLedgerTestBase
     {
         protected TokenCredential Credential;
-        protected AzureDataConfidentialLedgerClientOptions Options;
+        protected ConfidentialLedgerClientOptions Options;
 
         public ConfidentialLedgerTestBase()
         {
@@ -47,7 +46,7 @@ namespace Azure.Template.Tests
                 return valid && isChainValid;
             };
 
-            Options = new AzureDataConfidentialLedgerClientOptions() { Transport = new HttpClientTransport(httpHandler) };
+            Options = new ConfidentialLedgerClientOptions() { Transport = new HttpClientTransport(httpHandler) };
         }
     }
 }

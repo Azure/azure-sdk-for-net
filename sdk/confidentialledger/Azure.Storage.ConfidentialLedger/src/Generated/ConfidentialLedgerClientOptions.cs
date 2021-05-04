@@ -8,10 +8,10 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Data.ConfidentialLedger
+namespace Azure.Storage.ConfidentialLedger
 {
-    /// <summary> Client options for AzureDataConfidentialLedgerClient. </summary>
-    public partial class AzureDataConfidentialLedgerClientOptions : ClientOptions
+    /// <summary> Client options for ConfidentialLedgerClient. </summary>
+    public partial class ConfidentialLedgerClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V0_1_preview;
 
@@ -24,8 +24,8 @@ namespace Azure.Data.ConfidentialLedger
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of AzureDataConfidentialLedgerClientOptions. </summary>
-        public AzureDataConfidentialLedgerClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of ConfidentialLedgerClientOptions. </summary>
+        public ConfidentialLedgerClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
