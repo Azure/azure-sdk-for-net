@@ -14,9 +14,12 @@
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;Azure Policy</PackageTags>
 		<PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Resource Manager SDK. This release has below changes
-		  - introduces new preview resource type policyExemptions;
-		  - add filters for listing policyDefinitions/policySetDefinitions/policyAssignments
+        This is a public release of the Azure Resource Manager SDK. This release has below changes:
+          - Add a new value "NoEffect" to the enumeration PropertyChangeType
+          - Add a new value "Unsupported" to the enumeration ChangeType
+          - Add a new property UnsupportedReason to the model WhatIfChange
+          - Add new models: ExtendedLocation and ExtendedLocationType
+          - Add a new property ExtendedLocation to the model Resource
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>
