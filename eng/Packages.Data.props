@@ -128,7 +128,7 @@
     All should have PrivateAssets="All" set so they don't become pacakge dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210428.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210503.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20210322.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
@@ -190,8 +190,8 @@
     <PackageReference Update="Microsoft.CSharp" Version="4.6" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="2.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.8.0" />

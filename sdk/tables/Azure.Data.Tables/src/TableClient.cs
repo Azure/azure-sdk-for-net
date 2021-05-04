@@ -32,6 +32,7 @@ namespace Azure.Data.Tables
         private readonly Uri _endpoint;
         private Guid? _batchGuid;
         private Guid? _changesetGuid;
+        private readonly HttpPipeline _pipeline;
 
         /// <summary>
         /// The name of the table with which this client instance will interact.
@@ -69,7 +70,7 @@ namespace Azure.Data.Tables
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
-        public TableClient(Uri endpoint, TableClientOptions options = null)
+        public TableClient(Uri endpoint, TablesClientOptions options = null)
             : this(endpoint, null, default, options)
         {
             if (endpoint.Scheme != Uri.UriSchemeHttps)
@@ -92,7 +93,7 @@ namespace Azure.Data.Tables
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
-        public TableClient(Uri endpoint, AzureSasCredential credential, TableClientOptions options = null)
+        public TableClient(Uri endpoint, AzureSasCredential credential, TablesClientOptions options = null)
             : this(endpoint, null, default, credential, options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -132,7 +133,7 @@ namespace Azure.Data.Tables
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
-        public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential, TableClientOptions options = null)
+        public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential, TablesClientOptions options = null)
             : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), default, options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -172,7 +173,7 @@ namespace Azure.Data.Tables
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
-        public TableClient(string connectionString, string tableName, TableClientOptions options = null)
+        public TableClient(string connectionString, string tableName, TablesClientOptions options = null)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
 
@@ -181,7 +182,7 @@ namespace Azure.Data.Tables
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
-            options ??= new TableClientOptions();
+            options ??= new TablesClientOptions();
             var endpointString = connString.TableStorageUri.PrimaryUri.ToString();
 
             TableSharedKeyPipelinePolicy policy = connString.Credentials switch
@@ -199,7 +200,7 @@ namespace Azure.Data.Tables
             Name = tableName;
         }
 
-        internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
+        internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TablesClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
@@ -221,7 +222,7 @@ namespace Azure.Data.Tables
 
             _endpoint = endpoint;
             _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
-            options ??= new TableClientOptions();
+            options ??= new TablesClientOptions();
 
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             HttpPipelinePolicy authPolicy = sasCredential switch
@@ -229,19 +230,26 @@ namespace Azure.Data.Tables
                 null => policy,
                 _ => new AzureSasCredentialSynchronousPolicy(sasCredential)
             };
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
-                perCallPolicies: perCallPolicies,
-                perRetryPolicies: new[] { authPolicy },
+                perCallPolicies,
+                new[] { authPolicy },
                 new ResponseClassifier());
 
             _version = options.VersionString;
             _diagnostics = new TablesClientDiagnostics(options);
-            _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.AbsoluteUri, _version);
+            _tableOperations = new TableRestClient(_diagnostics, _pipeline, endpoint.AbsoluteUri, _version);
             Name = tableName;
         }
 
-        internal TableClient(string table, TableRestClient tableOperations, string version, ClientDiagnostics diagnostics, bool isPremiumEndpoint, Uri endpoint)
+        internal TableClient(
+            string table,
+            TableRestClient tableOperations,
+            string version,
+            ClientDiagnostics diagnostics,
+            bool isPremiumEndpoint,
+            Uri endpoint,
+            HttpPipeline pipeline)
         {
             _tableOperations = tableOperations;
             _version = version;
@@ -249,6 +257,7 @@ namespace Azure.Data.Tables
             _diagnostics = diagnostics;
             _isCosmosEndpoint = isPremiumEndpoint;
             _endpoint = endpoint;
+            _pipeline = pipeline;
         }
 
         /// <summary>
@@ -302,8 +311,8 @@ namespace Azure.Data.Tables
                 var response = _tableOperations.Create(
                     new TableProperties() { TableName = Name },
                     null,
-                    queryOptions: _defaultQueryOptions,
-                    cancellationToken: cancellationToken);
+                    _defaultQueryOptions,
+                    cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -328,8 +337,8 @@ namespace Azure.Data.Tables
                 var response = await _tableOperations.CreateAsync(
                         new TableProperties() { TableName = Name },
                         null,
-                        queryOptions: _defaultQueryOptions,
-                        cancellationToken: cancellationToken)
+                        _defaultQueryOptions,
+                        cancellationToken)
                     .ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
@@ -355,8 +364,8 @@ namespace Azure.Data.Tables
                 var response = _tableOperations.Create(
                     new TableProperties() { TableName = Name },
                     null,
-                    queryOptions: _defaultQueryOptions,
-                    cancellationToken: cancellationToken);
+                    _defaultQueryOptions,
+                    cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -385,8 +394,8 @@ namespace Azure.Data.Tables
                 var response = await _tableOperations.CreateAsync(
                         new TableProperties() { TableName = Name },
                         null,
-                        queryOptions: _defaultQueryOptions,
-                        cancellationToken: cancellationToken)
+                        _defaultQueryOptions,
+                        cancellationToken)
                     .ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
@@ -405,14 +414,24 @@ namespace Azure.Data.Tables
         /// Deletes the table specified by the tableName parameter used to construct this client instance.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
+        /// <returns>If the table exists, a <see cref="Response"/>. If the table already does not exist, <c>null</c>.</returns>
         public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Delete)}");
             scope.Start();
             try
             {
-                return _tableOperations.Delete(table: Name, cancellationToken: cancellationToken);
+                using var message = _tableOperations.CreateDeleteRequest(Name);
+                _pipeline.Send(message, cancellationToken);
+
+                switch (message.Response.Status)
+                {
+                    case 404:
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                }
             }
             catch (Exception ex)
             {
@@ -425,14 +444,24 @@ namespace Azure.Data.Tables
         /// Deletes the table specified by the tableName parameter used to construct this client instance.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns></returns>
+        /// <returns>If the table exists, a <see cref="Response"/>. If the table already does not exist, <c>null</c>.</returns>
         public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Delete)}");
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteAsync(table: Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                using var message = _tableOperations.CreateDeleteRequest(Name);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                switch (message.Response.Status)
+                {
+                    case 404:
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                }
             }
             catch (Exception ex)
             {
@@ -1089,14 +1118,18 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return await _tableOperations.DeleteEntityAsync(
-                        Name,
-                        partitionKey,
-                        rowKey,
-                        ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
-                        queryOptions: _defaultQueryOptions,
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
+                var etag = ifMatch == default ? ETag.All.ToString() : ifMatch.ToString();
+                using var message = _tableOperations.CreateDeleteEntityRequest(Name, partitionKey, rowKey, etag, null, _defaultQueryOptions);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                switch (message.Response.Status)
+                {
+                    case 404:
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                }
             }
             catch (Exception ex)
             {
@@ -1119,7 +1152,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        /// <returns>If the entity exists, the <see cref="Response"/> indicating the result of the operation. If the entity does not exist, <c>null</c></returns>
         public virtual Response DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
@@ -1128,13 +1161,18 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                return _tableOperations.DeleteEntity(
-                    Name,
-                    partitionKey,
-                    rowKey,
-                    ifMatch: ifMatch == default ? ETag.All.ToString() : ifMatch.ToString(),
-                    queryOptions: _defaultQueryOptions,
-                    cancellationToken: cancellationToken);
+                var etag = ifMatch == default ? ETag.All.ToString() : ifMatch.ToString();
+                using var message = _tableOperations.CreateDeleteEntityRequest(Name, partitionKey, rowKey, etag, null, _defaultQueryOptions);
+                _pipeline.Send(message, cancellationToken);
+
+                switch (message.Response.Status)
+                {
+                    case 404:
+                    case 204:
+                        return message.Response;
+                    default:
+                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                }
             }
             catch (Exception ex)
             {
@@ -1146,9 +1184,9 @@ namespace Azure.Data.Tables
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<IReadOnlyList<SignedIdentifier>>> GetAccessPolicyAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<TableSignedIdentifier>>> GetAccessPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetAccessPolicy)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetAccessPolicies)}");
             scope.Start();
             try
             {
@@ -1165,9 +1203,9 @@ namespace Azure.Data.Tables
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<IReadOnlyList<SignedIdentifier>> GetAccessPolicy(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<TableSignedIdentifier>> GetAccessPolicies(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetAccessPolicy)}");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetAccessPolicies)}");
             scope.Start();
             try
             {
@@ -1185,7 +1223,7 @@ namespace Azure.Data.Tables
         /// <param name="tableAcl"> the access policies for the table. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> SetAccessPolicyAsync(IEnumerable<SignedIdentifier> tableAcl, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetAccessPolicyAsync(IEnumerable<TableSignedIdentifier> tableAcl, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SetAccessPolicy)}");
             scope.Start();
@@ -1204,7 +1242,7 @@ namespace Azure.Data.Tables
         /// <param name="tableAcl"> the access policies for the table. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response SetAccessPolicy(IEnumerable<SignedIdentifier> tableAcl, CancellationToken cancellationToken = default)
+        public virtual Response SetAccessPolicy(IEnumerable<TableSignedIdentifier> tableAcl, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(SetAccessPolicy)}");
             scope.Start();
@@ -1259,8 +1297,11 @@ namespace Azure.Data.Tables
         /// <returns><see cref="Response{T}"/> containing a <see cref="TableTransactionResult"/>.</returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
-        public virtual Response<IReadOnlyList<Response>> SubmitTransaction(IEnumerable<TableTransactionAction> transactionActions, CancellationToken cancellationToken = default) =>
-            SubmitTransactionInternalAsync(transactionActions, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), false, cancellationToken).EnsureCompleted();
+        public virtual Response<IReadOnlyList<Response>> SubmitTransaction(
+            IEnumerable<TableTransactionAction> transactionActions,
+            CancellationToken cancellationToken = default) =>
+            SubmitTransactionInternalAsync(transactionActions, _batchGuid ?? Guid.NewGuid(), _changesetGuid ?? Guid.NewGuid(), false, cancellationToken)
+                .EnsureCompleted();
 
         internal virtual async Task<Response<IReadOnlyList<Response>>> SubmitTransactionInternalAsync(
             IEnumerable<TableTransactionAction> transactionalBatch,
@@ -1285,9 +1326,9 @@ namespace Azure.Data.Tables
                 var _batch = BuildChangeSet(batchOperations, batchItems, requestLookup, batchId, changesetId);
                 var request = _tableOperations.CreateBatchRequest(_batch, null, null);
 
-                return async ?
-                    await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false) :
-                    _tableOperations.SendBatchRequest(request, cancellationToken);
+                return async
+                    ? await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false)
+                    : _tableOperations.SendBatchRequest(request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -1377,7 +1418,7 @@ namespace Azure.Data.Tables
         private static HttpPipeline CreateBatchPipeline()
         {
             // Configure the options to use minimal policies
-            var options = new TableClientOptions();
+            var options = new TablesClientOptions();
             options.Diagnostics.IsLoggingEnabled = false;
             options.Diagnostics.IsTelemetryEnabled = false;
             options.Diagnostics.IsDistributedTracingEnabled = false;

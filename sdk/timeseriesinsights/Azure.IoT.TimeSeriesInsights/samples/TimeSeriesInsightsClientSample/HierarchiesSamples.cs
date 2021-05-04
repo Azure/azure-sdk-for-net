@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.IoT.TimeSeriesInsights.Models;
 using static Azure.IoT.TimeSeriesInsights.Samples.SampleLogger;
 
 namespace Azure.IoT.TimeSeriesInsights.Samples

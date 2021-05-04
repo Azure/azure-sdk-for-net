@@ -176,6 +176,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void AuthenticateWithDeviceCodeCallbackThrowsAsync()
         {
+            IdentityTestEnvironment testEnvironment = new IdentityTestEnvironment();
             var expectedCode = Guid.NewGuid().ToString();
 
             var expectedToken = Guid.NewGuid().ToString();
@@ -188,7 +189,7 @@ namespace Azure.Identity.Tests
 
             var cred = InstrumentClient(new DeviceCodeCredential(ThrowingDeviceCodeCallback, ClientId, options: options));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { testEnvironment.KeyvaultScope }), cancelSource.Token));
 
             Assert.IsInstanceOf(typeof(MockException), ex.InnerException);
         }
@@ -209,14 +210,15 @@ namespace Azure.Identity.Tests
 
         private MockResponse ProcessMockRequest(MockRequest mockRequest, string code, string token)
         {
+            IdentityTestEnvironment testEnvironment = new IdentityTestEnvironment();
             string requestUrl = mockRequest.Uri.ToUri().AbsoluteUri;
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/common/discovery/instance"))
+            if (requestUrl.StartsWith(new Uri(new Uri(testEnvironment.AuthorityHostUrl), "common/discovery/instance").ToString()))
             {
                 return DiscoveryInstanceResponse;
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/v2.0/.well-known/openid-configuration"))
+            if (requestUrl.StartsWith(new Uri(new Uri(testEnvironment.AuthorityHostUrl), "organizations/v2.0/.well-known/openid-configuration").ToString()))
             {
                 return OpenIdConfigurationResponse;
             }

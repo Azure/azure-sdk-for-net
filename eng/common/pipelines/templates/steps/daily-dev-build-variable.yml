@@ -22,3 +22,7 @@ steps:
     echo "##vso[task.setvariable variable=SetDevVersion]$setDailyDevBuild"
   displayName: "Setup Versioning Properties"
   condition: eq(variables['SetDevVersion'], '')
+- pwsh: |
+    echo "##vso[task.setvariable variable=SetDevVersion;isOutput=true]$(SetDevVersion)"
+  name: VersioningProperties
+  displayName: "Export Versioning Properties"
