@@ -254,6 +254,91 @@ namespace Azure.Core.Tests
             Assert.AreEqual(originalToken, passedToken);
         }
 
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task WaitForCompletionCallsUntilOperationCompletes(bool useDefaultPollingInterval)
+        {
+            var callsCount = 0;
+            var expectedCalls = 5;
+            var expectedValue = 50;
+            var mockResponse = new MockResponse(200);
+            var testOperation = new TestOperation()
+            {
+                OnUpdateState = _ => ++callsCount >= expectedCalls
+                    ? OperationState<int>.Success(mockResponse, expectedValue)
+                    : OperationState<int>.Pending(mockResponse)
+            };
+            var operationInternal = testOperation.OperationInternal;
+
+            operationInternal.DefaultPollingInterval = TimeSpan.Zero;
+
+            var operationResponse = useDefaultPollingInterval
+                ? await operationInternal.WaitForCompletionAsync(CancellationToken.None)
+                : await operationInternal.WaitForCompletionAsync(TimeSpan.Zero, CancellationToken.None);
+
+            Assert.AreEqual(mockResponse, operationResponse.GetRawResponse());
+            Assert.AreEqual(expectedCalls, callsCount);
+
+            Assert.AreEqual(mockResponse, operationInternal.RawResponse);
+            Assert.True(operationInternal.HasCompleted);
+            Assert.True(operationInternal.HasValue);
+            Assert.AreEqual(expectedValue, operationInternal.Value);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task WaitForCompletionPassesTheCancellationTokenToUpdateState(bool useDefaultPollingInterval)
+        {
+            using var tokenSource = new CancellationTokenSource();
+            var originalToken = tokenSource.Token;
+            CancellationToken passedToken = default;
+
+            var mockResponse = new MockResponse(200);
+            var testOperation = new TestOperation()
+            {
+                OnUpdateState = cancellationToken =>
+                {
+                    passedToken = cancellationToken;
+                    return OperationState<int>.Success(mockResponse, default);
+                }
+            };
+            var operationInternal = testOperation.OperationInternal;
+
+            operationInternal.DefaultPollingInterval = TimeSpan.Zero;
+
+            _ = useDefaultPollingInterval
+                ? await operationInternal.WaitForCompletionAsync(originalToken)
+                : await operationInternal.WaitForCompletionAsync(TimeSpan.Zero, originalToken);
+
+            Assert.AreEqual(originalToken, passedToken);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void WaitForCompletionPassesTheCancellationTokenToTaskDelay(bool useDefaultPollingInterval)
+        {
+            using var tokenSource = new CancellationTokenSource();
+            var cancellationToken = tokenSource.Token;
+
+            tokenSource.Cancel();
+
+            var mockResponse = new MockResponse(200);
+            var testOperation = new TestOperation()
+            {
+                OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
+            };
+            var operationInternal = testOperation.OperationInternal;
+
+            operationInternal.DefaultPollingInterval = TimeSpan.Zero;
+
+            _ = useDefaultPollingInterval
+                ? Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.WaitForCompletionAsync(cancellationToken))
+                : Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.WaitForCompletionAsync(TimeSpan.Zero, cancellationToken));
+        }
+
         private class TestOperation : IOperation<int>
         {
             public TestOperation()
