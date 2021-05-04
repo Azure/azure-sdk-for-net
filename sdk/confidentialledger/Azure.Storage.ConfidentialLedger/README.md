@@ -13,7 +13,7 @@ This section should include everything a developer needs to do to install and cr
 Install the Azure Tables client library for .NET with [NuGet][table_client_nuget_package]:
 
 ```
-dotnet add package Azure.Data.ConfidentialLedger --prerelease
+dotnet add package Azure.Storage.ConfidentialLedger --prerelease
 ```
 
 ### Prerequisites

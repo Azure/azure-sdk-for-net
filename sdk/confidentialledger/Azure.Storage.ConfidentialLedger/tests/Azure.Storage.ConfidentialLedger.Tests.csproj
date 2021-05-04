@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>Azure.Data.ConfidentialLedger.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.Data.ConfidentialLedger.csproj" />
+    <ProjectReference Include="..\src\Azure.Storage.ConfidentialLedger.csproj" />
   </ItemGroup>
 </Project>

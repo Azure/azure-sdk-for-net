@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/template/
+    - sdk/confidentialledger/
 
 pr:
   branches:
@@ -28,8 +28,8 @@ pr:
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: template
+    ServiceDirectory: confidentialledger
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Template
+    - name: Azure.Storage.ConfidentialLedger
       safeName: AzureTemplate
