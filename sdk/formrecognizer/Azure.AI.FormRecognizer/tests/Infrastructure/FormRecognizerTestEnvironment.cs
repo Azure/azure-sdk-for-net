@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Tests
         internal const string SelectionMarkBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_SELECTION_MARK_BLOB_CONTAINER_SAS_URL";
 
         /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have tables with dynamic rows used for live tests.</summary>
-        internal const string TableDynamicRowsBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_TABLE_DYNAMIC_ROWS_BLOB_CONTAINER_SAS_URL";
+        internal const string TableDynamicRowsBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_TABLE_VARIABLE_ROWS_BLOB_CONTAINER_SAS_URL";
 
         /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have tables with fixed rows used for live tests.</summary>
         internal const string TableFixedRowsBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL";
