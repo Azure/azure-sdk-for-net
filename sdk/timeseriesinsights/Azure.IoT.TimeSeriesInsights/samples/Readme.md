@@ -57,7 +57,7 @@ Let's create instances using the code below.
 ```C# Snippet:TimeSeriesInsightsSampleCreateInstance
 // Create a Time Series Instance object with the default Time Series Insights type Id.
 // The default type Id can be obtained programmatically by using the ModelSettings client.
-var instance = new TimeSeriesInstance(instanceId, defaultTypeId)
+var instance = new TimeSeriesInstance(tsId, defaultTypeId)
 {
     Name = "instance1",
 };
@@ -106,7 +106,7 @@ Use `Instances.GetAsync` with list of instance's unique identifiers or names to 
 // Get Time Series Insights instances by Id
 var timeSeriesIds = new List<TimeSeriesId>
 {
-    instanceId,
+    tsId,
 };
 
 Response<InstancesOperationResult[]> getByIdsResult = await client.Instances.GetAsync(timeSeriesIds).ConfigureAwait(false);
@@ -135,7 +135,7 @@ To replace instances, pass in a list of `TimeSeriesInstance`.
 // Get Time Series Insights instances by Id
 var instanceIdsToGet = new List<TimeSeriesId>
 {
-    instanceId,
+    tsId,
 };
 
 Response<InstancesOperationResult[]> getInstancesByIdResult = await client.Instances.GetAsync(instanceIdsToGet).ConfigureAwait(false);
@@ -178,7 +178,7 @@ To delete instances, pass in a list of time series Ids or names for the instance
 ```C# Snippet:TimeSeriesInsightsSampleDeleteInstanceById
 var instancesToDelete = new List<TimeSeriesId>
 {
-    instanceId,
+    tsId,
 };
 
 Response<TimeSeriesOperationError[]> deleteInstanceErrors = await client
