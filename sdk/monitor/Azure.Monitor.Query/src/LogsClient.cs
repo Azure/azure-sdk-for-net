@@ -63,7 +63,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
-        public virtual Response<IReadOnlyList<T>> Query<T>(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<T>> Query<T>(string workspaceId, string query, QueryTimeSpan timeSpan, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = Query(workspaceId, query, timeSpan, options, cancellationToken);
 
@@ -79,7 +79,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
-        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryAsync<T>(string workspaceId, string query, QueryTimeSpan timeSpan, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = await QueryAsync(workspaceId, query, timeSpan, options, cancellationToken).ConfigureAwait(false);
 
@@ -95,7 +95,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> containing the query results.</returns>
-        public virtual Response<LogsQueryResult> Query(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<LogsQueryResult> Query(string workspaceId, string query, QueryTimeSpan timeSpan, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
             scope.Start();
@@ -119,7 +119,7 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
-        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, TimeSpan? timeSpan = null, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, QueryTimeSpan timeSpan, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
             scope.Start();
@@ -143,12 +143,12 @@ namespace Azure.Monitor.Query
             return new LogsBatchQuery(_clientDiagnostics, _queryClient, _rowBinder);
         }
 
-        internal static QueryBody CreateQueryBody(string query, TimeSpan? timeSpan, LogsQueryOptions options, out string prefer)
+        internal static QueryBody CreateQueryBody(string query, QueryTimeSpan timeSpan, LogsQueryOptions options, out string prefer)
         {
             var queryBody = new QueryBody(query);
-            if (timeSpan != null)
+            if (timeSpan != QueryTimeSpan.MaxValue)
             {
-                queryBody.Timespan = TypeFormatters.ToString(timeSpan.Value, "P");
+                queryBody.Timespan = timeSpan.ToString();
             }
 
             prefer = null;
@@ -166,7 +166,7 @@ namespace Azure.Monitor.Query
             return queryBody;
         }
 
-        private async Task<Response<LogsQueryResult>> ExecuteAsync(string workspaceId, string query, TimeSpan? timeSpan, LogsQueryOptions options, bool async, CancellationToken cancellationToken = default)
+        private async Task<Response<LogsQueryResult>> ExecuteAsync(string workspaceId, string query, QueryTimeSpan timeSpan, LogsQueryOptions options, bool async, CancellationToken cancellationToken = default)
         {
             if (workspaceId == null)
             {

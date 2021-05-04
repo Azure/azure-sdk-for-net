@@ -28,7 +28,7 @@ namespace Azure.Monitor.Query.Tests
                 Transport = mockTransport
             });
 
-            Assert.ThrowsAsync<RequestFailedException>(() => client.QueryAsync("wid", "tid", options: new LogsQueryOptions()
+            Assert.ThrowsAsync<RequestFailedException>(() => client.QueryAsync("wid", "tid", TimeSpan.FromDays(1), options: new LogsQueryOptions()
             {
                 Timeout = TimeSpan.FromMinutes(10)
             }));

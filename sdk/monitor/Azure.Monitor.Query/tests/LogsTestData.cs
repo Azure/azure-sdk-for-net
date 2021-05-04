@@ -39,6 +39,7 @@ namespace Azure.Monitor.Query.Tests
 
         private string TableANameSent => nameof(TableA) + DataVersion + "_" + RetentionWindowStart.DayOfYear;
         public string TableAName => TableANameSent + "_CL";
+        public QueryTimeSpan DataTimeSpan => new QueryTimeSpan(RetentionWindowStart, TimeSpan.FromDays(7));
 
         private readonly MonitorQueryClientTestEnvironment _testEnvironment;
         private static bool _initialized;
@@ -113,7 +114,7 @@ namespace Azure.Monitor.Query.Tests
             var logsClient = new LogsClient(_testEnvironment.Credential);
             try
             {
-                var countResponse = await logsClient.QueryAsync<int>(_testEnvironment.WorkspaceId, $"{TableAName} | count");
+                var countResponse = await logsClient.QueryAsync<int>(_testEnvironment.WorkspaceId, $"{TableAName} | count", DataTimeSpan);
                 var count = countResponse.Value.Single();
                 return count;
             }

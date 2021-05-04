@@ -13,23 +13,9 @@ namespace Azure.Monitor.Query
     public class MetricQueryOptions
     {
         /// <summary>
-        /// Gets ot sets the start of the time range for the query.
-        /// This value has to be used in combination with the <see cref="EndTime"/> or <see cref="Duration"/>.
+        /// Gets or sets the time span over which the metric would be queried.
         /// </summary>
-        public DateTimeOffset? StartTime { get; set; }
-
-        /// <summary>
-        /// Gets ot sets the end of the time range for the query.
-        /// This value has to be used in combination with the <see cref="StartTime"/> or <see cref="Duration"/>.
-        /// </summary>
-        public DateTimeOffset? EndTime { get; set; }
-
-        /// <summary>
-        /// Gets ot sets the duration that of the time range for the query.
-        /// This value can be set on it's own or in combination with the <see cref="StartTime"/> or <see cref="EndTime"/>
-        /// but not both.
-        /// </summary>
-        public TimeSpan? Duration { get; set; }
+        public QueryTimeSpan? TimeSpan { get; set; }
 
         /// <summary>
         /// Gets ot sets the interval to sample metrics at.
