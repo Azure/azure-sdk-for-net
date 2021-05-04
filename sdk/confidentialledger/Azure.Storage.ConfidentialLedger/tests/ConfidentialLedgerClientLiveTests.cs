@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -49,8 +51,33 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         public async Task GetLedgerEntries()
         {
             var result = await Client.GetLedgerEntriesAsync();
+        }
 
-            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+        // [RecordedTest]
+        // public async Task GetConstitution()
+        // { }
+
+        private Dictionary<string, string> GetQueryStringKvps(string s)
+        {
+            var parts = s.Substring(s.IndexOf('?') + 1).Split('&');
+            var result = new Dictionary<string, string>();
+            foreach (var part in parts)
+            {
+                var kvp = part.Split('=');
+                result[kvp[0]] = kvp[1];
+            }
+            return result;
+        }
+
+        private Dictionary<string, string> GetNextLinkDetails(Response response)
+        {
+            var stringResult = new StreamReader(response.ContentStream).ReadToEnd();
+            var doc = JsonDocument.Parse(stringResult);
+            if (doc.RootElement.TryGetProperty("@nextLink", out var prop))
+            {
+                return GetQueryStringKvps(prop.GetString());
+            }
+            return default;
         }
     }
 }

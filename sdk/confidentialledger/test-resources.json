@@ -34,7 +34,7 @@
   "variables": {
     "mgmtApiVersion": "2019-04-01",
     "location": "[resourceGroup().location]",
-    "primaryAccountName": "[concat(parameters('baseName'), 'prim')]",
+    "primaryAccountName": "[parameters('baseName')]",
     "encryption": {
       "services": {
         "file": {
@@ -74,7 +74,7 @@
     {
       "type": "Microsoft.ConfidentialLedger/ledgers",
       "apiVersion": "2020-12-01-preview",
-      // "name": "[parameters('baseName')]",
+      "name": "[parameters('baseName')]",
       "location": "[parameters('location')]",
       "properties": {
         "ledgerStorageAccount": "[variables('primaryAccountName')]",
@@ -86,7 +86,10 @@
             "ledgerRoleName": "Administrator"
           }
         ]
-      }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName'))]"
+      ]
     }
   ],
   "outputs": {
