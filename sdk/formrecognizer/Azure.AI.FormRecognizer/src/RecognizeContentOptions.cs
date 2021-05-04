@@ -33,6 +33,9 @@ namespace Azure.AI.FormRecognizer
         /// order depends on the detected text, it may change across images and OCR version updates. Thus,
         /// business logic should be built upon the actual line location instead of order.
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         public FormReadingOrder? ReadingOrder { get; set; }
 
         /// <summary>
@@ -41,6 +44,9 @@ namespace Azure.AI.FormRecognizer
         /// provide a language code if you would like to force the documented to be processed as
         /// that specific language.
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         public FormRecognizerLanguage? Language { get; set; }
 
         /// <summary>
@@ -54,6 +60,9 @@ namespace Azure.AI.FormRecognizer
         /// See <a href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#collection-initializers">collection initializer</a>.
         /// </para>
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         public IList<string> Pages { get; } = new List<string>();
     }
 }

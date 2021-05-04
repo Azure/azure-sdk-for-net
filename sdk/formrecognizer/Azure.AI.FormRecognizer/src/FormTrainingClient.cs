@@ -116,7 +116,11 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
         /// For more information see <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
         /// <param name="useTrainingLabels">If <c>true</c>, corresponding labeled files must exist in the blob container. If <c>false</c>, the model will be trained from forms only.</param>
-        /// <param name="modelName">An optional, user-defined name to associate with the model.</param>
+        /// <param name="modelName">An optional, user-defined name to associate with the model.
+        /// <remarks>
+        /// This property is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
+        /// </param>
         /// <param name="trainingOptions">A set of options available for configuring the training request. For example, set a filter to apply
         /// to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -159,7 +163,10 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
         /// For more information see <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data"/>.</param>
         /// <param name="useTrainingLabels">If <c>true</c>, corresponding labeled files must exist in the blob container. If <c>false</c>, the model will be trained from forms only.</param>
-        /// <param name="modelName">An optional, user-defined name to associate with the model.</param>
+        /// <param name="modelName">An optional, user-defined name to associate with the model.
+        /// <remarks>
+        /// This property is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks></param>
         /// <param name="trainingOptions">A set of options available for configuring the training request. For example, set a filter to apply
         /// to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

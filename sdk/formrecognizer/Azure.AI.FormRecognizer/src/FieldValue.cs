@@ -431,6 +431,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <returns>The value of the field converted to <see cref="SelectionMarkState"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.SelectionMark"/>.</exception>
+        /// <remarks>
+        /// This method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         public SelectionMarkState AsSelectionMarkState()
         {
             if (ValueType != FieldValueType.SelectionMark)
@@ -457,6 +460,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <returns>The value of the field converted to an ISO 3166-1 alpha-3 country code <see cref="string"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Country"/>.</exception>
+        /// <remarks>
+        /// This method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         public string AsCountryCode()
         {
             if (ValueType != FieldValueType.Country)
