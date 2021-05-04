@@ -4,6 +4,8 @@
 
 ### New Features
 - Updated the `FormRecognizerModelFactory` class to support missing model types for mocking.
+- Added support for service version `2.0`. This can be specified in the `FormRecognizerClientOptions` object under the `ServiceVersion` enum.
+By default the SDK targets latest supported service version.
 
 ### Breaking changes
 - Renamed `Id` for `Identity` in all the `StartRecognizeIdDocuments` functionalities. For example, the name of the method is now `StartRecognizeIdentityDocuments`.

@@ -135,6 +135,21 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Max = FormRecognizerClientOptions.ServiceVersion.V2_0)]
+        public async Task StartCreateComposedModelWithV2()
+        {
+            var client = CreateFormTrainingClient();
+
+            await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            await using var trainedModelB = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartCreateComposedModelAsync(modelIds));
+            Assert.AreEqual("404", ex.ErrorCode);
+        }
+
+        [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
