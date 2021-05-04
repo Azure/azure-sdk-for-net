@@ -25,7 +25,7 @@ namespace Azure.Storage
         /// signatures.
         /// </summary>
         // TODO https://github.com/Azure/azure-sdk-for-net/issues/19575
-        public const string DefaultSasVersion = "2020-06-12";
+        public const string DefaultSasVersion = "2020-10-02";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -526,6 +526,8 @@ namespace Azure.Storage
                 public const string CorrelationIdUpper = "SCID";
                 public const string DirectoryDepth = "sdd";
                 public const string DirectoryDepthUpper = "SDD";
+                public const string EncryptionScope = "ses";
+                public const string EncryptionScopeUpper = "SES";
             }
 
             internal static class Resource

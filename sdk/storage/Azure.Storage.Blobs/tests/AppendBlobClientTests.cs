@@ -607,6 +607,43 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task AppendBlockAsync_EncryptionScopeSAS()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            await blob.CreateIfNotExistsAsync();
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = test.Container.Name,
+                BlobName = blobName,
+                EncryptionScope = TestConfigDefault.EncryptionScope,
+                ExpiresOn = Recording.UtcNow.AddDays(1)
+            };
+            blobSasBuilder.SetPermissions(BlobSasPermissions.All);
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = blobSasBuilder.ToSasQueryParameters(new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey))
+            };
+            AppendBlobClient sasBlob = InstrumentClient(new AppendBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            using var stream = new MemoryStream(data);
+            Response<BlobAppendInfo> response = await sasBlob.AppendBlockAsync(
+                content: stream);
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+        }
+
+        [RecordedTest]
         public async Task AppendBlockAsync_MD5()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
