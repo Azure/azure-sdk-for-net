@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub
 {
@@ -42,18 +43,24 @@ namespace Azure.Messaging.WebPubSub
                 claims.Add(role);
             }
 
-            string endpoint = _endpoint.AbsoluteUri;
+            string endpoint = this.endpoint.AbsoluteUri;
             if (!endpoint.EndsWith("/", StringComparison.Ordinal))
             {
                 endpoint += "/";
             }
-            var audience = $"{endpoint}client/hubs/{_hub}";
+            var audience = $"{endpoint}client/hubs/{hub}";
 
-            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, _credential, expireAfter);
+            // this is a hack. The generator needs to store the credential in a field.
+            if (credential == null)
+            {
+                HttpPipeline pipeline = Pipeline;
+            }
+
+            string token = WebPubSubAuthenticationPolicy.GenerateAccessToken(audience, claims, credential, expireAfter);
 
             var clientEndpoint = new UriBuilder(endpoint);
             clientEndpoint.Scheme = "wss";
-            var uriString = $"{clientEndpoint}client/hubs/{_hub}?access_token={token}";
+            var uriString = $"{clientEndpoint}client/hubs/{hub}?access_token={token}";
 
             return new Uri(uriString);
         }

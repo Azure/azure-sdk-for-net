@@ -20,7 +20,7 @@ namespace Azure.Template.Tests.Samples
             var key = TestEnvironment.Key;
 
             #region Snippet:WebPubSubHelloWorld
-            var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+            var serviceClient = new WebPubSubServiceClient("some_hub", new AzureKeyCredential(key), new Uri(endpoint));
 
             serviceClient.SendToAll("Hello World!");
             #endregion
@@ -32,7 +32,7 @@ namespace Azure.Template.Tests.Samples
             var key = TestEnvironment.Key;
 
             #region Snippet:WebPubSubAuthenticate
-            var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+            var serviceClient = new WebPubSubServiceClient("some_hub", new AzureKeyCredential(key), new Uri(endpoint));
             #endregion
         }
 
@@ -53,9 +53,9 @@ namespace Azure.Template.Tests.Samples
             var key = TestEnvironment.Key;
 
             #region Snippet:WebPubSubSendJson
-            var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+            var serviceClient = new WebPubSubServiceClient("some_hub", new AzureKeyCredential(key), new Uri(endpoint));
 
-            serviceClient.SendToAll(
+            serviceClient.SendToAll("application/json",
                 RequestContent.Create(
                     new
                     {
@@ -71,12 +71,10 @@ namespace Azure.Template.Tests.Samples
             var key = TestEnvironment.Key;
 
             #region Snippet:WebPubSubSendBinary
-            var serviceClient = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+            var serviceClient = new WebPubSubServiceClient("some_hub", new AzureKeyCredential(key), new Uri(endpoint));
 
             Stream stream = BinaryData.FromString("Hello World!").ToStream();
-            serviceClient.SendToAll(
-                RequestContent.Create(stream),
-                HttpHeader.Common.OctetStreamContentType.Value);
+            serviceClient.SendToAll("application/octet-stream", RequestContent.Create(stream));
             #endregion
         }
 
@@ -86,12 +84,12 @@ namespace Azure.Template.Tests.Samples
             var key = TestEnvironment.Key;
 
             #region Snippet:WebPubAddUserToGroup
-            var client = new WebPubSubServiceClient(new Uri(endpoint), "some_hub", new AzureKeyCredential(key));
+            var client = new WebPubSubServiceClient("some_hub", new AzureKeyCredential(key), new Uri(endpoint));
 
             client.AddUserToGroup("some_group", "some_user");
 
             // Avoid sending messages to users who do not exist.
-            if (client.UserExists("some_user"))
+            if (client.UserExists("some_user").Content.ToObjectFromJson<bool>())
             {
                 client.SendToUser("some_user", "Hi, I am glad you exist!");
             }

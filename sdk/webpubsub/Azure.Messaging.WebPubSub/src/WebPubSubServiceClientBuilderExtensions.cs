@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<WebPubSubServiceClient, WebPubSubServiceClientOptions> AddWebPubSubServiceClient<TBuilder>(this TBuilder builder, string connectionString, string hub)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<WebPubSubServiceClient, WebPubSubServiceClientOptions>(options => new WebPubSubServiceClient(connectionString, hub, options));
+            return builder.RegisterClientFactory<WebPubSubServiceClient, WebPubSubServiceClientOptions>(options => new WebPubSubServiceClient(hub, connectionString, options));
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<WebPubSubServiceClient, WebPubSubServiceClientOptions> AddWebPubSubServiceClient<TBuilder>(this TBuilder builder, Uri endpoint, string hub, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<WebPubSubServiceClient, WebPubSubServiceClientOptions>(options => new WebPubSubServiceClient(endpoint, hub, credential, options));
+            return builder.RegisterClientFactory<WebPubSubServiceClient, WebPubSubServiceClientOptions>(options => new WebPubSubServiceClient(hub, credential, endpoint, options));
         }
 
         /// <summary>

@@ -38,7 +38,7 @@
                     "webpubsub"
                 ],
                 "summary": "Broadcast content inside request body to all the connected client connections.",
-                "operationId": "WebPubSub_SendToAll",
+                "operationId": "WebPubSubService_SendToAll",
                 "consumes": [
                     "application/octet-stream",
                     "text/plain",
@@ -51,7 +51,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "query",
@@ -98,7 +99,7 @@
                     "webpubsub"
                 ],
                 "summary": "Check if the connection with the given connectionId exists.",
-                "operationId": "WebPubSub_ConnectionExists",
+                "operationId": "WebPubSubService_ConnectionExists",
                 "parameters": [
                     {
                         "in": "path",
@@ -106,7 +107,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -142,7 +144,7 @@
                     "webpubsub"
                 ],
                 "summary": "Close the client connection.",
-                "operationId": "WebPubSub_CloseClientConnection",
+                "operationId": "WebPubSubService_CloseClientConnection",
                 "parameters": [
                     {
                         "in": "path",
@@ -150,7 +152,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -191,7 +194,7 @@
                     "webpubsub"
                 ],
                 "summary": "Send content inside request body to the specific connection.",
-                "operationId": "WebPubSub_SendToConnection",
+                "operationId": "WebPubSubService_SendToConnection",
                 "consumes": [
                     "application/octet-stream",
                     "text/plain",
@@ -204,7 +207,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -249,7 +253,7 @@
                     "webpubsub"
                 ],
                 "summary": "Check if there are any client connections inside the given group",
-                "operationId": "WebPubSub_GroupExists",
+                "operationId": "WebPubSubService_GroupExists",
                 "parameters": [
                     {
                         "in": "path",
@@ -257,7 +261,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -296,7 +301,7 @@
                     "webpubsub"
                 ],
                 "summary": "Send content inside request body to a group of connections.",
-                "operationId": "WebPubSub_SendToGroup",
+                "operationId": "WebPubSubService_SendToGroup",
                 "consumes": [
                     "application/octet-stream",
                     "text/plain",
@@ -309,7 +314,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -365,7 +371,7 @@
                     "webpubsub"
                 ],
                 "summary": "Add a connection to the target group.",
-                "operationId": "WebPubSub_AddConnectionToGroup",
+                "operationId": "WebPubSubService_AddConnectionToGroup",
                 "parameters": [
                     {
                         "in": "path",
@@ -373,7 +379,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -418,7 +425,7 @@
                     "webpubsub"
                 ],
                 "summary": "Remove a connection from the target group.",
-                "operationId": "WebPubSub_RemoveConnectionFromGroup",
+                "operationId": "WebPubSubService_RemoveConnectionFromGroup",
                 "parameters": [
                     {
                         "in": "path",
@@ -426,7 +433,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -470,7 +478,7 @@
                     "webpubsub"
                 ],
                 "summary": "Check if there are any client connections connected for the given user.",
-                "operationId": "WebPubSub_UserExists",
+                "operationId": "WebPubSubService_UserExists",
                 "parameters": [
                     {
                         "in": "path",
@@ -478,7 +486,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -516,7 +525,7 @@
                     "webpubsub"
                 ],
                 "summary": "Send content inside request body to the specific user.",
-                "operationId": "WebPubSub_SendToUser",
+                "operationId": "WebPubSubService_SendToUser",
                 "consumes": [
                     "application/octet-stream",
                     "text/plain",
@@ -529,7 +538,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -574,7 +584,7 @@
                     "webpubsub"
                 ],
                 "summary": "Add a user to the target group.",
-                "operationId": "WebPubSub_AddUserToGroup",
+                "operationId": "WebPubSubService_AddUserToGroup",
                 "parameters": [
                     {
                         "in": "path",
@@ -582,7 +592,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -627,7 +638,7 @@
                     "webpubsub"
                 ],
                 "summary": "Remove a user from the target group.",
-                "operationId": "WebPubSub_RemoveUserFromGroup",
+                "operationId": "WebPubSubService_RemoveUserFromGroup",
                 "parameters": [
                     {
                         "in": "path",
@@ -635,7 +646,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -679,7 +691,7 @@
                     "webpubsub"
                 ],
                 "summary": "Remove a user from all groups.",
-                "operationId": "WebPubSub_RemoveUserFromAllGroups",
+                "operationId": "WebPubSubService_RemoveUserFromAllGroups",
                 "parameters": [
                     {
                         "in": "path",
@@ -687,7 +699,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -722,7 +735,7 @@
                     "webpubsub"
                 ],
                 "summary": "Grant permission to the connection.",
-                "operationId": "WebPubSub_GrantPermission",
+                "operationId": "WebPubSubService_GrantPermission",
                 "parameters": [
                     {
                         "in": "path",
@@ -730,7 +743,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -784,7 +798,7 @@
                     "webpubsub"
                 ],
                 "summary": "Revoke permission for the connection.",
-                "operationId": "WebPubSub_RevokePermission",
+                "operationId": "WebPubSubService_RevokePermission",
                 "parameters": [
                     {
                         "in": "path",
@@ -792,7 +806,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
@@ -846,7 +861,7 @@
                     "webpubsub"
                 ],
                 "summary": "Check if a connection has permission to the specified action.",
-                "operationId": "WebPubSub_CheckPermission",
+                "operationId": "WebPubSubService_CheckPermission",
                 "parameters": [
                     {
                         "in": "path",
@@ -854,7 +869,8 @@
                         "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
                         "required": true,
                         "type": "string",
-                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+                        "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$",
+                        "x-ms-parameter-location": "client"
                     },
                     {
                         "in": "path",
