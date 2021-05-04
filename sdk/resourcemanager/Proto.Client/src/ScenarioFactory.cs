@@ -40,7 +40,8 @@ namespace Proto.Client
         CheckResourceGroupOpsAsync,
         TenantResource,
         CheckResourceGroupContainerAsync,
-        GenericResourceOperationsExample
+        GenericResourceOperationsExample,
+        SingletonVmssUpgrade,
     }
 
     class ScenarioFactory
