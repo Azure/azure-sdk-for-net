@@ -46,7 +46,7 @@ In order to run the sample, you will need a Service Bus Namespace. For more info
 
 To build the sample:
 
-1. Install [.NET Core 3.1](https://dot.net) or newer.
+1. Install [.NET 5.0](https://dot.net) or newer.
 
 2. Run in the project directory:
 
