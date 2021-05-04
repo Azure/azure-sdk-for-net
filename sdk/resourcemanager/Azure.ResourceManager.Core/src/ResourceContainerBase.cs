@@ -29,6 +29,16 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ResourceContainerBase{TIdentifier, TOperations, TResource}"/> class.
+        /// </summary>
+        /// <param name="clientContext"> The client context to use. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal ResourceContainerBase(ClientContext clientContext, TIdentifier id)
+            : base(clientContext, id)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ResourceContainerBase{TIdentifier, TOperations, TData}"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>

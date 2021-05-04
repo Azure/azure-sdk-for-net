@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core;
 using NUnit.Framework;
 
@@ -24,15 +20,10 @@ namespace Azure.ResourceManager.Core.Tests
                 "\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\"," +
                 "\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\"," +
                 "\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{}}}";
-            GenericResourceData data = new(new ResourceGroupResourceIdentifier(Id), LocationData.EastUS)
-            {
-                Kind = "KindForResource",
-                ManagedBy = "ManagedByForResource",
-                Plan = new Plan("NameForPlan", "PublisherForPlan", 
-                    "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan"),
-                Sku = new Sku("NameForSku", "TierForSku", "FamilyForSku", 
-                    "SizeForSku", 15464547),
-            };
+            ResourceGroupResourceIdentifier id = Id;
+            Plan plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
+            Sku sku = new Sku("NameForSku", "TierForSku", "FamilyForSku", "SizeForSku", 15464547);
+            GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, LocationData.EastUS, null, plan, null, "KindForResource", "ManagedByForResource", sku, null);
             var stream = new MemoryStream();
             Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
             writer.WriteStartObject();
@@ -54,36 +45,20 @@ namespace Azure.ResourceManager.Core.Tests
                 "\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\"," +
                 "\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{\"key1\":\"value1\"," +
                 "\"key2\":\"value2\"}}}";
-            ResourceManager.Resources.Models.GenericResource genericResource = new()
+            GenericResourceData genericResource = new()
             {
-                Plan = new ResourceManager.Resources.Models.Plan() 
-                { 
-                    Name = "NameForPlan", 
-                    Publisher = "PublisherForPlan", 
-                    Product = "ProductForPlan", 
-                    PromotionCode = "PromotionCodeForPlan", 
-                    Version = "VersionForPlan",
-                },
+                Plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan"),
                 Kind = "KindForResource",
                 ManagedBy = "ManagedByForResource",
-                Sku = new ResourceManager.Resources.Models.Sku() 
-                {
-                    Name = "NameForSku", 
-                    Capacity = 15464547, 
-                    Family = "FamilyForSku", 
-                    Model = "ModelForSku", 
-                    Size = "SizeForSku", 
-                    Tier = "TierForSku",
-                },
+                Sku = new Sku("NameForSku", "TierForSku", "FamilyForSku", "SizeForSku", 15464547)
             };
             genericResource.Tags.Add("key1", "value1");
             genericResource.Tags.Add("key2", "value2");
-            GenericResourceData data = new(genericResource);
             var stream = new MemoryStream();
             Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
-            writer.WriteObjectValue(data);
+            writer.WriteObjectValue(genericResource);
             writer.WriteEndObject();
             writer.Flush();
             string json = Encoding.UTF8.GetString(stream.ToArray());
@@ -94,7 +69,9 @@ namespace Azure.ResourceManager.Core.Tests
         public void InvalidSerializationTest()
         {
             string expected = "{\"properties\":{\"location\":\"eastus\",\"tags\":{}}}";
-            GenericResourceData data = new(new ResourceGroupResourceIdentifier(Id), LocationData.EastUS);
+            ResourceGroupResourceIdentifier id = Id;
+            GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, LocationData.EastUS, null, null, null, null, null, null, null);
+
             var stream = new MemoryStream();
             Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
             writer.WriteStartObject();
@@ -111,7 +88,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             string json = "{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"kind\":\"KindForResource\",\"location\":\"eastus\",\"managedBy\":\"ManagedByForResource\",\"name\":\"account1\",\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{},\"type\":\"Microsoft.ClassicStorage/storageAccounts\"}";
             JsonElement element = JsonDocument.Parse(json).RootElement;
-            GenericResourceData data = GenericResourceData.DeserializeGenericResourceData(element);
+            GenericResourceData data = GenericResourceData.DeserializeGenericResource(element);
             Assert.IsTrue(data.Name.Equals("account1"));
             Assert.IsTrue(data.Location == LocationData.EastUS);
             Assert.IsTrue(data.Plan.PromotionCode.Equals("PromotionCodeForPlan"));
@@ -122,7 +99,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             string json = "{\"notId\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"location\":\"eastus\",\"managedBy\":\"ManagedByForResource\",\"name\":\"account1\",\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{},\"type\":\"Microsoft.ClassicStorage/storageAccounts\"}";
             JsonElement element = JsonDocument.Parse(json).RootElement;
-            GenericResourceData data = GenericResourceData.DeserializeGenericResourceData(element);
+            GenericResourceData data = GenericResourceData.DeserializeGenericResource(element);
             Assert.IsTrue(data.Id == null);
             Assert.IsTrue(data.Kind == null);
         }

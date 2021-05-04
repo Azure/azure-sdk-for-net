@@ -14,6 +14,13 @@ namespace Azure.ResourceManager.Core
         where TIdentifier : TenantResourceIdentifier
     {
         /// <summary>
+        /// Initializes an empty instance of <see cref="TrackedResource{TIdentifier}"/> for mocking.
+        /// </summary>
+        protected TrackedResource()
+        {
+        }
+
+        /// <summary>
         /// Initializes an empty instance of <see cref="TrackedResource{TIdentifier}"/>.
         /// </summary>
         [InitializationConstructor]
@@ -31,7 +38,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="tags"> The tags for the resource. </param>
         /// <param name="location"> The location of the resource. </param>
         [SerializationConstructor]
-        protected TrackedResource(TIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, LocationData location)
+        protected TrackedResource(TIdentifier id, string name, ResourceType type, LocationData location, IDictionary<string, string> tags)
             : base(id, name, type)
         {
             Tags = tags ?? new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
