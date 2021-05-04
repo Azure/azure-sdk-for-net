@@ -445,7 +445,7 @@ namespace Sql.Tests
                 Assert.Equal(null, dbResult.ElasticPoolName);
             }
         }
-        
+        /*
         [Fact]
         public void TestDatabaseTransparentDataEncryptionConfiguration()
         {
@@ -488,5 +488,6 @@ namespace Sql.Tests
                 Assert.Equal(TransparentDataEncryptionState.Disabled, config2.State);
             }
         }
+        */
     }
 }
