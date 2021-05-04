@@ -6,17 +6,18 @@
 #nullable disable
 
 using System;
+using Azure.Data.Tables.Models;
 
-namespace Azure.Data.Tables.Models
+namespace Azure.Data.Tables
 {
     /// <summary> A signed identifier. </summary>
-    public partial class SignedIdentifier
+    public partial class TableSignedIdentifier
     {
-        /// <summary> Initializes a new instance of SignedIdentifier. </summary>
+        /// <summary> Initializes a new instance of TableSignedIdentifier. </summary>
         /// <param name="id"> A unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accessPolicy"/> is null. </exception>
-        public SignedIdentifier(string id, TableAccessPolicy accessPolicy)
+        public TableSignedIdentifier(string id, TableAccessPolicy accessPolicy)
         {
             if (id == null)
             {

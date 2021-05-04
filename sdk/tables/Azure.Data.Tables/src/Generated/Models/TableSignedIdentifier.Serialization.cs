@@ -8,10 +8,11 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Data.Tables.Models;
 
-namespace Azure.Data.Tables.Models
+namespace Azure.Data.Tables
 {
-    public partial class SignedIdentifier : IXmlSerializable
+    public partial class TableSignedIdentifier : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -23,7 +24,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static SignedIdentifier DeserializeSignedIdentifier(XElement element)
+        internal static TableSignedIdentifier DeserializeTableSignedIdentifier(XElement element)
         {
             string id = default;
             TableAccessPolicy accessPolicy = default;
@@ -35,7 +36,7 @@ namespace Azure.Data.Tables.Models
             {
                 accessPolicy = TableAccessPolicy.DeserializeTableAccessPolicy(accessPolicyElement);
             }
-            return new SignedIdentifier(id, accessPolicy);
+            return new TableSignedIdentifier(id, accessPolicy);
         }
     }
 }

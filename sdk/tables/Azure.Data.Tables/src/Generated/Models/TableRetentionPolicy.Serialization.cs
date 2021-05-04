@@ -9,9 +9,9 @@ using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
-namespace Azure.Data.Tables.Models
+namespace Azure.Data.Tables
 {
-    public partial class RetentionPolicy : IXmlSerializable
+    public partial class TableRetentionPolicy : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -28,7 +28,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static RetentionPolicy DeserializeRetentionPolicy(XElement element)
+        internal static TableRetentionPolicy DeserializeTableRetentionPolicy(XElement element)
         {
             bool enabled = default;
             int? days = default;
@@ -40,7 +40,7 @@ namespace Azure.Data.Tables.Models
             {
                 days = (int?)daysElement;
             }
-            return new RetentionPolicy(enabled, days);
+            return new TableRetentionPolicy(enabled, days);
         }
     }
 }
