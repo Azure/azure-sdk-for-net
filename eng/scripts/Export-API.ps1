@@ -7,7 +7,7 @@ param (
     [switch] $SpellCheckPublicApiSurface
 )
 
-if ($SpellCheckPublicApiSurface -and (Get-Command npx | Measure-Object).Count -eq 0) { 
+if ($SpellCheckPublicApiSurface -and (Get-Command npx)) { 
     Write-Error "Could not locate npx. Install NodeJS (includes npm and npx) https://nodejs.org/en/download/"
     exit 1
 }
