@@ -85,5 +85,4 @@
             "value": "[resourceGroup().Name]"
         }
     }
-
 }
