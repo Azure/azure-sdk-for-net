@@ -14,7 +14,7 @@ namespace Azure.Communication.Tests
         protected const string TestPackagesEnabledDefaultValue = "all";
         private const string TestPackagesEnabledEnvironmentVariableName = "TEST_PACKAGES_ENABLED";
         private const string SkipSmsTestEnvironmentVariableName = "SKIP_SMS_TEST";
-        private const string SkipPhoneNumberTestEnvironmentVariableName = "SKIP_PHONENUMBER_TEST";
+        private const string SkipPhoneNumbersTestEnvironmentVariableName = "SKIP_PHONENUMBERS_TEST";
 
         public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);
 
@@ -32,7 +32,7 @@ namespace Azure.Communication.Tests
 
         public string SkipSmsTest => GetVariable(SkipSmsTestEnvironmentVariableName);
 
-        public string SkipPhoneNumberTest => GetVariable(SkipPhoneNumberTestEnvironmentVariableName);
+        public string SkipPhoneNumberTest => GetVariable(SkipPhoneNumbersTestEnvironmentVariableName);
 
         public virtual string ExpectedTestPackagesEnabled { get { return TestPackagesEnabledDefaultValue; } }
 
@@ -43,9 +43,9 @@ namespace Azure.Communication.Tests
             && TestPackagesEnabled != ExpectedTestPackagesEnabled
             || bool.Parse(SkipSmsTest);
 
-        public bool ShouldIgnorePhoneNumberTests => TestPackagesEnabled != TestPackagesEnabledDefaultValue
+        public bool ShouldIgnorePhoneNumbersTests => TestPackagesEnabled != TestPackagesEnabledDefaultValue
             && TestPackagesEnabled != ExpectedTestPackagesEnabled
-            || bool.Parse(SkipPhoneNumberTest);
+            || bool.Parse(SkipPhoneNumbersTest);
 
         public string TestPackagesEnabled => GetTestPackageEnabled();
 
