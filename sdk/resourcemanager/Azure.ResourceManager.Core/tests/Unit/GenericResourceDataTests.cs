@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Core.Tests
             writer.WriteObjectValue(data);
             writer.WriteEndObject();
             writer.Flush();
-            string json = Encoding.UTF8.GetString(stream.ToArray());
+            string json = Encoding.UTF8.GetString(stream.ToArray()) + Environment.NewLine;
             Assert.AreEqual(expected, json);
         }
 
@@ -36,13 +37,12 @@ namespace Azure.ResourceManager.Core.Tests
         public void SerializationTestType2()
         {
             string expected = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "GenericResourceData", "SerializationTestType2.json"));
-            GenericResourceData genericResource = new()
-            {
-                Plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan"),
-                Kind = "KindForResource",
-                ManagedBy = "ManagedByForResource",
-                Sku = new Sku("NameForSku", "TierForSku", "FamilyForSku", "SizeForSku", 15464547)
-            };
+            ResourceGroupResourceIdentifier id = Id;
+            var plan = new Plan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
+            var kind = "KindForResource";
+            var managedBy = "ManagedByForResource";
+            var sku = new Sku("NameForSku", "TierForSku", "FamilyForSku", "SizeForSku", 15464547);
+            GenericResourceData genericResource = new GenericResourceData(id, id.Name, id.ResourceType, LocationData.EastUS, null, plan, null, kind, managedBy, sku, null);
             genericResource.Tags.Add("key1", "value1");
             genericResource.Tags.Add("key2", "value2");
             var stream = new MemoryStream();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Core.Tests
             writer.WriteObjectValue(genericResource);
             writer.WriteEndObject();
             writer.Flush();
-            string json = Encoding.UTF8.GetString(stream.ToArray());
+            string json = Encoding.UTF8.GetString(stream.ToArray()) + Environment.NewLine;
             Assert.AreEqual(expected, json);
         }
 

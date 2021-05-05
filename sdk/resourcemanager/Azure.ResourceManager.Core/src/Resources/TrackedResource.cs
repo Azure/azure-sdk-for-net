@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         protected TrackedResource()
         {
+            Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
         }
 
         /// <summary>
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.Core
         [InitializationConstructor]
         protected TrackedResource(LocationData location)
         {
+            Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             Location = location;
         }
 
