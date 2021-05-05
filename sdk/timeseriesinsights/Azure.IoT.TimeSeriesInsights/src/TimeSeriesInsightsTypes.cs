@@ -416,7 +416,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateType">
-        /// // Create an aggregate variable
+        /// // Create a type with an aggregate variable
         /// var timeSeriesTypes = new List&lt;TimeSeriesType&gt;();
         ///
         /// var countExpression = new TimeSeriesExpression(&quot;count()&quot;);

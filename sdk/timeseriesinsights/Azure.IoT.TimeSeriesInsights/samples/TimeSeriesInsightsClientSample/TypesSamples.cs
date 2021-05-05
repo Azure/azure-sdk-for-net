@@ -21,7 +21,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             PrintHeader("TIME SERIES INSIGHTS TYPES SAMPLE");
 
             #region Snippet:TimeSeriesInsightsSampleCreateType
-            // Create an aggregate variable
+            // Create a type with an aggregate variable
             var timeSeriesTypes = new List<TimeSeriesType>();
 
             var countExpression = new TimeSeriesExpression("count()");

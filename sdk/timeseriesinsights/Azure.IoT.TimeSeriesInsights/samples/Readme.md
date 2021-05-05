@@ -12,7 +12,7 @@ The Time Series Insights client library for .NET provides the following function
 - Retrieving and being able to add, update and remove Time Series instances.
 - Retrieving and being able to make changes to the Time Series Insights environment types, such as creating, updating and deleting Time Series types.
 - Retrieving and being able to make changes to the Time Series Insights hierarchies, such as creating, updating and deleting Time Series hierarchies.
-- Executing Time series queries such as querying for raw events, series and aggregate series
+- Querying raw events, computed series and aggregate series
 
 [Source Code][tsi_client_src] | [Package (NuGet)][tsi_nuget_package] | [Product documentation][tsi_product_documentation] | [Samples][tsi_samples]
 
@@ -20,11 +20,11 @@ The Time Series Insights client library for .NET provides the following function
 
 ## TimeSeriesInsightsClient
 
-A `TimeSeriesInsightsClient` is the primary interface for developers using the Time Series Insights client library. It provides both synchronous and asynchronous operations to perform operations on a Time Series Insights environment. The `TimeSeriesInsightsClient` exposes several properties that a developer will use to perform specific operations on a Time Series Insights environment. For example, `ModelSettings` is the the property that a developer can use to perform operations on the model settings of the TSI environment. `Instances` can be used to perform operations on TSI instances. Other properties include `Types`, `Hierarchies` and `Query`.
+A `TimeSeriesInsightsClient` is the primary interface for developers using the Time Series Insights client library. It provides both synchronous and asynchronous operations to perform operations on a Time Series Insights environment. The `TimeSeriesInsightsClient` exposes several properties that a developer will use to perform specific operations on a Time Series Insights environment. For example, `ModelSettings` is the property that a developer can use to perform operations on the model settings of the TSI environment. `Instances` can be used to perform operations on TSI instances. Other properties include `Types`, `Hierarchies` and `Query`.
 
-# Creating TimeSeriesInsightsClient
+## Creating TimeSeriesInsightsClient
 
-To create a new Time Series Insights client, you need the endpoint to an Azure Time Series Insights instance and supply credentials.
+To create a new Time Series Insights client, you need the endpoint to an Azure Time Series Insights environment and supply credentials.
 To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
 or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
 
@@ -35,7 +35,7 @@ Install-Package Azure.Identity
 Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
 
 ```C# Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret
-// DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+// DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based on the environment it is executing in.
 // It attempts to use multiple credential types in an order until it finds a working credential.
 var tokenCredential = new DefaultAzureCredential();
 
@@ -280,7 +280,7 @@ Use [Types](https://github.com/Azure/azure-sdk-for-net/blob/82c7aff5ef867f7a3d77
 This snippet demonstrates creating a Time Series type in your environment.
 
 ```C# Snippet:TimeSeriesInsightsSampleCreateType
-// Create an aggregate variable
+// Create a type with an aggregate variable
 var timeSeriesTypes = new List<TimeSeriesType>();
 
 var countExpression = new TimeSeriesExpression("count()");
@@ -487,7 +487,7 @@ for (int i = 0; i < getHierarchiesByIdsResult.Value.Length; i++)
 }
 ```
 
-Similarly, you can use a list of hierarchies Ids or names to be able to delete heirarchies, as demonstrated in this code snippet.
+Similarly, you can use a list of hierarchies Ids or names to be able to delete hierarchies, as demonstrated in this code snippet.
 ```C# Snippet:TimeSeriesInsightsSampleDeleteHierarchiesById
 // Delete Time Series hierarchies with Ids
 var tsiHierarchyIdsToDelete = new List<string>
@@ -551,7 +551,7 @@ Use [Query](https://github.com/Azure/azure-sdk-for-net/blob/82c7aff5ef867f7a3d77
 - Computed values and the associated event timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
 - Aggregated values and the associated interval timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
 
-Response for the `Query` APIs are of type `QueryAnalyzer`. The QueryAnalyzer allows a developer to query for pages of results, while being able to perform operations on the result set as a whole. For example, to get list of `TimeSeriesPoint` in pages, call the `GetResultsAsync` method on the `QueryAnalyzer` object. You can enumerate an AsyncPageable object using the `async foreach` loop.
+Response for the `Query` APIs are of type `QueryAnalyzer`. The QueryAnalyzer allows a developer to query for pages of results, while being able to perform operations on the result set as a whole. For example, to get a list of `TimeSeriesPoint` in pages, call the `GetResultsAsync` method on the `QueryAnalyzer` object. You can enumerate an AsyncPageable object using the `async foreach` loop.
 
 This code snippets demonstrates retrieving raw events from Time Series Insights environment using a start and end time.
 
@@ -582,10 +582,10 @@ await foreach (TimeSeriesPoint point in humidityEventsQueryAnalyzer.GetResultsAs
 }
 ```
 
-This code snippet demonstrates querying for series events. In this snippet, we query for the temperature both in celsius and fahrenheit. Hence, we create two [numeric variables][tsi_numeric_variables], one for the celsius and the other for fahrenheit. These variables are then added as inline variables to the request options.
+This code snippet demonstrates querying for series events. In this snippet, we query for the temperature both in Celsius and fahrenheit. Hence, we create two [numeric variables][tsi_numeric_variables], one for the Celsius and the other for Fahrenheit. These variables are then added as inline variables to the request options.
 
 ```C# Snippet:TimeSeriesInsightsSampleQuerySeries
-Console.WriteLine("\n\nQuery for temperature series in celsius and fahrenheit over the past 10 minutes.\n");
+Console.WriteLine("\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes.\n");
 
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);

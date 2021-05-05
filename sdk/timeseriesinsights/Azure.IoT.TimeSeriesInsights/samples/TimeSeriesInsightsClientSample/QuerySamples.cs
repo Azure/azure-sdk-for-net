@@ -78,7 +78,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         {
             // Query for two series, one with the temperature values in Celsius and another in Fahrenheit
             #region Snippet:TimeSeriesInsightsSampleQuerySeries
-            Console.WriteLine("\n\nQuery for temperature series in celsius and fahrenheit over the past 10 minutes.\n");
+            Console.WriteLine("\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes.\n");
 
             DateTimeOffset endTime = DateTime.UtcNow;
             DateTimeOffset startTime = endTime.AddMinutes(-10);
