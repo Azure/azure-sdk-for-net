@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -161,7 +162,8 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     _infoTcs = _backgroundUpdateTcs;
                     _backgroundUpdateTcs = default;
-                    return (_infoTcs, default, false);
+
+					// return nothing here so we can enter the 5th case and start bg thread if needed.
                 }
 
                 // Attempt to get access token has failed or it has already expired. Need to get a new one
@@ -224,10 +226,54 @@ namespace Azure.Containers.ContainerRegistry
             AcrRefreshToken acrRefreshToken = async ? await _authenticationRestClient.ExchangeAadAccessTokenForAcrRefreshTokenAsync(service, aadAccessToken.Token, cancellationToken).ConfigureAwait(false) :
                 _authenticationRestClient.ExchangeAadAccessTokenForAcrRefreshToken(service, aadAccessToken.Token, cancellationToken);
 
-            DateTime now = DateTime.UtcNow;
-            DateTime expiresOn = now + _tokenExpiryOffset;
+            DateTimeOffset expiresOn = GetTokenExpiryTime(acrRefreshToken);
 
             return new RefreshTokenInfo(acrRefreshToken.RefreshToken, expiresOn, expiresOn - _tokenRefreshOffset);
+        }
+
+        private static DateTimeOffset GetTokenExpiryTime(AcrRefreshToken acrRefreshToken)
+        {
+            // If we can't parse the expiration from the JWT, indicate that it's expired now.
+            return GetTokenExpiryFromJwt(acrRefreshToken.RefreshToken) ?? DateTimeOffset.UtcNow;
+        }
+
+        private static DateTimeOffset? GetTokenExpiryFromJwt(string jwtValue)
+        {
+            // The JWT is in the format <Base64Url encoded header>.<Base64Url encoded body>.<Base64Url encoded signature>
+            // Here, we Base64Url decode the body and treat it as a JSON object in order to get the "exp" value
+
+            if (string.IsNullOrEmpty(jwtValue))
+            {
+                return null;
+            }
+
+            string[] jwtSegments = jwtValue.Split('.');
+            if (jwtSegments.Length < 2)
+            {
+                return null;
+            }
+
+            string jwtBodyEncoded = jwtSegments[1];
+
+            if (string.IsNullOrEmpty(jwtBodyEncoded))
+            {
+                return null;
+            }
+
+            byte[] jwtBodyDecoded = Base64Url.Decode(jwtBodyEncoded);
+            JsonDocument jsonBody = JsonDocument.Parse(jwtBodyDecoded);
+
+            if (!jsonBody.RootElement.TryGetProperty("exp", out JsonElement value))
+            {
+                return null;
+            }
+
+            if (!value.TryGetInt64(out long expValue))
+            {
+                return null;
+            }
+
+            return DateTimeOffset.FromUnixTimeSeconds(expValue);
         }
 
         private readonly struct RefreshTokenInfo
