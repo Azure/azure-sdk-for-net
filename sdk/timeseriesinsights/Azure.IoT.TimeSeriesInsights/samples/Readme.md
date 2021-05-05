@@ -64,7 +64,7 @@ var instanceId =  new TimeSeriesId("Millennium", "Floor2", "2A01");
 
 ## Time Series Insights Model Settings
 
-Use [ModelSettings](https://github.com/Azure/azure-sdk-for-net/blob/82c7aff5ef867f7a3d77f5ac43a0b1c5576996e6/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs#L32) in the `TimeSeriesInsightsClient` to learn more about the environment model settings, such as name, default type ID, and the properties that define the Time Series ID during environment creation.
+Use `ModelSettings` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs) to learn more about the environment model settings, such as name, default type ID, and the properties that define the Time Series ID during environment creation.
 
 ```C# Snippet:TimeSeriesInsightsSampleGetModelSettings
 Response<TimeSeriesModelSettings> getModelSettingsResponse = await client.ModelSettings.GetAsync();
@@ -126,7 +126,7 @@ Console.WriteLine($"Updated Time Series Insights model settings default type Id:
 
 Time Series Model instances are virtual representations of the time series themselves. To learn more about Time Series Model instances, make sure you visit [this page][tsi_instances_learn_more].
 
-Use [Instances](https://github.com/Azure/azure-sdk-for-net/blob/82c7aff5ef867f7a3d77f5ac43a0b1c5576996e6/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs#L37) in the `TimeSeriesInsightsClient` to perform a variety of operations on the environment's instances.
+Use `Instances` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs) to perform a variety of operations on the environment's instances.
 
 This code snippet demonstrates retrieving all created instances in your TSI environment.
 ```C# Snippet:TimeSeriesInsightsGetAllInstances
@@ -275,7 +275,7 @@ for (int i = 0; i < replaceInstancesResult.Value.Length; i++)
 ```
 
 ## Time Series Insights Types
-Use [Types](https://github.com/Azure/azure-sdk-for-net/blob/82c7aff5ef867f7a3d77f5ac43a0b1c5576996e6/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs#L42) in the `TimeSeriesInsightsClient` to create, retrieve, replace and delete Time Series types in your environment.
+Use `Types` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs) to create, retrieve, replace and delete Time Series types in your environment.
 
 This snippet demonstrates creating a Time Series type in your environment.
 
@@ -409,7 +409,7 @@ for (int i = 0; i < updateTypesResult.Value.Length; i++)
 
 Time Series Model hierarchies organize instances by specifying property names and their relationships. You can configure multiple hierarchies in a given Azure Time Series Insights Gen2 environment. A Time Series Model instance can map to a single hierarchy or multiple hierarchies (many-to-many relationship). To learn more about Time Series Model hierarchies, make sure you visit [this page][tsi_hierarchies_learn_more].
 
-Use [Hierarchies](https://github.com/Azure/azure-sdk-for-net/blob/82c7aff5ef867f7a3d77f5ac43a0b1c5576996e6/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs#L47) in the `TimeSeriesInsightsClient` to perform a variety of operations on the environment's hierarchies.
+Use `Hierarchies` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs) to perform a variety of operations on the environment's hierarchies.
 
 This code snippet demonstrates creating hierarchies in your Time Series Insights environment.
 
@@ -546,7 +546,7 @@ for (int i = 0; i < updateHierarchiesResult.Value.Length; i++)
 
 ## Time Series Insights Query
 
-Use [Query](https://github.com/Azure/azure-sdk-for-net/blob/82c7aff5ef867f7a3d77f5ac43a0b1c5576996e6/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs#L52) in `TimeSeriesInsightsClient` to query for:
+Use `Query` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs) to query for:
 - Raw events for a given Time Series ID and search span.
 - Computed values and the associated event timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
 - Aggregated values and the associated interval timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
