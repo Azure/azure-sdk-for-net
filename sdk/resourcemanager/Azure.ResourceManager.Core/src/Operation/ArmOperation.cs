@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> The response with the final state of the operation. </returns>
         public virtual Response WaitForCompletion(CancellationToken cancellationToken = default)
         {
-            return WaitForCompletion(OperationInternals<Response>.DefaultPollingInterval, cancellationToken);
+            return WaitForCompletion(OperationInternals.DefaultPollingInterval, cancellationToken);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> The response with the final state of the operation. </returns>
         public virtual Response<TOperations> WaitForCompletion(CancellationToken cancellationToken = default)
         {
-            return WaitForCompletion(OperationInternals<TOperations>.DefaultPollingInterval, cancellationToken);
+            return WaitForCompletion(OperationInternals.DefaultPollingInterval, cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Core
                 UpdateStatus(cancellationToken);
                 if (HasCompleted)
                 {
-                    return Response.FromValue(Value, GetRawResponse()) as ArmResponse<TOperations>;
+                    return ArmResponse.FromValue(Value, GetRawResponse());
                 }
 
                 Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);

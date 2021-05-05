@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests.Scenario
+namespace Azure.ResourceManager.Core.Tests
 {
     [Parallelizable]
     public class HttpPipelineTests : ResourceManagerTestBase

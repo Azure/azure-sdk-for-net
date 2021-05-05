@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override async ValueTask<Response<TOperations>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
-            var task = WaitForCompletionAsync(OperationInternals<TOperations>.DefaultPollingInterval, cancellationToken);
+            var task = WaitForCompletionAsync(OperationInternals.DefaultPollingInterval, cancellationToken);
             return await task.ConfigureAwait(false);
         }
 
@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.Core
             var value = _doesWrapOperation 
                 ? await _wrappedOperation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false) 
                 : await _wrappedResponseOperation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(_converter(value.Value), GetRawResponse());
+            return ArmResponse.FromValue(_converter(value.Value), GetRawResponse());
         }
 
         /// <inheritdoc/>
         public override Response<TOperations> WaitForCompletion(CancellationToken cancellationToken = default)
         {
-            return WaitForCompletion(OperationInternals<TOperations>.DefaultPollingInterval, cancellationToken);
+            return WaitForCompletion(OperationInternals.DefaultPollingInterval, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Core
                 UpdateStatus(cancellationToken);
                 if (HasCompleted)
                 {
-                    return Response.FromValue(Value, GetRawResponse()) as ArmResponse<TOperations>;
+                    return ArmResponse.FromValue(Value, GetRawResponse());
                 }
 
                 Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);

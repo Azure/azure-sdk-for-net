@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var operation = StartDelete(cancellationToken);
-                return new ArmResponse(operation.WaitForCompletion(cancellationToken).GetRawResponse());
+                return ArmResponse.FromResponse(operation.WaitForCompletion(cancellationToken).GetRawResponse());
             }
             catch (Exception e)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
-                return new ArmResponse((await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false)).GetRawResponse());
+                return ArmResponse.FromResponse((await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false)).GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Core
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var result = RestClient.GetById(Id, apiVersion, cancellationToken);
-                return Response.FromValue(new GenericResource(this, result), result.GetRawResponse()) as ArmResponse<GenericResource>;
+                return ArmResponse.FromValue(new GenericResource(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Core
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var result = await RestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(this, result), result.GetRawResponse()) as ArmResponse<GenericResource>;
+                return ArmResponse.FromValue(new GenericResource(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {

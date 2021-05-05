@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var originalResponse = StartMoveResources(parameters, cancellationToken);
-                return new ArmResponse(originalResponse.WaitForCompletion(cancellationToken));
+                return ArmResponse.FromResponse(originalResponse.WaitForCompletion(cancellationToken));
             }
             catch (Exception e)
             {
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var originalResponse = await StartMoveResourcesAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return new ArmResponse(await originalResponse.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+                return ArmResponse.FromResponse(await originalResponse.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var operation = StartValidateMoveResources(parameters, cancellationToken);
-                return new ArmResponse(operation.WaitForCompletion(cancellationToken));
+                return ArmResponse.FromResponse(operation.WaitForCompletion(cancellationToken));
             }
             catch (Exception e)
             {
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var operation = await StartValidateMoveResourcesAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return new ArmResponse(await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+                return ArmResponse.FromResponse(await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {

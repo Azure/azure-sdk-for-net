@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="response"> The HTTP response. </param>
         /// <returns> A new instance of <see cref="ArmResponse{TOperations}"/> with the provided value and HTTP response. </returns>
         /// <exception cref="ArgumentNullException"> Throws if response or value are null. </exception>
-        public static ArmResponse<TOperations> FromValue<TOperations>(TOperations value, ArmResponse response)
+        public static new ArmResponse<TOperations> FromValue<TOperations>(TOperations value, Response response)
         {
             if (value is null)
                 throw new ArgumentNullException(nameof(value));

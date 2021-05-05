@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Core
             {
                 var apiVersion = GetApiVersion(resourceId, cancellationToken);
                 var result = RestClient.GetById(resourceId, apiVersion, cancellationToken);
-                return Response.FromValue(new GenericResource(Parent, result), result.GetRawResponse()) as ArmResponse<GenericResource>;
+                return ArmResponse.FromValue(new GenericResource(Parent, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Core
             {
                 var apiVersion = await GetApiVersionAsync(resourceId, cancellationToken).ConfigureAwait(false);
                 var result = await RestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GenericResource(Parent, result), result.GetRawResponse()) as ArmResponse<GenericResource>;
+                return ArmResponse.FromValue(new GenericResource(Parent, result), result.GetRawResponse());
             }
             catch (Exception e)
             {

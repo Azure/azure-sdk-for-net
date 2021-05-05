@@ -7,9 +7,9 @@ namespace Azure.ResourceManager.Core
 {
     internal class ArmValueResponse<TOperations> : ArmResponse<TOperations>
     {
-        private readonly ArmResponse _response;
+        private readonly Response _response;
         
-        public ArmValueResponse(ArmResponse response, TOperations value)
+        public ArmValueResponse(Response response, TOperations value)
         {
             if (response is null)
                 throw new ArgumentNullException(nameof(response));
