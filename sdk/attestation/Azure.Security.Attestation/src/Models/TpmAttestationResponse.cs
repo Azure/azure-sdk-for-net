@@ -15,7 +15,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Attestation Response data. See  <seealso href="https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol"/> for more details.
         /// </summary>
-        public ReadOnlyMemory<byte> Data { get => Base64Url.Decode(InternalData); }
+        public BinaryData Data { get => BinaryData.FromBytes(Base64Url.Decode(InternalData)); }
 
         [CodeGenMember("Data")]
         internal string InternalData { get; }

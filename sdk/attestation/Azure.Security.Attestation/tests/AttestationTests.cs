@@ -241,7 +241,7 @@ namespace Azure.Security.Attestation.Tests
                     });
 
                 // Confirm that the attestation token contains the enclave held data we specified.
-               CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData.ToArray());
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.EnclaveHeldData.ToArray());
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
@@ -337,6 +337,53 @@ namespace Azure.Security.Attestation.Tests
 
                 Assert.IsTrue(callbackInvoked);
             }
+        }
+
+        private class TpmInit
+        {
+            [System.Text.Json.Serialization.JsonPropertyName("type")]
+            public string Type { get; set; }
+        }
+
+        private class TpmMetadata
+        {
+            [System.Text.Json.Serialization.JsonPropertyName("os_ver")]
+            public string OsVersion { get; set; }
+        }
+        private class TpmPayload
+        {
+            [System.Text.Json.Serialization.JsonPropertyName("payload")]
+            public object Payload { get; set; }
+
+            [System.Text.Json.Serialization.JsonPropertyName("metadata")]
+            public TpmMetadata Metadata { get; set; }
+        }
+
+        [RecordedTest]
+        public async Task AttestTpmMinimalAad()
+        {
+            // TPM attestation requires that there be an attestation policy applied before it can succeed.
+            string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
+            var adminClient = TestEnvironment.GetAadAdministrationClient(this);
+
+            var setResult = await adminClient.SetPolicyAsync(AttestationType.Tpm, attestationPolicy);
+
+            var tpmInit = new TpmInit { Type = "aikcert" };
+            var tpmPayload = new TpmPayload
+            {
+                Metadata = new TpmMetadata { OsVersion = "10.0.19041.928.amd64fre.vb_release.191206-1406.Enterprise" },
+                Payload = tpmInit,
+            };
+
+            var client = TestEnvironment.GetAadAttestationClient(this);
+            Response<TpmAttestationResponse> tpmResponse = null;
+            var request = new TpmAttestationRequest { Data = BinaryData.FromObjectAsJson(tpmPayload) };
+            tpmResponse = await client.AttestTpmAsync(request);
+            var parsedValue = System.Text.Json.JsonDocument.Parse(tpmResponse.Value.Data);
+            Assert.IsNotNull(parsedValue.RootElement.GetProperty("payload"));
+            var payload = parsedValue.RootElement.GetProperty("payload");
+            Assert.IsNotNull(payload.GetProperty("challenge"));
+            Assert.IsNotNull(payload.GetProperty("service_context"));
         }
     }
 }
