@@ -28,9 +28,7 @@ namespace Avs.Tests
 
             try
             {
-                using var testBase = new AvsTestBase(context);
-                var client = testBase.AvsClient;
-
+                using var client = context.GetServiceClient<AvsClient>();
                 var quota = client.Locations.CheckQuotaAvailability(location);
                 var trial = client.Locations.CheckTrialAvailability(location);
 
@@ -105,11 +103,12 @@ namespace Avs.Tests
                 clouds = client.PrivateClouds.List(rgName);
                 Assert.True(clouds.Count() == 1);
 
+                // disabled in test environment because of bug 9868299
                 // delete a private cloud
-                client.PrivateClouds.Delete(rgName, cloudName);
+                // client.PrivateClouds.Delete(rgName, cloudName);
 
-                clouds = client.PrivateClouds.List(rgName);
-                Assert.True(clouds.Count() == 0);
+                // clouds = client.PrivateClouds.List(rgName);
+                // Assert.True(clouds.Count() == 0);
 
             }
             finally
@@ -120,7 +119,7 @@ namespace Avs.Tests
 
         private ResourceGroup CreateResourceGroup(MockContext context, string location, string rgName)
         {
-            var client = context.GetServiceClient<ResourceManagementClient>();
+            using var client = context.GetServiceClient<ResourceManagementClient>();
             return client.ResourceGroups.CreateOrUpdate(
                 rgName,
                 new ResourceGroup
@@ -131,7 +130,7 @@ namespace Avs.Tests
 
         private void DeleteResourceGroup(MockContext context, string rgName)
         {
-            var client = context.GetServiceClient<ResourceManagementClient>();
+            using var client = context.GetServiceClient<ResourceManagementClient>();
             client.ResourceGroups.Delete(rgName);
         }
     }
