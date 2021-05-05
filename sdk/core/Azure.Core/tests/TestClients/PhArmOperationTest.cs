@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
@@ -27,7 +28,7 @@ namespace Azure.Core.Tests
 
         public PhArmOperationTest(T value)
         {
-            _operationHelper = new OperationOrResponseInternals<T>(Response.FromValue(value, null));
+            _operationHelper = new OperationOrResponseInternals<T>(Response.FromValue(value, new MockResponse(200)));
         }
 
         public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operationHelper.WaitForCompletionAsync(cancellationToken);

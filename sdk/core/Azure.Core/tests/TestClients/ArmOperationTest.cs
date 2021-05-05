@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
@@ -25,7 +23,7 @@ namespace Azure.Core.Tests
         {
             _value = value;
             _exceptionOnWait = exceptionOnWait;
-            _operationHelper = new OperationOrResponseInternals<TestResource>(Response.FromValue(value, null));
+            _operationHelper = new OperationOrResponseInternals<TestResource>(Response.FromValue(value, new MockResponse(200)));
         }
 
         public override string Id => "testId";
@@ -43,7 +41,7 @@ namespace Azure.Core.Tests
             if (_exceptionOnWait)
                 throw new ArgumentException("FakeArg");
 
-            return new ValueTask<Response<TestResource>>(Response.FromValue(_value, null));
+            return new ValueTask<Response<TestResource>>(Response.FromValue(_value, new MockResponse(200)));
         }
 
         public override ValueTask<Response<TestResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
@@ -51,7 +49,7 @@ namespace Azure.Core.Tests
             if (_exceptionOnWait)
                 throw new ArgumentException("FakeArg");
 
-            return new ValueTask<Response<TestResource>>(Response.FromValue(_value, null));
+            return new ValueTask<Response<TestResource>>(Response.FromValue(_value, new MockResponse(200)));
         }
 
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operationHelper.UpdateStatusAsync(cancellationToken);
