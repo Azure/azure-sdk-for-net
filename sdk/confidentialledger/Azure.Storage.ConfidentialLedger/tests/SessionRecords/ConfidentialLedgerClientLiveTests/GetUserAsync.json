@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-75aeb47a427500409537a321443127c7-234df7cf9b6a674b-00",
+        "Request-Id": "|951fbff3-4e176ec0313b391a.",
         "User-Agent": [
-          "azsdk-net-Storage.ConfidentialLedger/1.0.1-alpha.20210504.1",
-          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+          "azsdk-net-Storage.ConfidentialLedger/1.0.1-alpha.20210505.1",
+          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "8fac3b3f3d2acfddffb0caf7644148fc",
+        "x-ms-client-request-id": "f193cf166045cf833bc6387db549f26a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,7 +19,7 @@
       "ResponseHeaders": {
         "Content-Length": "80",
         "Content-Type": "application/json",
-        "x-ms-ccf-transaction-id": "8.4037"
+        "x-ms-ccf-transaction-id": "8.4165"
       },
       "ResponseBody": {
         "assignedRole": "Administrator",
@@ -28,8 +28,9 @@
     }
   ],
   "Variables": {
-    "CONFIDENTIALLEDGER_IDENTITY_URL": "https://identity.accledger.azure.com/ledgerIdentity/lyshi-sdk-ledger-2",
+    "CONFIDENTIALLEDGER_CLIENT_OBJECTID": "3c1303ad-140b-493c-ab45-bed8ddbfa72c",
+    "CONFIDENTIALLEDGER_IDENTITY_URL": "https://identity.accledger.azure.com",
     "CONFIDENTIALLEDGER_URL": "https://lyshi-sdk-ledger-2.eastus.cloudapp.azure.com",
-    "RandomSeed": "1269807889"
+    "RandomSeed": "290388264"
   }
 }

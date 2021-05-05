@@ -9,5 +9,6 @@ namespace Azure.Storage.ConfidentialLedger.Tests
     {
         public string ConfidentialLedgerUrl => GetRecordedVariable("CONFIDENTIALLEDGER_URL");
         public string ConfidentialLedgerIdentityUrl => GetRecordedVariable("CONFIDENTIALLEDGER_IDENTITY_URL");
+        public string ConfidentialLedgerAdminOid => GetRecordedVariable("CONFIDENTIALLEDGER_CLIENT_OBJECTID");
     }
 }

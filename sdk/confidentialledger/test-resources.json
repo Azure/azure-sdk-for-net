@@ -100,6 +100,10 @@
     "CONFIDENTIALLEDGER_IDENTITY_URL": {
       "type": "string",
       "value": "[format('https://identity.accledger.azure.com/ledgerIdentity/{0}', parameters('baseName'))]"
+    },
+    "CONFIDENTIALLEDGER_CLIENT_OBJECTID": {
+      "type": "string",
+      "value": "[parameters('testApplicationOid')]"
     }
   }
 }
