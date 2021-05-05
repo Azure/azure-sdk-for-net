@@ -22,7 +22,11 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         private ConfidentialLedgerClientOptions Options;
         private ConfidentialLedgerClient Client;
 
-        public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync) { }
+        public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync)
+        {
+            // https://github.com/Azure/autorest.csharp/issues/1214
+            TestDiagnostics = false;
+        }
 
         [SetUp]
         public void Setup()

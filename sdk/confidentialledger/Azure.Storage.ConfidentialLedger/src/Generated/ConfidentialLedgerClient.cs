@@ -60,7 +60,6 @@ namespace Azure.Storage.ConfidentialLedger
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> GetConstitutionAsync(CancellationToken cancellationToken = default)
         {
             Request req = CreateGetConstitutionRequest();
@@ -69,7 +68,6 @@ namespace Azure.Storage.ConfidentialLedger
 
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response GetConstitution(CancellationToken cancellationToken = default)
         {
             Request req = CreateGetConstitutionRequest();
@@ -93,7 +91,6 @@ namespace Azure.Storage.ConfidentialLedger
 
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> GetConsortiumMembersAsync(CancellationToken cancellationToken = default)
         {
             Request req = CreateGetConsortiumMembersRequest();
@@ -102,7 +99,6 @@ namespace Azure.Storage.ConfidentialLedger
 
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response GetConsortiumMembers(CancellationToken cancellationToken = default)
         {
             Request req = CreateGetConsortiumMembersRequest();
@@ -126,7 +122,6 @@ namespace Azure.Storage.ConfidentialLedger
 
         /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> GetEnclaveQuotesAsync(CancellationToken cancellationToken = default)
         {
             Request req = CreateGetEnclaveQuotesRequest();
@@ -135,7 +130,6 @@ namespace Azure.Storage.ConfidentialLedger
 
         /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response GetEnclaveQuotes(CancellationToken cancellationToken = default)
         {
             Request req = CreateGetEnclaveQuotesRequest();
@@ -162,7 +156,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> GetLedgerEntriesAsync(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId);
@@ -174,7 +167,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response GetLedgerEntries(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetLedgerEntriesRequest(subLedgerId, fromTransactionId, toTransactionId);
@@ -215,7 +207,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <param name="requestBody"> The request body. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> PostLedgerEntryAsync(RequestContent requestBody, string subLedgerId = null, CancellationToken cancellationToken = default)
         {
             Request req = CreatePostLedgerEntryRequest(requestBody, subLedgerId);
@@ -226,7 +217,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <param name="requestBody"> The request body. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response PostLedgerEntry(RequestContent requestBody, string subLedgerId = null, CancellationToken cancellationToken = default)
         {
             Request req = CreatePostLedgerEntryRequest(requestBody, subLedgerId);
@@ -260,7 +250,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string subLedgerId = null, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetLedgerEntryRequest(transactionId, subLedgerId);
@@ -271,7 +260,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response GetLedgerEntry(string transactionId, string subLedgerId = null, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetLedgerEntryRequest(transactionId, subLedgerId);
@@ -303,7 +291,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> GetReceiptAsync(string transactionId, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetReceiptRequest(transactionId);
@@ -313,7 +300,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response GetReceipt(string transactionId, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetReceiptRequest(transactionId);
@@ -341,7 +327,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> Gets the status of an entry identified by a transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetTransactionStatusRequest(transactionId);
@@ -351,7 +336,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> Gets the status of an entry identified by a transaction id. </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response GetTransactionStatus(string transactionId, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetTransactionStatusRequest(transactionId);
@@ -379,7 +363,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> A sub-ledger id may optionally be specified. </summary>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> GetCurrentLedgerEntryAsync(string subLedgerId = null, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetCurrentLedgerEntryRequest(subLedgerId);
@@ -389,7 +372,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> A sub-ledger id may optionally be specified. </summary>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response GetCurrentLedgerEntry(string subLedgerId = null, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetCurrentLedgerEntryRequest(subLedgerId);
@@ -419,7 +401,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> Deletes a user from the Confidential Ledger. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteUserAsync(string userId, CancellationToken cancellationToken = default)
         {
             Request req = CreateDeleteUserRequest(userId);
@@ -429,7 +410,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> Deletes a user from the Confidential Ledger. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response DeleteUser(string userId, CancellationToken cancellationToken = default)
         {
             Request req = CreateDeleteUserRequest(userId);
@@ -456,7 +436,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> Gets a user. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> GetUserAsync(string userId, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetUserRequest(userId);
@@ -466,7 +445,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> Gets a user. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response GetUser(string userId, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetUserRequest(userId);
@@ -494,7 +472,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent requestBody, CancellationToken cancellationToken = default)
         {
             Request req = CreateCreateOrUpdateUserRequest(userId, requestBody);
@@ -505,7 +482,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response CreateOrUpdateUser(string userId, RequestContent requestBody, CancellationToken cancellationToken = default)
         {
             Request req = CreateCreateOrUpdateUserRequest(userId, requestBody);
@@ -535,7 +511,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetLedgerIdentityRequest(ledgerId);
@@ -545,7 +520,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
         /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
         public virtual Response GetLedgerIdentity(string ledgerId, CancellationToken cancellationToken = default)
         {
             Request req = CreateGetLedgerIdentityRequest(ledgerId);
