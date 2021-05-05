@@ -19,6 +19,7 @@ $PrimaryAccountKey = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_KEY']
 $PrimaryAccountBlobEndpointSuffix = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
 $PrimaryAccountQueueEndpointSuffix = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX']
 $PrimaryAccountFileEndpointSuffix = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
+$PrimaryAccountTableEndpointSuffix = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX']
 $SecondaryAccountName = $DeploymentOutputs['SECONDARY_STORAGE_ACCOUNT_NAME']
 $SecondaryAccountKey = $DeploymentOutputs['SECONDARY_STORAGE_ACCOUNT_KEY']
 $PremiumAccountName = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_NAME']
@@ -50,13 +51,13 @@ $content =
       <AccountName>$PrimaryAccountName</AccountName>
       <AccountKey>$PrimaryAccountKey</AccountKey>
       <BlobServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$PrimaryAccountName.queue.core.windows.net</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$PrimaryAccountName.table.core.windows.net</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$PrimaryAccountName.file.core.windows.net</FileServiceEndpoint>
+      <QueueServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountTableEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountFileEndpointSuffix</FileServiceEndpoint>
       <BlobServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
       <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;EndpointSuffix=core.windows.net</ConnectionString>
       <EncryptionScope>encryptionScope</EncryptionScope>
     </TenantConfiguration>

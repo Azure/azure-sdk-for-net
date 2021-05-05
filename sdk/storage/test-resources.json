@@ -410,6 +410,10 @@
         "type": "string",
         "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.queue)]"
     },
+    "PRIMARY_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX": {
+        "type": "string",
+        "value": "[url.serviceEndpointSuffix(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.table)]"
+    },
     "SECONDARY_STORAGE_ACCOUNT_NAME": {
       "type": "string",
       "value": "[variables('secondaryAccountName')]"
