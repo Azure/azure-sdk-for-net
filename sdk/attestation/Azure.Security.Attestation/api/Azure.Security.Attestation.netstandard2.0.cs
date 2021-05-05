@@ -280,11 +280,11 @@ namespace Azure.Security.Attestation
     public partial class TpmAttestationRequest
     {
         public TpmAttestationRequest() { }
-        public System.ReadOnlyMemory<byte> Data { get { throw null; } set { } }
+        public System.BinaryData Data { get { throw null; } set { } }
     }
     public partial class TpmAttestationResponse
     {
         internal TpmAttestationResponse() { }
-        public System.ReadOnlyMemory<byte> Data { get { throw null; } }
+        public System.BinaryData Data { get { throw null; } }
     }
 }

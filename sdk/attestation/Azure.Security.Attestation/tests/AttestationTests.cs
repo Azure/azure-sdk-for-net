@@ -347,20 +347,11 @@ namespace Azure.Security.Attestation.Tests
             public string Type { get; set; }
         }
 
-        private class TpmMetadata
-        {
-            [JsonPropertyName("os_ver")]
-            public string OsVersion { get; set; }
-        }
-
         // TpmAttest requires a TpmPayload object.
         private class TpmPayload
         {
             [JsonPropertyName("payload")]
             public object Payload { get; set; }
-
-            [JsonPropertyName("metadata")]
-            public TpmMetadata Metadata { get; set; }
         }
 
         [RecordedTest]
@@ -374,10 +365,6 @@ namespace Azure.Security.Attestation.Tests
 
             var tpmPayload = new TpmPayload
             {
-                Metadata = new TpmMetadata
-                {
-                    OsVersion = "10.0.19041.928.amd64fre.vb_release.191206-1406.Enterprise"
-                },
                 Payload = new TpmInit
                 {
                     Type = "aikcert"
