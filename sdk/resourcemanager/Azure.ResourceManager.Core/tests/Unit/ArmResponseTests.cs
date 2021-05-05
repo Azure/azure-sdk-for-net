@@ -12,8 +12,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void TestArmResponseParamCheck()
         {
-            Assert.Throws<ArgumentNullException>(() => { new ArmResponse(null); });
-
+            Assert.Throws<ArgumentNullException>(() => { ArmResponse.FromResponse(null); });
         }
     }
 }
