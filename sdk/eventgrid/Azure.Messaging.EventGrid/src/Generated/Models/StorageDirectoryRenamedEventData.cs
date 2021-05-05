@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.DirectoryRenamed event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.DirectoryRenamed event. </summary>
     public partial class StorageDirectoryRenamedEventData
     {
         /// <summary> Initializes a new instance of StorageDirectoryRenamedEventData. </summary>
