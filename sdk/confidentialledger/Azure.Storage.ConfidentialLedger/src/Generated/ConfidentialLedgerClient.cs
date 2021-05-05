@@ -22,8 +22,8 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://confidential-ledger.azure.com/.default" };
-        private string ledgerBaseUrl;
-        private string identityServiceBaseUrl;
+        private Uri ledgerUri;
+        private Uri identityServiceUri;
         private readonly string apiVersion;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient for mocking. </summary>
@@ -32,19 +32,19 @@ namespace Azure.Storage.ConfidentialLedger
         }
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
-        /// <param name="ledgerBaseUrl"> The Confidential Ledger URL, for example https://contoso.eastus.cloudapp.azure.com. </param>
-        /// <param name="identityServiceBaseUrl"> The Identity Service URL, for example https://identity.accledger.azure.com. </param>
+        /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
+        /// <param name="identityServiceUri"> The Identity Service URL, for example https://identity.accledger.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public ConfidentialLedgerClient(string ledgerBaseUrl, string identityServiceBaseUrl, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
+        public ConfidentialLedgerClient(Uri ledgerUri, Uri identityServiceUri, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
         {
-            if (ledgerBaseUrl == null)
+            if (ledgerUri == null)
             {
-                throw new ArgumentNullException(nameof(ledgerBaseUrl));
+                throw new ArgumentNullException(nameof(ledgerUri));
             }
-            if (identityServiceBaseUrl == null)
+            if (identityServiceUri == null)
             {
-                throw new ArgumentNullException(nameof(identityServiceBaseUrl));
+                throw new ArgumentNullException(nameof(identityServiceUri));
             }
             if (credential == null)
             {
@@ -53,8 +53,8 @@ namespace Azure.Storage.ConfidentialLedger
 
             options ??= new ConfidentialLedgerClientOptions();
             Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
-            this.ledgerBaseUrl = ledgerBaseUrl;
-            this.identityServiceBaseUrl = identityServiceBaseUrl;
+            this.ledgerUri = ledgerUri;
+            this.identityServiceUri = identityServiceUri;
             apiVersion = options.Version;
         }
 
@@ -83,7 +83,7 @@ namespace Azure.Storage.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(ledgerBaseUrl, false);
+            uri.Reset(ledgerUri);
             uri.AppendPath("/app/governance/constitution", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -116,7 +116,7 @@ namespace Azure.Storage.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(ledgerBaseUrl, false);
+            uri.Reset(ledgerUri);
             uri.AppendPath("/app/governance/members", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -149,7 +149,7 @@ namespace Azure.Storage.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(ledgerBaseUrl, false);
+            uri.Reset(ledgerUri);
             uri.AppendPath("/app/enclaveQuotes", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -191,7 +191,7 @@ namespace Azure.Storage.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(ledgerBaseUrl, false);
+            uri.Reset(ledgerUri);
             uri.AppendPath("/app/transactions", false);
             uri.AppendQuery("api-version", apiVersion, true);
             if (subLedgerId != null)
@@ -242,7 +242,7 @@ namespace Azure.Storage.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(ledgerBaseUrl, false);
+            uri.Reset(ledgerUri);
             uri.AppendPath("/app/transactions", false);
             uri.AppendQuery("api-version", apiVersion, true);
             if (subLedgerId != null)
@@ -287,7 +287,7 @@ namespace Azure.Storage.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(ledgerBaseUrl, false);
+            uri.Reset(ledgerUri);
             uri.AppendPath("/app/transactions/", false);
             uri.AppendPath(transactionId, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -328,7 +328,7 @@ namespace Azure.Storage.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(ledgerBaseUrl, false);
+            uri.Reset(ledgerUri);
             uri.AppendPath("/app/transactions/", false);
             uri.AppendPath(transactionId, true);
             uri.AppendPath("/receipt", false);
@@ -366,7 +366,7 @@ namespace Azure.Storage.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(ledgerBaseUrl, false);
+            uri.Reset(ledgerUri);
             uri.AppendPath("/app/transactions/", false);
             uri.AppendPath(transactionId, true);
             uri.AppendPath("/status", false);
@@ -404,7 +404,7 @@ namespace Azure.Storage.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(ledgerBaseUrl, false);
+            uri.Reset(ledgerUri);
             uri.AppendPath("/app/transactions/current", false);
             uri.AppendQuery("api-version", apiVersion, true);
             if (subLedgerId != null)
@@ -444,7 +444,7 @@ namespace Azure.Storage.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(ledgerBaseUrl, false);
+            uri.Reset(ledgerUri);
             uri.AppendPath("/app/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -481,7 +481,7 @@ namespace Azure.Storage.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(ledgerBaseUrl, false);
+            uri.Reset(ledgerUri);
             uri.AppendPath("/app/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -495,9 +495,9 @@ namespace Azure.Storage.ConfidentialLedger
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response> PatchUserAsync(string userId, RequestContent requestBody, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent requestBody, CancellationToken cancellationToken = default)
         {
-            Request req = CreatePatchUserRequest(userId, requestBody);
+            Request req = CreateCreateOrUpdateUserRequest(userId, requestBody);
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
@@ -506,22 +506,22 @@ namespace Azure.Storage.ConfidentialLedger
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response PatchUser(string userId, RequestContent requestBody, CancellationToken cancellationToken = default)
+        public virtual Response CreateOrUpdateUser(string userId, RequestContent requestBody, CancellationToken cancellationToken = default)
         {
-            Request req = CreatePatchUserRequest(userId, requestBody);
+            Request req = CreateCreateOrUpdateUserRequest(userId, requestBody);
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
-        /// <summary> Create Request for <see cref="PatchUser"/> and <see cref="PatchUserAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="CreateOrUpdateUser"/> and <see cref="CreateOrUpdateUserAsync"/> operations. </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreatePatchUserRequest(string userId, RequestContent requestBody)
+        private Request CreateCreateOrUpdateUserRequest(string userId, RequestContent requestBody)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(ledgerBaseUrl, false);
+            uri.Reset(ledgerUri);
             uri.AppendPath("/app/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -560,7 +560,7 @@ namespace Azure.Storage.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(identityServiceBaseUrl, false);
+            uri.Reset(identityServiceUri);
             uri.AppendPath("/ledgerIdentity/", false);
             uri.AppendPath(ledgerId, true);
             uri.AppendQuery("api-version", apiVersion, true);

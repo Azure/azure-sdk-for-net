@@ -176,7 +176,7 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         public async Task CreateAndDeleteUser()
         {
             var userId = Recording.Random.NewGuid().ToString();
-            var result = await Client.PatchUserAsync(
+            var result = await Client.CreateOrUpdateUserAsync(
                 userId,
                 RequestContent.Create(new { assignedRole = "Reader" }));
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
@@ -192,7 +192,7 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetLedgerIdentity()
         {
-            var ledgerId = new Uri(TestEnvironment.ConfidentialLedgerUrl).Host;
+            var ledgerId = TestEnvironment.ConfidentialLedgerUrl.Host;
             ledgerId = ledgerId.Substring(0, ledgerId.IndexOf('.'));
             var result = await Client.GetLedgerIdentityAsync(ledgerId).ConfigureAwait(false);
 
