@@ -60,16 +60,16 @@ namespace Proto.Compute
 
         // Note: Singleton may have different operations such as GET/PUT/PATCH/POST or a combination of these
         // Individual methods will be generated as they are declared
-        public ArmResponse<Response> Cancel(CancellationToken cancellationToken = default)
+        public ArmResponse Cancel(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations
+            return ArmResponse.FromResponse(Operations
                 .StartCancel(ParentId.ResourceGroupName, ParentId.Name, cancellationToken)
                 .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
-        public async Task<ArmResponse<Response>> CancelAsync(CancellationToken cancellationToken = default)
+        public async Task<ArmResponse> CancelAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse((await Operations
+            return ArmResponse.FromResponse((await Operations
                 .StartCancel(ParentId.ResourceGroupName, ParentId.Name, cancellationToken)
                 .WaitForCompletionAsync(cancellationToken)));
         }
