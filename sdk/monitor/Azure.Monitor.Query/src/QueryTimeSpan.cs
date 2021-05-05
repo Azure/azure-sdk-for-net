@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// Represents the maximum <see cref="QueryTimeSpan"/>.
         /// </summary>
-        public static QueryTimeSpan MaxValue => new QueryTimeSpan(TimeSpan.MaxValue);
+        public static QueryTimeSpan MaxValue { get; } = new QueryTimeSpan(TimeSpan.MaxValue);
 
         /// <summary>
         /// Gets the duration of the interval.
