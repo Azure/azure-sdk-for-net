@@ -20,10 +20,7 @@ pr:
     - release/*
   paths:
     include:
-    - common/Perf/
-    - common/PerfStressShared/
-    - common/Stress/
-    - sdk/template/
+    - sdk/confidentialledger/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
