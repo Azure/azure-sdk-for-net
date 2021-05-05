@@ -11,7 +11,7 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal InternalPurchasePhoneNumbersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PurchasePhoneNumbersOperation");
+            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PurchasePhoneNumbersOperation");
 
             if (response.Headers.TryGetValue<string>("operation-id", out var id))
             {

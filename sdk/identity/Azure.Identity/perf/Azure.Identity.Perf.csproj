@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)BearerTokenChallengeAuthenticationPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared" />
@@ -26,4 +25,11 @@
     <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared" />
   </ItemGroup>
+
+  <!-- TODO: revert when Azure.Core ships -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+  </ItemGroup>
+  <!--  end TODO-->
+
 </Project>

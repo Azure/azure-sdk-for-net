@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.IoT.TimeSeriesInsights.Models;
-
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The interpolation operation to be performed on the raw data points. Currently, only sampling of interpolated time series is allowed. Allowed aggregate function - eg: left($value). Can be null if no interpolation needs to be applied. </summary>

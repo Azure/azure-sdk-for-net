@@ -31,7 +31,7 @@ namespace Azure.Containers.ContainerRegistry
     /// Step 5: GET /api/v1/acr/repositories
     /// Request Header: { Bearer acrTokenAccess }
     /// </summary>
-    internal class ContainerRegistryChallengeAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
+    internal class ContainerRegistryChallengeAuthenticationPolicy : BearerTokenAuthenticationPolicy
     {
         private readonly IContainerRegistryAuthenticationClient _authenticationClient;
         private readonly ContainerRegistryRefreshTokenCache _refreshTokenCache;
@@ -58,7 +58,13 @@ namespace Azure.Containers.ContainerRegistry
             return Task.CompletedTask;
         }
 
-        protected override async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message, bool async)
+        protected override ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
+            => AuthorizeRequestOnChallengeAsyncInternal(message, true);
+
+        protected override bool AuthorizeRequestOnChallenge(HttpMessage message)
+            => AuthorizeRequestOnChallengeAsyncInternal(message, false).EnsureCompleted();
+
+        private async ValueTask<bool> AuthorizeRequestOnChallengeAsyncInternal(HttpMessage message, bool async)
         {
             // Once we're here, we've completed Step 1.
 

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Partial list of time series instances returned in a single request. </summary>
-    public partial class GetInstancesPage : PagedResponse
+    internal partial class GetInstancesPage : PagedResponse
     {
         /// <summary> Initializes a new instance of GetInstancesPage. </summary>
         internal GetInstancesPage()

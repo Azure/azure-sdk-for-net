@@ -2,7 +2,7 @@
 . "${PSScriptRoot}\logging.ps1"
 . "${PSScriptRoot}\SemVer.ps1"
 
-$RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+.*(?<version>\b\d+\.\d+\.\d+([^0-9\s][^\s:]+)?)(\s+(?<releaseStatus>\(.*\)))?)"
+$RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+\s+(?<version>$([AzureEngSemanticVersion]::SEMVER_REGEX))(\s+(?<releaseStatus>\(.+\))))"
 $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
 
@@ -120,7 +120,17 @@ function Confirm-ChangeLogEntry {
     else {
       $status = $changeLogEntry.ReleaseStatus.Trim().Trim("()")
       try {
-        [DateTime]$status
+        $releaseDate = [DateTime]$status
+        if ($status -ne ($releaseDate.ToString($CHANGELOG_DATE_FORMAT)))
+        {
+          LogError "Date must be in the format $($CHANGELOG_DATE_FORMAT)"
+          return $false
+        }
+        if (((Get-Date).AddMonths(-1) -gt $releaseDate) -or ($releaseDate -gt (Get-Date).AddMonths(1)))
+        {
+          LogError "The date must be within +/- one month from today."
+          return $false
+        }
       }
       catch {
           LogError "Invalid date [ $status ] passed as status for Version [$($changeLogEntry.ReleaseVersion)]."

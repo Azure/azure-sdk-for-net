@@ -77,14 +77,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
-        public async Task RecognizeIdDocumentsOperationCanPollFromNewObject()
+        public async Task RecognizeIdentityDocumentsOperationCanPollFromNewObject()
         {
             var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
 
             var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Blank);
-            var operation = await client.StartRecognizeIdDocumentsFromUriAsync(uri);
+            var operation = await client.StartRecognizeIdentityDocumentsFromUriAsync(uri);
 
-            var sameOperation = InstrumentOperation(new RecognizeIdDocumentsOperation(operation.Id, nonInstrumentedClient));
+            var sameOperation = InstrumentOperation(new RecognizeIdentityDocumentsOperation(operation.Id, nonInstrumentedClient));
             await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
