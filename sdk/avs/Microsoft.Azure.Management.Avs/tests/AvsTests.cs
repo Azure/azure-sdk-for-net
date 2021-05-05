@@ -30,15 +30,15 @@ namespace Avs.Tests
 
             try
             {
-                using var client = context.GetServiceClient<AvsClient>();
-                var quota = client.Locations.CheckQuotaAvailability(location);
-                var trial = client.Locations.CheckTrialAvailability(location);
+                using var avsClient = context.GetServiceClient<AvsClient>();
+                var quota = avsClient.Locations.CheckQuotaAvailability(location);
+                var trial = avsClient.Locations.CheckTrialAvailability(location);
 
-                var clouds = client.PrivateClouds.List(rgName);
+                var clouds = avsClient.PrivateClouds.List(rgName);
                 Assert.True(clouds.Count() == 0);
 
                 // create a private cloud
-                var privateCloud = client.PrivateClouds.CreateOrUpdate(rgName, cloudName, new PrivateCloud
+                var privateCloud = avsClient.PrivateClouds.CreateOrUpdate(rgName, cloudName, new PrivateCloud
                 {
                     Location = location,
                     Sku = new Sku { Name = "av20" },
@@ -51,65 +51,65 @@ namespace Avs.Tests
 
                 // HCX Enterprise Sites
 
-                var hcxPage = client.HcxEnterpriseSites.List(rgName, privateCloud.Name);
+                var hcxPage = avsClient.HcxEnterpriseSites.List(rgName, privateCloud.Name);
                 Assert.True(hcxPage.Count() == 0);
 
-                var hcxSite = client.HcxEnterpriseSites.CreateOrUpdate(rgName, privateCloud.Name, hcxEnterpriseSiteName);
+                var hcxSite = avsClient.HcxEnterpriseSites.CreateOrUpdate(rgName, privateCloud.Name, hcxEnterpriseSiteName);
 
-                client.HcxEnterpriseSites.Get(rgName, privateCloud.Name, hcxSite.Name);
+                avsClient.HcxEnterpriseSites.Get(rgName, privateCloud.Name, hcxSite.Name);
 
-                hcxPage = client.HcxEnterpriseSites.List(rgName, privateCloud.Name);
+                hcxPage = avsClient.HcxEnterpriseSites.List(rgName, privateCloud.Name);
                 Assert.True(hcxPage.Count() == 1);
 
-                client.HcxEnterpriseSites.Get(rgName, privateCloud.Name, hcxSite.Name);
+                avsClient.HcxEnterpriseSites.Get(rgName, privateCloud.Name, hcxSite.Name);
 
-                client.HcxEnterpriseSites.Delete(rgName, privateCloud.Name, hcxSite.Name);
+                avsClient.HcxEnterpriseSites.Delete(rgName, privateCloud.Name, hcxSite.Name);
 
                 // ExpressRoute Authorizations
 
-                var authPage = client.Authorizations.List(rgName, privateCloud.Name);
+                var authPage = avsClient.Authorizations.List(rgName, privateCloud.Name);
                 Assert.True(authPage.Count() == 0);
 
-                var auth = client.Authorizations.CreateOrUpdate(rgName, privateCloud.Name, authName);
+                var auth = avsClient.Authorizations.CreateOrUpdate(rgName, privateCloud.Name, authName);
 
-                client.Authorizations.Get(rgName, privateCloud.Name, auth.Name);
+                avsClient.Authorizations.Get(rgName, privateCloud.Name, auth.Name);
 
-                authPage = client.Authorizations.List(rgName, privateCloud.Name);
+                authPage = avsClient.Authorizations.List(rgName, privateCloud.Name);
                 Assert.True(authPage.Count() == 1);
 
-                client.Authorizations.Delete(rgName, privateCloud.Name, auth.Name);
+                avsClient.Authorizations.Delete(rgName, privateCloud.Name, auth.Name);
 
                 // Clusters
 
-                var clusters = client.Clusters.List(rgName, cloudName);
+                var clusters = avsClient.Clusters.List(rgName, cloudName);
                 Assert.True(clusters.Count() == 0);
 
                 // create a cluster
-                var cluster = client.Clusters.CreateOrUpdate(rgName, cloudName, clusterName, new Cluster
+                var cluster = avsClient.Clusters.CreateOrUpdate(rgName, cloudName, clusterName, new Cluster
                 {
                     Sku = new Sku { Name = "av20" },
                     ClusterSize = 3,
                 });
 
-                client.Clusters.Get(rgName, cloudName, cluster.Name);
+                avsClient.Clusters.Get(rgName, cloudName, cluster.Name);
 
-                clusters = client.Clusters.List(rgName, cloudName);
+                clusters = avsClient.Clusters.List(rgName, cloudName);
                 Assert.True(clusters.Count() == 1);
 
                 // delete a cluster
-                client.Clusters.Delete(rgName, cloudName, cluster.Name);
+                avsClient.Clusters.Delete(rgName, cloudName, cluster.Name);
 
-                clusters = client.Clusters.List(rgName, cloudName);
+                clusters = avsClient.Clusters.List(rgName, cloudName);
                 Assert.True(clusters.Count() == 0);
 
-                clouds = client.PrivateClouds.List(rgName);
+                clouds = avsClient.PrivateClouds.List(rgName);
                 Assert.True(clouds.Count() == 1);
 
                 // disabled in test environment because of bug 9868299
                 // delete a private cloud
-                // client.PrivateClouds.Delete(rgName, cloudName);
+                // avsClient.PrivateClouds.Delete(rgName, cloudName);
 
-                // clouds = client.PrivateClouds.List(rgName);
+                // clouds = avsClient.PrivateClouds.List(rgName);
                 // Assert.True(clouds.Count() == 0);
 
             }
@@ -121,8 +121,8 @@ namespace Avs.Tests
 
         private ResourceGroup CreateResourceGroup(MockContext context, string location, string rgName)
         {
-            using var client = context.GetServiceClient<ResourceManagementClient>();
-            return client.ResourceGroups.CreateOrUpdate(
+            using var rmClient = context.GetServiceClient<ResourceManagementClient>();
+            return rmClient.ResourceGroups.CreateOrUpdate(
                 rgName,
                 new ResourceGroup
                 {
@@ -132,8 +132,8 @@ namespace Avs.Tests
 
         private void DeleteResourceGroup(MockContext context, string rgName)
         {
-            using var client = context.GetServiceClient<ResourceManagementClient>();
-            client.ResourceGroups.Delete(rgName);
+            using var rmClient = context.GetServiceClient<ResourceManagementClient>();
+            rmClient.ResourceGroups.Delete(rgName);
         }
     }
 }
