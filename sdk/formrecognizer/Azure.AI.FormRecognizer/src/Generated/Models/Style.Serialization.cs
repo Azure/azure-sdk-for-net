@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public partial class TextStyle
+    internal partial class Style
     {
-        internal static TextStyle DeserializeTextStyle(JsonElement element)
+        internal static Style DeserializeStyle(JsonElement element)
         {
             TextStyleName name = default;
             float confidence = default;
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new TextStyle(name, confidence);
+            return new Style(name, confidence);
         }
     }
 }
