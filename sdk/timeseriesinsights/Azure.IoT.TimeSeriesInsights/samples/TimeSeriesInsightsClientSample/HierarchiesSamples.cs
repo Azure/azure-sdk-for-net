@@ -21,13 +21,13 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             PrintHeader("TIME SERIES INSIGHTS HIERARCHIES SAMPLE");
 
             #region Snippet:TimeSeriesInsightsSampleCreateHierarchies
-            var tsiHierarchyName = "sampleHierarchy";
-            var tsiInstanceField1 = "hierarchyLevel1";
             var hierarchySource = new TimeSeriesHierarchySource();
-            hierarchySource.InstanceFieldNames.Add(tsiInstanceField1);
+            hierarchySource.InstanceFieldNames.Add("hierarchyLevel1");
 
-            var tsiHierarchy = new TimeSeriesHierarchy(tsiHierarchyName, hierarchySource);
-            tsiHierarchy.Id = "sampleHierarchyId";
+            var tsiHierarchy = new TimeSeriesHierarchy("sampleHierarchy", hierarchySource)
+            {
+                Id = "sampleHierarchyId"
+            };
 
             var timeSeriesHierarchies = new List<TimeSeriesHierarchy>
             {
@@ -66,10 +66,9 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             #region Snippet:TimeSeriesInsightsSampleReplaceHierarchies
             // Update hierarchies with adding a new instance field
-            var tsiInstanceField2 = "hierarchyLevel2";
             foreach (TimeSeriesHierarchy hierarchy in timeSeriesHierarchies)
             {
-                hierarchy.Source.InstanceFieldNames.Add(tsiInstanceField2);
+                hierarchy.Source.InstanceFieldNames.Add("hierarchyLevel2");
             }
 
             Response<TimeSeriesHierarchyOperationResult[]> updateHierarchiesResult = await client

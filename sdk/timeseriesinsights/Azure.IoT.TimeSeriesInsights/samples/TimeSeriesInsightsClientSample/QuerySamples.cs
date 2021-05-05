@@ -78,7 +78,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         {
             // Query for two series, one with the temperature values in Celsius and another in Fahrenheit
             #region Snippet:TimeSeriesInsightsSampleQuerySeries
-            Console.WriteLine("\n\nQuery for temperature series in celsius and fahrenheit over the past 10 minutes.\n");
+            Console.WriteLine("\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes.\n");
 
             DateTimeOffset endTime = DateTime.UtcNow;
             DateTimeOffset startTime = endTime.AddMinutes(-10);
@@ -141,7 +141,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #endregion Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithNumericVariable
 
             #region Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithAggregateVariable
-            Console.WriteLine("\n\nCount the number of temperature vents over the past 3 minutes, in 1-minute time slots.\n");
+            Console.WriteLine("\n\nCount the number of temperature events over the past 3 minutes, in 1-minute time slots.\n");
 
             // Get the count of events in 60-second time slots over the past 3 minutes
             DateTimeOffset endTime = DateTime.UtcNow;
