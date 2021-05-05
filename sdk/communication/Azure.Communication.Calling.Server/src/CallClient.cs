@@ -223,7 +223,7 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"><paramref name="callLegId"/> is null.</exception>
         public virtual async Task<Response> HangupCallAsync(string callLegId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(HangupCallAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(HangupCall)}");
             scope.Start();
             try
             {
@@ -267,7 +267,7 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"><paramref name="callLegId"/> is null.</exception>
         public virtual async Task<Response> SubscribeToToneAsync(string callLegId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(SubscribeToToneAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(SubscribeToTone)}");
             scope.Start();
             try
             {
@@ -312,7 +312,7 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"> <paramref name="callLegId"/> or <paramref name="operationContext"/> is null. </exception>
         public virtual async Task<Response<CancelMediaProcessingResponse>> CancelMediaProcessingAsync(string callLegId, string operationContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(CancelMediaProcessingAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(CancelMediaProcessing)}");
             scope.Start();
             try
             {
@@ -336,7 +336,7 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"> <paramref name="callLegId"/> or <paramref name="operationContext"/> is null. </exception>
         public virtual Response<CancelMediaProcessingResponse> CancelMediaProcessing(string callLegId, string operationContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(CancelMediaProcessingAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(CancelMediaProcessing)}");
             scope.Start();
             try
             {
@@ -360,7 +360,7 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"> <paramref name="callLegId"/> or <paramref name="request"/> is null. </exception>
         public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callLegId, PlayAudioRequest request, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(PlayAudioAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
@@ -410,7 +410,7 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"> <paramref name="callLegId"/> or <paramref name="audioFileUri"/> is null. </exception>
         public virtual async Task<Response<PlayAudioResponse>> PlayAudioAsync(string callLegId, Uri audioFileUri, bool loop, string operationContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(PlayAudioAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(PlayAudio)}");
             scope.Start();
             try
             {
@@ -476,7 +476,7 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"> <paramref name="callLegId"/> or <paramref name="participants"/> is null. </exception>
         public virtual async Task<Response> InviteParticipantsAsync(string callLegId, IEnumerable<CommunicationIdentifier> participants, string operationContext, string? alternateCallerId = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(InviteParticipantsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(InviteParticipants)}");
             scope.Start();
             try
             {
@@ -513,7 +513,7 @@ namespace Azure.Communication.Calling.Server
         /// <exception cref="ArgumentNullException"> <paramref name="callLegId"/> or <paramref name="participants"/> is null. </exception>
         public virtual Response InviteParticipants(string callLegId, IEnumerable<CommunicationIdentifier> participants, string operationContext, string? alternateCallerId = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(InviteParticipantsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(InviteParticipants)}");
             scope.Start();
             try
             {
