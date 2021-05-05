@@ -1,7 +1,8 @@
 # Release History
 
-## 1.0.0-preview.9 (Unreleased)
-
+## 1.0.0-preview.9 (2021-05-11)
+### Key Bug Fixes
+- Updated dependency versions.
 
 ## 1.0.0-preview.8 (2021-04-06)
 
