@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#region Snippet:Azure_Communication_ServerCalling_Tests_UsingStatements
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Azure.Core;
+//@@ using Azure.Communication.Calling.Server;
+#endregion Snippet:Azure_Communication_ServerCalling_Tests_UsingStatements
 using Azure.Communication.Identity;
 
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Azure.Communication.Calling.Server.Tests
 {
@@ -73,6 +73,7 @@ namespace Azure.Communication.Calling.Server.Tests
         }
 
         [Test]
+        [Ignore("PlayAudio Operation required the call is under established state which is not doable for now.")]
         public async Task PlayAudioTest()
         {
             CallClient client = CreateServerCallingClient();
@@ -119,6 +120,7 @@ namespace Azure.Communication.Calling.Server.Tests
         }
 
         [Test]
+        [Ignore("CancelMediaProcessing Operation required the call is under established state which is not doable for now.")]
         public async Task CancelMediaProcessingTest()
         {
             CallClient client = CreateServerCallingClient();
@@ -145,7 +147,8 @@ namespace Azure.Communication.Calling.Server.Tests
         #region Snippet:Azure_Communication_ServerCalling_Tests_CreateCallOperation
         private async Task<Response<CreateCallResponse>> CreateCallOperation(CallClient client)
         {
-            var source = new CommunicationUserIdentifier(TestEnvironment.SourceIdentity);
+            var sourceIdentity = await CreateUserAsync(TestEnvironment.LiveTestConnectionString).ConfigureAwait(false);
+            var source = new CommunicationUserIdentifier(sourceIdentity.Id);
             var targets = new List<CommunicationIdentifier>() { new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber) };
             var createCallOption = new CreateCallOptions(
                    new Uri(TestEnvironment.AppCallbackUrl),
@@ -227,5 +230,31 @@ namespace Azure.Communication.Calling.Server.Tests
         #endregion Snippet:Azure_Communication_ServerCalling_Tests_CancelMediaProcessingOperation
 
         #endregion
+
+        #region Support functions
+        /// <summary>
+        /// Create new user
+        /// </summary>
+        /// <param name="connectionString">The connectionstring of Azure Communication Service resource.</param>
+        /// <returns></returns>
+        public static async Task<CommunicationUserIdentifier> CreateUserAsync(string connectionString)
+        {
+            var client = new CommunicationIdentityClient(connectionString);
+            var user = await client.CreateUserAsync().ConfigureAwait(false);
+            return user.Value;
+        }
+
+        /// <summary>
+        /// Create new user
+        /// </summary>
+        /// <param name="connectionString">The connectionstring of Azure Communication Service resource.</param>
+        /// <returns></returns>
+        public static CommunicationUserIdentifier CreateUser(string connectionString)
+        {
+            var client = new CommunicationIdentityClient(connectionString);
+            var user = client.CreateUser();
+            return user.Value;
+        }
+        #endregion Support functions
     }
 }

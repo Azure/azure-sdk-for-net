@@ -36,37 +36,6 @@ namespace Azure.Communication.Calling.Server.Tests
             #endregion Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClient
             return InstrumentClient(client);
         }
-        public CallClient CreateSmsClientWithToken()
-        {
-            Uri endpoint = TestEnvironment.LiveTestEndpoint;
-            TokenCredential tokenCredential;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                tokenCredential = new MockCredential();
-            }
-            else
-            {
-                #region Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClientWithToken
-                //@@ string endpoint = "<endpoint_url>";
-                //@@ TokenCredential tokenCredential = new DefaultAzureCredential();
-                /*@@*/tokenCredential = new DefaultAzureCredential();
-                //@@ CallClient client = new CallClient(new Uri(endpoint), tokenCredential);
-                #endregion Snippet:Azure_Communication_ServerCalling_Tests_Samples_CreateServerCallingClientWithToken
-            }
-            CallClient client = new CallClient(endpoint, tokenCredential, CreateServerCallingClientOptions());
-            return InstrumentClient(client);
-        }
-
-        /// <summary>
-        /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
-        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
-        /// </summary>
-        /// <returns>The instrumented <see cref="CommunicationIdentityClient" />.</returns>
-        protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
-            => InstrumentClient(
-                new CommunicationIdentityClient(
-                    TestEnvironment.ConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
 
         // Todo: add CorrelationVectorLogs
         private CallClientOptions CreateServerCallingClientOptions()
