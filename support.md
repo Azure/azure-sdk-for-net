@@ -11,7 +11,7 @@ Customers with a [support plan](https://azure.microsoft.com/en-us/support/option
 - Take a look at the [Azure SDK blog](https://devblogs.microsoft.com/azure-sdk/).
 - Chat with other community members on [gitter](https://gitter.im/Azure/azure-sdk-for-net?source=orgpage)
 - Ask a question on [Twitter](https://twitter.com/AzureSDK?s=20)
-- Ask a question at [Microsoft Q&A](https://docs.microsoft.com/en-us/answers/products/azure?WT.mc_id=Portal-Microsoft_Azure_Support&product=all)
+- Ask a question at [Microsoft Q&A](https://docs.microsoft.com/answers/products/azure?WT.mc_id=Portal-Microsoft_Azure_Support&product=all)
 - Ask a question at [Microsoft Tech Community](https://techcommunity.microsoft.com/t5/azure/ct-p/Azure)
 - Search for similar issues in [our GitHub repository](https://github.com/Azure/azure-sdk-for-net/issues)
 
