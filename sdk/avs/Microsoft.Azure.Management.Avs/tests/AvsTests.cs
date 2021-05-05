@@ -13,16 +13,18 @@ namespace Avs.Tests
 {
     public class AvsTests : TestBase
     {
+        const string PREFIX = "avs-sdk-test-";
+
         [Fact]
         public void AvsCrud()
         {
             using var context = MockContext.Start(this.GetType());
-            string rgName = TestUtilities.GenerateName("avs-sdk-test-rg");
-            string cloudName = TestUtilities.GenerateName("avs-sdk-test-cloud");
-            string clusterName = TestUtilities.GenerateName("avs-sdk-test-cluster");
+            string rgName = TestUtilities.GenerateName(PREFIX + "rg");
+            string cloudName = TestUtilities.GenerateName(PREFIX + "cloud");
+            string clusterName = TestUtilities.GenerateName(PREFIX + "cluster");
             string location = "centralus";
-            string hcxEnterpriseSiteName = TestUtilities.GenerateName("avs-sdk-test-hcx-site");
-            string authName = TestUtilities.GenerateName("avs-sdk-test-authorization");
+            string hcxEnterpriseSiteName = TestUtilities.GenerateName(PREFIX + "site");
+            string authName = TestUtilities.GenerateName(PREFIX + "authorization");
 
             CreateResourceGroup(context, location, rgName);
 
