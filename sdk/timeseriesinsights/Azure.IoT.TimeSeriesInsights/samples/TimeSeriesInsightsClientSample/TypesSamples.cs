@@ -21,29 +21,16 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             PrintHeader("TIME SERIES INSIGHTS TYPES SAMPLE");
 
             #region Snippet:TimeSeriesInsightsSampleCreateType
-            // Create an aggregate type
+            // Create an aggregate variable
             var timeSeriesTypes = new List<TimeSeriesType>();
 
             var countExpression = new TimeSeriesExpression("count()");
             var aggregateVariable = new AggregateVariable(countExpression);
             var variables = new Dictionary<string, TimeSeriesVariable>();
-            var variableName = "aggregateVariable";
-            variables.Add(variableName, aggregateVariable);
+            variables.Add("aggregateVariable", aggregateVariable);
 
-            var timeSeriesTypesProperties = new Dictionary<string, string>
-            {
-                { "Type1", "Type1Id"},
-                { "Type2", "Type2Id"}
-            };
-
-            foreach (KeyValuePair<string, string> property in timeSeriesTypesProperties)
-            {
-                var type = new TimeSeriesType(property.Key, variables)
-                {
-                    Id = property.Value
-                };
-                timeSeriesTypes.Add(type);
-            }
+            timeSeriesTypes.Add(new TimeSeriesType("Type1", variables) { Id = "Type1Id" });
+            timeSeriesTypes.Add(new TimeSeriesType("Type2", variables) { Id = "Type2Id" });
 
             Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
                 .Types

@@ -141,7 +141,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #endregion Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithNumericVariable
 
             #region Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithAggregateVariable
-            Console.WriteLine("\n\nCount the number of temperature vents over the past 3 minutes, in 1-minute time slots.\n");
+            Console.WriteLine("\n\nCount the number of temperature events over the past 3 minutes, in 1-minute time slots.\n");
 
             // Get the count of events in 60-second time slots over the past 3 minutes
             DateTimeOffset endTime = DateTime.UtcNow;

@@ -261,7 +261,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <returns>The <see cref="QueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithAggregateVariable">
-        /// Console.WriteLine(&quot;\n\nCount the number of temperature vents over the past 3 minutes, in 1-minute time slots.\n&quot;);
+        /// Console.WriteLine(&quot;\n\nCount the number of temperature events over the past 3 minutes, in 1-minute time slots.\n&quot;);
         ///
         /// // Get the count of events in 60-second time slots over the past 3 minutes
         /// DateTimeOffset endTime = DateTime.UtcNow;

@@ -416,29 +416,16 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateType">
-        /// // Create an aggregate type
+        /// // Create an aggregate variable
         /// var timeSeriesTypes = new List&lt;TimeSeriesType&gt;();
         ///
         /// var countExpression = new TimeSeriesExpression(&quot;count()&quot;);
         /// var aggregateVariable = new AggregateVariable(countExpression);
         /// var variables = new Dictionary&lt;string, TimeSeriesVariable&gt;();
-        /// var variableName = &quot;aggregateVariable&quot;;
-        /// variables.Add(variableName, aggregateVariable);
+        /// variables.Add(&quot;aggregateVariable&quot;, aggregateVariable);
         ///
-        /// var timeSeriesTypesProperties = new Dictionary&lt;string, string&gt;
-        /// {
-        ///     { &quot;Type1&quot;, &quot;Type1Id&quot;},
-        ///     { &quot;Type2&quot;, &quot;Type2Id&quot;}
-        /// };
-        ///
-        /// foreach (KeyValuePair&lt;string, string&gt; property in timeSeriesTypesProperties)
-        /// {
-        ///     var type = new TimeSeriesType(property.Key, variables)
-        ///     {
-        ///         Id = property.Value
-        ///     };
-        ///     timeSeriesTypes.Add(type);
-        /// }
+        /// timeSeriesTypes.Add(new TimeSeriesType(&quot;Type1&quot;, variables) { Id = &quot;Type1Id&quot; });
+        /// timeSeriesTypes.Add(new TimeSeriesType(&quot;Type2&quot;, variables) { Id = &quot;Type2Id&quot; });
         ///
         /// Response&lt;TimeSeriesTypeOperationResult[]&gt; createTypesResult = await client
         ///     .Types

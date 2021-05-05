@@ -4,28 +4,35 @@ Azure Time Series Insights provides data exploration and telemetry tools to help
 
 Azure Time Series Insights gives you a global view of your data, so you can quickly validate your IoT solution and avoid costly downtime to mission-critical devices. It can help you discover hidden trends, spot anomalies, and conduct root-cause analysis in near real time.
 
-If you are new to Azure Time Series Insights and would like to learn more about the platform, please make sure you check out the Azure Time Series Insights official documentation page.
+If you are new to Azure Time Series Insights and would like to learn more about the platform, please make sure you check out the Azure Time Series Insights official [documentation page][tsi_product_documentation].
 
-# Time Series Insights Samples
+# Time Series Insights client library for .NET
+The Time Series Insights client library for .NET provides the following functionality:
+- Retrieving and being able to make changes to the Time Series Insights environment model settings, such as changing the model name or default type ID.
+- Retrieving and being able to add, update and remove Time Series instances.
+- Retrieving and being able to make changes to the Time Series Insights environment types, such as creating, updating and deleting Time Series types.
+- Retrieving and being able to make changes to the Time Series Insights hierarchies, such as creating, updating and deleting Time Series hierarchies.
+- Executing Time series queries such as querying for raw events, series and aggregate series
 
-You can explore the time series insights APIs (using the client library) using the samples project.
+[Source Code][tsi_client_src] | [Package (NuGet)][tsi_nuget_package] | [Product documentation][tsi_product_documentation] | [Samples][tsi_samples]
 
-The samples project demonstrates the following:
+# Key concepts
 
-- Instantiate the client
-- Demonstrate how to use Model APIs
-    - Create, get, replace, and delete instances
-    - Create, get, replace, and delete types
-    - Create, get, replace, and delete hierarchies
-    - Get and update model configuration settings
-- Demonstrate how to query raw events, series, and aggregates.
+## TimeSeriesInsightsClient
 
-## Creating the time series insights client
+A `TimeSeriesInsightsClient` is the primary interface for developers using the Time Series Insights client library. It provides both synchronous and asynchronous operations to perform operations on a Time Series Insights environment. The `TimeSeriesInsightsClient` exposes several properties that a developer will use to perform specific operations on a Time Series Insights environment. For example, `ModelSettings` is the the property that a developer can use to perform operations on the model settings of the TSI environment. `Instances` can be used to perform operations on TSI instances. Other properties include `Types`, `Hierarchies` and `Query`.
 
-To create a new time series insights client, you need the endpoint to an Azure Time Series Insights instance and supply credentials.
-In the sample below, you can set `TsiEndpoint`, `TenantId`, `ClientId`, and `ClientSecret` as command-line arguments.
-The client requires an instance of [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet).
-In this samples, we illustrate how to use one derived class: ClientSecretCredential.
+# Creating TimeSeriesInsightsClient
+
+To create a new Time Series Insights client, you need the endpoint to an Azure Time Series Insights instance and supply credentials.
+To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
+or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
+
+```PowerShell
+Install-Package Azure.Identity
+```
+
+Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
 
 ```C# Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret
 // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
@@ -37,23 +44,101 @@ var client = new TimeSeriesInsightsClient(
     tokenCredential);
 ```
 
-## Create, get, replace, and delete instances
+# Time Series Insights Samples
 
-### Create instances
-You can use the following snippet to create instance Id using `TimeSeriesId`.
+The following section provides several code snippets using the `client` created above, and covers the main functions of Time Series Insights. You can explore and learn more about the Time Series Insights client library APIs through using the samples project.
+
+- [Time Series Insights ID](#time-series-insights-id)
+- [Time Series Insights Model Settings](#time-series-insights-model-settings)
+- [Time Series Insights Instances](#time-series-insights-instances)
+- [Time Series Insights Types](#time-series-insights-types)
+- [Time Series Insights Hierarchies](#time-series-insights-hierarchies)
+- [Time Series Insights Query](#time-series-insights-query)
+
+## Time Series Insights ID
+A single Time Series ID value is composed of up to 3 string values that uniquely identify a Time Series instance. The keys that make up the Time Series ID are chosen when creating a Time Series Insights Gen2 environment through the Azure portal. The position of values must match Time Series ID properties specified on the environment and returned by Get Model Setting API.  For example, if your Time Series Insights environment is setup with ID properties `Building`, `Floor` and `Room`, then this code snippet illustrates creating a Time Series instance ID using `TimeSeriesId` class for building 'Millennium', 'Floor2' and room '2A01'. Visit [this page][tsi_id_learn_more] to check out the best practices for choosing a Time Series ID.
 
 ```csharp
-you can use the Model Settings client to learn more about what the Time Series Id is composed of in the environment.
-TimeSeriesId instanceId = modelSettings.TimeSeriesIdProperties.Count switch
-{
-    1 => new TimeSeriesId("key1"),
-    2 => new TimeSeriesId("key1", "key2"),
-    3 => new TimeSeriesId("key1", "key2", "key3"),
-    _ => throw new Exception($"Invalid number of Time Series Insights Id properties."),
-};
+var instanceId =  new TimeSeriesId("Millennium", "Floor2", "2A01");
 ```
 
-Let's create instances using the code below. 
+## Time Series Insights Model Settings
+
+Use [ModelSettings](https://github.com/Azure/azure-sdk-for-net/blob/82c7aff5ef867f7a3d77f5ac43a0b1c5576996e6/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs#L32) in the `TimeSeriesInsightsClient` to learn more about the environment model settings, such as name, default type ID, and the properties that define the Time Series ID during environment creation.
+
+```C# Snippet:TimeSeriesInsightsSampleGetModelSettings
+Response<TimeSeriesModelSettings> getModelSettingsResponse = await client.ModelSettings.GetAsync();
+Console.WriteLine($"Retrieved Time Series Insights model settings:\n{JsonSerializer.Serialize(getModelSettingsResponse.Value)}");
+```
+
+Here's what a retrieved model settings object looks like.
+```json
+{
+  "Name": "sampleModel",
+  "TimeSeriesIdProperties": [
+    {
+      "Name": "Building",
+      "Type": {
+        "HasValue": true,
+        "Value": {
+          
+        }
+      }
+    },
+    {
+      "Name": "Floor",
+      "Type": {
+        "HasValue": true,
+        "Value": {
+          
+        }
+      }
+    },
+    {
+      "Name": "Room",
+      "Type": {
+        "HasValue": true,
+        "Value": {
+          
+        }
+      }
+    }
+  ],
+  "DefaultTypeId": "86fc3da5-a7cb-443a-b7c3-00a7d9ebb72d"
+}
+```
+
+You can also use `ModelSettings` object to make changes to the model settings name and/or default type ID.
+
+```C# Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName
+Response<TimeSeriesModelSettings> updateModelSettingsNameResponse = await client.ModelSettings.UpdateNameAsync("NewModelSettingsName");
+Console.WriteLine($"Updated Time Series Insights model settings name:\n" +
+    $"{JsonSerializer.Serialize(updateModelSettingsNameResponse.Value)}");
+```
+
+```C# Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
+Response<TimeSeriesModelSettings> updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
+Console.WriteLine($"Updated Time Series Insights model settings default type Id:\n" +
+    $"{JsonSerializer.Serialize(updateDefaultTypeIdResponse.Value)}");
+```
+
+## Time Series Insights Instances
+
+Time Series Model instances are virtual representations of the time series themselves. To learn more about Time Series Model instances, make sure you visit [this page][tsi_instances_learn_more].
+
+Use [Instances](https://github.com/Azure/azure-sdk-for-net/blob/82c7aff5ef867f7a3d77f5ac43a0b1c5576996e6/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs#L37) in the `TimeSeriesInsightsClient` to perform a variety of operations on the environment's instances.
+
+This code snippet demonstrates retrieving all created instances in your TSI environment.
+```C# Snippet:TimeSeriesInsightsGetAllInstances
+// Get all instances for the Time Series Insigths environment
+AsyncPageable<TimeSeriesInstance> tsiInstances = client.Instances.GetAsync();
+await foreach (TimeSeriesInstance tsiInstance in tsiInstances)
+{
+    Console.WriteLine($"Retrieved Time Series Insights instance with Id '{tsiInstance.TimeSeriesId}' and name '{tsiInstance.Name}'.");
+}
+```
+
+This code snippet demonstrates creating a list of Time Series instances in your environment.
 ```C# Snippet:TimeSeriesInsightsSampleCreateInstance
 // Create a Time Series Instance object with the default Time Series Insights type Id.
 // The default type Id can be obtained programmatically by using the ModelSettings client.
@@ -89,19 +174,8 @@ for (int i = 0; i < createInstanceErrors.Value.Length; i++)
 }
 ```
 
-### Get instances
+You can also retrieve specific instances by their unique identifier, or by the Time Series instance names.
 
-Use `Instances.GetAsync` to get all created instances as `AsyncPageable<TimeSeriesInstance>`.
-```C# Snippet:TimeSeriesInsightsGetAllInstances
-// Get all instances for the Time Series Insigths environment
-AsyncPageable<TimeSeriesInstance> tsiInstances = client.Instances.GetAsync();
-await foreach (TimeSeriesInstance tsiInstance in tsiInstances)
-{
-    Console.WriteLine($"Retrieved Time Series Insights instance with Id '{tsiInstance.TimeSeriesId}' and name '{tsiInstance.Name}'.");
-}
-```
-
-Use `Instances.GetAsync` with list of instance's unique identifiers or names to get a list of specific instances.
 ```C# Snippet:TimeSeriesInsightsGetnstancesById
 // Get Time Series Insights instances by Id
 var timeSeriesIds = new List<TimeSeriesId>
@@ -128,9 +202,37 @@ for (int i = 0; i < getByIdsResult.Value.Length; i++)
 }
 ```
 
-### Replace instances
+Similarly, you can delete specific instances by their unique identifier, or by the Time Series instances names.
 
-To replace instances, pass in a list of `TimeSeriesInstance`.
+```C# Snippet:TimeSeriesInsightsSampleDeleteInstanceById
+var instancesToDelete = new List<TimeSeriesId>
+{
+    tsId,
+};
+
+Response<TimeSeriesOperationError[]> deleteInstanceErrors = await client
+    .Instances
+    .DeleteAsync(instancesToDelete)
+    .ConfigureAwait(false);
+
+// The response of calling the API contains a list of error objects corresponding by position to the input parameter
+// array in the request. If the error object is set to null, this means the operation was a success.
+for (int i = 0; i < deleteInstanceErrors.Value.Length; i++)
+{
+    TimeSeriesId tsiId = instancesToDelete[i];
+
+    if (deleteInstanceErrors.Value[i] == null)
+    {
+        Console.WriteLine($"Deleted Time Series Insights instance with Id '{tsiId}'.");
+    }
+    else
+    {
+        Console.WriteLine($"Failed to delete a Time Series Insights instance with Id '{tsiId}'. Error Message: '{deleteInstanceErrors.Value[i].Message}'");
+    }
+}
+```
+
+This code snippet demonstrates replacing an existing Time Series instance.
 ```C# Snippet:TimeSeriesInsightsReplaceInstance
 // Get Time Series Insights instances by Id
 var instanceIdsToGet = new List<TimeSeriesId>
@@ -172,66 +274,22 @@ for (int i = 0; i < replaceInstancesResult.Value.Length; i++)
 }
 ```
 
-### Delete instances
+## Time Series Insights Types
+Use [Types](https://github.com/Azure/azure-sdk-for-net/blob/82c7aff5ef867f7a3d77f5ac43a0b1c5576996e6/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs#L42) in the `TimeSeriesInsightsClient` to create, retrieve, replace and delete Time Series types in your environment.
 
-To delete instances, pass in a list of time series Ids or names for the instances you want to delete.
-```C# Snippet:TimeSeriesInsightsSampleDeleteInstanceById
-var instancesToDelete = new List<TimeSeriesId>
-{
-    tsId,
-};
-
-Response<TimeSeriesOperationError[]> deleteInstanceErrors = await client
-    .Instances
-    .DeleteAsync(instancesToDelete)
-    .ConfigureAwait(false);
-
-// The response of calling the API contains a list of error objects corresponding by position to the input parameter
-// array in the request. If the error object is set to null, this means the operation was a success.
-for (int i = 0; i < deleteInstanceErrors.Value.Length; i++)
-{
-    TimeSeriesId tsiId = instancesToDelete[i];
-
-    if (deleteInstanceErrors.Value[i] == null)
-    {
-        Console.WriteLine($"Deleted Time Series Insights instance with Id '{tsiId}'.");
-    }
-    else
-    {
-        Console.WriteLine($"Failed to delete a Time Series Insights instance with Id '{tsiId}'. Error Message: '{deleteInstanceErrors.Value[i].Message}'");
-    }
-}
-```
-
-## Create, get, replace, and delete types
-
-### Create types
-You can use the following snippet to create types.
+This snippet demonstrates creating a Time Series type in your environment.
 
 ```C# Snippet:TimeSeriesInsightsSampleCreateType
-// Create an aggregate type
+// Create an aggregate variable
 var timeSeriesTypes = new List<TimeSeriesType>();
 
 var countExpression = new TimeSeriesExpression("count()");
 var aggregateVariable = new AggregateVariable(countExpression);
 var variables = new Dictionary<string, TimeSeriesVariable>();
-var variableName = "aggregateVariable";
-variables.Add(variableName, aggregateVariable);
+variables.Add("aggregateVariable", aggregateVariable);
 
-var timeSeriesTypesProperties = new Dictionary<string, string>
-{
-    { "Type1", "Type1Id"},
-    { "Type2", "Type2Id"}
-};
-
-foreach (KeyValuePair<string, string> property in timeSeriesTypesProperties)
-{
-    var type = new TimeSeriesType(property.Key, variables)
-    {
-        Id = property.Value
-    };
-    timeSeriesTypes.Add(type);
-}
+timeSeriesTypes.Add(new TimeSeriesType("Type1", variables) { Id = "Type1Id" });
+timeSeriesTypes.Add(new TimeSeriesType("Type2", variables) { Id = "Type2Id" });
 
 Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
     .Types
@@ -253,9 +311,8 @@ for (int i = 0; i < createTypesResult.Value.Length; i++)
 }
 ```
 
-### Get types
+This snippet demonstrates retrieving all created types in your environment in pages. You can enumerate an AsyncPageable object using the `async foreach` loop.
 
-Using `Types.GetTypesAsync`, all created types are returned as `AsyncPageable<TimeSeriesType>`.
 ```C# Snippet:TimeSeriesInsightsSampleGetAllTypes
 // Get all Time Series types in the environment
 AsyncPageable<TimeSeriesType> getAllTypesResponse = client.Types.GetTypesAsync();
@@ -266,7 +323,8 @@ await foreach (TimeSeriesType tsiType in getAllTypesResponse)
 }
 ```
 
-Use `Types.GetByIdAsync` with list of types' unique identifiers or names to get a list of specific types.
+This snippet highlights how you can retrieve a list of specific Time Series types by their unique identifiers or names.
+
 ```C# Snippet:TimeSeriesInsightsSampleGetTypeById
 // Code snippet below shows getting a default Type using Id
 // The default type Id can be obtained programmatically by using the ModelSettings client.
@@ -292,9 +350,34 @@ for (int i = 0; i < getTypeByIdResults.Value.Length; i++)
 }
 ```
 
-### Replace types
+Similarly, you can delete Time Series types by providing a list of Time Series type Ids or names.
 
-To replace types, use `Types.CreateOrReplaceAsync` with a list of `TimeSeriesType`.
+```C# Snippet:TimeSeriesInsightsSampleDeleteTypeById
+// Delete Time Series types with Ids
+
+var typesIdsToDelete = new List<string> { "Type1Id", " Type2Id" };
+Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
+    .Types
+    .DeleteByIdAsync(typesIdsToDelete)
+    .ConfigureAwait(false);
+
+// The response of calling the API contains a list of error objects corresponding by position to the input parameter
+// array in the request. If the error object is set to null, this means the operation was a success.
+foreach (var result in deleteTypesResponse.Value)
+{
+    if (result != null)
+    {
+        Console.WriteLine($"Failed to delete a Time Series Insights type: {result.Message}.");
+    }
+    else
+    {
+        Console.WriteLine($"Deleted a Time Series Insights type successfully.");
+    }
+}
+```
+
+This code snippet demonstrates replacing an existing Time Series type.
+
 ```C# Snippet:TimeSeriesInsightsSampleReplaceType
 // Update variables with adding a new variable
 foreach (TimeSeriesType type in timeSeriesTypes)
@@ -322,46 +405,22 @@ for (int i = 0; i < updateTypesResult.Value.Length; i++)
 }
 ```
 
-### Delete types
+## Time Series Insights Hierarchies
 
-To delete types, use `Types.DeleteByIdAsync` and pass in a list of type Ids or names for the types you want to delete.
-```C# Snippet:TimeSeriesInsightsSampleDeleteTypeById
-// Delete Time Series types with Ids
+Time Series Model hierarchies organize instances by specifying property names and their relationships. You can configure multiple hierarchies in a given Azure Time Series Insights Gen2 environment. A Time Series Model instance can map to a single hierarchy or multiple hierarchies (many-to-many relationship). To learn more about Time Series Model hierarchies, make sure you visit [this page][tsi_hierarchies_learn_more].
 
-var typesIdsToDelete = new List<string> { "Type1Id", " Type2Id" };
-Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
-    .Types
-    .DeleteByIdAsync(typesIdsToDelete)
-    .ConfigureAwait(false);
+Use [Hierarchies](https://github.com/Azure/azure-sdk-for-net/blob/82c7aff5ef867f7a3d77f5ac43a0b1c5576996e6/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs#L47) in the `TimeSeriesInsightsClient` to perform a variety of operations on the environment's hierarchies.
 
-// The response of calling the API contains a list of error objects corresponding by position to the input parameter
-// array in the request. If the error object is set to null, this means the operation was a success.
-foreach (var result in deleteTypesResponse.Value)
-{
-    if (result != null)
-    {
-        Console.WriteLine($"Failed to delete a Time Series Insights type: {result.Message}.");
-    }
-    else
-    {
-        Console.WriteLine($"Deleted a Time Series Insights type successfully.");
-    }
-}
-```
-
-## Create, get, replace, and delete hierarchies
-
-### Create hierarchies
-You can use the following snippet to create hierarchies.
+This code snippet demonstrates creating hierarchies in your Time Series Insights environment.
 
 ```C# Snippet:TimeSeriesInsightsSampleCreateHierarchies
-var tsiHierarchyName = "sampleHierarchy";
-var tsiInstanceField1 = "hierarchyLevel1";
 var hierarchySource = new TimeSeriesHierarchySource();
-hierarchySource.InstanceFieldNames.Add(tsiInstanceField1);
+hierarchySource.InstanceFieldNames.Add("hierarchyLevel1");
 
-var tsiHierarchy = new TimeSeriesHierarchy(tsiHierarchyName, hierarchySource);
-tsiHierarchy.Id = "sampleHierarchyId";
+var tsiHierarchy = new TimeSeriesHierarchy("sampleHierarchy", hierarchySource)
+{
+    Id = "sampleHierarchyId"
+};
 
 var timeSeriesHierarchies = new List<TimeSeriesHierarchy>
 {
@@ -389,9 +448,8 @@ for (int i = 0; i < createHierarchiesResult.Value.Length; i++)
 }
 ```
 
-### Get hierarchies
+This code snippet demonstrates retrieving all hierarchies in your environment in pages. You can enumerate an AsyncPageable object using the `async foreach` loop.
 
-Using `Hierarchies.GetAsync`, all created hierarchies are returned as `AsyncPageable<TimeSeriesHierarchy>`.
 ```C# Snippet:TimeSeriesInsightsSampleGetAllHierarchies
 // Get all Time Series hierarchies in the environment
 AsyncPageable<TimeSeriesHierarchy> getAllHierarchies = client.Hierarchies.GetAsync();
@@ -401,7 +459,8 @@ await foreach (TimeSeriesHierarchy hierarchy in getAllHierarchies)
 }
 ```
 
-Use `Hierarchies.GetByIdAsync` with list of hierarchies unique identifiers or names to get a list of specific hierarchies.
+You can use a list of hierarchy IDs or names to get specific hierarchies, as demonstrated in this code snippet.
+
 ```C# Snippet:TimeSeriesInsightsSampleGetHierarchiesById
 var tsiHierarchyIds = new List<string>
 {
@@ -428,40 +487,7 @@ for (int i = 0; i < getHierarchiesByIdsResult.Value.Length; i++)
 }
 ```
 
-### Replace hierarchies
-
-To replace hierarchies, pass in a list of `TimeSeriesHierarchy`.
-```C# Snippet:TimeSeriesInsightsSampleReplaceHierarchies
-// Update hierarchies with adding a new instance field
-var tsiInstanceField2 = "hierarchyLevel2";
-foreach (TimeSeriesHierarchy hierarchy in timeSeriesHierarchies)
-{
-    hierarchy.Source.InstanceFieldNames.Add(tsiInstanceField2);
-}
-
-Response<TimeSeriesHierarchyOperationResult[]> updateHierarchiesResult = await client
-        .Hierarchies
-        .CreateOrReplaceAsync(timeSeriesHierarchies)
-        .ConfigureAwait(false);
-
-// The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
-// If the error object is set to null, this means the operation was a success.
-for (int i = 0; i < updateHierarchiesResult.Value.Length; i++)
-{
-    if (updateHierarchiesResult.Value[i].Error == null)
-    {
-        Console.WriteLine($"Updated Time Series hierarchy successfully.");
-    }
-    else
-    {
-        Console.WriteLine($"Failed to update a Time Series Insights hierarchy due to: {updateHierarchiesResult.Value[i].Error.Message}.");
-    }
-}
-```
-
-### Delete hierarchies
-
-To delete hierarchies, pass in a list of hierarchies Ids or names for the hierarchies you want to delete.
+Similarly, you can use a list of hierarchies Ids or names to be able to delete heirarchies, as demonstrated in this code snippet.
 ```C# Snippet:TimeSeriesInsightsSampleDeleteHierarchiesById
 // Delete Time Series hierarchies with Ids
 var tsiHierarchyIdsToDelete = new List<string>
@@ -489,31 +515,145 @@ foreach (TimeSeriesOperationError result in deleteHierarchiesResponse.Value)
 }
 ```
 
-## Get and delete model settings
+This code snippet demonstrates replacing a Time Series hierarchy.
 
-### Get model settings
+```C# Snippet:TimeSeriesInsightsSampleReplaceHierarchies
+// Update hierarchies with adding a new instance field
+foreach (TimeSeriesHierarchy hierarchy in timeSeriesHierarchies)
+{
+    hierarchy.Source.InstanceFieldNames.Add("hierarchyLevel2");
+}
 
-Using `ModelSettings.GetAsync`, model display name, Time Series Id properties and default type ID are returned with the  `Response<TimeSeriesModelSettings>`.
-```C# Snippet:TimeSeriesInsightsSampleGetModelSettings
-Response<TimeSeriesModelSettings> getModelSettingsResponse = await client.ModelSettings.GetAsync();
-Console.WriteLine($"Retrieved Time Series Insights model settings:\n{JsonSerializer.Serialize(getModelSettingsResponse.Value)}");
+Response<TimeSeriesHierarchyOperationResult[]> updateHierarchiesResult = await client
+        .Hierarchies
+        .CreateOrReplaceAsync(timeSeriesHierarchies)
+        .ConfigureAwait(false);
+
+// The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
+// If the error object is set to null, this means the operation was a success.
+for (int i = 0; i < updateHierarchiesResult.Value.Length; i++)
+{
+    if (updateHierarchiesResult.Value[i].Error == null)
+    {
+        Console.WriteLine($"Updated Time Series hierarchy successfully.");
+    }
+    else
+    {
+        Console.WriteLine($"Failed to update a Time Series Insights hierarchy due to: {updateHierarchiesResult.Value[i].Error.Message}.");
+    }
+}
 ```
 
-### Update model settings
+## Time Series Insights Query
 
-Here's how to update model display name or default type Id.
-```C# Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName
-Response<TimeSeriesModelSettings> updateModelSettingsNameResponse = await client.ModelSettings.UpdateNameAsync("NewModelSettingsName");
-Console.WriteLine($"Updated Time Series Insights model settings name:\n" +
-    $"{JsonSerializer.Serialize(updateModelSettingsNameResponse.Value)}");
+Use [Query](https://github.com/Azure/azure-sdk-for-net/blob/82c7aff5ef867f7a3d77f5ac43a0b1c5576996e6/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs#L52) in `TimeSeriesInsightsClient` to query for:
+- Raw events for a given Time Series ID and search span.
+- Computed values and the associated event timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
+- Aggregated values and the associated interval timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
+
+Response for the `Query` APIs are of type `QueryAnalyzer`. The QueryAnalyzer allows a developer to query for pages of results, while being able to perform operations on the result set as a whole. For example, to get list of `TimeSeriesPoint` in pages, call the `GetResultsAsync` method on the `QueryAnalyzer` object. You can enumerate an AsyncPageable object using the `async foreach` loop.
+
+This code snippets demonstrates retrieving raw events from Time Series Insights environment using a start and end time.
+
+```C# Snippet:TimeSeriesInsightsSampleQueryEvents
+Console.WriteLine("\n\nQuery for raw temperature events over the past 10 minutes.\n");
+
+// Get events from last 10 minute
+DateTimeOffset endTime = DateTime.UtcNow;
+DateTimeOffset startTime = endTime.AddMinutes(-10);
+
+QueryAnalyzer temperatureEventsQueryAnalyzer = client.Query.CreateEventsQueryAnalyzer(tsId, startTime, endTime);
+await foreach (TimeSeriesPoint point in temperatureEventsQueryAnalyzer.GetResultsAsync())
+{
+    double? temperatureValue = (double?)point.GetValue("Temperature");
+    Console.WriteLine($"{point.Timestamp} - Temperature: {temperatureValue}");
+}
 ```
 
-```C# Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
-Response<TimeSeriesModelSettings> updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
-Console.WriteLine($"Updated Time Series Insights model settings default type Id:\n" +
-    $"{JsonSerializer.Serialize(updateDefaultTypeIdResponse.Value)}");
+The client library also provides a way to query for raw events with using a time span interval.
+```C# Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
+Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
+
+QueryAnalyzer humidityEventsQueryAnalyzer = client.Query.CreateEventsQueryAnalyzer(tsId, TimeSpan.FromSeconds(30));
+await foreach (TimeSeriesPoint point in humidityEventsQueryAnalyzer.GetResultsAsync())
+{
+    double? humidityValue = (double?)point.GetValue("Humidity");
+    Console.WriteLine($"{point.Timestamp} - Humidity: {humidityValue}");
+}
 ```
 
-## Query raw events, series, and aggregates
+This code snippet demonstrates querying for series events. In this snippet, we query for the temperature both in celsius and fahrenheit. Hence, we create two [numeric variables][tsi_numeric_variables], one for the celsius and the other for fahrenheit. These variables are then added as inline variables to the request options.
 
-TBD
+```C# Snippet:TimeSeriesInsightsSampleQuerySeries
+Console.WriteLine("\n\nQuery for temperature series in celsius and fahrenheit over the past 10 minutes.\n");
+
+DateTimeOffset endTime = DateTime.UtcNow;
+DateTimeOffset startTime = endTime.AddMinutes(-10);
+
+var celsiusVariable = new NumericVariable(
+    new TimeSeriesExpression("$event.Temperature"),
+    new TimeSeriesExpression("avg($value)"));
+var fahrenheitVariable = new NumericVariable(
+    new TimeSeriesExpression("$event.Temperature * 1.8 + 32"),
+    new TimeSeriesExpression("avg($value)"));
+
+var querySeriesRequestOptions = new QuerySeriesRequestOptions();
+querySeriesRequestOptions.InlineVariables["TemperatureInCelsius"] = celsiusVariable;
+querySeriesRequestOptions.InlineVariables["TemperatureInFahrenheit"] = fahrenheitVariable;
+
+QueryAnalyzer seriesQueryAnalyzer = client.Query.CreateSeriesQueryAnalyzer(
+    tsId,
+    startTime,
+    endTime,
+    querySeriesRequestOptions);
+
+await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
+{
+    double? tempInCelsius = (double?)point.GetValue("TemperatureInCelsius");
+    double? tempInFahrenheit = (double?)point.GetValue("TemperatureInFahrenheit");
+
+    Console.WriteLine($"{point.Timestamp} - Average temperature in Celsius: {tempInCelsius}. Average temperature in Fahrenheit: {tempInFahrenheit}.");
+}
+```
+
+This code snippet demonstrates querying for aggregated values. More specifically, the number of temperature events that the TSI environment has ingested over the past 3 minutes, in 1-minute time slots. In order to achieve this, a `count` [AggregateVariable][tsi_aggregate_variables] is added as an inline variable to the request options.
+
+```C# Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithAggregateVariable
+Console.WriteLine("\n\nCount the number of temperature events over the past 3 minutes, in 1-minute time slots.\n");
+
+// Get the count of events in 60-second time slots over the past 3 minutes
+DateTimeOffset endTime = DateTime.UtcNow;
+DateTimeOffset startTime = endTime.AddMinutes(-3);
+
+var aggregateVariable = new AggregateVariable(
+    new TimeSeriesExpression("count()"));
+
+var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
+aggregateSeriesRequestOptions.InlineVariables["Count"] = aggregateVariable;
+aggregateSeriesRequestOptions.ProjectedVariables.Add("Count");
+
+QueryAnalyzer aggregateSeriesQueryAnalyzer = client.Query.CreateAggregateSeriesQueryAnalyzer(
+    tsId,
+    startTime,
+    endTime,
+    TimeSpan.FromSeconds(60),
+    aggregateSeriesRequestOptions);
+
+await foreach (TimeSeriesPoint point in aggregateSeriesQueryAnalyzer.GetResultsAsync())
+{
+    long? temperatureCount = (long?)point.GetValue("Count");
+    Console.WriteLine($"{point.Timestamp} - Temperature count: {temperatureCount}");
+}
+```
+
+<!-- LINKS -->
+[tsi_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src
+[tsi_nuget_package]: https://www.bing.com
+[tsi_product_documentation]: https://docs.microsoft.com/azure/time-series-insights/
+[tsi_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples/Readme.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
+[tsi_instances_learn_more]: https://docs.microsoft.com/en-us/azure/time-series-insights/concepts-model-overview#time-series-model-instances
+[tsi_id_learn_more]: https://docs.microsoft.com/en-us/azure/time-series-insights/how-to-select-tsid
+[tsi_hierarchies_learn_more]: https://docs.microsoft.com/en-us/azure/time-series-insights/concepts-model-overview#time-series-model-hierarchies
+[tsi_numeric_variables]: https://docs.microsoft.com/en-us/azure/time-series-insights/concepts-variables#numeric-variables
+[tsi_aggregate_variables]: https://docs.microsoft.com/en-us/azure/time-series-insights/concepts-variables#aggregate-variables

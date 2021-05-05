@@ -416,13 +416,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateHierarchies">
-        /// var tsiHierarchyName = &quot;sampleHierarchy&quot;;
-        /// var tsiInstanceField1 = &quot;hierarchyLevel1&quot;;
         /// var hierarchySource = new TimeSeriesHierarchySource();
-        /// hierarchySource.InstanceFieldNames.Add(tsiInstanceField1);
+        /// hierarchySource.InstanceFieldNames.Add(&quot;hierarchyLevel1&quot;);
         ///
-        /// var tsiHierarchy = new TimeSeriesHierarchy(tsiHierarchyName, hierarchySource);
-        /// tsiHierarchy.Id = &quot;sampleHierarchyId&quot;;
+        /// var tsiHierarchy = new TimeSeriesHierarchy(&quot;sampleHierarchy&quot;, hierarchySource)
+        /// {
+        ///     Id = &quot;sampleHierarchyId&quot;
+        /// };
         ///
         /// var timeSeriesHierarchies = new List&lt;TimeSeriesHierarchy&gt;
         /// {
