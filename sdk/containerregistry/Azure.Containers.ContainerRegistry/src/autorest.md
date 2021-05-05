@@ -15,20 +15,3 @@ directive:
   transform: >
     $["x-accessibility"] = "internal"
 ```
-
-### Correct Security to be separately defined
-
-``` yaml
-directive:
-  from: swagger-document
-  where: $
-  transform: >
-    $.security = [
-      {
-        "registry_oauth2": []
-      },
-      {
-        "registry_auth": []
-      }
-    ]
-```
