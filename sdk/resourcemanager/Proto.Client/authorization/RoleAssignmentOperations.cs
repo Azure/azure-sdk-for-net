@@ -62,27 +62,27 @@ namespace Proto.Authorization
         private RoleAssignmentsOperations Operations { get; }
 
         /// <inheritdoc/>
-        public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
+        public ArmResponse Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.DeleteById(Id, cancellationToken).GetRawResponse());
+            return ArmResponse.FromResponse(Operations.DeleteById(Id, cancellationToken).GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse((await Operations.DeleteByIdAsync(Id, cancellationToken)).GetRawResponse());
+            return ArmResponse.FromResponse((await Operations.DeleteByIdAsync(Id, cancellationToken)).GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
+        public ArmOperation StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.DeleteById(Id, cancellationToken).GetRawResponse());
+            return new PhVoidArmOperation(Operations.DeleteById(Id, cancellationToken).GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation((await Operations.DeleteByIdAsync(Id, cancellationToken)).GetRawResponse());
+            return new PhVoidArmOperation((await Operations.DeleteByIdAsync(Id, cancellationToken)).GetRawResponse());
         }
 
         /// <inheritdoc/>

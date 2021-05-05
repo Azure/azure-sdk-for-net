@@ -1508,7 +1508,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(FormContentType contentType, IEnumerable<string> pages, FormRecognizerLanguage? language, ReadingOrder? readingOrder, Stream fileStream)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(FormContentType contentType, IEnumerable<string> pages, FormRecognizerLanguage? language, FormReadingOrder? readingOrder, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1547,7 +1547,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="readingOrder"> Reading order algorithm to sort the text lines returned. Supported reading orders include: basic(default), natural. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(FormContentType contentType, IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, ReadingOrder? readingOrder = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(FormContentType contentType, IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, FormReadingOrder? readingOrder = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(contentType, pages, language, readingOrder, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1568,7 +1568,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="readingOrder"> Reading order algorithm to sort the text lines returned. Supported reading orders include: basic(default), natural. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(FormContentType contentType, IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, ReadingOrder? readingOrder = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(FormContentType contentType, IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, FormReadingOrder? readingOrder = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(contentType, pages, language, readingOrder, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -1582,7 +1582,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(IEnumerable<string> pages, FormRecognizerLanguage? language, ReadingOrder? readingOrder, SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(IEnumerable<string> pages, FormRecognizerLanguage? language, FormReadingOrder? readingOrder, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1622,7 +1622,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="readingOrder"> Reading order algorithm to sort the text lines returned. Supported reading orders include: basic(default), natural. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, ReadingOrder? readingOrder = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, FormReadingOrder? readingOrder = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(pages, language, readingOrder, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1642,7 +1642,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="readingOrder"> Reading order algorithm to sort the text lines returned. Supported reading orders include: basic(default), natural. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, ReadingOrder? readingOrder = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(IEnumerable<string> pages = null, FormRecognizerLanguage? language = null, FormReadingOrder? readingOrder = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeLayoutAsyncRequest(pages, language, readingOrder, fileStream);
             _pipeline.Send(message, cancellationToken);
