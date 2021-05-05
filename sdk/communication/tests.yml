@@ -11,6 +11,7 @@ parameters:
       - identity # run live/sample tests for identity package only
       - phonenumbers # run live/sample tests for phonenumber package only
       - sms # run live/sample tests for sms package only
+      - servercalling # run live/sample tests for servercalling package only
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
