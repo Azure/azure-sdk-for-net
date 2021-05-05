@@ -20,8 +20,11 @@
     "*.zip",
     "*.sha512",
     "*.ico",
-    "*.pri"
+    "*.pri",
+    ".vscode/cspell.json"
   ],
+  // cspell is not case sensitive
+  // Sort words alphabetically to make this list easier to use
   "words": [],
   "overrides": [
     { "filename": "**/sdk/formrecognizer/**/*.cs", "words": ["ZhHant"] }
