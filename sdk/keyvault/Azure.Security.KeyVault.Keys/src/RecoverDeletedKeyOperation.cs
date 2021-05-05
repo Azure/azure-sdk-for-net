@@ -71,22 +71,20 @@ namespace Azure.Security.KeyVault.Keys
         public override async ValueTask<Response<KeyVaultKey>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
-        async Task<Response> IOperation<KeyVaultKey>.GetResponseAsync(CancellationToken cancellationToken) =>
-            await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, KeyClient.KeysPath, Value.Name, "/", Value.Properties.Version).ConfigureAwait(false);
-
-        Response IOperation<KeyVaultKey>.GetResponse(CancellationToken cancellationToken) =>
-            _pipeline.GetResponse(RequestMethod.Get, cancellationToken, KeyClient.KeysPath, Value.Name, "/", Value.Properties.Version);
-
-        OperationState<KeyVaultKey> IOperation<KeyVaultKey>.UpdateState(Response response)
+        async ValueTask<OperationState<KeyVaultKey>> IOperation<KeyVaultKey>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
+            var response = async
+                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, KeyClient.KeysPath, Value.Name, "/", Value.Properties.Version).ConfigureAwait(false)
+                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, KeyClient.KeysPath, Value.Name, "/", Value.Properties.Version);
+
             switch (response.Status)
             {
                 case 200:
                 case 403: // Access denied but proof the key was recovered.
-                    return OperationState<KeyVaultKey>.Success(Value);
+                    return OperationState<KeyVaultKey>.Success(response, Value);
 
                 case 404:
-                    return default;
+                    return OperationState<KeyVaultKey>.Pending(response);
 
                 default:
                     throw _pipeline.Diagnostics.CreateRequestFailedException(response);

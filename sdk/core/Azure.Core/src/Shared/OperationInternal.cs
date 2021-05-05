@@ -119,7 +119,7 @@ namespace Azure.Core
         }
 
         protected virtual async Task WaitAsync(TimeSpan delay, CancellationToken cancellationToken) =>
-            await Task.Delay(delay, cancellationToken);
+            await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
 
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {

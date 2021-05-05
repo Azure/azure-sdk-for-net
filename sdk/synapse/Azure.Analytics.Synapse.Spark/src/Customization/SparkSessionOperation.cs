@@ -16,11 +16,11 @@ namespace Azure.Analytics.Synapse.Spark
     /// <see cref="SparkSessionClient.StartCreateSparkSession(SparkSessionOptions, bool?, CancellationToken)"/>,
     /// <see cref="SparkSessionClient.StartCreateSparkSessionAsync(SparkSessionOptions, bool?, CancellationToken)"/>,
     /// </summary>
-    public class SparkSessionOperation : Operation<SparkSession>, IOperation<SparkSession, SparkSession>
+    public class SparkSessionOperation : Operation<SparkSession>, IOperation<SparkSession>
     {
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(5);
 
-        private readonly OperationInternal<SparkSession, SparkSession> _operationInternal;
+        private readonly OperationInternal<SparkSession> _operationInternal;
         private readonly SparkSessionClient _client;
         private readonly SparkSession _value;
 
@@ -98,27 +98,27 @@ namespace Azure.Analytics.Synapse.Spark
             return false;
         }
 
-        async Task<Response<SparkSession>> IOperation<SparkSession, SparkSession>.GetResponseAsync(CancellationToken cancellationToken) =>
-            await _client.RestClient.GetSparkSessionAsync(_value.Id, true, cancellationToken).ConfigureAwait(false);
-
-        Response<SparkSession> IOperation<SparkSession, SparkSession>.GetResponse(CancellationToken cancellationToken) =>
-            _client.RestClient.GetSparkSession(_value.Id, true, cancellationToken);
-
-        OperationState<SparkSession> IOperation<SparkSession, SparkSession>.UpdateState(Response<SparkSession> response)
+        async ValueTask<OperationState<SparkSession>> IOperation<SparkSession>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
+            var response = async
+                ? await _client.RestClient.GetSparkSessionAsync(_value.Id, true, cancellationToken).ConfigureAwait(false)
+                : _client.RestClient.GetSparkSession(_value.Id, true, cancellationToken);
+
+            var rawResponse = response.GetRawResponse();
+
             if (IsJobComplete(response.Value.Result.ToString(), response.Value.State))
             {
                 if (StringComparer.OrdinalIgnoreCase.Equals("error", response?.Value?.State))
                 {
-                    return OperationState<SparkSession>.Failure(new RequestFailedException("SparkBatchOperation ended in state error"));
+                    return OperationState<SparkSession>.Failure(rawResponse, new RequestFailedException("SparkBatchOperation ended in state error"));
                 }
                 else
                 {
-                    return OperationState<SparkSession>.Success(_value);
+                    return OperationState<SparkSession>.Success(rawResponse, _value);
                 }
             }
 
-            return default;
+            return OperationState<SparkSession>.Pending(rawResponse);
         }
     }
 }
