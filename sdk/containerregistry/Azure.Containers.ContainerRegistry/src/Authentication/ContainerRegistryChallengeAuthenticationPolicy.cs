@@ -35,6 +35,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly IContainerRegistryAuthenticationClient _authenticationClient;
         private readonly ContainerRegistryRefreshTokenCache _refreshTokenCache;
+        private readonly string[] _aadScopes;
 
         public ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, IContainerRegistryAuthenticationClient authenticationClient)
             : this(credential, aadScope, authenticationClient, null, null)
@@ -49,13 +50,19 @@ namespace Azure.Containers.ContainerRegistry
 
             _authenticationClient = authenticationClient;
             _refreshTokenCache = new ContainerRegistryRefreshTokenCache(credential, authenticationClient, tokenRefreshOffset, tokenRefreshRetryDelay);
+            _aadScopes = new[] { aadScope };
+        }
+
+        protected override void AuthorizeRequest(HttpMessage message)
+        {
+            return;
         }
 
         // Since we'll not cache the AAD access token or set an auth header on the initial request,
         // we override the method that does this.
-        protected override Task AuthorizeRequestAsync(HttpMessage message, bool async)
+        protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
         {
-            return Task.CompletedTask;
+            return default;
         }
 
         protected override ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
@@ -69,7 +76,7 @@ namespace Azure.Containers.ContainerRegistry
             // Once we're here, we've completed Step 1.
 
             // We'll need this context to refresh the AAD access credential if that's needed.
-            var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
+            var context = new TokenRequestContext(_aadScopes, message.Request.ClientRequestId);
 
             // Step 2: Parse challenge string to retrieve serviceName and scope, where scope is the ACR Scope
             var service = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "service");

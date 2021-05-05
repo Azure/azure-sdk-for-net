@@ -138,7 +138,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             MockCredential mockCredential = new MockCredential();
 
             // We set refresh offset to zero so we don't try to refresh it before it expires.
-            var policy = new ContainerRegistryChallengeAuthenticationPolicy(mockCredential, "TestScope", mockClient, tokenRefreshOffset: TimeSpan.FromSeconds(0), tokenExpiryOffset: expiryTime);
+            var policy = new ContainerRegistryChallengeAuthenticationPolicy(mockCredential, "TestScope", mockClient, tokenRefreshOffset: TimeSpan.FromSeconds(0));
 
             // We'll send three GET requests - each will receive a challenge response
             // In the last one, the token will have expired so a new request for it will be sent
@@ -210,7 +210,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             MockCredential mockCredential = new MockCredential();
 
             // Set expiration 5 seconds longer than refresh time.  Result should be that it tries to refresh in 5 seconds.
-            var policy = new ContainerRegistryChallengeAuthenticationPolicy(mockCredential, "TestScope", mockClient, tokenRefreshOffset: refreshOffset, tokenExpiryOffset: expiryTime);
+            var policy = new ContainerRegistryChallengeAuthenticationPolicy(mockCredential, "TestScope", mockClient, tokenRefreshOffset: refreshOffset);
 
             // We'll send three GET requests - each will receive a challenge response
             // In the last one, the token will need to be refreshed so a new request for it will be sent
