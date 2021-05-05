@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Azure.Security.Attestation.Tests
 {
@@ -341,21 +343,23 @@ namespace Azure.Security.Attestation.Tests
 
         private class TpmInit
         {
-            [System.Text.Json.Serialization.JsonPropertyName("type")]
+            [JsonPropertyName("type")]
             public string Type { get; set; }
         }
 
         private class TpmMetadata
         {
-            [System.Text.Json.Serialization.JsonPropertyName("os_ver")]
+            [JsonPropertyName("os_ver")]
             public string OsVersion { get; set; }
         }
+
+        // TpmAttest requires a TpmPayload object.
         private class TpmPayload
         {
-            [System.Text.Json.Serialization.JsonPropertyName("payload")]
+            [JsonPropertyName("payload")]
             public object Payload { get; set; }
 
-            [System.Text.Json.Serialization.JsonPropertyName("metadata")]
+            [JsonPropertyName("metadata")]
             public TpmMetadata Metadata { get; set; }
         }
 
@@ -368,18 +372,24 @@ namespace Azure.Security.Attestation.Tests
 
             var setResult = await adminClient.SetPolicyAsync(AttestationType.Tpm, attestationPolicy);
 
-            var tpmInit = new TpmInit { Type = "aikcert" };
             var tpmPayload = new TpmPayload
             {
-                Metadata = new TpmMetadata { OsVersion = "10.0.19041.928.amd64fre.vb_release.191206-1406.Enterprise" },
-                Payload = tpmInit,
+                Metadata = new TpmMetadata
+                {
+                    OsVersion = "10.0.19041.928.amd64fre.vb_release.191206-1406.Enterprise"
+                },
+                Payload = new TpmInit
+                {
+                    Type = "aikcert"
+                },
             };
 
             var client = TestEnvironment.GetAadAttestationClient(this);
             Response<TpmAttestationResponse> tpmResponse = null;
-            var request = new TpmAttestationRequest { Data = BinaryData.FromObjectAsJson(tpmPayload) };
-            tpmResponse = await client.AttestTpmAsync(request);
-            var parsedValue = System.Text.Json.JsonDocument.Parse(tpmResponse.Value.Data);
+            tpmResponse = await client.AttestTpmAsync(new TpmAttestationRequest { Data = BinaryData.FromObjectAsJson(tpmPayload) });
+
+            // Make sure that the response from the service looks like it's supposed to look.
+            var parsedValue = JsonDocument.Parse(tpmResponse.Value.Data);
             Assert.IsNotNull(parsedValue.RootElement.GetProperty("payload"));
             var payload = parsedValue.RootElement.GetProperty("payload");
             Assert.IsNotNull(payload.GetProperty("challenge"));
