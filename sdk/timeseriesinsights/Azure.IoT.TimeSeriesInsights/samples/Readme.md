@@ -652,8 +652,8 @@ await foreach (TimeSeriesPoint point in aggregateSeriesQueryAnalyzer.GetResultsA
 [tsi_product_documentation]: https://docs.microsoft.com/azure/time-series-insights/
 [tsi_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples/Readme.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
-[tsi_instances_learn_more]: https://docs.microsoft.com/en-us/azure/time-series-insights/concepts-model-overview#time-series-model-instances
-[tsi_id_learn_more]: https://docs.microsoft.com/en-us/azure/time-series-insights/how-to-select-tsid
-[tsi_hierarchies_learn_more]: https://docs.microsoft.com/en-us/azure/time-series-insights/concepts-model-overview#time-series-model-hierarchies
-[tsi_numeric_variables]: https://docs.microsoft.com/en-us/azure/time-series-insights/concepts-variables#numeric-variables
-[tsi_aggregate_variables]: https://docs.microsoft.com/en-us/azure/time-series-insights/concepts-variables#aggregate-variables
+[tsi_instances_learn_more]: https://docs.microsoft.com/azure/time-series-insights/concepts-model-overview#time-series-model-instances
+[tsi_id_learn_more]: https://docs.microsoft.com/azure/time-series-insights/how-to-select-tsid
+[tsi_hierarchies_learn_more]: https://docs.microsoft.com/azure/time-series-insights/concepts-model-overview#time-series-model-hierarchies
+[tsi_numeric_variables]: https://docs.microsoft.com/azure/time-series-insights/concepts-variables#numeric-variables
+[tsi_aggregate_variables]: https://docs.microsoft.com/azure/time-series-insights/concepts-variables#aggregate-variables
