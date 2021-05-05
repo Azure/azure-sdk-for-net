@@ -13,31 +13,31 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry
 {
+    /// <summary>
+    /// This is a direct copy of BearerTokenChallengeAuthenticationPolicy.AccessTokenCache, with only the token lookup and force refresh logic replaced.
+    /// </summary>
     internal class ContainerRegistryRefreshTokenCache
     {
         private readonly TimeSpan DefaultTokenRefreshOffset = TimeSpan.FromMinutes(5);
         private readonly TimeSpan DefaultTokenRefreshRetryDelay = TimeSpan.FromSeconds(30);
-        private readonly TimeSpan DefaultTokenExpiryOffset = TimeSpan.FromHours(2);
 
         private readonly object _syncObj = new object();
         private readonly TokenCredential _aadTokenCredential;
         private readonly TimeSpan _tokenRefreshOffset;
         private readonly TimeSpan _tokenRefreshRetryDelay;
-        private readonly TimeSpan _tokenExpiryOffset;
         private readonly IContainerRegistryAuthenticationClient _authenticationRestClient;
 
         private string? _currentTokenService;
         private TaskCompletionSource<RefreshTokenInfo>? _infoTcs;
         private TaskCompletionSource<RefreshTokenInfo>? _backgroundUpdateTcs;
 
-        public ContainerRegistryRefreshTokenCache(TokenCredential aadTokenCredential, IContainerRegistryAuthenticationClient authClient, TimeSpan? tokenRefreshOffset = null, TimeSpan? tokenRefreshRetryDelay = null, TimeSpan? tokenExpiryOffset = null)
+        public ContainerRegistryRefreshTokenCache(TokenCredential aadTokenCredential, IContainerRegistryAuthenticationClient authClient, TimeSpan? tokenRefreshOffset = null, TimeSpan? tokenRefreshRetryDelay = null)
         {
             _aadTokenCredential = aadTokenCredential;
             _authenticationRestClient = authClient;
 
             _tokenRefreshOffset = tokenRefreshOffset ?? DefaultTokenRefreshOffset;
             _tokenRefreshRetryDelay = tokenRefreshRetryDelay ?? DefaultTokenRefreshRetryDelay;
-            _tokenExpiryOffset = tokenExpiryOffset ?? DefaultTokenExpiryOffset;
         }
 
         public async ValueTask<string> GetAcrRefreshTokenAsync(HttpMessage message, TokenRequestContext context, string service, bool async)

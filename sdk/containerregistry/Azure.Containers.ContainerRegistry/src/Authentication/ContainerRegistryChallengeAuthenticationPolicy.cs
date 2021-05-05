@@ -37,20 +37,22 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ContainerRegistryRefreshTokenCache _refreshTokenCache;
 
         public ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, IContainerRegistryAuthenticationClient authenticationClient)
-            : this(credential, aadScope, authenticationClient, null, null, null)
+            : this(credential, aadScope, authenticationClient, null, null)
         {
         }
 
-        internal ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, IContainerRegistryAuthenticationClient authenticationClient, TimeSpan? tokenRefreshOffset = null, TimeSpan? tokenRefreshRetryDelay = null, TimeSpan? tokenExpiryOffset = null)
+        internal ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, IContainerRegistryAuthenticationClient authenticationClient, TimeSpan? tokenRefreshOffset = null, TimeSpan? tokenRefreshRetryDelay = null)
             : base(credential, aadScope)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(aadScope, nameof(aadScope));
 
             _authenticationClient = authenticationClient;
-            _refreshTokenCache = new ContainerRegistryRefreshTokenCache(credential, authenticationClient, tokenRefreshOffset, tokenRefreshRetryDelay, tokenExpiryOffset);
+            _refreshTokenCache = new ContainerRegistryRefreshTokenCache(credential, authenticationClient, tokenRefreshOffset, tokenRefreshRetryDelay);
         }
 
+        // Since we'll not cache the AAD access token or set an auth header on the initial request,
+        // we override the method that does this.
         protected override Task AuthorizeRequestAsync(HttpMessage message, bool async)
         {
             return Task.CompletedTask;
