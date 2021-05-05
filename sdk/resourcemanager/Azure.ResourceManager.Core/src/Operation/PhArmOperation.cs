@@ -106,11 +106,10 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override async ValueTask<Response<TOperations>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
-            var task = _doesWrapOperation 
-                ? _wrappedOperation.WaitForCompletionAsync(pollingInterval, cancellationToken) 
-                : _wrappedResponseOperation.WaitForCompletionAsync(pollingInterval, cancellationToken);
-            var value = await task.ConfigureAwait(false);
-            return Response.FromValue(_converter(value), GetRawResponse());
+            var value = _doesWrapOperation 
+                ? await _wrappedOperation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false) 
+                : await _wrappedResponseOperation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(_converter(value.Value), GetRawResponse());
         }
 
         /// <inheritdoc/>
