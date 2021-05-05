@@ -18,7 +18,7 @@ Customers with a [support plan](https://azure.microsoft.com/en-us/support/option
 ### Security bugs
 Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center(secure@microsoft.com). 
 You should receive a response within 24 hours. 
-Further information, including the MSRC PGP key, can be found in the [Security TechCenter](https://www.microsoft.com/en-us/msrc/faqs-report-an-issue?rtc=1)
+Further information, including the MSRC PGP key, can be found in the [Security TechCenter](https://www.microsoft.com/msrc/faqs-report-an-issue?rtc=1)
 
 ### Github issues
 We use [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues/new/choose) to track bugs, questions, and feature requests. 
