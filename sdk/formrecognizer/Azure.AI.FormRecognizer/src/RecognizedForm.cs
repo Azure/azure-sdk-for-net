@@ -73,6 +73,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Model identifier of model used to analyze form if not using a prebuilt model.
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         public string ModelId { get; }
 
         /// <summary>
@@ -80,6 +83,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// Value is 1.0 when recognition is done against a single labeled model.
         /// If recognition is based on a composed model, value is between [0.0, 1.0].
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         public float? FormTypeConfidence { get; }
 
         /// <summary>

@@ -40,6 +40,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// An object representing the appearance of the text line.
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         public TextAppearance Appearance { get; }
 
         private static IReadOnlyList<FormWord> ConvertWords(IReadOnlyList<TextWord> textWords, int pageNumber)
