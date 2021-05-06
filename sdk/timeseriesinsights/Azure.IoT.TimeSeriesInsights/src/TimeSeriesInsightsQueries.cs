@@ -57,13 +57,12 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     // Figure out what is the underlying type for the time series value. Since you know your Time Series Insights
         ///     // environment best, you probably do not need this logic and you can skip to directly casting to the proper
         ///     // type. This logic demonstrates how you can figure out what type to cast to in the case where you are not
-        ///     // too familiar with the property type
-        ///     Type valueType = temperatureValue.Type;
-        ///     if (valueType == typeof(double?))
+        ///     // too familiar with the property type.
+        ///     if (temperatureValue.Type == typeof(double?))
         ///     {
         ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {(double?)temperatureValue}&quot;);
         ///     }
-        ///     else if (valueType == typeof(int?))
+        ///     else if (temperatureValue.Type == typeof(int?))
         ///     {
         ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {(int?)temperatureValue}&quot;);
         ///     }
@@ -124,13 +123,12 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     // Figure out what is the underlying type for the time series value. Since you know your Time Series Insights
         ///     // environment best, you probably do not need this logic and you can skip to directly casting to the proper
         ///     // type. This logic demonstrates how you can figure out what type to cast to in the case where you are not
-        ///     // too familiar with the property type
-        ///     Type valueType = humidityValue.Type;
-        ///     if (valueType == typeof(double?))
+        ///     // too familiar with the property type.
+        ///     if (humidityValue.Type == typeof(double?))
         ///     {
         ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {(double?)humidityValue}&quot;);
         ///     }
-        ///     else if (valueType == typeof(int?))
+        ///     else if (humidityValue.Type == typeof(int?))
         ///     {
         ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {(int?)humidityValue}&quot;);
         ///     }
