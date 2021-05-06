@@ -29,27 +29,27 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary>
         /// Client to get and update model settings.
         /// </summary>
-        public virtual ModelSettingsClient ModelSettings { get; private set; }
+        public virtual TimeSeriesInsightsModelSettings ModelSettings { get; private set; }
 
         /// <summary>
         /// Instances client to perform various Time Series Insights instances operations.
         /// </summary>
-        public virtual InstancesClient Instances { get; private set; }
+        public virtual TimeSeriesInsightsInstances Instances { get; private set; }
 
         /// <summary>
         /// Types client to perform various Time Series Insights types operations.
         /// </summary>
-        public virtual TypesClient Types { get; private set; }
+        public virtual TimeSeriesInsightsTypes Types { get; private set; }
 
         /// <summary>
         /// Hierarchies client to perform various Time Series Insights hierarchies operations.
         /// </summary>
-        public virtual HierarchiesClient Hierarchies { get; private set; }
+        public virtual TimeSeriesInsightsHierarchies Hierarchies { get; private set; }
 
         /// <summary>
-        /// Query client that can be used to perform query operations on Time Series Insights.
+        /// A client that can be used can be used to perform query operations on Time Series Insights.
         /// </summary>
-        public virtual QueryClient Query { get; private set; }
+        public virtual TimeSeriesInsightsQueries Queries { get; private set; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="TimeSeriesInsightsClient"/> class.
@@ -65,7 +65,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </seealso>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret">
-        /// // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+        /// // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based on the environment it is executing in.
         /// // It attempts to use multiple credential types in an order until it finds a working credential.
         /// var tokenCredential = new DefaultAzureCredential();
         ///
@@ -112,11 +112,11 @@ namespace Azure.IoT.TimeSeriesInsights
             _timeSeriesHierarchiesRestClient = new TimeSeriesHierarchiesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
 
-            ModelSettings = new ModelSettingsClient(_modelSettingsRestClient, _clientDiagnostics);
-            Instances = new InstancesClient(_timeSeriesInstancesRestClient, _clientDiagnostics);
-            Types = new TypesClient(_timeSeriesTypesRestClient, _clientDiagnostics);
-            Hierarchies = new HierarchiesClient(_timeSeriesHierarchiesRestClient, _clientDiagnostics);
-            Query = new QueryClient(_queryRestClient, _clientDiagnostics);
+            ModelSettings = new TimeSeriesInsightsModelSettings(_modelSettingsRestClient, _clientDiagnostics);
+            Instances = new TimeSeriesInsightsInstances(_timeSeriesInstancesRestClient, _clientDiagnostics);
+            Types = new TimeSeriesInsightsTypes(_timeSeriesTypesRestClient, _clientDiagnostics);
+            Hierarchies = new TimeSeriesInsightsHierarchies(_timeSeriesHierarchiesRestClient, _clientDiagnostics);
+            Queries = new TimeSeriesInsightsQueries(_queryRestClient, _clientDiagnostics);
         }
 
         /// <summary>

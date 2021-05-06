@@ -22,5 +22,8 @@ namespace Azure.Data.Tables.Models
         /// <summary> The name of the table. </summary>
         [CodeGenMember("TableName")]
         public string Name { get; }
+
+        /// <summary> Initializes a new instance of TableItem. </summary>
+        public TableItem(string name) { Name = name; }
     }
 }

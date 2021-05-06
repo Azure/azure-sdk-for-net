@@ -265,7 +265,10 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(expectedPageNumber, table.PageNumber);
                 Assert.Greater(table.ColumnCount, 0);
                 Assert.Greater(table.RowCount, 0);
-                Assert.AreEqual(4, table.BoundingBox.Points.Count());
+                if (_serviceVersion != FormRecognizerClientOptions.ServiceVersion.V2_0)
+                {
+                    Assert.AreEqual(4, table.BoundingBox.Points.Count());
+                }
 
                 Assert.NotNull(table.Cells);
 

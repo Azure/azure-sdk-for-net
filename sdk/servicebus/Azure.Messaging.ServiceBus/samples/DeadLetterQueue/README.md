@@ -1,12 +1,12 @@
-﻿---
+---
 page_type: sample
 languages:
 - csharp
-  products:
+products:
 - azure
 - azure-service-bus
-  name: Explore deadlettering in Azure Service Bus
-  description: This sample shows how to move messages to the Dead-letter queue, how to retrieve messages from it, and resubmit corrected message back into the main queue.
+name: Explore deadlettering in Azure Service Bus
+description: This sample shows how to move messages to the Dead-letter queue, how to retrieve messages from it, and resubmit corrected message back into the main queue.
 ---
 
 # Dead-Letter Queues
@@ -46,7 +46,7 @@ In order to run the sample, you will need a Service Bus Namespace. For more info
 
 To build the sample:
 
-1. Install [.NET Core 3.1](https://dot.net) or newer.
+1. Install [.NET 5.0](https://dot.net) or newer.
 
 2. Run in the project directory:
 
