@@ -95,8 +95,6 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
         private async Task RunQuerySeriesSampleWithPreDefinedVariables(TimeSeriesInsightsClient client, TimeSeriesId tsId)
         {
-            // In this sample, we demonstrate querying for series data with predefined numeric variables in a predefined Time Series type
-
             // Setup
 
             // First create the Time Series type along with the numeric variables
@@ -153,7 +151,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             // Now that we set up the instance with the property type, query for the data
             #region Snippet:TimeSeriesInsightsSampleQuerySeries
             Console.WriteLine($"\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes. " +
-                $"The Time Series instance has a type that has predefined numeric variable that represents the temperature " +
+                $"The Time Series instance belongs to a type that has predefined numeric variable that represents the temperature " +
                 $"in Celsuis, and a predefined numeric variable that represents the temperature in Fahrenheit.\n");
 
             DateTimeOffset endTime = DateTime.UtcNow;

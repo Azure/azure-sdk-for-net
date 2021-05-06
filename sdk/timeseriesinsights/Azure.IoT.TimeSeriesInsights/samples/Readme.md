@@ -604,7 +604,7 @@ This code snippet demonstrates querying for series events. In this snippet, we q
 
 ```C# Snippet:TimeSeriesInsightsSampleQuerySeries
 Console.WriteLine($"\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes. " +
-    $"The Time Series instance has a type that has predefined numeric variable that represents the temperature " +
+    $"The Time Series instance belongs to a type that has predefined numeric variable that represents the temperature " +
     $"in Celsuis, and a predefined numeric variable that represents the temperature in Fahrenheit.\n");
 
 DateTimeOffset endTime = DateTime.UtcNow;

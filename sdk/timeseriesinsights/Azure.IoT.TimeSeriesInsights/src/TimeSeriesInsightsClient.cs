@@ -47,7 +47,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public virtual TimeSeriesInsightsHierarchies Hierarchies { get; private set; }
 
         /// <summary>
-        /// Queries client that can be used to perform query operations on Time Series Insights.
+        /// A client that can be used can be used to perform query operations on Time Series Insights.
         /// </summary>
         public virtual TimeSeriesInsightsQueries Queries { get; private set; }
 

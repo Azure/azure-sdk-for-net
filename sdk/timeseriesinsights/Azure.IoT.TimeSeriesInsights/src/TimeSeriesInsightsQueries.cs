@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// Query client that can be used to query for events, series and aggregate series on Time Series Insights.
+    /// A client that can be used to query for events, series and aggregate series on Time Series Insights.
     /// </summary>
     public class TimeSeriesInsightsQueries
     {
@@ -167,7 +167,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleQuerySeries">
         /// Console.WriteLine($&quot;\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes. &quot; +
-        ///     $&quot;The Time Series instance has a type that has predefined numeric variable that represents the temperature &quot; +
+        ///     $&quot;The Time Series instance belongs to a type that has predefined numeric variable that represents the temperature &quot; +
         ///     $&quot;in Celsuis, and a predefined numeric variable that represents the temperature in Fahrenheit.\n&quot;);
         ///
         /// DateTimeOffset endTime = DateTime.UtcNow;
