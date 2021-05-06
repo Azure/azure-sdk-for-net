@@ -2,6 +2,8 @@
 
 ## 0.1.0-preview.12 (Unreleased)
 
+### New Features
+- Added `RequestOptions`.
 
 ## 0.1.0-preview.11 (2021-03-22)
 

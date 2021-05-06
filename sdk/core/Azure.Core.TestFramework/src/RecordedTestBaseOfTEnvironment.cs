@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading.Tasks;
+using NUnit.Framework;
+
 namespace Azure.Core.TestFramework
 {
 #pragma warning disable SA1649 // File name should match first type name
@@ -23,5 +27,11 @@ namespace Azure.Core.TestFramework
         }
 
         public TEnvironment TestEnvironment { get; }
+
+        [OneTimeSetUp]
+        public async ValueTask WaitForEnvironment()
+        {
+            await TestEnvironment.WaitForEnvironmentAsync();
+        }
     }
 }

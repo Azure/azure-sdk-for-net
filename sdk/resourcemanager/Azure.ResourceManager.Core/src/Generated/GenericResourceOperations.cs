@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> The status of the delete operation. </returns>
-        public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
+        public ArmResponse Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.StartDeleteById(Id, GetApiVersion(cancellationToken), cancellationToken).WaitForCompletion(cancellationToken));
+            return ArmResponse.FromResponse(Operations.StartDeleteById(Id, GetApiVersion(cancellationToken), cancellationToken).WaitForCompletion(cancellationToken));
         }
 
         /// <summary>
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> A <see cref="Task"/> that on completion returns the status of the delete operation. </returns>
-        public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartDeleteByIdAsync(Id, await GetApiVersionAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
             var result = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            return new ArmResponse(result);
+            return ArmResponse.FromResponse(result);
         }
 
         /// <summary>
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
+        public ArmOperation StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartDeleteById(Id, GetApiVersion(cancellationToken), cancellationToken));
+            return new PhVoidArmOperation(Operations.StartDeleteById(Id, GetApiVersion(cancellationToken), cancellationToken));
         }
 
         /// <summary>
@@ -93,17 +93,16 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartDeleteByIdAsync(Id, await GetApiVersionAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
-            return new ArmVoidOperation(operation);
+            return new PhVoidArmOperation(operation);
         }
 
         /// <inheritdoc/>
         public ArmResponse<GenericResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             GenericResource resource = GetResource(cancellationToken);
-            // Potential optimization on tags set, remove NOOP to bypass the call.
             resource.Data.Tags[key] = value;
             var apiVersion = GetApiVersion(cancellationToken);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Core
             resource.Data.Tags[key] = value;
             var apiVersion = GetApiVersion(cancellationToken);
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
-                Operations.StartUpdateById(Id, apiVersion, resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
+                Operations.StartUpdateById(Id, apiVersion, resource.Data, cancellationToken),
                 v => new GenericResource(this, new GenericResourceData(v)));
         }
 

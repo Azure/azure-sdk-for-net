@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Maintenance
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Azure Maintenance Management Client
+    /// Maintenance Client
     /// </summary>
     public partial interface IMaintenanceManagementClient : System.IDisposable
     {
@@ -90,6 +90,16 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Gets the IMaintenanceConfigurationsOperations.
         /// </summary>
         IMaintenanceConfigurationsOperations MaintenanceConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IMaintenanceConfigurationsForResourceGroupOperations.
+        /// </summary>
+        IMaintenanceConfigurationsForResourceGroupOperations MaintenanceConfigurationsForResourceGroup { get; }
+
+        /// <summary>
+        /// Gets the IApplyUpdateForResourceGroupOperations.
+        /// </summary>
+        IApplyUpdateForResourceGroupOperations ApplyUpdateForResourceGroup { get; }
 
         /// <summary>
         /// Gets the IOperations.

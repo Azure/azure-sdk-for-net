@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<IPage<ProtectionContainerMapping>>> ListByReplicationProtectionContainersWithHttpMessagesAsync(string fabricName, string protectionContainerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a protection container mapping/
+        /// Gets a protection container mapping.
         /// </summary>
         /// <remarks>
         /// Gets the details of a protection container mapping.
@@ -121,7 +121,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Purge protection container mapping.
         /// </summary>
         /// <remarks>
-        /// The operation to purge(force delete) a protection container mapping
+        /// The operation to purge(force delete) a protection container
+        /// mapping.
         /// </remarks>
         /// <param name='fabricName'>
         /// Fabric name.
@@ -270,7 +271,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Purge protection container mapping.
         /// </summary>
         /// <remarks>
-        /// The operation to purge(force delete) a protection container mapping
+        /// The operation to purge(force delete) a protection container
+        /// mapping.
         /// </remarks>
         /// <param name='fabricName'>
         /// Fabric name.

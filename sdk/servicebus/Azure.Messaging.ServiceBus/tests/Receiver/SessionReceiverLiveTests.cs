@@ -366,7 +366,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                        await receiver.CompleteMessageAsync(item.LockToken);
+                        await receiver.CompleteMessageAsync(item);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -464,7 +464,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
-                        await receiver.DeadLetterMessageAsync(item.LockToken, "testReason", "testDescription");
+                        await receiver.DeadLetterMessageAsync(item, "testReason", "testDescription");
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -489,7 +489,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         Assert.AreEqual(messageEnum.Current.SessionId, msg.SessionId);
                         Assert.AreEqual("testReason", msg.DeadLetterReason);
                         Assert.AreEqual("testDescription", msg.DeadLetterErrorDescription);
-                        await deadLetterReceiver.CompleteMessageAsync(msg.LockToken);
+                        await deadLetterReceiver.CompleteMessageAsync(msg);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -537,7 +537,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         props[AmqpMessageConstants.DeadLetterReasonHeader] = DateTime.UtcNow;
                         props[AmqpMessageConstants.DeadLetterErrorDescriptionHeader] = DateTime.UtcNow;
 
-                        await receiver.DeadLetterMessageAsync(item.LockToken, props);
+                        await receiver.DeadLetterMessageAsync(item, props);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -564,7 +564,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         Assert.IsNull(msg.DeadLetterReason);
                         Assert.IsNotNull(msg.ApplicationProperties[AmqpMessageConstants.DeadLetterReasonHeader]);
                         Assert.IsNotNull(msg.ApplicationProperties[AmqpMessageConstants.DeadLetterErrorDescriptionHeader]);
-                        await deadLetterReceiver.CompleteMessageAsync(msg.LockToken);
+                        await deadLetterReceiver.CompleteMessageAsync(msg);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -606,7 +606,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         Assert.AreEqual(messageEnum.Current.SessionId, item.SessionId);
                         sequenceNumbers.Add(item.SequenceNumber);
-                        await receiver.DeferMessageAsync(item.LockToken);
+                        await receiver.DeferMessageAsync(item);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -658,7 +658,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.Greater(receiver.SessionLockedUntil, firstLockedUntilUtcTime);
 
                 // Complete Messages
-                await receiver.CompleteMessageAsync(receivedMessage.LockToken);
+                await receiver.CompleteMessageAsync(receivedMessage);
 
                 Assert.AreEqual(messageCount, receivedMessages.Length);
                 if (isSessionSpecified)
@@ -864,7 +864,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     await foreach (var msg in receiver.ReceiveMessagesAsync(cts.Token))
                     {
                         Assert.AreEqual(messages[ct].MessageId, msg.MessageId);
-                        await receiver.CompleteMessageAsync(msg.LockToken);
+                        await receiver.CompleteMessageAsync(msg);
                         ct++;
                         if (ct == messageCount)
                         {

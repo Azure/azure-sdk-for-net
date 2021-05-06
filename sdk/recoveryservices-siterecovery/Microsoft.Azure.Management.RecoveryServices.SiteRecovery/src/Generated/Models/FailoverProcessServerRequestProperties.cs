@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="targetProcessServerId">The new process server.</param>
         /// <param name="vmsToMigrate">The VMS to migrate.</param>
         /// <param name="updateType">A value for failover type. It can be
-        /// systemlevel/serverlevel</param>
+        /// systemlevel/serverlevel.</param>
         public FailoverProcessServerRequestProperties(string containerName = default(string), string sourceProcessServerId = default(string), string targetProcessServerId = default(string), IList<string> vmsToMigrate = default(IList<string>), string updateType = default(string))
         {
             ContainerName = containerName;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets a value for failover type. It can be
-        /// systemlevel/serverlevel
+        /// systemlevel/serverlevel.
         /// </summary>
         [JsonProperty(PropertyName = "updateType")]
         public string UpdateType { get; set; }

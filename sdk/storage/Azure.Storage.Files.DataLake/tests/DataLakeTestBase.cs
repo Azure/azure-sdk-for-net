@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
         LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
-    public abstract class DataLakeTestBase : StorageTestBase
+    public abstract class DataLakeTestBase : StorageTestBase<DataLakeTestEnvironment>
     {
         protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";

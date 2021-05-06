@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -14,6 +14,8 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" Version="1.2.3" />
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="Microsoft.Azure.Devices" Version="1.32.0" />
+    <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.37.0" />
   </ItemGroup>
 
   <ItemGroup>

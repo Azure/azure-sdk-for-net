@@ -201,7 +201,7 @@ string sqlServerQuery = "<query>";
 
 var dataFeed = new DataFeed();
 
-dataFeed.Name = "Sample data feed";
+dataFeed.Name = "<dataFeedName>";
 dataFeed.DataSource = new SqlServerDataFeedSource(sqlServerConnectionString, sqlServerQuery);
 dataFeed.Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily);
 
@@ -283,7 +283,7 @@ Create an [`AnomalyDetectionConfiguration`](#data-point-anomaly) to tell the ser
 
 ```C# Snippet:CreateDetectionConfigurationAsync
 string metricId = "<metricId>";
-string configurationName = "Sample anomaly detection configuration";
+string configurationName = "<configurationName>";
 
 var detectionConfiguration = new AnomalyDetectionConfiguration()
 {
@@ -317,7 +317,7 @@ Console.WriteLine($"Anomaly detection configuration ID: {createdDetectionConfigu
 Metrics Advisor supports the [`EmailNotificationHook`](#notification-hook) and the [`WebNotificationHook`](#notification-hook) classes as means of subscribing to [alerts](#anomaly-alert) notifications. In this example we'll illustrate how to create an `EmailNotificationHook`. Note that you need to pass the hook to an anomaly alert configuration to start getting notifications. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
 
 ```C# Snippet:CreateHookAsync
-string hookName = "Sample hook";
+string hookName = "<hookName>";
 
 var emailHook = new EmailNotificationHook()
 {
@@ -341,8 +341,7 @@ Create an [`AnomalyAlertConfiguration`](#anomaly-alert) to tell the service whic
 ```C# Snippet:CreateAlertConfigurationAsync
 string hookId = "<hookId>";
 string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
-
-string configurationName = "Sample anomaly alert configuration";
+string configurationName = "<configurationName>";
 
 AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
 {

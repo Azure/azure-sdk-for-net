@@ -12,7 +12,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// from Time Series Insights into a HierarchiesBatchResponse object.
     /// </summary>
     [CodeGenModel("HierarchiesBatchResponse")]
-    public partial class HierarchiesBatchResponse
+    internal partial class HierarchiesBatchResponse
     {
         // The purpose of overriding this method is to protect against an InvalidOperationException
         // that is being thrown by the generated code. More specifically, the exception is being thrown

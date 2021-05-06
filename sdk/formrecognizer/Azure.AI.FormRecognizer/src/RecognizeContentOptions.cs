@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer
         /// order depends on the detected text, it may change across images and OCR version updates. Thus,
         /// business logic should be built upon the actual line location instead of order.
         /// </summary>
-        public ReadingOrder? ReadingOrder { get; set; }
+        public FormReadingOrder? ReadingOrder { get; set; }
 
         /// <summary>
         /// The BCP-47 language code of the text in the document.

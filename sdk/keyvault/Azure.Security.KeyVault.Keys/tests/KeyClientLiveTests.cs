@@ -649,7 +649,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             DeletedKey deletedKey = operation.Value;
 
             // Wait a little longer since live tests are failing with only a 2s delay.
-            await WaitForDeletedKey(keyName, TimeSpan.FromSeconds(5));
+            await WaitForDeletedKey(keyName, KeyVaultTestEnvironment.DefaultPollingInterval);
 
             DeletedKey polledSecret = await Client.GetDeletedKeyAsync(keyName);
 
@@ -910,7 +910,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 // WaitForDeletedKey disables recording, so we can wait concurrently.
                 // Wait a little longer for deleting keys since tests occasionally fail after max attempts.
-                deletingKeys.Add(WaitForDeletedKey(deletedKey.Name, delay: TimeSpan.FromSeconds(5)));
+                deletingKeys.Add(WaitForDeletedKey(deletedKey.Name, delay: KeyVaultTestEnvironment.DefaultPollingInterval));
             }
 
             await Task.WhenAll(deletingKeys);

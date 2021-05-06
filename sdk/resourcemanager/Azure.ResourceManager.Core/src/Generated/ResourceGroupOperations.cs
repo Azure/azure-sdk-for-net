@@ -77,15 +77,15 @@ namespace Azure.ResourceManager.Core
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public virtual ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
+        /// <returns> A response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        public virtual ArmResponse Delete(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Delete");
             scope.Start();
 
             try
             {
-                return new ArmResponse(RestClient.Delete(Id.Name, cancellationToken));
+                return ArmResponse.FromResponse(RestClient.Delete(Id.Name, cancellationToken));
             }
             catch (Exception e)
             {
@@ -98,15 +98,15 @@ namespace Azure.ResourceManager.Core
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public virtual async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        public virtual async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Delete");
             scope.Start();
 
             try
             {
-                return new ArmResponse(await RestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
+                return ArmResponse.FromResponse(await RestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
+        public virtual ArmOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
 
             try
             {
-                return new ArmVoidOperation(RestClient.Delete(Id.Name, cancellationToken));
+                return new PhVoidArmOperation(RestClient.Delete(Id.Name, cancellationToken));
             }
             catch (Exception e)
             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
 
             try
             {
-                return new ArmVoidOperation(await RestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
+                return new PhVoidArmOperation(await RestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {

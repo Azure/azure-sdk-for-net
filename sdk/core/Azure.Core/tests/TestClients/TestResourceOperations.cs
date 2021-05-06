@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
 {
@@ -17,14 +18,14 @@ namespace Azure.Core.Tests
             return new TestResource();
         }
 
-        public virtual ArmOperationTest<TestResource> GetArmOperation(bool exceptionOnWait = false, CancellationToken cancellationToken = default)
+        public virtual ArmOperationTest GetArmOperation(bool exceptionOnWait = false, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmOperation");
             scope.Start();
 
             try
             {
-                return new ArmOperationTest<TestResource>(new TestResource(), exceptionOnWait);
+                return new ArmOperationTest(new TestResource(), exceptionOnWait);
             }
             catch (Exception e)
             {
@@ -33,14 +34,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual Task<ArmOperationTest<TestResource>> GetArmOperationAsync(bool exceptionOnWait = false, CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperationTest> GetArmOperationAsync(bool exceptionOnWait = false, CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmOperation");
             scope.Start();
 
             try
             {
-                return Task.FromResult(new ArmOperationTest<TestResource>(new TestResource(), exceptionOnWait));
+                return Task.FromResult(new ArmOperationTest(new TestResource(), exceptionOnWait));
             }
             catch (Exception e)
             {
@@ -81,7 +82,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual ArmOperationTest<TestResource> GetPhArmOperation(CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TestResource> GetPhArmOperation(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetPhArmOperation");
             scope.Start();
@@ -97,14 +98,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual Task<ArmOperationTest<TestResource>> GetPhArmOperationAsync(CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperation<TestResource>> GetPhArmOperationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetPhArmOperation");
             scope.Start();
 
             try
             {
-                return Task.FromResult<ArmOperationTest<TestResource>>(new PhArmOperationTest<TestResource>(new TestResource()));
+                return Task.FromResult<ArmOperation<TestResource>>(new PhArmOperationTest<TestResource>(new TestResource()));
             }
             catch (Exception e)
             {
@@ -177,7 +178,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual ArmOperationTest<TestResource> GetArmOperationException(CancellationToken cancellationToken = default)
+        public virtual ArmOperationTest GetArmOperationException(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmOperationException");
             scope.Start();
@@ -193,7 +194,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual Task<ArmOperationTest<TestResource>> GetArmOperationExceptionAsync(CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperationTest> GetArmOperationExceptionAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmOperationException");
             scope.Start();

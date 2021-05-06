@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Core.Tests
             var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             ResourceGroup rg = await rgOp.WaitForCompletionAsync();
             var deleteOp = await rg.StartDeleteAsync();
-            await deleteOp.WaitForCompletionAsync();
+            await deleteOp.WaitForCompletionResponseAsync();
         }
 
         [TestCase]

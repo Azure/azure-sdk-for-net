@@ -31,7 +31,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateClient();
 
             // Act
-            AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
 
             bool gotHelloWorld = false;
             await foreach (string repository in repositories)
@@ -56,7 +56,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
             var pages = repositories.AsPages(pageSizeHint: pageSize);
 
             int pageCount = 0;
@@ -79,7 +79,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             int minExpectedPages = 2;
 
             // Act
-            AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+            AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
             var pages = repositories.AsPages($"</acr/v1/_catalog?last=library/alpine&n={pageSize}>");
 
             int pageCount = 0;
@@ -134,7 +134,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     await Task.Delay(5000);
                 }
 
-                var repositories = client.GetRepositoriesAsync();
+                var repositories = client.GetRepositoryNamesAsync();
 
                 await foreach (var item in repositories)
                 {

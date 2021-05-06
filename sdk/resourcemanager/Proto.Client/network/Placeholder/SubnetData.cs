@@ -21,7 +21,7 @@ namespace Proto.Network
         /// <summary>
         /// Gets or sets the Model this resource is based of. 
         ///</summary>
-        public virtual Azure.ResourceManager.Network.Models.Subnet Model { get; set; }
+        public virtual Azure.ResourceManager.Network.Models.Subnet Model { get; }
 
         /// <summary>
         /// Gets the subnet id. 
