@@ -19,7 +19,7 @@ dotnet add package Azure.Storage.ConfidentialLedger --prerelease
 ### Prerequisites
 * An [Azure subscription][azure_sub].
 * A running instance of Azure Confidential Ledger.
-* A registered user in the Confidential Ledger (typically assigned during [ARM](azure_resource_manager) resource creation) with `Administrator` privileges.
+* A registered user in the Confidential Ledger with `Administrator` privileges.
 
 ### Authenticate the client
 
@@ -152,7 +152,6 @@ This is a template, but your SDK readme should include details on how to contrib
 [azure_sub]: https://azure.microsoft.com/free
 [ccf]: https://github.com/Microsoft/CCF
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
-[azure_resource_manager]: https://docs.microsoft.com/azure/azure-resource-manager/management/overview
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fconfidentialledger%2FAzure.Template%2FREADME.png)
