@@ -59,6 +59,7 @@ known_presence_issues:
   - ['sdk/cognitiveservices/Vision.FormRecognizer','#5499']
   - ['sdk/containerregistry/Microsoft.Azure.ContainerRegistry','#5499']
   - ['sdk/eventgrid/Microsoft.Azure.EventGrid','#5499']
+  - ['sdk/eventgrid/Azure.Messaging.EventGrid/EventGridSourceGenerator','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs.Processor','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor','#5499']
   - ['sdk/graphrbac/Microsoft.Azure.Graph.RBAC','#5499']
