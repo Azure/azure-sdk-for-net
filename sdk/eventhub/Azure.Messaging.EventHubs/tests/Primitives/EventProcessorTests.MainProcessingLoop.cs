@@ -48,6 +48,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConnection())
                 .Throws(expectedException);
 
+            mockProcessor
+                .Setup(processor => processor.ValidateStartupAsync(
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
             // Delay the return from the error handler by slightly longer than cancellation is triggered in
             // order to validate that the handler call does not block or delay other processor operations.
 
@@ -97,6 +103,12 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
                 .Throws(expectedException);
+
+            mockProcessor
+                .Setup(processor => processor.ValidateStartupAsync(
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
 
             mockLogger
                 .Setup(log => log.EventProcessorTaskError(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))

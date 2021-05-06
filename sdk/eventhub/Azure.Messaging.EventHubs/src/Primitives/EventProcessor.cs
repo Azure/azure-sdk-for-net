@@ -415,6 +415,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessor{TPartition}" /> once it starts running.</param>
         ///
+        /// <exception cref="AggregateException">
+        ///   As the processor starts, it will attempt to detect configuration and permissions errors that would prevent it from
+        ///   being able to recover without intervention.  For example, an incorrect connection string or the inability to query the
+        ///   Event Hub would be detected.  These exceptions will be packaged as an <see cref="AggregateException"/>, and will cause
+        ///   <see cref="StartProcessingAsync" /> to fail.
+        /// </exception>
+        ///
         public virtual async Task StartProcessingAsync(CancellationToken cancellationToken = default) =>
             await StartProcessingInternalAsync(true, cancellationToken).ConfigureAwait(false);
 
@@ -424,6 +431,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessor{TPartition}" /> once it starts running.</param>
+        ///
+        /// <exception cref="AggregateException">
+        ///   As the processor starts, it will attempt to detect configuration and permissions errors that would prevent it from
+        ///   being able to recover without intervention.  For example, an incorrect connection string or the inability to query the
+        ///   Event Hub would be detected.  These exceptions will be packaged as an <see cref="AggregateException"/>, and will cause
+        ///   <see cref="StartProcessing" /> to fail.
+        /// </exception>
         ///
         public virtual void StartProcessing(CancellationToken cancellationToken = default) =>
             StartProcessingInternalAsync(false, cancellationToken).EnsureCompleted();
@@ -791,6 +805,54 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
+        ///   Performs the tasks needed to validate basic configuration and permissions of the dependencies needed for
+        ///   the processor to function.
+        /// </summary>
+        ///
+        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.</param>
+        ///
+        /// <exception cref="AggregateException">Any validation failures will result in an aggregate exception.</exception>
+        ///
+        internal virtual async Task ValidateStartupAsync(bool async,
+                                                         CancellationToken cancellationToken = default)
+        {
+            var validationTask = Task.WhenAll
+            (
+                ValidateEventHubsConnectionAsync(cancellationToken),
+                ValidateStorageConnectionAsync(cancellationToken)
+            );
+
+            if (async)
+            {
+                try
+                {
+                    await validationTask.ConfigureAwait(false);
+                }
+                catch
+                {
+                    // If the validation task has an exception, it will be the aggregate exception
+                    // that we wish to surface.  Use that if it is available.
+
+                    if (validationTask.Exception != null)
+                    {
+                        throw validationTask.Exception;
+                    }
+
+                    throw;
+                }
+            }
+            else
+            {
+                // Wait is used over GetAwaiter().GetResult() because it will
+                // ensure an AggregateException is thrown rather than unwrapping and
+                // throwing only the first exception.
+
+                validationTask.Wait(cancellationToken);
+            }
+        }
+
+        /// <summary>
         ///   Creates an <see cref="EventHubConnection" /> to use for communicating with the Event Hubs service.
         /// </summary>
         ///
@@ -1021,6 +1083,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.EventProcessorStart(Identifier, EventHubName, ConsumerGroup);
 
+            var capturedValidationException = default(Exception);
             var releaseGuard = false;
 
             try
@@ -1059,6 +1122,37 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 ActivePartitionProcessors.Clear();
                 _runningProcessorTask = RunProcessingAsync(_runningProcessorCancellationSource.Token);
+
+                // Validate the processor configuration and ensuring basic permissions are held for
+                // service operations.
+
+                try
+                {
+                    if (async)
+                    {
+                        await ValidateStartupAsync(async, cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        ValidateStartupAsync(async, cancellationToken).EnsureCompleted();
+                    }
+                }
+                catch (AggregateException ex)
+                {
+                    // Capture the validation exception and log, but do not throw.  Because this is
+                    // a fatal exception and the processing task was already started, StopProcessing
+                    // will need to be called, which requires the semaphore.  The validation exception
+                    // will be handled after the start operation has officially completed and the
+                    // semaphore has been released.
+
+                    capturedValidationException = ex.Flatten();
+                    Logger.EventProcessorStartError(Identifier, EventHubName, ConsumerGroup, ex.Message);
+
+                    // Canceling the main source here won't cause a problem and will help expedite stopping
+                    // the processor later.
+
+                    _runningProcessorCancellationSource?.Cancel();
+                }
             }
             catch (OperationCanceledException ex)
             {
@@ -1082,6 +1176,31 @@ namespace Azure.Messaging.EventHubs.Primitives
                 {
                     ProcessorRunningGuard.Release();
                 }
+            }
+
+            // If there was a validation exception captured, then stop the processor now
+            // that it is safe to do so.
+
+            if (capturedValidationException != null)
+            {
+                try
+                {
+                    if (async)
+                    {
+                        await StopProcessingInternalAsync(async, CancellationToken.None).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        StopProcessingInternalAsync(async, CancellationToken.None).EnsureCompleted();
+                    }
+                }
+                catch
+                {
+                    // An exception is expected here, as the processor configuration was invalid and
+                    // processing was canceled.  It will have already been logged; ignore it here.
+                }
+
+                ExceptionDispatchInfo.Capture(capturedValidationException).Throw();
             }
         }
 
@@ -1614,6 +1733,40 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                   TPartition partition,
                                                   string operationDescription,
                                                   CancellationToken cancellationToken) => Task.Run(() => OnProcessingErrorAsync(exception, partition, operationDescription, cancellationToken), CancellationToken.None);
+
+        /// <summary>
+        ///   Performs the actions needed to validate the connection to the requested
+        ///   Event Hub.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the validation.</param>
+        ///
+        private async Task ValidateEventHubsConnectionAsync(CancellationToken cancellationToken = default)
+        {
+            // Validate that the Event Hubs connection is valid by querying properties of the Event Hub.
+            // This is core functionality for the processor to discover partitions and validates read access.
+
+            var connection = CreateConnection();
+            await using var connectionAwaiter = connection.ConfigureAwait(false);
+            await connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///   Performs the actions needed to validate the connection to the storage
+        ///   provider for checkpoints and ownership.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the validation.</param>
+        ///
+        private async Task ValidateStorageConnectionAsync(CancellationToken cancellationToken)
+        {
+            // Because the processor does not have knowledge of what storage implementation is in use,
+            // it cannot perform any specific in-depth validations.  Use the standard checkpoint query
+            // for an invalid partition; this should ensure that the basic storage connection can be made
+            // and that a read operation is valid.
+
+            await GetCheckpointAsync("-1", cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
