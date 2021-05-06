@@ -32,16 +32,16 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.ScenarioTests
                 testHelper.GetPolicy("retentionpolicy2");
                 
                 // Configure Backup
-                testHelper.CreateBackupInstance("TestDiskCmk2");
+                // testHelper.CreateBackupInstance("TestDiskCmk2");
 
                 // Validate For Backup
-                //testHelper.ValidateForBackup("TestDiskCmk2");
+                // testHelper.ValidateForBackup("TestDiskCmk2");
 
                 // Trigger Backup
-                //testHelper.TriggerBackup("TestDiskCmk2");
+                // testHelper.TriggerBackup("TestDiskCmk2");
 
                 // Validate for Restore
-                //testHelper.ValidateForRestore("TestDiskCmk2");
+                // testHelper.ValidateForRestore("TestDiskCmk2");
 
                 // Trigger Restore
                 //testHelper.TriggerRestore("TestDiskCmk2");

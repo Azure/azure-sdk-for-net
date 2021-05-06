@@ -726,6 +726,77 @@
       "StatusCode": 202
     },
     {
+      "RequestUri": "/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault1?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjJlZGZkNWQtNTQ5Ni00NjgzLWI5NGYtYjM1ODhjNTc5MDA5L3Jlc291cmNlR3JvdXBzL21heWFnZ2FyRGlza1JHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vYmFja3VwVmF1bHRzL0Rpc2tiYWNrdXBWYXVsdDE/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cfc787f1-3f81-4ee6-8aba-9849a0caf02f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042."
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "x-ms-client-request-id": [
+          "cfc787f1-3f81-4ee6-8aba-9849a0caf02f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "209"
+        ],
+        "x-ms-correlation-request-id": [
+          "873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135053Z:873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:50:52 GMT"
+        ],
+        "Content-Length": [
+          "484"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n    \"location\": \"southeastasia\",\n    \"tags\": {},\n    \"identity\": {\n        \"type\": \"SystemAssigned\",\n        \"principalId\": \"26067d7d-8c49-4041-9b05-07dc65e04536\",\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\"\n    },\n    \"id\": \"/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/resourcegroups/DiskBackup_SEACAN/providers/Microsoft.DataProtection/BackupVaults/DiskBackupVault1\",\n    \"name\": \"DiskbackupVault1\",\n    \"type\": \"Microsoft.DataProtection/backupVaults\",\n    \"properties\": {\n        \"provisioningState\": \"Succeeded\",\n        \"storageSettings\": [\n            {\n                \"datastoreType\": \"VaultStore\",\n                \"type\": \"LocallyRedundant\"\n            }\n        ]\n    }\n}",
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3O2RlYTdhNzZmLTlhZTItNDkzZS04ZmI0LTZlNzQyYWM3ZDM0Yw==?api-version=2021-01-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjJlZGZkNWQtNTQ5Ni00NjgzLWI5NGYtYjM1ODhjNTc5MDA5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvb3BlcmF0aW9uU3RhdHVzL01HTmlZMlUzT1dRdFl6VTRZaTAwT1dJMExXSXdZMlF0TVRFeU5EQmhaVGs0TnprM08yUmxZVGRoTnpabUxUbGhaVEl0TkRrelpTMDRabUkwTFRabE56UXlZV00zWkRNMFl3PT0/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
       "RequestMethod": "GET",
@@ -793,9 +864,223 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\"id\":\"\/subscriptions\/f2edfd5d-5496-4683-b94f-b3588c579009\/providers\/Microsoft.DataProtection\/locations\/southeastasia\/operationStatus\/MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzI2OGIyZmMzLTExYzAtNDlkOC1iZTI4LTkyYjhkYjE5MGMyMA==\",\"name\":\"MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzI2OGIyZmMzLTExYzAtNDlkOC1iZTI4LTkyYjhkYjE5MGMyMA==\",\"status\":\"Succeded\",\"error\":{\"additionalInfo\":[],\"code\":\"\",\"message\":\"\"},\"startTime\":\"2021-04-12T11:52:46.9915389Z\",\"endTime\":\"2021-04-12T11:53:08Z\"}",
+      "ResponseBody": "{\"id\":\"\/subscriptions\/f2edfd5d-5496-4683-b94f-b3588c579009\/providers\/Microsoft.DataProtection\/locations\/southeastasia\/operationStatus\/MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzI2OGIyZmMzLTExYzAtNDlkOC1iZTI4LTkyYjhkYjE5MGMyMA==\",\"name\":\"MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzI2OGIyZmMzLTExYzAtNDlkOC1iZTI4LTkyYjhkYjE5MGMyMA==\",\"status\":\"Succeded\",\"startTime\":\"2021-04-12T11:52:46.9915389Z\",\"endTime\":\"2021-04-12T11:53:08Z\"}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzJlMjJjODZkLWMzMjctNGNmZC1hOTExLTY2NzZkY2ViMDVjNQ==?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjJlZGZkNWQtNTQ5Ni00NjgzLWI5NGYtYjM1ODhjNTc5MDA5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvb3BlcmF0aW9uU3RhdHVzL01HTmlZMlUzT1dRdFl6VTRZaTAwT1dJMExXSXdZMlF0TVRFeU5EQmhaVGs0TnprM096SmxNakpqT0Raa0xXTXpNamN0TkdObVpDMWhPVEV4TFRZMk56WmtZMlZpTURWak5RPT0/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1f015d8b-793d-463b-9997-32b8c464b97b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042."
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "913287bd-7d1a-4ed8-bdad-d0d2a9432c86"
+        ],
+        "x-ms-client-request-id": [
+          "1f015d8b-793d-463b-9997-32b8c464b97b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "209"
+        ],
+        "x-ms-correlation-request-id": [
+          "873ce447-d705-43e0-a250-c245a146c480"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135053Z:873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:50:52 GMT"
+        ],
+        "Content-Length": [
+          "484"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\"id\":\"\/subscriptions\/f2edfd5d-5496-4683-b94f-b3588c579009\/providers\/Microsoft.DataProtection\/locations\/southeastasia\/operationStatus\/MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzI2OGIyZmMzLTExYzAtNDlkOC1iZTI4LTkyYjhkYjE5MGMyMA==\",\"name\":\"MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzI2OGIyZmMzLTExYzAtNDlkOC1iZTI4LTkyYjhkYjE5MGMyMA==\",\"status\":\"Succeded\",\"startTime\":\"2021-04-12T11:52:46.9915389Z\",\"endTime\":\"2021-04-12T11:53:08Z\"}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzIwZWZlY2Q2LTA5MmItNDk1MC04YTBiLTI1NTk2NzA1MTMzZg==?api-version=2020-01-01-alpha",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjJlZGZkNWQtNTQ5Ni00NjgzLWI5NGYtYjM1ODhjNTc5MDA5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvb3BlcmF0aW9uU3RhdHVzL01HTmlZMlUzT1dRdFl6VTRZaTAwT1dJMExXSXdZMlF0TVRFeU5EQmhaVGs0TnprM096SXdaV1psWTJRMkxUQTVNbUl0TkRrMU1DMDRZVEJpTFRJMU5UazJOekExTVRNelpnPT0/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1hbHBoYQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1f015d8b-793d-463b-9997-32b8c464b97b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042."
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "913287bd-7d1a-4ed8-bdad-d0d2a9432c86"
+        ],
+        "x-ms-client-request-id": [
+          "1f015d8b-793d-463b-9997-32b8c464b97b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "209"
+        ],
+        "x-ms-correlation-request-id": [
+          "873ce447-d705-43e0-a250-c245a146c480"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135053Z:873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:50:52 GMT"
+        ],
+        "Content-Length": [
+          "484"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\"id\":\"\/subscriptions\/f2edfd5d-5496-4683-b94f-b3588c579009\/providers\/Microsoft.DataProtection\/locations\/southeastasia\/operationStatus\/MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzI2OGIyZmMzLTExYzAtNDlkOC1iZTI4LTkyYjhkYjE5MGMyMA==\",\"name\":\"MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzI2OGIyZmMzLTExYzAtNDlkOC1iZTI4LTkyYjhkYjE5MGMyMA==\",\"status\":\"Succeded\",\"startTime\":\"2021-04-12T11:52:46.9915389Z\",\"endTime\":\"2021-04-12T11:53:08Z\"}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/f2edfd5d-5496-4683-b94f-b3588c579009/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3O2MwYjcyZmJlLTgzMzAtNDhmMS1hODFiLTkxMmJjNTUzMGE5NA==?api-version=2020-01-01-alpha",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjJlZGZkNWQtNTQ5Ni00NjgzLWI5NGYtYjM1ODhjNTc5MDA5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvb3BlcmF0aW9uU3RhdHVzL01HTmlZMlUzT1dRdFl6VTRZaTAwT1dJMExXSXdZMlF0TVRFeU5EQmhaVGs0TnprM08yTXdZamN5Wm1KbExUZ3pNekF0TkRobU1TMWhPREZpTFRreE1tSmpOVFV6TUdFNU5BPT0/YXBpLXZlcnNpb249MjAyMC0wMS0wMS1hbHBoYQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1f015d8b-793d-463b-9997-32b8c464b97b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042."
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "913287bd-7d1a-4ed8-bdad-d0d2a9432c86"
+        ],
+        "x-ms-client-request-id": [
+          "1f015d8b-793d-463b-9997-32b8c464b97b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "209"
+        ],
+        "x-ms-correlation-request-id": [
+          "873ce447-d705-43e0-a250-c245a146c480"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135053Z:873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:50:52 GMT"
+        ],
+        "Content-Length": [
+          "484"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\"id\":\"\/subscriptions\/f2edfd5d-5496-4683-b94f-b3588c579009\/providers\/Microsoft.DataProtection\/locations\/southeastasia\/operationStatus\/MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzI2OGIyZmMzLTExYzAtNDlkOC1iZTI4LTkyYjhkYjE5MGMyMA==\",\"name\":\"MGNiY2U3OWQtYzU4Yi00OWI0LWIwY2QtMTEyNDBhZTk4Nzk3OzI2OGIyZmMzLTExYzAtNDlkOC1iZTI4LTkyYjhkYjE5MGMyMA==\",\"status\":\"Succeded\",\"startTime\":\"2021-04-12T11:52:46.9915389Z\",\"endTime\":\"2021-04-12T11:53:08Z\"}",
       "StatusCode": 200
     }
+
   ],
   "Names": {},
   "Variables": {

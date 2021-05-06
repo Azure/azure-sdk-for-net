@@ -90,8 +90,8 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
         public void ValidateForRestore(string backupInstanceName)
         {
             JToken requestData = mockJson["Entries"][8]["RequestBody"];
-            AzureBackupRestoreRequest body = SafeJsonConvert.DeserializeObject<AzureBackupRestoreRequest>(requestData.ToString(), BackupClient.DeserializationSettings);
-            var response = BackupClient.BackupInstances.ValidateRestore(VaultName, ResourceGroup, backupInstanceName, body);
+            ValidateRestoreRequestObject body = SafeJsonConvert.DeserializeObject<ValidateRestoreRequestObject>(requestData.ToString(), BackupClient.DeserializationSettings);
+            var response = BackupClient.BackupInstances.ValidateRestore(VaultName, ResourceGroup, backupInstanceName, body.RestoreRequestObject);
             Assert.Null(response);
         }
 
