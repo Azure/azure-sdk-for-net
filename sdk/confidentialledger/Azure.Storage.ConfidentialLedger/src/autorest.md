@@ -9,7 +9,7 @@ credential-types: TokenCredential
 credential-scopes: "https://confidential-ledger.azure.com/.default"
 low-level-client: true
 input-file:
-    -  https://github.com/Azure/azure-rest-api-specs/blob/0f79e4bb951c7dec6bfa03f856b39d03c4629101/specification/confidentialledger/data-plane/Microsoft.ConfidentialLedger/preview/0.1-preview/common.json
-    -  https://github.com/Azure/azure-rest-api-specs/blob/0f79e4bb951c7dec6bfa03f856b39d03c4629101/specification/confidentialledger/data-plane/Microsoft.ConfidentialLedger/preview/0.1-preview/confidentialledger.json
-    -  https://github.com/Azure/azure-rest-api-specs/blob/0f79e4bb951c7dec6bfa03f856b39d03c4629101/specification/confidentialledger/data-plane/Microsoft.ConfidentialLedger/preview/0.1-preview/identityservice.json
+    -  c:/src/azure-rest-api-specs/specification/confidentialledger/data-plane/Microsoft.ConfidentialLedger/preview/0.1-preview/common.json
+    -  c:/src/azure-rest-api-specs/specification/confidentialledger/data-plane/Microsoft.ConfidentialLedger/preview/0.1-preview/confidentialledger.json
+    -  c:/src/azure-rest-api-specs/specification/confidentialledger/data-plane/Microsoft.ConfidentialLedger/preview/0.1-preview/identityservice.json
 ```
