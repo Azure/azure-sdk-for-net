@@ -26,5 +26,5 @@ steps:
       Write-Host "Setting VersioningProperties.UseDevVersions to false."
       echo "##vso[task.setvariable variable=UseDevVersions;isOutput=true]false"
     }
-  name: VersioningProperties
+  name: DevVersioning
   displayName: "Setup Versioning Properties"

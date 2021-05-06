@@ -59,7 +59,7 @@ jobs:
           $skipDevBuildNumber = "false"
           # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
           # the SetDevVersion property isn't set to true. All other cases should contain dev version numbers.
-          if ('$(Build.Reason)' -eq 'Manual' -and '$(SetDevVersion)' -ne 'true') {
+          if ('$(Build.Reason)' -eq 'Manual' -and '$(DevVersioning.UseDevVersions)' -ne 'true') {
             $skipDevBuildNumber = "true"
           }
           $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
