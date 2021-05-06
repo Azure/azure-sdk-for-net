@@ -106,6 +106,7 @@ known_presence_issues:
   - ['sdk/cognitiveservices/Vision.Face/CHANGELOG.md','#5499']
   - ['sdk/containerregistry/Microsoft.Azure.ContainerRegistry/CHANGELOG.md','#5499']
   - ['sdk/eventgrid/Microsoft.Azure.EventGrid/CHANGELOG.md','#5499']
+  - ['sdk/eventgrid/Azure.Messaging.EventGrid/EventGridSourceGenerator/CHANGELOG.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs.Processor/CHANGELOG.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor/CHANGELOG.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/CHANGELOG.md','#5499']
