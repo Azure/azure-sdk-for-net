@@ -27,23 +27,23 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             PrintHeader("TIME SERIES INSIGHTS QUERY SAMPLE");
 
             // Figure out what keys make up the Time Series Id
-            TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
+            TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync();
 
             TimeSeriesId tsId = TimeSeriesIdHelper.CreateTimeSeriesId(modelSettings);
 
             // In order to query for data, let's first send events to the IoT Hub
-            await SendEventsToIotHubAsync(deviceClient, tsId, modelSettings.TimeSeriesIdProperties.ToArray()).ConfigureAwait(false);
+            await SendEventsToIotHubAsync(deviceClient, tsId, modelSettings.TimeSeriesIdProperties.ToArray());
 
             // Sleeping for a few seconds to allow data to fully propagate in the Time Series Insights service
             Thread.Sleep(TimeSpan.FromSeconds(3));
 
-            await RunQueryEventsSample(client, tsId).ConfigureAwait(false);
+            await RunQueryEventsSample(client, tsId);
 
-            await RunQueryAggregateSeriesSample(client, tsId).ConfigureAwait(false);
+            await RunQueryAggregateSeriesSample(client, tsId);
 
-            await RunQuerySeriesSampleWithInlineVariables(client, tsId).ConfigureAwait(false);
+            await RunQuerySeriesSampleWithInlineVariables(client, tsId);
 
-            await RunQuerySeriesSampleWithPreDefinedVariables(client, tsId).ConfigureAwait(false);
+            await RunQuerySeriesSampleWithPreDefinedVariables(client, tsId);
         }
 
         private async Task RunQueryEventsSample(TimeSeriesInsightsClient client, TimeSeriesId tsId)
@@ -292,7 +292,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                     ContentEncoding = "utf-8",
                 };
 
-                await deviceClient.SendEventAsync(message).ConfigureAwait(false);
+                await deviceClient.SendEventAsync(message);
 
                 Console.WriteLine($"{DateTime.UtcNow} - Temperature: {currentTemperature}. " +
                     $"Humidity: {currentHumidity}.");

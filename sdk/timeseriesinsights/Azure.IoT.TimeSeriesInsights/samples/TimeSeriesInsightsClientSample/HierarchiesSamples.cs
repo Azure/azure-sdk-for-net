@@ -37,8 +37,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             // Create Time Series hierarchies
             Response<TimeSeriesHierarchyOperationResult[]> createHierarchiesResult = await client
                 .Hierarchies
-                .CreateOrReplaceAsync(timeSeriesHierarchies)
-                .ConfigureAwait(false);
+                .CreateOrReplaceAsync(timeSeriesHierarchies);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
             // If the error object is set to null, this means the operation was a success.
@@ -73,8 +72,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             Response<TimeSeriesHierarchyOperationResult[]> updateHierarchiesResult = await client
                     .Hierarchies
-                    .CreateOrReplaceAsync(timeSeriesHierarchies)
-                    .ConfigureAwait(false);
+                    .CreateOrReplaceAsync(timeSeriesHierarchies);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
             // If the error object is set to null, this means the operation was a success.
@@ -99,8 +97,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             Response<TimeSeriesHierarchyOperationResult[]> getHierarchiesByIdsResult = await client
                         .Hierarchies
-                        .GetByIdAsync(tsiHierarchyIds)
-                        .ConfigureAwait(false);
+                        .GetByIdAsync(tsiHierarchyIds);
 
             // The response of calling the API contains a list of hieararchy or error objects corresponding by position to the input parameter array in the request.
             // If the error object is set to null, this means the operation was a success.
@@ -129,8 +126,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
                 Response<TimeSeriesOperationError[]> deleteHierarchiesResponse = await client
                         .Hierarchies
-                        .DeleteByIdAsync(tsiHierarchyIdsToDelete)
-                        .ConfigureAwait(false);
+                        .DeleteByIdAsync(tsiHierarchyIdsToDelete);
 
                 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
                 // array in the request. If the error object is set to null, this means the operation was a success.
