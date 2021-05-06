@@ -12,6 +12,8 @@ namespace Azure.Core
     internal class OperationInternal<TResult>
     {
         private const string RetryAfterHeaderName = "Retry-After";
+        private const string RetryAfterMsHeaderName = "retry-after-ms";
+        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
 
         private readonly object SetStateLock = new object();
 
@@ -107,9 +109,7 @@ namespace Azure.Core
                     return Response.FromValue(Value, response);
                 }
 
-                var serverDelay = response.Headers.TryGetValue(RetryAfterHeaderName, out string retryAfterValue)
-                    && int.TryParse(retryAfterValue, out int serverDelayInSeconds)
-                    ? TimeSpan.FromSeconds(serverDelayInSeconds) : TimeSpan.Zero;
+                var serverDelay = GetServerDelay(response);
 
                 var delay = serverDelay > pollingInterval
                     ? serverDelay : pollingInterval;
@@ -172,6 +172,28 @@ namespace Azure.Core
             }
 
             return state.RawResponse;
+        }
+
+        private TimeSpan GetServerDelay(Response response)
+        {
+            if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string retryAfterValue)
+                || response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out int serverDelayInMilliseconds))
+                {
+                    return TimeSpan.FromMilliseconds(serverDelayInMilliseconds);
+                }
+            }
+
+            if (response.Headers.TryGetValue(RetryAfterHeaderName, out retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out int serverDelayInSeconds))
+                {
+                    return TimeSpan.FromSeconds(serverDelayInSeconds);
+                }
+            }
+
+            return TimeSpan.Zero;
         }
     }
 

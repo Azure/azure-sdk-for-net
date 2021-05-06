@@ -366,6 +366,54 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [TestCase(true, "retry-after-ms")]
+        [TestCase(true, "x-ms-retry-after-ms")]
+        [TestCase(false, "retry-after-ms")]
+        [TestCase(false, "x-ms-retry-after-ms")]
+        public async Task WaitForCompletionUsesRetryAfterMsHeader(bool useDefaultPollingInterval, string headerName)
+        {
+            var originalDelay = TimeSpan.FromMilliseconds(500);
+            var shortDelay = originalDelay.Subtract(TimeSpan.FromMilliseconds(250));
+            var longDelay = originalDelay.Add(TimeSpan.FromMilliseconds(250));
+            var passedDelays = new List<TimeSpan>();
+
+            var shortDelayMockResponse = new MockResponse(200);
+            shortDelayMockResponse.AddHeader(new HttpHeader(headerName, shortDelay.Milliseconds.ToString()));
+
+            var longDelayMockResponse = new MockResponse(200);
+            longDelayMockResponse.AddHeader(new HttpHeader(headerName, longDelay.Milliseconds.ToString()));
+
+            var callsCount = 0;
+            var testOperation = new TestOperation()
+            {
+                OnUpdateState = _ => ++callsCount switch
+                {
+                    1 => OperationState<int>.Pending(shortDelayMockResponse),
+                    2 => OperationState<int>.Pending(longDelayMockResponse),
+                    _ => OperationState<int>.Success(new MockResponse(200), 50)
+                }
+            };
+            var operationInternal = testOperation.MockOperationInternal;
+
+            operationInternal.OnWait = delay => passedDelays.Add(delay);
+
+            if (useDefaultPollingInterval)
+            {
+                operationInternal.DefaultPollingInterval = originalDelay;
+                await operationInternal.WaitForCompletionAsync(CancellationToken.None);
+            }
+            else
+            {
+                await operationInternal.WaitForCompletionAsync(originalDelay, CancellationToken.None);
+            }
+
+            // Algorithm must choose the longest delay between the two.
+            Assert.AreEqual(2, passedDelays.Count);
+            Assert.AreEqual(originalDelay, passedDelays[0]);
+            Assert.AreEqual(longDelay, passedDelays[1]);
+        }
+
+        [Test]
         [TestCase(true)]
         [TestCase(false)]
         public async Task WaitForCompletionPassesTheCancellationTokenToUpdateState(bool useDefaultPollingInterval)
