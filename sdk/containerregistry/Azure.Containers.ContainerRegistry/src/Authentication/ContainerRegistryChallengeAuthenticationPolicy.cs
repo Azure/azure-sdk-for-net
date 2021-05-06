@@ -84,23 +84,11 @@ namespace Azure.Containers.ContainerRegistry
             var service = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "service");
             var scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "scope");
 
-            string acrAccessToken;
-            if (async)
-            {
-                // Step 3: Exchange AAD Access Token for ACR Refresh Token, or get the cached value instead.
-                string acrRefreshToken = await _refreshTokenCache.GetAcrRefreshTokenAsync(message, context, service, async).ConfigureAwait(false);
+            // Step 3: Exchange AAD Access Token for ACR Refresh Token, or get the cached value instead.
+            string acrRefreshToken = await _refreshTokenCache.GetAcrRefreshTokenAsync(message, context, service, async).ConfigureAwait(false);
 
-                // Step 4: Send in acrRefreshToken and get back acrAccessToken
-                acrAccessToken = await ExchangeAcrRefreshTokenForAcrAccessTokenAsync(acrRefreshToken, service, scope, true, message.CancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                // Step 3: Exchange AAD Access Token for ACR Refresh Token, or get the cached value instead.
-                string acrRefreshToken = _refreshTokenCache.GetAcrRefreshTokenAsync(message, context, service, false).EnsureCompleted();
-
-                // Step 4: Send in acrRefreshToken and get back acrAccessToken
-                acrAccessToken = ExchangeAcrRefreshTokenForAcrAccessTokenAsync(acrRefreshToken, service, scope, false, message.CancellationToken).EnsureCompleted();
-            }
+            // Step 4: Send in acrRefreshToken and get back acrAccessToken
+            string acrAccessToken = await ExchangeAcrRefreshTokenForAcrAccessTokenAsync(acrRefreshToken, service, scope, async, message.CancellationToken).ConfigureAwait(false);
 
             // Step 5 - Authorize Request.  Note, we don't use SetAuthorizationHeader from the base class here, because it
             // sets an AAD access token header, and at this point we're done with AAD and using an ACR access token.
