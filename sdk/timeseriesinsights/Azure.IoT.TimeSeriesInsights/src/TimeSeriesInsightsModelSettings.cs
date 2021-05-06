@@ -46,7 +46,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Response&lt;TimeSeriesModelSettings&gt; getModelSettingsResponse = await client.ModelSettings.GetAsync();
         /// Console.WriteLine($&quot;Retrieved Time Series Insights model settings \nname : &apos;{getModelSettingsResponse.Value.Name}&apos;, &quot; +
         ///     $&quot;default type Id: {getModelSettingsResponse.Value.DefaultTypeId}&apos;&quot;);
-        /// var timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
+        /// IReadOnlyList&lt;TimeSeriesIdProperty&gt; timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
         /// foreach (TimeSeriesIdProperty property in timeSeriesIdProperties)
         /// {
         ///     Console.WriteLine($&quot;Time Series Id property name : &apos;{property.Name}&apos;, type : &apos;{property.Type}&apos;.&quot;);

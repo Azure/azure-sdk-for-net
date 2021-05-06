@@ -70,7 +70,7 @@ Use `ModelSettings` in [TimeSeriesInsightsClient](https://github.com/Azure/azure
 Response<TimeSeriesModelSettings> getModelSettingsResponse = await client.ModelSettings.GetAsync();
 Console.WriteLine($"Retrieved Time Series Insights model settings \nname : '{getModelSettingsResponse.Value.Name}', " +
     $"default type Id: {getModelSettingsResponse.Value.DefaultTypeId}'");
-var timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
+IReadOnlyList<TimeSeriesIdProperty> timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
 foreach (TimeSeriesIdProperty property in timeSeriesIdProperties)
 {
     Console.WriteLine($"Time Series Id property name : '{property.Name}', type : '{property.Type}'.");
