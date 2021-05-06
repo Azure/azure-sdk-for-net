@@ -1,15 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Core.Pipeline;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
-using System.Linq;
-using System.Runtime.CompilerServices;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {

@@ -6,9 +6,6 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
 {
@@ -70,11 +67,11 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private ResourceGroupsOperations Operations => new ResourcesManagementClient(
-            BaseUri,
+        private ResourceGroupsRestOperations RestClient => new ResourceGroupsRestOperations(
+            Diagnostics,
+            Pipeline,
             Id.SubscriptionId,
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>()).ResourceGroups;
+            BaseUri);
 
         /// <summary>
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
@@ -88,7 +85,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new ArmResponse(Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletion(cancellationToken));
+                return new ArmResponse(RestClient.Delete(Id.Name, cancellationToken));
             }
             catch (Exception e)
             {
@@ -109,7 +106,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new ArmResponse(await Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+                return new ArmResponse(await RestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {
@@ -133,7 +130,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new ArmVoidOperation(Operations.StartDelete(Id.Name, cancellationToken));
+                return new ArmVoidOperation(RestClient.Delete(Id.Name, cancellationToken));
             }
             catch (Exception e)
             {
@@ -157,7 +154,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
+                return new ArmVoidOperation(await RestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {
@@ -174,9 +171,9 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(Id.Name, cancellationToken), g =>
+                return new PhArmResponse<ResourceGroup, ResourceGroupData>(RestClient.Get(Id.Name, cancellationToken), g =>
                 {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
+                    return new ResourceGroup(this, g);
                 });
             }
             catch (Exception e)
@@ -194,11 +191,11 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                await Operations.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
+                return new PhArmResponse<ResourceGroup, ResourceGroupData>(
+                await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
                 g =>
                 {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
+                    return new ResourceGroup(this, g);
                 });
             }
             catch (Exception e)
@@ -223,9 +220,9 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags[key] = value;
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
+                return new PhArmResponse<ResourceGroup, ResourceGroupData>(RestClient.Update(Id.Name, patch, cancellationToken), g =>
                 {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
+                    return new ResourceGroup(this, g);
                 });
             }
             catch (Exception e)
@@ -250,10 +247,10 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags[key] = value;
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false), g =>
+                return new PhArmResponse<ResourceGroup, ResourceGroupData>(
+                    await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false), g =>
                 {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
+                    return new ResourceGroup(this, g);
                 });
             }
             catch (Exception e)
@@ -278,9 +275,9 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags[key] = value;
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
+                return new PhArmOperation<ResourceGroup, ResourceGroupData>(RestClient.Update(Id.Name, patch, cancellationToken), g =>
                 {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
+                    return new ResourceGroup(this, g);
                 });
             }
             catch (Exception e)
@@ -305,11 +302,11 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags[key] = value;
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
+                return new PhArmOperation<ResourceGroup, ResourceGroupData>(
+                    await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
                     g =>
                     {
-                        return new ResourceGroup(this, new ResourceGroupData(g));
+                        return new ResourceGroup(this, g);
                     });
             }
             catch (Exception e)
@@ -363,7 +360,7 @@ namespace Azure.ResourceManager.Core
         /// <exception cref="ArgumentNullException"> Model cannot be null. </exception>
         public virtual Task<ArmResponse<TOperations>> CreateResourceAsync<TContainer, TIdentifier, TOperations, TResource>(string name, TResource model, CancellationToken cancellationToken = default)
             where TResource : TrackedResource<TIdentifier>
-            where TOperations : ResourceOperationsBase<TIdentifier,TOperations>
+            where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
             where TContainer : ResourceContainerBase<TIdentifier, TOperations, TResource>
             where TIdentifier : SubscriptionResourceIdentifier
         {
@@ -393,9 +390,9 @@ namespace Azure.ResourceManager.Core
                 var resource = GetResource(cancellationToken);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(tags);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
+                return new PhArmResponse<ResourceGroup, ResourceGroupData>(RestClient.Update(Id.Name, patch, cancellationToken), g =>
                 {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
+                    return new ResourceGroup(this, g);
                 });
             }
             catch (Exception e)
@@ -419,11 +416,11 @@ namespace Azure.ResourceManager.Core
                 ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(tags);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
+                return new PhArmResponse<ResourceGroup, ResourceGroupData>(
+                    await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
                     g =>
                     {
-                        return new ResourceGroup(this, new ResourceGroupData(g));
+                        return new ResourceGroup(this, g);
                     });
             }
             catch (Exception e)
@@ -447,9 +444,9 @@ namespace Azure.ResourceManager.Core
                 var resource = GetResource(cancellationToken);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(tags);
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
+                return new PhArmOperation<ResourceGroup, ResourceGroupData>(RestClient.Update(Id.Name, patch, cancellationToken), g =>
                 {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
+                    return new ResourceGroup(this, g);
                 });
             }
             catch (Exception e)
@@ -473,11 +470,11 @@ namespace Azure.ResourceManager.Core
                 ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(tags);
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
+                return new PhArmOperation<ResourceGroup, ResourceGroupData>(
+                    await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
                     g =>
                     {
-                        return new ResourceGroup(this, new ResourceGroupData(g));
+                        return new ResourceGroup(this, g);
                     });
             }
             catch (Exception e)
@@ -502,9 +499,9 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
+                return new PhArmResponse<ResourceGroup, ResourceGroupData>(RestClient.Update(Id.Name, patch, cancellationToken), g =>
                 {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
+                    return new ResourceGroup(this, g);
                 });
             }
             catch (Exception e)
@@ -529,11 +526,11 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);
-                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
+                return new PhArmResponse<ResourceGroup, ResourceGroupData>(
+                    await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
                     g =>
                     {
-                        return new ResourceGroup(this, new ResourceGroupData(g));
+                        return new ResourceGroup(this, g);
                     });
             }
             catch (Exception e)
@@ -558,9 +555,9 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
+                return new PhArmOperation<ResourceGroup, ResourceGroupData>(RestClient.Update(Id.Name, patch, cancellationToken), g =>
                 {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
+                    return new ResourceGroup(this, g);
                 });
             }
             catch (Exception e)
@@ -585,11 +582,11 @@ namespace Azure.ResourceManager.Core
                 var patch = new ResourceGroupPatchable();
                 patch.Tags.ReplaceWith(resource.Data.Tags);
                 patch.Tags.Remove(key);
-                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
+                return new PhArmOperation<ResourceGroup, ResourceGroupData>(
+                    await RestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
                     g =>
                     {
-                        return new ResourceGroup(this, new ResourceGroupData(g));
+                        return new ResourceGroup(this, g);
                     });
             }
             catch (Exception e)

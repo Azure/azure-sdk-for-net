@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.Core.Adapters;
-using Azure.ResourceManager.Core.Resources;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using System;
 using System.Globalization;
 using System.Reflection;
 using System.Threading;
+using Azure.ResourceManager.Core.Resources;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
 {

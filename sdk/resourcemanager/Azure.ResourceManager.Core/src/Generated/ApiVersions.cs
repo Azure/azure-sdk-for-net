@@ -3,13 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
