@@ -197,7 +197,7 @@ namespace Azure.Messaging.ServiceBus
 
             Options = options?.Clone() ?? new ServiceBusProcessorOptions();
             Connection = connection;
-            EntityPath = entityPath;
+            EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, Options.SubQueue);
             Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
 
             ReceiveMode = Options.ReceiveMode;
@@ -225,7 +225,6 @@ namespace Azure.Messaging.ServiceBus
 
             AutoCompleteMessages = Options.AutoCompleteMessages;
 
-            EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
             _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
             _plugins = plugins;
@@ -434,7 +433,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Invokes the process message event handler after a message has been received.
-        /// This method can be overriden to raise an event manually for testing purposes.
+        /// This method can be overridden to raise an event manually for testing purposes.
         /// </summary>
         /// <param name="args">The event args containing information related to the message.</param>
         protected internal virtual async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
@@ -443,8 +442,8 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Invokes the error event handler when an error has occured during processing.
-        /// This method can be overriden to raise an event manually for testing purposes.
+        /// Invokes the error event handler when an error has occurred during processing.
+        /// This method can be overridden to raise an event manually for testing purposes.
         /// </summary>
         /// <param name="args">The event args containing information related to the error.</param>
         protected internal async virtual Task OnProcessErrorAsync(ProcessErrorEventArgs args)
@@ -486,6 +485,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusProcessor));
+            Connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             bool releaseGuard = false;
             try
@@ -672,7 +672,7 @@ namespace Azure.Messaging.ServiceBus
             List<Task> tasks = new List<Task>(_maxConcurrentCalls + _receiverManagers.Count);
             try
             {
-                while (!cancellationToken.IsCancellationRequested)
+                while (!cancellationToken.IsCancellationRequested && !Connection.IsClosed)
                 {
                     foreach (ReceiverManager receiverManager in _receiverManagers)
                     {
@@ -691,6 +691,42 @@ namespace Azure.Messaging.ServiceBus
                     {
                         tasks.RemoveAll(t => t.IsCompleted);
                     }
+                }
+
+                // If the main loop is aborting due to the connection being canceled, then
+                // force the processor to stop.
+                if (!cancellationToken.IsCancellationRequested && Connection.IsClosed)
+                {
+                    Logger.ProcessorClientClosedException(Identifier);
+
+                    // Because this is a highly unusual situation
+                    // and goes against the goal of resiliency for the processor, surface
+                    // a fatal exception with an explicit message detailing that processing
+                    // will be stopped.
+                    try
+                    {
+                        await OnProcessErrorAsync(
+                            new ProcessErrorEventArgs(
+                                new ObjectDisposedException(nameof(ServiceBusConnection), Resources.DisposedConnectionMessageProcessorMustStop),
+                                ServiceBusErrorSource.Receive,
+                                FullyQualifiedNamespace,
+                                EntityPath,
+                                cancellationToken))
+                        .ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Don't bubble up exceptions raised from customer exception handler.
+                        Logger.ProcessorErrorHandlerThrewException(ex.ToString());
+                    }
+
+                    // This call will deadlock if awaited, as StopProcessingAsync awaits
+                    // completion of this task.  The processor is already known to be in a bad
+                    // state and exceptions in StopProcessingAsync are likely and will be logged
+                    // in that call.  There is little value in surfacing those expected exceptions
+                    // to the customer error handler as well; allow StopProcessingAsync to run
+                    // in a fire-and-forget manner.
+                    _ = StopProcessingAsync();
                 }
             }
             finally
@@ -772,7 +808,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />.
-        ///   This is equivalent to calling <see cref="CloseAsync"/> with the default <see cref="LinkCloseMode"/>.
+        ///   This is equivalent to calling <see cref="CloseAsync"/>.
         /// </summary>
         public async ValueTask DisposeAsync() =>
             await CloseAsync().ConfigureAwait(false);

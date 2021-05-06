@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             SearchResourceCounter dataSourcesCount = default;
             SearchResourceCounter storageSize = default;
             SearchResourceCounter synonymMaps = default;
-            SearchResourceCounter skillsetCount = default;
+            Optional<SearchResourceCounter> skillsetCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documentCount"))
@@ -55,11 +55,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("skillsetCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     skillsetCount = SearchResourceCounter.DeserializeSearchResourceCounter(property.Value);
                     continue;
                 }
             }
-            return new SearchServiceCounters(documentCount, indexesCount, indexersCount, dataSourcesCount, storageSize, synonymMaps, skillsetCount);
+            return new SearchServiceCounters(documentCount, indexesCount, indexersCount, dataSourcesCount, storageSize, synonymMaps, skillsetCount.Value);
         }
     }
 }

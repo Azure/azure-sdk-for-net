@@ -9,7 +9,7 @@ Use the client library for Azure Container Registry to:
 - Set read/write/delete properties on registry items
 - Delete images and artifacts, repositories and tags
 
-[Source code][source] | [Package (NuGet)]<!--[package]--> | [API reference documentation]<!--[docs]--> | [REST API documentation][rest_docs] | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
 
 ## Getting started
 
@@ -90,7 +90,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 
 // Perform an operation
-Pageable<string> repositories = client.GetRepositories();
+Pageable<string> repositories = client.GetRepositoryNames();
 foreach (string repository in repositories)
 {
     Console.WriteLine(repository);
@@ -109,7 +109,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 
 // Perform an operation
-AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
 await foreach (string repository in repositories)
 {
     Console.WriteLine(repository);
@@ -124,13 +124,14 @@ All container registry service operations will throw a
 ```C# Snippet:ContainerRegistry_Tests_Samples_HandleErrors
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
-// Create an invalid ContainerRepositoryClient
+// Create a ContainerRepository class for an invalid repository
 string fakeRepositoryName = "doesnotexist";
-ContainerRepositoryClient client = new ContainerRepositoryClient(endpoint, fakeRepositoryName, new DefaultAzureCredential());
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
 try
 {
-    client.GetProperties();
+    repository.GetProperties();
 }
 catch (RequestFailedException ex) when (ex.Status == 404)
 {

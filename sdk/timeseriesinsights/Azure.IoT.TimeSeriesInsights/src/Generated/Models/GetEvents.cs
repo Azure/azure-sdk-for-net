@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Get Events query. Allows to retrieve raw events for a given Time Series ID and search span. </summary>
-    public partial class GetEvents
+    internal partial class GetEvents
     {
         /// <summary> The range of time on which the query is executed. Cannot be null. </summary>
         public DateTimeRange SearchSpan { get; }

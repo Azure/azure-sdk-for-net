@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the ResourceGroup data model.
     /// </summary>
-    public class ResourceGroupData : TrackedResource<ResourceGroupResourceIdentifier, ResourceManager.Resources.Models.ResourceGroup>
+    public partial class ResourceGroupData : TrackedResource<ResourceGroupResourceIdentifier, ResourceManager.Resources.Models.ResourceGroup>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupData"/> class.

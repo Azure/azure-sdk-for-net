@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CannotAddNullHandler()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
@@ -33,7 +33,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void MustSetMessageHandler()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void MustSetErrorHandler()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CannotAddTwoHandlersToTheSameEvent()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
@@ -79,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CannotRemoveHandlerThatHasNotBeenAdded()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());
@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         public void CanRemoveHandlerThatHasBeenAdded()
         {
             var processor = new ServiceBusSessionProcessor(
-                GetMockedConnection(),
+                GetMockedReceiverConnection(),
                 "entityPath",
                 new ServiceBusPlugin[] { },
                 new ServiceBusSessionProcessorOptions());

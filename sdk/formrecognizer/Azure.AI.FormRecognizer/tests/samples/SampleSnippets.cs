@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
@@ -21,12 +19,14 @@ namespace Azure.AI.FormRecognizer.Samples
         [Test]
         public void CreateFormRecognizerClient()
         {
+            #region Snippet:CreateFormRecognizerClient
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
-            #region Snippet:CreateFormRecognizerClient
-            //@@ string endpoint = "<endpoint>";
-            //@@ string apiKey = "<apiKey>";
+#endif
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormRecognizerClient(new Uri(endpoint), credential);
             #endregion
@@ -35,10 +35,12 @@ namespace Azure.AI.FormRecognizer.Samples
         [Test]
         public void CreateFormRecognizerClientTokenCredential()
         {
-            string endpoint = TestEnvironment.Endpoint;
-
             #region Snippet:CreateFormRecognizerClientTokenCredential
-            //@@ string endpoint = "<endpoint>";
+#if SNIPPET
+            string endpoint = "<endpoint>";
+#else
+            string endpoint = TestEnvironment.Endpoint;
+#endif
             var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
@@ -46,12 +48,14 @@ namespace Azure.AI.FormRecognizer.Samples
         [Test]
         public void CreateFormTrainingClient()
         {
+            #region Snippet:CreateFormTrainingClient
+#if SNIPPET
+            string endpoint = "<endpoint>";
+            string apiKey = "<apiKey>";
+#else
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
-            #region Snippet:CreateFormTrainingClient
-            //@@ string endpoint = "<endpoint>";
-            //@@ string apiKey = "<apiKey>";
+#endif
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormTrainingClient(new Uri(endpoint), credential);
             #endregion

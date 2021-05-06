@@ -56,5 +56,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         public DataFeedStatus? Status { get; set; }
         /// <summary> action link for alert. </summary>
         public string ActionLinkTemplate { get; set; }
+        /// <summary> authentication type for corresponding data source. </summary>
+        public AuthenticationTypeEnum? AuthenticationType { get; set; }
+        /// <summary> The credential entity id. </summary>
+        public string CredentialId { get; set; }
     }
 }

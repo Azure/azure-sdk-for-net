@@ -4,6 +4,7 @@ pr:
     include:
     - master
     - '*-preview'
+    - 'feature/cplat*'
   paths:
     include:
     - Directory.Build.props

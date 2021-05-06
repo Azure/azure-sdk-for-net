@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void TestResourceTypeFilterParamCheck()
         {
-            Assert.Throws<ArgumentNullException>(() => { new ArmVoidOperation((Operation<Response>)null); });
-            Assert.Throws<ArgumentNullException>(() => { new ArmVoidOperation((Response)null); });
+            Assert.Throws<ArgumentNullException>(() => { new PhVoidArmOperation((Operation<Response>)null); });
+            Assert.Throws<ArgumentNullException>(() => { new PhVoidArmOperation((Response)null); });
         }
     }
 }

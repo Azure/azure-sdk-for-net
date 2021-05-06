@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -16,16 +16,21 @@ namespace Azure.Containers.ContainerRegistry
     {
         /// <summary> Initializes a new instance of TagList. </summary>
         /// <param name="repository"> Image name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="repository"/> is null. </exception>
-        internal TagList(string repository)
+        /// <param name="tagAttributeBases"> List of tag attribute details. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="repository"/> or <paramref name="tagAttributeBases"/> is null. </exception>
+        internal TagList(string repository, IEnumerable<TagAttributesBase> tagAttributeBases)
         {
             if (repository == null)
             {
                 throw new ArgumentNullException(nameof(repository));
             }
+            if (tagAttributeBases == null)
+            {
+                throw new ArgumentNullException(nameof(tagAttributeBases));
+            }
 
             Repository = repository;
-            TagAttributeBases = new ChangeTrackingList<TagAttributesBase>();
+            TagAttributeBases = tagAttributeBases.ToList();
         }
 
         /// <summary> Initializes a new instance of TagList. </summary>
