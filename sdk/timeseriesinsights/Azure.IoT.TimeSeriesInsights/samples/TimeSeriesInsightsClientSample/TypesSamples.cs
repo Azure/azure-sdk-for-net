@@ -34,8 +34,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
                 .Types
-                .CreateOrReplaceAsync(timeSeriesTypes)
-                .ConfigureAwait(false);
+                .CreateOrReplaceAsync(timeSeriesTypes);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
             // If the error object is set to null, this means the operation was a success.
@@ -56,11 +55,10 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             // Code snippet below shows getting a default Type using Id
             // The default type Id can be obtained programmatically by using the ModelSettings client.
 
-            TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
+            TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync();
             Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await client
                 .Types
-                .GetByIdAsync(new string[] { modelSettings.DefaultTypeId })
-                .ConfigureAwait(false);
+                .GetByIdAsync(new string[] { modelSettings.DefaultTypeId });
 
             // The response of calling the API contains a list of type or error objects corresponding by position to the input parameter array in the request.
             // If the error object is set to null, this means the operation was a success.
@@ -86,8 +84,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             Response<TimeSeriesTypeOperationResult[]> updateTypesResult = await client
                 .Types
-                .CreateOrReplaceAsync(timeSeriesTypes)
-                .ConfigureAwait(false);
+                .CreateOrReplaceAsync(timeSeriesTypes);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
             // If the error object is set to null, this means the operation was a success.
@@ -124,8 +121,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 var typesIdsToDelete = new List<string> { "Type1Id", " Type2Id" };
                 Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
                     .Types
-                    .DeleteByIdAsync(typesIdsToDelete)
-                    .ConfigureAwait(false);
+                    .DeleteByIdAsync(typesIdsToDelete);
 
                 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
                 // array in the request. If the error object is set to null, this means the operation was a success.
