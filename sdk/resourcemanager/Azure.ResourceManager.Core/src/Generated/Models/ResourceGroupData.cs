@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -19,8 +18,6 @@ namespace Azure.ResourceManager.Core
             {
                 throw new ArgumentNullException(nameof(location));
             }
-
-            Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
         }
 
         /// <summary> Initializes a new instance of ResourceGroupData. </summary>
@@ -42,7 +39,5 @@ namespace Azure.ResourceManager.Core
         public ResourceGroupProperties Properties { get; set; }
         /// <summary> The ID of the resource that manages this resource group. </summary>
         public string ManagedBy { get; set; }
-        /// <summary> The tags attached to the resource group. </summary>
-        public override IDictionary<string, string> Tags { get; }
     }
 }

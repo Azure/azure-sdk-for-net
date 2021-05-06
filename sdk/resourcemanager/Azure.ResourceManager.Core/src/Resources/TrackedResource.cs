@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Core
         protected TrackedResource(LocationData location)
         {
             Location = location;
+            Tags = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
         }
 
         /// <summary>
