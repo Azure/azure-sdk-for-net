@@ -67,7 +67,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             #region Snippet:TimeSeriesInsightsGetAllInstances
 
-            // Get all instances for the Time Series Insigths environment
+            // Get all instances for the Time Series Insights environment
             AsyncPageable<TimeSeriesInstance> tsiInstances = client.Instances.GetAsync();
             await foreach (TimeSeriesInstance tsiInstance in tsiInstances)
             {
