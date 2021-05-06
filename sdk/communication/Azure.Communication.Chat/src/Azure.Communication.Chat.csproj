@@ -8,6 +8,8 @@
     </Description>
     <AssemblyTitle>Azure Communication Chat Service</AssemblyTitle>
     <Version>1.0.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Chat Service;Microsoft;Azure;Azure Communication Service;Azure Communication Chat Service;Chat;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
