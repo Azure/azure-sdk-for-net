@@ -139,7 +139,7 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/da364f0f-307b-41c9-9d47-b7413ec45535/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2021-01-01",
+      "RequestUri": "/subscriptions/da364f0f-307b-41c9-9d47-b7413ec45535/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=3-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEzNjRmMGYtMzA3Yi00MWM5LTlkNDctYjc0MTNlYzQ1NTM1L3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -209,7 +209,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/da364f0f-307b-41c9-9d47-b7413ec45535/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2021-01-01",
+      "RequestUri": "/subscriptions/da364f0f-307b-41c9-9d47-b7413ec45535/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2021-03-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEzNjRmMGYtMzA3Yi00MWM5LTlkNDctYjc0MTNlYzQ1NTM1L3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -279,7 +279,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/da364f0f-307b-41c9-9d47-b7413ec45535/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2021-01-01",
+      "RequestUri": "/subscriptions/da364f0f-307b-41c9-9d47-b7413ec45535/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2021-03-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEzNjRmMGYtMzA3Yi00MWM5LTlkNDctYjc0MTNlYzQ1NTM1L3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -349,7 +349,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/da364f0f-307b-41c9-9d47-b7413ec45535/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies/defaultpolicy?api-version=2021-01-01",
+      "RequestUri": "/subscriptions/da364f0f-307b-41c9-9d47-b7413ec45535/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies/defaultpolicy?api-version=2021-03-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGEzNjRmMGYtMzA3Yi00MWM5LTlkNDctYjc0MTNlYzQ1NTM1L3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXMvZGVmYXVsdHBvbGljeT9hcGktdmVyc2lvbj0yMDIxLTAxLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
