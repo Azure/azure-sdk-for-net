@@ -444,7 +444,7 @@ namespace Azure.Core.Tests
 
             protected override async Task WaitAsync(TimeSpan delay, CancellationToken cancellationToken)
             {
-                OnWait(delay);
+                OnWait?.Invoke(delay);
                 await base.WaitAsync(delay, cancellationToken);
             }
         }
