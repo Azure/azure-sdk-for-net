@@ -19,15 +19,19 @@ namespace Azure.Core
 
         private readonly ClientDiagnostics _diagnostics;
 
+        private readonly string _updateStatusScopeName;
+
         private TResult _value;
 
         private RequestFailedException _operationFailedException;
 
-        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation)
+        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, string operationTypeName = null)
         {
+            operationTypeName ??= operation.GetType().Name;
+
             _operation = operation;
             _diagnostics = clientDiagnostics;
-            OperationTypeName = operation.GetType().Name;
+            _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
             DefaultPollingInterval = TimeSpan.FromSeconds(1);
             ScopeAttributes = new Dictionary<string, string>();
         }
@@ -69,8 +73,6 @@ namespace Azure.Core
 
         public Response RawResponse { get; set; }
 
-        public string OperationTypeName { get; set; }
-
         public TimeSpan DefaultPollingInterval { get; set; }
 
         public async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken) =>
@@ -107,7 +109,7 @@ namespace Azure.Core
 
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{OperationTypeName}.UpdateStatus");
+            using DiagnosticScope scope = _diagnostics.CreateScope(_updateStatusScopeName);
 
             foreach (KeyValuePair<string, string> attribute in ScopeAttributes)
             {

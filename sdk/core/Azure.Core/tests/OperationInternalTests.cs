@@ -24,7 +24,6 @@ namespace Azure.Core.Tests
             var operationInternal = testOperation.MockOperationInternal;
 
             Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.DefaultPollingInterval);
-            Assert.AreEqual(nameof(TestOperation), operationInternal.OperationTypeName);
             Assert.IsNotNull(operationInternal.ScopeAttributes);
             Assert.IsEmpty(operationInternal.ScopeAttributes);
 
@@ -142,13 +141,16 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task UpdateStatusCreatesDiagnosticScope(bool async)
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public async Task UpdateStatusCreatesDiagnosticScope(bool async, bool useDefaultTypeName)
         {
+            const string customTypeName = "CustomTypeName";
             using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
 
-            var expectedTypeName = "CustomTypeName";
+            var expectedTypeName = useDefaultTypeName ? nameof(TestOperation) : customTypeName;
             var expectedAttributes = new KeyValuePair<string, string>[]
             {
                 new KeyValuePair<string, string>("key1", "value1"),
@@ -156,13 +158,11 @@ namespace Azure.Core.Tests
             };
 
             var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation()
+            var testOperation = new TestOperation(useDefaultTypeName ? null : customTypeName)
             {
                 OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
             };
             var operationInternal = testOperation.MockOperationInternal;
-
-            operationInternal.OperationTypeName = expectedTypeName;
 
             foreach (var kvp in expectedAttributes)
             {
@@ -475,9 +475,11 @@ namespace Azure.Core.Tests
 
         private class TestOperation : IOperation<int>
         {
-            public TestOperation()
+            public TestOperation(string operationTypeName = null)
             {
-                MockOperationInternal = new MockOperationInternal<int>(ClientDiagnostics, this);
+                MockOperationInternal = operationTypeName is null
+                    ? new MockOperationInternal<int>(ClientDiagnostics, this)
+                    : new MockOperationInternal<int>(ClientDiagnostics, this, operationTypeName);
             }
 
             public MockOperationInternal<int> MockOperationInternal { get; }
@@ -492,6 +494,11 @@ namespace Azure.Core.Tests
         {
             public MockOperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation)
                 : base(clientDiagnostics, operation)
+            {
+            }
+
+            public MockOperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, string operationTypeName)
+                : base(clientDiagnostics, operation, operationTypeName)
             {
             }
 
