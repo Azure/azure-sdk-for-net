@@ -15,11 +15,11 @@ steps:
     displayName: Dump Package properties
     condition: succeeded()
 - pwsh: |
-    Write-Host "SetDevVersion was: $(SetDevVersion)"
+    Write-Host "SetDevVersion was: $('$(SetDevVersion)')"
     Write-Host "Build.Reason was: $(Build.Reason)"
     Write-Host "System.TeamProject was: $(System.TeamProject)"
 
-    if (('$(Build.Reason)' -in 'Schedule', 'IndividualCI') -and ('$(System.TeamProject)' -eq 'internal') -and ('$(SetDevVersion)' -ne 'false')) {
+    if (('$(SetDevVersion' -eq 'true') -or (('$(Build.Reason)' -in 'Schedule', 'IndividualCI') -and ('$(System.TeamProject)' -eq 'internal') -and ('$(SetDevVersion)' -ne 'false'))) {
       Write-Host "Setting VersioningProperties.UseDevVersions to true"
       echo "##vso[task.setvariable variable=UseDevVersions;isOutput=true]true"
     } else {
