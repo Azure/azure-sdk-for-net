@@ -119,8 +119,25 @@ namespace Azure.IoT.TimeSeriesInsights
         /// QueryAnalyzer humidityEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, TimeSpan.FromSeconds(30));
         /// await foreach (TimeSeriesPoint point in humidityEventsQueryAnalyzer.GetResultsAsync())
         /// {
-        ///     double? humidityValue = (double?)point.GetValue(&quot;Humidity&quot;);
-        ///     Console.WriteLine($&quot;{point.Timestamp} - Humidity: {humidityValue}&quot;);
+        ///     TimeSeriesValue humidityValue = point.GetValue(&quot;Humidity&quot;);
+        ///
+        ///     // Figure out what is the underlying type for the time series value. Since you know your Time Series Insights
+        ///     // environment best, you probably do not need this logic and you can skip to directly casting to the proper
+        ///     // type. This logic demonstrates how you can figure out what type to cast to in the case where you are not
+        ///     // too familiar with the property type
+        ///     Type valueType = humidityValue.Type;
+        ///     if (valueType == typeof(double?))
+        ///     {
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {(double?)humidityValue}&quot;);
+        ///     }
+        ///     else if (valueType == typeof(int?))
+        ///     {
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {(int?)humidityValue}&quot;);
+        ///     }
+        ///     else
+        ///     {
+        ///         Console.WriteLine(&quot;The type of the Time Series value for Humidity is not numeric.&quot;);
+        ///     }
         /// }
         /// </code>
         /// </example>

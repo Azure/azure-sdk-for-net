@@ -564,8 +564,25 @@ Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n
 QueryAnalyzer humidityEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, TimeSpan.FromSeconds(30));
 await foreach (TimeSeriesPoint point in humidityEventsQueryAnalyzer.GetResultsAsync())
 {
-    double? humidityValue = (double?)point.GetValue("Humidity");
-    Console.WriteLine($"{point.Timestamp} - Humidity: {humidityValue}");
+    TimeSeriesValue humidityValue = point.GetValue("Humidity");
+
+    // Figure out what is the underlying type for the time series value. Since you know your Time Series Insights
+    // environment best, you probably do not need this logic and you can skip to directly casting to the proper
+    // type. This logic demonstrates how you can figure out what type to cast to in the case where you are not
+    // too familiar with the property type
+    Type valueType = humidityValue.Type;
+    if (valueType == typeof(double?))
+    {
+        Console.WriteLine($"{point.Timestamp} - Humidity: {(double?)humidityValue}");
+    }
+    else if (valueType == typeof(int?))
+    {
+        Console.WriteLine($"{point.Timestamp} - Humidity: {(int?)humidityValue}");
+    }
+    else
+    {
+        Console.WriteLine("The type of the Time Series value for Humidity is not numeric.");
+    }
 }
 ```
 
