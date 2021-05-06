@@ -163,7 +163,7 @@ namespace Azure.Containers.ContainerRegistry
                     _infoTcs = _backgroundUpdateTcs;
                     _backgroundUpdateTcs = default;
 
-					// return nothing here so we can enter the 5th case and start bg thread if needed.
+                    // return nothing here so we can enter the 5th case and start bg thread if needed.
                 }
 
                 // Attempt to get access token has failed or it has already expired. Need to get a new one

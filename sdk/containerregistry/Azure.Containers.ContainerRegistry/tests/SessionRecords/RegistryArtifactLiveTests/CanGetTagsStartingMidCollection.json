@@ -21,7 +21,7 @@
         "Connection": "keep-alive",
         "Content-Length": "221",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:31 GMT",
+        "Date": "Thu, 06 May 2021 00:53:24 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -30,7 +30,7 @@
         ],
         "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr01.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr01.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "ba31e93c-c9a1-42fe-befe-4cbbcf4abfd3"
+        "X-Ms-Correlation-Request-Id": "2926186f-d301-4106-8570-d7ff6eac43ba"
       },
       "ResponseBody": {
         "errors": [
@@ -64,15 +64,15 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:32 GMT",
+        "Date": "Thu, 06 May 2021 00:53:25 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "93c5f5f6-3a5d-4c7e-abd7-7a942564613d",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.3"
+        "X-Ms-Correlation-Request-Id": "e3ec523a-56b1-4ef7-be62-4f41b9bf11f9",
+        "x-ms-ratelimit-remaining-calls-per-second": "164.916667"
       },
       "ResponseBody": {
-        "refresh_token": "Sanitized.eyJleHAiOjE2MjAyNzA2MzJ9.Sanitized"
+        "refresh_token": "Sanitized.eyJleHAiOjI1NjYzNDI0MDR9.Sanitized"
       }
     },
     {
@@ -91,12 +91,12 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:32 GMT",
+        "Date": "Thu, 06 May 2021 00:53:25 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "08de403c-6c48-4a4a-8ae5-d4c83b7ec9e6",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.283333"
+        "X-Ms-Correlation-Request-Id": "bcfa6a64-c9c7-4abe-8602-28c0e0af46cb",
+        "x-ms-ratelimit-remaining-calls-per-second": "164.9"
       },
       "ResponseBody": {
         "access_token": "Sanitized"
@@ -124,7 +124,7 @@
         "Connection": "keep-alive",
         "Content-Length": "393",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:32 GMT",
+        "Date": "Thu, 06 May 2021 00:53:25 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -132,7 +132,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "ada13718-3189-4831-998c-c4bcbd5fc31c"
+        "X-Ms-Correlation-Request-Id": "646d4916-7d63-4bf6-b594-3a206bc4e9a7"
       },
       "ResponseBody": {
         "registry": "localtestacr01.azurecr.io",
@@ -140,8 +140,8 @@
         "tag": {
           "name": "latest",
           "digest": "sha256:f2266cbfc127c960fd30e76b7c792dc23b588c0db76233517e1891a4e357d519",
-          "createdTime": "2021-05-06T00:10:09.7818311Z",
-          "lastUpdateTime": "2021-05-06T00:10:09.7818311Z",
+          "createdTime": "2021-05-06T00:53:01.4496936Z",
+          "lastUpdateTime": "2021-05-06T00:53:01.4496936Z",
           "signed": false,
           "changeableAttributes": {
             "deleteEnabled": true,
@@ -173,7 +173,7 @@
         "Connection": "keep-alive",
         "Content-Length": "221",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:32 GMT",
+        "Date": "Thu, 06 May 2021 00:53:25 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -182,7 +182,7 @@
         ],
         "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr01.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr01.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "25959ce7-072e-47ca-9acc-717681be89e3"
+        "X-Ms-Correlation-Request-Id": "a9e46ef7-b1d6-43e8-bf47-7ffd8a9fce8d"
       },
       "ResponseBody": {
         "errors": [
@@ -216,12 +216,12 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:32 GMT",
+        "Date": "Thu, 06 May 2021 00:53:25 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "dd0eaa2b-f72e-4eb3-9cc3-2f493bea399f",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.266667"
+        "X-Ms-Correlation-Request-Id": "a0cfcb41-7a6f-466d-a22e-da90ee3efcb3",
+        "x-ms-ratelimit-remaining-calls-per-second": "164.883333"
       },
       "ResponseBody": {
         "access_token": "Sanitized"
@@ -247,9 +247,9 @@
           "X-Ms-Correlation-Request-Id"
         ],
         "Connection": "keep-alive",
-        "Content-Length": "392",
+        "Content-Length": "390",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:32 GMT",
+        "Date": "Thu, 06 May 2021 00:53:25 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Link": "\u003C/acr/v1/library/hello-world/_tags?last=v2\u0026n=1\u0026orderby=\u003E; rel=\u0022next\u0022",
         "Server": "openresty",
@@ -258,7 +258,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "8653c15c-7533-489f-9041-16ab8fafc931"
+        "X-Ms-Correlation-Request-Id": "18a41027-73be-4ec5-b9f2-575ac9da16db"
       },
       "ResponseBody": {
         "registry": "localtestacr01.azurecr.io",
@@ -267,8 +267,8 @@
           {
             "name": "v2",
             "digest": "sha256:f2266cbfc127c960fd30e76b7c792dc23b588c0db76233517e1891a4e357d519",
-            "createdTime": "2021-05-06T00:10:10.1414152Z",
-            "lastUpdateTime": "2021-05-06T00:10:10.1414152Z",
+            "createdTime": "2021-05-06T00:53:02.722304Z",
+            "lastUpdateTime": "2021-05-06T00:53:02.722304Z",
             "signed": false,
             "changeableAttributes": {
               "deleteEnabled": true,
@@ -301,7 +301,7 @@
         "Connection": "keep-alive",
         "Content-Length": "221",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:32 GMT",
+        "Date": "Thu, 06 May 2021 00:53:25 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -310,7 +310,7 @@
         ],
         "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr01.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr01.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "b6e526f6-b6e6-4109-a5d5-d65196ba8072"
+        "X-Ms-Correlation-Request-Id": "7153bea0-ba3b-4f2b-9a27-237e049ae786"
       },
       "ResponseBody": {
         "errors": [
@@ -344,12 +344,12 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:32 GMT",
+        "Date": "Thu, 06 May 2021 00:53:25 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "9c5bcbb5-3156-40c0-9a09-3e3a87aadb89",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.25"
+        "X-Ms-Correlation-Request-Id": "0d652cb8-0cda-410b-b656-761ee78912aa",
+        "x-ms-ratelimit-remaining-calls-per-second": "164.866667"
       },
       "ResponseBody": {
         "access_token": "Sanitized"
@@ -377,7 +377,7 @@
         "Connection": "keep-alive",
         "Content-Length": "392",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:32 GMT",
+        "Date": "Thu, 06 May 2021 00:53:25 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Link": "\u003C/acr/v1/library/hello-world/_tags?last=v3\u0026n=1\u0026orderby=\u003E; rel=\u0022next\u0022",
         "Server": "openresty",
@@ -386,7 +386,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "a8711a66-e2dc-4e45-a3c7-7756efc2cfdd"
+        "X-Ms-Correlation-Request-Id": "9f8cac60-ae31-4e64-a5f5-2d64f6e7ee25"
       },
       "ResponseBody": {
         "registry": "localtestacr01.azurecr.io",
@@ -395,8 +395,8 @@
           {
             "name": "v3",
             "digest": "sha256:f2266cbfc127c960fd30e76b7c792dc23b588c0db76233517e1891a4e357d519",
-            "createdTime": "2021-05-06T00:10:10.2831447Z",
-            "lastUpdateTime": "2021-05-06T00:10:10.2831447Z",
+            "createdTime": "2021-05-06T00:53:02.4515253Z",
+            "lastUpdateTime": "2021-05-06T00:53:02.4515253Z",
             "signed": false,
             "changeableAttributes": {
               "deleteEnabled": true,
@@ -429,7 +429,7 @@
         "Connection": "keep-alive",
         "Content-Length": "221",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:32 GMT",
+        "Date": "Thu, 06 May 2021 00:53:25 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -438,7 +438,7 @@
         ],
         "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr01.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr01.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "b54d125e-fcc7-4456-8bbd-0d1653d0273f"
+        "X-Ms-Correlation-Request-Id": "8490d71d-2dd4-40d8-b87f-f4215aac8f80"
       },
       "ResponseBody": {
         "errors": [
@@ -472,12 +472,12 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:32 GMT",
+        "Date": "Thu, 06 May 2021 00:53:25 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "85c26d07-1d3f-4b6c-945e-853972ea0731",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.233333"
+        "X-Ms-Correlation-Request-Id": "c7cbd994-1992-4293-8c3b-50fd0eb72fa0",
+        "x-ms-ratelimit-remaining-calls-per-second": "164.85"
       },
       "ResponseBody": {
         "access_token": "Sanitized"
@@ -505,7 +505,7 @@
         "Connection": "keep-alive",
         "Content-Length": "392",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 06 May 2021 00:10:32 GMT",
+        "Date": "Thu, 06 May 2021 00:53:25 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -513,7 +513,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "ba9f3124-3acf-417a-b6ec-85312085bdfa"
+        "X-Ms-Correlation-Request-Id": "84f9069b-0730-4d57-bd13-75f046f85982"
       },
       "ResponseBody": {
         "registry": "localtestacr01.azurecr.io",
@@ -522,8 +522,8 @@
           {
             "name": "v4",
             "digest": "sha256:f2266cbfc127c960fd30e76b7c792dc23b588c0db76233517e1891a4e357d519",
-            "createdTime": "2021-05-06T00:10:10.4520162Z",
-            "lastUpdateTime": "2021-05-06T00:10:10.4520162Z",
+            "createdTime": "2021-05-06T00:53:02.5327704Z",
+            "lastUpdateTime": "2021-05-06T00:53:02.5327704Z",
             "signed": false,
             "changeableAttributes": {
               "deleteEnabled": true,

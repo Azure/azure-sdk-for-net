@@ -53,13 +53,15 @@ namespace Azure.Containers.ContainerRegistry
             _aadScopes = new[] { aadScope };
         }
 
+        // Since we'll not cache the AAD access token or set an auth header on the initial request,
+        // that receives a challenge response, we override the method that does this.
         protected override void AuthorizeRequest(HttpMessage message)
         {
             return;
         }
 
         // Since we'll not cache the AAD access token or set an auth header on the initial request,
-        // we override the method that does this.
+        // that receives a challenge response, we override the method that does this.
         protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
         {
             return default;

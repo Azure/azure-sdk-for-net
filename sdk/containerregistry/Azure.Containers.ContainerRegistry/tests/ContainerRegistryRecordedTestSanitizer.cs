@@ -109,8 +109,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         private string SanitizeJwt(string value)
         {
-            AcrRefreshToken token = new AcrRefreshToken(value);
-            DateTimeOffset expiresOn = ContainerRegistryRefreshTokenCache.GetTokenExpiryTime(token);
+            DateTimeOffset expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromDays(365 * 30); // Never expire in software years
             string encodedBody = Base64Url.EncodeString($"{{\"exp\":{expiresOn.ToUnixTimeSeconds()}}}");
 
             return $"{SanitizeValue}.{encodedBody}.{SanitizeValue}";
