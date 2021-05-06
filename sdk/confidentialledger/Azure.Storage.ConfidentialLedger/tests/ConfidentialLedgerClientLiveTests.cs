@@ -31,7 +31,7 @@ namespace Azure.Storage.ConfidentialLedger.Tests
         [SetUp]
         public void Setup()
         {
-            Credential = new AzureCliCredential();
+            Credential = TestEnvironment.Credential;
             var httpHandler = new HttpClientHandler();
             httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
             Options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
