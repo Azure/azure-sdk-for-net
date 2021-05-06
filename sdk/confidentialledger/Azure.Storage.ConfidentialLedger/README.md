@@ -10,7 +10,7 @@ portfolio, Azure Confidential Ledger runs in SGX enclaves. It is built on Micros
 This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
 
 ### Install the package
-Install the Azure Tables client library for .NET with [NuGet][table_client_nuget_package]:
+Install the Confidential Ledger client library for .NET with [NuGet][client_nuget_package]:
 
 ```
 dotnet add package Azure.Storage.ConfidentialLedger --prerelease
