@@ -144,7 +144,7 @@ This is a template, but your SDK readme should include details on how to contrib
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-[client_src]: https://github.com/azure/azure-sdk-for-net/sdk
+[client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/confidentialledger
 [client_nuget_package]: https://www.nuget.org/packages?q=Azure.Data.ConfidentialLedger
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_cloud_shell]: https://shell.azure.com/bash
