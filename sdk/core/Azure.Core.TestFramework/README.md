@@ -273,8 +273,8 @@ Another sanitizer property that is available for sanitizing Json payloads is the
         public FormRecognizerRecordedTestSanitizer()
             : base()
         {
-            JsonPathSanitizers.Add("$..accessToken");
-            JsonPathSanitizers.Add("$..source");
+            AddJsonPathSanitizer("$..accessToken");
+            AddJsonPathSanitizer("$..source");
         }
     }
 ```
