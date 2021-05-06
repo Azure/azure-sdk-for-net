@@ -51,10 +51,6 @@ namespace EventGridSourceGenerator
                         DeserializeMethod = symbol.MemberNames.Single(m => m.StartsWith("Deserialize"))
                     });
             }
-            foreach (var childSymbol in symbol.GetTypeMembers())
-            {
-                childSymbol.Accept(this);
-            }
         }
     }
 }
