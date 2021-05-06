@@ -39,9 +39,11 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             await RunQueryEventsSample(client, tsId).ConfigureAwait(false);
 
-            await RunQuerySeriesSample(client, tsId).ConfigureAwait(false);
-
             await RunQueryAggregateSeriesSample(client, tsId).ConfigureAwait(false);
+
+            await RunQuerySeriesSampleWithInlineVariables(client, tsId).ConfigureAwait(false);
+
+            await RunQuerySeriesSampleWithPreDefinedVariables(client, tsId).ConfigureAwait(false);
         }
 
         private async Task RunQueryEventsSample(TimeSeriesInsightsClient client, TimeSeriesId tsId)
@@ -53,7 +55,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             DateTimeOffset endTime = DateTime.UtcNow;
             DateTimeOffset startTime = endTime.AddMinutes(-10);
 
-            QueryAnalyzer temperatureEventsQueryAnalyzer = client.Query.CreateEventsQueryAnalyzer(tsId, startTime, endTime);
+            QueryAnalyzer temperatureEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, startTime, endTime);
             await foreach (TimeSeriesPoint point in temperatureEventsQueryAnalyzer.GetResultsAsync())
             {
                 double? temperatureValue = (double?)point.GetValue("Temperature");
@@ -65,7 +67,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #region Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
             Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
 
-            QueryAnalyzer humidityEventsQueryAnalyzer = client.Query.CreateEventsQueryAnalyzer(tsId, TimeSpan.FromSeconds(30));
+            QueryAnalyzer humidityEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, TimeSpan.FromSeconds(30));
             await foreach (TimeSeriesPoint point in humidityEventsQueryAnalyzer.GetResultsAsync())
             {
                 double? humidityValue = (double?)point.GetValue("Humidity");
@@ -74,14 +76,98 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #endregion Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
         }
 
-        private async Task RunQuerySeriesSample(TimeSeriesInsightsClient client, TimeSeriesId tsId)
+        private async Task RunQuerySeriesSampleWithPreDefinedVariables(TimeSeriesInsightsClient client, TimeSeriesId tsId)
+        {
+            // In this sample, we demonstrate querying for series data with predefined numeric variables in a predefined Time Series type
+
+            // Setup
+
+            // First create the Time Series type along with the numeric variables
+            var timeSeriesTypes = new List<TimeSeriesType>();
+
+            var celsiusVariable = new NumericVariable(
+                new TimeSeriesExpression("$event.Temperature"),
+                new TimeSeriesExpression("avg($value)"));
+            var fahrenheitVariable = new NumericVariable(
+                new TimeSeriesExpression("$event.Temperature * 1.8 + 32"),
+                new TimeSeriesExpression("avg($value)"));
+
+            var celsiusVariableName = "TemperatureInCelsius";
+            var fahrenheitVariableName = "TemperatureInFahrenheit";
+            var variables = new Dictionary<string, TimeSeriesVariable>
+            {
+                { celsiusVariableName, celsiusVariable },
+                { fahrenheitVariableName, fahrenheitVariable }
+            };
+
+            timeSeriesTypes.Add(new TimeSeriesType("TemperatureSensor", variables) { Id = "TemperatureSensorTypeId" });
+
+            Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
+                .Types
+                .CreateOrReplaceAsync(timeSeriesTypes)
+                .ConfigureAwait(false);
+
+            if (createTypesResult.Value.First().Error != null)
+            {
+                Console.WriteLine($"\n\nFailed to create a Time Series Insights type. " +
+                    $"Error Message: '{createTypesResult.Value.First().Error.Message}.' " +
+                    $"Code: '{createTypesResult.Value.First().Error.Code}'.");
+            }
+            else
+            {
+                // Get the Time Series instance and replace its type with the one we just created
+                Response<InstancesOperationResult[]> getInstanceResult = await client.Instances.GetAsync(new List<TimeSeriesId> { tsId });
+                if (getInstanceResult.Value.First().Error != null)
+                {
+                    Console.WriteLine($"\n\nFailed to retrieve Time Series instance with Id '{tsId}'. " +
+                        $"Error Message: '{getInstanceResult.Value.First().Error.Message}.' " +
+                        $"Code: '{getInstanceResult.Value.First().Error.Code}'.");
+                }
+                else
+                {
+                    TimeSeriesInstance instanceToReplace = getInstanceResult.Value.First().Instance;
+                    instanceToReplace.TypeId = createTypesResult.Value.First().TimeSeriesType.Id;
+                    Response<InstancesOperationResult[]> replaceInstanceResult = await client.Instances.ReplaceAsync(new List<TimeSeriesInstance> { instanceToReplace });
+                    if (replaceInstanceResult.Value.First().Error != null)
+                    {
+                        Console.WriteLine($"\n\nFailed to retrieve Time Series instance with Id '{tsId}'. " +
+                            $"Error Message: '{replaceInstanceResult.Value.First().Error.Message}.' " +
+                            $"Code: '{replaceInstanceResult.Value.First().Error.Code}'.");
+                    }
+                    else
+                    {
+                        // Now that we set up the instance with the property type, query for the data
+                        #region Snippet:TimeSeriesInsightsSampleQuerySeries
+                        Console.WriteLine($"\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes. " +
+                            $"The Time Series instance has a type that has predefined numeric variable that represents the temperature " +
+                            $"in Celsuis, and a predefined numeric variable that represents the temperature in Fahrenheit.\n");
+
+                        DateTimeOffset endTime = DateTime.UtcNow;
+                        DateTimeOffset startTime = endTime.AddMinutes(-10);
+                        QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
+                            tsId,
+                            startTime,
+                            endTime);
+
+                        await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
+                        {
+                            double? tempInCelsius = (double?)point.GetValue(celsiusVariableName);
+                            double? tempInFahrenheit = (double?)point.GetValue(fahrenheitVariableName);
+
+                            Console.WriteLine($"{point.Timestamp} - Average temperature in Celsius: {tempInCelsius}. " +
+                                $"Average temperature in Fahrenheit: {tempInFahrenheit}.");
+                        }
+                        #endregion Snippet:TimeSeriesInsightsSampleQuerySeries
+                    }
+                }
+            }
+        }
+
+        private async Task RunQuerySeriesSampleWithInlineVariables(TimeSeriesInsightsClient client, TimeSeriesId tsId)
         {
             // Query for two series, one with the temperature values in Celsius and another in Fahrenheit
-            #region Snippet:TimeSeriesInsightsSampleQuerySeries
+            #region Snippet:TimeSeriesInsightsSampleQuerySeriesWithInlineVariables
             Console.WriteLine("\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes.\n");
-
-            DateTimeOffset endTime = DateTime.UtcNow;
-            DateTimeOffset startTime = endTime.AddMinutes(-10);
 
             var celsiusVariable = new NumericVariable(
                 new TimeSeriesExpression("$event.Temperature"),
@@ -94,10 +180,10 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             querySeriesRequestOptions.InlineVariables["TemperatureInCelsius"] = celsiusVariable;
             querySeriesRequestOptions.InlineVariables["TemperatureInFahrenheit"] = fahrenheitVariable;
 
-            QueryAnalyzer seriesQueryAnalyzer = client.Query.CreateSeriesQueryAnalyzer(
+            QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
                 tsId,
-                startTime,
-                endTime,
+                TimeSpan.FromMinutes(10),
+                null,
                 querySeriesRequestOptions);
 
             await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
@@ -107,7 +193,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
                 Console.WriteLine($"{point.Timestamp} - Average temperature in Celsius: {tempInCelsius}. Average temperature in Fahrenheit: {tempInFahrenheit}.");
             }
-            #endregion Snippet:TimeSeriesInsightsSampleQuerySeries
+            #endregion Snippet:TimeSeriesInsightsSampleQuerySeriesWithInlineVariables
         }
 
         private async Task RunQueryAggregateSeriesSample(TimeSeriesInsightsClient client, TimeSeriesId tsId)
@@ -123,7 +209,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             requestOptions.InlineVariables["Temperature"] = numericVariable;
             requestOptions.ProjectedVariables.Add("Temperature");
 
-            QueryAnalyzer queryAggregateSeriesAnalyzer = client.Query.CreateAggregateSeriesQueryAnalyzer(
+            QueryAnalyzer queryAggregateSeriesAnalyzer = client.Queries.CreateAggregateSeriesQueryAnalyzer(
                 tsId,
                 TimeSpan.FromSeconds(2),
                 TimeSpan.FromSeconds(30),
@@ -150,11 +236,13 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             var aggregateVariable = new AggregateVariable(
                 new TimeSeriesExpression("count()"));
 
-            var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
-            aggregateSeriesRequestOptions.InlineVariables["Count"] = aggregateVariable;
-            aggregateSeriesRequestOptions.ProjectedVariables.Add("Count");
+            var countVariableName = "Count";
 
-            QueryAnalyzer aggregateSeriesQueryAnalyzer = client.Query.CreateAggregateSeriesQueryAnalyzer(
+            var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
+            aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
+            aggregateSeriesRequestOptions.ProjectedVariables.Add(countVariableName);
+
+            QueryAnalyzer aggregateSeriesQueryAnalyzer = client.Queries.CreateAggregateSeriesQueryAnalyzer(
                 tsId,
                 startTime,
                 endTime,
@@ -163,7 +251,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             await foreach (TimeSeriesPoint point in aggregateSeriesQueryAnalyzer.GetResultsAsync())
             {
-                long? temperatureCount = (long?)point.GetValue("Count");
+                long? temperatureCount = (long?)point.GetValue(countVariableName);
                 Console.WriteLine($"{point.Timestamp} - Temperature count: {temperatureCount}");
             }
             #endregion Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithAggregateVariable

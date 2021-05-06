@@ -130,7 +130,7 @@ Use `Instances` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk
 
 This code snippet demonstrates retrieving all created instances in your TSI environment.
 ```C# Snippet:TimeSeriesInsightsGetAllInstances
-// Get all instances for the Time Series Insigths environment
+// Get all instances for the Time Series Insights environment
 AsyncPageable<TimeSeriesInstance> tsiInstances = client.Instances.GetAsync();
 await foreach (TimeSeriesInstance tsiInstance in tsiInstances)
 {
@@ -546,14 +546,27 @@ for (int i = 0; i < updateHierarchiesResult.Value.Length; i++)
 
 ## Time Series Insights Query
 
-Use `Query` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs) to query for:
+Use `Queries` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs) to query for:
 - Raw events for a given Time Series ID and search span.
 - Computed values and the associated event timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
 - Aggregated values and the associated interval timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
 
 Response for the `Query` APIs are of type `QueryAnalyzer`. The QueryAnalyzer allows a developer to query for pages of results, while being able to perform operations on the result set as a whole. For example, to get a list of `TimeSeriesPoint` in pages, call the `GetResultsAsync` method on the `QueryAnalyzer` object. You can enumerate an AsyncPageable object using the `async foreach` loop.
 
-This code snippets demonstrates retrieving raw events from Time Series Insights environment using a start and end time.
+This code snippet demonstrates querying for raw events with using a time span interval.
+
+```C# Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
+Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
+
+QueryAnalyzer humidityEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, TimeSpan.FromSeconds(30));
+await foreach (TimeSeriesPoint point in humidityEventsQueryAnalyzer.GetResultsAsync())
+{
+    double? humidityValue = (double?)point.GetValue("Humidity");
+    Console.WriteLine($"{point.Timestamp} - Humidity: {humidityValue}");
+}
+```
+
+The client library also provides a way to query for raw events using using a start and end time, as demonstrated in this code snippet.
 
 ```C# Snippet:TimeSeriesInsightsSampleQueryEvents
 Console.WriteLine("\n\nQuery for raw temperature events over the past 10 minutes.\n");
@@ -562,7 +575,7 @@ Console.WriteLine("\n\nQuery for raw temperature events over the past 10 minutes
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);
 
-QueryAnalyzer temperatureEventsQueryAnalyzer = client.Query.CreateEventsQueryAnalyzer(tsId, startTime, endTime);
+QueryAnalyzer temperatureEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, startTime, endTime);
 await foreach (TimeSeriesPoint point in temperatureEventsQueryAnalyzer.GetResultsAsync())
 {
     double? temperatureValue = (double?)point.GetValue("Temperature");
@@ -570,25 +583,34 @@ await foreach (TimeSeriesPoint point in temperatureEventsQueryAnalyzer.GetResult
 }
 ```
 
-The client library also provides a way to query for raw events with using a time span interval.
-```C# Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
-Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
-
-QueryAnalyzer humidityEventsQueryAnalyzer = client.Query.CreateEventsQueryAnalyzer(tsId, TimeSpan.FromSeconds(30));
-await foreach (TimeSeriesPoint point in humidityEventsQueryAnalyzer.GetResultsAsync())
-{
-    double? humidityValue = (double?)point.GetValue("Humidity");
-    Console.WriteLine($"{point.Timestamp} - Humidity: {humidityValue}");
-}
-```
-
-This code snippet demonstrates querying for series events. In this snippet, we query for the temperature both in Celsius and fahrenheit. Hence, we create two [numeric variables][tsi_numeric_variables], one for the Celsius and the other for Fahrenheit. These variables are then added as inline variables to the request options.
+This code snippet demonstrates querying for series events. In this snippet, we query for the temperature both in Celsius and fahrenheit. The Time Series instance that we query from has predefined numeric variables, one for the Celsius and the other for Fahrenheit.
 
 ```C# Snippet:TimeSeriesInsightsSampleQuerySeries
-Console.WriteLine("\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes.\n");
+Console.WriteLine($"\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes. " +
+    $"The Time Series instance has a type that has predefined numeric variable that represents the temperature " +
+    $"in Celsuis, and a predefined numeric variable that represents the temperature in Fahrenheit.\n");
 
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);
+QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
+    tsId,
+    startTime,
+    endTime);
+
+await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
+{
+    double? tempInCelsius = (double?)point.GetValue(celsiusVariableName);
+    double? tempInFahrenheit = (double?)point.GetValue(fahrenheitVariableName);
+
+    Console.WriteLine($"{point.Timestamp} - Average temperature in Celsius: {tempInCelsius}. " +
+        $"Average temperature in Fahrenheit: {tempInFahrenheit}.");
+}
+```
+
+You can also query for series events with variables defined in the request options. In this snippet, we create two [numeric variables][tsi_numeric_variables], one for the Celsius and the other for Fahrenheit. These variables are then added as inline variables to the request options.
+
+```C# Snippet:TimeSeriesInsightsSampleQuerySeriesWithInlineVariables
+Console.WriteLine("\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes.\n");
 
 var celsiusVariable = new NumericVariable(
     new TimeSeriesExpression("$event.Temperature"),
@@ -601,10 +623,10 @@ var querySeriesRequestOptions = new QuerySeriesRequestOptions();
 querySeriesRequestOptions.InlineVariables["TemperatureInCelsius"] = celsiusVariable;
 querySeriesRequestOptions.InlineVariables["TemperatureInFahrenheit"] = fahrenheitVariable;
 
-QueryAnalyzer seriesQueryAnalyzer = client.Query.CreateSeriesQueryAnalyzer(
+QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
     tsId,
-    startTime,
-    endTime,
+    TimeSpan.FromMinutes(10),
+    null,
     querySeriesRequestOptions);
 
 await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
@@ -628,11 +650,13 @@ DateTimeOffset startTime = endTime.AddMinutes(-3);
 var aggregateVariable = new AggregateVariable(
     new TimeSeriesExpression("count()"));
 
-var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
-aggregateSeriesRequestOptions.InlineVariables["Count"] = aggregateVariable;
-aggregateSeriesRequestOptions.ProjectedVariables.Add("Count");
+var countVariableName = "Count";
 
-QueryAnalyzer aggregateSeriesQueryAnalyzer = client.Query.CreateAggregateSeriesQueryAnalyzer(
+var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
+aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
+aggregateSeriesRequestOptions.ProjectedVariables.Add(countVariableName);
+
+QueryAnalyzer aggregateSeriesQueryAnalyzer = client.Queries.CreateAggregateSeriesQueryAnalyzer(
     tsId,
     startTime,
     endTime,
@@ -641,7 +665,7 @@ QueryAnalyzer aggregateSeriesQueryAnalyzer = client.Query.CreateAggregateSeriesQ
 
 await foreach (TimeSeriesPoint point in aggregateSeriesQueryAnalyzer.GetResultsAsync())
 {
-    long? temperatureCount = (long?)point.GetValue("Count");
+    long? temperatureCount = (long?)point.GetValue(countVariableName);
     Console.WriteLine($"{point.Timestamp} - Temperature count: {temperatureCount}");
 }
 ```
