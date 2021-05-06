@@ -11,13 +11,15 @@ namespace EventGridSourceGenerator
 {
     internal class SourceVisitor : CSharpSyntaxWalker
     {
-        private Dictionary<string, SystemEventNode> _systemEvents;
+        private readonly Dictionary<string, SystemEventNode> _systemEvents;
         private List<SystemEventNode> _systemEventList;
         
         public List<SystemEventNode> SystemEvents
         {
             get
             {
+                // We expect some EventData to not have event types if they are base types,
+                // e.g. ContainerRegistryEventData
                 _systemEventList ??= _systemEvents.Values.Where(e => !string.IsNullOrEmpty(e.EventType)).ToList();
                 return _systemEventList;
             }
@@ -46,23 +48,28 @@ namespace EventGridSourceGenerator
                         // e.g. ContainerRegistryEventData
                         if (match.Success)
                         {
-                            type = $@"""{match.Value}"";";
+                            type = $@"""{match.Value}""";
                         }
                         break;
                     }
                 }
                 var methods = node.DescendantNodes().OfType<MethodDeclarationSyntax>();
-                deserializationMethod = methods.Where(m => m.Identifier.ValueText.StartsWith("Deserialize"))
-                    .FirstOrDefault()?.Identifier.ValueText;
+                deserializationMethod = methods
+                    .FirstOrDefault(m => m.Identifier.ValueText.StartsWith("Deserialize"))?.Identifier.ValueText;
 
-                // since each system event is defined in two separate files, we need to handle Visit being
-                // called separately for each of the files.
+                // Since each system event is defined in two separate files, we need to handle Visit being
+                // called separately for each of the files. In the first Visit call, we will populate the 
+                // EventName and EventType. In the next Visit call, we will populate the DeserializeMethod.
                 if (!_systemEvents.ContainsKey(node.Identifier.ValueText))
                 {
                     _systemEvents.Add(node.Identifier.ValueText, new SystemEventNode());
                 }
                 _systemEvents[node.Identifier.ValueText].EventName ??= name;
-                _systemEvents[node.Identifier.ValueText].EventType ??= type;
+                _systemEvents[node.Identifier.ValueText].EventType ??=
+                    // temporary workaround until https://github.com/Azure/azure-rest-api-specs/pull/14261/ is merged
+                    type == @"""Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListenersEvent""" ? 
+                        @"""Microsoft.ServiceBus.DeadletterMessagesAvailableWithNoListener""" 
+                        : type;
                 _systemEvents[node.Identifier.ValueText].DeserializeMethod ??= deserializationMethod;
             }
         }
