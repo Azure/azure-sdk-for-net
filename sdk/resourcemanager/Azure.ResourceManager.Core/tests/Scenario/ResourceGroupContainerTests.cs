@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
             Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties, rg2.Data.Properties);
+            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
             Assert.AreEqual(rg.Data.Tags, rg2.Data.Tags);
