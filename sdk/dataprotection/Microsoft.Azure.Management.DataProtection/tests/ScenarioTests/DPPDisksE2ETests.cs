@@ -23,16 +23,16 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.ScenarioTests
                 testHelper.CreateVault();
 
                 // Get Backup Vault
-                //testHelper.GetVault();
+                testHelper.GetVault();
 
                 // Create Policy
                 testHelper.CreatePolicy("retentionpolicy2");
 
                 // Get Policy
-                //testHelper.GetPolicy("retentionpolicy2");
+                testHelper.GetPolicy("retentionpolicy2");
                 
                 // Configure Backup
-                //testHelper.CreateBackupInstance("TestDiskCmk2");
+                testHelper.CreateBackupInstance("TestDiskCmk2");
 
                 // Validate For Backup
                 //testHelper.ValidateForBackup("TestDiskCmk2");
