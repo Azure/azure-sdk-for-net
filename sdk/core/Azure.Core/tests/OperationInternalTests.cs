@@ -129,10 +129,10 @@ namespace Azure.Core.Tests
             var operationInternal = testOperation.MockOperationInternal;
 
             var thrownException = async
-                ? Assert.ThrowsAsync<RequestFailedException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
-                : Assert.Throws<RequestFailedException>(() => operationInternal.UpdateStatus(CancellationToken.None));
+                ? Assert.ThrowsAsync<StackOverflowException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
+                : Assert.Throws<StackOverflowException>(() => operationInternal.UpdateStatus(CancellationToken.None));
 
-            Assert.AreEqual(originalException, thrownException.InnerException);
+            Assert.AreEqual(originalException, thrownException);
 
             Assert.IsNull(operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
@@ -228,10 +228,7 @@ namespace Azure.Core.Tests
             catch { }
 
             testListener.AssertScopeException($"{nameof(TestOperation)}.UpdateStatus", (Exception scopeException) =>
-            {
-                Assert.IsInstanceOf(typeof(RequestFailedException), scopeException);
-                Assert.AreEqual(originalException, scopeException.InnerException);
-            });
+                Assert.AreEqual(originalException, scopeException));
         }
 
         [Test]

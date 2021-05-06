@@ -60,20 +60,56 @@ namespace Azure.Analytics.Synapse.Spark
         public override Response GetRawResponse() => _operationInternal.RawResponse;
 
         /// <inheritdoc/>
-        public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
-            _operationInternal.UpdateStatus(cancellationToken);
+        public override Response UpdateStatus(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return _operationInternal.UpdateStatus(cancellationToken);
+            }
+            catch (Exception e) when (e is not RequestFailedException)
+            {
+                throw new RequestFailedException("Unexpected failure", e);
+            }
+        }
 
         /// <inheritdoc/>
-        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
-            await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e) when (e is not RequestFailedException)
+            {
+                throw new RequestFailedException("Unexpected failure", e);
+            }
+        }
 
         /// <inheritdoc />
-        public override async ValueTask<Response<SparkSession>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            await _operationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+        public override async ValueTask<Response<SparkSession>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await _operationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e) when (e is not RequestFailedException)
+            {
+                throw new RequestFailedException("Unexpected failure", e);
+            }
+        }
 
         /// <inheritdoc />
-        public override async ValueTask<Response<SparkSession>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
-            await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+        public override async ValueTask<Response<SparkSession>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e) when (e is not RequestFailedException)
+            {
+                throw new RequestFailedException("Unexpected failure", e);
+            }
+        }
 
         private static bool IsJobComplete(string jobState, string livyState)
         {

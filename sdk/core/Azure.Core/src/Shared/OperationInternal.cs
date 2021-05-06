@@ -122,16 +122,10 @@ namespace Azure.Core
             {
                 return await UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
             }
-            catch (RequestFailedException e)
+            catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
-            }
-            catch (Exception e)
-            {
-                var requestFailedException = new RequestFailedException("Unexpected failure.", e);
-                scope.Failed(requestFailedException);
-                throw requestFailedException;
             }
         }
 
