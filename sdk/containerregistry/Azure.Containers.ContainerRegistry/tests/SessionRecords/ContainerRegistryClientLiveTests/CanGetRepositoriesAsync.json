@@ -5,10 +5,10 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "traceparent": "00-313fd1db9309f7428b2ebaf19db95b5d-e8f32dca56d74c43-00",
+        "traceparent": "00-59148c80ef6eac43a7a6a3bcf153931e-05c694d2508c0141-00",
         "User-Agent": [
-          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210502.1",
-          "(.NET Core 4.6.29916.01; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210505.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "d1c947d404b29065d5ea7fcc142ddb07",
         "x-ms-return-client-request-id": "true"
@@ -25,7 +25,7 @@
         "Connection": "keep-alive",
         "Content-Length": "195",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 May 2021 16:51:44 GMT",
+        "Date": "Wed, 05 May 2021 17:13:58 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -34,7 +34,7 @@
         ],
         "WWW-Authenticate": "Bearer realm=\u0022https://localtestacr01.azurecr.io/oauth2/token\u0022,service=\u0022localtestacr01.azurecr.io\u0022,scope=\u0022registry:catalog:*\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "ef856fbc-7632-41ec-9026-dc74b75b7e9e"
+        "X-Ms-Correlation-Request-Id": "e7a9befb-ba71-40ae-8938-d5216283c3a5"
       },
       "ResponseBody": {
         "errors": [
@@ -59,10 +59,10 @@
         "Accept": "application/json",
         "Content-Length": "80",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-313fd1db9309f7428b2ebaf19db95b5d-892f3ee6d3b19049-00",
+        "traceparent": "00-59148c80ef6eac43a7a6a3bcf153931e-04d92019b265e043-00",
         "User-Agent": [
-          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210502.1",
-          "(.NET Core 4.6.29916.01; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210505.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "d5a2d1d52c38a62142d4218e7b22dcca",
         "x-ms-return-client-request-id": "true"
@@ -72,12 +72,12 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 May 2021 16:51:44 GMT",
+        "Date": "Wed, 05 May 2021 17:13:58 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "40520d4d-3220-4283-b09a-fa643d513aa1",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.216667"
+        "X-Ms-Correlation-Request-Id": "4e2594b7-15d3-46f7-9354-639f2916872b",
+        "x-ms-ratelimit-remaining-calls-per-second": "166.45"
       },
       "ResponseBody": {
         "refresh_token": "Sanitized"
@@ -90,10 +90,10 @@
         "Accept": "application/json",
         "Content-Length": "111",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-313fd1db9309f7428b2ebaf19db95b5d-2c71f351643a5444-00",
+        "traceparent": "00-59148c80ef6eac43a7a6a3bcf153931e-a2f99249ef9d6d49-00",
         "User-Agent": [
-          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210502.1",
-          "(.NET Core 4.6.29916.01; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210505.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "a56cd05dc143c3afacb828a54c1aa768",
         "x-ms-return-client-request-id": "true"
@@ -103,12 +103,12 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 May 2021 16:51:44 GMT",
+        "Date": "Wed, 05 May 2021 17:13:58 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "2fabd12b-c71c-46fa-b5c8-adde815fc4f7",
-        "x-ms-ratelimit-remaining-calls-per-second": "166.2"
+        "X-Ms-Correlation-Request-Id": "bee1b80f-0094-47ef-a8ea-87fddc16224a",
+        "x-ms-ratelimit-remaining-calls-per-second": "166.433333"
       },
       "ResponseBody": {
         "access_token": "Sanitized"
@@ -120,10 +120,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-313fd1db9309f7428b2ebaf19db95b5d-e8f32dca56d74c43-00",
+        "traceparent": "00-59148c80ef6eac43a7a6a3bcf153931e-05c694d2508c0141-00",
         "User-Agent": [
-          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210502.1",
-          "(.NET Core 4.6.29916.01; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210505.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "d1c947d404b29065d5ea7fcc142ddb07",
         "x-ms-return-client-request-id": "true"
@@ -140,7 +140,7 @@
         "Connection": "keep-alive",
         "Content-Length": "90",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 May 2021 16:51:44 GMT",
+        "Date": "Wed, 05 May 2021 17:13:58 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -148,7 +148,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "5abfa791-ecf7-45b5-9359-22d674f5b3d4"
+        "X-Ms-Correlation-Request-Id": "437ab79f-a70c-4ee8-b1ec-a937d7ce31e1"
       },
       "ResponseBody": {
         "repositories": [

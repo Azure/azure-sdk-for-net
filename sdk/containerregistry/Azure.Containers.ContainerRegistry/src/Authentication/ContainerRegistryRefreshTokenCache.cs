@@ -231,7 +231,7 @@ namespace Azure.Containers.ContainerRegistry
             return new RefreshTokenInfo(acrRefreshToken.RefreshToken, expiresOn, expiresOn - _tokenRefreshOffset);
         }
 
-        private static DateTimeOffset GetTokenExpiryTime(AcrRefreshToken acrRefreshToken)
+        internal static DateTimeOffset GetTokenExpiryTime(AcrRefreshToken acrRefreshToken)
         {
             // If we can't parse the expiration from the JWT, indicate that it's expired now.
             return GetTokenExpiryFromJwt(acrRefreshToken.RefreshToken) ?? DateTimeOffset.UtcNow;
