@@ -26,7 +26,8 @@ namespace Avs.Tests
             string hcxEnterpriseSiteName = TestUtilities.GenerateName(PREFIX + "site");
             string authName = TestUtilities.GenerateName(PREFIX + "authorization");
 
-            CreateResourceGroup(context, location, rgName);
+            using var rmClient = context.GetServiceClient<ResourceManagementClient>();
+            rmClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
 
             try
             {
@@ -115,25 +116,9 @@ namespace Avs.Tests
             }
             finally
             {
-                DeleteResourceGroup(context, rgName);
+                rmClient.ResourceGroups.Delete(rgName);
             }
         }
 
-        private ResourceGroup CreateResourceGroup(MockContext context, string location, string rgName)
-        {
-            using var rmClient = context.GetServiceClient<ResourceManagementClient>();
-            return rmClient.ResourceGroups.CreateOrUpdate(
-                rgName,
-                new ResourceGroup
-                {
-                    Location = location
-                });
-        }
-
-        private void DeleteResourceGroup(MockContext context, string rgName)
-        {
-            using var rmClient = context.GetServiceClient<ResourceManagementClient>();
-            rmClient.ResourceGroups.Delete(rgName);
-        }
     }
 }
