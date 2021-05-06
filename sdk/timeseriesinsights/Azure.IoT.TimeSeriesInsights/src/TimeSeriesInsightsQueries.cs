@@ -63,7 +63,7 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     {
         ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {(double?)temperatureValue}&quot;);
         ///     }
-        ///     else if(valueType == typeof(int?))
+        ///     else if (valueType == typeof(int?))
         ///     {
         ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {(int?)temperatureValue}&quot;);
         ///     }

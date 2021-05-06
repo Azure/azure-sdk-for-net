@@ -589,7 +589,7 @@ await foreach (TimeSeriesPoint point in temperatureEventsQueryAnalyzer.GetResult
     {
         Console.WriteLine($"{point.Timestamp} - Temperature: {(double?)temperatureValue}");
     }
-    else if(valueType == typeof(int?))
+    else if (valueType == typeof(int?))
     {
         Console.WriteLine($"{point.Timestamp} - Temperature: {(int?)temperatureValue}");
     }

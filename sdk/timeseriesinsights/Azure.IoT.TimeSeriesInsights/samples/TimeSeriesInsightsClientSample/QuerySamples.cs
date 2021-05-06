@@ -69,7 +69,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 {
                     Console.WriteLine($"{point.Timestamp} - Temperature: {(double?)temperatureValue}");
                 }
-                else if(valueType == typeof(int?))
+                else if (valueType == typeof(int?))
                 {
                     Console.WriteLine($"{point.Timestamp} - Temperature: {(int?)temperatureValue}");
                 }
@@ -130,54 +130,48 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                     $"Error Message: '{createTypesResult.Value.First().Error.Message}.' " +
                     $"Code: '{createTypesResult.Value.First().Error.Code}'.");
             }
-            else
+
+            // Get the Time Series instance and replace its type with the one we just created
+            Response<InstancesOperationResult[]> getInstanceResult = await client.Instances.GetAsync(new List<TimeSeriesId> { tsId });
+            if (getInstanceResult.Value.First().Error != null)
             {
-                // Get the Time Series instance and replace its type with the one we just created
-                Response<InstancesOperationResult[]> getInstanceResult = await client.Instances.GetAsync(new List<TimeSeriesId> { tsId });
-                if (getInstanceResult.Value.First().Error != null)
-                {
-                    Console.WriteLine($"\n\nFailed to retrieve Time Series instance with Id '{tsId}'. " +
-                        $"Error Message: '{getInstanceResult.Value.First().Error.Message}.' " +
-                        $"Code: '{getInstanceResult.Value.First().Error.Code}'.");
-                }
-                else
-                {
-                    TimeSeriesInstance instanceToReplace = getInstanceResult.Value.First().Instance;
-                    instanceToReplace.TypeId = createTypesResult.Value.First().TimeSeriesType.Id;
-                    Response<InstancesOperationResult[]> replaceInstanceResult = await client.Instances.ReplaceAsync(new List<TimeSeriesInstance> { instanceToReplace });
-                    if (replaceInstanceResult.Value.First().Error != null)
-                    {
-                        Console.WriteLine($"\n\nFailed to retrieve Time Series instance with Id '{tsId}'. " +
-                            $"Error Message: '{replaceInstanceResult.Value.First().Error.Message}.' " +
-                            $"Code: '{replaceInstanceResult.Value.First().Error.Code}'.");
-                    }
-                    else
-                    {
-                        // Now that we set up the instance with the property type, query for the data
-                        #region Snippet:TimeSeriesInsightsSampleQuerySeries
-                        Console.WriteLine($"\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes. " +
-                            $"The Time Series instance has a type that has predefined numeric variable that represents the temperature " +
-                            $"in Celsuis, and a predefined numeric variable that represents the temperature in Fahrenheit.\n");
-
-                        DateTimeOffset endTime = DateTime.UtcNow;
-                        DateTimeOffset startTime = endTime.AddMinutes(-10);
-                        QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
-                            tsId,
-                            startTime,
-                            endTime);
-
-                        await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
-                        {
-                            double? tempInCelsius = (double?)point.GetValue(celsiusVariableName);
-                            double? tempInFahrenheit = (double?)point.GetValue(fahrenheitVariableName);
-
-                            Console.WriteLine($"{point.Timestamp} - Average temperature in Celsius: {tempInCelsius}. " +
-                                $"Average temperature in Fahrenheit: {tempInFahrenheit}.");
-                        }
-                        #endregion Snippet:TimeSeriesInsightsSampleQuerySeries
-                    }
-                }
+                Console.WriteLine($"\n\nFailed to retrieve Time Series instance with Id '{tsId}'. " +
+                    $"Error Message: '{getInstanceResult.Value.First().Error.Message}.' " +
+                    $"Code: '{getInstanceResult.Value.First().Error.Code}'.");
             }
+
+            TimeSeriesInstance instanceToReplace = getInstanceResult.Value.First().Instance;
+            instanceToReplace.TypeId = createTypesResult.Value.First().TimeSeriesType.Id;
+            Response<InstancesOperationResult[]> replaceInstanceResult = await client.Instances.ReplaceAsync(new List<TimeSeriesInstance> { instanceToReplace });
+            if (replaceInstanceResult.Value.First().Error != null)
+            {
+                Console.WriteLine($"\n\nFailed to retrieve Time Series instance with Id '{tsId}'. " +
+                    $"Error Message: '{replaceInstanceResult.Value.First().Error.Message}.' " +
+                    $"Code: '{replaceInstanceResult.Value.First().Error.Code}'.");
+            }
+
+            // Now that we set up the instance with the property type, query for the data
+            #region Snippet:TimeSeriesInsightsSampleQuerySeries
+            Console.WriteLine($"\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes. " +
+                $"The Time Series instance has a type that has predefined numeric variable that represents the temperature " +
+                $"in Celsuis, and a predefined numeric variable that represents the temperature in Fahrenheit.\n");
+
+            DateTimeOffset endTime = DateTime.UtcNow;
+            DateTimeOffset startTime = endTime.AddMinutes(-10);
+            QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
+                tsId,
+                startTime,
+                endTime);
+
+            await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
+            {
+                double? tempInCelsius = (double?)point.GetValue(celsiusVariableName);
+                double? tempInFahrenheit = (double?)point.GetValue(fahrenheitVariableName);
+
+                Console.WriteLine($"{point.Timestamp} - Average temperature in Celsius: {tempInCelsius}. " +
+                    $"Average temperature in Fahrenheit: {tempInFahrenheit}.");
+            }
+            #endregion Snippet:TimeSeriesInsightsSampleQuerySeries
         }
 
         private async Task RunQuerySeriesSampleWithInlineVariables(TimeSeriesInsightsClient client, TimeSeriesId tsId)
