@@ -97,7 +97,7 @@ One may want to validate details about the Confidential Ledger for a variety of 
 
 TODO
 
-[Microsoft Azure Attestation Service](https://azure.microsoft.com/en-us/services/azure-attestation/) is one provider of SGX enclave quotes.
+[Microsoft Azure Attestation Service](https://azure.microsoft.com/services/azure-attestation/) is one provider of SGX enclave quotes.
 
 ### Async API
 This library includes a complete async API supported on Python 3.5+. To use it, you must first install an async transport, such as [aiohttp](https://pypi.org/project/aiohttp). See [azure-core documentation](https://github.com/Azure/azure-sdk-for-python/blob/master/sdk/core/azure-core/CLIENT_LIBRARY_DEVELOPER.md#transport) for more information.
@@ -144,15 +144,15 @@ This is a template, but your SDK readme should include details on how to contrib
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-[client_src]: https://github.com/azure/azure-sdk-for-net/sdk/confidentialledger
+[client_src]: https://github.com/azure/azure-sdk-for-net/sdk
 [client_nuget_package]: https://www.nuget.org/packages?q=Azure.Data.ConfidentialLedger
-[azure_cli]: https://docs.microsoft.com/en-us/cli/azure
+[azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_cloud_shell]: https://shell.azure.com/bash
-[azure_confidential_computing]: https://azure.microsoft.com/en-us/solutions/confidential-compute
+[azure_confidential_computing]: https://azure.microsoft.com/solutions/confidential-compute
 [azure_sub]: https://azure.microsoft.com/free
 [ccf]: https://github.com/Microsoft/CCF
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
-[azure_resource_manager]: https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/overview
+[azure_resource_manager]: https://docs.microsoft.com/azure/azure-resource-manager/management/overview
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fconfidentialledger%2FAzure.Template%2FREADME.png)
