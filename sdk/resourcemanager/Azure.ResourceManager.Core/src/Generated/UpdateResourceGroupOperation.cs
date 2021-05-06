@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Core
         {
             var method = typeof(ResourceManager.Resources.Models.ResourceGroup).GetMethod("DeserializeResourceGroup", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
             var obj = method.Invoke(null, new object[] { document.RootElement });
-            return new ResourceGroup(_operations, new ResourceGroupData(obj as ResourceManager.Resources.Models.ResourceGroup));
+            return new ResourceGroup(_operations, obj as ResourceGroupData);
         }
     }
 }
