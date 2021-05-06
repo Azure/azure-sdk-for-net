@@ -3,8 +3,8 @@ trigger: none
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
-    PackageName: "Azure.Communication.Chat"
     ServiceDirectory: communication
+    PackageName: "Azure.Communication.Chat"
     CloudConfig:
       Public:
         SubscriptionConfigurations:
