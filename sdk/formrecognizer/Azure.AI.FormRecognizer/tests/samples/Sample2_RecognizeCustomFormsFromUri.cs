@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer.Samples
                         Console.WriteLine($"Selection marks found on page {page.PageNumber}");
                         foreach (var selectionMark in page.SelectionMarks)
                         {
-                            Console.WriteLine($"  Selection marks is '{selectionMark.State}' with confidence {selectionMark.Confidence}");
+                            Console.WriteLine($"  Selection mark is '{selectionMark.State}' with confidence {selectionMark.Confidence}");
                         }
                     }
                 }
