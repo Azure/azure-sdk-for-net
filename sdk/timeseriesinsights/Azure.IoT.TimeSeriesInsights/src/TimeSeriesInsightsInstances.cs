@@ -283,7 +283,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsGetnstancesById">
         /// // Get Time Series Insights instances by Id
-        /// // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`
+        /// // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
         /// var timeSeriesIds = new List&lt;TimeSeriesId&gt;
         /// {
         ///     tsId,
@@ -414,11 +414,9 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </remarks>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateInstance">
-        /// TimeSeriesId tsId = TimeSeriesIdHelper.CreateTimeSeriesId(modelSettings);
-        /// string defaultTypeId = modelSettings.DefaultTypeId;
-        ///
         /// // Create a Time Series Instance object with the default Time Series Insights type Id.
         /// // The default type Id can be obtained programmatically by using the ModelSettings client.
+        /// // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
         /// var instance = new TimeSeriesInstance(tsId, defaultTypeId)
         /// {
         ///     Name = &quot;instance1&quot;,
@@ -445,7 +443,9 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     }
         ///     else
         ///     {
-        ///         Console.WriteLine($&quot;Failed to create a Time Series Insights instance with Id &apos;{tsiId}&apos;, Error Message: &apos;{createInstanceErrors.Value[i].Message}.&quot;);
+        ///         Console.WriteLine($&quot;Failed to create a Time Series Insights instance with Id &apos;{tsiId}&apos;, &quot; +
+        ///             $&quot;Error Message: &apos;{createInstanceErrors.Value[i].Message}, &quot; +
+        ///             $&quot;Error code: &apos;{createInstanceErrors.Value[i].Code}&apos;.&quot;);
         ///     }
         /// }
         /// </code>
@@ -560,7 +560,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsReplaceInstance">
         /// // Get Time Series Insights instances by Id
-        /// // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`
+        /// // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
         /// var instanceIdsToGet = new List&lt;TimeSeriesId&gt;
         /// {
         ///     tsId,
@@ -581,7 +581,7 @@ namespace Azure.IoT.TimeSeriesInsights
         ///
         /// Response&lt;InstancesOperationResult[]&gt; replaceInstancesResult = await client.Instances.ReplaceAsync(instancesToReplace);
         ///
-        /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter
+        /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter.
         /// // array in the request. If the error object is set to null, this means the operation was a success.
         /// for (int i = 0; i &lt; replaceInstancesResult.Value.Length; i++)
         /// {
@@ -591,7 +591,8 @@ namespace Azure.IoT.TimeSeriesInsights
         ///
         ///     if (currentError != null)
         ///     {
-        ///         Console.WriteLine($&quot;Failed to replace Time Series Insights instance with Id &apos;{tsiId}&apos;. Error Message: &apos;{currentError.Message}&apos;.&quot;);
+        ///         Console.WriteLine($&quot;Failed to replace Time Series Insights instance with Id &apos;{tsiId}&apos;,&quot; +
+        ///             $&quot; Error Message: &apos;{currentError.Message}&apos;, Error code: &apos;{currentError.Code}&apos;.&quot;);
         ///     }
         ///     else
         ///     {
@@ -700,7 +701,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </remarks>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleDeleteInstanceById">
-        /// // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`
+        /// // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
         /// var instancesToDelete = new List&lt;TimeSeriesId&gt;
         /// {
         ///     tsId,

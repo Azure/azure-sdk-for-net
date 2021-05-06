@@ -20,7 +20,13 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             #region Snippet:TimeSeriesInsightsSampleGetModelSettings
             Response<TimeSeriesModelSettings> getModelSettingsResponse = await client.ModelSettings.GetAsync();
-            Console.WriteLine($"Retrieved Time Series Insights model settings \nname : '{getModelSettingsResponse.Value.Name}', default type Id: {getModelSettingsResponse.Value.DefaultTypeId}, '{JsonSerializer.Serialize(getModelSettingsResponse.Value.TimeSeriesIdProperties)}'");
+            Console.WriteLine($"Retrieved Time Series Insights model settings \nname : '{getModelSettingsResponse.Value.Name}', " +
+                $"default type Id: {getModelSettingsResponse.Value.DefaultTypeId}'");
+            var timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
+            foreach (TimeSeriesIdProperty property in timeSeriesIdProperties)
+            {
+                Console.WriteLine($"Time Series Id property name : '{property.Name}', type : '{property.Type}'.");
+            }
             #endregion Snippet:TimeSeriesInsightsSampleGetModelSettings
 
             // Store the default type Id so it can be used during clean up
@@ -28,7 +34,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             #region Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName
             Response<TimeSeriesModelSettings> updateModelSettingsNameResponse = await client.ModelSettings.UpdateNameAsync("NewModelSettingsName");
-            Console.WriteLine($"Updated Time Series Insights model settings name:\n" +
+            Console.WriteLine($"Updated Time Series Insights model settings name: " +
                 $"{updateModelSettingsNameResponse.Value.Name}");
             #endregion Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName
 
@@ -54,7 +60,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
                 #region Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
                 Response<TimeSeriesModelSettings> updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
-                Console.WriteLine($"Updated Time Series Insights model settings default type Id:\n" +
+                Console.WriteLine($"Updated Time Series Insights model settings default type Id: " +
                     $"{updateDefaultTypeIdResponse.Value.Name}");
                 #endregion Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
             }

@@ -68,7 +68,13 @@ Use `ModelSettings` in [TimeSeriesInsightsClient](https://github.com/Azure/azure
 
 ```C# Snippet:TimeSeriesInsightsSampleGetModelSettings
 Response<TimeSeriesModelSettings> getModelSettingsResponse = await client.ModelSettings.GetAsync();
-Console.WriteLine($"Retrieved Time Series Insights model settings \nname : '{getModelSettingsResponse.Value.Name}', default type Id: {getModelSettingsResponse.Value.DefaultTypeId}, '{JsonSerializer.Serialize(getModelSettingsResponse.Value.TimeSeriesIdProperties)}'");
+Console.WriteLine($"Retrieved Time Series Insights model settings \nname : '{getModelSettingsResponse.Value.Name}', " +
+    $"default type Id: {getModelSettingsResponse.Value.DefaultTypeId}'");
+var timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
+foreach (TimeSeriesIdProperty property in timeSeriesIdProperties)
+{
+    Console.WriteLine($"Time Series Id property name : '{property.Name}', type : '{property.Type}'.");
+}
 ```
 
 Here's what a retrieved model settings object looks like.
@@ -112,13 +118,13 @@ You can also use `ModelSettings` object to make changes to the model settings na
 
 ```C# Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName
 Response<TimeSeriesModelSettings> updateModelSettingsNameResponse = await client.ModelSettings.UpdateNameAsync("NewModelSettingsName");
-Console.WriteLine($"Updated Time Series Insights model settings name:\n" +
+Console.WriteLine($"Updated Time Series Insights model settings name: " +
     $"{updateModelSettingsNameResponse.Value.Name}");
 ```
 
 ```C# Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
 Response<TimeSeriesModelSettings> updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
-Console.WriteLine($"Updated Time Series Insights model settings default type Id:\n" +
+Console.WriteLine($"Updated Time Series Insights model settings default type Id: " +
     $"{updateDefaultTypeIdResponse.Value.Name}");
 ```
 
@@ -140,11 +146,9 @@ await foreach (TimeSeriesInstance tsiInstance in tsiInstances)
 
 This code snippet demonstrates creating a list of Time Series instances in your environment.
 ```C# Snippet:TimeSeriesInsightsSampleCreateInstance
-TimeSeriesId tsId = TimeSeriesIdHelper.CreateTimeSeriesId(modelSettings);
-string defaultTypeId = modelSettings.DefaultTypeId;
-
 // Create a Time Series Instance object with the default Time Series Insights type Id.
 // The default type Id can be obtained programmatically by using the ModelSettings client.
+// tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
 var instance = new TimeSeriesInstance(tsId, defaultTypeId)
 {
     Name = "instance1",
@@ -171,7 +175,9 @@ for (int i = 0; i < createInstanceErrors.Value.Length; i++)
     }
     else
     {
-        Console.WriteLine($"Failed to create a Time Series Insights instance with Id '{tsiId}', Error Message: '{createInstanceErrors.Value[i].Message}.");
+        Console.WriteLine($"Failed to create a Time Series Insights instance with Id '{tsiId}', " +
+            $"Error Message: '{createInstanceErrors.Value[i].Message}, " +
+            $"Error code: '{createInstanceErrors.Value[i].Code}'.");
     }
 }
 ```
@@ -180,7 +186,7 @@ You can also retrieve specific instances by their unique identifier, or by the T
 
 ```C# Snippet:TimeSeriesInsightsGetnstancesById
 // Get Time Series Insights instances by Id
-// tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`
+// tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
 var timeSeriesIds = new List<TimeSeriesId>
 {
     tsId,
@@ -208,7 +214,7 @@ for (int i = 0; i < getByIdsResult.Value.Length; i++)
 Similarly, you can delete specific instances by their unique identifier, or by the Time Series instances names.
 
 ```C# Snippet:TimeSeriesInsightsSampleDeleteInstanceById
-// tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`
+// tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
 var instancesToDelete = new List<TimeSeriesId>
 {
     tsId,
@@ -238,7 +244,7 @@ for (int i = 0; i < deleteInstanceErrors.Value.Length; i++)
 This code snippet demonstrates replacing an existing Time Series instance.
 ```C# Snippet:TimeSeriesInsightsReplaceInstance
 // Get Time Series Insights instances by Id
-// tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`
+// tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
 var instanceIdsToGet = new List<TimeSeriesId>
 {
     tsId,
@@ -259,7 +265,7 @@ var instancesToReplace = new List<TimeSeriesInstance>
 
 Response<InstancesOperationResult[]> replaceInstancesResult = await client.Instances.ReplaceAsync(instancesToReplace);
 
-// The response of calling the API contains a list of error objects corresponding by position to the input parameter
+// The response of calling the API contains a list of error objects corresponding by position to the input parameter.
 // array in the request. If the error object is set to null, this means the operation was a success.
 for (int i = 0; i < replaceInstancesResult.Value.Length; i++)
 {
@@ -269,7 +275,8 @@ for (int i = 0; i < replaceInstancesResult.Value.Length; i++)
 
     if (currentError != null)
     {
-        Console.WriteLine($"Failed to replace Time Series Insights instance with Id '{tsiId}'. Error Message: '{currentError.Message}'.");
+        Console.WriteLine($"Failed to replace Time Series Insights instance with Id '{tsiId}'," +
+            $" Error Message: '{currentError.Message}', Error code: '{currentError.Code}'.");
     }
     else
     {

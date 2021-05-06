@@ -23,14 +23,14 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             // Figure out what keys make up the Time Series Id
             TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync();
-
-            #region Snippet:TimeSeriesInsightsSampleCreateInstance
-
             TimeSeriesId tsId = TimeSeriesIdHelper.CreateTimeSeriesId(modelSettings);
             string defaultTypeId = modelSettings.DefaultTypeId;
 
+            #region Snippet:TimeSeriesInsightsSampleCreateInstance
+
             // Create a Time Series Instance object with the default Time Series Insights type Id.
             // The default type Id can be obtained programmatically by using the ModelSettings client.
+            // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
             var instance = new TimeSeriesInstance(tsId, defaultTypeId)
             {
                 Name = "instance1",
@@ -57,7 +57,9 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 }
                 else
                 {
-                    Console.WriteLine($"Failed to create a Time Series Insights instance with Id '{tsiId}', Error Message: '{createInstanceErrors.Value[i].Message}.");
+                    Console.WriteLine($"Failed to create a Time Series Insights instance with Id '{tsiId}', " +
+                        $"Error Message: '{createInstanceErrors.Value[i].Message}, " +
+                        $"Error code: '{createInstanceErrors.Value[i].Code}'.");
                 }
             }
 
@@ -77,7 +79,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #region Snippet:TimeSeriesInsightsReplaceInstance
 
             // Get Time Series Insights instances by Id
-            // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`
+            // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
             var instanceIdsToGet = new List<TimeSeriesId>
             {
                 tsId,
@@ -98,7 +100,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             Response<InstancesOperationResult[]> replaceInstancesResult = await client.Instances.ReplaceAsync(instancesToReplace);
 
-            // The response of calling the API contains a list of error objects corresponding by position to the input parameter
+            // The response of calling the API contains a list of error objects corresponding by position to the input parameter.
             // array in the request. If the error object is set to null, this means the operation was a success.
             for (int i = 0; i < replaceInstancesResult.Value.Length; i++)
             {
@@ -108,7 +110,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
                 if (currentError != null)
                 {
-                    Console.WriteLine($"Failed to replace Time Series Insights instance with Id '{tsiId}'. Error Message: '{currentError.Message}'.");
+                    Console.WriteLine($"Failed to replace Time Series Insights instance with Id '{tsiId}'," +
+                        $" Error Message: '{currentError.Message}', Error code: '{currentError.Code}'.");
                 }
                 else
                 {
@@ -121,7 +124,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #region Snippet:TimeSeriesInsightsGetnstancesById
 
             // Get Time Series Insights instances by Id
-            // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`
+            // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
             var timeSeriesIds = new List<TimeSeriesId>
             {
                 tsId,
@@ -152,7 +155,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             {
                 #region Snippet:TimeSeriesInsightsSampleDeleteInstanceById
 
-                // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`
+                // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
                 var instancesToDelete = new List<TimeSeriesId>
                 {
                     tsId,
