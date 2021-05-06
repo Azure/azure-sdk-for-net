@@ -176,20 +176,20 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Delete the repository identified by `repostitory`. </summary>
-        /// <param name="repository"> Repository name (including the namespace). </param>
+        /// <param name="repositoryName"> Repository name (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repository"/> is null. </exception>
-        /// <exception cref="ArgumentException"> Thrown when <paramref name="repository"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual async Task<Response<DeleteRepositoryResult>> DeleteRepositoryAsync(string repository, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeleteRepositoryResult>> DeleteRepositoryAsync(string repositoryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(repository, nameof(repository));
+            Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
             scope.Start();
             try
             {
-                return await _restClient.DeleteRepositoryAsync(repository, cancellationToken).ConfigureAwait(false);
+                return await _restClient.DeleteRepositoryAsync(repositoryName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -199,20 +199,20 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Delete the repository identified by `repostitory`. </summary>
-        /// <param name="repository"> Repository name (including the namespace). </param>
+        /// <param name="repositoryName"> Repository name (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repository"/> is null. </exception>
-        /// <exception cref="ArgumentException"> Thrown when <paramref name="repository"/> is empty. </exception>
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
-        public virtual Response<DeleteRepositoryResult> DeleteRepository(string repository, CancellationToken cancellationToken = default)
+        public virtual Response<DeleteRepositoryResult> DeleteRepository(string repositoryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(repository, nameof(repository));
+            Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
             scope.Start();
             try
             {
-                return _restClient.DeleteRepository(repository, cancellationToken);
+                return _restClient.DeleteRepository(repositoryName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -224,17 +224,17 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Create a new <see cref="ContainerRepository"/> object for the specified repository.
         /// </summary>
-        /// <param name="name"> The name of the repository to reference. </param>
+        /// <param name="repositoryName"> The name of the repository to reference. </param>
         /// <returns> A new <see cref="ContainerRepository"/> for the desired repository. </returns>
-        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> Thrown when <paramref name="name"/> is empty. </exception>
-        public virtual ContainerRepository GetRepository(string name)
+        /// <exception cref="ArgumentNullException"> Thrown when <paramref name="repositoryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> Thrown when <paramref name="repositoryName"/> is empty. </exception>
+        public virtual ContainerRepository GetRepository(string repositoryName)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(repositoryName, nameof(repositoryName));
 
             return new ContainerRepository(
                 _registryUri,
-                name,
+                repositoryName,
                 _clientDiagnostics,
                 _restClient);
         }

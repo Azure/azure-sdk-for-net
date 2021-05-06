@@ -52,6 +52,101 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Gets data using search. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>keywords</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The keywords applied to all searchable fields. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>offset</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The offset. The default value is 0. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>limit</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The limit of the number of the search result. default value is 50; maximum value is 1000. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>filter</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> The filter for the search. See examples for the usage of supported filters. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>facets</term>
+        ///     <term>SearchFacetItem[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>taxonomySetting</term>
+        ///     <term>SearchRequestTaxonomySetting</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SearchRequestTaxonomySetting</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>assetTypes</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>facet</term>
+        ///     <term>SearchFacetItem</term>
+        ///     <term></term>
+        ///     <term> The content of a search facet result item. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SearchFacetItem</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>count</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The count of the facet item. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>facet</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the facet item. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>sort</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Any object. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> SearchAdvancedAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
@@ -61,6 +156,101 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Gets data using search. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>keywords</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The keywords applied to all searchable fields. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>offset</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The offset. The default value is 0. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>limit</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The limit of the number of the search result. default value is 50; maximum value is 1000. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>filter</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> The filter for the search. See examples for the usage of supported filters. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>facets</term>
+        ///     <term>SearchFacetItem[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>taxonomySetting</term>
+        ///     <term>SearchRequestTaxonomySetting</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SearchRequestTaxonomySetting</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>assetTypes</term>
+        ///     <term>string[]</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>facet</term>
+        ///     <term>SearchFacetItem</term>
+        ///     <term></term>
+        ///     <term> The content of a search facet result item. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>SearchFacetItem</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>count</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The count of the facet item. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>facet</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the facet item. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>sort</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> Any object. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response SearchAdvanced(RequestContent requestBody, CancellationToken cancellationToken = default)
@@ -92,6 +282,35 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>keywords</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>limit</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>filter</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> The filter for the search. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> SuggestAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
@@ -101,6 +320,35 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>keywords</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The keywords applied to all fields that support suggest operation. It must be at least 1 character, and no more than 100 characters. In the index schema we defined a default suggester which lists all the supported fields and specifies a search mode. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>limit</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The number of suggestions we hope to return. The default value is 5. The value must be a number between 1 and 100. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>filter</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> The filter for the search. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Suggest(RequestContent requestBody, CancellationToken cancellationToken = default)
@@ -132,6 +380,35 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get auto complete options. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>keywords</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>limit</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>filter</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> The filter for the autocomplete request. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> AutoCompleteAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
@@ -141,6 +418,35 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get auto complete options. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>keywords</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The keywords applied to all fields that support autocomplete operation. It must be at least 1 character, and no more than 100 characters. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>limit</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The number of autocomplete results we hope to return. The default value is 50. The value must be a number between 1 and 100. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>filter</term>
+        ///     <term>AnyObject</term>
+        ///     <term></term>
+        ///     <term> The filter for the autocomplete request. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response AutoComplete(RequestContent requestBody, CancellationToken cancellationToken = default)

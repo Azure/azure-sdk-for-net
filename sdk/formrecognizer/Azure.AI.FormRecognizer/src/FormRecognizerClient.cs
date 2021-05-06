@@ -448,6 +448,9 @@ namespace Azure.AI.FormRecognizer
         /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
         public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsAsync(Stream businessCard, RecognizeBusinessCardsOptions recognizeBusinessCardsOptions = default, CancellationToken cancellationToken = default)
@@ -489,6 +492,9 @@ namespace Azure.AI.FormRecognizer
         /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
         public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCards(Stream businessCard, RecognizeBusinessCardsOptions recognizeBusinessCardsOptions = default, CancellationToken cancellationToken = default)
@@ -530,6 +536,9 @@ namespace Azure.AI.FormRecognizer
         /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
         public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsFromUriAsync(Uri businessCardUri, RecognizeBusinessCardsOptions recognizeBusinessCardsOptions = default, CancellationToken cancellationToken = default)
@@ -569,6 +578,9 @@ namespace Azure.AI.FormRecognizer
         /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
         public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCardsFromUri(Uri businessCardUri, RecognizeBusinessCardsOptions recognizeBusinessCardsOptions = default, CancellationToken cancellationToken = default)
@@ -612,6 +624,9 @@ namespace Azure.AI.FormRecognizer
         /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
         public virtual async Task<RecognizeInvoicesOperation> StartRecognizeInvoicesAsync(Stream invoice, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
@@ -653,6 +668,9 @@ namespace Azure.AI.FormRecognizer
         /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
         public virtual RecognizeInvoicesOperation StartRecognizeInvoices(Stream invoice, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
@@ -694,6 +712,9 @@ namespace Azure.AI.FormRecognizer
         /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
         public virtual async Task<RecognizeInvoicesOperation> StartRecognizeInvoicesFromUriAsync(Uri invoiceUri, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
@@ -733,6 +754,9 @@ namespace Azure.AI.FormRecognizer
         /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
         public virtual RecognizeInvoicesOperation StartRecognizeInvoicesFromUri(Uri invoiceUri, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
@@ -776,6 +800,9 @@ namespace Azure.AI.FormRecognizer
         /// <param name="recognizeIdentityDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeIdentityDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdentityDocumentsOperation.Value"/> upon successful
         /// completion will contain the extracted identity document information.</returns>
         public virtual async Task<RecognizeIdentityDocumentsOperation> StartRecognizeIdentityDocumentsAsync(Stream identityDocument, RecognizeIdentityDocumentsOptions recognizeIdentityDocumentsOptions = default, CancellationToken cancellationToken = default)
@@ -817,6 +844,9 @@ namespace Azure.AI.FormRecognizer
         /// <param name="recognizeIdentityDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeIdentityDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdentityDocumentsOperation.Value"/> upon successful
         /// completion will contain the extracted identity document information.</returns>
         public virtual RecognizeIdentityDocumentsOperation StartRecognizeIdentityDocuments(Stream identityDocument, RecognizeIdentityDocumentsOptions recognizeIdentityDocumentsOptions = default, CancellationToken cancellationToken = default)
@@ -858,6 +888,9 @@ namespace Azure.AI.FormRecognizer
         /// <param name="recognizeIdentityDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeIdentityDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdentityDocumentsOperation.Value"/> upon successful
         /// completion will contain the extracted identity document information.</returns>
         public virtual async Task<RecognizeIdentityDocumentsOperation> StartRecognizeIdentityDocumentsFromUriAsync(Uri identityDocumentUri, RecognizeIdentityDocumentsOptions recognizeIdentityDocumentsOptions = default, CancellationToken cancellationToken = default)
@@ -897,6 +930,9 @@ namespace Azure.AI.FormRecognizer
         /// <param name="recognizeIdentityDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeIdentityDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdentityDocumentsOperation.Value"/> upon successful
         /// completion will contain the extracted identity document information.</returns>
         public virtual RecognizeIdentityDocumentsOperation StartRecognizeIdentityDocumentsFromUri(Uri identityDocumentUri, RecognizeIdentityDocumentsOptions recognizeIdentityDocumentsOptions = default, CancellationToken cancellationToken = default)

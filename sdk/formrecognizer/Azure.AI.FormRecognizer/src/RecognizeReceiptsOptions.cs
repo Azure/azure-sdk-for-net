@@ -38,6 +38,9 @@ namespace Azure.AI.FormRecognizer
         /// Sets the locale information for the receipt.
         /// Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US.
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         public FormRecognizerLocale? Locale { get; set; }
 
         /// <summary>
@@ -51,6 +54,9 @@ namespace Azure.AI.FormRecognizer
         /// See <a href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#collection-initializers">collection initializer</a>.
         /// </para>
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         public IList<string> Pages { get; } = new List<string>();
     }
 }

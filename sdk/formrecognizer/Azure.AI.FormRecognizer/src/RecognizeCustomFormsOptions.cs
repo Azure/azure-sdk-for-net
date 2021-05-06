@@ -45,6 +45,9 @@ namespace Azure.AI.FormRecognizer
         /// See <a href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#collection-initializers">collection initializer</a>.
         /// </para>
         /// </summary>
+        /// <remarks>
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         public IList<string> Pages { get; } = new List<string>();
     }
 }

@@ -31,67 +31,70 @@ namespace Azure.Containers.ContainerRegistry
     /// Step 5: GET /api/v1/acr/repositories
     /// Request Header: { Bearer acrTokenAccess }
     /// </summary>
-    internal class ContainerRegistryChallengeAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
+    internal class ContainerRegistryChallengeAuthenticationPolicy : BearerTokenAuthenticationPolicy
     {
         private readonly IContainerRegistryAuthenticationClient _authenticationClient;
+        private readonly ContainerRegistryRefreshTokenCache _refreshTokenCache;
+        private readonly string[] _aadScopes;
 
         public ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, IContainerRegistryAuthenticationClient authenticationClient)
+            : this(credential, aadScope, authenticationClient, null, null)
+        {
+        }
+
+        internal ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, IContainerRegistryAuthenticationClient authenticationClient, TimeSpan? tokenRefreshOffset = null, TimeSpan? tokenRefreshRetryDelay = null)
             : base(credential, aadScope)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(aadScope, nameof(aadScope));
 
             _authenticationClient = authenticationClient;
+            _refreshTokenCache = new ContainerRegistryRefreshTokenCache(credential, authenticationClient, tokenRefreshOffset, tokenRefreshRetryDelay);
+            _aadScopes = new[] { aadScope };
         }
 
-        protected override async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message, bool async)
+        // Since we'll not cache the AAD access token or set an auth header on the initial request,
+        // that receives a challenge response, we override the method that does this.
+        protected override void AuthorizeRequest(HttpMessage message)
+        {
+            return;
+        }
+
+        // Since we'll not cache the AAD access token or set an auth header on the initial request,
+        // that receives a challenge response, we override the method that does this.
+        protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
+        {
+            return default;
+        }
+
+        protected override ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
+            => AuthorizeRequestOnChallengeAsyncInternal(message, true);
+
+        protected override bool AuthorizeRequestOnChallenge(HttpMessage message)
+            => AuthorizeRequestOnChallengeAsyncInternal(message, false).EnsureCompleted();
+
+        private async ValueTask<bool> AuthorizeRequestOnChallengeAsyncInternal(HttpMessage message, bool async)
         {
             // Once we're here, we've completed Step 1.
+
+            // We'll need this context to refresh the AAD access credential if that's needed.
+            var context = new TokenRequestContext(_aadScopes, message.Request.ClientRequestId);
 
             // Step 2: Parse challenge string to retrieve serviceName and scope, where scope is the ACR Scope
             var service = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "service");
             var scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "scope");
 
-            string acrAccessToken = string.Empty;
-            if (async)
-            {
-                // Step 3: Exchange AAD Access Token for ACR Refresh Token
-                string acrRefreshToken = await ExchangeAadAccessTokenForAcrRefreshTokenAsync(message, service, true).ConfigureAwait(false);
+            // Step 3: Exchange AAD Access Token for ACR Refresh Token, or get the cached value instead.
+            string acrRefreshToken = await _refreshTokenCache.GetAcrRefreshTokenAsync(message, context, service, async).ConfigureAwait(false);
 
-                // Step 4: Send in acrRefreshToken and get back acrAccessToken
-                acrAccessToken = await ExchangeAcrRefreshTokenForAcrAccessTokenAsync(acrRefreshToken, service, scope, true, message.CancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                // Step 3: Exchange AAD Access Token for ACR Refresh Token
-                string acrRefreshToken = ExchangeAadAccessTokenForAcrRefreshTokenAsync(message, service, false).EnsureCompleted();
+            // Step 4: Send in acrRefreshToken and get back acrAccessToken
+            string acrAccessToken = await ExchangeAcrRefreshTokenForAcrAccessTokenAsync(acrRefreshToken, service, scope, async, message.CancellationToken).ConfigureAwait(false);
 
-                // Step 4: Send in acrRefreshToken and get back acrAccessToken
-                acrAccessToken = ExchangeAcrRefreshTokenForAcrAccessTokenAsync(acrRefreshToken, service, scope, false, message.CancellationToken).EnsureCompleted();
-            }
-
-            // Step 5 - Authorize Request.  Note, we don't use SetAuthorizationHeader here, because it
+            // Step 5 - Authorize Request.  Note, we don't use SetAuthorizationHeader from the base class here, because it
             // sets an AAD access token header, and at this point we're done with AAD and using an ACR access token.
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, $"Bearer {acrAccessToken}");
 
             return true;
-        }
-
-        private async Task<string> ExchangeAadAccessTokenForAcrRefreshTokenAsync(HttpMessage message, string service, bool async)
-        {
-            string aadAccessToken = GetAuthorizationToken(message);
-
-            Response<AcrRefreshToken> acrRefreshToken = null;
-            if (async)
-            {
-                acrRefreshToken = await _authenticationClient.ExchangeAadAccessTokenForAcrRefreshTokenAsync(service, aadAccessToken, message.CancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                acrRefreshToken = _authenticationClient.ExchangeAadAccessTokenForAcrRefreshToken(service, aadAccessToken, message.CancellationToken);
-            }
-
-            return acrRefreshToken.Value.RefreshToken;
         }
 
         private async Task<string> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(string acrRefreshToken, string service, string scope, bool async, CancellationToken cancellationToken)
@@ -107,17 +110,6 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             return acrAccessToken.Value.AccessToken;
-        }
-
-        private static string GetAuthorizationToken(HttpMessage message)
-        {
-            string aadAuthHeader;
-            if (!message.Request.Headers.TryGetValue(HttpHeader.Names.Authorization, out aadAuthHeader))
-            {
-                throw new InvalidOperationException("Failed to retrieve Authentication header from message request.");
-            }
-
-            return aadAuthHeader.Remove(0, "Bearer ".Length);
         }
     }
 }

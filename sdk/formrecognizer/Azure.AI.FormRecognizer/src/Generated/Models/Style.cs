@@ -8,12 +8,12 @@
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> An object representing the style of the text line. </summary>
-    public partial class TextStyle
+    internal partial class Style
     {
-        /// <summary> Initializes a new instance of TextStyle. </summary>
+        /// <summary> Initializes a new instance of Style. </summary>
         /// <param name="name"> The text line style name, including handwriting and other. </param>
         /// <param name="confidence"> The confidence of text line style. </param>
-        internal TextStyle(TextStyleName name, float confidence)
+        internal Style(TextStyleName name, float confidence)
         {
             Name = name;
             Confidence = confidence;

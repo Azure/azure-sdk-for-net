@@ -7,10 +7,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -52,6 +54,9 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
         private readonly SemaphoreSlim ProcessorStatusGuard = new SemaphoreSlim(1, 1);
+
+        /// <summary>The client provided to perform storage operations related to checkpoints and ownership.</summary>
+        private BlobContainerClient _containerClient;
 
         /// <summary>The handler to be called just before event processing starts for a given partition.</summary>
         private Func<PartitionInitializingEventArgs, Task> _partitionInitializingAsync;
@@ -398,6 +403,8 @@ namespace Azure.Messaging.EventHubs
                                     EventProcessorClientOptions clientOptions) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, connectionString, eventHubName, CreateOptions(clientOptions))
         {
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
+
+            _containerClient = checkpointStore;
             StorageManager = CreateStorageManager(checkpointStore);
         }
 
@@ -425,6 +432,8 @@ namespace Azure.Messaging.EventHubs
                                     EventProcessorClientOptions clientOptions = default) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, CreateOptions(clientOptions))
         {
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
+
+            _containerClient = checkpointStore;
             StorageManager = CreateStorageManager(checkpointStore);
         }
 
@@ -452,6 +461,8 @@ namespace Azure.Messaging.EventHubs
                                     EventProcessorClientOptions clientOptions = default) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, CreateOptions(clientOptions))
         {
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
+
+            _containerClient = checkpointStore;
             StorageManager = CreateStorageManager(checkpointStore);
         }
 
@@ -479,6 +490,8 @@ namespace Azure.Messaging.EventHubs
                                     EventProcessorClientOptions clientOptions = default) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, CreateOptions(clientOptions))
         {
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
+
+            _containerClient = checkpointStore;
             StorageManager = CreateStorageManager(checkpointStore);
         }
 
@@ -587,40 +600,15 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
         ///
-        public override async Task StartProcessingAsync(CancellationToken cancellationToken = default)
-        {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var releaseGuard = false;
-
-            try
-            {
-                await ProcessorStatusGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
-                releaseGuard = true;
-
-                if (_processEventAsync == null)
-                {
-                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventAsync)));
-                }
-
-                if (_processErrorAsync == null)
-                {
-                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsync)));
-                }
-
-                await base.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (OperationCanceledException)
-            {
-                throw new TaskCanceledException();
-            }
-            finally
-            {
-                if (releaseGuard)
-                {
-                    ProcessorStatusGuard.Release();
-                }
-            }
-        }
+        /// <exception cref="AggregateException">
+        ///   As the processor starts, it will attempt to detect configuration and permissions errors that would prevent it from
+        ///   being able to recover without intervention.  For example, an incorrect connection string or the inability to write to the
+        ///   storage container would be detected.  These exceptions will be packaged as an <see cref="AggregateException"/>, and will cause
+        ///   <see cref="StartProcessingAsync" /> to fail.
+        /// </exception>
+        ///
+        public override async Task StartProcessingAsync(CancellationToken cancellationToken = default) =>
+             await StartProcessingInternalAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Signals the <see cref="EventProcessorClient" /> to begin processing events.  Should this method be called while the processor
@@ -629,40 +617,15 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
         ///
-        public override void StartProcessing(CancellationToken cancellationToken = default)
-        {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var releaseGuard = false;
-
-            try
-            {
-                ProcessorStatusGuard.Wait(cancellationToken);
-                releaseGuard = true;
-
-                if (_processEventAsync == null)
-                {
-                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventAsync)));
-                }
-
-                if (_processErrorAsync == null)
-                {
-                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsync)));
-                }
-
-                base.StartProcessing(cancellationToken);
-            }
-            catch (OperationCanceledException)
-            {
-                throw new TaskCanceledException();
-            }
-            finally
-            {
-                if (releaseGuard)
-                {
-                    ProcessorStatusGuard.Release();
-                }
-            }
-        }
+        /// <exception cref="AggregateException">
+        ///   As the processor starts, it will attempt to detect configuration and permissions errors that would prevent it from
+        ///   being able to recover without intervention.  For example, an incorrect connection string or the inability to write to the
+        ///   storage container would be detected.  These exceptions will be packaged as an <see cref="AggregateException"/>, and will cause
+        ///   <see cref="StartProcessing" /> to fail.
+        /// </exception>
+        ///
+        public override void StartProcessing(CancellationToken cancellationToken = default) =>
+            StartProcessingInternalAsync(false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         ///   Signals the <see cref="EventProcessorClient" /> to stop processing events.  Should this method be called while the processor
@@ -808,23 +771,8 @@ namespace Azure.Messaging.EventHubs
         ///   starting location set.
         /// </remarks>
         ///
-        protected override async Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken)
-        {
-            var checkpoints = await StorageManager.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken).ConfigureAwait(false);
-
-            // If there was no initialization handler, no custom starting positions
-            // could have been specified.  Return the checkpoints without further processing.
-
-            if (_partitionInitializingAsync == null)
-            {
-                return checkpoints;
-            }
-
-            // Process the checkpoints to inject mock checkpoints for partitions that
-            // specify a custom default and do not have an actual checkpoint.
-
-            return ProcessCheckpointStartingPositions(checkpoints);
-        }
+        protected override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken) =>
+            throw new InvalidOperationException(Resources.ListCheckpointsAsyncObsolete);
 
         /// <summary>
         ///   Returns a checkpoint for the Event Hub, consumer group, and partition ID associated with the
@@ -1092,6 +1040,129 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Signals the <see cref="EventProcessorClient" /> to begin processing events.  Should this method be called while the processor
+        ///   is running, no action is taken.
+        /// </summary>
+        ///
+        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessor{TPartition}" /> once it starts running.</param>
+        ///
+        private async Task StartProcessingInternalAsync(bool async,
+                                                        CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            var capturedValidationException = default(Exception);
+            var releaseGuard = false;
+
+            try
+            {
+                // Acquire the semaphore used to synchronize processor starts and stops, respecting
+                // the async flag.  When this is held, the state of the processor is stable.
+
+                if (async)
+                {
+                    await ProcessorStatusGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessorStatusGuard.Wait(cancellationToken);
+                }
+
+                releaseGuard = true;
+
+                // Validate that the required handlers are assigned.
+
+                if (_processEventAsync == null)
+                {
+                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessEventAsync)));
+                }
+
+                if (_processErrorAsync == null)
+                {
+                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsync)));
+                }
+
+                // Allow the base class to perform its startup operation; this will include validation for
+                // the basic Event Hubs and storage configuration.
+
+                if (async)
+                {
+                    await base.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    base.StartProcessing(cancellationToken);
+                }
+
+                // Because the base class has no understanding of what concrete storage type is in use and
+                // does not directly make use of some of its operations, such as writing a checkpoint.  Validate
+                // these additional needs if a storage client is available.
+
+                if (_containerClient != null)
+                {
+                    try
+                    {
+                        if (async)
+                        {
+                            await ValidateStartupAsync(async, _containerClient, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            ValidateStartupAsync(async, _containerClient, cancellationToken).EnsureCompleted();
+                        }
+                    }
+                    catch (AggregateException ex)
+                    {
+                        // Capture the validation exception and log, but do not throw.  Because this is
+                        // a fatal exception and the processing task was already started, StopProcessing
+                        // will need to be called, which requires the semaphore.  The validation exception
+                        // will be handled after the start operation has officially completed and the
+                        // semaphore has been released.
+
+                        capturedValidationException = ex.Flatten();
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                throw new TaskCanceledException();
+            }
+            finally
+            {
+                if (releaseGuard)
+                {
+                    ProcessorStatusGuard.Release();
+                }
+            }
+
+            // If there was a validation exception captured, then stop the processor now
+            // that it is safe to do so.
+
+            if (capturedValidationException != null)
+            {
+                try
+                {
+                    if (async)
+                    {
+                        await StopProcessingAsync(CancellationToken.None).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        StopProcessing(CancellationToken.None);
+                    }
+                }
+                catch
+                {
+                    // An exception is expected here, as the processor configuration was invalid and
+                    // processing was canceled.  It will have already been logged; ignore it here.
+                }
+
+                ExceptionDispatchInfo.Capture(capturedValidationException).Throw();
+            }
+        }
+
+        /// <summary>
         ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
         /// </summary>
         ///
@@ -1100,39 +1171,6 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A <see cref="StorageManager" /> with the requested configuration.</returns>
         ///
         private StorageManager CreateStorageManager(BlobContainerClient checkpointStore) => new BlobsCheckpointStore(checkpointStore, RetryPolicy);
-
-        /// <summary>
-        ///   Processes the starting positions for checkpoints, ensuring that any overrides set by the <see cref="PartitionInitializingAsync" />
-        ///   handler are respected when no natural checkpoint exists for the partition.
-        /// </summary>
-        ///
-        /// <param name="sourceCheckpoints">The checkpoint set to process.</param>
-        ///
-        /// <returns>An enumerable consisting of the <paramref name="sourceCheckpoints" /> and a set of artificial checkpoints for any overrides applied to the starting position.</returns>
-        ///
-        private IEnumerable<EventProcessorCheckpoint> ProcessCheckpointStartingPositions(IEnumerable<EventProcessorCheckpoint> sourceCheckpoints)
-        {
-            var knownCheckpoints = new HashSet<string>();
-
-            // Return the checkpoints and track which partitions they belong to.
-
-            foreach (var checkpoint in sourceCheckpoints)
-            {
-                knownCheckpoints.Add(checkpoint.PartitionId);
-                yield return checkpoint;
-            }
-
-            // For any partitions with custom default starting point, emit an artificial
-            // checkpoint if a natural checkpoint did not exist.
-
-            foreach (var partition in PartitionStartingPositionDefaults.Keys)
-            {
-                if (!knownCheckpoints.Contains(partition))
-                {
-                    yield return CreateCheckpointWithDefaultStartingPosition(partition);
-                }
-            }
-        }
 
         /// <summary>
         ///   Creates a checkpoint with a default starting position set.
@@ -1152,6 +1190,71 @@ namespace Azure.Messaging.EventHubs
                 PartitionId = partitionId,
                 StartingPosition = PartitionStartingPositionDefaults.TryGetValue(partitionId, out EventPosition position) ? position : DefaultStartingPosition
             };
+        }
+
+        /// <summary>
+        ///   Performs the tasks needed to validate basic configuration and permissions of the dependencies needed for
+        ///   the processor to function.
+        /// </summary>
+        ///
+        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
+        /// <param name="containerClient">The <see cref="BlobContainerClient" /> to use for validating storage operations.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.</param>
+        ///
+        /// <exception cref="AggregateException">Any validation failures will result in an aggregate exception.</exception>
+        ///
+        private async Task ValidateStartupAsync(bool async,
+                                                BlobContainerClient containerClient,
+                                                CancellationToken cancellationToken = default)
+        {
+            var blobClient = containerClient.GetBlobClient(Guid.NewGuid().ToString("N"));
+
+            // Write an blob with metadata, simulating the approach used for checkpoint and ownership
+            // data creation.
+
+            try
+            {
+                using var blobContent = new MemoryStream(Array.Empty<byte>());
+                var blobMetadata = new Dictionary<string, string> {{ "name", blobClient.Name }};
+
+                if (async)
+                {
+                    await blobClient.UploadAsync(blobContent, metadata: blobMetadata, cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    blobClient.Upload(blobContent, metadata: blobMetadata, cancellationToken: cancellationToken);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new AggregateException(ex);
+            }
+            finally
+            {
+                // Remove the test blob if written; do so without respecting a cancellation request to
+                // ensure that the container is left in a consistent state.
+
+                try
+                {
+                    if (async)
+                    {
+                        await blobClient.DeleteIfExistsAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        blobClient.DeleteIfExists(cancellationToken: CancellationToken.None);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.ValidationCleanupError(Identifier, EventHubName, ConsumerGroup, ex.Message);
+                }
+            }
         }
 
         /// <summary>

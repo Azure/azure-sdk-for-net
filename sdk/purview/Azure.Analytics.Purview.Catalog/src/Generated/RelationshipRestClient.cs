@@ -52,6 +52,265 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create a new relationship between entities. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>attributes</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> The attributes of the struct. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>typeName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastModifiedTS</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> ETag for concurrency control. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>blockedPropagatedClassifications</term>
+        ///     <term>AtlasClassification[]</term>
+        ///     <term></term>
+        ///     <term> An array of blocked propagated classifications. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>createTime</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The created time of the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>createdBy</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The user who created the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>end1</term>
+        ///     <term>AtlasObjectId</term>
+        ///     <term></term>
+        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>end2</term>
+        ///     <term>AtlasObjectId</term>
+        ///     <term></term>
+        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>guid</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The GUID of the relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>homeId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The home ID of the relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>label</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The label of the relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>propagateTags</term>
+        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
+        ///     <term></term>
+        ///     <term>
+        /// PropagateTags indicates whether tags should propagate across the relationship instance.
+        /// &lt;p&gt;
+        /// Tags can propagate:
+        /// &lt;p&gt;
+        /// NONE - not at all &lt;br&gt;
+        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
+        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
+        /// BOTH - both ways
+        /// &lt;p&gt;
+        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
+        /// &lt;p&gt;
+        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
+        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
+        /// &lt;p&gt;
+        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
+        /// address how to resolve conflicts.
+        /// </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>propagatedClassifications</term>
+        ///     <term>AtlasClassification[]</term>
+        ///     <term></term>
+        ///     <term> An array of propagated classifications. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>provenanceType</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>status</term>
+        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
+        ///     <term></term>
+        ///     <term> The enum of relationship status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>updateTime</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The update time of the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>updatedBy</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The user who updated the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>version</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The version of the relationship. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>AtlasObjectId</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>guid</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The GUID of the object. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>typeName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>uniqueAttributes</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> The unique attributes of the object. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>AtlasClassification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>attributes</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> The attributes of the struct. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>typeName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastModifiedTS</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> ETag for concurrency control. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>entityGuid</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The GUID of the entity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>entityStatus</term>
+        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
+        ///     <term></term>
+        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>propagate</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Determines if the classification will be propagated. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>removePropagationsOnEntityDelete</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>validityPeriods</term>
+        ///     <term>TimeBoundary[]</term>
+        ///     <term></term>
+        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>source</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> indicate the source who create the classification detail. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>sourceDetails</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> more detail on source information. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>TimeBoundary</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>endTime</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The end of the time boundary. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>startTime</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The start of the time boundary. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>timeZone</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The timezone of the time boundary. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CreateAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
@@ -61,6 +320,265 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create a new relationship between entities. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>attributes</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> The attributes of the struct. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>typeName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastModifiedTS</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> ETag for concurrency control. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>blockedPropagatedClassifications</term>
+        ///     <term>AtlasClassification[]</term>
+        ///     <term></term>
+        ///     <term> An array of blocked propagated classifications. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>createTime</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The created time of the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>createdBy</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The user who created the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>end1</term>
+        ///     <term>AtlasObjectId</term>
+        ///     <term></term>
+        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>end2</term>
+        ///     <term>AtlasObjectId</term>
+        ///     <term></term>
+        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>guid</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The GUID of the relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>homeId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The home ID of the relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>label</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The label of the relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>propagateTags</term>
+        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
+        ///     <term></term>
+        ///     <term>
+        /// PropagateTags indicates whether tags should propagate across the relationship instance.
+        /// &lt;p&gt;
+        /// Tags can propagate:
+        /// &lt;p&gt;
+        /// NONE - not at all &lt;br&gt;
+        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
+        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
+        /// BOTH - both ways
+        /// &lt;p&gt;
+        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
+        /// &lt;p&gt;
+        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
+        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
+        /// &lt;p&gt;
+        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
+        /// address how to resolve conflicts.
+        /// </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>propagatedClassifications</term>
+        ///     <term>AtlasClassification[]</term>
+        ///     <term></term>
+        ///     <term> An array of propagated classifications. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>provenanceType</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>status</term>
+        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
+        ///     <term></term>
+        ///     <term> The enum of relationship status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>updateTime</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The update time of the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>updatedBy</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The user who updated the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>version</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The version of the relationship. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>AtlasObjectId</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>guid</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The GUID of the object. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>typeName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>uniqueAttributes</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> The unique attributes of the object. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>AtlasClassification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>attributes</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> The attributes of the struct. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>typeName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastModifiedTS</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> ETag for concurrency control. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>entityGuid</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The GUID of the entity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>entityStatus</term>
+        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
+        ///     <term></term>
+        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>propagate</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Determines if the classification will be propagated. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>removePropagationsOnEntityDelete</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>validityPeriods</term>
+        ///     <term>TimeBoundary[]</term>
+        ///     <term></term>
+        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>source</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> indicate the source who create the classification detail. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>sourceDetails</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> more detail on source information. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>TimeBoundary</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>endTime</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The end of the time boundary. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>startTime</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The start of the time boundary. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>timeZone</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The timezone of the time boundary. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Create(RequestContent requestBody, CancellationToken cancellationToken = default)
@@ -88,6 +606,265 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>attributes</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> The attributes of the struct. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>typeName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastModifiedTS</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> ETag for concurrency control. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>blockedPropagatedClassifications</term>
+        ///     <term>AtlasClassification[]</term>
+        ///     <term></term>
+        ///     <term> An array of blocked propagated classifications. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>createTime</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The created time of the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>createdBy</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The user who created the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>end1</term>
+        ///     <term>AtlasObjectId</term>
+        ///     <term></term>
+        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>end2</term>
+        ///     <term>AtlasObjectId</term>
+        ///     <term></term>
+        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>guid</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The GUID of the relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>homeId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The home ID of the relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>label</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The label of the relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>propagateTags</term>
+        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
+        ///     <term></term>
+        ///     <term>
+        /// PropagateTags indicates whether tags should propagate across the relationship instance.
+        /// &lt;p&gt;
+        /// Tags can propagate:
+        /// &lt;p&gt;
+        /// NONE - not at all &lt;br&gt;
+        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
+        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
+        /// BOTH - both ways
+        /// &lt;p&gt;
+        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
+        /// &lt;p&gt;
+        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
+        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
+        /// &lt;p&gt;
+        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
+        /// address how to resolve conflicts.
+        /// </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>propagatedClassifications</term>
+        ///     <term>AtlasClassification[]</term>
+        ///     <term></term>
+        ///     <term> An array of propagated classifications. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>provenanceType</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>status</term>
+        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
+        ///     <term></term>
+        ///     <term> The enum of relationship status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>updateTime</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The update time of the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>updatedBy</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The user who updated the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>version</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The version of the relationship. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>AtlasObjectId</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>guid</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The GUID of the object. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>typeName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>uniqueAttributes</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> The unique attributes of the object. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>AtlasClassification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>attributes</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> The attributes of the struct. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>typeName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastModifiedTS</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> ETag for concurrency control. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>entityGuid</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The GUID of the entity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>entityStatus</term>
+        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
+        ///     <term></term>
+        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>propagate</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Determines if the classification will be propagated. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>removePropagationsOnEntityDelete</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>validityPeriods</term>
+        ///     <term>TimeBoundary[]</term>
+        ///     <term></term>
+        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>source</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> indicate the source who create the classification detail. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>sourceDetails</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> more detail on source information. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>TimeBoundary</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>endTime</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The end of the time boundary. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>startTime</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The start of the time boundary. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>timeZone</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The timezone of the time boundary. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> UpdateAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
@@ -97,6 +874,265 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Update an existing relationship between entities. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>attributes</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> The attributes of the struct. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>typeName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastModifiedTS</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> ETag for concurrency control. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>blockedPropagatedClassifications</term>
+        ///     <term>AtlasClassification[]</term>
+        ///     <term></term>
+        ///     <term> An array of blocked propagated classifications. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>createTime</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The created time of the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>createdBy</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The user who created the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>end1</term>
+        ///     <term>AtlasObjectId</term>
+        ///     <term></term>
+        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>end2</term>
+        ///     <term>AtlasObjectId</term>
+        ///     <term></term>
+        ///     <term> Reference to an object-instance of an Atlas type - like entity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>guid</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The GUID of the relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>homeId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The home ID of the relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>label</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The label of the relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>propagateTags</term>
+        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
+        ///     <term></term>
+        ///     <term>
+        /// PropagateTags indicates whether tags should propagate across the relationship instance.
+        /// &lt;p&gt;
+        /// Tags can propagate:
+        /// &lt;p&gt;
+        /// NONE - not at all &lt;br&gt;
+        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
+        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
+        /// BOTH - both ways
+        /// &lt;p&gt;
+        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
+        /// &lt;p&gt;
+        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
+        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
+        /// &lt;p&gt;
+        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
+        /// address how to resolve conflicts.
+        /// </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>propagatedClassifications</term>
+        ///     <term>AtlasClassification[]</term>
+        ///     <term></term>
+        ///     <term> An array of propagated classifications. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>provenanceType</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> Used to record the provenance of an instance of an entity or relationship. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>status</term>
+        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
+        ///     <term></term>
+        ///     <term> The enum of relationship status. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>updateTime</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The update time of the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>updatedBy</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The user who updated the record. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>version</term>
+        ///     <term>number</term>
+        ///     <term></term>
+        ///     <term> The version of the relationship. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>AtlasObjectId</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>guid</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The GUID of the object. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>typeName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>uniqueAttributes</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> The unique attributes of the object. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>AtlasClassification</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>attributes</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> The attributes of the struct. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>typeName</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The name of the type. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>lastModifiedTS</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> ETag for concurrency control. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>entityGuid</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The GUID of the entity. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>entityStatus</term>
+        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
+        ///     <term></term>
+        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>propagate</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Determines if the classification will be propagated. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>removePropagationsOnEntityDelete</term>
+        ///     <term>boolean</term>
+        ///     <term></term>
+        ///     <term> Determines if propagations will be removed on entity deletion. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>validityPeriods</term>
+        ///     <term>TimeBoundary[]</term>
+        ///     <term></term>
+        ///     <term> An array of time boundaries indicating validity periods. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>source</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> indicate the source who create the classification detail. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>sourceDetails</term>
+        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
+        ///     <term></term>
+        ///     <term> more detail on source information. </term>
+        ///   </item>
+        /// </list>
+        /// Schema for <c>TimeBoundary</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>endTime</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The end of the time boundary. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>startTime</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The start of the time boundary. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>timeZone</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> The timezone of the time boundary. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Update(RequestContent requestBody, CancellationToken cancellationToken = default)

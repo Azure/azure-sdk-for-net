@@ -12,8 +12,24 @@ namespace Azure.AI.FormRecognizer.Models
         /// Initializes a new instance of <see cref="TextAppearance"/>. This constructor
         /// is intended to be used for mocking only.
         /// </summary>
-        internal TextAppearance()
+        internal TextAppearance(TextStyleName styleName, float styleConfidence)
         {
+            Style = new Style(styleName, styleConfidence);
         }
+
+        /// <summary>
+        /// An object representing the style of the text line.
+        /// </summary>
+        internal Style Style { get; }
+
+        /// <summary>
+        /// The text line style name, including handwriting and other.
+        /// </summary>
+        public TextStyleName StyleName => Style.Name;
+
+        /// <summary>
+        /// The confidence of text line style.
+        /// </summary>
+        public float StyleConfidence => Style.Confidence;
     }
 }

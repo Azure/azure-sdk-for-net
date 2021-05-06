@@ -91,6 +91,35 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Creates or Updates a classification rule. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>kind</term>
+        ///     <term>&quot;System&quot; | &quot;Custom&quot;</term>
+        ///     <term>Yes</term>
+        ///    <term></term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
@@ -100,6 +129,35 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Creates or Updates a classification rule. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>id</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>name</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///    <term></term>
+        ///   </item>
+        ///   <item>
+        ///     <term>kind</term>
+        ///     <term>&quot;System&quot; | &quot;Custom&quot;</term>
+        ///     <term>Yes</term>
+        ///    <term></term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response CreateOrUpdate(RequestContent requestBody, CancellationToken cancellationToken = default)

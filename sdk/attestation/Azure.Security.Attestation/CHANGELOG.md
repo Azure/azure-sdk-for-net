@@ -42,6 +42,7 @@ to reduce the number of parameters passed into the API.
 - The return value of `GetPolicyManagementCertificates` has been changed from `AttestationResult<PolicyCertificatesResult>` to `AttestationResult<IReadOnlyList<X509Certificate2>>` to simplify the experience of retrieving the certificate list. As a consequence of this change, the `PolicyCertificatesResult` type has been removed.
 - The unused `TpmAttestationRequest` and `TpmAttestationResponse` types have been removed.
 - The `AttestationTokenSigningKey` will now ensure that the public key in the provided certificate is the public key corresponding to the private key.
+- `AttestTpm` and `AttestTpmAsync` are changed to accept a new `TpmAttestationRequest` and return a `TpmAttestationResponse` instead of accepting and returning a `BinaryData`. The semantics of the API do not change, just the encapsulation of the BinaryData.
 
 ## 1.0.0-beta.2 (2021-04-06)
 
