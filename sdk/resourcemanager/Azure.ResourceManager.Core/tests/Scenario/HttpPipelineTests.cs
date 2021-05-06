@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests.Scenario
@@ -32,7 +27,7 @@ namespace Azure.ResourceManager.Core.Tests.Scenario
         public async Task ValidateHttpPipelines()
         {
             await _client.DefaultSubscription
-                .GetResourceGroups().Construct("westus")
+                .GetResourceGroups().Construct(LocationData.WestUS)
                 .CreateOrUpdateAsync(_rgName);
             await foreach (var rg in _client.DefaultSubscription.GetResourceGroups().ListAsync())
             {
