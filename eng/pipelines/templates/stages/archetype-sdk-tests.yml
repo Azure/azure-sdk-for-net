@@ -1,4 +1,7 @@
 parameters:
+- name: PackageName
+  type: string
+  default: ""
 - name: AdditionalPlatforms
   type: object
   default: {}
@@ -124,6 +127,7 @@ stages:
               Location: ${{ parameters.Location }}
               SDKType: ${{ parameters.SDKType }}
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              PackageName: ${{ parameters.PackageName }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
             MatrixConfigs:
               # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
