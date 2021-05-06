@@ -40,7 +40,7 @@ namespace Azure.Core
 
         public bool HasValue { get; private set; }
 
-        public bool HasCompleted { get; set; }
+        public bool HasCompleted { get; private set; }
 
         public TResult Value
         {
@@ -59,7 +59,7 @@ namespace Azure.Core
                     throw new InvalidOperationException("The operation has not completed yet.");
                 }
             }
-            set
+            private set
             {
                 if (value is null)
                 {

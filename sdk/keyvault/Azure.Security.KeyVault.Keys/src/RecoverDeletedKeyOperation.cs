@@ -17,15 +17,16 @@ namespace Azure.Security.KeyVault.Keys
 
         private readonly OperationInternal<KeyVaultKey> _operationInternal;
         private readonly KeyVaultPipeline _pipeline;
+        private readonly KeyVaultKey _value;
 
         internal RecoverDeletedKeyOperation(KeyVaultPipeline pipeline, Response<KeyVaultKey> response)
         {
             _pipeline = pipeline;
+            _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
             _operationInternal = new(pipeline.Diagnostics, this)
             {
                 DefaultPollingInterval = s_defaultPollingInterval,
-                RawResponse = response.GetRawResponse(),
-                Value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.")
+                RawResponse = response.GetRawResponse()
             };
 
             _operationInternal.ScopeAttributes.Add("secret", Value.Name);
@@ -44,7 +45,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <remarks>
         /// Azure Key Vault will return a <see cref="KeyVaultKey"/> immediately but may take time to actually recover the deleted key if soft-delete is enabled.
         /// </remarks>
-        public override KeyVaultKey Value => _operationInternal.Value;
+        public override KeyVaultKey Value => _operationInternal.HasValue ? _operationInternal.Value : _value;
 
         /// <inheritdoc/>
         public override bool HasCompleted => _operationInternal.HasCompleted;
@@ -81,7 +82,7 @@ namespace Azure.Security.KeyVault.Keys
             {
                 case 200:
                 case 403: // Access denied but proof the key was recovered.
-                    return OperationState<KeyVaultKey>.Success(response, Value);
+                    return OperationState<KeyVaultKey>.Success(response, _value);
 
                 case 404:
                     return OperationState<KeyVaultKey>.Pending(response);
