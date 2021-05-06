@@ -29,12 +29,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             return Task.FromResult(Response.FromValue(_acrRefreshTokenFunc(service), new MockResponse(200)));
         }
 
-        public Response<AcrAccessToken> ExchangeAcrRefreshTokenForAcrAccessToken(string service, string scope, string acrRefreshToken, CancellationToken token = default)
+        public Response<AcrAccessToken> ExchangeAcrRefreshTokenForAcrAccessToken(string service, string scope, string acrRefreshToken, TokenGrantType grantType = TokenGrantType.RefreshToken, CancellationToken token = default)
         {
             return Response.FromValue(_acrAccessTokenFunc(service, scope), new MockResponse(200));
         }
 
-        public Task<Response<AcrAccessToken>> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(string service, string scope, string acrRefreshToken, CancellationToken token = default)
+        public Task<Response<AcrAccessToken>> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(string service, string scope, string acrRefreshToken, TokenGrantType grantType = TokenGrantType.RefreshToken, CancellationToken token = default)
         {
             return Task.FromResult(Response.FromValue(_acrAccessTokenFunc(service, scope), new MockResponse(200)));
         }

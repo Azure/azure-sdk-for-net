@@ -22,13 +22,38 @@ namespace Azure.Containers.ContainerRegistry
         private readonly string AcrAadScope = "https://management.core.windows.net/.default";
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts,
+        /// using anonymous access to the registry.  Only operations that support anonymous access are enabled.  Other service
+        /// methods will throw <see cref="RequestFailedException"/> if called.
+        /// </summary>
+        /// <param name="registryUri">The URI endpoint of the container registry.  This is likely to be similar
+        /// to "https://{registry-name}.azurecr.io".</param>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> is null. </exception>
+        public ContainerRegistryClient(Uri registryUri) : this(registryUri, credential: null, new ContainerRegistryClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ContainerRegistryClient for managing container images and artifacts,
+        /// using anonymous access to the registry.  Only operations that support anonymous access are enabled.  Other service
+        /// methods will throw <see cref="RequestFailedException"/> if called.
+        /// </summary>
+        /// <param name="registryUri">The URI endpoint of the container registry.  This is likely to be similar
+        /// to "https://{registry-name}.azurecr.io".</param>
+        /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> is null. </exception>
+        public ContainerRegistryClient(Uri registryUri, ContainerRegistryClientOptions options) : this(registryUri, credential: null, options)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts.
         /// </summary>
         /// <param name="registryUri">The URI endpoint of the container registry.  This is likely to be similar
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
-        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> is null. </exception>
         public ContainerRegistryClient(Uri registryUri, TokenCredential credential) : this(registryUri, credential, new ContainerRegistryClientOptions())
         {
         }
@@ -41,11 +66,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
-        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> is null. </exception>
         public ContainerRegistryClient(Uri registryUri, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(registryUri, nameof(registryUri));
-            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
             _registryUri = registryUri;
