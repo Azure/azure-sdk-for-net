@@ -204,6 +204,35 @@ namespace Azure.Storage.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>contents</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Contents of the ledger entry. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>subLedgerId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Identifier for sub-ledgers. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>transactionId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -214,6 +243,35 @@ namespace Azure.Storage.ConfidentialLedger
         }
 
         /// <summary> A sub-ledger id may optionally be specified. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>contents</term>
+        ///     <term>string</term>
+        ///     <term>Yes</term>
+        ///     <term> Contents of the ledger entry. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>subLedgerId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Identifier for sub-ledgers. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>transactionId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -469,6 +527,29 @@ namespace Azure.Storage.ConfidentialLedger
         }
 
         /// <summary> A JSON merge patch is applied for existing users. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>assignedRole</term>
+        ///     <term>&quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Represents an assignable role. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>userId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Identifier for the user. This must either be an AAD object id or a certificate fingerprint. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -479,6 +560,29 @@ namespace Azure.Storage.ConfidentialLedger
         }
 
         /// <summary> A JSON merge patch is applied for existing users. </summary>
+        /// <remarks>
+        /// Schema for <c>Request Body</c>:
+        /// <list type="table">
+        ///   <listeader>
+        ///     <term>Name</term>
+        ///     <term>Type</term>
+        ///     <term>Required</term>
+        ///     <term>Description</term>
+        ///   </listeader>
+        ///   <item>
+        ///     <term>assignedRole</term>
+        ///     <term>&quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;</term>
+        ///     <term>Yes</term>
+        ///     <term> Represents an assignable role. </term>
+        ///   </item>
+        ///   <item>
+        ///     <term>userId</term>
+        ///     <term>string</term>
+        ///     <term></term>
+        ///     <term> Identifier for the user. This must either be an AAD object id or a certificate fingerprint. </term>
+        ///   </item>
+        /// </list>
+        /// </remarks>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
