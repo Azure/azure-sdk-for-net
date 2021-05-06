@@ -44,7 +44,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleGetModelSettings">
         /// Response&lt;TimeSeriesModelSettings&gt; getModelSettingsResponse = await client.ModelSettings.GetAsync();
-        /// Console.WriteLine($&quot;Retrieved Time Series Insights model settings:\n{JsonSerializer.Serialize(getModelSettingsResponse.Value)}&quot;);
+        /// Console.WriteLine($&quot;Retrieved Time Series Insights model settings \nname : &apos;{getModelSettingsResponse.Value.Name}&apos;, default type Id: {getModelSettingsResponse.Value.DefaultTypeId}, &apos;{JsonSerializer.Serialize(getModelSettingsResponse.Value.TimeSeriesIdProperties)}&apos;&quot;);
         /// </code>
         /// </example>
         public virtual async Task<Response<TimeSeriesModelSettings>> GetAsync(CancellationToken cancellationToken = default)
@@ -100,7 +100,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName">
         /// Response&lt;TimeSeriesModelSettings&gt; updateModelSettingsNameResponse = await client.ModelSettings.UpdateNameAsync(&quot;NewModelSettingsName&quot;);
         /// Console.WriteLine($&quot;Updated Time Series Insights model settings name:\n&quot; +
-        ///     $&quot;{JsonSerializer.Serialize(updateModelSettingsNameResponse.Value)}&quot;);
+        ///     $&quot;{updateModelSettingsNameResponse.Value.Name}&quot;);
         /// </code>
         /// </example>
         public virtual async Task<Response<TimeSeriesModelSettings>> UpdateNameAsync(string name, CancellationToken cancellationToken = default)
@@ -157,7 +157,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType">
         /// Response&lt;TimeSeriesModelSettings&gt; updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
         /// Console.WriteLine($&quot;Updated Time Series Insights model settings default type Id:\n&quot; +
-        ///     $&quot;{JsonSerializer.Serialize(updateDefaultTypeIdResponse.Value)}&quot;);
+        ///     $&quot;{updateDefaultTypeIdResponse.Value.Name}&quot;);
         /// </code>
         /// </example>
         public virtual async Task<Response<TimeSeriesModelSettings>> UpdateDefaultTypeIdAsync(string defaultTypeId, CancellationToken cancellationToken = default)

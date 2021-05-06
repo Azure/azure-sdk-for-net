@@ -22,13 +22,12 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             PrintHeader("TIME SERIES INSIGHTS INSTANCES SAMPLE");
 
             // Figure out what keys make up the Time Series Id
-            TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
-
-            TimeSeriesId tsId = TimeSeriesIdHelper.CreateTimeSeriesId(modelSettings);
-
-            string defaultTypeId = modelSettings.DefaultTypeId;
+            TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync();
 
             #region Snippet:TimeSeriesInsightsSampleCreateInstance
+
+            TimeSeriesId tsId = TimeSeriesIdHelper.CreateTimeSeriesId(modelSettings);
+            string defaultTypeId = modelSettings.DefaultTypeId;
 
             // Create a Time Series Instance object with the default Time Series Insights type Id.
             // The default type Id can be obtained programmatically by using the ModelSettings client.
@@ -44,8 +43,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             Response<TimeSeriesOperationError[]> createInstanceErrors = await client
                 .Instances
-                .CreateOrReplaceAsync(tsiInstancesToCreate)
-                .ConfigureAwait(false);
+                .CreateOrReplaceAsync(tsiInstancesToCreate);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter
             // array in the request. If the error object is set to null, this means the operation was a success.
@@ -59,7 +57,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 }
                 else
                 {
-                    Console.WriteLine($"Failed to create a Time Series Insights instance with Id '{tsiId}'.");
+                    Console.WriteLine($"Failed to create a Time Series Insights instance with Id '{tsiId}', Error Message: '{createInstanceErrors.Value[i].Message}.");
                 }
             }
 
@@ -79,12 +77,13 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #region Snippet:TimeSeriesInsightsReplaceInstance
 
             // Get Time Series Insights instances by Id
+            // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`
             var instanceIdsToGet = new List<TimeSeriesId>
             {
                 tsId,
             };
 
-            Response<InstancesOperationResult[]> getInstancesByIdResult = await client.Instances.GetAsync(instanceIdsToGet).ConfigureAwait(false);
+            Response<InstancesOperationResult[]> getInstancesByIdResult = await client.Instances.GetAsync(instanceIdsToGet);
 
             TimeSeriesInstance instanceResult = getInstancesByIdResult.Value[0].Instance;
             Console.WriteLine($"Retrieved Time Series Insights instance with Id '{instanceResult.TimeSeriesId}' and name '{instanceResult.Name}'.");
@@ -97,7 +96,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 instanceResult,
             };
 
-            Response<InstancesOperationResult[]> replaceInstancesResult = await client.Instances.ReplaceAsync(instancesToReplace).ConfigureAwait(false);
+            Response<InstancesOperationResult[]> replaceInstancesResult = await client.Instances.ReplaceAsync(instancesToReplace);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter
             // array in the request. If the error object is set to null, this means the operation was a success.
@@ -122,15 +121,16 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #region Snippet:TimeSeriesInsightsGetnstancesById
 
             // Get Time Series Insights instances by Id
+            // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`
             var timeSeriesIds = new List<TimeSeriesId>
             {
                 tsId,
             };
 
-            Response<InstancesOperationResult[]> getByIdsResult = await client.Instances.GetAsync(timeSeriesIds).ConfigureAwait(false);
+            Response<InstancesOperationResult[]> getByIdsResult = await client.Instances.GetAsync(timeSeriesIds);
 
-            /// The response of calling the API contains a list of instance or error objects corresponding by position to the array in the request.
-            /// Instance object is set when operation is successful and error object is set when operation is unsuccessful.
+            // The response of calling the API contains a list of instance or error objects corresponding by position to the array in the request.
+            // Instance object is set when operation is successful and error object is set when operation is unsuccessful.
             for (int i = 0; i < getByIdsResult.Value.Length; i++)
             {
                 InstancesOperationResult currentOperationResult = getByIdsResult.Value[i];
@@ -152,6 +152,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             {
                 #region Snippet:TimeSeriesInsightsSampleDeleteInstanceById
 
+                // tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`
                 var instancesToDelete = new List<TimeSeriesId>
                 {
                     tsId,
@@ -159,8 +160,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
                 Response<TimeSeriesOperationError[]> deleteInstanceErrors = await client
                     .Instances
-                    .DeleteAsync(instancesToDelete)
-                    .ConfigureAwait(false);
+                    .DeleteAsync(instancesToDelete);
 
                 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
                 // array in the request. If the error object is set to null, this means the operation was a success.

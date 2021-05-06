@@ -20,7 +20,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             #region Snippet:TimeSeriesInsightsSampleGetModelSettings
             Response<TimeSeriesModelSettings> getModelSettingsResponse = await client.ModelSettings.GetAsync();
-            Console.WriteLine($"Retrieved Time Series Insights model settings:\n{JsonSerializer.Serialize(getModelSettingsResponse.Value)}");
+            Console.WriteLine($"Retrieved Time Series Insights model settings \nname : '{getModelSettingsResponse.Value.Name}', default type Id: {getModelSettingsResponse.Value.DefaultTypeId}, '{JsonSerializer.Serialize(getModelSettingsResponse.Value.TimeSeriesIdProperties)}'");
             #endregion Snippet:TimeSeriesInsightsSampleGetModelSettings
 
             // Store the default type Id so it can be used during clean up
@@ -29,7 +29,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #region Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName
             Response<TimeSeriesModelSettings> updateModelSettingsNameResponse = await client.ModelSettings.UpdateNameAsync("NewModelSettingsName");
             Console.WriteLine($"Updated Time Series Insights model settings name:\n" +
-                $"{JsonSerializer.Serialize(updateModelSettingsNameResponse.Value)}");
+                $"{updateModelSettingsNameResponse.Value.Name}");
             #endregion Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName
 
             // For every Time Series Insights environment, there is a default type that any newly created Time Series instance will be associated with.
@@ -55,7 +55,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 #region Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
                 Response<TimeSeriesModelSettings> updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
                 Console.WriteLine($"Updated Time Series Insights model settings default type Id:\n" +
-                    $"{JsonSerializer.Serialize(updateDefaultTypeIdResponse.Value)}");
+                    $"{updateDefaultTypeIdResponse.Value.Name}");
                 #endregion Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
             }
             // Clean up
