@@ -15,9 +15,9 @@ namespace Azure.Core
         private const string RetryAfterMsHeaderName = "retry-after-ms";
         private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
 
-        private readonly object SetStateLock = new object();
-
         private readonly IOperation<TResult> _operation;
+
+        private readonly ClientDiagnostics _diagnostics;
 
         private TResult _value;
 
@@ -26,8 +26,8 @@ namespace Azure.Core
         public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation)
         {
             _operation = operation;
+            _diagnostics = clientDiagnostics;
             OperationTypeName = operation.GetType().Name;
-            ClientDiagnostics = clientDiagnostics;
             DefaultPollingInterval = TimeSpan.FromSeconds(1);
             ScopeAttributes = new Dictionary<string, string>();
         }
@@ -46,9 +46,9 @@ namespace Azure.Core
                 {
                     return _value;
                 }
-                else if (OperationFailedException != null)
+                else if (_operationFailedException != null)
                 {
-                    throw OperationFailedException;
+                    throw _operationFailedException;
                 }
                 else
                 {
@@ -72,22 +72,6 @@ namespace Azure.Core
         public string OperationTypeName { get; set; }
 
         public TimeSpan DefaultPollingInterval { get; set; }
-
-        private ClientDiagnostics ClientDiagnostics { get; }
-
-        private RequestFailedException OperationFailedException
-        {
-            get => _operationFailedException;
-            set
-            {
-                if (value is null)
-                {
-                    throw new ArgumentNullException(nameof(value));
-                }
-
-                _operationFailedException = value;
-            }
-        }
 
         public async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken) =>
             await UpdateStatusAsync(async: true, cancellationToken).ConfigureAwait(false);
@@ -123,7 +107,7 @@ namespace Azure.Core
 
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{OperationTypeName}.UpdateStatus");
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{OperationTypeName}.UpdateStatus");
 
             foreach (KeyValuePair<string, string> attribute in ScopeAttributes)
             {
@@ -153,28 +137,27 @@ namespace Azure.Core
         {
             var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
 
-            lock (SetStateLock)
+            RawResponse = state.RawResponse;
+
+            if (state.Succeeded == true)
             {
-                RawResponse = state.RawResponse;
+                Value = state.Value;
+                HasCompleted = true;
+            }
+            else if (state.Succeeded == false)
+            {
+                _operationFailedException = state.OperationFailedException ?? (async
+                    ? await _diagnostics.CreateRequestFailedExceptionAsync(state.RawResponse).ConfigureAwait(false)
+                    : _diagnostics.CreateRequestFailedException(state.RawResponse));
+                HasCompleted = true;
 
-                if (state.Succeeded == true)
-                {
-                    Value = state.Value;
-                    HasCompleted = true;
-                }
-                else if (state.Succeeded == false)
-                {
-                    OperationFailedException = state.OperationFailedException;
-                    HasCompleted = true;
-
-                    throw OperationFailedException;
-                }
+                throw _operationFailedException;
             }
 
             return state.RawResponse;
         }
 
-        private TimeSpan GetServerDelay(Response response)
+        private static TimeSpan GetServerDelay(Response response)
         {
             if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string retryAfterValue)
                 || response.Headers.TryGetValue(XRetryAfterMsHeaderName, out retryAfterValue))
@@ -223,7 +206,7 @@ namespace Azure.Core
         public static OperationState<TResult> Success(Response rawResponse, TResult value) =>
             new OperationState<TResult>(rawResponse, true, value, default);
 
-        public static OperationState<TResult> Failure(Response rawResponse, RequestFailedException operationFailedException) =>
+        public static OperationState<TResult> Failure(Response rawResponse, RequestFailedException operationFailedException = null) =>
             new OperationState<TResult>(rawResponse, false, default, operationFailedException);
 
         public static OperationState<TResult> Pending(Response rawResponse) =>

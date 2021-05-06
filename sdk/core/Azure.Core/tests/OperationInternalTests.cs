@@ -84,15 +84,19 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void UpdateStatusWhenOperationFails(bool async)
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public void UpdateStatusWhenOperationFails(bool async, bool useDefaultException)
         {
             var originalException = new RequestFailedException("");
             var mockResponse = new MockResponse(200);
             var testOperation = new TestOperation()
             {
-                OnUpdateState = _ => OperationState<int>.Failure(mockResponse, originalException)
+                OnUpdateState = _ => useDefaultException
+                    ? OperationState<int>.Failure(mockResponse)
+                    : OperationState<int>.Failure(mockResponse, originalException)
             };
             var operationInternal = testOperation.MockOperationInternal;
 
@@ -100,14 +104,17 @@ namespace Azure.Core.Tests
                 ? Assert.ThrowsAsync<RequestFailedException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
                 : Assert.Throws<RequestFailedException>(() => operationInternal.UpdateStatus(CancellationToken.None));
 
-            Assert.AreEqual(originalException, thrownException);
+            if (!useDefaultException)
+            {
+                Assert.AreEqual(originalException, thrownException);
+            }
 
             Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.True(operationInternal.HasCompleted);
             Assert.False(operationInternal.HasValue);
 
             var valueException = Assert.Throws<RequestFailedException>(() => _ = operationInternal.Value);
-            Assert.AreEqual(originalException, valueException);
+            Assert.AreEqual(thrownException, valueException);
         }
 
         [Test]
