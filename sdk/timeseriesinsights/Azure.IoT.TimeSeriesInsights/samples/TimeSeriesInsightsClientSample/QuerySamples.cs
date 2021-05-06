@@ -58,8 +58,25 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             QueryAnalyzer temperatureEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, startTime, endTime);
             await foreach (TimeSeriesPoint point in temperatureEventsQueryAnalyzer.GetResultsAsync())
             {
-                double? temperatureValue = (double?)point.GetValue("Temperature");
-                Console.WriteLine($"{point.Timestamp} - Temperature: {temperatureValue}");
+                TimeSeriesValue temperatureValue = point.GetValue("Temperature");
+
+                // Figure out what is the underlying type for the time series value. Since you know your Time Series Insights
+                // environment best, you probably do not need this logic and you can skip to directly casting to the proper
+                // type. This logic demonstrates how you can figure out what type to cast to in the case where you are not
+                // too familiar with the property type
+                Type valueType = temperatureValue.Type;
+                if (valueType == typeof(double?))
+                {
+                    Console.WriteLine($"{point.Timestamp} - Temperature: {(double?)temperatureValue}");
+                }
+                else if(valueType == typeof(int?))
+                {
+                    Console.WriteLine($"{point.Timestamp} - Temperature: {(int?)temperatureValue}");
+                }
+                else
+                {
+                    Console.WriteLine("The type of the Time Series value for Temperature is not numeric.");
+                }
             }
             #endregion Snippet:TimeSeriesInsightsSampleQueryEvents
 
