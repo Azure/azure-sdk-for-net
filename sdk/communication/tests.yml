@@ -22,7 +22,9 @@ extends:
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
       Int:
-        SubscriptionConfiguration: $(sub-config-communication-int-test-resources)
+        SubscriptionConfiguration:
+          - $(sub-config-communication-int-test-resources-common)
+          - $(sub-config-communication-int-test-resources-net)
     Clouds: Int
     EnvVars:
       # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
