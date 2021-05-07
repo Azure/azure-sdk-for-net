@@ -28,10 +28,9 @@ namespace Azure.Analytics.Synapse.Spark
         {
             _client = client;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(diagnostics, this)
+            _operationInternal = new(diagnostics, this, response.GetRawResponse())
             {
-                DefaultPollingInterval = s_defaultPollingInterval,
-                RawResponse = response.GetRawResponse()
+                DefaultPollingInterval = s_defaultPollingInterval
             };
         }
 

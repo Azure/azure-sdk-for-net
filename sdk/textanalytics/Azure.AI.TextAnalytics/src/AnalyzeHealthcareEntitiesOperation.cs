@@ -119,7 +119,7 @@ namespace Azure.AI.TextAnalytics
             Id = operationId;
             _serviceClient = client._serviceRestClient;
             _diagnostics = client._clientDiagnostics;
-            _operationInternal = new(_diagnostics, this);
+            _operationInternal = new(_diagnostics, this, rawResponse: null);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.AI.TextAnalytics
             _diagnostics = diagnostics;
             _idToIndexMap = idToIndexMap;
             _showStats = showStats;
-            _operationInternal = new(_diagnostics, this);
+            _operationInternal = new(_diagnostics, this, rawResponse: null);
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505

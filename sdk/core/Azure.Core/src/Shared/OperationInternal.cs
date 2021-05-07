@@ -25,13 +25,14 @@ namespace Azure.Core
 
         private RequestFailedException _operationFailedException;
 
-        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, string operationTypeName = null)
+        public OperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, Response rawResponse, string operationTypeName = null)
         {
             operationTypeName ??= operation.GetType().Name;
 
             _operation = operation;
             _diagnostics = clientDiagnostics;
             _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
+            RawResponse = rawResponse;
             DefaultPollingInterval = TimeSpan.FromSeconds(1);
             ScopeAttributes = new Dictionary<string, string>();
         }

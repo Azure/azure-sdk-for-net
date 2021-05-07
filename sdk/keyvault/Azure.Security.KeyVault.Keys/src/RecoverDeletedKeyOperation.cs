@@ -23,10 +23,9 @@ namespace Azure.Security.KeyVault.Keys
         {
             _pipeline = pipeline;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(pipeline.Diagnostics, this)
+            _operationInternal = new(pipeline.Diagnostics, this, response.GetRawResponse())
             {
-                DefaultPollingInterval = s_defaultPollingInterval,
-                RawResponse = response.GetRawResponse()
+                DefaultPollingInterval = s_defaultPollingInterval
             };
 
             _operationInternal.ScopeAttributes.Add("secret", Value.Name);

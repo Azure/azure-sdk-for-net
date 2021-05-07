@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
         private static ClientDiagnostics ClientDiagnostics = new ClientDiagnostics(new TestClientOption());
 
         [Test]
-        public void InitialState()
+        public void DefaultPropertyInitialization()
         {
             var testOperation = new TestOperation();
             var operationInternal = testOperation.MockOperationInternal;
@@ -28,6 +28,23 @@ namespace Azure.Core.Tests
             Assert.IsEmpty(operationInternal.ScopeAttributes);
 
             Assert.IsNull(operationInternal.RawResponse);
+            Assert.False(operationInternal.HasCompleted);
+            Assert.False(operationInternal.HasValue);
+            Assert.Throws<InvalidOperationException>(() => _ = operationInternal.Value);
+        }
+
+        [Test]
+        public void RawResponseInitialization()
+        {
+            var mockResponse = new MockResponse(200);
+            var testOperation = new TestOperation(mockResponse);
+            var operationInternal = testOperation.MockOperationInternal;
+
+            Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.DefaultPollingInterval);
+            Assert.IsNotNull(operationInternal.ScopeAttributes);
+            Assert.IsEmpty(operationInternal.ScopeAttributes);
+
+            Assert.AreEqual(mockResponse, operationInternal.RawResponse);
             Assert.False(operationInternal.HasCompleted);
             Assert.False(operationInternal.HasValue);
             Assert.Throws<InvalidOperationException>(() => _ = operationInternal.Value);
@@ -158,7 +175,7 @@ namespace Azure.Core.Tests
             };
 
             var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation(useDefaultTypeName ? null : customTypeName)
+            var testOperation = new TestOperation(operationTypeName: useDefaultTypeName ? null : customTypeName)
             {
                 OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
             };
@@ -472,11 +489,11 @@ namespace Azure.Core.Tests
 
         private class TestOperation : IOperation<int>
         {
-            public TestOperation(string operationTypeName = null)
+            public TestOperation(Response rawResponse = null, string operationTypeName = null)
             {
                 MockOperationInternal = operationTypeName is null
-                    ? new MockOperationInternal<int>(ClientDiagnostics, this)
-                    : new MockOperationInternal<int>(ClientDiagnostics, this, operationTypeName);
+                    ? new MockOperationInternal<int>(ClientDiagnostics, this, rawResponse)
+                    : new MockOperationInternal<int>(ClientDiagnostics, this, rawResponse, operationTypeName);
             }
 
             public MockOperationInternal<int> MockOperationInternal { get; }
@@ -489,13 +506,13 @@ namespace Azure.Core.Tests
 
         private class MockOperationInternal<TResult> : OperationInternal<TResult>
         {
-            public MockOperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation)
-                : base(clientDiagnostics, operation)
+            public MockOperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, Response rawResponse)
+                : base(clientDiagnostics, operation, rawResponse)
             {
             }
 
-            public MockOperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, string operationTypeName)
-                : base(clientDiagnostics, operation, operationTypeName)
+            public MockOperationInternal(ClientDiagnostics clientDiagnostics, IOperation<TResult> operation, Response rawResponse, string operationTypeName)
+                : base(clientDiagnostics, operation, rawResponse, operationTypeName)
             {
             }
 
