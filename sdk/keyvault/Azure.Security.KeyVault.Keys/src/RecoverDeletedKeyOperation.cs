@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Keys
                 DefaultPollingInterval = s_defaultPollingInterval
             };
 
-            _operationInternal.ScopeAttributes.Add("secret", Value.Name);
+            _operationInternal.ScopeAttributes.Add("key", Value.Name);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoverDeletedKeyOperation" /> for mocking. </summary>
