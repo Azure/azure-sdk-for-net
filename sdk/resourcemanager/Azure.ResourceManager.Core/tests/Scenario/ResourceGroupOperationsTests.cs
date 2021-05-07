@@ -176,33 +176,5 @@ namespace Azure.ResourceManager.Core.Tests
                 result++;
             return result;
         }
-
-        private async Task<ResourcesCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceGroupResourceIdentifier rgId)
-        {
-            var genericResources = Client.DefaultSubscription.GetGenericResources();
-            GenericResourceData data = ConstructGenericAvailabilitySet();
-            var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.StartCreateOrUpdateAsync(asetId, data);
-        }
-
-        private static GenericResourceData ConstructGenericAvailabilitySet()
-        {
-            var data = new GenericResourceData();
-            data.Location = LocationData.WestUS2;
-            data.Sku = new Sku("Aligned");
-            var propertyBag = new Dictionary<string, object>();
-            propertyBag.Add("platformUpdateDomainCount", 5);
-            propertyBag.Add("platformFaultDomainCount", 2);
-            data.Properties = propertyBag;
-            return data;
-        }
-
-        private async Task<GenericResource> CreateGenericAvailabilitySetAsync(ResourceGroupResourceIdentifier rgId)
-        {
-            var genericResources = Client.DefaultSubscription.GetGenericResources();
-            GenericResourceData data = ConstructGenericAvailabilitySet();
-            var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.CreateOrUpdateAsync(asetId, data);
-        }
     }
 }
