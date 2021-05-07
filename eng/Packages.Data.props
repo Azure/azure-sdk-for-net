@@ -74,9 +74,10 @@
     <PackageReference Update="Microsoft.CSharp" Version="4.5.0" />
 
     <!-- Azure SDK packages -->
-    <PackageReference Update="Azure.Core" Version="1.13.0" />
+    <PackageReference Update="Azure.Communication.Common" Version="1.0.0" />
+    <PackageReference Update="Azure.Core" Version="1.14.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.1.0-beta.1" Condition="'$(HasReleaseVersion)' == 'false'"/>
-    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.10" />
+    <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.12" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.4.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.0.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.2.0-beta.2" Condition="'$(HasReleaseVersion)' == 'false'"/>
@@ -137,6 +138,7 @@
     <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Update="SauceControl.InheritDoc" Version="1.2.0" PrivateAssets="All" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version ="3.9.0" PrivateAssets="all" />
   </ItemGroup>
 
   <!--
