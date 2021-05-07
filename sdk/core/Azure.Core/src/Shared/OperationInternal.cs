@@ -98,8 +98,7 @@ namespace Azure.Core
 
                 var serverDelay = GetServerDelay(response);
 
-                var delay = serverDelay > pollingInterval
-                    ? serverDelay : pollingInterval;
+                var delay = Math.Max(serverDelay, pollingInterval);
 
                 await WaitAsync(delay, cancellationToken).ConfigureAwait(false);
             }
