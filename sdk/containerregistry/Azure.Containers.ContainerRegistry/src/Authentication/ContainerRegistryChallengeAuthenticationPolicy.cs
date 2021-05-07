@@ -46,6 +46,7 @@ namespace Azure.Containers.ContainerRegistry
         internal ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, IContainerRegistryAuthenticationClient authenticationClient, TimeSpan? tokenRefreshOffset = null, TimeSpan? tokenRefreshRetryDelay = null)
             : base(credential, aadScope)
         {
+            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(aadScope, nameof(aadScope));
 
             _authenticationClient = authenticationClient;

@@ -8,6 +8,9 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
+    /// <summary>
+    /// Used internally to indiate the client is intended for use with anonymous access authentication.
+    /// </summary>
     internal class ContainerRegistryAnonymousAccessCredential : TokenCredential
     {
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
@@ -17,7 +20,7 @@ namespace Azure.Containers.ContainerRegistry
 
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException();
         }
     }
 }

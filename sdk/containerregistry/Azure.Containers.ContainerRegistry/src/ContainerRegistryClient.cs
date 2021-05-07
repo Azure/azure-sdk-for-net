@@ -53,7 +53,7 @@ namespace Azure.Containers.ContainerRegistry
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
-        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> or <paramref name="credential"/> is null. </exception>
         public ContainerRegistryClient(Uri registryUri, TokenCredential credential) : this(registryUri, credential, new ContainerRegistryClientOptions())
         {
         }
@@ -66,7 +66,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="credential">The API key credential used to authenticate requests
         /// against the container registry.  </param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
-        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> or <paramref name="credential"/> is null. </exception>
         public ContainerRegistryClient(Uri registryUri, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(registryUri, nameof(registryUri));
