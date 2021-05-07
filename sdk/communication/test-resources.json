@@ -76,7 +76,7 @@
             "type": "string",
             "value": "[parameters('testApplicationSecret')]"
         },
-        "COMMUNICATION_CONNECTION_STRING": {
+        "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.Communication/CommunicationServices',variables('uniqueSubDomainName')), '2020-08-20-preview').primaryConnectionString]"
         },
