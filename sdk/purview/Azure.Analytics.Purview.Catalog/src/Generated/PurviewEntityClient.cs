@@ -14,8 +14,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The EntityRest service client. </summary>
-    public partial class EntityRestClient
+    /// <summary> The PurviewEntity service client. </summary>
+    public partial class PurviewEntityClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -24,16 +24,16 @@ namespace Azure.Analytics.Purview.Catalog
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of EntityRestClient for mocking. </summary>
-        protected EntityRestClient()
+        /// <summary> Initializes a new instance of PurviewEntityClient for mocking. </summary>
+        protected PurviewEntityClient()
         {
         }
 
-        /// <summary> Initializes a new instance of EntityRestClient. </summary>
+        /// <summary> Initializes a new instance of PurviewEntityClient. </summary>
         /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.catalog.purview.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public EntityRestClient(Uri endpoint, TokenCredential credential, CatalogClientOptions options = null)
+        public PurviewEntityClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Purview.Catalog
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new CatalogClientOptions();
+            options ??= new PurviewCatalogClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
@@ -241,12 +241,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -401,7 +395,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -617,12 +611,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -777,7 +765,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -816,10 +804,6 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(endpoint);
             uri.AppendRaw("/api", false);
             uri.AppendPath("/atlas/v2/entity", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -828,22 +812,22 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
-        /// <param name="guid"> An array of GUIDs of entities to create. </param>
+        /// <param name="guids"> An array of GUIDs of entities to create. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guid, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetByGuidsAsync(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByGuidsRequest(guid, minExtInfo, ignoreRelationships, excludeRelationshipTypes, requestOptions);
+            HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetByGuids");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetByGuids");
             scope.Start();
             try
             {
@@ -871,22 +855,22 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
-        /// <param name="guid"> An array of GUIDs of entities to create. </param>
+        /// <param name="guids"> An array of GUIDs of entities to create. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetByGuids(IEnumerable<string> guid, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions requestOptions = null)
+        public virtual Response GetByGuids(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByGuidsRequest(guid, minExtInfo, ignoreRelationships, excludeRelationshipTypes, requestOptions);
+            HttpMessage message = CreateGetByGuidsRequest(guids, minExtInfo, ignoreRelationships, excludeRelationshipTypes, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetByGuids");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetByGuids");
             scope.Start();
             try
             {
@@ -914,12 +898,12 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Create Request for <see cref="GetByGuids"/> and <see cref="GetByGuidsAsync"/> operations. </summary>
-        /// <param name="guid"> An array of GUIDs of entities to create. </param>
+        /// <param name="guids"> An array of GUIDs of entities to create. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetByGuidsRequest(IEnumerable<string> guid, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetByGuidsRequest(IEnumerable<string> guids, bool? minExtInfo = null, bool? ignoreRelationships = null, IEnumerable<string> excludeRelationshipTypes = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -928,7 +912,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(endpoint);
             uri.AppendRaw("/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            uri.AppendQueryDelimited("guid", guid, ",", true);
+            uri.AppendQueryDelimited("guids", guids, ",", true);
             if (minExtInfo != null)
             {
                 uri.AppendQuery("minExtInfo", minExtInfo.Value, true);
@@ -941,10 +925,6 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQueryDelimited("excludeRelationshipTypes", excludeRelationshipTypes, ",", true);
             }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1139,12 +1119,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -1290,16 +1264,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateBulkAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateEntitiesAsync(RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateBulkRequest(requestBody, requestOptions);
+            HttpMessage message = CreateCreateOrUpdateEntitiesRequest(requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.CreateOrUpdateBulk");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.CreateOrUpdateEntities");
             scope.Start();
             try
             {
@@ -1515,12 +1489,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -1666,16 +1634,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdateBulk(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdateEntities(RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateBulkRequest(requestBody, requestOptions);
+            HttpMessage message = CreateCreateOrUpdateEntitiesRequest(requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.CreateOrUpdateBulk");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.CreateOrUpdateEntities");
             scope.Start();
             try
             {
@@ -1702,10 +1670,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateBulk"/> and <see cref="CreateOrUpdateBulkAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="CreateOrUpdateEntities"/> and <see cref="CreateOrUpdateEntitiesAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateBulkRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateCreateOrUpdateEntitiesRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1714,10 +1682,6 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(endpoint);
             uri.AppendRaw("/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1726,19 +1690,19 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete a list of entities in bulk identified by their GUIDs or unique attributes. </summary>
-        /// <param name="guid"> An array of GUIDs of entities to delete. </param>
+        /// <param name="guids"> An array of GUIDs of entities to delete. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> BulkDeleteAsync(IEnumerable<string> guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteByGuidsAsync(IEnumerable<string> guids, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateBulkDeleteRequest(guid, requestOptions);
+            HttpMessage message = CreateDeleteByGuidsRequest(guids, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.BulkDelete");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.DeleteByGuids");
             scope.Start();
             try
             {
@@ -1766,19 +1730,19 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Delete a list of entities in bulk identified by their GUIDs or unique attributes. </summary>
-        /// <param name="guid"> An array of GUIDs of entities to delete. </param>
+        /// <param name="guids"> An array of GUIDs of entities to delete. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response BulkDelete(IEnumerable<string> guid, RequestOptions requestOptions = null)
+        public virtual Response DeleteByGuids(IEnumerable<string> guids, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateBulkDeleteRequest(guid, requestOptions);
+            HttpMessage message = CreateDeleteByGuidsRequest(guids, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.BulkDelete");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.DeleteByGuids");
             scope.Start();
             try
             {
@@ -1805,10 +1769,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="BulkDelete"/> and <see cref="BulkDeleteAsync"/> operations. </summary>
-        /// <param name="guid"> An array of GUIDs of entities to delete. </param>
+        /// <summary> Create Request for <see cref="DeleteByGuids"/> and <see cref="DeleteByGuidsAsync"/> operations. </summary>
+        /// <param name="guids"> An array of GUIDs of entities to delete. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateBulkDeleteRequest(IEnumerable<string> guid, RequestOptions requestOptions = null)
+        private HttpMessage CreateDeleteByGuidsRequest(IEnumerable<string> guids, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1817,11 +1781,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(endpoint);
             uri.AppendRaw("/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            uri.AppendQueryDelimited("guid", guid, ",", true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQueryDelimited("guids", guids, ",", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1887,12 +1847,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
@@ -1959,7 +1913,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.AddClassification");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.AddClassification");
             scope.Start();
             try
             {
@@ -2048,12 +2002,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -2118,7 +2066,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.AddClassification");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.AddClassification");
             scope.Start();
             try
             {
@@ -2157,10 +2105,6 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(endpoint);
             uri.AppendRaw("/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/classification", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
@@ -2173,16 +2117,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetByIdAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetByGuidAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByIdRequest(guid, minExtInfo, ignoreRelationships, requestOptions);
+            HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetById");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetByGuid");
             scope.Start();
             try
             {
@@ -2215,16 +2159,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetById(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions requestOptions = null)
+        public virtual Response GetByGuid(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetByIdRequest(guid, minExtInfo, ignoreRelationships, requestOptions);
+            HttpMessage message = CreateGetByGuidRequest(guid, minExtInfo, ignoreRelationships, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetById");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetByGuid");
             scope.Start();
             try
             {
@@ -2251,12 +2195,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetById"/> and <see cref="GetByIdAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GetByGuid"/> and <see cref="GetByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetByIdRequest(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetByGuidRequest(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2290,16 +2234,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> PartialUpdateEntityAttrByGuidAsync(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateByGuidAsync(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateEntityAttrByGuidRequest(guid, name, requestBody, requestOptions);
+            HttpMessage message = CreateCreateOrUpdateByGuidRequest(guid, name, requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.PartialUpdateEntityAttrByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.CreateOrUpdateByGuid");
             scope.Start();
             try
             {
@@ -2337,16 +2281,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response PartialUpdateEntityAttrByGuid(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdateByGuid(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateEntityAttrByGuidRequest(guid, name, requestBody, requestOptions);
+            HttpMessage message = CreateCreateOrUpdateByGuidRequest(guid, name, requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.PartialUpdateEntityAttrByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.CreateOrUpdateByGuid");
             scope.Start();
             try
             {
@@ -2373,12 +2317,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="PartialUpdateEntityAttrByGuid"/> and <see cref="PartialUpdateEntityAttrByGuidAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="CreateOrUpdateByGuid"/> and <see cref="CreateOrUpdateByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="name"> The name of the attribute. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreatePartialUpdateEntityAttrByGuidRequest(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateCreateOrUpdateByGuidRequest(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2409,7 +2353,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.DeleteByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.DeleteByGuid");
             scope.Start();
             try
             {
@@ -2449,7 +2393,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.DeleteByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.DeleteByGuid");
             scope.Start();
             try
             {
@@ -2508,7 +2452,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetClassification");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetClassification");
             scope.Start();
             try
             {
@@ -2549,7 +2493,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetClassification");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetClassification");
             scope.Start();
             try
             {
@@ -2611,7 +2555,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.DeleteClassification");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.DeleteClassification");
             scope.Start();
             try
             {
@@ -2652,7 +2596,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.DeleteClassification");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.DeleteClassification");
             scope.Start();
             try
             {
@@ -2712,7 +2656,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetClassifications");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetClassifications");
             scope.Start();
             try
             {
@@ -2752,7 +2696,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetClassifications");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetClassifications");
             scope.Start();
             try
             {
@@ -2839,12 +2783,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -2910,7 +2848,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.AddClassifications");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.AddClassifications");
             scope.Start();
             try
             {
@@ -2978,12 +2916,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -3049,7 +2981,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.AddClassifications");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.AddClassifications");
             scope.Start();
             try
             {
@@ -3138,12 +3070,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -3209,7 +3135,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.UpdateClassifications");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.UpdateClassifications");
             scope.Start();
             try
             {
@@ -3277,12 +3203,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -3348,7 +3268,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.UpdateClassifications");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.UpdateClassifications");
             scope.Start();
             try
             {
@@ -3419,7 +3339,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetByUniqueAttributes");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetByUniqueAttributes");
             scope.Start();
             try
             {
@@ -3469,7 +3389,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetByUniqueAttributes");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetByUniqueAttributes");
             scope.Start();
             try
             {
@@ -3723,12 +3643,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -3876,16 +3790,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> PartialUpdateEntityByUniqueAttrsAsync(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateOrUpdateByUniqueAttributeAsync(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateEntityByUniqueAttrsRequest(typeName, requestBody, attrQualifiedName, requestOptions);
+            HttpMessage message = CreateCreateOrUpdateByUniqueAttributeRequest(typeName, requestBody, attrQualifiedName, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.PartialUpdateEntityByUniqueAttrs");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.CreateOrUpdateByUniqueAttribute");
             scope.Start();
             try
             {
@@ -4106,12 +4020,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -4259,16 +4167,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response PartialUpdateEntityByUniqueAttrs(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response CreateOrUpdateByUniqueAttribute(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateEntityByUniqueAttrsRequest(typeName, requestBody, attrQualifiedName, requestOptions);
+            HttpMessage message = CreateCreateOrUpdateByUniqueAttributeRequest(typeName, requestBody, attrQualifiedName, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.PartialUpdateEntityByUniqueAttrs");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.CreateOrUpdateByUniqueAttribute");
             scope.Start();
             try
             {
@@ -4295,12 +4203,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="PartialUpdateEntityByUniqueAttrs"/> and <see cref="PartialUpdateEntityByUniqueAttrsAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="CreateOrUpdateByUniqueAttribute"/> and <see cref="CreateOrUpdateByUniqueAttributeAsync"/> operations. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreatePartialUpdateEntityByUniqueAttrsRequest(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateCreateOrUpdateByUniqueAttributeRequest(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -4342,7 +4250,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.DeleteByUniqueAttribute");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
@@ -4390,7 +4298,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.DeleteByUniqueAttribute");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
@@ -4455,7 +4363,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.DeleteClassificationByUniqueAttribute");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
             {
@@ -4497,7 +4405,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.DeleteClassificationByUniqueAttribute");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.DeleteClassificationByUniqueAttribute");
             scope.Start();
             try
             {
@@ -4590,12 +4498,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -4662,7 +4564,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.AddClassificationsByUniqueAttribute");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
@@ -4728,12 +4630,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
@@ -4802,7 +4698,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.AddClassificationsByUniqueAttribute");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
@@ -4896,12 +4792,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -4968,7 +4858,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.UpdateClassificationsByUniqueAttribute");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
@@ -5034,12 +4924,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
@@ -5108,7 +4992,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.UpdateClassificationsByUniqueAttribute");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.UpdateClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
@@ -5286,12 +5170,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -5425,7 +5303,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.SetClassifications");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.SetClassifications");
             scope.Start();
             try
             {
@@ -5577,12 +5455,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -5716,7 +5588,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.SetClassifications");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.SetClassifications");
             scope.Start();
             try
             {
@@ -5790,7 +5662,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetEntitiesByUniqueAttributes");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
             {
@@ -5845,7 +5717,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetEntitiesByUniqueAttributes");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetEntitiesByUniqueAttributes");
             scope.Start();
             try
             {
@@ -5909,16 +5781,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetHeaderByIdAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetHeaderAsync(string guid, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetHeaderByIdRequest(guid, requestOptions);
+            HttpMessage message = CreateGetHeaderRequest(guid, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetHeaderById");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetHeader");
             scope.Start();
             try
             {
@@ -5949,16 +5821,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetHeaderById(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetHeader(string guid, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetHeaderByIdRequest(guid, requestOptions);
+            HttpMessage message = CreateGetHeaderRequest(guid, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("EntityRestClient.GetHeaderById");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntityClient.GetHeader");
             scope.Start();
             try
             {
@@ -5985,10 +5857,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetHeaderById"/> and <see cref="GetHeaderByIdAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GetHeader"/> and <see cref="GetHeaderAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetHeaderByIdRequest(string guid, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetHeaderRequest(string guid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

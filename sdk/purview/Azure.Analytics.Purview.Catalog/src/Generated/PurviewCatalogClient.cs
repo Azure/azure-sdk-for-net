@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The DiscoveryRest service client. </summary>
-    public partial class DiscoveryRestClient
+    /// <summary> The PurviewCatalog service client. </summary>
+    public partial class PurviewCatalogClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -23,16 +23,16 @@ namespace Azure.Analytics.Purview.Catalog
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of DiscoveryRestClient for mocking. </summary>
-        protected DiscoveryRestClient()
+        /// <summary> Initializes a new instance of PurviewCatalogClient for mocking. </summary>
+        protected PurviewCatalogClient()
         {
         }
 
-        /// <summary> Initializes a new instance of DiscoveryRestClient. </summary>
+        /// <summary> Initializes a new instance of PurviewCatalogClient. </summary>
         /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.catalog.purview.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public DiscoveryRestClient(Uri endpoint, TokenCredential credential, CatalogClientOptions options = null)
+        public PurviewCatalogClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Purview.Catalog
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new CatalogClientOptions();
+            options ??= new PurviewCatalogClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
@@ -150,16 +150,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> SearchAdvancedAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> SearchAsync(RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSearchAdvancedRequest(requestBody, requestOptions);
+            HttpMessage message = CreateSearchRequest(requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("DiscoveryRestClient.SearchAdvanced");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
             {
@@ -285,16 +285,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response SearchAdvanced(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response Search(RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateSearchAdvancedRequest(requestBody, requestOptions);
+            HttpMessage message = CreateSearchRequest(requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("DiscoveryRestClient.SearchAdvanced");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
             try
             {
@@ -321,10 +321,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="SearchAdvanced"/> and <see cref="SearchAdvancedAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="Search"/> and <see cref="SearchAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateSearchAdvancedRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateSearchRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -333,10 +333,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(endpoint);
             uri.AppendRaw("/api", false);
             uri.AppendPath("/search/query", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -386,7 +383,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("DiscoveryRestClient.Suggest");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
             {
@@ -455,7 +452,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("DiscoveryRestClient.Suggest");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
             try
             {
@@ -494,10 +491,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(endpoint);
             uri.AppendRaw("/api", false);
             uri.AppendPath("/search/suggest", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -547,7 +541,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("DiscoveryRestClient.AutoComplete");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
             {
@@ -616,7 +610,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("DiscoveryRestClient.AutoComplete");
+            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
             try
             {
@@ -655,14 +649,266 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(endpoint);
             uri.AppendRaw("/api", false);
             uri.AppendPath("/search/autocomplete", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
+            return message;
+        }
+
+        /// <summary> Get lineage info of the entity specified by GUID. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
+        /// <param name="depth"> The number of hops for lineage. </param>
+        /// <param name="width"> The number of max expanding width in lineage. </param>
+        /// <param name="includeParent"> True to include the parent chain in the response. </param>
+        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.GetLineageGraph");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get lineage info of the entity specified by GUID. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
+        /// <param name="depth"> The number of hops for lineage. </param>
+        /// <param name="width"> The number of max expanding width in lineage. </param>
+        /// <param name="includeParent"> True to include the parent chain in the response. </param>
+        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetLineageGraph(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.GetLineageGraph");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="GetLineageGraph"/> and <see cref="GetLineageGraphAsync"/> operations. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
+        /// <param name="depth"> The number of hops for lineage. </param>
+        /// <param name="width"> The number of max expanding width in lineage. </param>
+        /// <param name="includeParent"> True to include the parent chain in the response. </param>
+        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/api", false);
+            uri.AppendPath("/atlas/v2/lineage/", false);
+            uri.AppendPath(guid, true);
+            if (depth != null)
+            {
+                uri.AppendQuery("depth", depth.Value, true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", width.Value, true);
+            }
+            uri.AppendQuery("direction", direction, true);
+            if (includeParent != null)
+            {
+                uri.AppendQuery("includeParent", includeParent.Value, true);
+            }
+            if (getDerivedLineage != null)
+            {
+                uri.AppendQuery("getDerivedLineage", getDerivedLineage.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
+        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> NextPageLineageAsync(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.NextPageLineage");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return immediate next page lineage info about entity with pagination. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
+        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response NextPageLineage(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
+        {
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateNextPageLineageRequest(guid, direction, getDerivedLineage, offset, limit, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("PurviewCatalogClient.NextPageLineage");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create Request for <see cref="NextPageLineage"/> and <see cref="NextPageLineageAsync"/> operations. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. </param>
+        /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
+        /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="limit"> The page size - by default there is no paging. </param>
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateNextPageLineageRequest(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions requestOptions = null)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(endpoint);
+            uri.AppendRaw("/api", false);
+            uri.AppendPath("/lineage/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/next/", false);
+            uri.AppendQuery("direction", direction, true);
+            if (getDerivedLineage != null)
+            {
+                uri.AppendQuery("getDerivedLineage", getDerivedLineage.Value, true);
+            }
+            if (offset != null)
+            {
+                uri.AppendQuery("offset", offset.Value, true);
+            }
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
     }

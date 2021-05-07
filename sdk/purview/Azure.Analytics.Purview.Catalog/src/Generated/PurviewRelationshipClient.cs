@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The RelationshipRest service client. </summary>
-    public partial class RelationshipRestClient
+    /// <summary> The PurviewRelationship service client. </summary>
+    public partial class PurviewRelationshipClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -23,16 +23,16 @@ namespace Azure.Analytics.Purview.Catalog
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of RelationshipRestClient for mocking. </summary>
-        protected RelationshipRestClient()
+        /// <summary> Initializes a new instance of PurviewRelationshipClient for mocking. </summary>
+        protected PurviewRelationshipClient()
         {
         }
 
-        /// <summary> Initializes a new instance of RelationshipRestClient. </summary>
+        /// <summary> Initializes a new instance of PurviewRelationshipClient. </summary>
         /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.catalog.purview.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public RelationshipRestClient(Uri endpoint, TokenCredential credential, CatalogClientOptions options = null)
+        public PurviewRelationshipClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Purview.Catalog
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new CatalogClientOptions();
+            options ??= new PurviewCatalogClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
@@ -78,12 +78,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>string</term>
         ///     <term></term>
         ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>blockedPropagatedClassifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of blocked propagated classifications. </term>
         ///   </item>
         ///   <item>
         ///     <term>createTime</term>
@@ -126,35 +120,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>string</term>
         ///     <term></term>
         ///     <term> The label of the relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagateTags</term>
-        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
-        ///     <term></term>
-        ///     <term>
-        /// PropagateTags indicates whether tags should propagate across the relationship instance.
-        /// &lt;p&gt;
-        /// Tags can propagate:
-        /// &lt;p&gt;
-        /// NONE - not at all &lt;br&gt;
-        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
-        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
-        /// BOTH - both ways
-        /// &lt;p&gt;
-        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
-        /// &lt;p&gt;
-        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
-        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
-        /// &lt;p&gt;
-        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
-        /// address how to resolve conflicts.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagatedClassifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of propagated classifications. </term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
@@ -214,102 +179,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> The unique attributes of the object. </term>
         ///   </item>
         /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
@@ -323,7 +192,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("RelationshipRestClient.Create");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Create");
             scope.Start();
             try
             {
@@ -379,12 +248,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> ETag for concurrency control. </term>
         ///   </item>
         ///   <item>
-        ///     <term>blockedPropagatedClassifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of blocked propagated classifications. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
@@ -425,35 +288,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>string</term>
         ///     <term></term>
         ///     <term> The label of the relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagateTags</term>
-        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
-        ///     <term></term>
-        ///     <term>
-        /// PropagateTags indicates whether tags should propagate across the relationship instance.
-        /// &lt;p&gt;
-        /// Tags can propagate:
-        /// &lt;p&gt;
-        /// NONE - not at all &lt;br&gt;
-        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
-        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
-        /// BOTH - both ways
-        /// &lt;p&gt;
-        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
-        /// &lt;p&gt;
-        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
-        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
-        /// &lt;p&gt;
-        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
-        /// address how to resolve conflicts.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagatedClassifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of propagated classifications. </term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
@@ -513,102 +347,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> The unique attributes of the object. </term>
         ///   </item>
         /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
@@ -622,7 +360,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("RelationshipRestClient.Create");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Create");
             scope.Start();
             try
             {
@@ -697,12 +435,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> ETag for concurrency control. </term>
         ///   </item>
         ///   <item>
-        ///     <term>blockedPropagatedClassifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of blocked propagated classifications. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
@@ -743,35 +475,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>string</term>
         ///     <term></term>
         ///     <term> The label of the relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagateTags</term>
-        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
-        ///     <term></term>
-        ///     <term>
-        /// PropagateTags indicates whether tags should propagate across the relationship instance.
-        /// &lt;p&gt;
-        /// Tags can propagate:
-        /// &lt;p&gt;
-        /// NONE - not at all &lt;br&gt;
-        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
-        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
-        /// BOTH - both ways
-        /// &lt;p&gt;
-        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
-        /// &lt;p&gt;
-        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
-        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
-        /// &lt;p&gt;
-        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
-        /// address how to resolve conflicts.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagatedClassifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of propagated classifications. </term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
@@ -831,102 +534,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> The unique attributes of the object. </term>
         ///   </item>
         /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
@@ -940,7 +547,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("RelationshipRestClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Update");
             scope.Start();
             try
             {
@@ -996,12 +603,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> ETag for concurrency control. </term>
         ///   </item>
         ///   <item>
-        ///     <term>blockedPropagatedClassifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of blocked propagated classifications. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>createTime</term>
         ///     <term>number</term>
         ///     <term></term>
@@ -1042,35 +643,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>string</term>
         ///     <term></term>
         ///     <term> The label of the relationship. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagateTags</term>
-        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
-        ///     <term></term>
-        ///     <term>
-        /// PropagateTags indicates whether tags should propagate across the relationship instance.
-        /// &lt;p&gt;
-        /// Tags can propagate:
-        /// &lt;p&gt;
-        /// NONE - not at all &lt;br&gt;
-        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
-        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
-        /// BOTH - both ways
-        /// &lt;p&gt;
-        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
-        /// &lt;p&gt;
-        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
-        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
-        /// &lt;p&gt;
-        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
-        /// address how to resolve conflicts.
-        /// </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagatedClassifications</term>
-        ///     <term>AtlasClassification[]</term>
-        ///     <term></term>
-        ///     <term> An array of propagated classifications. </term>
         ///   </item>
         ///   <item>
         ///     <term>provenanceType</term>
@@ -1130,102 +702,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> The unique attributes of the object. </term>
         ///   </item>
         /// </list>
-        /// Schema for <c>AtlasClassification</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>attributes</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> The attributes of the struct. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>typeName</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The name of the type. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>lastModifiedTS</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> ETag for concurrency control. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityGuid</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The GUID of the entity. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>entityStatus</term>
-        ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
-        ///     <term></term>
-        ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>removePropagationsOnEntityDelete</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if propagations will be removed on entity deletion. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>validityPeriods</term>
-        ///     <term>TimeBoundary[]</term>
-        ///     <term></term>
-        ///     <term> An array of time boundaries indicating validity periods. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>source</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> indicate the source who create the classification detail. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>sourceDetails</term>
-        ///     <term>Dictionary&lt;string, AnyObject&gt;</term>
-        ///     <term></term>
-        ///     <term> more detail on source information. </term>
-        ///   </item>
-        /// </list>
-        /// Schema for <c>TimeBoundary</c>:
-        /// <list type="table">
-        ///   <listeader>
-        ///     <term>Name</term>
-        ///     <term>Type</term>
-        ///     <term>Required</term>
-        ///     <term>Description</term>
-        ///   </listeader>
-        ///   <item>
-        ///     <term>endTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The end of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>startTime</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The start of the time boundary. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>timeZone</term>
-        ///     <term>string</term>
-        ///     <term></term>
-        ///     <term> The timezone of the time boundary. </term>
-        ///   </item>
-        /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
@@ -1239,7 +715,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("RelationshipRestClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Update");
             scope.Start();
             try
             {
@@ -1290,16 +766,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetById2Async(string guid, bool? extendedInfo = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetAsync(string guid, bool? extendedInfo = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetById2Request(guid, extendedInfo, requestOptions);
+            HttpMessage message = CreateGetRequest(guid, extendedInfo, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("RelationshipRestClient.GetById2");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Get");
             scope.Start();
             try
             {
@@ -1331,16 +807,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetById2(string guid, bool? extendedInfo = null, RequestOptions requestOptions = null)
+        public virtual Response Get(string guid, bool? extendedInfo = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetById2Request(guid, extendedInfo, requestOptions);
+            HttpMessage message = CreateGetRequest(guid, extendedInfo, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("RelationshipRestClient.GetById2");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Get");
             scope.Start();
             try
             {
@@ -1367,11 +843,11 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetById2"/> and <see cref="GetById2Async"/> operations. </summary>
+        /// <summary> Create Request for <see cref="Get"/> and <see cref="GetAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetById2Request(string guid, bool? extendedInfo = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetRequest(string guid, bool? extendedInfo = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1394,16 +870,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteByIdAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteAsync(string guid, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByIdRequest(guid, requestOptions);
+            HttpMessage message = CreateDeleteRequest(guid, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("RelationshipRestClient.DeleteById");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Delete");
             scope.Start();
             try
             {
@@ -1434,16 +910,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteById(string guid, RequestOptions requestOptions = null)
+        public virtual Response Delete(string guid, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteByIdRequest(guid, requestOptions);
+            HttpMessage message = CreateDeleteRequest(guid, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("RelationshipRestClient.DeleteById");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Delete");
             scope.Start();
             try
             {
@@ -1470,10 +946,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteById"/> and <see cref="DeleteByIdAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="Delete"/> and <see cref="DeleteAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteByIdRequest(string guid, RequestOptions requestOptions = null)
+        private HttpMessage CreateDeleteRequest(string guid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

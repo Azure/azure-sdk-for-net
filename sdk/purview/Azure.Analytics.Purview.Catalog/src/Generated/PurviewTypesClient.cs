@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The TypesRest service client. </summary>
-    public partial class TypesRestClient
+    /// <summary> The PurviewTypes service client. </summary>
+    public partial class PurviewTypesClient
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -23,16 +23,16 @@ namespace Azure.Analytics.Purview.Catalog
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of TypesRestClient for mocking. </summary>
-        protected TypesRestClient()
+        /// <summary> Initializes a new instance of PurviewTypesClient for mocking. </summary>
+        protected PurviewTypesClient()
         {
         }
 
-        /// <summary> Initializes a new instance of TypesRestClient. </summary>
+        /// <summary> Initializes a new instance of PurviewTypesClient. </summary>
         /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.catalog.purview.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public TypesRestClient(Uri endpoint, TokenCredential credential, CatalogClientOptions options = null)
+        public PurviewTypesClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options = null)
         {
             if (endpoint == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Purview.Catalog
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new CatalogClientOptions();
+            options ??= new PurviewCatalogClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetClassificationDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetClassificationDefByGuid");
             scope.Start();
             try
             {
@@ -104,7 +104,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetClassificationDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetClassificationDefByGuid");
             scope.Start();
             try
             {
@@ -162,7 +162,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetClassificationDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetClassificationDefByName");
             scope.Start();
             try
             {
@@ -202,7 +202,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetClassificationDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetClassificationDefByName");
             scope.Start();
             try
             {
@@ -251,16 +251,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEntityDefByGuidAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetEntityDefinitionByGuidAsync(string guid, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEntityDefByGuidRequest(guid, requestOptions);
+            HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetEntityDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEntityDefinitionByGuid");
             scope.Start();
             try
             {
@@ -291,16 +291,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetEntityDefByGuid(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetEntityDefinitionByGuid(string guid, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEntityDefByGuidRequest(guid, requestOptions);
+            HttpMessage message = CreateGetEntityDefinitionByGuidRequest(guid, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetEntityDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEntityDefinitionByGuid");
             scope.Start();
             try
             {
@@ -327,10 +327,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEntityDefByGuid"/> and <see cref="GetEntityDefByGuidAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GetEntityDefinitionByGuid"/> and <see cref="GetEntityDefinitionByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetEntityDefByGuidRequest(string guid, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetEntityDefinitionByGuidRequest(string guid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -349,16 +349,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="name"> The name of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetEntityDefByNameAsync(string name, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetEntityDefinitionByNameAsync(string name, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEntityDefByNameRequest(name, requestOptions);
+            HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetEntityDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEntityDefinitionByName");
             scope.Start();
             try
             {
@@ -389,16 +389,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="name"> The name of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetEntityDefByName(string name, RequestOptions requestOptions = null)
+        public virtual Response GetEntityDefinitionByName(string name, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetEntityDefByNameRequest(name, requestOptions);
+            HttpMessage message = CreateGetEntityDefinitionByNameRequest(name, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetEntityDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEntityDefinitionByName");
             scope.Start();
             try
             {
@@ -425,10 +425,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetEntityDefByName"/> and <see cref="GetEntityDefByNameAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GetEntityDefinitionByName"/> and <see cref="GetEntityDefinitionByNameAsync"/> operations. </summary>
         /// <param name="name"> The name of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetEntityDefByNameRequest(string name, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetEntityDefinitionByNameRequest(string name, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -456,7 +456,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetEnumDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEnumDefByGuid");
             scope.Start();
             try
             {
@@ -496,7 +496,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetEnumDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEnumDefByGuid");
             scope.Start();
             try
             {
@@ -554,7 +554,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetEnumDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEnumDefByName");
             scope.Start();
             try
             {
@@ -594,7 +594,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetEnumDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEnumDefByName");
             scope.Start();
             try
             {
@@ -652,7 +652,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetRelationshipDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetRelationshipDefByGuid");
             scope.Start();
             try
             {
@@ -692,7 +692,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetRelationshipDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetRelationshipDefByGuid");
             scope.Start();
             try
             {
@@ -750,7 +750,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetRelationshipDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetRelationshipDefByName");
             scope.Start();
             try
             {
@@ -790,7 +790,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetRelationshipDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetRelationshipDefByName");
             scope.Start();
             try
             {
@@ -848,7 +848,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetStructDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetStructDefByGuid");
             scope.Start();
             try
             {
@@ -888,7 +888,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetStructDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetStructDefByGuid");
             scope.Start();
             try
             {
@@ -946,7 +946,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetStructDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetStructDefByName");
             scope.Start();
             try
             {
@@ -986,7 +986,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetStructDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetStructDefByName");
             scope.Start();
             try
             {
@@ -1035,16 +1035,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the type. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTypeDefByGuidAsync(string guid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetTypeDefinitionByGuidAsync(string guid, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefByGuidRequest(guid, requestOptions);
+            HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetTypeDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTypeDefinitionByGuid");
             scope.Start();
             try
             {
@@ -1075,16 +1075,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="guid"> The globally unique identifier of the type. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetTypeDefByGuid(string guid, RequestOptions requestOptions = null)
+        public virtual Response GetTypeDefinitionByGuid(string guid, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefByGuidRequest(guid, requestOptions);
+            HttpMessage message = CreateGetTypeDefinitionByGuidRequest(guid, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetTypeDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTypeDefinitionByGuid");
             scope.Start();
             try
             {
@@ -1111,10 +1111,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTypeDefByGuid"/> and <see cref="GetTypeDefByGuidAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GetTypeDefinitionByGuid"/> and <see cref="GetTypeDefinitionByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the type. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetTypeDefByGuidRequest(string guid, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetTypeDefinitionByGuidRequest(string guid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1133,16 +1133,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="name"> The name of the type. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTypeDefByNameAsync(string name, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetTypeDefinitionByNameAsync(string name, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefByNameRequest(name, requestOptions);
+            HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetTypeDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTypeDefinitionByName");
             scope.Start();
             try
             {
@@ -1173,16 +1173,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="name"> The name of the type. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetTypeDefByName(string name, RequestOptions requestOptions = null)
+        public virtual Response GetTypeDefinitionByName(string name, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefByNameRequest(name, requestOptions);
+            HttpMessage message = CreateGetTypeDefinitionByNameRequest(name, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetTypeDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTypeDefinitionByName");
             scope.Start();
             try
             {
@@ -1209,10 +1209,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTypeDefByName"/> and <see cref="GetTypeDefByNameAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GetTypeDefinitionByName"/> and <see cref="GetTypeDefinitionByNameAsync"/> operations. </summary>
         /// <param name="name"> The name of the type. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetTypeDefByNameRequest(string name, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetTypeDefinitionByNameRequest(string name, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1240,7 +1240,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.DeleteTypeByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.DeleteTypeByName");
             scope.Start();
             try
             {
@@ -1280,7 +1280,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.DeleteTypeByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.DeleteTypeByName");
             scope.Start();
             try
             {
@@ -1332,16 +1332,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetAllTypeDefsAsync(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetAllTypeDefinitionsAsync(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetAllTypeDefsRequest(includeTermTemplate, type, requestOptions);
+            HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetAllTypeDefs");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetAllTypeDefinitions");
             scope.Start();
             try
             {
@@ -1376,16 +1376,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetAllTypeDefs(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
+        public virtual Response GetAllTypeDefinitions(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetAllTypeDefsRequest(includeTermTemplate, type, requestOptions);
+            HttpMessage message = CreateGetAllTypeDefinitionsRequest(includeTermTemplate, type, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetAllTypeDefs");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetAllTypeDefinitions");
             scope.Start();
             try
             {
@@ -1412,14 +1412,14 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetAllTypeDefs"/> and <see cref="GetAllTypeDefsAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GetAllTypeDefinitions"/> and <see cref="GetAllTypeDefinitionsAsync"/> operations. </summary>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template.
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetAllTypeDefsRequest(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetAllTypeDefinitionsRequest(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1958,29 +1958,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagateTags</term>
-        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
-        ///     <term></term>
-        ///     <term>
-        /// PropagateTags indicates whether tags should propagate across the relationship instance.
-        /// &lt;p&gt;
-        /// Tags can propagate:
-        /// &lt;p&gt;
-        /// NONE - not at all &lt;br&gt;
-        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
-        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
-        /// BOTH - both ways
-        /// &lt;p&gt;
-        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
-        /// &lt;p&gt;
-        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
-        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
-        /// &lt;p&gt;
-        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
-        /// address how to resolve conflicts.
-        /// </term>
-        ///   </item>
-        ///   <item>
         ///     <term>relationshipCategory</term>
         ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
         ///     <term></term>
@@ -2685,16 +2662,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateTypeDefsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateTypeDefinitionsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateTypeDefsRequest(requestBody, requestOptions);
+            HttpMessage message = CreateCreateTypeDefinitionsRequest(requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.CreateTypeDefs");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.CreateTypeDefinitions");
             scope.Start();
             try
             {
@@ -3238,29 +3215,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagateTags</term>
-        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
-        ///     <term></term>
-        ///     <term>
-        /// PropagateTags indicates whether tags should propagate across the relationship instance.
-        /// &lt;p&gt;
-        /// Tags can propagate:
-        /// &lt;p&gt;
-        /// NONE - not at all &lt;br&gt;
-        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
-        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
-        /// BOTH - both ways
-        /// &lt;p&gt;
-        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
-        /// &lt;p&gt;
-        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
-        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
-        /// &lt;p&gt;
-        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
-        /// address how to resolve conflicts.
-        /// </term>
-        ///   </item>
-        ///   <item>
         ///     <term>relationshipCategory</term>
         ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
         ///     <term></term>
@@ -3965,16 +3919,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateTypeDefs(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateTypeDefinitions(RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateTypeDefsRequest(requestBody, requestOptions);
+            HttpMessage message = CreateCreateTypeDefinitionsRequest(requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.CreateTypeDefs");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.CreateTypeDefinitions");
             scope.Start();
             try
             {
@@ -4001,10 +3955,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateTypeDefs"/> and <see cref="CreateTypeDefsAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="CreateTypeDefinitions"/> and <see cref="CreateTypeDefinitionsAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateTypeDefsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateCreateTypeDefinitionsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -4534,29 +4488,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagateTags</term>
-        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
-        ///     <term></term>
-        ///     <term>
-        /// PropagateTags indicates whether tags should propagate across the relationship instance.
-        /// &lt;p&gt;
-        /// Tags can propagate:
-        /// &lt;p&gt;
-        /// NONE - not at all &lt;br&gt;
-        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
-        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
-        /// BOTH - both ways
-        /// &lt;p&gt;
-        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
-        /// &lt;p&gt;
-        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
-        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
-        /// &lt;p&gt;
-        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
-        /// address how to resolve conflicts.
-        /// </term>
-        ///   </item>
-        ///   <item>
         ///     <term>relationshipCategory</term>
         ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
         ///     <term></term>
@@ -5261,16 +5192,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateAtlasTypeDefsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> UpdateAtlasTypeDefinitionsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateAtlasTypeDefsRequest(requestBody, requestOptions);
+            HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.UpdateAtlasTypeDefs");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.UpdateAtlasTypeDefinitions");
             scope.Start();
             try
             {
@@ -5811,29 +5742,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagateTags</term>
-        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
-        ///     <term></term>
-        ///     <term>
-        /// PropagateTags indicates whether tags should propagate across the relationship instance.
-        /// &lt;p&gt;
-        /// Tags can propagate:
-        /// &lt;p&gt;
-        /// NONE - not at all &lt;br&gt;
-        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
-        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
-        /// BOTH - both ways
-        /// &lt;p&gt;
-        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
-        /// &lt;p&gt;
-        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
-        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
-        /// &lt;p&gt;
-        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
-        /// address how to resolve conflicts.
-        /// </term>
-        ///   </item>
-        ///   <item>
         ///     <term>relationshipCategory</term>
         ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
         ///     <term></term>
@@ -6538,16 +6446,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response UpdateAtlasTypeDefs(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response UpdateAtlasTypeDefinitions(RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateUpdateAtlasTypeDefsRequest(requestBody, requestOptions);
+            HttpMessage message = CreateUpdateAtlasTypeDefinitionsRequest(requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.UpdateAtlasTypeDefs");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.UpdateAtlasTypeDefinitions");
             scope.Start();
             try
             {
@@ -6574,10 +6482,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="UpdateAtlasTypeDefs"/> and <see cref="UpdateAtlasTypeDefsAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="UpdateAtlasTypeDefinitions"/> and <see cref="UpdateAtlasTypeDefinitionsAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateUpdateAtlasTypeDefsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateUpdateAtlasTypeDefinitionsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -7107,29 +7015,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagateTags</term>
-        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
-        ///     <term></term>
-        ///     <term>
-        /// PropagateTags indicates whether tags should propagate across the relationship instance.
-        /// &lt;p&gt;
-        /// Tags can propagate:
-        /// &lt;p&gt;
-        /// NONE - not at all &lt;br&gt;
-        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
-        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
-        /// BOTH - both ways
-        /// &lt;p&gt;
-        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
-        /// &lt;p&gt;
-        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
-        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
-        /// &lt;p&gt;
-        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
-        /// address how to resolve conflicts.
-        /// </term>
-        ///   </item>
-        ///   <item>
         ///     <term>relationshipCategory</term>
         ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
         ///     <term></term>
@@ -7834,16 +7719,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> DeleteTypeDefsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> DeleteTypeDefinitionsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTypeDefsRequest(requestBody, requestOptions);
+            HttpMessage message = CreateDeleteTypeDefinitionsRequest(requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.DeleteTypeDefs");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.DeleteTypeDefinitions");
             scope.Start();
             try
             {
@@ -8384,29 +8269,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagateTags</term>
-        ///     <term>&quot;NONE&quot; | &quot;ONE_TO_TWO&quot; | &quot;TWO_TO_ONE&quot; | &quot;BOTH&quot;</term>
-        ///     <term></term>
-        ///     <term>
-        /// PropagateTags indicates whether tags should propagate across the relationship instance.
-        /// &lt;p&gt;
-        /// Tags can propagate:
-        /// &lt;p&gt;
-        /// NONE - not at all &lt;br&gt;
-        /// ONE_TO_TWO - from end 1 to 2 &lt;br&gt;
-        /// TWO_TO_ONE - from end 2 to 1  &lt;br&gt;
-        /// BOTH - both ways
-        /// &lt;p&gt;
-        /// Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
-        /// &lt;p&gt;
-        /// - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here &lt;br&gt;
-        /// - propagating classifications around Glossary synonyms - BOTH could be used here.
-        /// &lt;p&gt;
-        /// There is an expectation that further enhancements will allow more granular control of tag propagation and will
-        /// address how to resolve conflicts.
-        /// </term>
-        ///   </item>
-        ///   <item>
         ///     <term>relationshipCategory</term>
         ///     <term>&quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;</term>
         ///     <term></term>
@@ -9111,16 +8973,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response DeleteTypeDefs(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response DeleteTypeDefinitions(RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateDeleteTypeDefsRequest(requestBody, requestOptions);
+            HttpMessage message = CreateDeleteTypeDefinitionsRequest(requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.DeleteTypeDefs");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.DeleteTypeDefinitions");
             scope.Start();
             try
             {
@@ -9147,10 +9009,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="DeleteTypeDefs"/> and <see cref="DeleteTypeDefsAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="DeleteTypeDefinitions"/> and <see cref="DeleteTypeDefinitionsAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateDeleteTypeDefsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateDeleteTypeDefinitionsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -9173,16 +9035,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTypeDefHeadersAsync(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetTypeDefinitionHeadersAsync(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefHeadersRequest(includeTermTemplate, type, requestOptions);
+            HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetTypeDefHeaders");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTypeDefinitionHeaders");
             scope.Start();
             try
             {
@@ -9217,16 +9079,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetTypeDefHeaders(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
+        public virtual Response GetTypeDefinitionHeaders(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTypeDefHeadersRequest(includeTermTemplate, type, requestOptions);
+            HttpMessage message = CreateGetTypeDefinitionHeadersRequest(includeTermTemplate, type, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetTypeDefHeaders");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTypeDefinitionHeaders");
             scope.Start();
             try
             {
@@ -9253,14 +9115,14 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetTypeDefHeaders"/> and <see cref="GetTypeDefHeadersAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="GetTypeDefinitionHeaders"/> and <see cref="GetTypeDefinitionHeadersAsync"/> operations. </summary>
         /// <param name="includeTermTemplate">
         /// Whether include termtemplatedef when return all typedefs.
         /// This is always true when search filter type=term_template.
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetTypeDefHeadersRequest(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetTypeDefinitionHeadersRequest(bool? includeTermTemplate = null, string type = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -9295,7 +9157,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetTermTemplateDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTermTemplateDefByGuid");
             scope.Start();
             try
             {
@@ -9335,7 +9197,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetTermTemplateDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTermTemplateDefByGuid");
             scope.Start();
             try
             {
@@ -9375,10 +9237,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendRaw("/api", false);
             uri.AppendPath("/types/termtemplatedef/guid/", false);
             uri.AppendPath(guid, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -9397,7 +9256,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetTermTemplateDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTermTemplateDefByName");
             scope.Start();
             try
             {
@@ -9437,7 +9296,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("TypesRestClient.GetTermTemplateDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTermTemplateDefByName");
             scope.Start();
             try
             {
@@ -9477,10 +9336,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendRaw("/api", false);
             uri.AppendPath("/types/termtemplatedef/name/", false);
             uri.AppendPath(name, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
