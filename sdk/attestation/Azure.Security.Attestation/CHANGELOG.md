@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Hopefully the final changes for Azure Attestation Service for .Net. Mostly code cleanups, but significant improvements to the `AttestationToken` class.
+- Final changes for Azure Attestation Service for .Net, including API review feedback. Mostly code cleanups, but significant improvements to the `AttestationToken` class.
 
 ### Breaking change
 
