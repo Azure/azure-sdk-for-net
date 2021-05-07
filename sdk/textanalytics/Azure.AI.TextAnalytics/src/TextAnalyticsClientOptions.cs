@@ -17,6 +17,9 @@ namespace Azure.AI.TextAnalytics
         /// The latest service version supported by this client library.
         /// </summary>
         internal const ServiceVersion LatestVersion = ServiceVersion.V3_1_Preview_4;
+        private const string AzurePublicCloudtenantid = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+        private const string AzureChinatenantid = "3d0a72e2-8b06-4528-98df-1391c6f12c11";
+        private const string AzureGovernmenttenantid = "63296244-ce2c-46d8-bc36-3e558792fbee";
 
         /// <summary>
         /// The versions of the Text Analytics service supported by this client library.
@@ -78,6 +81,21 @@ namespace Azure.AI.TextAnalytics
 
                 _ => throw new ArgumentException($"Version {Version} not supported."),
             };
+        }
+
+        internal static string getDefaultCognitiveScope(string tenantid)
+        {
+            switch (tenantid)
+            {
+                case AzurePublicCloudtenantid:
+                    return "https://cognitiveservices.azure.com/.default";
+                case AzureChinatenantid:
+                    return "https://cognitiveservices.azure.cn/.default";
+                case AzureGovernmenttenantid:
+                    return "https://cognitiveservices.azure.us/.default";
+                default:
+                    return null;
+            }
         }
     }
 }

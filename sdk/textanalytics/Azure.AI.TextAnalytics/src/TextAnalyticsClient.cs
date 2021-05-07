@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics
         internal readonly TextAnalyticsRestClient _serviceRestClient;
         internal readonly ClientDiagnostics _clientDiagnostics;
         private readonly TextAnalyticsClientOptions _options;
-        private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
+        private readonly string DefaultCognitiveScope = TextAnalyticsClientOptions.getDefaultCognitiveScope(Environment.GetEnvironmentVariable("TENANT_ID"));
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
         /// <summary>
