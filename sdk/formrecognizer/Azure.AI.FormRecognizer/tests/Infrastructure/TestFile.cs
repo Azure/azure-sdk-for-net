@@ -55,8 +55,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>A three-page invoice file in which the second page is blank.</summary>
         public const string InvoiceMultipageBlank = "multipage_invoice1.pdf";
 
-        /// <summary>A form with a table that has variable rows and empty cells.</summary>
-        public const string FormTableVariableRows = "label_table_variable_rows1.pdf";
+        /// <summary>A form with a table that has dynamic rows and empty cells.</summary>
+        public const string FormTableDynamicRows = "label_table_dynamic_rows1.pdf";
 
         /// <summary>A form with a table that has fixed rows and empty cells.</summary>
         public const string FormTableFixedRows = "label_table_fixed_rows1.pdf";

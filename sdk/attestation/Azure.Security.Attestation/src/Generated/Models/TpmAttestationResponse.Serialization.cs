@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class TpmAttestationResponse
+    public partial class TpmAttestationResponse
     {
         internal static TpmAttestationResponse DeserializeTpmAttestationResponse(JsonElement element)
         {

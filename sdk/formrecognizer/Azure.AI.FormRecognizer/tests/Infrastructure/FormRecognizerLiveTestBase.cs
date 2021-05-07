@@ -122,7 +122,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
                 ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrl,
                 ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrl,
-                ContainerType.TableVariableRows => TestEnvironment.TableVariableRowsContainerSasUrl,
+                ContainerType.TableVariableRows => TestEnvironment.TableDynamicRowsContainerSasUrl,
                 ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrl,
                 _ => TestEnvironment.BlobContainerSasUrl,
             };

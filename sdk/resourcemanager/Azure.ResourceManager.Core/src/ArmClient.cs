@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentNullException(nameof(credential));
 
             Credential = credential;
-            BaseUri = baseUri;
+            BaseUri = baseUri ?? new Uri(DefaultUri);
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
             Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions);
 

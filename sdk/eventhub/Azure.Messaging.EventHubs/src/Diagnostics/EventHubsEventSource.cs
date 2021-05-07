@@ -774,18 +774,16 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
-        /// <param name="eventPosition">The description of the <see cref="EventPosition" /> used as the starting point for processing.</param>
         ///
-        [Event(39, Level = EventLevel.Verbose, Message = "Completed starting to process partition '{0}' using processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Starting at position: {4}.")]
+        [Event(39, Level = EventLevel.Verbose, Message = "Completed starting to process partition '{0}' using processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
         public virtual void EventProcessorPartitionProcessingStartComplete(string partitionId,
                                                                            string identifier,
                                                                            string eventHubName,
-                                                                           string consumerGroup,
-                                                                           string eventPosition)
+                                                                           string consumerGroup)
         {
             if (IsEnabled())
             {
-                WriteEvent(39, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, eventPosition ?? string.Empty);
+                WriteEvent(39, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
             }
         }
 

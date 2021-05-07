@@ -1,24 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/9a15b791-8d2f-436f-a734-25d128c72254/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/bb1b4371-062d-414d-bef3-b0d124ff721c/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "84",
         "Content-Type": "application/json",
-        "traceparent": "00-b1daf6db25d90644a7dab82a9340c341-dd18f6c005a34e4e-00",
-        "User-Agent": [
-          "azsdk-net-Monitory.Query/1.0.0-alpha.20210420.1",
-          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
-        ],
+        "traceparent": "00-39fb2970c538b3488f89301c80033554-166b5266119c7446-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "ef888e0b48e04b118dccb2adc69443e0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA1_102_CL | project TimeGenerated",
-        "timespan": "P7DT22H2M23.3719678S"
+        "query": "TableA1_116_CL | project TimeGenerated",
+        "timespan": "P7DT18H37M9.8267504S"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
@@ -27,10 +24,10 @@
         "Connection": "keep-alive",
         "Content-Length": "151",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 20 Apr 2021 22:11:04 GMT",
+        "Date": "Tue, 04 May 2021 18:37:10 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6ddc976cfd-6n8cb",
+        "Via": "1.1 draft-oms-6c84644dc4-jbp94",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -45,10 +42,10 @@
             ],
             "rows": [
               [
-                "2021-04-14T00:00:00Z"
+                "2021-04-28T00:00:00Z"
               ],
               [
-                "2021-04-17T00:00:00Z"
+                "2021-05-01T00:00:00Z"
               ]
             ]
           }
@@ -57,9 +54,8 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-20T15:02:23.3719678-07:00",
+    "DateTimeOffsetNow": "2021-05-04T11:37:09.8267504-07:00",
     "RandomSeed": "479188848",
-    "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254",
-    "WORKSPACE_KEY": "Kg=="
+    "WORKSPACE_ID": "bb1b4371-062d-414d-bef3-b0d124ff721c"
   }
 }

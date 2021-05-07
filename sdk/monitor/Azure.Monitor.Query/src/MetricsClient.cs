@@ -71,7 +71,7 @@ namespace Azure.Monitor.Query
             try
             {
                 return _metricsRestClient.List(resource,
-                    timespan: GetTimespan(options),
+                    timespan: options?.TimeSpan?.ToString(),
                     interval: options?.Interval,
                     filter: options?.Filter,
                     top: options?.Top,
@@ -104,7 +104,7 @@ namespace Azure.Monitor.Query
             try
             {
                 return await _metricsRestClient.ListAsync(resource,
-                    timespan: GetTimespan(options),
+                    timespan: options?.TimeSpan?.ToString(),
                     interval: options?.Interval,
                     filter: options?.Filter,
                     top: options?.Top,
@@ -217,34 +217,6 @@ namespace Azure.Monitor.Query
             {
                 scope.Failed(e);
                 throw;
-            }
-        }
-
-        private static string GetTimespan(MetricQueryOptions options)
-        {
-            var startTime = options?.StartTime != null ? TypeFormatters.ToString(options.StartTime.Value, "o") : null;
-            var endTime = options?.EndTime != null ? TypeFormatters.ToString(options.EndTime.Value, "o") : null;
-            var duration = options?.Duration != null ? TypeFormatters.ToString(options.Duration.Value, "P") : null;
-
-            switch (startTime, endTime, duration)
-            {
-                case (null, null, string):
-                    return duration;
-                case (string, string, null):
-                    return $"{startTime}/{endTime}";
-                case (string, null, string):
-                    return $"{startTime}/{duration}";
-                case (null, string, string):
-                    return $"{duration}/{endTime}";
-                case (null, null, null):
-                    return null;
-                default:
-                    throw new ArgumentException(
-                        $"The following combinations of {nameof(MetricQueryOptions.Duration)}, {nameof(MetricQueryOptions.StartTime)}, {nameof(MetricQueryOptions.EndTime)} are allowed: " + Environment.NewLine +
-                        $"  {nameof(MetricQueryOptions.Duration)}, " + Environment.NewLine +
-                        $"  {nameof(MetricQueryOptions.StartTime)} + {nameof(MetricQueryOptions.Duration)}" + Environment.NewLine +
-                        $"  {nameof(MetricQueryOptions.Duration)} + {nameof(MetricQueryOptions.EndTime)}" + Environment.NewLine +
-                        $"  {nameof(MetricQueryOptions.StartTime)} + {nameof(MetricQueryOptions.EndTime)}");
             }
         }
 

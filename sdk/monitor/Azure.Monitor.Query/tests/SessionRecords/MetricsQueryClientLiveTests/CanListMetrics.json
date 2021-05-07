@@ -6,11 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3cb9fdf7c65a38448cd114d0f8aca640-df79b70acb6e184b-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210429.1",
-          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
-        ],
+        "traceparent": "00-fca0549e05857744b5e70c94667e1e70-d0e7228c63caf340-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "41243e379d1e3f54b2b97fb33a3557ba",
         "x-ms-return-client-request-id": "true"
       },
@@ -21,17 +18,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "86362",
         "Content-Type": "application/json",
-        "Date": "Thu, 29 Apr 2021 17:51:37 GMT",
+        "Date": "Tue, 04 May 2021 18:37:32 GMT",
         "Request-Context": "appId=cid-v1:b021da79-5252-4375-9df5-2e17c1dcd822",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "377c57df-d97b-4a26-94b1-70df907d4f1b",
+        "x-ms-correlation-request-id": "6c2dc8e4-9ca0-4584-a3be-bf2adc7739d3",
         "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "{377c57df-d97b-4a26-94b1-70df907d4f1b}",
-        "x-ms-routing-request-id": "WESTCENTRALUS:20210429T175137Z:377c57df-d97b-4a26-94b1-70df907d4f1b",
+        "x-ms-request-id": "{6c2dc8e4-9ca0-4584-a3be-bf2adc7739d3}",
+        "x-ms-routing-request-id": "WESTUS:20210504T183733Z:6c2dc8e4-9ca0-4584-a3be-bf2adc7739d3",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -4900,7 +4897,7 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-29T10:51:35.3947165-07:00",
+    "DateTimeOffsetNow": "2021-05-04T11:37:31.6236535-07:00",
     "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmon2/providers/Microsoft.OperationalInsights/workspaces/pakrymmon2-logs",
     "METRICS_RESOURCE_NAMESPACE": "Microsoft.OperationalInsights/workspaces",
     "RandomSeed": "275861639"
