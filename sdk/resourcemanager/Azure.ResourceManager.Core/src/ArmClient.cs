@@ -86,13 +86,14 @@ namespace Azure.ResourceManager.Core
             TokenCredential credential,
             ArmClientOptions options)
         {
-            Pipeline = ManagementPipelineBuilder.Build(credential, baseUri, options);
-            Credential = credential;
-            BaseUri = baseUri;
             if (credential is null)
                 throw new ArgumentNullException(nameof(credential));
 
+            Credential = credential;
+            BaseUri = baseUri ?? new Uri(DefaultUri);
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
+            Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions);
+
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptions().TryGet(defaultSubscriptionId);

@@ -70,27 +70,27 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
+        public ArmResponse Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return ArmResponse.FromResponse(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return ArmResponse.FromResponse((await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
         /// <inheritdoc/>
-        public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
+        public ArmOperation StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return new PhVoidArmOperation(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return new PhVoidArmOperation(await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         #region PowerOn
@@ -98,42 +98,42 @@ namespace Proto.Compute
         ///  The operation to start a virtual machine. 
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public ArmResponse<Response> PowerOn(CancellationToken cancellationToken = default)
+        /// <returns> A response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        public ArmResponse PowerOn(CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartStart(Id.ResourceGroupName, Id.Name, cancellationToken);
-            return new ArmResponse(operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return ArmResponse.FromResponse(operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
         /// <summary>
         ///  The operation to start a virtual machine. 
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public async Task<ArmResponse<Response>> PowerOnAsync(CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        public async Task<ArmResponse> PowerOnAsync(CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartStartAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-            return new ArmResponse(await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+            return ArmResponse.FromResponse(await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
         }
 
         /// <summary>
         ///  The operation to start a virtual machine. 
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
-        public ArmOperation<Response> StartPowerOn(CancellationToken cancellationToken = default)
+        /// <returns> An <see cref="ArmOperation"/> that allows polling for completion of the operation. </returns>
+        public ArmOperation StartPowerOn(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartStart(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return new PhVoidArmOperation(Operations.StartStart(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <summary>
         ///  The operation to start a virtual machine. 
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
-        public async Task<ArmOperation<Response>> StartPowerOnAsync(CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation"/> that allows polling for completion of the operation. </returns>
+        public async Task<ArmOperation> StartPowerOnAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartStartAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false));
+            return new PhVoidArmOperation(await Operations.StartStartAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false));
         }
         #endregion
 
@@ -143,11 +143,11 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public ArmResponse<Response> PowerOff(bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        /// <returns> A response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        public ArmResponse PowerOff(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartPowerOff(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken);
-            return new ArmResponse(operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return ArmResponse.FromResponse(operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
         /// <summary>
@@ -155,11 +155,11 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public async Task<ArmResponse<Response>> PowerOffAsync(bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        public async Task<ArmResponse> PowerOffAsync(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartPowerOffAsync(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken).ConfigureAwait(false);
-            return new ArmResponse(await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+            return ArmResponse.FromResponse(await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -167,10 +167,10 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
-        public ArmOperation<Response> StartPowerOff(bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        /// <returns> An <see cref="ArmOperation"/> that allows polling for completion of the operation. </returns>
+        public ArmOperation StartPowerOff(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartPowerOff(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken));
+            return new PhVoidArmOperation(Operations.StartPowerOff(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken));
         }
 
         /// <summary>
@@ -178,10 +178,10 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
-        public async Task<ArmOperation<Response>> StartPowerOffAsync(bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation"/> that allows polling for completion of the operation. </returns>
+        public async Task<ArmOperation> StartPowerOffAsync(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartPowerOffAsync(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken).ConfigureAwait(false));
+            return new PhVoidArmOperation(await Operations.StartPowerOffAsync(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken).ConfigureAwait(false));
         }
         #endregion
 

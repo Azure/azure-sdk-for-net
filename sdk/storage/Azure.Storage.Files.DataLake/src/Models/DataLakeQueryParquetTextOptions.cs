@@ -6,7 +6,8 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// Parquet text configuration.
     /// </summary>
-    public class DataLakeQueryParquetTextOptions : DataLakeQueryTextOptions
+    // TODO https://github.com/Azure/azure-sdk-for-net/issues/20758
+    internal class DataLakeQueryParquetTextOptions : DataLakeQueryTextOptions
     {
     }
 }

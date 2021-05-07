@@ -67,8 +67,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg3136/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk5989?api-version=2020-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnMzEzNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvbWFpbnRlbmFuY2VzZGs1OTg5P2FwaS12ZXJzaW9uPTIwMjAtMDctMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg3136/providers/Microsoft.Maintenance/maintenanceConfigurations/maintenancesdk5989?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnMzEzNi9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvbWFpbnRlbmFuY2VzZGs1OTg5P2FwaS12ZXJzaW9uPTIwMjEtMDUtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n  \"maintenanceWindow\":{ \"startDateTime\": \"2020-04-01 01:00:00\"\r\n },\r\n    \"maintenanceScope\": \"Host\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -199,8 +199,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg6391/providers/Microsoft.Maintenance/maintenanceConfigurations/acinetsdk2792?api-version=2020-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnNjM5MS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvYWNpbmV0c2RrMjc5Mj9hcGktdmVyc2lvbj0yMDIwLTA3LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourcegroups/maintenance_rg6391/providers/Microsoft.Maintenance/maintenanceConfigurations/acinetsdk2792?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Jlc291cmNlZ3JvdXBzL21haW50ZW5hbmNlX3JnNjM5MS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1haW50ZW5hbmNlL21haW50ZW5hbmNlQ29uZmlndXJhdGlvbnMvYWNpbmV0c2RrMjc5Mj9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n  \"maintenanceWindow\":{ \"startDateTime\": \"2020-04-01 01:00:00\"\r\n },\r\n    \"maintenanceScope\": \"Host\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -265,8 +265,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/providers/Microsoft.Maintenance/maintenanceConfigurations?api-version=2020-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFpbnRlbmFuY2UvbWFpbnRlbmFuY2VDb25maWd1cmF0aW9ucz9hcGktdmVyc2lvbj0yMDIwLTA3LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/providers/Microsoft.Maintenance/maintenanceConfigurations?api-version=2021-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDJjOTc0ZGQtMmMwMy00ZjFiLTk2YWQtYjA3ZjA1MGFhYTc0L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFpbnRlbmFuY2UvbWFpbnRlbmFuY2VDb25maWd1cmF0aW9ucz9hcGktdmVyc2lvbj0yMDIxLTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

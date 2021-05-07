@@ -142,6 +142,8 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
   $fields += "PackageBetaVersions"
   $fields += "PackageGAVersion"
   $fields += "PackagePatchVersions"
+  $fields += "Generated"
+  $fields += "RoadmapState"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Package'"
@@ -295,13 +297,14 @@ function UpdatePackageWorkItemReleaseState($id, $state, $releaseType, $outputCom
   return UpdateWorkItem -id $id -state $state -fields $fields -outputCommand $outputCommand
 }
 
-function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $outputCommand = $false)
+function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPrompt = $false, $outputCommand = $false)
 {
   $workItem = FindPackageWorkItem -lang $lang -packageName $pkg.Package -version $verMajorMinor -includeClosed $true -outputCommand $outputCommand
 
   if (!$workItem) {
     $latestVersionItem = FindLatestPackageWorkItem -lang $lang -packageName $pkg.Package -outputCommand $outputCommand
     $assignedTo = "me"
+    $extraFields = @()
     if ($latestVersionItem) {
       Write-Verbose "Copying data from latest matching [$($latestVersionItem.id)] with version $($latestVersionItem.fields["Custom.PackageVersionMajorMinor"])"
       if ($latestVersionItem.fields["System.AssignedTo"]) {
@@ -312,14 +315,33 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $outputCo
       if (!$pkg.RepoPath -and $pkg.RepoPath -ne "NA" -and $pkg.fields["Custom.PackageRepoPath"]) {
         $pkg.RepoPath = $pkg.fields["Custom.PackageRepoPath"]
       }
+
+      $extraFields += "`"Generated=" + $latestVersionItem.fields["Custom.Generated"] + "`""
+      $extraFields += "`"RoadmapState=" +  $latestVersionItem.fields["Custom.RoadmapState"] + "`""
     }
-    $workItem = CreateOrUpdatePackageWorkItem $lang $pkg $verMajorMinor -existingItem $null -assignedTo $assignedTo -outputCommand $outputCommand
+
+    if ($allowPrompt) {
+      if (!$pkg.DisplayName) {
+        Write-Host "We need a package display name to be used in various places and it should be consistent across languages for similar packages."
+        while (($readInput = Read-Host -Prompt "Input the display name") -eq "") { }
+        $packageInfo.DisplayName = $readInput
+      }
+
+      if (!$pkg.ServiceName) {
+        Write-Host "We need a package service name to be used in various places and it should be consistent across languages for similar packages."
+        while (($readInput = Read-Host -Prompt "Input the service name") -eq "") { }
+        $packageInfo.ServiceName = $readInput
+      }
+    }
+
+
+    $workItem = CreateOrUpdatePackageWorkItem $lang $pkg $verMajorMinor -existingItem $null -assignedTo $assignedTo -extraFields $extraFields -outputCommand $outputCommand
   }
 
   return $workItem
 }
 
-function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingItem, $assignedTo = $null, $outputCommand = $true)
+function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingItem, $assignedTo = $null, $extraFields = $null, $outputCommand = $true)
 {
   if (!$lang -or !$pkg -or !$verMajorMinor) {
     Write-Host "Cannot create or update because one of lang, pkg or verMajorMinor aren't set. [$lang|$($pkg.Package)|$verMajorMinor]"
@@ -342,6 +364,10 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   $fields += "`"PackageVersionMajorMinor=${verMajorMinor}`""
   $fields += "`"ServiceName=${serviceName}`""
   $fields += "`"PackageRepoPath=${pkgRepoPath}`""
+
+  if ($extraFields) {
+    $fields += $extraFields
+  }
 
   if ($existingItem)
   {

@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class AvailabilityResponse
+    internal partial class AvailabilityResponse
     {
         internal static AvailabilityResponse DeserializeAvailabilityResponse(JsonElement element)
         {
-            Optional<EventAvailability> availability = default;
+            Optional<Availability> availability = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availability"))
@@ -24,7 +24,7 @@ namespace Azure.IoT.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    availability = EventAvailability.DeserializeEventAvailability(property.Value);
+                    availability = Availability.DeserializeAvailability(property.Value);
                     continue;
                 }
             }

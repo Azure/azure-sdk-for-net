@@ -5,6 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Azure.Identity;
 using CommandLine;
+using Microsoft.Azure.Devices;
+using Microsoft.Azure.Devices.Client;
 
 namespace Azure.IoT.TimeSeriesInsights.Samples
 {
@@ -27,20 +29,32 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                         Environment.Exit(1);
                     });
 
-            // Instantiate the client
+            // Instantiate the Time Series Insights client
             TimeSeriesInsightsClient tsiClient = GetTimeSeriesInsightsClient(
                 options.TenantId,
                 options.ClientId,
                 options.ClientSecret,
                 options.TsiEnvironmentFqdn);
 
-            // Run the samples
+            // Instantiate an IoT Hub device client client in order to send telemetry to the hub
+            DeviceClient deviceClient = await GetDeviceClientAsync(options.IoTHubConnectionString).ConfigureAwait(false);
 
-            var tsiLifecycleSamples = new TimeSeriesInsightsLifecycleSamples(tsiClient, options.TsiEnvironmentFqdn);
-            await tsiLifecycleSamples.RunSamplesAsync();
+            // Run the samples
 
             var tsiInstancesSamples = new InstancesSamples();
             await tsiInstancesSamples.RunSamplesAsync(tsiClient);
+
+            var tsiTypesSamples = new TypesSamples();
+            await tsiTypesSamples.RunSamplesAsync(tsiClient);
+
+            var tsiHierarchiesSamples = new HierarchiesSamples();
+            await tsiHierarchiesSamples.RunSamplesAsync(tsiClient);
+            
+            var tsiModelSettingsSamples = new ModelSettingsSamples();
+            await tsiModelSettingsSamples.RunSamplesAsync(tsiClient);
+
+            var querySamples = new QuerySamples();
+            await querySamples.RunSamplesAsync(tsiClient, deviceClient);
         }
 
         /// <summary>
@@ -57,7 +71,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             #region Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret
 
-            // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+            // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based on the environment it is executing in.
             // It attempts to use multiple credential types in an order until it finds a working credential.
             var tokenCredential = new DefaultAzureCredential();
 
@@ -68,6 +82,27 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #endregion Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret
 
             return client;
+        }
+
+        private static async Task<DeviceClient> GetDeviceClientAsync(string iotHubConnectionString)
+        {
+            // Create a device
+            using var registryManager = RegistryManager.CreateFromConnectionString(iotHubConnectionString);
+            string deviceId = Guid.NewGuid().ToString();
+            var requestDevice = new Device(deviceId);
+
+            // Add the device to the device manager
+            Device device = await registryManager.AddDeviceAsync(requestDevice).ConfigureAwait(false);
+            await Task.Delay(5000).ConfigureAwait(false);
+            await registryManager.CloseAsync().ConfigureAwait(false);
+
+            // Create a device client
+            string iotHubHostName = HostNameHelper.GetHostName(iotHubConnectionString);
+            string deviceConnectinString = $"HostName={iotHubHostName};DeviceId={device.Id};SharedAccessKey={device.Authentication.SymmetricKey.PrimaryKey}";
+            DeviceClient deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectinString, Microsoft.Azure.Devices.Client.TransportType.Mqtt);
+            await deviceClient.OpenAsync().ConfigureAwait(false);
+
+            return deviceClient;
         }
     }
 }

@@ -142,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.Cancel();
 
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
-            Assert.That(() => mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(() => mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
                 .Returns(mockConsumer);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest);
             Assert.That(partitionProcessor.CancellationSource, Is.SameAs(cancellationSource));
 
             cancellationSource.Cancel();
@@ -210,7 +210,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
                 .Returns(mockConsumer.Object);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest);
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
 
             var lastEventProperties = partitionProcessor.ReadLastEnqueuedEventProperties();
@@ -244,7 +244,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(default(TransportConsumer))
                 .Callback(() => completionSource.TrySetResult(true));
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
                 .Returns(mockConsumer.Object);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -349,7 +349,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(badMockConsumer.Object)
                 .Returns(mockConsumer.Object);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -405,7 +405,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(connection => connection.CreateTransportConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<uint?>(), It.IsAny<long?>()))
                 .Returns(mockConsumer.Object);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -461,7 +461,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.ProcessEventBatchAsync(partition, It.IsAny<IReadOnlyList<EventData>>(), It.IsAny<bool>(), cancellationSource.Token))
                 .Returns(Task.CompletedTask);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -515,7 +515,7 @@ namespace Azure.Messaging.EventHubs.Tests
                  .Setup(processor => processor.ProcessEventBatchAsync(partition, It.IsAny<IReadOnlyList<EventData>>(), It.IsAny<bool>(), cancellationSource.Token))
                  .Returns(Task.CompletedTask);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -564,7 +564,7 @@ namespace Azure.Messaging.EventHubs.Tests
                  .Returns(Task.CompletedTask)
                  .Callback(() => completionSource.TrySetResult(true));
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -610,7 +610,7 @@ namespace Azure.Messaging.EventHubs.Tests
                .Callback(() => completionSource.TrySetResult(true))
                .Returns(Task.CompletedTask);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource);
             Assert.That(async () => await partitionProcessor.ProcessingTask, Throws.Exception.EqualTo(expectedException), "The processing task should fail.");
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
@@ -673,7 +673,7 @@ namespace Azure.Messaging.EventHubs.Tests
                .Callback(() => errorCompletion.TrySetResult(true))
                .Returns(Task.CompletedTask);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
             var completionSources = Task.WhenAll(receiveCompletion.Task, errorCompletion.Task);
 
             await Task.WhenAny(completionSources, Task.Delay(Timeout.Infinite, cancellationSource.Token));
@@ -737,7 +737,7 @@ namespace Azure.Messaging.EventHubs.Tests
                .Setup(log => log.EventProcessorPartitionProcessingError(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                .Callback(() => errorCompletion.TrySetResult(true));
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
             var completionSources = Task.WhenAll(receiveCompletion.Task, errorCompletion.Task);
 
             await Task.WhenAny(completionSources, Task.Delay(Timeout.Infinite, cancellationSource.Token));
@@ -801,7 +801,7 @@ namespace Azure.Messaging.EventHubs.Tests
                .Callback(() => errorCompletion.TrySetResult(true))
                .Returns(Task.CompletedTask);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
             var completionSources = Task.WhenAll(receiveCompletion.Task, errorCompletion.Task);
 
             await Task.WhenAny(completionSources, Task.Delay(Timeout.Infinite, cancellationSource.Token));
@@ -849,7 +849,7 @@ namespace Azure.Messaging.EventHubs.Tests
                  .Callback(() => completionSource.TrySetResult(true))
                  .Throws(expectedException);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -910,7 +910,7 @@ namespace Azure.Messaging.EventHubs.Tests
                  .Callback(() => completionSource.TrySetResult(true))
                  .Throws(expectedException);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -970,7 +970,7 @@ namespace Azure.Messaging.EventHubs.Tests
                  .Callback(() => completionSource.TrySetResult(true))
                  .Throws(developerException);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1021,7 +1021,7 @@ namespace Azure.Messaging.EventHubs.Tests
                  .Setup(processor => processor.ProcessEventBatchAsync(partition, It.IsAny<IReadOnlyList<EventData>>(), It.IsAny<bool>(), cancellationSource.Token))
                  .Returns(Task.CompletedTask);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, position, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, position);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1073,7 +1073,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(badMockConsumer.Object)
                 .Returns(mockConsumer.Object);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1134,7 +1134,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     return mockConsumer.Object;
                 });
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, initialStartingPosition, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, initialStartingPosition);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1191,7 +1191,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
                 .Returns(mockConsumer.Object);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1241,7 +1241,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
                 .Returns(mockConsumer.Object);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1290,7 +1290,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
                 .Returns(mockConsumer.Object);
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1355,7 +1355,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     return mockConsumer.Object;
                 });
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1424,7 +1424,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     return mockConsumer.Object;
                 });
 
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, EventPosition.Earliest, cancellationSource);
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource, EventPosition.Earliest);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");

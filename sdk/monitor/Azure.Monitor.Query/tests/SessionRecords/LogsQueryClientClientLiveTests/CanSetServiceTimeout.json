@@ -1,0 +1,153 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/bb1b4371-062d-414d-bef3-b0d124ff721c/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "72",
+        "Content-Type": "application/json",
+        "Prefer": "wait=600",
+        "traceparent": "00-b3aea9130f79bb4689c448329ec206db-9bbbf70b15c5f24a-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "6f2a881af2d0cc7f1d2dc5f84904637e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "TableA1_116_CL",
+        "timespan": "2021-04-26T00:00:00.0000000Z/P7D"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "66",
+        "Connection": "keep-alive",
+        "Content-Length": "929",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 04 May 2021 18:37:10 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "Via": "1.1 draft-oms-6c84644dc4-d6p68",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "MG",
+                "type": "string"
+              },
+              {
+                "name": "ManagementGroupName",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Computer",
+                "type": "string"
+              },
+              {
+                "name": "RawData",
+                "type": "string"
+              },
+              {
+                "name": "IntColumn_d",
+                "type": "real"
+              },
+              {
+                "name": "StringColumn_s",
+                "type": "string"
+              },
+              {
+                "name": "BoolColumn_b",
+                "type": "bool"
+              },
+              {
+                "name": "FloatColumn_d",
+                "type": "real"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                "bb1b4371-062d-414d-bef3-b0d124ff721c",
+                "RestAPI",
+                "",
+                "",
+                "2021-04-26T00:00:00Z",
+                "",
+                "",
+                1,
+                "a",
+                false,
+                0,
+                "TableA1_116_CL",
+                ""
+              ],
+              [
+                "bb1b4371-062d-414d-bef3-b0d124ff721c",
+                "RestAPI",
+                "",
+                "",
+                "2021-04-28T00:00:00Z",
+                "",
+                "",
+                3,
+                "b",
+                true,
+                1.20000005,
+                "TableA1_116_CL",
+                ""
+              ],
+              [
+                "bb1b4371-062d-414d-bef3-b0d124ff721c",
+                "RestAPI",
+                "",
+                "",
+                "2021-05-01T00:00:00Z",
+                "",
+                "",
+                1,
+                "c",
+                false,
+                1.10000002,
+                "TableA1_116_CL",
+                ""
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-05-04T11:37:10.1865400-07:00",
+    "RandomSeed": "253792280",
+    "WORKSPACE_ID": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+  }
+}

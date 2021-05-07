@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Models
             double searchScore = default;
             Optional<double?> searchRerankerScore = default;
             Optional<IReadOnlyDictionary<string, IList<string>>> searchHighlights = default;
-            Optional<IReadOnlyDictionary<string, IList<CaptionResult>>> searchCaptions = default;
+            Optional<IReadOnlyList<CaptionResult>> searchCaptions = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -65,23 +65,18 @@ namespace Azure.Search.Documents.Models
                         searchCaptions = null;
                         continue;
                     }
-                    Dictionary<string, IList<CaptionResult>> dictionary = new Dictionary<string, IList<CaptionResult>>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    List<CaptionResult> array = new List<CaptionResult>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<CaptionResult> array = new List<CaptionResult>();
-                        foreach (var item in property0.Value.EnumerateArray())
-                        {
-                            array.Add(CaptionResult.DeserializeCaptionResult(item));
-                        }
-                        dictionary.Add(property0.Name, array);
+                        array.Add(CaptionResult.DeserializeCaptionResult(item));
                     }
-                    searchCaptions = dictionary;
+                    searchCaptions = array;
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SearchResult(searchScore, Optional.ToNullable(searchRerankerScore), Optional.ToDictionary(searchHighlights), Optional.ToDictionary(searchCaptions), additionalProperties);
+            return new SearchResult(searchScore, Optional.ToNullable(searchRerankerScore), Optional.ToDictionary(searchHighlights), Optional.ToList(searchCaptions), additionalProperties);
         }
     }
 }

@@ -588,10 +588,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public event System.Action<Azure.Storage.Files.DataLake.Models.DataLakeQueryError> ErrorHandler { add { } remove { } }
     }
-    public partial class DataLakeQueryParquetTextOptions : Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions
-    {
-        public DataLakeQueryParquetTextOptions() { }
-    }
     public abstract partial class DataLakeQueryTextOptions
     {
         protected DataLakeQueryTextOptions() { }
@@ -992,6 +988,7 @@ namespace Azure.Storage.Sas
         public Azure.Storage.Sas.SasProtocol Protocol { get { throw null; } set { } }
         public string Resource { get { throw null; } set { } }
         public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Version { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

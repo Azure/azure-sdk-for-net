@@ -50,5 +50,15 @@ namespace Proto.Network
         {
             return new NetworkSecurityGroupContainer(resourceGroup);
         }
+
+        /// <summary>
+        /// Gets a <see cref="LoadBalancerContainer"/> under a <see cref="ResourceGroup"/>.
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <returns> An instance of <see cref="LoadBalancerContainer" />. </returns>
+        public static LoadBalancerContainer GetLoadBalancers(this ResourceGroupOperations resourceGroup)
+        {
+            return new LoadBalancerContainer(resourceGroup);
+        }
     }
 }

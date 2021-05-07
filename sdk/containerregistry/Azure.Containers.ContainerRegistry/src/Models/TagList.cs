@@ -10,11 +10,11 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class TagList
     {
         /// <summary> List of tag attribute details. </summary>
-        public IReadOnlyList<TagProperties> Tags
+        public IReadOnlyList<ArtifactTagProperties> Tags
         {
             get
             {
-                List<TagProperties> tags = new List<TagProperties>();
+                List<ArtifactTagProperties> tags = new List<ArtifactTagProperties>(this.TagAttributeBases.Count);
                 foreach (var tag in this.TagAttributeBases)
                 {
                     tags.Add(FromTagAttributesBase(this.Repository, tag));
@@ -23,9 +23,9 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal static TagProperties FromTagAttributesBase(string repository, TagAttributesBase attributesBase)
+        internal static ArtifactTagProperties FromTagAttributesBase(string repository, TagAttributesBase attributesBase)
         {
-            return new TagProperties(
+            return new ArtifactTagProperties(
                 repository,
                 attributesBase.Name,
                 attributesBase.Digest,
