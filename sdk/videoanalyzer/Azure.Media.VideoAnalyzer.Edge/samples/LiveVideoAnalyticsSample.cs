@@ -24,10 +24,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
 
         public LiveVideoAnalyticsSample()
         {
-            #region Snippet:Azure_MediaServices_Samples_ConnectionString
+            #region Snippet:Azure_VideoAnalyzer_Samples_ConnectionString
             var connectionString = "connectionString";
             this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
-            #endregion Snippet:Azure_MediaServices_Samples_ConnectionString
+            #endregion Snippet:Azure_VideoAnalyzer_Samples_ConnectionString
 
         }
 
@@ -41,14 +41,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
                 var livePipeline = BuildLivePipeline(pipelineTopology.Name);
 
                 //set graph topology without using helper function
-                #region Snippet:Azure_MediaServices_Samples_InvokeDirectMethod
+                #region Snippet:Azure_VideoAnalyzeramples_InvokeDirectMethod
                 var setPipelineTopRequest = new PipelineTopologySetRequest(pipelineTopology);
 
                 var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
                 directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());
 
                 var setPipelineTopResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
-                #endregion Snippet:Azure_MediaServices_Samples_InvokeDirectMethod
+                #endregion Snippet:Azure_VideoAnalyzeramples_InvokeDirectMethod
 
                 // get a graph topology using helper function
                 var getPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyGetRequest(pipelineTopology.Name));
@@ -94,7 +94,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             return await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
         }
 
-        #region Snippet:Azure_MediaServices_Samples_BuildLivePipeline
+        #region Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
         private LivePipeline BuildLivePipeline(string graphTopologyName)
         {
             var livePipelineProps = new LivePipelineProperties
@@ -110,9 +110,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
                 Properties = livePipelineProps
             };
         }
-        #endregion Snippet:Azure_MediaServices_Samples_BuildLivePipeline
+        #endregion Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
 
-        #region Snippet:Azure_MediaServices_Samples_BuildPipelineTopology
+        #region Snippet:Azure_VideoAnalyzerles_BuildPipelineTopology
         private PipelineTopology BuildPipelineTopology()
         {
             var pipelineTopologyProps = new PipelineTopologyProperties
@@ -127,9 +127,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
                 Properties = pipelineTopologyProps
             };
         }
-        #endregion Snippet:Azure_MediaServices_Samples_BuildPipelineTopology
+        #endregion Snippet:Azure_VideoAnalyzerles_BuildPipelineTopology
 
-        #region Snippet:Azure_MediaServices_Samples_SetParameters
+        #region Snippet:Azure_VideoAnalyzerces_Samples_SetParameters
         // Add parameters to Topology
         private void SetParameters(PipelineTopologyProperties pipelineTopologyProperties)
         {
@@ -152,9 +152,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
                 Description = "hub sink output"
             });
         }
-        #endregion Snippet:Azure_MediaServices_Samples_SetParameters
+        #endregion Snippet:Azure_VideoAnalyzerces_Samples_SetParameters
 
-        #region Snippet:Azure_MediaServices_Samples_SetSourcesSinks
+        #region Snippet:Azure_VideoAnalyzers_Samples_SetSourcesSinks
         // Add sources to Topology
         private void SetSources(PipelineTopologyProperties pipelineTopologyProps)
         {
@@ -174,6 +174,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             };
             pipelineTopologyProps.Sinks.Add(new IotHubMessageSink("msgSink", nodeInput, "${hubSinkOutputName}"));
         }
-        #endregion Snippet:Azure_MediaServices_Samples_SetSourcesSinks
+        #endregion Snippet:Azure_VideoAnalyzers_Samples_SetSourcesSinks
     }
 }

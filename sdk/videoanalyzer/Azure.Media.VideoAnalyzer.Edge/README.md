@@ -1,29 +1,30 @@
-# Azure Live Video Analytics for IoT Edge client library for .NET
+# Azure Video Analyzer for IoT Edge client library for .NET
 
-Live Video Analytics on IoT Edge provides a platform to build intelligent video applications that span the edge and the cloud. The platform offers the capability to capture, record, and analyze live video along with publishing the results, video and video analytics, to Azure services in the cloud or the edge. It is designed to be an extensible platform, enabling you to connect different video analysis edge modules (such as Cognitive services containers, custom edge modules built by you with open-source machine learning models or custom models trained with your own data) to it and use them to analyze live video without worrying about the complexity of building and running a live video pipeline.
+Azure Video Analyzer on IoT Edge provides a platform to build intelligent video applications that span the edge and the cloud. The platform offers the capability to capture, record, and analyze live video along with publishing the results, video and video analytics, to Azure services in the cloud or the edge. It is designed to be an extensible platform, enabling you to connect different video analysis edge modules (such as Cognitive services containers, custom edge modules built by you with open-source machine learning models or custom models trained with your own data) to it and use them to analyze live video without worrying about the complexity of building and running a live video pipeline.
 
-Use the client library for Live Video Analytics on IoT Edge to:
+Use the client library for Video Analyzer on IoT Edge to:
 
-- Simplify interactions with the [Microsoft Azure IoT SDKs](https://github.com/azure/azure-iot-sdks) 
-- Programatically construct media graph topologies and instances
+- Simplify interactions with the [Microsoft Azure IoT SDKs](https://github.com/azure/azure-iot-sdks)
+- Programmatically construct pipeline topologies and live pipelines
 
-[Product documentation][doc_product] | [Direct methods][doc_direct_methods] | [Media graphs][doc_media_graph] | [Source code][source] | [Samples][samples]
+[Product documentation][doc_product] | [Direct methods][doc_direct_methods] | [Pipelines][doc_pipelines] | [Source code][source] | [Samples][samples]
 
 ## Getting started
 
-This is a models only sdk. All client operations are done using the [Microsoft Azure IoT SDKs](https://github.com/azure/azure-iot-sdks). This sdk provides models you can use to interact with the Azure Iot SDKs.
+This is a models-only sdk. All client operations are done using the [Microsoft Azure IoT SDKs](https://github.com/azure/azure-iot-sdks). This sdk provides models you can use to interact with the Azure Iot SDKs.
 
 ### Authenticate the client
 
-As mentioned above the client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: https://github.com/Azure/azure-iot-sdk-csharp. 
-```C# Snippet:Azure_MediaServices_Samples_ConnectionString
+As mentioned above the client is coming from Azure IoT SDK. You will need to obtain an [IoT device connection string][iot_device_connection_string] in order to authenticate the Azure IoT SDK. For more information please visit: [https://github.com/Azure/azure-iot-sdk-csharp].
+
+```C# Snippet:Azure_VideoAnalyzer_Samples_ConnectionString
 var connectionString = "connectionString";
 this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
 ```
 
 ### Install the package
 
-Install the Live Video Analytics client library for .NET with NuGet:
+Install the Video Analyzer client library for .NET with NuGet:
 
 `dotnet add package Azure.Media.Analytics.Edge --version 1.0.0-beta.1`
 
@@ -33,30 +34,34 @@ Install the Azure IoT Hub SDk for .Net with NuGet:
 
 ### Prerequisites
 
-* C# is required to use this package.
-* You need an active [Azure subscription][azure_sub], and an [IoT device connection string][iot_device_connection_string] to use this package.
-* You will need to use the version of the SDK that corresponds to the version of the LVA Edge module you are using.
+- C# is required to use this package.
+- You need an active [Azure subscription][azure_sub] and an [IoT device connection string][iot_device_connection_string] to use this package.
+- You will need to use the version of the SDK that corresponds to the version of the Video Analyzer Edge module you are using.
 
-    | SDK  | LVA Edge Module  |
+    | SDK  | Video Analyzer Edge Module  |
     |---|---|
     | 1.0.0b1  | 2.0  |
 
 ### Creating a pipeline topology and making requests
-Please visit the [Examples](#examples) for starter code
+
+Please visit the [Examples](#examples) for starter code.
+
 ## Key concepts
 
 ### Pipeline Topology vs Live Pipeline
-A _pipeline topology_ is a blueprint or template of a graph. It defines the parameters of the graph using placeholders as values for them. A _live pipeline_ references a pipeline topology and specifies the parameters. This way you are able to have multiple live pipelines referencing the same topology but with different values for parameters. For more information please visit [Media graph topologies and instances][doc_media_graph] 
+
+A _pipeline topology_ is a blueprint or template for instantiating live pipelines. It defines the parameters of the pipeline using placeholders as values for them. A _live pipeline_ references a pipeline topology and specifies the parameters. This way you are able to have multiple live pipelines referencing the same topology but with different values for parameters. For more information please visit [pipeline topologies and live pipelines][doc_pipelines].
 
 ### CloudToDeviceMethod
 
-The `CloudToDeviceMethod` is part of the [azure-iot-hub SDk][iot-hub-sdk]. This method allows you to communicate one way notifications to a device in your IoT hub. In our case, we want to communicate various graph methods such as `MediaGraphTopologySetRequest` and `MediaGraphTopologyGetRequest`. To use `CloudToDeviceMethod` you need to pass in one parameter: `method_name` and then set the Json payload of that method. 
+The `CloudToDeviceMethod` is part of the [azure-iot-hub SDk][iot-hub-sdk]. This method allows you to communicate one way notifications to a device in your IoT hub. In our case, we want to communicate various methods such as `PipelineTopologySetRequest` and `PipelineTopologyGetRequest`. To use `CloudToDeviceMethod` you need to pass in one parameter: `method_name` and then set the Json payload of that method.
 
-The parameter `method_name` is the name of the media graph request you are sending. Make sure to use each method's predefined `method_name` property. For example, `MediaGraphTopologySetRequest.method_name`. 
+The parameter `method_name` is the name of the request you are sending. Make sure to use each method's predefined `method_name` property. For example, `PipelineTopologySetRequest.method_name`.
 
-To set the Json payload of the cloud method, use the media graph request method's `GetPayloadAsJson()` function. For example, `directCloudMethod.SetPayloadJson(MediaGraphTopologySetRequest.GetPayloadAsJson())`
+To set the Json payload of the cloud method, use the pipeline request method's `GetPayloadAsJson()` function. For example, `directCloudMethod.SetPayloadJson(PipelineTopologySetRequest.GetPayloadAsJson())`
 
 ### Thread safety
+
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
@@ -73,8 +78,10 @@ We guarantee that all client instance methods are thread-safe and independent of
 ## Examples
 
 ### Creating a pipeline topology
+
 To create a pipeline topology you need to define parameters, sources, and sinks.
-```C# Snippet:Azure_MediaServices_Samples_SetParameters
+
+```C# Snippet:Azure_VideoAnalyzerces_Samples_SetParameters
 // Add parameters to Topology
 private void SetParameters(PipelineTopologyProperties pipelineTopologyProperties)
 {
@@ -99,7 +106,7 @@ private void SetParameters(PipelineTopologyProperties pipelineTopologyProperties
 }
 ```
 
-```C# Snippet:Azure_MediaServices_Samples_SetSourcesSinks
+```C# Snippet:Azure_VideoAnalyzers_Samples_SetSourcesSinks
 // Add sources to Topology
 private void SetSources(PipelineTopologyProperties pipelineTopologyProps)
 {
@@ -121,7 +128,7 @@ private void SetSinks(PipelineTopologyProperties pipelineTopologyProps)
 }
 ```
 
-```C# Snippet:Azure_MediaServices_Samples_BuildPipelineTopology
+```C# Snippet:Azure_VideoAnalyzerles_BuildPipelineTopology
 private PipelineTopology BuildPipelineTopology()
 {
     var pipelineTopologyProps = new PipelineTopologyProperties
@@ -138,9 +145,11 @@ private PipelineTopology BuildPipelineTopology()
 }
 ```
 
-### Creating a live pipeline 
+### Creating a live pipeline
+
 To create a live pipeline, you need to have an existing pipeline topology.
-```C# Snippet:Azure_MediaServices_Samples_BuildLivePipeline
+
+```C# Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
 private LivePipeline BuildLivePipeline(string graphTopologyName)
 {
     var livePipelineProps = new LivePipelineProperties
@@ -158,9 +167,11 @@ private LivePipeline BuildLivePipeline(string graphTopologyName)
 }
 ```
 
-### Invoking a graph method request
-To invoke a graph method on your device you need to first define the request using the lva sdk. Then send that method request using the iot sdk's `CloudToDeviceMethod`
-```C# Snippet:Azure_MediaServices_Samples_InvokeDirectMethod
+### Invoking a direct method request
+
+To invoke a direct method on your device you need to first define the request using the Video Analyzer SDK, then send that method request using the IoT SDK's `CloudToDeviceMethod`.
+
+```C# Snippet:Azure_VideoAnalyzeramples_InvokeDirectMethod
 var setPipelineTopRequest = new PipelineTopologySetRequest(pipelineTopology);
 
 var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
@@ -169,7 +180,7 @@ directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());
 var setPipelineTopResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
 ```
 
-To try different media graph topologies with the SDK, please see the official [Samples][samples].
+To try different pipeline topologies with the SDK, please see the official [Samples][samples].
 
 ## Troubleshooting
 
@@ -214,12 +225,12 @@ additional questions or comments.
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/mediaservices
 [samples]: https://github.com/Azure-Samples/live-video-analytics-iot-edge-csharp
 
-[doc_direct_methods]: https://docs.microsoft.com/azure/media-services/live-video-analytics-edge/direct-methods
-[doc_media_graph]: https://docs.microsoft.com/azure/media-services/live-video-analytics-edge/media-graph-concept#media-graph-topologies-and-instances
-[doc_product]: https://docs.microsoft.com/azure/media-services/live-video-analytics-edge/
+[doc_direct_methods]: TODO
+[doc_pipelines]: TODO
+[doc_product]: TODO
 
 [iot-device-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices.Client/
 [iot-hub-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices/
-[iot_device_connection_string]: https://docs.microsoft.com/azure/media-services/live-video-analytics-edge/get-started-detect-motion-emit-events-quickstart
+[iot_device_connection_string]: TODO
 
 [github-page-issues]: https://github.com/Azure/azure-sdk-for-net/issues
