@@ -51,7 +51,7 @@ namespace Azure.Containers.ContainerRegistry
             _authenticationClient = authenticationClient;
             _refreshTokenCache = new ContainerRegistryRefreshTokenCache(credential, authenticationClient, tokenRefreshOffset, tokenRefreshRetryDelay);
             _aadScopes = new[] { aadScope };
-            _anonymousAccess = credential == null;
+            _anonymousAccess = credential is ContainerRegistryAnonymousAccessCredential;
         }
 
         // Since we'll not cache the AAD access token or set an auth header on the initial request,
@@ -126,11 +126,11 @@ namespace Azure.Containers.ContainerRegistry
             Response<AcrAccessToken> acrAccessToken = null;
             if (async)
             {
-                acrAccessToken = await _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, acrRefreshToken: null, TokenGrantType.Password, cancellationToken ).ConfigureAwait(false);
+                acrAccessToken = await _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, acrRefreshToken: string.Empty, TokenGrantType.Password, cancellationToken ).ConfigureAwait(false);
             }
             else
             {
-                acrAccessToken = _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken(service, scope, acrRefreshToken: null, TokenGrantType.Password, cancellationToken);
+                acrAccessToken = _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken(service, scope, acrRefreshToken: string.Empty, TokenGrantType.Password, cancellationToken);
             }
 
             return acrAccessToken.Value.AccessToken;

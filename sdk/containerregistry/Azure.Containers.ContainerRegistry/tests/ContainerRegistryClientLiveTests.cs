@@ -11,24 +11,33 @@ namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRegistryClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync)
+        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
-        private ContainerRegistryClient CreateClient()
+        private ContainerRegistryClient CreateClient(bool anonymousAccess = false)
         {
-            return InstrumentClient(new ContainerRegistryClient(
-                new Uri(TestEnvironment.Endpoint),
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new ContainerRegistryClientOptions())
-            ));
+            return anonymousAccess ?
+
+                InstrumentClient(new ContainerRegistryClient(
+                    new Uri(TestEnvironment.Endpoint),
+                    InstrumentClientOptions(new ContainerRegistryClientOptions())
+                )) :
+
+                InstrumentClient(new ContainerRegistryClient(
+                    new Uri(TestEnvironment.Endpoint),
+                    TestEnvironment.Credential,
+                    InstrumentClientOptions(new ContainerRegistryClientOptions())
+                ));
         }
 
         [RecordedTest]
-        public async Task CanGetRepositories()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetRepositories(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
 
             // Act
             AsyncPageable<string> repositories = client.GetRepositoryNamesAsync();
@@ -48,10 +57,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetRepositoriesWithCustomPageSize()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetRepositoriesWithCustomPageSize(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
             int pageSize = 2;
             int minExpectedPages = 2;
 
@@ -71,10 +82,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanStartPagingMidCollection()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanStartPagingMidCollection(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
             int pageSize = 1;
             int minExpectedPages = 2;
 

@@ -29,7 +29,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="registryUri">The URI endpoint of the container registry.  This is likely to be similar
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> is null. </exception>
-        public ContainerRegistryClient(Uri registryUri) : this(registryUri, credential: null, new ContainerRegistryClientOptions())
+        public ContainerRegistryClient(Uri registryUri) : this(registryUri, new ContainerRegistryAnonymousAccessCredential(), new ContainerRegistryClientOptions())
         {
         }
 
@@ -42,7 +42,7 @@ namespace Azure.Containers.ContainerRegistry
         /// to "https://{registry-name}.azurecr.io".</param>
         /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
         /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> is null. </exception>
-        public ContainerRegistryClient(Uri registryUri, ContainerRegistryClientOptions options) : this(registryUri, credential: null, options)
+        public ContainerRegistryClient(Uri registryUri, ContainerRegistryClientOptions options) : this(registryUri, new ContainerRegistryAnonymousAccessCredential(), options)
         {
         }
 
