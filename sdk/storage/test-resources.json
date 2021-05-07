@@ -192,10 +192,6 @@
                 "containerDeleteRetentionPolicy": {
                     "enabled": true,
                     "days": 1
-                },
-                "deleteRetentionPolicy": {
-                    "enabled": true,
-                    "days": 1
                 }
             },
             "dependsOn": [
