@@ -100,11 +100,9 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
-        public void UpdateStatusWhenOperationFails(bool async, bool useDefaultException)
+        public void UpdateStatusWhenOperationFails(
+            [Values(true, false)] bool async,
+            [Values(true, false)] bool useDefaultException)
         {
             var originalException = new RequestFailedException("");
             var mockResponse = new MockResponse(200);
@@ -385,11 +383,9 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [TestCase(true, "retry-after-ms")]
-        [TestCase(true, "x-ms-retry-after-ms")]
-        [TestCase(false, "retry-after-ms")]
-        [TestCase(false, "x-ms-retry-after-ms")]
-        public async Task WaitForCompletionUsesRetryAfterMsHeader(bool useDefaultPollingInterval, string headerName)
+        public async Task WaitForCompletionUsesRetryAfterMsHeader(
+            [Values(true, false)] bool useDefaultPollingInterval,
+            [Values("retry-after-ms", "x-ms-retry-after-ms")] string headerName)
         {
             var originalDelay = TimeSpan.FromMilliseconds(500);
             var shortDelay = originalDelay.Subtract(TimeSpan.FromMilliseconds(250));
