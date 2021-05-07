@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Ingest fragment dropped event data. </summary>
+    /// <summary> Ingest fragment dropped event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIngestHeartbeat event. </summary>
     public partial class MediaLiveEventIngestHeartbeatEventData
     {
         /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>

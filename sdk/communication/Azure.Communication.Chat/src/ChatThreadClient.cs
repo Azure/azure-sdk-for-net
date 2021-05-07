@@ -143,7 +143,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                Response<SendChatMessageResultInternal> sendChatMessageResultInternal = await _chatThreadRestClient.SendChatMessageAsync(Id, content, senderDisplayName, type: null, cancellationToken).ConfigureAwait(false);
+                Response<SendChatMessageResultInternal> sendChatMessageResultInternal = await _chatThreadRestClient.SendChatMessageAsync(Id, content, senderDisplayName, type, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SendChatMessageResult(sendChatMessageResultInternal.Value), sendChatMessageResultInternal.GetRawResponse());
             }
             catch (Exception ex)

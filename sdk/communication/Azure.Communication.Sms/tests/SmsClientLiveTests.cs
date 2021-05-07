@@ -126,8 +126,7 @@ namespace Azure.Communication.Sms.Tests
             catch (RequestFailedException ex)
             {
                 Assert.IsNotEmpty(ex.Message);
-                // TODO: re-enable this when service change is made
-                // Assert.True(ex.Message.Contains("401"));
+                Assert.True(ex.Message.Contains("401"));
                 Console.WriteLine(ex.Message);
             }
             catch (Exception ex)
@@ -195,6 +194,25 @@ namespace Azure.Communication.Sms.Tests
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }
+        }
+
+        [Test]
+        public async Task SendingSmsFromNullNumberShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                SmsSendResult result = await client.SendAsync(
+                   from: null,
+                   to: TestEnvironment.ToPhoneNumber,
+                   message: "Hi");
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("from", ex.ParamName);
+                return;
+            }
+            Assert.Fail("SendAsync should have thrown an exception.");
         }
 
         public void assertHappyPath(SmsSendResult sendResult)

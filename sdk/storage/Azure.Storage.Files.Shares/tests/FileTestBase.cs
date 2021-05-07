@@ -16,18 +16,18 @@ using NUnit.Framework;
 namespace Azure.Storage.Files.Shares.Tests
 {
     [ClientTestFixture(
-        /* ShareClientOptions.ServiceVersion.V2019_02_02,
+        ShareClientOptions.ServiceVersion.V2019_02_02,
         ShareClientOptions.ServiceVersion.V2019_07_07,
         ShareClientOptions.ServiceVersion.V2019_12_12,
         ShareClientOptions.ServiceVersion.V2020_02_10,
         ShareClientOptions.ServiceVersion.V2020_04_08,
         ShareClientOptions.ServiceVersion.V2020_06_12,
-        ShareClientOptions.ServiceVersion.V2020_08_04,*/ // https://github.com/Azure/azure-sdk-for-net/issues/20386
+        ShareClientOptions.ServiceVersion.V2020_08_04,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
         LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
-    public class FileTestBase : StorageTestBase
+    public class FileTestBase : StorageTestBase<StorageTestEnvironment>
     {
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
 

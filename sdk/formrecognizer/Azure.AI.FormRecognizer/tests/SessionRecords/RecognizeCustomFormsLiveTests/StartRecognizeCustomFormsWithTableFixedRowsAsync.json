@@ -1,0 +1,931 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "42",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-fdff5a8acfdc424586ff5c5d507651a2-856c1df15c3fde40-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "a78a24a265da1067b88f1234eb8ba169",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "source": "Sanitized",
+        "useLabelFile": true
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "1f149aad-296c-4367-afb5-796a20919bd5",
+        "Content-Length": "0",
+        "Date": "Fri, 23 Apr 2021 17:21:47 GMT",
+        "Location": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "62"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "697357b6afb5a889beb72111e7c82f09",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "05a60663-2b16-4c43-bbc8-7c51a9bd7c28",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 23 Apr 2021 17:21:47 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d3429059-b6a1-460b-945c-83798b3de9a4",
+          "status": "creating",
+          "createdDateTime": "2021-04-23T17:21:47Z",
+          "lastUpdatedDateTime": "2021-04-23T17:21:47Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "01a7dcaf4f08622e0e6c546791beff77",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b68d0500-e798-4744-9872-31388d2dbcd5",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 23 Apr 2021 17:21:48 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d3429059-b6a1-460b-945c-83798b3de9a4",
+          "status": "creating",
+          "createdDateTime": "2021-04-23T17:21:47Z",
+          "lastUpdatedDateTime": "2021-04-23T17:21:47Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "5e5bbd0820ebf25c9ae1e823445528ef",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "495f892b-fd05-48bc-b338-38fafa0dcfcb",
+        "Content-Length": "720",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 23 Apr 2021 17:21:51 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "23"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "d3429059-b6a1-460b-945c-83798b3de9a4",
+          "attributes": {
+            "isComposed": false
+          },
+          "status": "ready",
+          "createdDateTime": "2021-04-23T17:21:47Z",
+          "lastUpdatedDateTime": "2021-04-23T17:21:50Z"
+        },
+        "trainResult": {
+          "averageModelAccuracy": 0.995,
+          "trainingDocuments": [
+            {
+              "documentName": "label_table_fixed_rows1.pdf",
+              "pages": 1,
+              "status": "succeeded"
+            },
+            {
+              "documentName": "label_table_fixed_rows2.pdf",
+              "pages": 1,
+              "status": "succeeded"
+            },
+            {
+              "documentName": "label_table_fixed_rows3.pdf",
+              "pages": 1,
+              "status": "succeeded"
+            },
+            {
+              "documentName": "label_table_fixed_rows4.pdf",
+              "pages": 1,
+              "status": "succeeded"
+            },
+            {
+              "documentName": "label_table_fixed_rows5.pdf",
+              "pages": 1,
+              "status": "succeeded"
+            }
+          ],
+          "fields": [
+            {
+              "fieldName": "table",
+              "accuracy": 0.995
+            }
+          ],
+          "errors": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4/analyze?includeTextDetails=false",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "73507",
+        "Content-Type": "application/pdf",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-ec08be620b25e646b5aaab18754bd01a-b6d05456aebfbd46-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "0f84095f9fe4666029105a485b2116ff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "f3460a35-a66c-4a40-b315-f4dd72af117b",
+        "Content-Length": "0",
+        "Date": "Fri, 23 Apr 2021 17:21:52 GMT",
+        "Operation-Location": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4/analyzeresults/3261acf7-1777-4a0c-b999-55f95b682796",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "67"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4/analyzeResults/3261acf7-1777-4a0c-b999-55f95b682796",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "2a08a9b7d16c8e1d80b56727670a1eb8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "981a65c4-17d2-4571-9580-8bc8d706bf80",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 23 Apr 2021 17:21:52 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "50"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-04-23T17:21:52Z",
+        "lastUpdatedDateTime": "2021-04-23T17:21:52Z"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4/analyzeResults/3261acf7-1777-4a0c-b999-55f95b682796",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "88086444f03a68935cf435dac6139678",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4df9dfe2-3a74-46f4-8d80-640b85671102",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 23 Apr 2021 17:21:54 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-04-23T17:21:52Z",
+        "lastUpdatedDateTime": "2021-04-23T17:21:52Z"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4/analyzeResults/3261acf7-1777-4a0c-b999-55f95b682796",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "9a6ce8cbfe4c8e82ebf58e2e3839ff1e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4f502676-8413-41f4-9a3d-962a10e8c117",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 23 Apr 2021 17:21:55 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "23"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-04-23T17:21:52Z",
+        "lastUpdatedDateTime": "2021-04-23T17:21:52Z"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4/analyzeResults/3261acf7-1777-4a0c-b999-55f95b682796",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "f604a1f28e19c7c515a0cd789c43c86c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "1a61e9a1-276c-45e7-a06d-1ef0bba75e7a",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 23 Apr 2021 17:21:57 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-04-23T17:21:52Z",
+        "lastUpdatedDateTime": "2021-04-23T17:21:56Z"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4/analyzeResults/3261acf7-1777-4a0c-b999-55f95b682796",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "7f5cee1e839e466be1799d4461643023",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "fc956299-21ef-475c-9d18-fe57a3207446",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 23 Apr 2021 17:21:58 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "25"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-04-23T17:21:52Z",
+        "lastUpdatedDateTime": "2021-04-23T17:21:56Z"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4/analyzeResults/3261acf7-1777-4a0c-b999-55f95b682796",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "24e716f59f0e3d5f22a485ac300af2a7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "1ce51c95-3301-4c63-af9a-dff34dd845e2",
+        "Content-Length": "4533",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 23 Apr 2021 17:22:00 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "27"
+      },
+      "ResponseBody": {
+        "status": "succeeded",
+        "createdDateTime": "2021-04-23T17:21:52Z",
+        "lastUpdatedDateTime": "2021-04-23T17:22:00Z",
+        "analyzeResult": {
+          "version": "2.1.0",
+          "readResults": [
+            {
+              "page": 1,
+              "angle": 0,
+              "width": 8.5,
+              "height": 11,
+              "unit": "inch"
+            }
+          ],
+          "pageResults": [
+            {
+              "page": 1,
+              "tables": [
+                {
+                  "rows": 5,
+                  "columns": 4,
+                  "cells": [
+                    {
+                      "rowIndex": 0,
+                      "columnIndex": 0,
+                      "text": "",
+                      "boundingBox": [
+                        0.9904,
+                        1.6215,
+                        2.297,
+                        1.6215,
+                        2.297,
+                        1.8221,
+                        0.9958,
+                        1.8272
+                      ]
+                    },
+                    {
+                      "rowIndex": 0,
+                      "columnIndex": 1,
+                      "text": "Price",
+                      "boundingBox": [
+                        2.297,
+                        1.6215,
+                        3.5874,
+                        1.6215,
+                        3.5928,
+                        1.8221,
+                        2.297,
+                        1.8221
+                      ]
+                    },
+                    {
+                      "rowIndex": 0,
+                      "columnIndex": 2,
+                      "text": "Tax",
+                      "boundingBox": [
+                        3.5874,
+                        1.6215,
+                        4.8994,
+                        1.6215,
+                        4.8994,
+                        1.8221,
+                        3.5928,
+                        1.8221
+                      ]
+                    },
+                    {
+                      "rowIndex": 0,
+                      "columnIndex": 3,
+                      "text": "Total",
+                      "boundingBox": [
+                        4.8994,
+                        1.6215,
+                        6.1952,
+                        1.6215,
+                        6.1952,
+                        1.8272,
+                        4.8994,
+                        1.8221
+                      ]
+                    },
+                    {
+                      "rowIndex": 1,
+                      "columnIndex": 0,
+                      "text": "Apple",
+                      "boundingBox": [
+                        0.9958,
+                        1.8272,
+                        2.297,
+                        1.8221,
+                        2.297,
+                        2.0078,
+                        0.9958,
+                        2.0128
+                      ]
+                    },
+                    {
+                      "rowIndex": 1,
+                      "columnIndex": 1,
+                      "text": "5.00",
+                      "boundingBox": [
+                        2.297,
+                        1.8221,
+                        3.5928,
+                        1.8221,
+                        3.5928,
+                        2.0078,
+                        2.297,
+                        2.0078
+                      ]
+                    },
+                    {
+                      "rowIndex": 1,
+                      "columnIndex": 2,
+                      "text": "2.00",
+                      "boundingBox": [
+                        3.5928,
+                        1.8221,
+                        4.8994,
+                        1.8221,
+                        4.8994,
+                        2.0078,
+                        3.5928,
+                        2.0078
+                      ]
+                    },
+                    {
+                      "rowIndex": 1,
+                      "columnIndex": 3,
+                      "text": "7.00",
+                      "boundingBox": [
+                        4.8994,
+                        1.8221,
+                        6.1952,
+                        1.8272,
+                        6.1952,
+                        2.0128,
+                        4.8994,
+                        2.0078
+                      ]
+                    },
+                    {
+                      "rowIndex": 2,
+                      "columnIndex": 0,
+                      "text": "Orange",
+                      "boundingBox": [
+                        0.9958,
+                        2.0128,
+                        2.297,
+                        2.0078,
+                        2.297,
+                        2.2034,
+                        0.9958,
+                        2.2084
+                      ]
+                    },
+                    {
+                      "rowIndex": 2,
+                      "columnIndex": 1,
+                      "text": "2.00",
+                      "boundingBox": [
+                        2.297,
+                        2.0078,
+                        3.5928,
+                        2.0078,
+                        3.5928,
+                        2.2034,
+                        2.297,
+                        2.2034
+                      ]
+                    },
+                    {
+                      "rowIndex": 2,
+                      "columnIndex": 2,
+                      "text": "1.00",
+                      "boundingBox": [
+                        3.5928,
+                        2.0078,
+                        4.8994,
+                        2.0078,
+                        4.8994,
+                        2.2034,
+                        3.5928,
+                        2.2034
+                      ]
+                    },
+                    {
+                      "rowIndex": 2,
+                      "columnIndex": 3,
+                      "text": "3.00",
+                      "boundingBox": [
+                        4.8994,
+                        2.0078,
+                        6.1952,
+                        2.0128,
+                        6.1952,
+                        2.2034,
+                        4.8994,
+                        2.2034
+                      ]
+                    },
+                    {
+                      "rowIndex": 3,
+                      "columnIndex": 0,
+                      "text": "Grapefruit",
+                      "boundingBox": [
+                        0.9958,
+                        2.2084,
+                        2.297,
+                        2.2034,
+                        2.297,
+                        2.3991,
+                        0.9958,
+                        2.3991
+                      ]
+                    },
+                    {
+                      "rowIndex": 3,
+                      "columnIndex": 1,
+                      "text": "1.00",
+                      "boundingBox": [
+                        2.297,
+                        2.2034,
+                        3.5928,
+                        2.2034,
+                        3.5928,
+                        2.3991,
+                        2.297,
+                        2.3991
+                      ]
+                    },
+                    {
+                      "rowIndex": 3,
+                      "columnIndex": 2,
+                      "text": "4.00",
+                      "boundingBox": [
+                        3.5928,
+                        2.2034,
+                        4.8994,
+                        2.2034,
+                        4.8994,
+                        2.3991,
+                        3.5928,
+                        2.3991
+                      ]
+                    },
+                    {
+                      "rowIndex": 3,
+                      "columnIndex": 3,
+                      "text": "5.00",
+                      "boundingBox": [
+                        4.8994,
+                        2.2034,
+                        6.1952,
+                        2.2034,
+                        6.1952,
+                        2.3991,
+                        4.8994,
+                        2.3991
+                      ]
+                    },
+                    {
+                      "rowIndex": 4,
+                      "columnIndex": 0,
+                      "text": "Pear",
+                      "boundingBox": [
+                        0.9958,
+                        2.3991,
+                        2.297,
+                        2.3991,
+                        2.297,
+                        2.5947,
+                        0.9958,
+                        2.5947
+                      ]
+                    },
+                    {
+                      "rowIndex": 4,
+                      "columnIndex": 1,
+                      "text": "",
+                      "boundingBox": [
+                        2.297,
+                        2.3991,
+                        3.5928,
+                        2.3991,
+                        3.5982,
+                        2.5947,
+                        2.297,
+                        2.5947
+                      ]
+                    },
+                    {
+                      "rowIndex": 4,
+                      "columnIndex": 2,
+                      "text": "2.00",
+                      "boundingBox": [
+                        3.5928,
+                        2.3991,
+                        4.8994,
+                        2.3991,
+                        4.8994,
+                        2.5947,
+                        3.5982,
+                        2.5947
+                      ]
+                    },
+                    {
+                      "rowIndex": 4,
+                      "columnIndex": 3,
+                      "text": "2.00",
+                      "boundingBox": [
+                        4.8994,
+                        2.3991,
+                        6.1952,
+                        2.3991,
+                        6.1952,
+                        2.5947,
+                        4.8994,
+                        2.5947
+                      ]
+                    }
+                  ],
+                  "boundingBox": [
+                    0.9986,
+                    1.6168,
+                    6.2004,
+                    1.6179,
+                    6.2004,
+                    2.597,
+                    0.9981,
+                    2.5961
+                  ]
+                }
+              ]
+            }
+          ],
+          "documentResults": [
+            {
+              "docType": "custom:d3429059-b6a1-460b-945c-83798b3de9a4",
+              "modelId": "d3429059-b6a1-460b-945c-83798b3de9a4",
+              "pageRange": [
+                1,
+                1
+              ],
+              "fields": {
+                "table": {
+                  "type": "object",
+                  "valueObject": {
+                    "Apple": {
+                      "type": "object",
+                      "valueObject": {
+                        "Price": {
+                          "type": "string",
+                          "valueString": "5.00",
+                          "text": "5.00",
+                          "page": 1,
+                          "boundingBox": [
+                            2.385,
+                            1.87,
+                            2.645,
+                            1.87,
+                            2.645,
+                            1.97,
+                            2.385,
+                            1.97
+                          ]
+                        },
+                        "Tax": {
+                          "type": "string",
+                          "valueString": "2.00",
+                          "text": "2.00",
+                          "page": 1,
+                          "boundingBox": [
+                            3.685,
+                            1.87,
+                            3.945,
+                            1.87,
+                            3.945,
+                            1.97,
+                            3.685,
+                            1.97
+                          ]
+                        },
+                        "Total": {
+                          "type": "string",
+                          "valueString": "7.00",
+                          "text": "7.00",
+                          "page": 1,
+                          "boundingBox": [
+                            4.985,
+                            1.87,
+                            5.245,
+                            1.87,
+                            5.245,
+                            1.97,
+                            4.985,
+                            1.97
+                          ]
+                        }
+                      }
+                    },
+                    "Orange": {
+                      "type": "object",
+                      "valueObject": {
+                        "Price": {
+                          "type": "string",
+                          "valueString": "2.00",
+                          "text": "2.00",
+                          "page": 1,
+                          "boundingBox": [
+                            2.385,
+                            2.065,
+                            2.645,
+                            2.065,
+                            2.645,
+                            2.165,
+                            2.385,
+                            2.165
+                          ]
+                        },
+                        "Tax": {
+                          "type": "string",
+                          "valueString": "1.00",
+                          "text": "1.00",
+                          "page": 1,
+                          "boundingBox": [
+                            3.69,
+                            2.065,
+                            3.945,
+                            2.065,
+                            3.945,
+                            2.165,
+                            3.69,
+                            2.165
+                          ]
+                        },
+                        "Total": {
+                          "type": "string",
+                          "valueString": "3.00",
+                          "text": "3.00",
+                          "page": 1,
+                          "boundingBox": [
+                            4.985,
+                            2.065,
+                            5.245,
+                            2.065,
+                            5.245,
+                            2.165,
+                            4.985,
+                            2.165
+                          ]
+                        }
+                      }
+                    },
+                    "Grapefruit": {
+                      "type": "object",
+                      "valueObject": {
+                        "Price": {
+                          "type": "string",
+                          "valueString": "1.00",
+                          "text": "1.00",
+                          "page": 1,
+                          "boundingBox": [
+                            2.39,
+                            2.26,
+                            2.645,
+                            2.26,
+                            2.645,
+                            2.36,
+                            2.39,
+                            2.36
+                          ]
+                        },
+                        "Tax": {
+                          "type": "string",
+                          "valueString": "4.00",
+                          "text": "4.00",
+                          "page": 1,
+                          "boundingBox": [
+                            3.68,
+                            2.26,
+                            3.945,
+                            2.26,
+                            3.945,
+                            2.36,
+                            3.68,
+                            2.36
+                          ]
+                        },
+                        "Total": {
+                          "type": "string",
+                          "valueString": "5.00",
+                          "text": "5.00",
+                          "page": 1,
+                          "boundingBox": [
+                            4.985,
+                            2.26,
+                            5.245,
+                            2.26,
+                            5.245,
+                            2.36,
+                            4.985,
+                            2.36
+                          ]
+                        }
+                      }
+                    },
+                    "Pear": {
+                      "type": "object",
+                      "valueObject": {
+                        "Price": null,
+                        "Tax": {
+                          "type": "string",
+                          "valueString": "2.00",
+                          "text": "2.00",
+                          "page": 1,
+                          "boundingBox": [
+                            3.685,
+                            2.45,
+                            3.945,
+                            2.45,
+                            3.945,
+                            2.55,
+                            3.685,
+                            2.55
+                          ]
+                        },
+                        "Total": {
+                          "type": "string",
+                          "valueString": "2.00",
+                          "text": "2.00",
+                          "page": 1,
+                          "boundingBox": [
+                            4.985,
+                            2.45,
+                            5.245,
+                            2.45,
+                            5.245,
+                            2.55,
+                            4.985,
+                            2.55
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "docTypeConfidence": 0.979
+            }
+          ],
+          "errors": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/d3429059-b6a1-460b-945c-83798b3de9a4",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-49b05c875386614a9e4b1b28ae143fee-82e8da61129ba343-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210423.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "4a10212d80dd6e8035be14a0f08066b0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "apim-request-id": "503635f6-cfbf-4a0e-9408-8d8143952dda",
+        "Content-Length": "0",
+        "Date": "Fri, 23 Apr 2021 17:22:00 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "30"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-canada-central.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
+    "RandomSeed": "912060981"
+  }
+}

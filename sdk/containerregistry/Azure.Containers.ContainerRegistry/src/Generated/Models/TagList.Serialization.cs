@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         internal static TagList DeserializeTagList(JsonElement element)
         {
             string imageName = default;
-            Optional<IReadOnlyList<TagAttributesBase>> tags = default;
+            IReadOnlyList<TagAttributesBase> tags = default;
             Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,11 +27,6 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<TagAttributesBase> array = new List<TagAttributesBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -46,7 +41,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new TagList(imageName, Optional.ToList(tags), link.Value);
+            return new TagList(imageName, tags, link.Value);
         }
     }
 }

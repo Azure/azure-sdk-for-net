@@ -58,17 +58,17 @@ namespace Azure.Data.Tables.Sas
             var uriBuilder = new TableUriBuilder(uri);
 
             TableName = uriBuilder.Tablename;
-            ExpiresOn = uriBuilder.Sas.ExpiresOn;
-            Identifier = uriBuilder.Sas.Identifier;
-            IPRange = uriBuilder.Sas.IPRange;
-            PartitionKeyEnd = uriBuilder.Sas.EndPartitionKey;
-            PartitionKeyStart = uriBuilder.Sas.StartPartitionKey;
-            Protocol = uriBuilder.Sas.Protocol;
-            RowKeyEnd = uriBuilder.Sas.EndRowKey;
-            RowKeyStart = uriBuilder.Sas.StartRowKey;
-            StartsOn = uriBuilder.Sas.StartsOn;
-            Version = uriBuilder.Sas.Version;
-            SetPermissions(uriBuilder.Sas.Permissions);
+            ExpiresOn = uriBuilder.Sas?.ExpiresOn ?? default;
+            Identifier = uriBuilder.Sas?.Identifier;
+            IPRange = uriBuilder.Sas?.IPRange ?? default;
+            PartitionKeyEnd = uriBuilder.Sas?.EndPartitionKey;
+            PartitionKeyStart = uriBuilder.Sas?.StartPartitionKey;
+            Protocol = uriBuilder.Sas?.Protocol ?? default;
+            RowKeyEnd = uriBuilder.Sas?.EndRowKey;
+            RowKeyStart = uriBuilder.Sas?.StartRowKey;
+            StartsOn = uriBuilder.Sas?.StartsOn ?? default;
+            Version = uriBuilder.Sas?.Version;
+            SetPermissions(uriBuilder.Sas?.Permissions);
         }
 
         /// <summary>
@@ -210,10 +210,10 @@ namespace Azure.Data.Tables.Sas
                 RowKeyEnd);
             var signature = TableSharedKeyCredential.ComputeSasSignature(sharedKeyCredential, stringToSign);
             var p = new TableSasQueryParameters(
-                version: Version,
-                resourceTypes: default,
-                tableName: TableName,
-                partitionKeyStart: PartitionKeyStart,
+                Version,
+                default,
+                TableName,
+                PartitionKeyStart,
                 partitionKeyEnd: PartitionKeyEnd,
                 rowKeyStart: RowKeyStart,
                 rowKeyEnd: RowKeyEnd,

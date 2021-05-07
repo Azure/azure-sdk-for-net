@@ -129,7 +129,7 @@ namespace Azure.Search.Documents
         public double? MinimumCoverage { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
         public Azure.Search.Documents.Models.QueryAnswer? QueryAnswer { get { throw null; } set { } }
-        public uint QueryAnswerCount { get { throw null; } set { } }
+        public int? QueryAnswerCount { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QueryLanguage? QueryLanguage { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QuerySpeller? QuerySpeller { get { throw null; } set { } }
         public Azure.Search.Documents.Models.SearchQueryType? QueryType { get { throw null; } set { } }
@@ -1672,6 +1672,46 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get { throw null; } }
         public int StatusCode { get { throw null; } }
     }
+    public partial class SearchIndexerKnowledgeStore
+    {
+        public SearchIndexerKnowledgeStore(string storageConnectionString, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreProjection> projections) { }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreProjection> Projections { get { throw null; } }
+        public string StorageConnectionString { get { throw null; } set { } }
+    }
+    public partial class SearchIndexerKnowledgeStoreBlobProjectionSelector : Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreProjectionSelector
+    {
+        public SearchIndexerKnowledgeStoreBlobProjectionSelector(string storageContainer) { }
+        public string StorageContainer { get { throw null; } set { } }
+    }
+    public partial class SearchIndexerKnowledgeStoreFileProjectionSelector : Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreBlobProjectionSelector
+    {
+        public SearchIndexerKnowledgeStoreFileProjectionSelector(string storageContainer) : base (default(string)) { }
+    }
+    public partial class SearchIndexerKnowledgeStoreObjectProjectionSelector : Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreBlobProjectionSelector
+    {
+        public SearchIndexerKnowledgeStoreObjectProjectionSelector(string storageContainer) : base (default(string)) { }
+    }
+    public partial class SearchIndexerKnowledgeStoreProjection
+    {
+        public SearchIndexerKnowledgeStoreProjection() { }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreFileProjectionSelector> Files { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreObjectProjectionSelector> Objects { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreTableProjectionSelector> Tables { get { throw null; } }
+    }
+    public partial class SearchIndexerKnowledgeStoreProjectionSelector
+    {
+        public SearchIndexerKnowledgeStoreProjectionSelector() { }
+        public string GeneratedKeyName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> Inputs { get { throw null; } }
+        public string ReferenceKeyName { get { throw null; } set { } }
+        public string Source { get { throw null; } set { } }
+        public string SourceContext { get { throw null; } set { } }
+    }
+    public partial class SearchIndexerKnowledgeStoreTableProjectionSelector : Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStoreProjectionSelector
+    {
+        public SearchIndexerKnowledgeStoreTableProjectionSelector(string tableName) { }
+        public string TableName { get { throw null; } set { } }
+    }
     public partial class SearchIndexerLimits
     {
         internal SearchIndexerLimits() { }
@@ -1695,6 +1735,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Description { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey EncryptionKey { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.SearchIndexerKnowledgeStore KnowledgeStore { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SearchIndexerSkill> Skills { get { throw null; } }
     }

@@ -12,7 +12,6 @@
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Chat Service;Microsoft;Azure;Azure Communication Service;Azure Communication Chat Service;Chat;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <EnableApiCompat>false</EnableApiCompat>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
@@ -31,7 +30,7 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Communication.Common\src\Azure.Communication.Common.csproj" />
+    <PackageReference Include="Azure.Communication.Common" />
   </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />

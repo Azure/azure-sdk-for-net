@@ -2,6 +2,16 @@
 
 ## 3.1.0-beta.5 (Unreleased)
 
+### New Features
+- Updated the `FormRecognizerModelFactory` class to support missing model types for mocking.
+- Added support for service version `2.0`. This can be specified in the `FormRecognizerClientOptions` object under the `ServiceVersion` enum.
+By default the SDK targets latest supported service version.
+
+### Breaking changes
+- Renamed `Id` for `Identity` in all the `StartRecognizeIdDocuments` functionalities. For example, the name of the method is now `StartRecognizeIdentityDocuments`.
+- Renamed the model `ReadingOrder` to `FormReadingOrder`.
+- The model `TextAppearance` now includes the properties `StyleName` and `StyleConfidence` that were part of the `TextStyle` object.
+- Removed the model `TextStyle`.
 
 ## 3.0.1 (2021-04-09)
 

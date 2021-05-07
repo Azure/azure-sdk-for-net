@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Security;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
@@ -27,9 +26,11 @@ namespace Azure.Identity.Tests.Mock
 
         public Func<string[], AuthenticationResult> DeviceCodeAuthFactory { get; set; }
 
+        public Func<string[], IPublicClientApplication> PubClientAppFactory { get; set; }
+
         protected override ValueTask<List<IAccount>> GetAccountsCoreAsync(bool async, CancellationToken cancellationToken)
         {
-            return new ValueTask<List<IAccount>>(Accounts);
+            return new(Accounts);
         }
 
         protected override ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordCoreAsync(string[] scopes, string claims, string username, SecureString password, bool async, CancellationToken cancellationToken)
@@ -95,6 +96,21 @@ namespace Azure.Identity.Tests.Mock
             }
 
             throw new NotImplementedException();
+        }
+
+        internal ValueTask<IPublicClientApplication> CallCreateClientAsync(bool async, CancellationToken cancellationToken)
+        {
+            return CreateClientAsync(async, cancellationToken);
+        }
+
+        protected override ValueTask<IPublicClientApplication> CreateClientCoreAsync(string[] clientCapabilities, bool async, CancellationToken cancellationToken)
+        {
+            if (PubClientAppFactory == null)
+            {
+                throw new NotImplementedException();
+            }
+
+            return new ValueTask<IPublicClientApplication>(PubClientAppFactory(clientCapabilities));
         }
     }
 }

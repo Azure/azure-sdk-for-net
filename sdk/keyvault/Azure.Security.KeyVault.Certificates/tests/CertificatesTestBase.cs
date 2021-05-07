@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     [NonParallelizable]
     public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+        protected readonly TimeSpan PollingInterval = KeyVaultTestEnvironment.DefaultPollingInterval;
         private readonly CertificateClientOptions.ServiceVersion _serviceVersion;
 
         public CertificateClient Client { get; set; }
@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         private KeyVaultTestEventListener _listener;
 
         public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
-            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
         }
@@ -200,12 +200,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
             }
-        }
-
-        protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation, TimeSpan? pollingInterval = null)
-        {
-            pollingInterval ??= TimeSpan.FromSeconds(1);
-            return await operation.WaitForCompletionAsync(pollingInterval.Value, default).TimeoutAfter(TimeSpan.FromMinutes(1));
         }
 
         protected Task WaitForDeletedCertificate(string name)

@@ -18,18 +18,18 @@ using NUnit.Framework;
 namespace Azure.Storage.Files.DataLake.Tests
 {
     [ClientTestFixture(
-        /* DataLakeClientOptions.ServiceVersion.V2019_02_02,
+        DataLakeClientOptions.ServiceVersion.V2019_02_02,
         DataLakeClientOptions.ServiceVersion.V2019_07_07,
         DataLakeClientOptions.ServiceVersion.V2019_12_12,
         DataLakeClientOptions.ServiceVersion.V2020_02_10,
         DataLakeClientOptions.ServiceVersion.V2020_04_08,
         DataLakeClientOptions.ServiceVersion.V2020_06_12,
-        DataLakeClientOptions.ServiceVersion.V2020_08_04, */ // https://github.com/Azure/azure-sdk-for-net/issues/20386
+        DataLakeClientOptions.ServiceVersion.V2020_08_04,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
         LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
-    public abstract class DataLakeTestBase : StorageTestBase
+    public abstract class DataLakeTestBase : StorageTestBase<DataLakeTestEnvironment>
     {
         protected readonly DataLakeClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";

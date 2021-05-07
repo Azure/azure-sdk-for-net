@@ -340,7 +340,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task CreateAsync_Headers()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
 
             await using DisposingDirectory test = await GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
@@ -873,7 +873,11 @@ namespace Azure.Storage.Files.Shares.Tests
                 GetOptions()));
 
             // Act
-            Response<ShareFileProperties> response = await sasFileClient.GetPropertiesAsync();
+            Response<ShareFileProperties> response = await RetryAsync(
+                operation: async () => await sasFileClient.GetPropertiesAsync(),
+                // The SetAccessPolicyAsync call may take up to 30 seconds to take effect
+                // per https://docs.microsoft.com/en-us/rest/api/storageservices/set-share-acl.
+                shouldRetry: e => e.Status == 403);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -906,7 +910,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task SetHttpHeadersAsync()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
 
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
@@ -939,7 +943,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task SetHttpHeadersAsync_Lease()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
 
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
@@ -966,7 +970,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task SetHttpHeadersAsync_InvalidLease()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
 
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
@@ -1041,7 +1045,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task SetPropertiesAsync_FilePermissionTooLong()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
 
             await using DisposingDirectory test = await GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
@@ -1085,7 +1089,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public async Task SetPropertiesAsync_Error()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             await using DisposingDirectory test = await GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
@@ -2984,9 +2988,11 @@ namespace Azure.Storage.Files.Shares.Tests
             string leaseId = Recording.Random.NewGuid().ToString();
 
             // Act
-            Response<ShareFileLease> response = await InstrumentClient(file.GetShareLeaseClient(leaseId)).AcquireAsync();
+            var leaseClient = InstrumentClient(file.GetShareLeaseClient(leaseId));
+            Response<ShareFileLease> response = await leaseClient.AcquireAsync();
 
             // Assert
+            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
             Assert.AreNotEqual(new ETag(), response.Value.ETag);
             Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
             Assert.IsNotNull(response.Value.LeaseId);
@@ -3068,6 +3074,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileLease> response = await leaseClient.ChangeAsync(newLeaseId);
 
             // Assert
+            Assert.AreEqual(response.Value.LeaseId, newLeaseId);
+            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
             Assert.AreNotEqual(new ETag(), response.Value.ETag);
             Assert.AreNotEqual(new DateTimeOffset(), response.Value.LastModified);
             Assert.IsNotNull(response.Value.LeaseId);
@@ -4011,7 +4019,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, fileStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -4067,7 +4075,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             string shareName = GetNewShareName();
@@ -4104,7 +4112,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public void GenerateSas_Builder()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
 
@@ -4149,7 +4157,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public void GenerateSas_BuilderNullShareName()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
 
@@ -4195,7 +4203,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void GenerateSas_BuilderWrongShareName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string shareName = GetNewShareName();
             string fileName = GetNewFileName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
@@ -4224,7 +4232,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         public void GenerateSas_BuilderNullFileName()
         {
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
 
@@ -4270,7 +4278,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public void GenerateSas_BuilderWrongFileName()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             string shareName = GetNewShareName();
             string fileName = GetNewFileName();
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");

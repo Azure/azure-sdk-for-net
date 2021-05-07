@@ -64,12 +64,14 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var client = new MetricsAdvisorClient(new Uri(endpoint), credential);
 
+            #region Snippet:GetAnomaliesForAlertAsync
+#if SNIPPET
+            string alertConfigurationId = "<alertConfigurationId>";
+            string alertId = "<alertId>";
+#else
             string alertConfigurationId = AlertConfigurationId;
             string alertId = AlertId;
-
-            #region Snippet:GetAnomaliesForAlertAsync
-            //@@ string alertConfigurationId = "<alertConfigurationId>";
-            //@@ string alertId = "<alertId>";
+#endif
 
             var options = new GetAnomaliesForAlertOptions() { TopCount = 3 };
 

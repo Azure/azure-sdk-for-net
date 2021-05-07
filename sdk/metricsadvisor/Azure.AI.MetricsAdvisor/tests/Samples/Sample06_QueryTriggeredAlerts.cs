@@ -21,10 +21,12 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var client = new MetricsAdvisorClient(new Uri(endpoint), credential);
 
-            string anomalyAlertConfigurationId = AlertConfigurationId;
-
             #region Snippet:GetAlertsAsync
-            //@@ string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
+#if SNIPPET
+            string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
+#else
+            string anomalyAlertConfigurationId = AlertConfigurationId;
+#endif
 
             var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endTime = DateTimeOffset.UtcNow;
