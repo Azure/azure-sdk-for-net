@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.ChatMessageReceived event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageReceived event. </summary>
     public partial class AcsChatMessageReceivedEventData : AcsChatMessageEventBaseProperties
     {
         /// <summary> Initializes a new instance of AcsChatMessageReceivedEventData. </summary>

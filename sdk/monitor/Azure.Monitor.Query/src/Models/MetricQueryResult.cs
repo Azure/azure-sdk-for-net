@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query.Models
 {

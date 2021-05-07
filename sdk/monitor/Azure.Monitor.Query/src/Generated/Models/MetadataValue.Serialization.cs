@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetadataValue
+    internal partial class MetadataValue
     {
         internal static MetadataValue DeserializeMetadataValue(JsonElement element)
         {

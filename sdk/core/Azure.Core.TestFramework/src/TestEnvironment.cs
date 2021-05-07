@@ -7,13 +7,11 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using System.ComponentModel;
 using System.Linq;
 using NUnit.Framework;
-using System.Collections.Concurrent;
 
 namespace Azure.Core.TestFramework
 {
@@ -26,7 +24,7 @@ namespace Azure.Core.TestFramework
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
 
-        private static readonly ConcurrentDictionary<Type, Task> s_environmentStateCache = new ConcurrentDictionary<Type, Task>();
+        private static readonly Dictionary<Type, Task> s_environmentStateCache = new Dictionary<Type, Task>();
 
         private readonly string _prefix;
 
@@ -201,7 +199,16 @@ namespace Azure.Core.TestFramework
         {
             if (GlobalIsRunningInCI && Mode == RecordedTestMode.Live)
             {
-                await s_environmentStateCache.GetOrAdd(GetType(), t => WaitForEnvironmentInternalAsync());
+                Task task;
+                lock (s_environmentStateCache)
+                {
+                    if (!s_environmentStateCache.TryGetValue(GetType(), out task))
+                    {
+                        task = WaitForEnvironmentInternalAsync();
+                        s_environmentStateCache[GetType()] = task;
+                    }
+                }
+                await task;
             }
         }
 

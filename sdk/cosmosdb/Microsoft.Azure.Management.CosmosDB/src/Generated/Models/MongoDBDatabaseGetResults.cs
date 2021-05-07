@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="type">The type of Azure resource.</param>
         /// <param name="location">The location of the resource group to which
         /// the resource belongs.</param>
-        public MongoDBDatabaseGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), MongoDBDatabaseGetPropertiesResource resource = default(MongoDBDatabaseGetPropertiesResource), MongoDBDatabaseGetPropertiesOptions options = default(MongoDBDatabaseGetPropertiesOptions))
-            : base(id, name, type, location, tags, identity)
+        public MongoDBDatabaseGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), MongoDBDatabaseGetPropertiesResource resource = default(MongoDBDatabaseGetPropertiesResource), MongoDBDatabaseGetPropertiesOptions options = default(MongoDBDatabaseGetPropertiesOptions))
+            : base(id, name, type, location, tags)
         {
             Resource = resource;
             Options = options;

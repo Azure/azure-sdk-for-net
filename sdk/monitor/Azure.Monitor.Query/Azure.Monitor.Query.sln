@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.Query", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.Query.Tests", "tests\Azure.Monitor.Query.Tests.csproj", "{57982C70-975B-475E-B4F4-D20E9EC9F7FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{9F9BE74E-2036-41E7-8B6E-24F2E825250A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{57982C70-975B-475E-B4F4-D20E9EC9F7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57982C70-975B-475E-B4F4-D20E9EC9F7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57982C70-975B-475E-B4F4-D20E9EC9F7FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F9BE74E-2036-41E7-8B6E-24F2E825250A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F9BE74E-2036-41E7-8B6E-24F2E825250A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F9BE74E-2036-41E7-8B6E-24F2E825250A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F9BE74E-2036-41E7-8B6E-24F2E825250A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

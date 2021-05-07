@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure SDK client library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK for WebPubSub</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure, WebPubSub, SignalR</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -48,14 +48,8 @@ File.WriteAllText(FileName, Regex.Replace(File.ReadAllText(FileName), Pattern, R
   </UsingTask>
   <Target Name="HackGeneratedCode" AfterTargets="GenerateCode" Condition="'$(_GenerateCode)' == 'true'">
     <Message Importance="high" Text="Hacking RequestContent into Generated Code" />
-    <ReplaceText
-      Filename="$(MSBuildThisFileDirectory)\Generated\WebPubSubRestClient.cs"
-      Pattern="Stream message"
-      Replacement="RequestContent message" />
-    <ReplaceText
-      Filename="$(MSBuildThisFileDirectory)\Generated\WebPubSubRestClient.cs"
-      Pattern="RequestContent\.Create\(message\)"
-      Replacement="message" />
+    <ReplaceText Filename="$(MSBuildThisFileDirectory)\Generated\WebPubSubRestClient.cs" Pattern="Stream message" Replacement="RequestContent message" />
+    <ReplaceText Filename="$(MSBuildThisFileDirectory)\Generated\WebPubSubRestClient.cs" Pattern="RequestContent\.Create\(message\)" Replacement="message" />
   </Target>
   <!-- /HACK -->
 </Project>

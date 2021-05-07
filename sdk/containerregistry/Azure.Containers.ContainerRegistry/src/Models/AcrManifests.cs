@@ -10,11 +10,11 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class AcrManifests
     {
         /// <summary> List of manifests. </summary>
-        public IReadOnlyList<RegistryArtifactProperties> RegistryArtifacts
+        public IReadOnlyList<ArtifactManifestProperties> RegistryArtifacts
         {
             get
             {
-                List<RegistryArtifactProperties> artifacts = new List<RegistryArtifactProperties>();
+                List<ArtifactManifestProperties> artifacts = new List<ArtifactManifestProperties>(this.Manifests.Count);
                 foreach (var artifact in this.Manifests)
                 {
                     artifacts.Add(FromManifestAttributesBase(this.Repository, artifact));
@@ -23,15 +23,15 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal static RegistryArtifactProperties FromManifestAttributesBase(string repository, ManifestAttributesBase attributesBase)
+        internal static ArtifactManifestProperties FromManifestAttributesBase(string repository, ManifestAttributesBase attributesBase)
         {
-            return new RegistryArtifactProperties(
+            return new ArtifactManifestProperties(
                 repository,
                 attributesBase.Digest,
                 attributesBase.Size,
                 attributesBase.CreatedOn,
                 attributesBase.LastUpdatedOn,
-                attributesBase.CpuArchitecture,
+                attributesBase.Architecture,
                 attributesBase.OperatingSystem,
                 attributesBase.References,
                 attributesBase.Tags,

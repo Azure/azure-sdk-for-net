@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.IoT.TimeSeriesInsights.Models
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The type of the property. Currently, only &quot;String&quot; is supported. </summary>
     public readonly partial struct TimeSeriesIdPropertyTypes : IEquatable<TimeSeriesIdPropertyTypes>
