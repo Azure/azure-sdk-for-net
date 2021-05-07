@@ -133,6 +133,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IElasticPoolDatabaseActivitiesOperations ElasticPoolDatabaseActivities { get; private set; }
 
         /// <summary>
+        /// Gets the ITransparentDataEncryptionsOperations.
+        /// </summary>
+        public virtual ITransparentDataEncryptionsOperations TransparentDataEncryptions { get; private set; }
+
+        /// <summary>
         /// Gets the ITransparentDataEncryptionActivitiesOperations.
         /// </summary>
         public virtual ITransparentDataEncryptionActivitiesOperations TransparentDataEncryptionActivities { get; private set; }
@@ -638,11 +643,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ITimeZonesOperations TimeZones { get; private set; }
 
         /// <summary>
-        /// Gets the ITransparentDataEncryptionsOperations.
-        /// </summary>
-        public virtual ITransparentDataEncryptionsOperations TransparentDataEncryptions { get; private set; }
-
-        /// <summary>
         /// Gets the IVirtualClustersOperations.
         /// </summary>
         public virtual IVirtualClustersOperations VirtualClusters { get; private set; }
@@ -875,6 +875,7 @@ namespace Microsoft.Azure.Management.Sql
             ServiceObjectives = new ServiceObjectivesOperations(this);
             ElasticPoolActivities = new ElasticPoolActivitiesOperations(this);
             ElasticPoolDatabaseActivities = new ElasticPoolDatabaseActivitiesOperations(this);
+            TransparentDataEncryptions = new TransparentDataEncryptionsOperations(this);
             TransparentDataEncryptionActivities = new TransparentDataEncryptionActivitiesOperations(this);
             ServerUsages = new ServerUsagesOperations(this);
             Usages = new UsagesOperations(this);
@@ -976,7 +977,6 @@ namespace Microsoft.Azure.Management.Sql
             SyncMembers = new SyncMembersOperations(this);
             TdeCertificates = new TdeCertificatesOperations(this);
             TimeZones = new TimeZonesOperations(this);
-            TransparentDataEncryptions = new TransparentDataEncryptionsOperations(this);
             VirtualClusters = new VirtualClustersOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             WorkloadClassifiers = new WorkloadClassifiersOperations(this);

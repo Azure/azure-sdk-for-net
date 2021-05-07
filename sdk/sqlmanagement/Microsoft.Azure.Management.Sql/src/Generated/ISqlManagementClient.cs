@@ -128,6 +128,11 @@ namespace Microsoft.Azure.Management.Sql
         IElasticPoolDatabaseActivitiesOperations ElasticPoolDatabaseActivities { get; }
 
         /// <summary>
+        /// Gets the ITransparentDataEncryptionsOperations.
+        /// </summary>
+        ITransparentDataEncryptionsOperations TransparentDataEncryptions { get; }
+
+        /// <summary>
         /// Gets the ITransparentDataEncryptionActivitiesOperations.
         /// </summary>
         ITransparentDataEncryptionActivitiesOperations TransparentDataEncryptionActivities { get; }
@@ -631,11 +636,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the ITimeZonesOperations.
         /// </summary>
         ITimeZonesOperations TimeZones { get; }
-
-        /// <summary>
-        /// Gets the ITransparentDataEncryptionsOperations.
-        /// </summary>
-        ITransparentDataEncryptionsOperations TransparentDataEncryptions { get; }
 
         /// <summary>
         /// Gets the IVirtualClustersOperations.
