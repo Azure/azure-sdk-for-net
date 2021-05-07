@@ -11,8 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -30,7 +35,5 @@
     <Compile Include="$(AzureMixedRealityAuthenticationSharedSources)\AuthenticationEndpoint.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureMixedRealityAuthenticationSharedSources)\MixedRealityAccountKeyCredential.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
-
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
 </Project>
