@@ -22,7 +22,7 @@ extends:
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
       Int:
-        SubscriptionConfiguration:
+        SubscriptionConfigurations:
           - $(sub-config-communication-int-test-resources-common)
           - $(sub-config-communication-int-test-resources-net)
     Clouds: Int
