@@ -8,11 +8,10 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    [Parallelizable]
     public class ResourceGroupOperationsTests : ResourceManagerTestBase
     {
         public ResourceGroupOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -73,35 +72,87 @@ namespace Azure.ResourceManager.Core.Tests
             ResourceGroup rg1 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             ResourceGroup rg2 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             var genericResources = Client.DefaultSubscription.GetGenericResources();
-            var data = new GenericResourceData();
-            data.Location = LocationData.WestUS2;
-            data.Sku = new Sku("Aligned");
-            var propertyBag = new Dictionary<string, object>();
-            propertyBag.Add("platformUpdateDomainCount", 5);
-            propertyBag.Add("platformFaultDomainCount", 2);
-            data.Properties = propertyBag;
-            var asetId = rg1.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            var aset = await genericResources.CreateOrUpdateAsync(asetId, data);
-            int countRg1 = 0;
-            int countRg2 = 0;
-            await foreach (var resource in genericResources.ListByResourceGroupAsync(rg1.Id.Name))
-                countRg1++;
-            await foreach (var resource in genericResources.ListByResourceGroupAsync(rg2.Id.Name))
-                countRg2++;
+            var aset = await CreateGenericAvailabilitySetAsync(rg1.Id);
+
+            int countRg1 = await GetResourceCountAsync(rg1, genericResources);
+            int countRg2 = await GetResourceCountAsync(rg2, genericResources);
             Assert.AreEqual(1, countRg1);
             Assert.AreEqual(0, countRg2);
+
             var moveInfo = new ResourcesMoveInfo();
             moveInfo.TargetResourceGroup = rg2.Id;
-            moveInfo.Resources.Add(aset.Value.Id);
-            await rg1.MoveResourcesAsync(moveInfo);
-            countRg1 = 0;
-            countRg2 = 0;
-            await foreach (var resource in genericResources.ListByResourceGroupAsync(rg1.Id.Name))
-                countRg1++;
-            await foreach (var resource in genericResources.ListByResourceGroupAsync(rg2.Id.Name))
-                countRg2++;
+            moveInfo.Resources.Add(aset.Id);
+            _ = await rg1.MoveResourcesAsync(moveInfo);
+
+            countRg1 = await GetResourceCountAsync(rg1, genericResources);
+            countRg2 = await GetResourceCountAsync(rg2, genericResources);
             Assert.AreEqual(0, countRg1);
             Assert.AreEqual(1, countRg2);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task StartMoveResources()
+        {
+            var rg1Op = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var rg2Op = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg1 = await rg1Op.WaitForCompletionAsync();
+            ResourceGroup rg2 = await rg2Op.WaitForCompletionAsync();
+            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            var asetOp = await StartCreateGenericAvailabilitySetAsync(rg1.Id);
+            GenericResource aset = await asetOp.WaitForCompletionAsync();
+
+            int countRg1 = await GetResourceCountAsync(rg1, genericResources);
+            int countRg2 = await GetResourceCountAsync(rg2, genericResources);
+            Assert.AreEqual(1, countRg1);
+            Assert.AreEqual(0, countRg2);
+
+            var moveInfo = new ResourcesMoveInfo();
+            moveInfo.TargetResourceGroup = rg2.Id;
+            moveInfo.Resources.Add(aset.Id);
+            var moveOp = await rg1.StartMoveResourcesAsync(moveInfo);
+            _ = await moveOp.WaitForCompletionResponseAsync();
+
+            countRg1 = await GetResourceCountAsync(rg1, genericResources);
+            countRg2 = await GetResourceCountAsync(rg2, genericResources);
+            Assert.AreEqual(0, countRg1);
+            Assert.AreEqual(1, countRg2);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task ValidateMoveResources()
+        {
+            ResourceGroup rg1 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg2 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var aset = await CreateGenericAvailabilitySetAsync(rg1.Id);
+
+            var moveInfo = new ResourcesMoveInfo();
+            moveInfo.TargetResourceGroup = rg2.Id;
+            moveInfo.Resources.Add(aset.Id);
+            Response response = await rg1.ValidateMoveResourcesAsync(moveInfo);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task StartValidateMoveResources()
+        {
+            var rg1Op = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var rg2Op = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg1 = await rg1Op.WaitForCompletionAsync();
+            ResourceGroup rg2 = await rg2Op.WaitForCompletionAsync();
+            var asetOp = await StartCreateGenericAvailabilitySetAsync(rg1.Id);
+            GenericResource aset = await asetOp.WaitForCompletionAsync();
+
+            var moveInfo = new ResourcesMoveInfo();
+            moveInfo.TargetResourceGroup = rg2.Id;
+            moveInfo.Resources.Add(aset.Id);
+            var validateOp = await rg1.StartValidateMoveResourcesAsync(moveInfo);
+            Response response = await validateOp.WaitForCompletionResponseAsync();
+
+            Assert.AreEqual(204, response.Status);
         }
 
         [TestCase]
@@ -116,6 +167,42 @@ namespace Azure.ResourceManager.Core.Tests
         public void CreateResourceFromModelAsync()
         {
             //public ArmResponse<TOperations> CreateResource<TContainer, TOperations, TResource>(string name, TResource model, azure_proto_core.Location location = default)
+        }
+
+        private static async Task<int> GetResourceCountAsync(ResourceGroup rg1, GenericResourceContainer genericResources)
+        {
+            int result = 0;
+            await foreach (var resource in genericResources.ListByResourceGroupAsync(rg1.Id.Name))
+                result++;
+            return result;
+        }
+
+        private async Task<ResourcesCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceGroupResourceIdentifier rgId)
+        {
+            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            GenericResourceData data = ConstructGenericAvailabilitySet();
+            var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
+            return await genericResources.StartCreateOrUpdateAsync(asetId, data);
+        }
+
+        private static GenericResourceData ConstructGenericAvailabilitySet()
+        {
+            var data = new GenericResourceData();
+            data.Location = LocationData.WestUS2;
+            data.Sku = new Sku("Aligned");
+            var propertyBag = new Dictionary<string, object>();
+            propertyBag.Add("platformUpdateDomainCount", 5);
+            propertyBag.Add("platformFaultDomainCount", 2);
+            data.Properties = propertyBag;
+            return data;
+        }
+
+        private async Task<GenericResource> CreateGenericAvailabilitySetAsync(ResourceGroupResourceIdentifier rgId)
+        {
+            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            GenericResourceData data = ConstructGenericAvailabilitySet();
+            var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
+            return await genericResources.CreateOrUpdateAsync(asetId, data);
         }
     }
 }

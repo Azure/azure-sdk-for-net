@@ -5,11 +5,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
 {
-    public class PhArmOperationTest<T> : ArmOperation<T>
+    public class PhArmOperationTest<T> : Operation<T>
         where T : class
     {
         private OperationOrResponseInternals<T> _operationHelper;

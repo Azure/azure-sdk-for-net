@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
+using System.Collections.Concurrent;
 
 namespace Azure.ResourceManager.Core
 {
@@ -44,8 +45,8 @@ namespace Azure.ResourceManager.Core
             _clientOptions.Convert<ResourcesManagementClientOptions>()).Providers;
         }
 
-        private Dictionary<string, PropertyWrapper> _loadedResourceToApiVersions = new Dictionary<string, PropertyWrapper>();
-        private Dictionary<string, string> _nonLoadedResourceToApiVersion = new Dictionary<string, string>();
+        private ConcurrentDictionary<string, PropertyWrapper> _loadedResourceToApiVersions = new ConcurrentDictionary<string, PropertyWrapper>();
+        private ConcurrentDictionary<string, string> _nonLoadedResourceToApiVersion = new ConcurrentDictionary<string, string>();
 
         private void BuildApiTable(ArmClientOptions clientOptions)
         {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Core
                         if (prop.GetValue(apiObject) is ApiVersionsBase propVal)
                         {
                             var key = propVal.ResourceType;
-                            _loadedResourceToApiVersions.Add(key.ToString(), new PropertyWrapper(prop, apiObject));
+                            _loadedResourceToApiVersions.TryAdd(key.ToString(), new PropertyWrapper(prop, apiObject));
                         }
                     }
                 }
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Core
             {
                 if (type.ResourceType.Equals(resourceType.Type))
                 {
-                    _nonLoadedResourceToApiVersion.Add(resourceType.ToString(), type.ApiVersions[0]);
+                    _nonLoadedResourceToApiVersion.TryAdd(resourceType.ToString(), type.ApiVersions[0]);
                     return type.ApiVersions[0];
                 }
             }
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Core
             {
                 if (type.ResourceType.Equals(resourceType.Type))
                 {
-                    _nonLoadedResourceToApiVersion.Add(resourceType.ToString(), type.ApiVersions[0]);
+                    _nonLoadedResourceToApiVersion.TryAdd(resourceType.ToString(), type.ApiVersions[0]);
                     return type.ApiVersions[0];
                 }
             }
@@ -191,16 +192,16 @@ namespace Azure.ResourceManager.Core
             ApiVersions copy = new ApiVersions(_clientOptions);
             copy.ProviderOperations = ProviderOperations;
 
-            copy._loadedResourceToApiVersions = new Dictionary<string, PropertyWrapper>();
+            copy._loadedResourceToApiVersions = new ConcurrentDictionary<string, PropertyWrapper>();
             foreach (var property in _loadedResourceToApiVersions)
             {
-                copy._loadedResourceToApiVersions.Add(property.Key, property.Value);
+                copy._loadedResourceToApiVersions.TryAdd(property.Key, property.Value);
             }
 
-            copy._nonLoadedResourceToApiVersion = new Dictionary<string, string>();
+            copy._nonLoadedResourceToApiVersion = new ConcurrentDictionary<string, string>();
             foreach (var property in _nonLoadedResourceToApiVersion)
             {
-                copy._nonLoadedResourceToApiVersion.Add(property.Key, property.Value);
+                copy._nonLoadedResourceToApiVersion.TryAdd(property.Key, property.Value);
             }
             return copy;
         }
