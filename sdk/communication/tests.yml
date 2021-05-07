@@ -11,7 +11,6 @@ parameters:
       - identity # run live/sample tests for identity package only
       - phonenumbers # run live/sample tests for phonenumber package only
       - sms # run live/sample tests for sms package only
-
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
@@ -22,7 +21,9 @@ extends:
           - $(sub-config-azure-cloud-test-resources)
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
-    Clouds: Public
+      Int:
+        SubscriptionConfiguration: $(sub-config-communication-int-test-resources)
+    Clouds: Int
     EnvVars:
       # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
       SKIP_PHONENUMBER_LIVE_TESTS: TRUE
