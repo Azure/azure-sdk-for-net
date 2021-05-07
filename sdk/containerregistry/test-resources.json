@@ -30,7 +30,7 @@
         }
     },
     "variables": {
-        "apiVersion": "2019-05-01",
+        "apiVersion": "2020-11-01-preview",
         "endpointValue": "[format('https://{0}.azurecr.io', parameters('baseName'))]"
     },
     "resources": [
@@ -41,11 +41,11 @@
             "location": "[parameters('location')]",
             "properties": {        
                 "endpoint": "[variables('endpointValue')]",
-                "adminUserEnabled": true
+                "anonymousPullEnabled": true
             },
             "sku": {
-                "name": "Basic",
-                "tier": "Basic"
+                "name": "Standard",
+                "tier": "Standard"
             }
         }
     ],
