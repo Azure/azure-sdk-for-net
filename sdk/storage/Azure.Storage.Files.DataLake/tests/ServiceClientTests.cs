@@ -432,6 +432,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [NonParallelizable]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task SetPropertiesAsync_DeleteRetentionPolicy()
         {
             // Arrange
