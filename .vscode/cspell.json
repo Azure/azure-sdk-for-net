@@ -25,9 +25,13 @@
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
-  "words": [],
+  "words": ["azsdk", "pwsh"],
   "overrides": [
-    { "filename": "**/sdk/formrecognizer/**/*.cs", "words": ["ZhHant"] }
+    { "filename": "**/sdk/formrecognizer/**/*.cs", "words": ["ZhHant"] },
+    {
+      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
+      "words": ["warnaserror"]
+    }
   ],
   "allowCompoundWords": true
 }
