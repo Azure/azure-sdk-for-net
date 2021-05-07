@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The PurviewGlossary service client. </summary>
-    public partial class PurviewGlossaryClient
+    /// <summary> The PurviewGlossaries service client. </summary>
+    public partial class PurviewGlossaries
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -23,32 +23,9 @@ namespace Azure.Analytics.Purview.Catalog
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of PurviewGlossaryClient for mocking. </summary>
-        protected PurviewGlossaryClient()
+        /// <summary> Initializes a new instance of PurviewGlossaries for mocking. </summary>
+        protected PurviewGlossaries()
         {
-        }
-
-        /// <summary> Initializes a new instance of PurviewGlossaryClient. </summary>
-        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.catalog.purview.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public PurviewGlossaryClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options = null)
-        {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            options ??= new PurviewCatalogClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
         }
 
         /// <summary> Get all glossaries registered with Atlas. </summary>
@@ -66,7 +43,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaries");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
             try
             {
@@ -108,7 +85,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaries");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
             try
             {
@@ -442,7 +419,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.CreateGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossary");
             scope.Start();
             try
             {
@@ -745,7 +722,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.CreateGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossary");
             scope.Start();
             try
             {
@@ -1094,7 +1071,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.CreateGlossaryCategories");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
             scope.Start();
             try
             {
@@ -1424,7 +1401,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.CreateGlossaryCategories");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
             scope.Start();
             try
             {
@@ -1773,7 +1750,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.CreateGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategory");
             scope.Start();
             try
             {
@@ -2103,7 +2080,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.CreateGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategory");
             scope.Start();
             try
             {
@@ -2162,7 +2139,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
             try
             {
@@ -2202,7 +2179,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
             try
             {
@@ -2551,7 +2528,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.UpdateGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
             scope.Start();
             try
             {
@@ -2882,7 +2859,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.UpdateGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
             scope.Start();
             try
             {
@@ -2943,7 +2920,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.DeleteGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
             try
             {
@@ -2983,7 +2960,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.DeleteGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
             try
             {
@@ -3041,7 +3018,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.PartialUpdateGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
             scope.Start();
             try
             {
@@ -3082,7 +3059,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.PartialUpdateGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
             scope.Start();
             try
             {
@@ -3147,7 +3124,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetRelatedCategories");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
             try
             {
@@ -3190,7 +3167,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetRelatedCategories");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
             try
             {
@@ -3267,7 +3244,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetCategoryTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
             try
             {
@@ -3310,7 +3287,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetCategoryTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
             try
             {
@@ -3954,7 +3931,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.CreateGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerm");
             scope.Start();
             try
             {
@@ -4564,7 +4541,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.CreateGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerm");
             scope.Start();
             try
             {
@@ -4629,7 +4606,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
             try
             {
@@ -4670,7 +4647,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
             try
             {
@@ -5303,7 +5280,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.UpdateGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
             try
             {
@@ -5913,7 +5890,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.UpdateGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
             try
             {
@@ -5974,7 +5951,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.DeleteGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
             try
             {
@@ -6014,7 +5991,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.DeleteGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
             try
             {
@@ -6073,7 +6050,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.PartialUpdateGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
             scope.Start();
             try
             {
@@ -6115,7 +6092,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.PartialUpdateGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
             scope.Start();
             try
             {
@@ -6752,7 +6729,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.CreateGlossaryTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
             scope.Start();
             try
             {
@@ -7362,7 +7339,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.CreateGlossaryTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
             scope.Start();
             try
             {
@@ -7429,7 +7406,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetEntitiesAssignedWithTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
             try
             {
@@ -7472,7 +7449,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetEntitiesAssignedWithTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
             try
             {
@@ -7639,7 +7616,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.AssignTermToEntities");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
             scope.Start();
             try
             {
@@ -7772,7 +7749,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.AssignTermToEntities");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
             scope.Start();
             try
             {
@@ -7926,7 +7903,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.RemoveTermAssignmentFromEntities");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
             scope.Start();
             try
             {
@@ -8059,7 +8036,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.RemoveTermAssignmentFromEntities");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
             scope.Start();
             try
             {
@@ -8213,7 +8190,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.DeleteTermAssignmentFromEntities");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
             scope.Start();
             try
             {
@@ -8346,7 +8323,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.DeleteTermAssignmentFromEntities");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
             scope.Start();
             try
             {
@@ -8410,7 +8387,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetRelatedTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
             try
             {
@@ -8453,7 +8430,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetRelatedTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
             try
             {
@@ -8527,7 +8504,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
             try
             {
@@ -8567,7 +8544,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
             try
             {
@@ -8889,7 +8866,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.UpdateGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
             scope.Start();
             try
             {
@@ -9193,7 +9170,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.UpdateGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
             scope.Start();
             try
             {
@@ -9254,7 +9231,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.DeleteGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
             try
             {
@@ -9294,7 +9271,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.DeleteGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
             try
             {
@@ -9354,7 +9331,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaryCategories");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
             try
             {
@@ -9397,7 +9374,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaryCategories");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
             try
             {
@@ -9474,7 +9451,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaryCategoriesHeaders");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
             try
             {
@@ -9517,7 +9494,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaryCategoriesHeaders");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
             try
             {
@@ -9592,7 +9569,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetDetailedGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
             try
             {
@@ -9633,7 +9610,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetDetailedGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
             try
             {
@@ -9699,7 +9676,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.PartialUpdateGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
             scope.Start();
             try
             {
@@ -9741,7 +9718,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.PartialUpdateGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
             scope.Start();
             try
             {
@@ -9812,7 +9789,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaryTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
             try
             {
@@ -9856,7 +9833,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaryTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
             try
             {
@@ -9938,7 +9915,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaryTermHeaders");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
             try
             {
@@ -9981,7 +9958,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetGlossaryTermHeaders");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
             try
             {
@@ -10057,7 +10034,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.ImportGlossaryTermsViaCsv");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
             scope.Start();
             try
             {
@@ -10099,7 +10076,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.ImportGlossaryTermsViaCsv");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
             scope.Start();
             try
             {
@@ -10169,7 +10146,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.ImportGlossaryTermsViaCsvByGlossaryName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
             scope.Start();
             try
             {
@@ -10211,7 +10188,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.ImportGlossaryTermsViaCsvByGlossaryName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
             scope.Start();
             try
             {
@@ -10279,7 +10256,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetImportCsvOperationStatus");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
             try
             {
@@ -10319,7 +10296,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetImportCsvOperationStatus");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
             try
             {
@@ -10380,7 +10357,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.ExportGlossaryTermsAsCsv");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
             scope.Start();
             try
             {
@@ -10422,7 +10399,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.ExportGlossaryTermsAsCsv");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
             scope.Start();
             try
             {
@@ -10493,7 +10470,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetTermsByGlossaryName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
             try
             {
@@ -10536,7 +10513,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaryClient.GetTermsByGlossaryName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
             try
             {

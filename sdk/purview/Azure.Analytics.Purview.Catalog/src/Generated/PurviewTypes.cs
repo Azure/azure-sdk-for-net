@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Purview.Catalog
 {
     /// <summary> The PurviewTypes service client. </summary>
-    public partial class PurviewTypesClient
+    public partial class PurviewTypes
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -23,32 +23,9 @@ namespace Azure.Analytics.Purview.Catalog
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of PurviewTypesClient for mocking. </summary>
-        protected PurviewTypesClient()
+        /// <summary> Initializes a new instance of PurviewTypes for mocking. </summary>
+        protected PurviewTypes()
         {
-        }
-
-        /// <summary> Initializes a new instance of PurviewTypesClient. </summary>
-        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.catalog.purview.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public PurviewTypesClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options = null)
-        {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            options ??= new PurviewCatalogClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
         }
 
         /// <summary> Get the classification definition for the given GUID. </summary>
@@ -64,7 +41,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetClassificationDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
             try
             {
@@ -104,7 +81,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetClassificationDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
             try
             {
@@ -162,7 +139,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetClassificationDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
             try
             {
@@ -202,7 +179,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetClassificationDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
             try
             {
@@ -260,7 +237,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEntityDefinitionByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
             try
             {
@@ -300,7 +277,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEntityDefinitionByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
             try
             {
@@ -358,7 +335,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEntityDefinitionByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
             try
             {
@@ -398,7 +375,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEntityDefinitionByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
             try
             {
@@ -456,7 +433,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEnumDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
             try
             {
@@ -496,7 +473,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEnumDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
             try
             {
@@ -554,7 +531,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEnumDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
             try
             {
@@ -594,7 +571,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetEnumDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
             try
             {
@@ -652,7 +629,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetRelationshipDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
             try
             {
@@ -692,7 +669,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetRelationshipDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
             try
             {
@@ -750,7 +727,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetRelationshipDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
             try
             {
@@ -790,7 +767,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetRelationshipDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
             try
             {
@@ -848,7 +825,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetStructDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
             try
             {
@@ -888,7 +865,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetStructDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
             try
             {
@@ -946,7 +923,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetStructDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
             try
             {
@@ -986,7 +963,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetStructDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
             try
             {
@@ -1044,7 +1021,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTypeDefinitionByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
             try
             {
@@ -1084,7 +1061,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTypeDefinitionByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
             try
             {
@@ -1142,7 +1119,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTypeDefinitionByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
             try
             {
@@ -1182,7 +1159,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTypeDefinitionByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
             try
             {
@@ -1240,7 +1217,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.DeleteTypeByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
             try
             {
@@ -1280,7 +1257,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.DeleteTypeByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
             try
             {
@@ -1341,7 +1318,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetAllTypeDefinitions");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
             scope.Start();
             try
             {
@@ -1385,7 +1362,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetAllTypeDefinitions");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetAllTypeDefinitions");
             scope.Start();
             try
             {
@@ -2671,7 +2648,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.CreateTypeDefinitions");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
             try
             {
@@ -3928,7 +3905,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.CreateTypeDefinitions");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
             try
             {
@@ -5201,7 +5178,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.UpdateAtlasTypeDefinitions");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
             try
             {
@@ -6455,7 +6432,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.UpdateAtlasTypeDefinitions");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
             try
             {
@@ -7728,7 +7705,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.DeleteTypeDefinitions");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
             try
             {
@@ -8982,7 +8959,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.DeleteTypeDefinitions");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
             try
             {
@@ -9044,7 +9021,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTypeDefinitionHeaders");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
             scope.Start();
             try
             {
@@ -9088,7 +9065,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTypeDefinitionHeaders");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionHeaders");
             scope.Start();
             try
             {
@@ -9157,7 +9134,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTermTemplateDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
             try
             {
@@ -9197,7 +9174,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTermTemplateDefByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
             try
             {
@@ -9256,7 +9233,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTermTemplateDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
             try
             {
@@ -9296,7 +9273,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewTypesClient.GetTermTemplateDefByName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
             try
             {

@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The PurviewRelationship service client. </summary>
-    public partial class PurviewRelationshipClient
+    /// <summary> The PurviewRelationships service client. </summary>
+    public partial class PurviewRelationships
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -23,32 +23,9 @@ namespace Azure.Analytics.Purview.Catalog
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of PurviewRelationshipClient for mocking. </summary>
-        protected PurviewRelationshipClient()
+        /// <summary> Initializes a new instance of PurviewRelationships for mocking. </summary>
+        protected PurviewRelationships()
         {
-        }
-
-        /// <summary> Initializes a new instance of PurviewRelationshipClient. </summary>
-        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.catalog.purview.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public PurviewRelationshipClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options = null)
-        {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            options ??= new PurviewCatalogClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
         }
 
         /// <summary> Create a new relationship between entities. </summary>
@@ -192,7 +169,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Create");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
             {
@@ -360,7 +337,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Create");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
             try
             {
@@ -547,7 +524,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
             {
@@ -715,7 +692,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
             try
             {
@@ -775,7 +752,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Get");
             scope.Start();
             try
             {
@@ -816,7 +793,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Get");
             scope.Start();
             try
             {
@@ -879,7 +856,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
             {
@@ -919,7 +896,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewRelationshipClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
             try
             {

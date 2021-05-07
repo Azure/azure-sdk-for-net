@@ -4,7 +4,11 @@ namespace Azure.Analytics.Purview.Catalog
     {
         protected PurviewCatalogClient() { }
         public PurviewCatalogClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions options = null) { }
+        public Azure.Analytics.Purview.Catalog.PurviewEntities Entities { get { throw null; } }
+        public Azure.Analytics.Purview.Catalog.PurviewGlossaries Glossaries { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public Azure.Analytics.Purview.Catalog.PurviewRelationships Relationships { get { throw null; } }
+        public Azure.Analytics.Purview.Catalog.PurviewTypes Types { get { throw null; } }
         public virtual Azure.Response AutoComplete(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AutoCompleteAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual Azure.Response GetLineageGraph(string guid, string direction, int? depth = default(int?), int? width = default(int?), bool? includeParent = default(bool?), bool? getDerivedLineage = default(bool?), Azure.RequestOptions requestOptions = null) { throw null; }
@@ -24,10 +28,9 @@ namespace Azure.Analytics.Purview.Catalog
             V2021_05_01_preview = 1,
         }
     }
-    public partial class PurviewEntityClient
+    public partial class PurviewEntities
     {
-        protected PurviewEntityClient() { }
-        public PurviewEntityClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions options = null) { }
+        protected PurviewEntities() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response AddClassification(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddClassificationAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
@@ -74,10 +77,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Azure.Response UpdateClassificationsByUniqueAttribute(string typeName, Azure.Core.RequestContent requestBody, string attrQualifiedName = null, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateClassificationsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent requestBody, string attrQualifiedName = null, Azure.RequestOptions requestOptions = null) { throw null; }
     }
-    public partial class PurviewGlossaryClient
+    public partial class PurviewGlossaries
     {
-        protected PurviewGlossaryClient() { }
-        public PurviewGlossaryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions options = null) { }
+        protected PurviewGlossaries() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response AssignTermToEntities(string termGuid, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AssignTermToEntitiesAsync(string termGuid, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
@@ -150,10 +152,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Azure.Response UpdateGlossaryTerm(string termGuid, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateGlossaryTermAsync(string termGuid, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
     }
-    public partial class PurviewRelationshipClient
+    public partial class PurviewRelationships
     {
-        protected PurviewRelationshipClient() { }
-        public PurviewRelationshipClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions options = null) { }
+        protected PurviewRelationships() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response Create(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
@@ -164,10 +165,9 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual Azure.Response Update(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
     }
-    public partial class PurviewTypesClient
+    public partial class PurviewTypes
     {
-        protected PurviewTypesClient() { }
-        public PurviewTypesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions options = null) { }
+        protected PurviewTypes() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateTypeDefinitions(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateTypeDefinitionsAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
