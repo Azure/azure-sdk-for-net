@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
             Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties, rg2.Data.Properties);
+            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
             Assert.AreEqual(rg.Data.Tags, rg2.Data.Tags);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
             Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties, rg2.Data.Properties);
+            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
         }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
             Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties, rg2.Data.Properties);
+            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
         }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
             Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties, rg2.Data.Properties);
+            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
         }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
             Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties, rg2.Data.Properties);
+            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
             Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
             Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
         }
@@ -146,19 +146,19 @@ namespace Azure.ResourceManager.Core.Tests
                 { "k1", "v1"},
                 { "k2", "v2"}
             };
-            ResourceGroup rg2 = await rg.SetTagsAsync(tags);
-            ResourceGroup rg3 = await rg2.RemoveTagAsync("k1");
+            rg = await rg.SetTagsAsync(tags);
+            ResourceGroup rg2 = await rg.RemoveTagAsync("k1");
             var tags2 = new Dictionary<string, string>()
             {
                 { "k2", "v2"}
             };
-            Assert.AreEqual(tags2, rg3.Data.Tags);
-            Assert.AreEqual(rg2.Data.Name, rg3.Data.Name);
-            Assert.AreEqual(rg2.Data.Id, rg3.Data.Id);
-            Assert.AreEqual(rg2.Data.Type, rg3.Data.Type);
-            Assert.AreEqual(rg2.Data.Properties, rg3.Data.Properties);
-            Assert.AreEqual(rg2.Data.Location, rg3.Data.Location);
-            Assert.AreEqual(rg2.Data.ManagedBy, rg3.Data.ManagedBy);
+            Assert.AreEqual(tags2, rg2.Data.Tags);
+            Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
+            Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
+            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
+            Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
+            Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
         }
 
         [TestCase]
@@ -173,20 +173,20 @@ namespace Azure.ResourceManager.Core.Tests
                 { "k2", "v2"}
             };
             var setTagOp = await rg.StartSetTagsAsync(tags);
-            ResourceGroup rg2 = await setTagOp.WaitForCompletionAsync();
-            var removeTagOp = await rg2.StartRemoveTagAsync("k1");
-            ResourceGroup rg3 = await removeTagOp.WaitForCompletionAsync();
+            rg = await setTagOp.WaitForCompletionAsync();
+            var removeTagOp = await rg.StartRemoveTagAsync("k1");
+            ResourceGroup rg2 = await removeTagOp.WaitForCompletionAsync();
             var tags2 = new Dictionary<string, string>()
             {
                 { "k2", "v2"}
             };
-            Assert.AreEqual(tags2, rg3.Data.Tags);
-            Assert.AreEqual(rg2.Data.Name, rg3.Data.Name);
-            Assert.AreEqual(rg2.Data.Id, rg3.Data.Id);
-            Assert.AreEqual(rg2.Data.Type, rg3.Data.Type);
-            Assert.AreEqual(rg2.Data.Properties, rg3.Data.Properties);
-            Assert.AreEqual(rg2.Data.Location, rg3.Data.Location);
-            Assert.AreEqual(rg2.Data.ManagedBy, rg3.Data.ManagedBy);
+            Assert.AreEqual(tags2, rg2.Data.Tags);
+            Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
+            Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
+            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
+            Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
+            Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
         }
 
         [TestCase]
