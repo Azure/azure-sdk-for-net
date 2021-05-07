@@ -13,8 +13,8 @@ namespace Azure.Communication.Tests
         public const string AzurePhoneNumber = "AZURE_PHONE_NUMBER";
         protected const string TestPackagesEnabledDefaultValue = "all";
         private const string TestPackagesEnabledEnvironmentVariableName = "TEST_PACKAGES_ENABLED";
-        private const string SkipSmsTestEnvironmentVariableName = "COMMUNICATION_SKIP_INT_SMS_TEST";
-        private const string SkipPhoneNumbersTestEnvironmentVariableName = "COMMUNICATION_SKIP_INT_PHONENUMBERS_TEST";
+        private const string SkipSmsTestEnvironmentVariableName = "SKIP_INT_SMS_TEST";
+        private const string SkipPhoneNumbersTestEnvironmentVariableName = "SKIP_INT_PHONENUMBERS_TEST";
 
         public string ConnectionString => GetRecordedVariable(ConnectionStringEnvironmentVariableName);
 
