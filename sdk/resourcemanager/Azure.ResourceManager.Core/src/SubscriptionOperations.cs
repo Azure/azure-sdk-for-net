@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Core
         {
             async Task<Page<SubscriptionData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionsOperations.List");
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.List");
                 scope.Start();
                 try
                 {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Core
             }
             async Task<Page<SubscriptionData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionsOperations.List");
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.List");
                 scope.Start();
                 try
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Core
         {
             Page<SubscriptionData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionsOperations.List");
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.List");
                 scope.Start();
                 try
                 {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Core
             }
             Page<SubscriptionData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionsOperations.List");
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.List");
                 scope.Start();
                 try
                 {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Core
 
             async Task<Page<LocationData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionsOperations.ListLocations");
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListLocations");
                 scope.Start();
                 try
                 {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Core
 
             Page<LocationData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionsOperations.ListLocations");
+                using var scope = Diagnostics.CreateScope("SubscriptionOperations.ListLocations");
                 scope.Start();
                 try
                 {
