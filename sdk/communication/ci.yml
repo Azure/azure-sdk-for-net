@@ -40,3 +40,5 @@ extends:
       safeName: AzureCommunicationPhoneNumbers
     - name: Azure.ResourceManager.Communication
       safeName: AzureResourceManagerCommunication
+  EnvVars:
+      COMMUNICATION_SKIP_SMS_TEST: FALSE
