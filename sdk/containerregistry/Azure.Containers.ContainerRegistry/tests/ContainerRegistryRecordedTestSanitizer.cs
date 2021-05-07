@@ -21,7 +21,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             DateTimeOffset expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromDays(365 * 30); // Never expire in software years
             string encodedBody = Base64Url.EncodeString($"{{\"exp\":{expiresOn.ToUnixTimeSeconds()}}}");
 
-            var  jwtSanitizedValue = $"{SanitizeValue}.{encodedBody}.{SanitizeValue}";
+            var jwtSanitizedValue = $"{SanitizeValue}.{encodedBody}.{SanitizeValue}";
 
             AddJsonPathSanitizer("$..refresh_token", _ => JToken.FromObject(jwtSanitizedValue));
 
