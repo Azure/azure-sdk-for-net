@@ -70,6 +70,7 @@ namespace Azure.Containers.ContainerRegistry
         public ContainerRegistryClient(Uri registryUri, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(registryUri, nameof(registryUri));
+            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
             _registryUri = registryUri;
