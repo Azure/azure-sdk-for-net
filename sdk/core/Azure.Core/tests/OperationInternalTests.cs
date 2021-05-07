@@ -158,11 +158,9 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
-        public async Task UpdateStatusCreatesDiagnosticScope(bool async, bool useDefaultTypeName)
+        public async Task UpdateStatusCreatesDiagnosticScope(
+            [Values(true, false)] bool async,
+            [Values(true, false)] bool useDefaultTypeName)
         {
             const string customTypeName = "CustomTypeName";
             using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
