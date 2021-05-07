@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             var  jwtSanitizedValue = $"{SanitizeValue}.{encodedBody}.{SanitizeValue}";
 
-            AddJsonPathSanitizer("$..refresh_token", t => JToken.FromObject(jwtSanitizedValue));
+            AddJsonPathSanitizer("$..refresh_token", _ => JToken.FromObject(jwtSanitizedValue));
 
             FormEncodedBodySanitizers.Add("access_token");
             FormEncodedBodySanitizers.Add("refresh_token");
