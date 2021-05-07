@@ -16,17 +16,17 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Updates a resource. </summary>
-    public partial class ResourcesUpdateOperation : ArmOperation<GenericResource>, IOperationSource<GenericResource>
+    public partial class ResourcesUpdateOperation : Operation<GenericResource>, IOperationSource<GenericResource>
     {
         private readonly OperationOrResponseInternals<GenericResource> _operation;
-        private readonly ResourceOperationsBase _parentOperation;
+        private readonly OperationsBase _parentOperation;
 
         /// <summary> Initializes a new instance of ResourcesUpdateOperation for mocking. </summary>
         protected ResourcesUpdateOperation()
         {
         }
 
-        internal ResourcesUpdateOperation(ResourceOperationsBase parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ResourcesUpdateOperation(OperationsBase parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationOrResponseInternals<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesUpdateOperation");
             _parentOperation = parentOperation;

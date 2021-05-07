@@ -17,17 +17,17 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Updates a resource by ID. </summary>
-    public partial class ResourcesUpdateByIdOperation : ArmOperation<GenericResource>, IOperationSource<GenericResource>
+    public partial class ResourcesUpdateByIdOperation : Operation<GenericResource>, IOperationSource<GenericResource>
     {
         private readonly OperationOrResponseInternals<GenericResource> _operation;
-        private readonly ResourceOperationsBase _parentOperation;
+        private readonly OperationsBase _parentOperation;
 
         /// <summary> Initializes a new instance of ResourcesUpdateByIdOperation for mocking. </summary>
         protected ResourcesUpdateByIdOperation()
         {
         }
 
-        internal ResourcesUpdateByIdOperation(ResourceOperationsBase parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal ResourcesUpdateByIdOperation(OperationsBase parentOperation, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new OperationOrResponseInternals<GenericResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesUpdateByIdOperation");
             _parentOperation = parentOperation;

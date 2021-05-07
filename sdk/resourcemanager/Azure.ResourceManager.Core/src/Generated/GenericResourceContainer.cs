@@ -25,13 +25,19 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="GenericResourceContainer"/> class.
         /// </summary>
         /// <param name="clientContext"> The client context to use. </param>
-        internal GenericResourceContainer(ClientContext clientContext)
-            : base(clientContext, new TenantResourceIdentifier())
+        /// <param name="id"> The id for the subscription that owns this container. </param>
+        internal GenericResourceContainer(ClientContext clientContext, SubscriptionResourceIdentifier id)
+            : base(clientContext, id)
         {
         }
 
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceIdentifier.RootResourceIdentifier.ResourceType;
+
+        /// <inheritdoc/>
+        protected override void Validate(ResourceIdentifier identifier)
+        {
+        }
 
         private ResourcesRestOperations RestClient
         {
@@ -52,7 +58,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<GenericResource> Get(string resourceId, CancellationToken cancellationToken = default)
+        public override Response<GenericResource> Get(string resourceId, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceContainer.Get");
             scope.Start();
@@ -60,7 +66,7 @@ namespace Azure.ResourceManager.Core
             {
                 var apiVersion = GetApiVersion(resourceId, cancellationToken);
                 var result = RestClient.GetById(resourceId, apiVersion, cancellationToken);
-                return ArmResponse.FromValue(new GenericResource(Parent, result), result.GetRawResponse());
+                return Response.FromValue(new GenericResource(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -70,7 +76,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<GenericResource>> GetAsync(string resourceId, CancellationToken cancellationToken = default)
+        public override async Task<Response<GenericResource>> GetAsync(string resourceId, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceContainer.Get");
             scope.Start();
@@ -78,7 +84,7 @@ namespace Azure.ResourceManager.Core
             {
                 var apiVersion = await GetApiVersionAsync(resourceId, cancellationToken).ConfigureAwait(false);
                 var result = await RestClient.GetByIdAsync(resourceId, apiVersion, cancellationToken).ConfigureAwait(false);
-                return ArmResponse.FromValue(new GenericResource(Parent, result), result.GetRawResponse());
+                return Response.FromValue(new GenericResource(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -100,7 +106,7 @@ namespace Azure.ResourceManager.Core
                 try
                 {
                     var response = RestClient.List(filter, null, top, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(Parent, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -115,7 +121,7 @@ namespace Azure.ResourceManager.Core
                 try
                 {
                     var response = RestClient.ListNextPage(nextLink, filter, null, top, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(Parent, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -139,7 +145,7 @@ namespace Azure.ResourceManager.Core
                 try
                 {
                     var response = await RestClient.ListAsync(filter, null, top, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(Parent, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.Core
                 try
                 {
                     var response = await RestClient.ListNextPageAsync(nextLink, filter, null, top, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(Parent, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -185,7 +191,7 @@ namespace Azure.ResourceManager.Core
                 try
                 {
                     var response = RestClient.ListByResourceGroup(resourceGroupName, filter, null, top, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(Parent, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -200,7 +206,7 @@ namespace Azure.ResourceManager.Core
                 try
                 {
                     var response = RestClient.ListByResourceGroupNextPage(nextLink, resourceGroupName, filter, null, top, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(Parent, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -231,7 +237,7 @@ namespace Azure.ResourceManager.Core
                 try
                 {
                     var response = await RestClient.ListByResourceGroupAsync(resourceGroupName, filter, null, top, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(Parent, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -246,7 +252,7 @@ namespace Azure.ResourceManager.Core
                 try
                 {
                     var response = await RestClient.ListByResourceGroupNextPageAsync(nextLink, resourceGroupName, filter, null, top, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(Parent, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new GenericResource(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,7 +280,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmResponse<GenericResource> CreateOrUpdate(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual Response<GenericResource> CreateOrUpdate(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -290,7 +296,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var operation = StartCreateOrUpdate(resourceId, parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken) as ArmResponse<GenericResource>;
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -304,7 +310,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parameters"> Create or update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmResponse<GenericResource>> CreateOrUpdateAsync(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GenericResource>> CreateOrUpdateAsync(string resourceId, GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -320,7 +326,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var operation = await StartCreateOrUpdateAsync(resourceId, parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false) as ArmResponse<GenericResource>;
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -351,7 +357,7 @@ namespace Azure.ResourceManager.Core
             {
                 var apiVersion = GetApiVersion(resourceId, cancellationToken);
                 var originalResponse = RestClient.CreateOrUpdateById(resourceId, apiVersion, parameters, cancellationToken);
-                return new ResourcesCreateOrUpdateByIdOperation(Parent, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
+                return new ResourcesCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -382,7 +388,7 @@ namespace Azure.ResourceManager.Core
             {
                 var apiVersion = await GetApiVersionAsync(resourceId, cancellationToken).ConfigureAwait(false);
                 var originalResponse = await RestClient.CreateOrUpdateByIdAsync(resourceId, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                return new ResourcesCreateOrUpdateByIdOperation(Parent, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
+                return new ResourcesCreateOrUpdateByIdOperation(this, Diagnostics, Pipeline, RestClient.CreateCreateOrUpdateByIdRequest(resourceId, apiVersion, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {

@@ -82,15 +82,15 @@ namespace Azure.ResourceManager.Core
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse"/> operation for this resource. </returns>
-        public virtual ArmResponse Delete(CancellationToken cancellationToken = default)
+        /// <returns> A response with the <see cref="Response"/> operation for this resource. </returns>
+        public virtual Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Delete");
             scope.Start();
 
             try
             {
-                return ArmResponse.FromResponse(Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletion(cancellationToken));
+                return Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -103,15 +103,15 @@ namespace Azure.ResourceManager.Core
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse"/> operation for this resource. </returns>
-        public virtual async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response"/> operation for this resource. </returns>
+        public virtual async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Delete");
             scope.Start();
 
             try
             {
-                return ArmResponse.FromResponse(await Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+                return await Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Core
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmOperation{Response}"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="Operation"/> operation for this resource. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual ArmOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual Operation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.Core
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Operation"/> operation for this resource. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<ResourceGroup> Get(CancellationToken cancellationToken = default)
+        public override Response<ResourceGroup> Get(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Get");
             scope.Start();
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<ResourceGroup>> GetAsync(CancellationToken cancellationToken = default)
+        public override async Task<Response<ResourceGroup>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Get");
             scope.Start();
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public virtual ArmResponse<ResourceGroup> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroup> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public virtual async Task<ArmResponse<ResourceGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public virtual ArmOperation<ResourceGroup> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Operation<ResourceGroup> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public virtual async Task<ArmOperation<ResourceGroup>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<ResourceGroup>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -330,10 +330,10 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="TOperations"> The type of the operations class for a specific resource. </typeparam>
         /// <typeparam name="TIdentifier"> The type of the resource identifier. </typeparam>
         /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
-        /// <returns> Returns a response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
+        /// <returns> Returns a response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> Model cannot be null. </exception>
-        public virtual ArmResponse<TOperations> CreateResource<TContainer, TOperations, TIdentifier, TResource>(string name, TResource model)
+        public virtual Response<TOperations> CreateResource<TContainer, TOperations, TIdentifier, TResource>(string name, TResource model)
             where TResource : TrackedResource<TIdentifier>
             where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
             where TContainer : ResourceContainerBase<TIdentifier, TOperations, TResource>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Core
             var myResource = model as TrackedResource<TIdentifier>;
             TContainer container = Activator.CreateInstance(typeof(TContainer), ClientOptions, myResource) as TContainer;
             var createOrUpdateMethod = typeof(TContainer).GetMethod(CreateOrUpdateMethodName);
-            return createOrUpdateMethod.Invoke(container, new object[] { name, model }) as ArmResponse<TOperations>;
+            return createOrUpdateMethod.Invoke(container, new object[] { name, model }) as Response<TOperations>;
         }
 
         /// <summary>
@@ -360,10 +360,10 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="TIdentifier"> The type of the operations class for a specific resource. </typeparam>
         /// <typeparam name="TOperations"> The type of the resource identifier. </typeparam>
         /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> Model cannot be null. </exception>
-        public virtual Task<ArmResponse<TOperations>> CreateResourceAsync<TContainer, TIdentifier, TOperations, TResource>(string name, TResource model, CancellationToken cancellationToken = default)
+        public virtual Task<Response<TOperations>> CreateResourceAsync<TContainer, TIdentifier, TOperations, TResource>(string name, TResource model, CancellationToken cancellationToken = default)
             where TResource : TrackedResource<TIdentifier>
             where TOperations : ResourceOperationsBase<TIdentifier,TOperations>
             where TContainer : ResourceContainerBase<TIdentifier, TOperations, TResource>
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.Core
 
             TContainer container = Activator.CreateInstance(typeof(TContainer), ClientOptions, myResource) as TContainer;
             var createOrUpdateAsyncMethod = typeof(TContainer).GetMethod(CreateOrUpdateAsyncMethodName);
-            return createOrUpdateAsyncMethod.Invoke(container, new object[] { name, model, cancellationToken }) as Task<ArmResponse<TOperations>>;
+            return createOrUpdateAsyncMethod.Invoke(container, new object[] { name, model, cancellationToken }) as Task<Response<TOperations>>;
         }
 
         /// <inheritdoc/>
-        public virtual ArmResponse<ResourceGroup> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroup> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public virtual async Task<ArmResponse<ResourceGroup>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroup>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public virtual ArmOperation<ResourceGroup> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Operation<ResourceGroup> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public virtual async Task<ArmOperation<ResourceGroup>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<ResourceGroup>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public virtual ArmResponse<ResourceGroup> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroup> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public virtual async Task<ArmResponse<ResourceGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public virtual ArmOperation<ResourceGroup> StartRemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Operation<ResourceGroup> StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public virtual async Task<ArmOperation<ResourceGroup>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<ResourceGroup>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmResponse MoveResources(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual Response MoveResources(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var originalResponse = StartMoveResources(parameters, cancellationToken);
-                return ArmResponse.FromResponse(originalResponse.WaitForCompletion(cancellationToken));
+                return originalResponse.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmResponse> MoveResourcesAsync(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> MoveResourcesAsync(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var originalResponse = await StartMoveResourcesAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return ArmResponse.FromResponse(await originalResponse.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+                return await originalResponse.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmResponse ValidateMoveResources(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual Response ValidateMoveResources(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var operation = StartValidateMoveResources(parameters, cancellationToken);
-                return ArmResponse.FromResponse(operation.WaitForCompletion(cancellationToken));
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parameters"> Parameters for moving resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmResponse> ValidateMoveResourcesAsync(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ValidateMoveResourcesAsync(ResourcesMoveInfo parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var operation = await StartValidateMoveResourcesAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return ArmResponse.FromResponse(await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {

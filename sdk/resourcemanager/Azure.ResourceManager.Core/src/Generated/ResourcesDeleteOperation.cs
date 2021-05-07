@@ -15,9 +15,9 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> Deletes a resource. </summary>
-    public partial class ResourcesDeleteOperation : ArmOperation<Response>, IOperationSource<Response>
+    public partial class ResourcesDeleteOperation : Operation
     {
-        private readonly OperationOrResponseInternals<Response> _operation;
+        private readonly OperationOrResponseInternals _operation;
 
         /// <summary> Initializes a new instance of ResourcesDeleteOperation for mocking. </summary>
         protected ResourcesDeleteOperation()
@@ -26,19 +26,13 @@ namespace Azure.ResourceManager.Core
 
         internal ResourcesDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesDeleteOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesDeleteOperation");
         }
         /// <inheritdoc />
         public override string Id => "";
 
         /// <inheritdoc />
-        public override Response Value => _operation.Value;
-
-        /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
-
-        /// <inheritdoc />
-        public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
         public override Response GetRawResponse() => _operation.GetRawResponse();
@@ -50,19 +44,9 @@ namespace Azure.ResourceManager.Core
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
-
-        Response IOperationSource<Response>.CreateResult(Response response, CancellationToken cancellationToken)
-        {
-            return response;
-        }
-
-        async ValueTask<Response> IOperationSource<Response>.CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            return await new ValueTask<Response>(response).ConfigureAwait(false);
-        }
+        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
     }
 }

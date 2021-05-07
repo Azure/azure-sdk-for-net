@@ -1,18 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class ResourceGroupOperationsTests : ResourceManagerTestBase
     {
         public ResourceGroupOperationsTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -64,6 +65,44 @@ namespace Azure.ResourceManager.Core.Tests
                 count++;
             }
             Assert.GreaterOrEqual(count, 1);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task MoveResources()
+        {
+            ResourceGroup rg1 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg2 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            var data = new GenericResourceData();
+            data.Location = LocationData.WestUS2;
+            data.Sku = new Sku("Aligned");
+            var propertyBag = new Dictionary<string, object>();
+            propertyBag.Add("platformUpdateDomainCount", 5);
+            propertyBag.Add("platformFaultDomainCount", 2);
+            data.Properties = propertyBag;
+            var asetId = rg1.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
+            var aset = await genericResources.CreateOrUpdateAsync(asetId, data);
+            int countRg1 = 0;
+            int countRg2 = 0;
+            await foreach (var resource in genericResources.ListByResourceGroupAsync(rg1.Id.Name))
+                countRg1++;
+            await foreach (var resource in genericResources.ListByResourceGroupAsync(rg2.Id.Name))
+                countRg2++;
+            Assert.AreEqual(1, countRg1);
+            Assert.AreEqual(0, countRg2);
+            var moveInfo = new ResourcesMoveInfo();
+            moveInfo.TargetResourceGroup = rg2.Id;
+            moveInfo.Resources.Add(aset.Value.Id);
+            await rg1.MoveResourcesAsync(moveInfo);
+            countRg1 = 0;
+            countRg2 = 0;
+            await foreach (var resource in genericResources.ListByResourceGroupAsync(rg1.Id.Name))
+                countRg1++;
+            await foreach (var resource in genericResources.ListByResourceGroupAsync(rg2.Id.Name))
+                countRg2++;
+            Assert.AreEqual(0, countRg1);
+            Assert.AreEqual(1, countRg2);
         }
 
         [TestCase]

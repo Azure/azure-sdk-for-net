@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets or sets the location the resource is in.
         /// </summary>
-        public virtual LocationData Location { get; }
+        public virtual LocationData Location { get; set; }
     }
 }

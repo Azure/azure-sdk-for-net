@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing an arm operation wrapper object.
     /// </summary>
-    internal class PhValueArmOperation<TOperations> : ArmOperation<TOperations>
+    internal class PhValueArmOperation<TOperations> : Operation<TOperations>
         where TOperations : class
     {
         private readonly Operation<TOperations> _wrappedOperation;

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -14,11 +15,21 @@ namespace Azure.ResourceManager.Core
     public class GenericResourceOperations : ResourceOperationsBase<TenantResourceIdentifier, GenericResource>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
+        /// </summary>
+        /// <param name="clientContext"></param>
+        /// <param name="id"></param>
+        internal GenericResourceOperations(ClientContext clientContext, TenantResourceIdentifier id)
+            : base(clientContext, id)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceOperations"/> class.
         /// </summary>
         /// <param name="operations"> The resource operations to copy the options from. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GenericResourceOperations(ResourceOperationsBase operations, TenantResourceIdentifier id)
+        internal GenericResourceOperations(OperationsBase operations, TenantResourceIdentifier id)
             : base(operations, id)
         {
         }
@@ -37,8 +48,8 @@ namespace Azure.ResourceManager.Core
                 }
 
                 return new ResourcesRestOperations(
-                    Diagnostics,
-                    Pipeline,
+                    new Azure.Core.Pipeline.ClientDiagnostics(ClientOptions),
+                    ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions),
                     subscription,
                     BaseUri);
             }
@@ -49,14 +60,14 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> The status of the delete operation. </returns>
-        public ArmResponse Delete(CancellationToken cancellationToken = default)
+        public Response Delete(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.Delete");
             scope.Start();
             try
             {
                 var operation = StartDelete(cancellationToken);
-                return ArmResponse.FromResponse(operation.WaitForCompletion(cancellationToken).GetRawResponse());
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -70,14 +81,14 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> A <see cref="Task"/> that on completion returns the status of the delete operation. </returns>
-        public async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.Delete");
             scope.Start();
             try
             {
                 var operation = await StartDeleteAsync(cancellationToken).ConfigureAwait(false);
-                return ArmResponse.FromResponse((await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false)).GetRawResponse());
+                return await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -90,7 +101,7 @@ namespace Azure.ResourceManager.Core
         /// Delete the resource.
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
-        /// <returns> A <see cref="ArmOperation{Response}"/> which allows the caller to control polling and waiting for resource deletion.
+        /// <returns> A <see cref="ResourcesDeleteByIdOperation"/> which allows the caller to control polling and waiting for resource deletion.
         /// The operation yields the final http response to the delete request when complete. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
@@ -117,7 +128,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a <see cref="ArmOperation{Response}"/> which
+        /// <returns> A <see cref="Task"/> that on completion returns a <see cref="ResourcesDeleteByIdOperation"/> which
         /// allows the caller to control polling and waiting for resource deletion.
         /// The operation yields the final http response to the delete request when complete. </returns>
         /// <remarks>
@@ -141,14 +152,14 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public ArmResponse<GenericResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public Response<GenericResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.AddTag");
             scope.Start();
             try
             {
                 var operation = StartAddTag(key, value, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken) as ArmResponse<GenericResource>;
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -158,14 +169,14 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<GenericResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async Task<Response<GenericResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.AddTag");
             scope.Start();
             try
             {
                 var operation = await StartAddTagAsync(key, value, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false) as ArmResponse<GenericResource>;
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -215,7 +226,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<GenericResource> Get(CancellationToken cancellationToken = default)
+        public override Response<GenericResource> Get(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.Get");
             scope.Start();
@@ -223,7 +234,7 @@ namespace Azure.ResourceManager.Core
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var result = RestClient.GetById(Id, apiVersion, cancellationToken);
-                return ArmResponse.FromValue(new GenericResource(this, result), result.GetRawResponse());
+                return Response.FromValue(new GenericResource(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,7 +244,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<GenericResource>> GetAsync(CancellationToken cancellationToken = default)
+        public override async Task<Response<GenericResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.Get");
             scope.Start();
@@ -241,7 +252,7 @@ namespace Azure.ResourceManager.Core
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var result = await RestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                return ArmResponse.FromValue(new GenericResource(this, result), result.GetRawResponse());
+                return Response.FromValue(new GenericResource(this, result), result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,14 +269,14 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public ArmResponse<GenericResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public Response<GenericResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.SetTags");
             scope.Start();
             try
             {
                 var operation = StartSetTags(tags, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken) as ArmResponse<GenericResource>;
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -275,14 +286,14 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<GenericResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async Task<Response<GenericResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.SetTags");
             scope.Start();
             try
             {
                 var operation = await StartSetTagsAsync(tags, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false) as ArmResponse<GenericResource>;
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -332,14 +343,14 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public ArmResponse<GenericResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public Response<GenericResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.RemoveTag");
             scope.Start();
             try
             {
                 var operation = StartRemoveTag(key, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken) as ArmResponse<GenericResource>;
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -349,14 +360,14 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<GenericResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Response<GenericResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.RemoveTag");
             scope.Start();
             try
             {
                 var operation = await StartRemoveTagAsync(key, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false) as ArmResponse<GenericResource>;
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -386,7 +397,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<GenericResource>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Operation<GenericResource>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartRemoveTag");
             scope.Start();
@@ -409,7 +420,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmResponse<GenericResource> Update(GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual Response<GenericResource> Update(GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -421,7 +432,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var operation = StartUpdate(parameters, cancellationToken);
-                return operation.WaitForCompletion(cancellationToken) as ArmResponse<GenericResource>;
+                return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)
             {
@@ -434,7 +445,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parameters"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmResponse<GenericResource>> UpdateAsync(GenericResourceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GenericResource>> UpdateAsync(GenericResourceData parameters, CancellationToken cancellationToken = default)
         {
             if (parameters == null)
             {
@@ -446,7 +457,7 @@ namespace Azure.ResourceManager.Core
             try
             {
                 var operation = await StartUpdateAsync(parameters, cancellationToken).ConfigureAwait(false);
-                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false) as ArmResponse<GenericResource>;
+                return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {

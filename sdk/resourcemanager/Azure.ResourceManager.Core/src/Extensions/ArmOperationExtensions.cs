@@ -9,88 +9,68 @@ using Azure.Core;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// Abstract class for long-running or synchronous applications.
+    /// Extension methods for Operation class that apply to management use cases.
     /// </summary>
-    public abstract class ArmOperation : Operation
+    public static class ArmOperationExtensions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArmOperation"/> class for mocking.
-        /// </summary>
-        protected ArmOperation()
-        {
-        }
-
-        /// <summary>
         /// Waits for the completion of the long running operations.
         /// </summary>
+        /// <param name="operation"> The operation instance to use. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The response with the final state of the operation. </returns>
-        public virtual Response WaitForCompletion(CancellationToken cancellationToken = default)
+        public static Response WaitForCompletion(this Operation operation, CancellationToken cancellationToken)
         {
-            return WaitForCompletion(OperationInternals.DefaultPollingInterval, cancellationToken);
+            return operation.WaitForCompletion(OperationInternals.DefaultPollingInterval, cancellationToken);
         }
 
         /// <summary>
         /// Waits for the completion of the long running operations.
         /// </summary>
+        /// <param name="operation"> The operation instance to use. </param>
         /// <param name="pollingInterval"> The polling interval to check for status. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The response with the final state of the operation. </returns>
-        public virtual Response WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
+        public static Response WaitForCompletion(this Operation operation, TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
-                UpdateStatus(cancellationToken);
-                if (HasCompleted)
+                operation.UpdateStatus(cancellationToken);
+                if (operation.HasCompleted)
                 {
-                    return new ArmVoidResponse(GetRawResponse());
+                    return operation.GetRawResponse();
                 }
 
                 Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);
             }
         }
-    }
-
-    /// <summary>
-    /// Abstract class for long-running or synchronous applications.
-    /// </summary>
-    /// <typeparam name="TOperations"> The <see cref="OperationsBase"/> to return representing the result of the ArmOperation. </typeparam>
-#pragma warning disable SA1402 // File may only contain a single type
-    public abstract class ArmOperation<TOperations> : Operation<TOperations>
-        where TOperations : notnull
-#pragma warning restore SA1402 // File may only contain a single type
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ArmOperation{TOperations}"/> class for mocking.
-        /// </summary>
-        protected ArmOperation()
-        {
-        }
 
         /// <summary>
         /// Waits for the completion of the long running operations.
         /// </summary>
+        /// <param name="operation"> The operation instance to use. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The response with the final state of the operation. </returns>
-        public virtual Response<TOperations> WaitForCompletion(CancellationToken cancellationToken = default)
+        public static Response<T> WaitForCompletion<T>(this Operation<T> operation, CancellationToken cancellationToken = default)
         {
-            return WaitForCompletion(OperationInternals.DefaultPollingInterval, cancellationToken);
+            return operation.WaitForCompletion(OperationInternals.DefaultPollingInterval, cancellationToken);
         }
 
         /// <summary>
         /// Waits for the completion of the long running operations.
         /// </summary>
+        /// <param name="operation"> The operation instance to use. </param>
         /// <param name="pollingInterval"> The polling interval to check for status. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> The response with the final state of the operation. </returns>
-        public virtual Response<TOperations> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
+        public static Response<T> WaitForCompletion<T>(this Operation<T> operation, TimeSpan pollingInterval, CancellationToken cancellationToken = default)
         {
             while (true)
             {
-                UpdateStatus(cancellationToken);
-                if (HasCompleted)
+                operation.UpdateStatus(cancellationToken);
+                if (operation.HasCompleted)
                 {
-                    return ArmResponse.FromValue(Value, GetRawResponse());
+                    return Response.FromValue(operation.Value, operation.GetRawResponse());
                 }
 
                 Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);

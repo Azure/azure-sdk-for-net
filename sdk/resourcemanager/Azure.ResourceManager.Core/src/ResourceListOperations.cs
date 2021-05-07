@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Core
         private static GenericResourceContainer GetRestClient(ResourceOperationsBase resourceOperations)
         {
             var subscription = resourceOperations.Id as SubscriptionResourceIdentifier;
-            return new GenericResourceContainer(new ClientContext(resourceOperations.ClientOptions, resourceOperations.Credential, resourceOperations.BaseUri, resourceOperations.Pipeline));
+            return new GenericResourceContainer(new ClientContext(resourceOperations.ClientOptions, resourceOperations.Credential, resourceOperations.BaseUri, resourceOperations.Pipeline), subscription);
         }
 
         private static AsyncPageable<GenericResource> ListAtContextInternalAsync(

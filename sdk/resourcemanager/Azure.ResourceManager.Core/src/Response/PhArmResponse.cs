@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     /// <typeparam name="TOperations"> The <see cref="ResourceOperationsBase"/> to convert the TModel into. </typeparam>
     /// <typeparam name="TModel"> The model returned by the existing serivce calls. </typeparam>
-    public class PhArmResponse<TOperations, TModel> : ArmResponse<TOperations>
+    public class PhArmResponse<TOperations, TModel> : Response<TOperations>
         where TOperations : class
         where TModel : class
     {

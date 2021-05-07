@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Core.Generated
         protected override ResourceType ValidResourceType => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        public override ArmResponse<GenericResourceExpanded> Get(CancellationToken cancellationToken = default)
+        public override Response<GenericResourceExpanded> Get(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override Task<ArmResponse<GenericResourceExpanded>> GetAsync(CancellationToken cancellationToken = default)
+        public override Task<Response<GenericResourceExpanded>> GetAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

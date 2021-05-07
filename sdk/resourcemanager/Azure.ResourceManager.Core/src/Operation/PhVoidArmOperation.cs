@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing an arm operation wrapper object.
     /// </summary>
-    public class PhVoidArmOperation : ArmOperation
+    public class PhVoidArmOperation : Operation
     {
         private readonly Operation _wrappedOperation;
         private readonly OperationOrResponseInternals _wrappedResponseOperation;

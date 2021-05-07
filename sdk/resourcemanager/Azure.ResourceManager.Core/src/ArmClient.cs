@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
         public ArmClient(TokenCredential credential, ArmClientOptions options = default)
-            : this(null, null, credential, options)
+            : this(null, new Uri(DefaultUri), credential, options)
         {
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Core
             string defaultSubscriptionId,
             TokenCredential credential,
             ArmClientOptions options = default)
-            : this(defaultSubscriptionId, null, credential, options)
+            : this(defaultSubscriptionId, new Uri(DefaultUri), credential, options)
         {
         }
 
@@ -144,33 +144,21 @@ namespace Azure.ResourceManager.Core
             return new ResourceGroupOperations(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id.SubscriptionId), id.ResourceGroupName);
         }
 
-        /// <summary>
-        /// Gets resource operations base.
-        /// </summary>
-        /// <typeparam name="T"> The type of the underlying model this class wraps. </typeparam>
-        /// <param name="subscription"> The id of the Azure subscription. </param>
-        /// <param name="resourceGroup"> The resource group name. </param>
-        /// <param name="name"> The resource type name. </param>
-        /// <returns> Resource operations of the resource. </returns>
-        public virtual T GetResourceOperations<T>(string subscription, string resourceGroup, string name)
-            where T : OperationsBase
-        {
-            var subOp = new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), subscription);
-            var rgOp = subOp.GetResourceGroups().Get(resourceGroup);
-            return Activator.CreateInstance(
-                typeof(T),
-                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance,
-                null,
-                new object[] { rgOp, name },
-                CultureInfo.InvariantCulture) as T;
-        }
-
         private Subscription GetDefaultSubscription()
         {
             var sub = GetSubscriptions().List().FirstOrDefault();
             if (sub is null)
                 throw new Exception("No subscriptions found for the given credentials");
             return sub;
+        }
+
+        /// <summary>
+        /// Gets a container representing all resources as generic objects in the current tenant.
+        /// </summary>
+        /// <returns> GenericResource container. </returns>
+        public GenericResourceOperations GetGenericResourcesOperations(TenantResourceIdentifier id)
+        {
+            return new GenericResourceOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id);
         }
     }
 }

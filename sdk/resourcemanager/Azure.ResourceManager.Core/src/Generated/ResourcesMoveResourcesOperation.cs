@@ -15,9 +15,9 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Core
 {
     /// <summary> The resources to move must be in the same source resource group. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes. </summary>
-    public partial class ResourcesMoveResourcesOperation : ArmOperation<Response>, IOperationSource<Response>
+    public partial class ResourcesMoveResourcesOperation : Operation
     {
-        private readonly OperationOrResponseInternals<Response> _operation;
+        private readonly OperationOrResponseInternals _operation;
 
         /// <summary> Initializes a new instance of ResourcesMoveResourcesOperation for mocking. </summary>
         protected ResourcesMoveResourcesOperation()
@@ -26,20 +26,14 @@ namespace Azure.ResourceManager.Core
 
         internal ResourcesMoveResourcesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationOrResponseInternals<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesMoveResourcesOperation");
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesMoveResourcesOperation");
         }
 
         /// <inheritdoc />
         public override string Id => "";
 
         /// <inheritdoc />
-        public override Response Value => _operation.Value;
-
-        /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
-
-        /// <inheritdoc />
-        public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
         public override Response GetRawResponse() => _operation.GetRawResponse();
@@ -51,19 +45,9 @@ namespace Azure.ResourceManager.Core
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<Response>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
-
-        Response IOperationSource<Response>.CreateResult(Response response, CancellationToken cancellationToken)
-        {
-            return response;
-        }
-
-        async ValueTask<Response> IOperationSource<Response>.CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            return await new ValueTask<Response>(response).ConfigureAwait(false);
-        }
+        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
     }
 }

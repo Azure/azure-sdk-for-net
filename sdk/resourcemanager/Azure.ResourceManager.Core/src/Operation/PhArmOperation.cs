@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     /// <typeparam name="TOperations"> The <see cref="ResourceOperationsBase"/> to convert TModel into. </typeparam>
     /// <typeparam name="TModel"> The model returned by existing Operation methods. </typeparam>
-    public class PhArmOperation<TOperations, TModel> : ArmOperation<TOperations>
+    public class PhArmOperation<TOperations, TModel> : Operation<TOperations>
         where TOperations : class
         where TModel : class
     {
         private readonly Func<TModel, TOperations> _converter;
         private readonly Operation<TModel> _wrappedOperation;
-        private readonly ArmOperation<TModel> _wrappedResponseOperation;
+        private readonly Operation<TModel> _wrappedResponseOperation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhArmOperation{TOperations, TModel}"/> class for mocking.
@@ -109,28 +109,7 @@ namespace Azure.ResourceManager.Core
             var value = _doesWrapOperation 
                 ? await _wrappedOperation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false) 
                 : await _wrappedResponseOperation.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
-            return ArmResponse.FromValue(_converter(value.Value), GetRawResponse());
-        }
-
-        /// <inheritdoc/>
-        public override Response<TOperations> WaitForCompletion(CancellationToken cancellationToken = default)
-        {
-            return WaitForCompletion(OperationInternals.DefaultPollingInterval, cancellationToken);
-        }
-
-        /// <inheritdoc/>
-        public override Response<TOperations> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
-        {
-            while (true)
-            {
-                UpdateStatus(cancellationToken);
-                if (HasCompleted)
-                {
-                    return ArmResponse.FromValue(Value, GetRawResponse());
-                }
-
-                Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);
-            }
+            return Response.FromValue(_converter(value.Value), GetRawResponse());
         }
     }
 }
