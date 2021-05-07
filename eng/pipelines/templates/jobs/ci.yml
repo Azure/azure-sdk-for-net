@@ -33,6 +33,9 @@ parameters:
 - name: MatrixReplace
   type: object
   default: []
+- name: SpellCheckPublicApiSurface
+  type: boolean
+  default: false
 
 jobs:
   - job: Build
@@ -135,6 +138,7 @@ jobs:
           arguments: >
            -ServiceDirectory ${{ parameters.ServiceToTest }}
            -SDKType ${{ parameters.SDKType }}
+           -SpellCheckPublicApiSurface:$${{ parameters.SpellCheckPublicApiSurface }}
           pwsh: true
           failOnStderr:  false
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
