@@ -57,5 +57,27 @@ namespace Azure.ResourceManager.Core.Tests
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
             return await genericResources.StartCreateOrUpdateAsync(asetId, data);
         }
+
+        protected static void AssertAreEqual(GenericResource aset, GenericResource aset2)
+        {
+            Assert.AreEqual(aset.Data.Id, aset2.Data.Id);
+            Assert.AreEqual(aset.Data.Identity, aset2.Data.Identity);
+            Assert.AreEqual(aset.Data.Kind, aset2.Data.Kind);
+            Assert.AreEqual(aset.Data.Location, aset2.Data.Location);
+            Assert.AreEqual(aset.Data.ManagedBy, aset2.Data.ManagedBy);
+            Assert.AreEqual(aset.Data.Name, aset2.Data.Name);
+            Assert.AreEqual(aset.Data.Plan, aset2.Data.Plan);
+            Assert.AreEqual(aset.Data.Sku, aset2.Data.Sku);
+            //TODO: Add equal for Properties and Tags
+        }
+
+        protected static async Task<int> GetResourceCountAsync(GenericResourceContainer genericResources, ResourceGroup rg = default)
+        {
+            int result = 0;
+            var pageable = rg == null ? genericResources.ListAsync() : genericResources.ListByResourceGroupAsync(rg.Id.Name);
+            await foreach (var resource in pageable)
+                result++;
+            return result;
+        }
     }
 }

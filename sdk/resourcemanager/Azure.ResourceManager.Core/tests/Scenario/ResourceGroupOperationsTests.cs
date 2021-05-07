@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Core.Tests
             var genericResources = Client.DefaultSubscription.GetGenericResources();
             var aset = await CreateGenericAvailabilitySetAsync(rg1.Id);
 
-            int countRg1 = await GetResourceCountAsync(rg1, genericResources);
-            int countRg2 = await GetResourceCountAsync(rg2, genericResources);
+            int countRg1 = await GetResourceCountAsync(genericResources, rg1);
+            int countRg2 = await GetResourceCountAsync(genericResources, rg2);
             Assert.AreEqual(1, countRg1);
             Assert.AreEqual(0, countRg2);
 
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Core.Tests
             moveInfo.Resources.Add(aset.Id);
             _ = await rg1.MoveResourcesAsync(moveInfo);
 
-            countRg1 = await GetResourceCountAsync(rg1, genericResources);
-            countRg2 = await GetResourceCountAsync(rg2, genericResources);
+            countRg1 = await GetResourceCountAsync(genericResources, rg1);
+            countRg2 = await GetResourceCountAsync(genericResources, rg2);
             Assert.AreEqual(0, countRg1);
             Assert.AreEqual(1, countRg2);
         }
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Core.Tests
             var asetOp = await StartCreateGenericAvailabilitySetAsync(rg1.Id);
             GenericResource aset = await asetOp.WaitForCompletionAsync();
 
-            int countRg1 = await GetResourceCountAsync(rg1, genericResources);
-            int countRg2 = await GetResourceCountAsync(rg2, genericResources);
+            int countRg1 = await GetResourceCountAsync(genericResources, rg1);
+            int countRg2 = await GetResourceCountAsync(genericResources, rg2);
             Assert.AreEqual(1, countRg1);
             Assert.AreEqual(0, countRg2);
 
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Core.Tests
             var moveOp = await rg1.StartMoveResourcesAsync(moveInfo);
             _ = await moveOp.WaitForCompletionResponseAsync();
 
-            countRg1 = await GetResourceCountAsync(rg1, genericResources);
-            countRg2 = await GetResourceCountAsync(rg2, genericResources);
+            countRg1 = await GetResourceCountAsync(genericResources, rg1);
+            countRg2 = await GetResourceCountAsync(genericResources, rg2);
             Assert.AreEqual(0, countRg1);
             Assert.AreEqual(1, countRg2);
         }
@@ -167,14 +167,6 @@ namespace Azure.ResourceManager.Core.Tests
         public void CreateResourceFromModelAsync()
         {
             //public ArmResponse<TOperations> CreateResource<TContainer, TOperations, TResource>(string name, TResource model, azure_proto_core.Location location = default)
-        }
-
-        private static async Task<int> GetResourceCountAsync(ResourceGroup rg1, GenericResourceContainer genericResources)
-        {
-            int result = 0;
-            await foreach (var resource in genericResources.ListByResourceGroupAsync(rg1.Id.Name))
-                result++;
-            return result;
         }
     }
 }

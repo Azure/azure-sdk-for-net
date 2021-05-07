@@ -397,6 +397,12 @@ namespace Azure.ResourceManager.Core
             }
         }
 
+        /// <inheritdoc/>
+        protected override ResourceOperationsBase<TenantResourceIdentifier, GenericResource> GetOperation(string resourceId)
+        {
+            return new GenericResourceOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), resourceId);
+        }
+
         private string GetApiVersion(ResourceIdentifier resourceId, CancellationToken cancellationToken)
         {
             string version = ClientOptions.ApiVersions.TryGetApiVersion(resourceId.ResourceType, cancellationToken);

@@ -249,18 +249,5 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
             Assert.AreEqual("value", aset.Data.Tags["key"]);
         }
-
-        private static void AssertAreEqual(GenericResource aset, GenericResource aset2)
-        {
-            Assert.AreEqual(aset.Data.Id, aset2.Data.Id);
-            Assert.AreEqual(aset.Data.Identity, aset2.Data.Identity);
-            Assert.AreEqual(aset.Data.Kind, aset2.Data.Kind);
-            Assert.AreEqual(aset.Data.Location, aset2.Data.Location);
-            Assert.AreEqual(aset.Data.ManagedBy, aset2.Data.ManagedBy);
-            Assert.AreEqual(aset.Data.Name, aset2.Data.Name);
-            Assert.AreEqual(aset.Data.Plan, aset2.Data.Plan);
-            Assert.AreEqual(aset.Data.Sku, aset2.Data.Sku);
-            //TODO: Add equal for Properties and Tags
-        }
     }
 }
