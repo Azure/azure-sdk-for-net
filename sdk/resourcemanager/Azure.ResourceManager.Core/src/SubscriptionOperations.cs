@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -111,16 +112,16 @@ namespace Azure.ResourceManager.Core
 
         /// <summary> Gets all subscriptions for a tenant. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<SubscriptionData> ListAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Subscription> ListAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Subscription>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("SubscriptionOperations.List");
                 scope.Start();
                 try
                 {
                     var response = await SubscriptionsRestOperations.ListAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -128,14 +129,14 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            async Task<Page<SubscriptionData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<Subscription>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("SubscriptionOperations.List");
                 scope.Start();
                 try
                 {
                     var response = await SubscriptionsRestOperations.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -148,16 +149,16 @@ namespace Azure.ResourceManager.Core
 
         /// <summary> Gets all subscriptions for a tenant. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<SubscriptionData> List(CancellationToken cancellationToken = default)
+        public virtual Pageable<Subscription> List(CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionData> FirstPageFunc(int? pageSizeHint)
+            Page<Subscription> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("SubscriptionOperations.List");
                 scope.Start();
                 try
                 {
                     var response = SubscriptionsRestOperations.List(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -165,14 +166,14 @@ namespace Azure.ResourceManager.Core
                     throw;
                 }
             }
-            Page<SubscriptionData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<Subscription> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = Diagnostics.CreateScope("SubscriptionOperations.List");
                 scope.Start();
                 try
                 {
                     var response = SubscriptionsRestOperations.ListNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -53,9 +53,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhWrappingPageable<SubscriptionData, Subscription>(
-                Operations.List(cancellationToken),
-                Converter());
+                return Operations.List(cancellationToken);
             }
             catch (Exception e)
             {
@@ -78,9 +76,7 @@ namespace Azure.ResourceManager.Core
 
             try
             {
-                return new PhWrappingAsyncPageable<SubscriptionData, Subscription>(
-                Operations.ListAsync(cancellationToken),
-                Converter());
+                return Operations.ListAsync(cancellationToken);
             }
             catch (Exception e)
             {
