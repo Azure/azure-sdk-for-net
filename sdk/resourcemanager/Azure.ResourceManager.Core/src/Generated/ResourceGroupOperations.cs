@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Core
     /// A class representing the operations that can be performed over a specific ResourceGroup.
     /// </summary>
     public class ResourceGroupOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, ResourceGroup>,
-        ITaggableResource<ResourceGroupResourceIdentifier, ResourceGroup>, IDeletableResource
+        ITaggableResource<ResourceGroupResourceIdentifier, ResourceGroup>
     {
         /// <summary>
         /// Name of the CreateOrUpdate() method in [Resource]Container classes.
@@ -73,6 +73,40 @@ namespace Azure.ResourceManager.Core
             Id.SubscriptionId,
             BaseUri);
 
+        /// <summary> Checks whether a resource group exists. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<bool> CheckExistence(CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.CheckExistence");
+            scope.Start();
+            try
+            {
+                return RestClient.CheckExistence(Id.Name, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks whether a resource group exists. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<bool>> CheckExistenceAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.CheckExistence");
+            scope.Start();
+            try
+            {
+                return await RestClient.CheckExistenceAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary>
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
@@ -123,14 +157,15 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual ArmOperation StartDelete(CancellationToken cancellationToken = default)
+        public virtual ResourceGroupsDeleteOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
 
             try
             {
-                return new PhVoidArmOperation(RestClient.Delete(Id.Name, cancellationToken));
+                var originalResponse = RestClient.Delete(Id.Name, cancellationToken);
+                return new ResourceGroupsDeleteOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -147,14 +182,63 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ResourceGroupsDeleteOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
 
             try
             {
-                return new PhVoidArmOperation(await RestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
+                var originalResponse = await RestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                return new ResourceGroupsDeleteOperation(Diagnostics, Pipeline, RestClient.CreateDeleteRequest(Id.Name).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Captures the specified resource group as a template. </summary>
+        /// <param name="parameters"> Parameters for exporting the template. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ResourceGroupsExportTemplateOperation StartExportTemplate(ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartExportTemplate");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.ExportTemplate(Id.Name, parameters, cancellationToken);
+                return new ResourceGroupsExportTemplateOperation(Diagnostics, Pipeline, RestClient.CreateExportTemplateRequest(Id.Name, parameters).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Captures the specified resource group as a template. </summary>
+        /// <param name="parameters"> Parameters for exporting the template. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ResourceGroupsExportTemplateOperation> StartExportTemplateAsync(ExportTemplateRequest parameters, CancellationToken cancellationToken = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartExportTemplate");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.ExportTemplateAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                return new ResourceGroupsExportTemplateOperation(Diagnostics, Pipeline, RestClient.CreateExportTemplateRequest(Id.Name, parameters).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -193,6 +277,50 @@ namespace Azure.ResourceManager.Core
             {
                 return new PhArmResponse<ResourceGroup, ResourceGroupData>(
                 await RestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
+                g =>
+                {
+                    return new ResourceGroup(this, g);
+                });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource group. If a field is unspecified, the current value is retained. </summary>
+        /// <param name="parameters"> Parameters supplied to update a resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ResourceGroup> Update(ResourceGroupPatchable parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Update");
+            scope.Start();
+            try
+            {
+                return new PhArmResponse<ResourceGroup, ResourceGroupData>(RestClient.Update(Id.Name, parameters, cancellationToken), g =>
+                {
+                    return new ResourceGroup(this, g);
+                });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resource groups can be updated through a simple PATCH operation to a group address. The format of the request is the same as that for creating a resource group. If a field is unspecified, the current value is retained. </summary>
+        /// <param name="parameters"> Parameters supplied to update a resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ResourceGroup>> UpdateAsync(ResourceGroupPatchable parameters, CancellationToken cancellationToken = default)
+        {
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Update");
+            scope.Start();
+            try
+            {
+                return new PhArmResponse<ResourceGroup, ResourceGroupData>(
+                await RestClient.UpdateAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false),
                 g =>
                 {
                     return new ResourceGroup(this, g);

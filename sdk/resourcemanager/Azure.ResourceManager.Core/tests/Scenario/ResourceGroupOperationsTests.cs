@@ -60,6 +60,53 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task Update()
+        {
+            var rgName = Recording.GenerateAssetName("testrg");
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
+            var parameters = new ResourceGroupPatchable
+            {
+                Name = rgName
+            };
+            ResourceGroup rg2 = await rg.UpdateAsync(parameters);
+            Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
+            Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
+            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
+            Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
+            Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.AreEqual(rg.Data.Tags, rg2.Data.Tags);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task CheckExistence()
+        {
+            var rgName = Recording.GenerateAssetName("testrg");
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
+            bool existence = await rg.CheckExistenceAsync();
+            Assert.IsTrue(existence);
+            var deleteOp = await rg.StartDeleteAsync();
+            await deleteOp.WaitForCompletionResponseAsync();
+            existence = await rg.CheckExistenceAsync();
+            Assert.IsFalse(existence);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task StartExportTemplate()
+        {
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var parameters = new ExportTemplateRequest
+            {
+                Options = ""
+            };
+            var expOp = await rg.StartExportTemplateAsync(parameters);
+            await expOp.WaitForCompletionAsync();
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task AddTag()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));

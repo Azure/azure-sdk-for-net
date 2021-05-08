@@ -56,9 +56,7 @@ namespace Azure.ResourceManager.Core
 
         private ResourceGroup GetResourceGrouop(JsonDocument document)
         {
-            var method = typeof(ResourceManager.Resources.Models.ResourceGroup).GetMethod("DeserializeResourceGroup", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-            var obj = method.Invoke(null, new object[] { document.RootElement });
-            return new ResourceGroup(_operations, obj as ResourceGroupData);
+            return new ResourceGroup(_operations, ResourceGroupData.DeserializeResourceGroup(document.RootElement));
         }
     }
 }
