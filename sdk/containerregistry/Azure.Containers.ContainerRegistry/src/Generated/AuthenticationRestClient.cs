@@ -135,7 +135,7 @@ namespace Azure.Containers.ContainerRegistry
             var content = new FormUrlEncodedContent();
             content.Add("service", service);
             content.Add("scope", scope);
-            //content.Add("refresh_token", refreshToken);
+            content.Add("refresh_token", refreshToken);
             content.Add("grant_type", grantType.ToSerialString());
             request.Content = content;
             return message;

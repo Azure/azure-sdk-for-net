@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -11,24 +10,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRegistryClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync)
         {
-        }
-
-        private ContainerRegistryClient CreateClient(bool anonymousAccess = false)
-        {
-            return anonymousAccess ?
-
-                InstrumentClient(new ContainerRegistryClient(
-                    new Uri(TestEnvironment.Endpoint),
-                    InstrumentClientOptions(new ContainerRegistryClientOptions())
-                )) :
-
-                InstrumentClient(new ContainerRegistryClient(
-                    new Uri(TestEnvironment.Endpoint),
-                    TestEnvironment.Credential,
-                    InstrumentClientOptions(new ContainerRegistryClientOptions())
-                ));
         }
 
         [RecordedTest]
@@ -118,6 +101,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanDeleteRepostitory()
         {
             // Arrange
+            string registry = TestEnvironment.Registry;
             string repository = $"library/hello-world";
             List<string> tags = new List<string>()
             {
@@ -133,7 +117,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(repository, tags);
+                    await ImportImage(registry, repository, tags);
                 }
 
                 // Act
@@ -162,9 +146,19 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 // Clean up - put the repository with tags back.
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(repository, tags);
+                    await ImportImage(registry, repository, tags);
                 }
             }
+        }
+
+        [RecordedTest, NonParallelizable]
+        public void CanDeleteRepostitory_Anonymous()
+        {
+            // Arrange
+            string repository = $"library/hello-world";
+            var client = CreateClient(anonymousAccess: true);
+
+            Assert.ThrowsAsync<RequestFailedException>(() => client.DeleteRepositoryAsync(repository));
         }
     }
 }
