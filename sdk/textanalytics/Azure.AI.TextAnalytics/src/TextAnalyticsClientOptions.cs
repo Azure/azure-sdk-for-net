@@ -94,7 +94,7 @@ namespace Azure.AI.TextAnalytics
                 case AzureGovernmenttenantid:
                     return "https://cognitiveservices.azure.us/.default";
                 default:
-                    return null;
+                    return "https://cognitiveservices.azure.com/.default";
             }
         }
     }
