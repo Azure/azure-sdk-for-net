@@ -50,7 +50,6 @@ namespace Sql.Tests
                 var ep2Input = new ElasticPool()
                 {
                     Location = server.Location,
-                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
                 };
 
@@ -61,7 +60,6 @@ namespace Sql.Tests
                 var ep3Input = new ElasticPool()
                 {
                     Location = server.Location,
-                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
                 };
                 sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, ep3Input);
@@ -126,7 +124,6 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ElasticPoolEdition.Premium + "Pool"),
                     Tags = tags,
                 };
                 var elasticPool = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
@@ -137,10 +134,6 @@ namespace Sql.Tests
                 var epUpdateReponse = sqlClient.ElasticPools.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, epName, new ElasticPool()
                 {
                     Location = server.Location,
-                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ElasticPoolEdition.Premium + "Pool")
-                    {
-                        Capacity = 250,
-                    },
                     Tags = tags
                 });
 
@@ -275,7 +268,6 @@ namespace Sql.Tests
                     inputs.Add(name, new ElasticPool()
                     {
                         Location = server.Location,
-                        Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     });
                     sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, name, inputs[name]);
                 }

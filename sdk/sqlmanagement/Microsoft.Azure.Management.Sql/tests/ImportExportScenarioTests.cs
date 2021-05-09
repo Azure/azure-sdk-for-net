@@ -147,7 +147,7 @@ namespace Sql.Tests
                     }
 
                     // Import bacpac to existing database
-                    sqlClient.ImportExport.Import(resourceGroup.Name, server.Name, dbName2, importDatabaseDefinition);
+                    sqlClient.Databases.ImportWithHttpMessagesAsync(resourceGroup.Name, server.Name, dbName2, importDatabaseDefinition);
                 }
                 else
                 {

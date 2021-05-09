@@ -31,7 +31,7 @@ namespace Sql.Tests
                     sqlClient.SubscriptionUsages.Get(TestEnvironmentUtilities.DefaultLocation, "ServerQuota");
             }
         }
-
+        /*
         [Fact]
         public void TestGetUsageData()
         {
@@ -56,5 +56,6 @@ namespace Sql.Tests
                 Assert.True(databaseUsages.Where(db => db.ResourceName == dbName).Count() == 1);
             }
         }
+        */
     }
 }
