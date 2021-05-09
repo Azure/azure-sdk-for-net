@@ -8723,16 +8723,69 @@
    "$id": "1193",
    "isReadOnly": false,
    "realPath": [
-    "operationId"
+    "readingOrder"
    ],
    "collectionFormat": "none",
    "defaultValue": {
     "$id": "1194",
-    "fixed": false
+    "fixed": false,
+    "raw": "basic"
    },
    "deprecated": false,
    "documentation": {
     "$id": "1195",
+    "fixed": false,
+    "raw": "Optional parameter to specify which reading order algorithm should be applied when ordering the extract text elements. Can be either 'basic' or 'natural'. Will default to 'basic' if not specified"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "3.2"
+     ],
+     "filename": [
+      "mem:///164?oai3.shaken.json"
+     ],
+     "name": "ReadingOrder",
+     "originalLocations": [
+      "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.2/Ocr.json#/components/parameters/ReadingOrder"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": false,
+   "isConstant": false,
+   "name": {
+    "$id": "1196",
+    "fixed": false,
+    "raw": "readingOrder"
+   },
+   "serializedName": "readingOrder",
+   "modelType": {
+    "$id": "1197",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "1198",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "1199",
+   "isReadOnly": false,
+   "realPath": [
+    "operationId"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "1200",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "1201",
     "fixed": false,
     "raw": "Id of read operation returned in the response of the 'Read' interface."
    },
@@ -8754,18 +8807,18 @@
    "isRequired": true,
    "isConstant": false,
    "name": {
-    "$id": "1196",
+    "$id": "1202",
     "fixed": false,
     "raw": "operationId"
    },
    "serializedName": "operationId",
    "modelType": {
-    "$id": "1197",
+    "$id": "1203",
     "$type": "PrimaryType",
     "format": "uuid",
     "knownPrimaryType": "uuid",
     "name": {
-     "$id": "1198",
+     "$id": "1204",
      "fixed": false,
      "raw": "Uuid"
     },
@@ -8775,25 +8828,25 @@
  ],
  "operations": [
   {
-   "$id": "1199",
+   "$id": "1205",
    "methods": [
     {
-     "$id": "1200",
+     "$id": "1206",
      "parameters": [
       {
-       "$id": "1201",
+       "$id": "1207",
        "clientProperty": {
         "$ref": "1091"
        },
        "location": "query",
        "collectionFormat": "csv",
        "defaultValue": {
-        "$id": "1202",
+        "$id": "1208",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1203",
+        "$id": "1209",
         "fixed": false,
         "raw": "A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Categories - categorizes image content according to a taxonomy defined in documentation. Tags - tags the image with a detailed list of words related to the image content. Description - describes the image content with a complete English sentence. Faces - detects if faces are present. If present, generate coordinates, gender and age. ImageType - detects if image is clipart or a line drawing. Color - determines the accent color, dominant color, and whether an image is black&white. Adult - detects if the image is pornographic in nature (depicts nudity or a sex act), or is gory (depicts extreme violence or blood). Sexually suggestive content (aka racy content) is also detected. Objects - detects various objects within an image, including the approximate location. The Objects argument is only available in English. Brands - detects various brands within an image, including the approximate location. The Brands argument is only available in English."
        },
@@ -8815,38 +8868,38 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1204",
+        "$id": "1210",
         "fixed": false,
         "raw": "visualFeatures"
        },
        "serializedName": "visualFeatures",
        "modelType": {
-        "$id": "1205",
+        "$id": "1211",
         "$type": "SequenceType",
         "elementType": {
          "$ref": "954"
         },
         "name": {
-         "$id": "1206",
+         "$id": "1212",
          "fixed": false
         },
         "deprecated": false
        }
       },
       {
-       "$id": "1207",
+       "$id": "1213",
        "clientProperty": {
         "$ref": "1103"
        },
        "location": "query",
        "collectionFormat": "csv",
        "defaultValue": {
-        "$id": "1208",
+        "$id": "1214",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1209",
+        "$id": "1215",
         "fixed": false,
         "raw": "A string indicating which domain-specific details to return. Multiple values should be comma-separated. Valid visual feature types include: Celebrities - identifies celebrities if detected in the image, Landmarks - identifies notable landmarks in the image."
        },
@@ -8868,39 +8921,39 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1210",
+        "$id": "1216",
         "fixed": false,
         "raw": "details"
        },
        "serializedName": "details",
        "modelType": {
-        "$id": "1211",
+        "$id": "1217",
         "$type": "SequenceType",
         "elementType": {
          "$ref": "967"
         },
         "name": {
-         "$id": "1212",
+         "$id": "1218",
          "fixed": false
         },
         "deprecated": false
        }
       },
       {
-       "$id": "1213",
+       "$id": "1219",
        "clientProperty": {
         "$ref": "1068"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1214",
+        "$id": "1220",
         "fixed": false,
         "raw": "en"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1215",
+        "$id": "1221",
         "fixed": false,
         "raw": "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese."
        },
@@ -8922,37 +8975,37 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1216",
+        "$id": "1222",
         "fixed": false,
         "raw": "language"
        },
        "serializedName": "language",
        "modelType": {
-        "$id": "1217",
+        "$id": "1223",
         "$type": "EnumType",
         "values": [
          {
-          "$id": "1218",
+          "$id": "1224",
           "name": "en",
           "serializedName": "en"
          },
          {
-          "$id": "1219",
+          "$id": "1225",
           "name": "es",
           "serializedName": "es"
          },
          {
-          "$id": "1220",
+          "$id": "1226",
           "name": "ja",
           "serializedName": "ja"
          },
          {
-          "$id": "1221",
+          "$id": "1227",
           "name": "pt",
           "serializedName": "pt"
          },
          {
-          "$id": "1222",
+          "$id": "1228",
           "name": "zh",
           "serializedName": "zh"
          }
@@ -8960,18 +9013,18 @@
         "oldModelAsString": false,
         "modelAsString": true,
         "underlyingType": {
-         "$id": "1223",
+         "$id": "1229",
          "$type": "PrimaryType",
          "knownPrimaryType": "string",
          "name": {
-          "$id": "1224",
+          "$id": "1230",
           "fixed": false,
           "raw": "String"
          },
          "deprecated": false
         },
         "name": {
-         "$id": "1225",
+         "$id": "1231",
          "fixed": false,
          "raw": ""
         },
@@ -8979,19 +9032,19 @@
        }
       },
       {
-       "$id": "1226",
+       "$id": "1232",
        "clientProperty": {
         "$ref": "1081"
        },
        "location": "query",
        "collectionFormat": "csv",
        "defaultValue": {
-        "$id": "1227",
+        "$id": "1233",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1228",
+        "$id": "1234",
         "fixed": false,
         "raw": "Turn off specified domain models when generating the description."
        },
@@ -9013,35 +9066,35 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1229",
+        "$id": "1235",
         "fixed": false,
         "raw": "descriptionExclude"
        },
        "serializedName": "descriptionExclude",
        "modelType": {
-        "$id": "1230",
+        "$id": "1236",
         "$type": "SequenceType",
         "elementType": {
          "$ref": "917"
         },
         "name": {
-         "$id": "1231",
+         "$id": "1237",
          "fixed": false
         },
         "deprecated": false
        }
       },
       {
-       "$id": "1232",
+       "$id": "1238",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1233",
+        "$id": "1239",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1234",
+        "$id": "1240",
         "fixed": false,
         "raw": "A JSON document with a URL pointing to the image that is to be analyzed."
        },
@@ -9065,7 +9118,7 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1235",
+        "$id": "1241",
         "fixed": false,
         "raw": "ImageUrl"
        },
@@ -9075,7 +9128,7 @@
        }
       },
       {
-       "$id": "1236",
+       "$id": "1242",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -9085,13 +9138,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1237",
+        "$id": "1243",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1238",
+        "$id": "1244",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -9113,17 +9166,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1239",
+        "$id": "1245",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1240",
+        "$id": "1246",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1241",
+         "$id": "1247",
          "fixed": false,
          "raw": "String"
         },
@@ -9132,12 +9185,12 @@
       }
      ],
      "name": {
-      "$id": "1242",
+      "$id": "1248",
       "fixed": false,
       "raw": "AnalyzeImage"
      },
      "group": {
-      "$id": "1243",
+      "$id": "1249",
       "fixed": false,
       "raw": ""
      },
@@ -9147,12 +9200,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1244",
+       "$id": "1250",
        "body": {
         "$ref": "354"
        },
        "extensions": {
-        "$id": "1245",
+        "$id": "1251",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -9170,12 +9223,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1246",
+      "$id": "1252",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1247",
+       "$id": "1253",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -9192,7 +9245,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1248",
+      "$id": "1254",
       "body": {
        "$ref": "354"
       },
@@ -9417,23 +9470,23 @@
      "hidden": false
     },
     {
-     "$id": "1249",
+     "$id": "1255",
      "parameters": [
       {
-       "$id": "1250",
+       "$id": "1256",
        "clientProperty": {
         "$ref": "1109"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1251",
+        "$id": "1257",
         "fixed": false,
         "raw": "1"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1252",
+        "$id": "1258",
         "fixed": false,
         "raw": "Maximum number of candidate descriptions to be returned.  The default is 1."
        },
@@ -9455,18 +9508,18 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1253",
+        "$id": "1259",
         "fixed": false,
         "raw": "maxCandidates"
        },
        "serializedName": "maxCandidates",
        "modelType": {
-        "$id": "1254",
+        "$id": "1260",
         "$type": "PrimaryType",
         "format": "int32",
         "knownPrimaryType": "int",
         "name": {
-         "$id": "1255",
+         "$id": "1261",
          "fixed": false,
          "raw": "Int"
         },
@@ -9474,20 +9527,20 @@
        }
       },
       {
-       "$id": "1256",
+       "$id": "1262",
        "clientProperty": {
         "$ref": "1068"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1257",
+        "$id": "1263",
         "fixed": false,
         "raw": "en"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1258",
+        "$id": "1264",
         "fixed": false,
         "raw": "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese."
        },
@@ -9509,37 +9562,37 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1259",
+        "$id": "1265",
         "fixed": false,
         "raw": "language"
        },
        "serializedName": "language",
        "modelType": {
-        "$id": "1260",
+        "$id": "1266",
         "$type": "EnumType",
         "values": [
          {
-          "$id": "1261",
+          "$id": "1267",
           "name": "en",
           "serializedName": "en"
          },
          {
-          "$id": "1262",
+          "$id": "1268",
           "name": "es",
           "serializedName": "es"
          },
          {
-          "$id": "1263",
+          "$id": "1269",
           "name": "ja",
           "serializedName": "ja"
          },
          {
-          "$id": "1264",
+          "$id": "1270",
           "name": "pt",
           "serializedName": "pt"
          },
          {
-          "$id": "1265",
+          "$id": "1271",
           "name": "zh",
           "serializedName": "zh"
          }
@@ -9547,18 +9600,18 @@
         "oldModelAsString": false,
         "modelAsString": true,
         "underlyingType": {
-         "$id": "1266",
+         "$id": "1272",
          "$type": "PrimaryType",
          "knownPrimaryType": "string",
          "name": {
-          "$id": "1267",
+          "$id": "1273",
           "fixed": false,
           "raw": "String"
          },
          "deprecated": false
         },
         "name": {
-         "$id": "1268",
+         "$id": "1274",
          "fixed": false,
          "raw": ""
         },
@@ -9566,19 +9619,19 @@
        }
       },
       {
-       "$id": "1269",
+       "$id": "1275",
        "clientProperty": {
         "$ref": "1081"
        },
        "location": "query",
        "collectionFormat": "csv",
        "defaultValue": {
-        "$id": "1270",
+        "$id": "1276",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1271",
+        "$id": "1277",
         "fixed": false,
         "raw": "Turn off specified domain models when generating the description."
        },
@@ -9600,35 +9653,35 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1272",
+        "$id": "1278",
         "fixed": false,
         "raw": "descriptionExclude"
        },
        "serializedName": "descriptionExclude",
        "modelType": {
-        "$id": "1273",
+        "$id": "1279",
         "$type": "SequenceType",
         "elementType": {
          "$ref": "917"
         },
         "name": {
-         "$id": "1274",
+         "$id": "1280",
          "fixed": false
         },
         "deprecated": false
        }
       },
       {
-       "$id": "1275",
+       "$id": "1281",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1276",
+        "$id": "1282",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1277",
+        "$id": "1283",
         "fixed": false,
         "raw": "A JSON document with a URL pointing to the image that is to be analyzed."
        },
@@ -9652,7 +9705,7 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1278",
+        "$id": "1284",
         "fixed": false,
         "raw": "ImageUrl"
        },
@@ -9662,7 +9715,7 @@
        }
       },
       {
-       "$id": "1279",
+       "$id": "1285",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -9672,13 +9725,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1280",
+        "$id": "1286",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1281",
+        "$id": "1287",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -9700,17 +9753,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1282",
+        "$id": "1288",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1283",
+        "$id": "1289",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1284",
+         "$id": "1290",
          "fixed": false,
          "raw": "String"
         },
@@ -9719,12 +9772,12 @@
       }
      ],
      "name": {
-      "$id": "1285",
+      "$id": "1291",
       "fixed": false,
       "raw": "DescribeImage"
      },
      "group": {
-      "$id": "1286",
+      "$id": "1292",
       "fixed": false,
       "raw": ""
      },
@@ -9734,12 +9787,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1287",
+       "$id": "1293",
        "body": {
         "$ref": "418"
        },
        "extensions": {
-        "$id": "1288",
+        "$id": "1294",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -9757,12 +9810,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1289",
+      "$id": "1295",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1290",
+       "$id": "1296",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -9779,7 +9832,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1291",
+      "$id": "1297",
       "body": {
        "$ref": "418"
       },
@@ -9858,19 +9911,19 @@
      "hidden": false
     },
     {
-     "$id": "1292",
+     "$id": "1298",
      "parameters": [
       {
-       "$id": "1293",
+       "$id": "1299",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1294",
+        "$id": "1300",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1295",
+        "$id": "1301",
         "fixed": false,
         "raw": "A JSON document with a URL pointing to the image that is to be analyzed."
        },
@@ -9894,7 +9947,7 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1296",
+        "$id": "1302",
         "fixed": false,
         "raw": "ImageUrl"
        },
@@ -9904,7 +9957,7 @@
        }
       },
       {
-       "$id": "1297",
+       "$id": "1303",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -9914,13 +9967,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1298",
+        "$id": "1304",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1299",
+        "$id": "1305",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -9942,17 +9995,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1300",
+        "$id": "1306",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1301",
+        "$id": "1307",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1302",
+         "$id": "1308",
          "fixed": false,
          "raw": "String"
         },
@@ -9961,12 +10014,12 @@
       }
      ],
      "name": {
-      "$id": "1303",
+      "$id": "1309",
       "fixed": false,
       "raw": "DetectObjects"
      },
      "group": {
-      "$id": "1304",
+      "$id": "1310",
       "fixed": false,
       "raw": ""
      },
@@ -9976,12 +10029,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1305",
+       "$id": "1311",
        "body": {
         "$ref": "440"
        },
        "extensions": {
-        "$id": "1306",
+        "$id": "1312",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -9999,12 +10052,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1307",
+      "$id": "1313",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1308",
+       "$id": "1314",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -10021,7 +10074,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1309",
+      "$id": "1315",
       "body": {
        "$ref": "440"
       },
@@ -10099,14 +10152,14 @@
      "hidden": false
     },
     {
-     "$id": "1310",
+     "$id": "1316",
      "name": {
-      "$id": "1311",
+      "$id": "1317",
       "fixed": false,
       "raw": "ListModels"
      },
      "group": {
-      "$id": "1312",
+      "$id": "1318",
       "fixed": false,
       "raw": ""
      },
@@ -10116,12 +10169,12 @@
      "httpMethod": "get",
      "responses": {
       "OK": {
-       "$id": "1313",
+       "$id": "1319",
        "body": {
         "$ref": "480"
        },
        "extensions": {
-        "$id": "1314",
+        "$id": "1320",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -10139,12 +10192,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1315",
+      "$id": "1321",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1316",
+       "$id": "1322",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -10161,7 +10214,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1317",
+      "$id": "1323",
       "body": {
        "$ref": "480"
       },
@@ -10227,22 +10280,22 @@
      "hidden": false
     },
     {
-     "$id": "1318",
+     "$id": "1324",
      "parameters": [
       {
-       "$id": "1319",
+       "$id": "1325",
        "clientProperty": {
         "$ref": "1115"
        },
        "location": "path",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1320",
+        "$id": "1326",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1321",
+        "$id": "1327",
         "fixed": false,
         "raw": "The domain-specific content to recognize."
        },
@@ -10264,17 +10317,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1322",
+        "$id": "1328",
         "fixed": false,
         "raw": "model"
        },
        "serializedName": "model",
        "modelType": {
-        "$id": "1323",
+        "$id": "1329",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1324",
+         "$id": "1330",
          "fixed": false,
          "raw": "String"
         },
@@ -10282,20 +10335,20 @@
        }
       },
       {
-       "$id": "1325",
+       "$id": "1331",
        "clientProperty": {
         "$ref": "1068"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1326",
+        "$id": "1332",
         "fixed": false,
         "raw": "en"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1327",
+        "$id": "1333",
         "fixed": false,
         "raw": "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese."
        },
@@ -10317,37 +10370,37 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1328",
+        "$id": "1334",
         "fixed": false,
         "raw": "language"
        },
        "serializedName": "language",
        "modelType": {
-        "$id": "1329",
+        "$id": "1335",
         "$type": "EnumType",
         "values": [
          {
-          "$id": "1330",
+          "$id": "1336",
           "name": "en",
           "serializedName": "en"
          },
          {
-          "$id": "1331",
+          "$id": "1337",
           "name": "es",
           "serializedName": "es"
          },
          {
-          "$id": "1332",
+          "$id": "1338",
           "name": "ja",
           "serializedName": "ja"
          },
          {
-          "$id": "1333",
+          "$id": "1339",
           "name": "pt",
           "serializedName": "pt"
          },
          {
-          "$id": "1334",
+          "$id": "1340",
           "name": "zh",
           "serializedName": "zh"
          }
@@ -10355,18 +10408,18 @@
         "oldModelAsString": false,
         "modelAsString": true,
         "underlyingType": {
-         "$id": "1335",
+         "$id": "1341",
          "$type": "PrimaryType",
          "knownPrimaryType": "string",
          "name": {
-          "$id": "1336",
+          "$id": "1342",
           "fixed": false,
           "raw": "String"
          },
          "deprecated": false
         },
         "name": {
-         "$id": "1337",
+         "$id": "1343",
          "fixed": false,
          "raw": ""
         },
@@ -10374,16 +10427,16 @@
        }
       },
       {
-       "$id": "1338",
+       "$id": "1344",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1339",
+        "$id": "1345",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1340",
+        "$id": "1346",
         "fixed": false,
         "raw": "A JSON document with a URL pointing to the image that is to be analyzed."
        },
@@ -10407,7 +10460,7 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1341",
+        "$id": "1347",
         "fixed": false,
         "raw": "ImageUrl"
        },
@@ -10417,7 +10470,7 @@
        }
       },
       {
-       "$id": "1342",
+       "$id": "1348",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -10427,13 +10480,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1343",
+        "$id": "1349",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1344",
+        "$id": "1350",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -10455,17 +10508,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1345",
+        "$id": "1351",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1346",
+        "$id": "1352",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1347",
+         "$id": "1353",
          "fixed": false,
          "raw": "String"
         },
@@ -10474,12 +10527,12 @@
       }
      ],
      "name": {
-      "$id": "1348",
+      "$id": "1354",
       "fixed": false,
       "raw": "AnalyzeImageByDomain"
      },
      "group": {
-      "$id": "1349",
+      "$id": "1355",
       "fixed": false,
       "raw": ""
      },
@@ -10489,12 +10542,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1350",
+       "$id": "1356",
        "body": {
         "$ref": "488"
        },
        "extensions": {
-        "$id": "1351",
+        "$id": "1357",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -10512,12 +10565,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1352",
+      "$id": "1358",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1353",
+       "$id": "1359",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -10534,7 +10587,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1354",
+      "$id": "1360",
       "body": {
        "$ref": "488"
       },
@@ -10611,23 +10664,23 @@
      "hidden": false
     },
     {
-     "$id": "1355",
+     "$id": "1361",
      "parameters": [
       {
-       "$id": "1356",
+       "$id": "1362",
        "clientProperty": {
         "$ref": "1097"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1357",
+        "$id": "1363",
         "fixed": false,
         "raw": "true"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1358",
+        "$id": "1364",
         "fixed": false,
         "raw": "Whether detect the text orientation in the image. With detectOrientation=true the OCR service tries to detect the image orientation and correct it before further processing (e.g. if it's upside-down)."
        },
@@ -10649,17 +10702,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1359",
+        "$id": "1365",
         "fixed": false,
         "raw": "detectOrientation"
        },
        "serializedName": "detectOrientation",
        "modelType": {
-        "$id": "1360",
+        "$id": "1366",
         "$type": "PrimaryType",
         "knownPrimaryType": "boolean",
         "name": {
-         "$id": "1361",
+         "$id": "1367",
          "fixed": false,
          "raw": "Boolean"
         },
@@ -10667,20 +10720,20 @@
        }
       },
       {
-       "$id": "1362",
+       "$id": "1368",
        "clientProperty": {
         "$ref": "1068"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1363",
+        "$id": "1369",
         "fixed": false,
         "raw": "unk"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1364",
+        "$id": "1370",
         "fixed": false,
         "raw": "The BCP-47 language code of the text to be detected in the image. The default value is 'unk'."
        },
@@ -10702,7 +10755,7 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1365",
+        "$id": "1371",
         "fixed": false,
         "raw": "language"
        },
@@ -10712,16 +10765,16 @@
        }
       },
       {
-       "$id": "1366",
+       "$id": "1372",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1367",
+        "$id": "1373",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1368",
+        "$id": "1374",
         "fixed": false,
         "raw": "A JSON document with a URL pointing to the image that is to be analyzed."
        },
@@ -10745,7 +10798,7 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1369",
+        "$id": "1375",
         "fixed": false,
         "raw": "ImageUrl"
        },
@@ -10755,7 +10808,7 @@
        }
       },
       {
-       "$id": "1370",
+       "$id": "1376",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -10765,13 +10818,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1371",
+        "$id": "1377",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1372",
+        "$id": "1378",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -10793,17 +10846,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1373",
+        "$id": "1379",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1374",
+        "$id": "1380",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1375",
+         "$id": "1381",
          "fixed": false,
          "raw": "String"
         },
@@ -10812,12 +10865,12 @@
       }
      ],
      "name": {
-      "$id": "1376",
+      "$id": "1382",
       "fixed": false,
       "raw": "RecognizePrintedText"
      },
      "group": {
-      "$id": "1377",
+      "$id": "1383",
       "fixed": false,
       "raw": ""
      },
@@ -10827,12 +10880,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1378",
+       "$id": "1384",
        "body": {
         "$ref": "554"
        },
        "extensions": {
-        "$id": "1379",
+        "$id": "1385",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -10850,12 +10903,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1380",
+      "$id": "1386",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1381",
+       "$id": "1387",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -10872,7 +10925,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1382",
+      "$id": "1388",
       "body": {
        "$ref": "554"
       },
@@ -10992,23 +11045,23 @@
      "hidden": false
     },
     {
-     "$id": "1383",
+     "$id": "1389",
      "parameters": [
       {
-       "$id": "1384",
+       "$id": "1390",
        "clientProperty": {
         "$ref": "1068"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1385",
+        "$id": "1391",
         "fixed": false,
         "raw": "en"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1386",
+        "$id": "1392",
         "fixed": false,
         "raw": "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese."
        },
@@ -11030,37 +11083,37 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1387",
+        "$id": "1393",
         "fixed": false,
         "raw": "language"
        },
        "serializedName": "language",
        "modelType": {
-        "$id": "1388",
+        "$id": "1394",
         "$type": "EnumType",
         "values": [
          {
-          "$id": "1389",
+          "$id": "1395",
           "name": "en",
           "serializedName": "en"
          },
          {
-          "$id": "1390",
+          "$id": "1396",
           "name": "es",
           "serializedName": "es"
          },
          {
-          "$id": "1391",
+          "$id": "1397",
           "name": "ja",
           "serializedName": "ja"
          },
          {
-          "$id": "1392",
+          "$id": "1398",
           "name": "pt",
           "serializedName": "pt"
          },
          {
-          "$id": "1393",
+          "$id": "1399",
           "name": "zh",
           "serializedName": "zh"
          }
@@ -11068,18 +11121,18 @@
         "oldModelAsString": false,
         "modelAsString": true,
         "underlyingType": {
-         "$id": "1394",
+         "$id": "1400",
          "$type": "PrimaryType",
          "knownPrimaryType": "string",
          "name": {
-          "$id": "1395",
+          "$id": "1401",
           "fixed": false,
           "raw": "String"
          },
          "deprecated": false
         },
         "name": {
-         "$id": "1396",
+         "$id": "1402",
          "fixed": false,
          "raw": ""
         },
@@ -11087,16 +11140,16 @@
        }
       },
       {
-       "$id": "1397",
+       "$id": "1403",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1398",
+        "$id": "1404",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1399",
+        "$id": "1405",
         "fixed": false,
         "raw": "A JSON document with a URL pointing to the image that is to be analyzed."
        },
@@ -11120,7 +11173,7 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1400",
+        "$id": "1406",
         "fixed": false,
         "raw": "ImageUrl"
        },
@@ -11130,7 +11183,7 @@
        }
       },
       {
-       "$id": "1401",
+       "$id": "1407",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -11140,13 +11193,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1402",
+        "$id": "1408",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1403",
+        "$id": "1409",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -11168,17 +11221,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1404",
+        "$id": "1410",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1405",
+        "$id": "1411",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1406",
+         "$id": "1412",
          "fixed": false,
          "raw": "String"
         },
@@ -11187,12 +11240,12 @@
       }
      ],
      "name": {
-      "$id": "1407",
+      "$id": "1413",
       "fixed": false,
       "raw": "TagImage"
      },
      "group": {
-      "$id": "1408",
+      "$id": "1414",
       "fixed": false,
       "raw": ""
      },
@@ -11202,12 +11255,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1409",
+       "$id": "1415",
        "body": {
         "$ref": "586"
        },
        "extensions": {
-        "$id": "1410",
+        "$id": "1416",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -11225,12 +11278,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1411",
+      "$id": "1417",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1412",
+       "$id": "1418",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -11247,7 +11300,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1413",
+      "$id": "1419",
       "body": {
        "$ref": "586"
       },
@@ -11343,10 +11396,10 @@
      "hidden": false
     },
     {
-     "$id": "1414",
+     "$id": "1420",
      "parameters": [
       {
-       "$id": "1415",
+       "$id": "1421",
        "clientProperty": {
         "$ref": "1121"
        },
@@ -11357,12 +11410,12 @@
         "InclusiveMinimum": "1"
        },
        "defaultValue": {
-        "$id": "1416",
+        "$id": "1422",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1417",
+        "$id": "1423",
         "fixed": false,
         "raw": "Width of the thumbnail, in pixels. It must be between 1 and 1024. Recommended minimum of 50."
        },
@@ -11384,18 +11437,18 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1418",
+        "$id": "1424",
         "fixed": false,
         "raw": "width"
        },
        "serializedName": "width",
        "modelType": {
-        "$id": "1419",
+        "$id": "1425",
         "$type": "PrimaryType",
         "format": "int32",
         "knownPrimaryType": "int",
         "name": {
-         "$id": "1420",
+         "$id": "1426",
          "fixed": false,
          "raw": "Int"
         },
@@ -11403,7 +11456,7 @@
        }
       },
       {
-       "$id": "1421",
+       "$id": "1427",
        "clientProperty": {
         "$ref": "1127"
        },
@@ -11414,12 +11467,12 @@
         "InclusiveMinimum": "1"
        },
        "defaultValue": {
-        "$id": "1422",
+        "$id": "1428",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1423",
+        "$id": "1429",
         "fixed": false,
         "raw": "Height of the thumbnail, in pixels. It must be between 1 and 1024. Recommended minimum of 50."
        },
@@ -11441,18 +11494,18 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1424",
+        "$id": "1430",
         "fixed": false,
         "raw": "height"
        },
        "serializedName": "height",
        "modelType": {
-        "$id": "1425",
+        "$id": "1431",
         "$type": "PrimaryType",
         "format": "int32",
         "knownPrimaryType": "int",
         "name": {
-         "$id": "1426",
+         "$id": "1432",
          "fixed": false,
          "raw": "Int"
         },
@@ -11460,20 +11513,20 @@
        }
       },
       {
-       "$id": "1427",
+       "$id": "1433",
        "clientProperty": {
         "$ref": "1133"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1428",
+        "$id": "1434",
         "fixed": false,
         "raw": "false"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1429",
+        "$id": "1435",
         "fixed": false,
         "raw": "Boolean flag for enabling smart cropping."
        },
@@ -11495,17 +11548,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1430",
+        "$id": "1436",
         "fixed": false,
         "raw": "smartCropping"
        },
        "serializedName": "smartCropping",
        "modelType": {
-        "$id": "1431",
+        "$id": "1437",
         "$type": "PrimaryType",
         "knownPrimaryType": "boolean",
         "name": {
-         "$id": "1432",
+         "$id": "1438",
          "fixed": false,
          "raw": "Boolean"
         },
@@ -11513,16 +11566,16 @@
        }
       },
       {
-       "$id": "1433",
+       "$id": "1439",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1434",
+        "$id": "1440",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1435",
+        "$id": "1441",
         "fixed": false,
         "raw": "A JSON document with a URL pointing to the image that is to be analyzed."
        },
@@ -11546,7 +11599,7 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1436",
+        "$id": "1442",
         "fixed": false,
         "raw": "ImageUrl"
        },
@@ -11556,7 +11609,7 @@
        }
       },
       {
-       "$id": "1437",
+       "$id": "1443",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -11566,13 +11619,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1438",
+        "$id": "1444",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1439",
+        "$id": "1445",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -11594,17 +11647,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1440",
+        "$id": "1446",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1441",
+        "$id": "1447",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1442",
+         "$id": "1448",
          "fixed": false,
          "raw": "String"
         },
@@ -11613,12 +11666,12 @@
       }
      ],
      "name": {
-      "$id": "1443",
+      "$id": "1449",
       "fixed": false,
       "raw": "GenerateThumbnail"
      },
      "group": {
-      "$id": "1444",
+      "$id": "1450",
       "fixed": false,
       "raw": ""
      },
@@ -11628,20 +11681,20 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1445",
+       "$id": "1451",
        "body": {
-        "$id": "1446",
+        "$id": "1452",
         "$type": "PrimaryType",
         "knownPrimaryType": "stream",
         "name": {
-         "$id": "1447",
+         "$id": "1453",
          "fixed": false,
          "raw": "Stream"
         },
         "deprecated": false
        },
        "extensions": {
-        "$id": "1448",
+        "$id": "1454",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -11659,13 +11712,13 @@
       }
      },
      "defaultResponse": {
-      "$id": "1449",
+      "$id": "1455",
       "isNullable": true
      },
      "returnType": {
-      "$id": "1450",
+      "$id": "1456",
       "body": {
-       "$ref": "1446"
+       "$ref": "1452"
       },
       "isNullable": true
      },
@@ -11721,19 +11774,19 @@
      "hidden": false
     },
     {
-     "$id": "1451",
+     "$id": "1457",
      "parameters": [
       {
-       "$id": "1452",
+       "$id": "1458",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1453",
+        "$id": "1459",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1454",
+        "$id": "1460",
         "fixed": false,
         "raw": "A JSON document with a URL pointing to the image that is to be analyzed."
        },
@@ -11757,7 +11810,7 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1455",
+        "$id": "1461",
         "fixed": false,
         "raw": "ImageUrl"
        },
@@ -11767,7 +11820,7 @@
        }
       },
       {
-       "$id": "1456",
+       "$id": "1462",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -11777,13 +11830,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1457",
+        "$id": "1463",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1458",
+        "$id": "1464",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -11805,17 +11858,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1459",
+        "$id": "1465",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1460",
+        "$id": "1466",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1461",
+         "$id": "1467",
          "fixed": false,
          "raw": "String"
         },
@@ -11824,12 +11877,12 @@
       }
      ],
      "name": {
-      "$id": "1462",
+      "$id": "1468",
       "fixed": false,
       "raw": "GetAreaOfInterest"
      },
      "group": {
-      "$id": "1463",
+      "$id": "1469",
       "fixed": false,
       "raw": ""
      },
@@ -11839,12 +11892,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1464",
+       "$id": "1470",
        "body": {
         "$ref": "610"
        },
        "extensions": {
-        "$id": "1465",
+        "$id": "1471",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -11862,12 +11915,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1466",
+      "$id": "1472",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1467",
+       "$id": "1473",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -11884,7 +11937,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1468",
+      "$id": "1474",
       "body": {
        "$ref": "610"
       },
@@ -11953,22 +12006,22 @@
      "hidden": false
     },
     {
-     "$id": "1469",
+     "$id": "1475",
      "parameters": [
       {
-       "$id": "1470",
+       "$id": "1476",
        "clientProperty": {
         "$ref": "1091"
        },
        "location": "query",
        "collectionFormat": "csv",
        "defaultValue": {
-        "$id": "1471",
+        "$id": "1477",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1472",
+        "$id": "1478",
         "fixed": false,
         "raw": "A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Categories - categorizes image content according to a taxonomy defined in documentation. Tags - tags the image with a detailed list of words related to the image content. Description - describes the image content with a complete English sentence. Faces - detects if faces are present. If present, generate coordinates, gender and age. ImageType - detects if image is clipart or a line drawing. Color - determines the accent color, dominant color, and whether an image is black&white. Adult - detects if the image is pornographic in nature (depicts nudity or a sex act), or is gory (depicts extreme violence or blood). Sexually suggestive content (aka racy content) is also detected. Objects - detects various objects within an image, including the approximate location. The Objects argument is only available in English. Brands - detects various brands within an image, including the approximate location. The Brands argument is only available in English."
        },
@@ -11990,38 +12043,38 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1473",
+        "$id": "1479",
         "fixed": false,
         "raw": "visualFeatures"
        },
        "serializedName": "visualFeatures",
        "modelType": {
-        "$id": "1474",
+        "$id": "1480",
         "$type": "SequenceType",
         "elementType": {
          "$ref": "954"
         },
         "name": {
-         "$id": "1475",
+         "$id": "1481",
          "fixed": false
         },
         "deprecated": false
        }
       },
       {
-       "$id": "1476",
+       "$id": "1482",
        "clientProperty": {
         "$ref": "1103"
        },
        "location": "query",
        "collectionFormat": "csv",
        "defaultValue": {
-        "$id": "1477",
+        "$id": "1483",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1478",
+        "$id": "1484",
         "fixed": false,
         "raw": "A string indicating which domain-specific details to return. Multiple values should be comma-separated. Valid visual feature types include: Celebrities - identifies celebrities if detected in the image, Landmarks - identifies notable landmarks in the image."
        },
@@ -12043,39 +12096,39 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1479",
+        "$id": "1485",
         "fixed": false,
         "raw": "details"
        },
        "serializedName": "details",
        "modelType": {
-        "$id": "1480",
+        "$id": "1486",
         "$type": "SequenceType",
         "elementType": {
          "$ref": "967"
         },
         "name": {
-         "$id": "1481",
+         "$id": "1487",
          "fixed": false
         },
         "deprecated": false
        }
       },
       {
-       "$id": "1482",
+       "$id": "1488",
        "clientProperty": {
         "$ref": "1068"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1483",
+        "$id": "1489",
         "fixed": false,
         "raw": "en"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1484",
+        "$id": "1490",
         "fixed": false,
         "raw": "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese."
        },
@@ -12097,37 +12150,37 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1485",
+        "$id": "1491",
         "fixed": false,
         "raw": "language"
        },
        "serializedName": "language",
        "modelType": {
-        "$id": "1486",
+        "$id": "1492",
         "$type": "EnumType",
         "values": [
          {
-          "$id": "1487",
+          "$id": "1493",
           "name": "en",
           "serializedName": "en"
          },
          {
-          "$id": "1488",
+          "$id": "1494",
           "name": "es",
           "serializedName": "es"
          },
          {
-          "$id": "1489",
+          "$id": "1495",
           "name": "ja",
           "serializedName": "ja"
          },
          {
-          "$id": "1490",
+          "$id": "1496",
           "name": "pt",
           "serializedName": "pt"
          },
          {
-          "$id": "1491",
+          "$id": "1497",
           "name": "zh",
           "serializedName": "zh"
          }
@@ -12135,18 +12188,18 @@
         "oldModelAsString": false,
         "modelAsString": true,
         "underlyingType": {
-         "$id": "1492",
+         "$id": "1498",
          "$type": "PrimaryType",
          "knownPrimaryType": "string",
          "name": {
-          "$id": "1493",
+          "$id": "1499",
           "fixed": false,
           "raw": "String"
          },
          "deprecated": false
         },
         "name": {
-         "$id": "1494",
+         "$id": "1500",
          "fixed": false,
          "raw": ""
         },
@@ -12154,19 +12207,19 @@
        }
       },
       {
-       "$id": "1495",
+       "$id": "1501",
        "clientProperty": {
         "$ref": "1081"
        },
        "location": "query",
        "collectionFormat": "csv",
        "defaultValue": {
-        "$id": "1496",
+        "$id": "1502",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1497",
+        "$id": "1503",
         "fixed": false,
         "raw": "Turn off specified domain models when generating the description."
        },
@@ -12188,35 +12241,35 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1498",
+        "$id": "1504",
         "fixed": false,
         "raw": "descriptionExclude"
        },
        "serializedName": "descriptionExclude",
        "modelType": {
-        "$id": "1499",
+        "$id": "1505",
         "$type": "SequenceType",
         "elementType": {
          "$ref": "917"
         },
         "name": {
-         "$id": "1500",
+         "$id": "1506",
          "fixed": false
         },
         "deprecated": false
        }
       },
       {
-       "$id": "1501",
+       "$id": "1507",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1502",
+        "$id": "1508",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1503",
+        "$id": "1509",
         "fixed": false,
         "raw": "An image stream."
        },
@@ -12239,17 +12292,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1504",
+        "$id": "1510",
         "fixed": false,
         "raw": "Image"
        },
        "serializedName": "Image",
        "modelType": {
-        "$id": "1505",
+        "$id": "1511",
         "$type": "PrimaryType",
         "knownPrimaryType": "stream",
         "name": {
-         "$id": "1506",
+         "$id": "1512",
          "fixed": false,
          "raw": "Stream"
         },
@@ -12257,7 +12310,7 @@
        }
       },
       {
-       "$id": "1507",
+       "$id": "1513",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -12267,13 +12320,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1508",
+        "$id": "1514",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1509",
+        "$id": "1515",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -12295,17 +12348,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1510",
+        "$id": "1516",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1511",
+        "$id": "1517",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1512",
+         "$id": "1518",
          "fixed": false,
          "raw": "String"
         },
@@ -12314,12 +12367,12 @@
       }
      ],
      "name": {
-      "$id": "1513",
+      "$id": "1519",
       "fixed": false,
       "raw": "AnalyzeImageInStream"
      },
      "group": {
-      "$id": "1514",
+      "$id": "1520",
       "fixed": false,
       "raw": ""
      },
@@ -12329,12 +12382,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1515",
+       "$id": "1521",
        "body": {
         "$ref": "354"
        },
        "extensions": {
-        "$id": "1516",
+        "$id": "1522",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -12352,12 +12405,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1517",
+      "$id": "1523",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1518",
+       "$id": "1524",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -12374,7 +12427,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1519",
+      "$id": "1525",
       "body": {
        "$ref": "354"
       },
@@ -12591,19 +12644,19 @@
      "hidden": false
     },
     {
-     "$id": "1520",
+     "$id": "1526",
      "parameters": [
       {
-       "$id": "1521",
+       "$id": "1527",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1522",
+        "$id": "1528",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1523",
+        "$id": "1529",
         "fixed": false,
         "raw": "An image stream."
        },
@@ -12626,17 +12679,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1524",
+        "$id": "1530",
         "fixed": false,
         "raw": "Image"
        },
        "serializedName": "Image",
        "modelType": {
-        "$id": "1525",
+        "$id": "1531",
         "$type": "PrimaryType",
         "knownPrimaryType": "stream",
         "name": {
-         "$id": "1526",
+         "$id": "1532",
          "fixed": false,
          "raw": "Stream"
         },
@@ -12644,7 +12697,7 @@
        }
       },
       {
-       "$id": "1527",
+       "$id": "1533",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -12654,13 +12707,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1528",
+        "$id": "1534",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1529",
+        "$id": "1535",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -12682,17 +12735,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1530",
+        "$id": "1536",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1531",
+        "$id": "1537",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1532",
+         "$id": "1538",
          "fixed": false,
          "raw": "String"
         },
@@ -12701,12 +12754,12 @@
       }
      ],
      "name": {
-      "$id": "1533",
+      "$id": "1539",
       "fixed": false,
       "raw": "GetAreaOfInterestInStream"
      },
      "group": {
-      "$id": "1534",
+      "$id": "1540",
       "fixed": false,
       "raw": ""
      },
@@ -12716,12 +12769,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1535",
+       "$id": "1541",
        "body": {
         "$ref": "610"
        },
        "extensions": {
-        "$id": "1536",
+        "$id": "1542",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -12739,12 +12792,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1537",
+      "$id": "1543",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1538",
+       "$id": "1544",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -12761,7 +12814,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1539",
+      "$id": "1545",
       "body": {
        "$ref": "610"
       },
@@ -12828,23 +12881,23 @@
      "hidden": false
     },
     {
-     "$id": "1540",
+     "$id": "1546",
      "parameters": [
       {
-       "$id": "1541",
+       "$id": "1547",
        "clientProperty": {
         "$ref": "1109"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1542",
+        "$id": "1548",
         "fixed": false,
         "raw": "1"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1543",
+        "$id": "1549",
         "fixed": false,
         "raw": "Maximum number of candidate descriptions to be returned.  The default is 1."
        },
@@ -12866,18 +12919,18 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1544",
+        "$id": "1550",
         "fixed": false,
         "raw": "maxCandidates"
        },
        "serializedName": "maxCandidates",
        "modelType": {
-        "$id": "1545",
+        "$id": "1551",
         "$type": "PrimaryType",
         "format": "int32",
         "knownPrimaryType": "int",
         "name": {
-         "$id": "1546",
+         "$id": "1552",
          "fixed": false,
          "raw": "Int"
         },
@@ -12885,20 +12938,20 @@
        }
       },
       {
-       "$id": "1547",
+       "$id": "1553",
        "clientProperty": {
         "$ref": "1068"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1548",
+        "$id": "1554",
         "fixed": false,
         "raw": "en"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1549",
+        "$id": "1555",
         "fixed": false,
         "raw": "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese."
        },
@@ -12920,37 +12973,37 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1550",
+        "$id": "1556",
         "fixed": false,
         "raw": "language"
        },
        "serializedName": "language",
        "modelType": {
-        "$id": "1551",
+        "$id": "1557",
         "$type": "EnumType",
         "values": [
          {
-          "$id": "1552",
+          "$id": "1558",
           "name": "en",
           "serializedName": "en"
          },
          {
-          "$id": "1553",
+          "$id": "1559",
           "name": "es",
           "serializedName": "es"
          },
          {
-          "$id": "1554",
+          "$id": "1560",
           "name": "ja",
           "serializedName": "ja"
          },
          {
-          "$id": "1555",
+          "$id": "1561",
           "name": "pt",
           "serializedName": "pt"
          },
          {
-          "$id": "1556",
+          "$id": "1562",
           "name": "zh",
           "serializedName": "zh"
          }
@@ -12958,18 +13011,18 @@
         "oldModelAsString": false,
         "modelAsString": true,
         "underlyingType": {
-         "$id": "1557",
+         "$id": "1563",
          "$type": "PrimaryType",
          "knownPrimaryType": "string",
          "name": {
-          "$id": "1558",
+          "$id": "1564",
           "fixed": false,
           "raw": "String"
          },
          "deprecated": false
         },
         "name": {
-         "$id": "1559",
+         "$id": "1565",
          "fixed": false,
          "raw": ""
         },
@@ -12977,19 +13030,19 @@
        }
       },
       {
-       "$id": "1560",
+       "$id": "1566",
        "clientProperty": {
         "$ref": "1081"
        },
        "location": "query",
        "collectionFormat": "csv",
        "defaultValue": {
-        "$id": "1561",
+        "$id": "1567",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1562",
+        "$id": "1568",
         "fixed": false,
         "raw": "Turn off specified domain models when generating the description."
        },
@@ -13011,35 +13064,35 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1563",
+        "$id": "1569",
         "fixed": false,
         "raw": "descriptionExclude"
        },
        "serializedName": "descriptionExclude",
        "modelType": {
-        "$id": "1564",
+        "$id": "1570",
         "$type": "SequenceType",
         "elementType": {
          "$ref": "917"
         },
         "name": {
-         "$id": "1565",
+         "$id": "1571",
          "fixed": false
         },
         "deprecated": false
        }
       },
       {
-       "$id": "1566",
+       "$id": "1572",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1567",
+        "$id": "1573",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1568",
+        "$id": "1574",
         "fixed": false,
         "raw": "An image stream."
        },
@@ -13062,17 +13115,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1569",
+        "$id": "1575",
         "fixed": false,
         "raw": "Image"
        },
        "serializedName": "Image",
        "modelType": {
-        "$id": "1570",
+        "$id": "1576",
         "$type": "PrimaryType",
         "knownPrimaryType": "stream",
         "name": {
-         "$id": "1571",
+         "$id": "1577",
          "fixed": false,
          "raw": "Stream"
         },
@@ -13080,7 +13133,7 @@
        }
       },
       {
-       "$id": "1572",
+       "$id": "1578",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -13090,13 +13143,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1573",
+        "$id": "1579",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1574",
+        "$id": "1580",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -13118,17 +13171,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1575",
+        "$id": "1581",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1576",
+        "$id": "1582",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1577",
+         "$id": "1583",
          "fixed": false,
          "raw": "String"
         },
@@ -13137,12 +13190,12 @@
       }
      ],
      "name": {
-      "$id": "1578",
+      "$id": "1584",
       "fixed": false,
       "raw": "DescribeImageInStream"
      },
      "group": {
-      "$id": "1579",
+      "$id": "1585",
       "fixed": false,
       "raw": ""
      },
@@ -13152,12 +13205,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1580",
+       "$id": "1586",
        "body": {
         "$ref": "418"
        },
        "extensions": {
-        "$id": "1581",
+        "$id": "1587",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -13175,12 +13228,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1582",
+      "$id": "1588",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1583",
+       "$id": "1589",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -13197,7 +13250,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1584",
+      "$id": "1590",
       "body": {
        "$ref": "418"
       },
@@ -13274,19 +13327,19 @@
      "hidden": false
     },
     {
-     "$id": "1585",
+     "$id": "1591",
      "parameters": [
       {
-       "$id": "1586",
+       "$id": "1592",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1587",
+        "$id": "1593",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1588",
+        "$id": "1594",
         "fixed": false,
         "raw": "An image stream."
        },
@@ -13309,17 +13362,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1589",
+        "$id": "1595",
         "fixed": false,
         "raw": "Image"
        },
        "serializedName": "Image",
        "modelType": {
-        "$id": "1590",
+        "$id": "1596",
         "$type": "PrimaryType",
         "knownPrimaryType": "stream",
         "name": {
-         "$id": "1591",
+         "$id": "1597",
          "fixed": false,
          "raw": "Stream"
         },
@@ -13327,7 +13380,7 @@
        }
       },
       {
-       "$id": "1592",
+       "$id": "1598",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -13337,13 +13390,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1593",
+        "$id": "1599",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1594",
+        "$id": "1600",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -13365,17 +13418,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1595",
+        "$id": "1601",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1596",
+        "$id": "1602",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1597",
+         "$id": "1603",
          "fixed": false,
          "raw": "String"
         },
@@ -13384,12 +13437,12 @@
       }
      ],
      "name": {
-      "$id": "1598",
+      "$id": "1604",
       "fixed": false,
       "raw": "DetectObjectsInStream"
      },
      "group": {
-      "$id": "1599",
+      "$id": "1605",
       "fixed": false,
       "raw": ""
      },
@@ -13399,12 +13452,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1600",
+       "$id": "1606",
        "body": {
         "$ref": "440"
        },
        "extensions": {
-        "$id": "1601",
+        "$id": "1607",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -13422,12 +13475,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1602",
+      "$id": "1608",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1603",
+       "$id": "1609",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -13444,7 +13497,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1604",
+      "$id": "1610",
       "body": {
        "$ref": "440"
       },
@@ -13520,10 +13573,10 @@
      "hidden": false
     },
     {
-     "$id": "1605",
+     "$id": "1611",
      "parameters": [
       {
-       "$id": "1606",
+       "$id": "1612",
        "clientProperty": {
         "$ref": "1121"
        },
@@ -13534,12 +13587,12 @@
         "InclusiveMinimum": "1"
        },
        "defaultValue": {
-        "$id": "1607",
+        "$id": "1613",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1608",
+        "$id": "1614",
         "fixed": false,
         "raw": "Width of the thumbnail, in pixels. It must be between 1 and 1024. Recommended minimum of 50."
        },
@@ -13561,18 +13614,18 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1609",
+        "$id": "1615",
         "fixed": false,
         "raw": "width"
        },
        "serializedName": "width",
        "modelType": {
-        "$id": "1610",
+        "$id": "1616",
         "$type": "PrimaryType",
         "format": "int32",
         "knownPrimaryType": "int",
         "name": {
-         "$id": "1611",
+         "$id": "1617",
          "fixed": false,
          "raw": "Int"
         },
@@ -13580,7 +13633,7 @@
        }
       },
       {
-       "$id": "1612",
+       "$id": "1618",
        "clientProperty": {
         "$ref": "1127"
        },
@@ -13591,12 +13644,12 @@
         "InclusiveMinimum": "1"
        },
        "defaultValue": {
-        "$id": "1613",
+        "$id": "1619",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1614",
+        "$id": "1620",
         "fixed": false,
         "raw": "Height of the thumbnail, in pixels. It must be between 1 and 1024. Recommended minimum of 50."
        },
@@ -13618,18 +13671,18 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1615",
+        "$id": "1621",
         "fixed": false,
         "raw": "height"
        },
        "serializedName": "height",
        "modelType": {
-        "$id": "1616",
+        "$id": "1622",
         "$type": "PrimaryType",
         "format": "int32",
         "knownPrimaryType": "int",
         "name": {
-         "$id": "1617",
+         "$id": "1623",
          "fixed": false,
          "raw": "Int"
         },
@@ -13637,20 +13690,20 @@
        }
       },
       {
-       "$id": "1618",
+       "$id": "1624",
        "clientProperty": {
         "$ref": "1133"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1619",
+        "$id": "1625",
         "fixed": false,
         "raw": "false"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1620",
+        "$id": "1626",
         "fixed": false,
         "raw": "Boolean flag for enabling smart cropping."
        },
@@ -13672,17 +13725,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1621",
+        "$id": "1627",
         "fixed": false,
         "raw": "smartCropping"
        },
        "serializedName": "smartCropping",
        "modelType": {
-        "$id": "1622",
+        "$id": "1628",
         "$type": "PrimaryType",
         "knownPrimaryType": "boolean",
         "name": {
-         "$id": "1623",
+         "$id": "1629",
          "fixed": false,
          "raw": "Boolean"
         },
@@ -13690,16 +13743,16 @@
        }
       },
       {
-       "$id": "1624",
+       "$id": "1630",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1625",
+        "$id": "1631",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1626",
+        "$id": "1632",
         "fixed": false,
         "raw": "An image stream."
        },
@@ -13722,17 +13775,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1627",
+        "$id": "1633",
         "fixed": false,
         "raw": "Image"
        },
        "serializedName": "Image",
        "modelType": {
-        "$id": "1628",
+        "$id": "1634",
         "$type": "PrimaryType",
         "knownPrimaryType": "stream",
         "name": {
-         "$id": "1629",
+         "$id": "1635",
          "fixed": false,
          "raw": "Stream"
         },
@@ -13740,7 +13793,7 @@
        }
       },
       {
-       "$id": "1630",
+       "$id": "1636",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -13750,13 +13803,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1631",
+        "$id": "1637",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1632",
+        "$id": "1638",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -13778,17 +13831,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1633",
+        "$id": "1639",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1634",
+        "$id": "1640",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1635",
+         "$id": "1641",
          "fixed": false,
          "raw": "String"
         },
@@ -13797,12 +13850,12 @@
       }
      ],
      "name": {
-      "$id": "1636",
+      "$id": "1642",
       "fixed": false,
       "raw": "GenerateThumbnailInStream"
      },
      "group": {
-      "$id": "1637",
+      "$id": "1643",
       "fixed": false,
       "raw": ""
      },
@@ -13812,20 +13865,20 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1638",
+       "$id": "1644",
        "body": {
-        "$id": "1639",
+        "$id": "1645",
         "$type": "PrimaryType",
         "knownPrimaryType": "stream",
         "name": {
-         "$id": "1640",
+         "$id": "1646",
          "fixed": false,
          "raw": "Stream"
         },
         "deprecated": false
        },
        "extensions": {
-        "$id": "1641",
+        "$id": "1647",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -13843,13 +13896,13 @@
       }
      },
      "defaultResponse": {
-      "$id": "1642",
+      "$id": "1648",
       "isNullable": true
      },
      "returnType": {
-      "$id": "1643",
+      "$id": "1649",
       "body": {
-       "$ref": "1639"
+       "$ref": "1645"
       },
       "isNullable": true
      },
@@ -13903,22 +13956,22 @@
      "hidden": false
     },
     {
-     "$id": "1644",
+     "$id": "1650",
      "parameters": [
       {
-       "$id": "1645",
+       "$id": "1651",
        "clientProperty": {
         "$ref": "1115"
        },
        "location": "path",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1646",
+        "$id": "1652",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1647",
+        "$id": "1653",
         "fixed": false,
         "raw": "The domain-specific content to recognize."
        },
@@ -13940,17 +13993,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1648",
+        "$id": "1654",
         "fixed": false,
         "raw": "model"
        },
        "serializedName": "model",
        "modelType": {
-        "$id": "1649",
+        "$id": "1655",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1650",
+         "$id": "1656",
          "fixed": false,
          "raw": "String"
         },
@@ -13958,20 +14011,20 @@
        }
       },
       {
-       "$id": "1651",
+       "$id": "1657",
        "clientProperty": {
         "$ref": "1068"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1652",
+        "$id": "1658",
         "fixed": false,
         "raw": "en"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1653",
+        "$id": "1659",
         "fixed": false,
         "raw": "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese."
        },
@@ -13993,37 +14046,37 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1654",
+        "$id": "1660",
         "fixed": false,
         "raw": "language"
        },
        "serializedName": "language",
        "modelType": {
-        "$id": "1655",
+        "$id": "1661",
         "$type": "EnumType",
         "values": [
          {
-          "$id": "1656",
+          "$id": "1662",
           "name": "en",
           "serializedName": "en"
          },
          {
-          "$id": "1657",
+          "$id": "1663",
           "name": "es",
           "serializedName": "es"
          },
          {
-          "$id": "1658",
+          "$id": "1664",
           "name": "ja",
           "serializedName": "ja"
          },
          {
-          "$id": "1659",
+          "$id": "1665",
           "name": "pt",
           "serializedName": "pt"
          },
          {
-          "$id": "1660",
+          "$id": "1666",
           "name": "zh",
           "serializedName": "zh"
          }
@@ -14031,18 +14084,18 @@
         "oldModelAsString": false,
         "modelAsString": true,
         "underlyingType": {
-         "$id": "1661",
+         "$id": "1667",
          "$type": "PrimaryType",
          "knownPrimaryType": "string",
          "name": {
-          "$id": "1662",
+          "$id": "1668",
           "fixed": false,
           "raw": "String"
          },
          "deprecated": false
         },
         "name": {
-         "$id": "1663",
+         "$id": "1669",
          "fixed": false,
          "raw": ""
         },
@@ -14050,16 +14103,16 @@
        }
       },
       {
-       "$id": "1664",
+       "$id": "1670",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1665",
+        "$id": "1671",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1666",
+        "$id": "1672",
         "fixed": false,
         "raw": "An image stream."
        },
@@ -14082,17 +14135,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1667",
+        "$id": "1673",
         "fixed": false,
         "raw": "Image"
        },
        "serializedName": "Image",
        "modelType": {
-        "$id": "1668",
+        "$id": "1674",
         "$type": "PrimaryType",
         "knownPrimaryType": "stream",
         "name": {
-         "$id": "1669",
+         "$id": "1675",
          "fixed": false,
          "raw": "Stream"
         },
@@ -14100,7 +14153,7 @@
        }
       },
       {
-       "$id": "1670",
+       "$id": "1676",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -14110,13 +14163,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1671",
+        "$id": "1677",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1672",
+        "$id": "1678",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -14138,17 +14191,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1673",
+        "$id": "1679",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1674",
+        "$id": "1680",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1675",
+         "$id": "1681",
          "fixed": false,
          "raw": "String"
         },
@@ -14157,12 +14210,12 @@
       }
      ],
      "name": {
-      "$id": "1676",
+      "$id": "1682",
       "fixed": false,
       "raw": "AnalyzeImageByDomainInStream"
      },
      "group": {
-      "$id": "1677",
+      "$id": "1683",
       "fixed": false,
       "raw": ""
      },
@@ -14172,12 +14225,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1678",
+       "$id": "1684",
        "body": {
         "$ref": "488"
        },
        "extensions": {
-        "$id": "1679",
+        "$id": "1685",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -14195,12 +14248,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1680",
+      "$id": "1686",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1681",
+       "$id": "1687",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -14217,7 +14270,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1682",
+      "$id": "1688",
       "body": {
        "$ref": "488"
       },
@@ -14292,23 +14345,23 @@
      "hidden": false
     },
     {
-     "$id": "1683",
+     "$id": "1689",
      "parameters": [
       {
-       "$id": "1684",
+       "$id": "1690",
        "clientProperty": {
         "$ref": "1097"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1685",
+        "$id": "1691",
         "fixed": false,
         "raw": "true"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1686",
+        "$id": "1692",
         "fixed": false,
         "raw": "Whether detect the text orientation in the image. With detectOrientation=true the OCR service tries to detect the image orientation and correct it before further processing (e.g. if it's upside-down)."
        },
@@ -14330,17 +14383,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1687",
+        "$id": "1693",
         "fixed": false,
         "raw": "detectOrientation"
        },
        "serializedName": "detectOrientation",
        "modelType": {
-        "$id": "1688",
+        "$id": "1694",
         "$type": "PrimaryType",
         "knownPrimaryType": "boolean",
         "name": {
-         "$id": "1689",
+         "$id": "1695",
          "fixed": false,
          "raw": "Boolean"
         },
@@ -14348,20 +14401,20 @@
        }
       },
       {
-       "$id": "1690",
+       "$id": "1696",
        "clientProperty": {
         "$ref": "1068"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1691",
+        "$id": "1697",
         "fixed": false,
         "raw": "unk"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1692",
+        "$id": "1698",
         "fixed": false,
         "raw": "The BCP-47 language code of the text to be detected in the image. The default value is 'unk'."
        },
@@ -14383,7 +14436,7 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1693",
+        "$id": "1699",
         "fixed": false,
         "raw": "language"
        },
@@ -14393,16 +14446,16 @@
        }
       },
       {
-       "$id": "1694",
+       "$id": "1700",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1695",
+        "$id": "1701",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1696",
+        "$id": "1702",
         "fixed": false,
         "raw": "An image stream."
        },
@@ -14425,17 +14478,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1697",
+        "$id": "1703",
         "fixed": false,
         "raw": "Image"
        },
        "serializedName": "Image",
        "modelType": {
-        "$id": "1698",
+        "$id": "1704",
         "$type": "PrimaryType",
         "knownPrimaryType": "stream",
         "name": {
-         "$id": "1699",
+         "$id": "1705",
          "fixed": false,
          "raw": "Stream"
         },
@@ -14443,7 +14496,7 @@
        }
       },
       {
-       "$id": "1700",
+       "$id": "1706",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -14453,13 +14506,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1701",
+        "$id": "1707",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1702",
+        "$id": "1708",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -14481,17 +14534,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1703",
+        "$id": "1709",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1704",
+        "$id": "1710",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1705",
+         "$id": "1711",
          "fixed": false,
          "raw": "String"
         },
@@ -14500,12 +14553,12 @@
       }
      ],
      "name": {
-      "$id": "1706",
+      "$id": "1712",
       "fixed": false,
       "raw": "RecognizePrintedTextInStream"
      },
      "group": {
-      "$id": "1707",
+      "$id": "1713",
       "fixed": false,
       "raw": ""
      },
@@ -14515,12 +14568,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1708",
+       "$id": "1714",
        "body": {
         "$ref": "554"
        },
        "extensions": {
-        "$id": "1709",
+        "$id": "1715",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -14538,12 +14591,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1710",
+      "$id": "1716",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1711",
+       "$id": "1717",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -14560,7 +14613,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1712",
+      "$id": "1718",
       "body": {
        "$ref": "554"
       },
@@ -14678,23 +14731,23 @@
      "hidden": false
     },
     {
-     "$id": "1713",
+     "$id": "1719",
      "parameters": [
       {
-       "$id": "1714",
+       "$id": "1720",
        "clientProperty": {
         "$ref": "1068"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1715",
+        "$id": "1721",
         "fixed": false,
         "raw": "en"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1716",
+        "$id": "1722",
         "fixed": false,
         "raw": "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default. es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified Chinese."
        },
@@ -14716,37 +14769,37 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1717",
+        "$id": "1723",
         "fixed": false,
         "raw": "language"
        },
        "serializedName": "language",
        "modelType": {
-        "$id": "1718",
+        "$id": "1724",
         "$type": "EnumType",
         "values": [
          {
-          "$id": "1719",
+          "$id": "1725",
           "name": "en",
           "serializedName": "en"
          },
          {
-          "$id": "1720",
+          "$id": "1726",
           "name": "es",
           "serializedName": "es"
          },
          {
-          "$id": "1721",
+          "$id": "1727",
           "name": "ja",
           "serializedName": "ja"
          },
          {
-          "$id": "1722",
+          "$id": "1728",
           "name": "pt",
           "serializedName": "pt"
          },
          {
-          "$id": "1723",
+          "$id": "1729",
           "name": "zh",
           "serializedName": "zh"
          }
@@ -14754,18 +14807,18 @@
         "oldModelAsString": false,
         "modelAsString": true,
         "underlyingType": {
-         "$id": "1724",
+         "$id": "1730",
          "$type": "PrimaryType",
          "knownPrimaryType": "string",
          "name": {
-          "$id": "1725",
+          "$id": "1731",
           "fixed": false,
           "raw": "String"
          },
          "deprecated": false
         },
         "name": {
-         "$id": "1726",
+         "$id": "1732",
          "fixed": false,
          "raw": ""
         },
@@ -14773,16 +14826,16 @@
        }
       },
       {
-       "$id": "1727",
+       "$id": "1733",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1728",
+        "$id": "1734",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1729",
+        "$id": "1735",
         "fixed": false,
         "raw": "An image stream."
        },
@@ -14805,17 +14858,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1730",
+        "$id": "1736",
         "fixed": false,
         "raw": "Image"
        },
        "serializedName": "Image",
        "modelType": {
-        "$id": "1731",
+        "$id": "1737",
         "$type": "PrimaryType",
         "knownPrimaryType": "stream",
         "name": {
-         "$id": "1732",
+         "$id": "1738",
          "fixed": false,
          "raw": "Stream"
         },
@@ -14823,7 +14876,7 @@
        }
       },
       {
-       "$id": "1733",
+       "$id": "1739",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -14833,13 +14886,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1734",
+        "$id": "1740",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1735",
+        "$id": "1741",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the AI model. Accepted values are: \"latest\", \"2021-04-01\". Defaults to \"latest\"."
        },
@@ -14861,17 +14914,17 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1736",
+        "$id": "1742",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1737",
+        "$id": "1743",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1738",
+         "$id": "1744",
          "fixed": false,
          "raw": "String"
         },
@@ -14880,12 +14933,12 @@
       }
      ],
      "name": {
-      "$id": "1739",
+      "$id": "1745",
       "fixed": false,
       "raw": "TagImageInStream"
      },
      "group": {
-      "$id": "1740",
+      "$id": "1746",
       "fixed": false,
       "raw": ""
      },
@@ -14895,12 +14948,12 @@
      "httpMethod": "post",
      "responses": {
       "OK": {
-       "$id": "1741",
+       "$id": "1747",
        "body": {
         "$ref": "586"
        },
        "extensions": {
-        "$id": "1742",
+        "$id": "1748",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -14918,12 +14971,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1743",
+      "$id": "1749",
       "body": {
        "$ref": "699"
       },
       "extensions": {
-       "$id": "1744",
+       "$id": "1750",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -14940,7 +14993,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1745",
+      "$id": "1751",
       "body": {
        "$ref": "586"
       },
@@ -15034,22 +15087,22 @@
      "hidden": false
     },
     {
-     "$id": "1746",
+     "$id": "1752",
      "parameters": [
       {
-       "$id": "1747",
+       "$id": "1753",
        "clientProperty": {
         "$ref": "1068"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1748",
+        "$id": "1754",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1749",
+        "$id": "1755",
         "fixed": false,
         "raw": "The BCP-47 language code of the text in the document. Read supports auto language identification and multi-language documents, so only provide a language code if you would like to force the document to be processed in that specific language. See https://aka.ms/ocr-languages for list of supported languages."
        },
@@ -15071,7 +15124,7 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1750",
+        "$id": "1756",
         "fixed": false,
         "raw": "language"
        },
@@ -15081,16 +15134,16 @@
        }
       },
       {
-       "$id": "1751",
+       "$id": "1757",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1752",
+        "$id": "1758",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1753",
+        "$id": "1759",
         "fixed": false,
         "raw": "A JSON document with a URL pointing to the image that is to be analyzed."
        },
@@ -15114,7 +15167,7 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1754",
+        "$id": "1760",
         "fixed": false,
         "raw": "ImageUrl"
        },
@@ -15124,19 +15177,19 @@
        }
       },
       {
-       "$id": "1755",
+       "$id": "1761",
        "clientProperty": {
         "$ref": "1179"
        },
        "location": "query",
        "collectionFormat": "csv",
        "defaultValue": {
-        "$id": "1756",
+        "$id": "1762",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1757",
+        "$id": "1763",
         "fixed": false,
         "raw": "Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma."
        },
@@ -15158,34 +15211,34 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1758",
+        "$id": "1764",
         "fixed": false,
         "raw": "pages"
        },
        "serializedName": "pages",
        "modelType": {
-        "$id": "1759",
+        "$id": "1765",
         "$type": "SequenceType",
         "elementType": {
-         "$id": "1760",
+         "$id": "1766",
          "$type": "PrimaryType",
          "knownPrimaryType": "string",
          "name": {
-          "$id": "1761",
+          "$id": "1767",
           "fixed": false,
           "raw": "String"
          },
          "deprecated": false
         },
         "name": {
-         "$id": "1762",
+         "$id": "1768",
          "fixed": false
         },
         "deprecated": false
        }
       },
       {
-       "$id": "1763",
+       "$id": "1769",
        "clientProperty": {
         "$ref": "1062"
        },
@@ -15195,13 +15248,13 @@
         "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
        },
        "defaultValue": {
-        "$id": "1764",
+        "$id": "1770",
         "fixed": false,
         "raw": "latest"
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1765",
+        "$id": "1771",
         "fixed": false,
         "raw": "Optional parameter to specify the version of the OCR model used for text extraction. Accepted values are: \"latest\", \"latest-preview\", \"2021-04-12\". Defaults to \"latest\"."
        },
@@ -15223,17 +15276,70 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1766",
+        "$id": "1772",
         "fixed": false,
         "raw": "model-version"
        },
        "serializedName": "model-version",
        "modelType": {
-        "$id": "1767",
+        "$id": "1773",
         "$type": "PrimaryType",
         "knownPrimaryType": "string",
         "name": {
-         "$id": "1768",
+         "$id": "1774",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "1775",
+       "clientProperty": {
+        "$ref": "1193"
+       },
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "1776",
+        "fixed": false,
+        "raw": "basic"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "1777",
+        "fixed": false,
+        "raw": "Optional parameter to specify which reading order algorithm should be applied when ordering the extract text elements. Can be either 'basic' or 'natural'. Will default to 'basic' if not specified"
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "3.2"
+         ],
+         "filename": [
+          "mem:///164?oai3.shaken.json"
+         ],
+         "name": "ReadingOrder",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.2/Ocr.json#/components/parameters/ReadingOrder"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": false,
+       "isConstant": false,
+       "name": {
+        "$id": "1778",
+        "fixed": false,
+        "raw": "readingOrder"
+       },
+       "serializedName": "readingOrder",
+       "modelType": {
+        "$id": "1779",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "1780",
          "fixed": false,
          "raw": "String"
         },
@@ -15242,12 +15348,12 @@
       }
      ],
      "name": {
-      "$id": "1769",
+      "$id": "1781",
       "fixed": false,
       "raw": "Read"
      },
      "group": {
-      "$id": "1770",
+      "$id": "1782",
       "fixed": false,
       "raw": ""
      },
@@ -15257,12 +15363,12 @@
      "httpMethod": "post",
      "responses": {
       "Accepted": {
-       "$id": "1771",
+       "$id": "1783",
        "headers": {
         "$ref": "901"
        },
        "extensions": {
-        "$id": "1772",
+        "$id": "1784",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -15280,7 +15386,7 @@
       }
      },
      "defaultResponse": {
-      "$id": "1773",
+      "$id": "1785",
       "body": {
        "$ref": "881"
       },
@@ -15288,7 +15394,7 @@
        "$ref": "901"
       },
       "extensions": {
-       "$id": "1774",
+       "$id": "1786",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -15305,7 +15411,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1775",
+      "$id": "1787",
       "headers": {
        "$ref": "901"
       },
@@ -15366,22 +15472,22 @@
      "hidden": false
     },
     {
-     "$id": "1776",
+     "$id": "1788",
      "parameters": [
       {
-       "$id": "1777",
+       "$id": "1789",
        "clientProperty": {
-        "$ref": "1193"
+        "$ref": "1199"
        },
        "location": "path",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1778",
+        "$id": "1790",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1779",
+        "$id": "1791",
         "fixed": false,
         "raw": "Id of read operation returned in the response of the 'Read' interface."
        },
@@ -15403,18 +15509,18 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1780",
+        "$id": "1792",
         "fixed": false,
         "raw": "operationId"
        },
        "serializedName": "operationId",
        "modelType": {
-        "$id": "1781",
+        "$id": "1793",
         "$type": "PrimaryType",
         "format": "uuid",
         "knownPrimaryType": "uuid",
         "name": {
-         "$id": "1782",
+         "$id": "1794",
          "fixed": false,
          "raw": "Uuid"
         },
@@ -15423,12 +15529,12 @@
       }
      ],
      "name": {
-      "$id": "1783",
+      "$id": "1795",
       "fixed": false,
       "raw": "GetReadResult"
      },
      "group": {
-      "$id": "1784",
+      "$id": "1796",
       "fixed": false,
       "raw": ""
      },
@@ -15438,12 +15544,12 @@
      "httpMethod": "get",
      "responses": {
       "OK": {
-       "$id": "1785",
+       "$id": "1797",
        "body": {
         "$ref": "851"
        },
        "extensions": {
-        "$id": "1786",
+        "$id": "1798",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -15461,12 +15567,12 @@
       }
      },
      "defaultResponse": {
-      "$id": "1787",
+      "$id": "1799",
       "body": {
        "$ref": "881"
       },
       "extensions": {
-       "$id": "1788",
+       "$id": "1800",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -15483,7 +15589,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1789",
+      "$id": "1801",
       "body": {
        "$ref": "851"
       },
@@ -15916,22 +16022,22 @@
      "hidden": false
     },
     {
-     "$id": "1790",
+     "$id": "1802",
      "parameters": [
       {
-       "$id": "1791",
+       "$id": "1803",
        "clientProperty": {
         "$ref": "1068"
        },
        "location": "query",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1792",
+        "$id": "1804",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1793",
+        "$id": "1805",
         "fixed": false,
         "raw": "The BCP-47 language code of the text in the document. Read supports auto language identification and multi-language documents, so only provide a language code if you would like to force the document to be processed in that specific language. See https://aka.ms/ocr-languages for list of supported languages."
        },
@@ -15953,7 +16059,7 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1794",
+        "$id": "1806",
         "fixed": false,
         "raw": "language"
        },
@@ -15963,16 +16069,16 @@
        }
       },
       {
-       "$id": "1795",
+       "$id": "1807",
        "location": "body",
        "collectionFormat": "none",
        "defaultValue": {
-        "$id": "1796",
+        "$id": "1808",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1797",
+        "$id": "1809",
         "fixed": false,
         "raw": "An image stream."
        },
@@ -15995,17 +16101,17 @@
        "isRequired": true,
        "isConstant": false,
        "name": {
-        "$id": "1798",
+        "$id": "1810",
         "fixed": false,
         "raw": "Image"
        },
        "serializedName": "Image",
        "modelType": {
-        "$id": "1799",
+        "$id": "1811",
         "$type": "PrimaryType",
         "knownPrimaryType": "stream",
         "name": {
-         "$id": "1800",
+         "$id": "1812",
          "fixed": false,
          "raw": "Stream"
         },
@@ -16013,19 +16119,19 @@
        }
       },
       {
-       "$id": "1801",
+       "$id": "1813",
        "clientProperty": {
         "$ref": "1179"
        },
        "location": "query",
        "collectionFormat": "csv",
        "defaultValue": {
-        "$id": "1802",
+        "$id": "1814",
         "fixed": false
        },
        "deprecated": false,
        "documentation": {
-        "$id": "1803",
+        "$id": "1815",
         "fixed": false,
         "raw": "Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma."
        },
@@ -16047,40 +16153,149 @@
        "isRequired": false,
        "isConstant": false,
        "name": {
-        "$id": "1804",
+        "$id": "1816",
         "fixed": false,
         "raw": "pages"
        },
        "serializedName": "pages",
        "modelType": {
-        "$id": "1805",
+        "$id": "1817",
         "$type": "SequenceType",
         "elementType": {
-         "$id": "1806",
+         "$id": "1818",
          "$type": "PrimaryType",
          "knownPrimaryType": "string",
          "name": {
-          "$id": "1807",
+          "$id": "1819",
           "fixed": false,
           "raw": "String"
          },
          "deprecated": false
         },
         "name": {
-         "$id": "1808",
+         "$id": "1820",
          "fixed": false
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "1821",
+       "clientProperty": {
+        "$ref": "1062"
+       },
+       "location": "query",
+       "collectionFormat": "none",
+       "constraints": {
+        "Pattern": "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"
+       },
+       "defaultValue": {
+        "$id": "1822",
+        "fixed": false,
+        "raw": "latest"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "1823",
+        "fixed": false,
+        "raw": "Optional parameter to specify the version of the OCR model used for text extraction. Accepted values are: \"latest\", \"latest-preview\", \"2021-04-12\". Defaults to \"latest\"."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "3.2"
+         ],
+         "filename": [
+          "mem:///164?oai3.shaken.json"
+         ],
+         "name": "OcrModelVersion",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.2/Ocr.json#/components/parameters/OcrModelVersion"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": false,
+       "isConstant": false,
+       "name": {
+        "$id": "1824",
+        "fixed": false,
+        "raw": "model-version"
+       },
+       "serializedName": "model-version",
+       "modelType": {
+        "$id": "1825",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "1826",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "1827",
+       "clientProperty": {
+        "$ref": "1193"
+       },
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "1828",
+        "fixed": false,
+        "raw": "basic"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "1829",
+        "fixed": false,
+        "raw": "Optional parameter to specify which reading order algorithm should be applied when ordering the extract text elements. Can be either 'basic' or 'natural'. Will default to 'basic' if not specified"
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "3.2"
+         ],
+         "filename": [
+          "mem:///164?oai3.shaken.json"
+         ],
+         "name": "ReadingOrder",
+         "originalLocations": [
+          "https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/stable/v3.2/Ocr.json#/components/parameters/ReadingOrder"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": false,
+       "isConstant": false,
+       "name": {
+        "$id": "1830",
+        "fixed": false,
+        "raw": "readingOrder"
+       },
+       "serializedName": "readingOrder",
+       "modelType": {
+        "$id": "1831",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "1832",
+         "fixed": false,
+         "raw": "String"
         },
         "deprecated": false
        }
       }
      ],
      "name": {
-      "$id": "1809",
+      "$id": "1833",
       "fixed": false,
       "raw": "ReadInStream"
      },
      "group": {
-      "$id": "1810",
+      "$id": "1834",
       "fixed": false,
       "raw": ""
      },
@@ -16090,12 +16305,12 @@
      "httpMethod": "post",
      "responses": {
       "Accepted": {
-       "$id": "1811",
+       "$id": "1835",
        "headers": {
         "$ref": "909"
        },
        "extensions": {
-        "$id": "1812",
+        "$id": "1836",
         "x-ms-metadata": {
          "apiVersions": [
           "3.2"
@@ -16113,7 +16328,7 @@
       }
      },
      "defaultResponse": {
-      "$id": "1813",
+      "$id": "1837",
       "body": {
        "$ref": "881"
       },
@@ -16121,7 +16336,7 @@
        "$ref": "909"
       },
       "extensions": {
-       "$id": "1814",
+       "$id": "1838",
        "x-ms-metadata": {
         "apiVersions": [
          "3.2"
@@ -16138,7 +16353,7 @@
       "isNullable": true
      },
      "returnType": {
-      "$id": "1815",
+      "$id": "1839",
       "headers": {
        "$ref": "909"
       },
@@ -16198,12 +16413,12 @@
     }
    ],
    "name": {
-    "$id": "1816",
+    "$id": "1840",
     "fixed": false,
     "raw": ""
    },
    "typeName": {
-    "$id": "1817",
+    "$id": "1841",
     "fixed": false
    },
    "nameForProperty": "ComputerVisionClient"

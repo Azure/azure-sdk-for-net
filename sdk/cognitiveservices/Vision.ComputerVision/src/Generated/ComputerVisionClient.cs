@@ -3761,6 +3761,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// extraction. Accepted values are: "latest", "latest-preview", "2021-04-12".
         /// Defaults to "latest".
         /// </param>
+        /// <param name='readingOrder'>
+        /// Optional parameter to specify which reading order algorithm should be
+        /// applied when ordering the extract text elements. Can be either 'basic' or
+        /// 'natural'. Will default to 'basic' if not specified
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -3779,7 +3784,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<ReadHeaders>> ReadWithHttpMessagesAsync(string url, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationHeaderResponse<ReadHeaders>> ReadWithHttpMessagesAsync(string url, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", string readingOrder = "basic", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -3811,6 +3816,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 tracingParameters.Add("language", language);
                 tracingParameters.Add("pages", pages);
                 tracingParameters.Add("modelVersion", modelVersion);
+                tracingParameters.Add("readingOrder", readingOrder);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Read", tracingParameters);
@@ -3831,6 +3837,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (modelVersion != null)
             {
                 _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
+            }
+            if (readingOrder != null)
+            {
+                _queryParameters.Add(string.Format("readingOrder={0}", System.Uri.EscapeDataString(readingOrder)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -4117,6 +4127,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// the pages you want to get OCR result. For a range of pages, use a hyphen.
         /// Separate each page or range with a comma.
         /// </param>
+        /// <param name='modelVersion'>
+        /// Optional parameter to specify the version of the OCR model used for text
+        /// extraction. Accepted values are: "latest", "latest-preview", "2021-04-12".
+        /// Defaults to "latest".
+        /// </param>
+        /// <param name='readingOrder'>
+        /// Optional parameter to specify which reading order algorithm should be
+        /// applied when ordering the extract text elements. Can be either 'basic' or
+        /// 'natural'. Will default to 'basic' if not specified
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -4135,7 +4155,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<ReadInStreamHeaders>> ReadInStreamWithHttpMessagesAsync(Stream image, string language = default(string), IList<string> pages = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationHeaderResponse<ReadInStreamHeaders>> ReadInStreamWithHttpMessagesAsync(Stream image, string language = default(string), IList<string> pages = default(IList<string>), string modelVersion = "latest", string readingOrder = "basic", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -4144,6 +4164,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
+            }
+            if (modelVersion != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(modelVersion, "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "modelVersion", "^(latest|\\d{4}-\\d{2}-\\d{2})(-preview)?$");
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -4155,6 +4182,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 tracingParameters.Add("language", language);
                 tracingParameters.Add("image", image);
                 tracingParameters.Add("pages", pages);
+                tracingParameters.Add("modelVersion", modelVersion);
+                tracingParameters.Add("readingOrder", readingOrder);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ReadInStream", tracingParameters);
             }
@@ -4170,6 +4199,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             if (pages != null)
             {
                 _queryParameters.Add(string.Format("pages={0}", System.Uri.EscapeDataString(string.Join(",", pages))));
+            }
+            if (modelVersion != null)
+            {
+                _queryParameters.Add(string.Format("model-version={0}", System.Uri.EscapeDataString(modelVersion)));
+            }
+            if (readingOrder != null)
+            {
+                _queryParameters.Add(string.Format("readingOrder={0}", System.Uri.EscapeDataString(readingOrder)));
             }
             if (_queryParameters.Count > 0)
             {
