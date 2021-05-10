@@ -1,7 +1,4 @@
 parameters:
-- name: PackageName
-  type: string
-  default: ""
 - name: AdditionalPlatforms
   type: object
   default: {}
