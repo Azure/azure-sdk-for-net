@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.BotService
 
         /// <summary>
         /// Version of the API to be used with the client request. Current version is
-        /// 2017-12-01
+        /// 2021-03-01
         /// </summary>
         public string ApiVersion { get; private set; }
 

@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/airtest/providers/Microsoft.BotService/botServices/carlostestbotcli4/channels/EmailChannel?api-version=2017-12-01",
+      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/airtest/providers/Microsoft.BotService/botServices/carlostestbotcli4/channels/EmailChannel?api-version=2021-03-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL2FpcnRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2Nhcmxvc3Rlc3Rib3RjbGk0L2NoYW5uZWxzL0VtYWlsQ2hhbm5lbD9hcGktdmVyc2lvbj0yMDE3LTEyLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"channelName\": \"EmailChannel\",\r\n    \"properties\": {\r\n      \"emailAddress\": \"carlostestsdk2@outlook.com\",\r\n      \"password\": \"Carlos.Test1\",\r\n      \"isEnabled\": true\r\n    }\r\n  },\r\n  \"location\": \"global\"\r\n}",
