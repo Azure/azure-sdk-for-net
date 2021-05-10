@@ -31,7 +31,7 @@ An API using models might be:
         Response SetDog(Pet dog);
 ```
 
-Some SDK Clients however expose methods which take a RequestContent instead of a model type, and return Response instead of returning Response<Model>.
+Some SDK Clients however expose methods which take a RequestContent instead of a model type, and return Response instead of returning Response&lt;Model&gt;.
 
 For example:
 
@@ -102,7 +102,6 @@ The most important field on Response contains the REST content returned from the
         var content = response.Content;
 
         var doc = JsonDocument.Parse(content.ToMemory());
-        var responseBody = JsonData.FromBytes(response.Content.ToMemory());
         string name = doc.RootElement.GetProperty("name").GetString();
 ```
 
@@ -122,19 +121,6 @@ Protocol methods allow customization of exception behavior by use of the optiona
                 name = "Buddy"
         }), options);
         int code = response.Status;
-```
-
-Some service methods return detailed information within the response. An easy way to access that is to convert it to `JsonDocument`.
-
-See the service documentation for details, but as an example:
-
-```csharp
-        Response response = client.GetDog(RequestContent.Create(new {
-                name = "Buddy"
-        }));
-        var doc = JsonDocument.Parse(result.Content.ToMemory());
-        var responseBody = JsonData.FromBytes(response.Content.ToMemory());
-        string name = doc.RootElement.GetProperty("name").GetString();
 ```
 
 ### Request Callback
