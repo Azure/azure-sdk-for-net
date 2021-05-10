@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Get the tenant operations <see cref="TenantOperations"/> class.
         /// </summary>
-        public TenantOperations Tenant => _tenant ??= new TenantOperations(ClientOptions, Credential, BaseUri);
+        public TenantOperations Tenant => _tenant ??= new TenantOperations(ClientOptions, Credential, BaseUri, Pipeline);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmClient"/> class for mocking.
@@ -86,12 +86,14 @@ namespace Azure.ResourceManager.Core
             TokenCredential credential,
             ArmClientOptions options)
         {
-            Credential = credential;
-            BaseUri = baseUri;
             if (credential is null)
                 throw new ArgumentNullException(nameof(credential));
 
+            Credential = credential;
+            BaseUri = baseUri ?? new Uri(DefaultUri);
             ClientOptions = options?.Clone() ?? new ArmClientOptions();
+            Pipeline = ManagementPipelineBuilder.Build(Credential, BaseUri, ClientOptions);
+
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptions().TryGet(defaultSubscriptionId);
@@ -119,12 +121,17 @@ namespace Azure.ResourceManager.Core
         protected virtual Uri BaseUri { get; private set; }
 
         /// <summary>
+        /// Gets the HTTP pipeline.
+        /// </summary>
+        protected virtual HttpPipeline Pipeline { get; private set; }
+
+        /// <summary>
         /// Gets the Azure subscriptions.
         /// </summary>
         /// <returns> Subscription container. </returns>
         public virtual SubscriptionContainer GetSubscriptions()
         {
-            return new SubscriptionContainer(new ClientContext(ClientOptions, Credential, BaseUri));
+            return new SubscriptionContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
         }
 
         /// <summary>
@@ -134,7 +141,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Resource operations of the resource. </returns>
         public ResourceGroupOperations GetResourceGroupOperations(ResourceGroupResourceIdentifier id)
         {
-            return new ResourceGroupOperations(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), id.SubscriptionId), id.ResourceGroupName);
+            return new ResourceGroupOperations(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), id.SubscriptionId), id.ResourceGroupName);
         }
 
         /// <summary>
@@ -148,7 +155,7 @@ namespace Azure.ResourceManager.Core
         public virtual T GetResourceOperations<T>(string subscription, string resourceGroup, string name)
             where T : OperationsBase
         {
-            var subOp = new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), subscription);
+            var subOp = new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline), subscription);
             var rgOp = subOp.GetResourceGroups().Get(resourceGroup);
             return Activator.CreateInstance(
                 typeof(T),

@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Core.Extensions;
 
 namespace Azure.ResourceManager.Core
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="id"></param>
         internal ResourceOperationsBase(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
-        { 
+        {
         }
     }
 
@@ -58,7 +56,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parentOperations"> The resource representing the parent resource. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         protected ResourceOperationsBase(OperationsBase parentOperations, ResourceIdentifier id)
-            : base(new ClientContext(parentOperations.ClientOptions, parentOperations.Credential, parentOperations.BaseUri), id)
+            : base(new ClientContext(parentOperations.ClientOptions, parentOperations.Credential, parentOperations.BaseUri, parentOperations.Pipeline), id)
         {
         }
 

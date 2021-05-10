@@ -19,6 +19,16 @@ namespace Azure.ResourceManager.Core
         ITaggableResource<ResourceGroupResourceIdentifier, ResourceGroup>, IDeletableResource
     {
         /// <summary>
+        /// Name of the CreateOrUpdate() method in [Resource]Container classes.
+        /// </summary>
+        private const string CreateOrUpdateMethodName = "CreateOrUpdate";
+
+        /// <summary>
+        /// Name of the CreateOrUpdateAsync() method in [Resource]Container classes.
+        /// </summary>
+        private const string CreateOrUpdateAsyncMethodName = "CreateOrUpdateAsync";
+
+        /// <summary>
         /// Gets the resource type definition for a ResourceType.
         /// </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions/resourceGroups";
@@ -70,15 +80,15 @@ namespace Azure.ResourceManager.Core
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public virtual ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
+        /// <returns> A response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        public virtual ArmResponse Delete(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Delete");
             scope.Start();
 
             try
             {
-                return new ArmResponse(Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletion(cancellationToken));
+                return ArmResponse.FromResponse(Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletion(cancellationToken));
             }
             catch (Exception e)
             {
@@ -91,15 +101,15 @@ namespace Azure.ResourceManager.Core
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public virtual async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        public virtual async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Delete");
             scope.Start();
 
             try
             {
-                return new ArmResponse(await Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+                return ArmResponse.FromResponse(await Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {
@@ -116,14 +126,14 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
+        public virtual ArmOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
 
             try
             {
-                return new ArmVoidOperation(Operations.StartDelete(Id.Name, cancellationToken));
+                return new PhVoidArmOperation(Operations.StartDelete(Id.Name, cancellationToken));
             }
             catch (Exception e)
             {
@@ -140,14 +150,14 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
 
             try
             {
-                return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
+                return new PhVoidArmOperation(await Operations.StartDeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {
@@ -334,8 +344,8 @@ namespace Azure.ResourceManager.Core
 
             var myResource = model as TrackedResource<TIdentifier>;
             TContainer container = Activator.CreateInstance(typeof(TContainer), ClientOptions, myResource) as TContainer;
-
-            return container.CreateOrUpdate(name, model);
+            var createOrUpdateMethod = typeof(TContainer).GetMethod(CreateOrUpdateMethodName);
+            return createOrUpdateMethod.Invoke(container, new object[] { name, model }) as ArmResponse<TOperations>;
         }
 
         /// <summary>
@@ -365,8 +375,8 @@ namespace Azure.ResourceManager.Core
             var myResource = model as TrackedResource<TIdentifier>;
 
             TContainer container = Activator.CreateInstance(typeof(TContainer), ClientOptions, myResource) as TContainer;
-
-            return container.CreateOrUpdateAsync(name, model, cancellationToken);
+            var createOrUpdateAsyncMethod = typeof(TContainer).GetMethod(CreateOrUpdateAsyncMethodName);
+            return createOrUpdateAsyncMethod.Invoke(container, new object[] { name, model, cancellationToken }) as Task<ArmResponse<TOperations>>;
         }
 
         /// <inheritdoc/>

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="managedBy"> Who the resource group is managed by. </param>
         /// <returns> A builder with <see cref="ResourceGroup"/> and <see cref="ResourceGroupData"/>. </returns>
         /// <exception cref="ArgumentNullException"> Location cannot be null. </exception>
-        public ArmBuilder<ResourceGroupResourceIdentifier, ResourceGroup, ResourceGroupData> Construct(LocationData location, IDictionary<string, string> tags = default, string managedBy = default)
+        public ResourceGroupBuilder Construct(LocationData location, IDictionary<string, string> tags = default, string managedBy = default)
         {
             if (location is null)
                 throw new ArgumentNullException(nameof(location));
@@ -66,11 +66,19 @@ namespace Azure.ResourceManager.Core
             if (!(tags is null))
                 model.Tags.ReplaceWith(tags);
             model.ManagedBy = managedBy;
-            return new ArmBuilder<ResourceGroupResourceIdentifier, ResourceGroup, ResourceGroupData>(this, new ResourceGroupData(model));
+            return new ResourceGroupBuilder(this, new ResourceGroupData(model));
         }
 
-        /// <inheritdoc/>
-        public override ArmResponse<ResourceGroup> CreateOrUpdate(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a resource group. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the resource group. </param>
+        /// <param name="resourceDetails"> The desired resource group configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A response with the <see cref="ArmResponse{ResourceGroup}"/> operation for this resource. </returns>
+        /// <exception cref="ArgumentException"> Name of the resource group cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public ArmResponse<ResourceGroup> CreateOrUpdate(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
@@ -94,8 +102,16 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
-        public override async Task<ArmResponse<ResourceGroup>> CreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a resource group. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the resource group. </param>
+        /// <param name="resourceDetails"> The desired resource group configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{ResourceGroup}"/> operation for this resource group. </returns>
+        /// <exception cref="ArgumentException"> Name of the resource group cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public virtual async Task<ArmResponse<ResourceGroup>> CreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
@@ -119,8 +135,19 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
-        public override ArmOperation<ResourceGroup> StartCreateOrUpdate(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a resource group. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the resource group. </param>
+        /// <param name="resourceDetails"> The desired resource group configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> An <see cref="ArmOperation{ResourceGroup}"/> that allows polling for completion of the operation. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        /// <exception cref="ArgumentException"> Name of the resource group cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public ArmOperation<ResourceGroup> StartCreateOrUpdate(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
@@ -133,8 +160,8 @@ namespace Azure.ResourceManager.Core
             try
             {
                 return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                Operations.CreateOrUpdate(name, resourceDetails, cancellationToken),
-                g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+                    Operations.CreateOrUpdate(name, resourceDetails, cancellationToken),
+                    g => new ResourceGroup(Parent, new ResourceGroupData(g)));
             }
             catch (Exception e)
             {
@@ -143,8 +170,19 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
-        public override async Task<ArmOperation<ResourceGroup>> StartCreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a resource group. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the resource group. </param>
+        /// <param name="resourceDetails"> The desired resource group configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{ResourceGroup}"/> that allows polling for completion of the operation. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        /// <exception cref="ArgumentException"> Name of the resource group cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public virtual async Task<ArmOperation<ResourceGroup>> StartCreateOrUpdateAsync(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));

@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public abstract Task CompleteAsync(
-            string lockToken,
+            Guid lockToken,
             CancellationToken cancellationToken);
 
         /// <summary> Indicates that the receiver wants to defer the processing for the message.</summary>
@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
+        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockTokenGuid"/>,
         /// only when <see cref="ServiceBusReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// In order to receive this message again in the future, you will need to save the <see cref="ServiceBusReceivedMessage.SequenceNumber"/>
         /// and receive it using ReceiveDeferredMessageBatchAsync(IEnumerable, CancellationToken).
@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public abstract Task DeferAsync(
-            string lockToken,
+            Guid lockToken,
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default);
 
@@ -141,7 +141,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public abstract Task AbandonAsync(
-            string lockToken,
+            Guid lockToken,
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default);
 
@@ -165,7 +165,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public abstract Task DeadLetterAsync(
-            string lockToken,
+            Guid lockToken,
             string deadLetterReason = default,
             string deadLetterErrorDescription = default,
             IDictionary<string, object> propertiesToModify = default,
@@ -191,7 +191,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="lockToken">Lock token associated with the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public abstract Task<DateTimeOffset> RenewMessageLockAsync(
-            string lockToken,
+            Guid lockToken,
             CancellationToken cancellationToken);
 
         /// <summary>

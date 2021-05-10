@@ -10,9 +10,6 @@
     <IncludeStress Condition="'$(IncludeStress)' == ''">true</IncludeStress>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
-    <TraversalGlobalProperties>
-      CodeCoverageDirectory=$([System.IO.Path]::GetFullPath("$(CodeCoverageDirectory)", "$(MSBuildThisFileDirectory)..\sdk"));
-    </TraversalGlobalProperties>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,6 +45,14 @@
   <Target Name="GenerateCode">
     <MSBuild Projects="@(ProjectReference)"
              Targets="GenerateCode"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="false"
+             SkipNonexistentTargets="true" />
+  </Target>
+
+  <Target Name="ExportApi">
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="ExportApi"
              BuildInParallel="$(BuildInParallel)"
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />

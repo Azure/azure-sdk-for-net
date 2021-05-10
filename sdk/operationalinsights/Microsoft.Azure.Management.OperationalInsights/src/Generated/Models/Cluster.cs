@@ -36,33 +36,57 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="identity">The identity of the resource.</param>
         /// <param name="sku">The sku properties.</param>
-        /// <param name="nextLink">The link used to get the next page of
-        /// recommendations.</param>
         /// <param name="clusterId">The ID associated with the cluster.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// cluster. Possible values include: 'Creating', 'Succeeded',
         /// 'Failed', 'Canceled', 'Deleting', 'ProvisioningAccount',
         /// 'Updating'</param>
+        /// <param name="isDoubleEncryptionEnabled">Configures whether cluster
+        /// will use double encryption. This Property can not be modified after
+        /// cluster creation. Default value is 'true'</param>
+        /// <param name="isAvailabilityZonesEnabled">Sets whether the cluster
+        /// will support availability zones. This can be set as true only in
+        /// regions where Azure Data Explorer support Availability Zones. This
+        /// Property can not be modified after cluster creation. Default value
+        /// is 'true' if region supports Availability Zones.</param>
+        /// <param name="billingType">Configures whether billing will be only
+        /// on the cluster or each workspace will be billed by its proportional
+        /// use. This does not change the overall billing, only how it will be
+        /// distributed. Default value is 'Cluster'. Possible values include:
+        /// 'Cluster', 'Workspaces'</param>
         /// <param name="keyVaultProperties">The associated key
         /// properties.</param>
-        public Cluster(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), ClusterSku sku = default(ClusterSku), string nextLink = default(string), string clusterId = default(string), string provisioningState = default(string), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties))
+        /// <param name="lastModifiedDate">The last time the cluster was
+        /// updated.</param>
+        /// <param name="createdDate">The cluster creation time</param>
+        /// <param name="associatedWorkspaces">The list of Log Analytics
+        /// workspaces associated with the cluster</param>
+        /// <param name="capacityReservationProperties">Additional properties
+        /// for capacity reservation</param>
+        public Cluster(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), ClusterSku sku = default(ClusterSku), string clusterId = default(string), string provisioningState = default(string), bool? isDoubleEncryptionEnabled = default(bool?), bool? isAvailabilityZonesEnabled = default(bool?), string billingType = default(string), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), string lastModifiedDate = default(string), string createdDate = default(string), IList<AssociatedWorkspace> associatedWorkspaces = default(IList<AssociatedWorkspace>), CapacityReservationProperties capacityReservationProperties = default(CapacityReservationProperties))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
             Sku = sku;
-            NextLink = nextLink;
             ClusterId = clusterId;
             ProvisioningState = provisioningState;
+            IsDoubleEncryptionEnabled = isDoubleEncryptionEnabled;
+            IsAvailabilityZonesEnabled = isAvailabilityZonesEnabled;
+            BillingType = billingType;
             KeyVaultProperties = keyVaultProperties;
+            LastModifiedDate = lastModifiedDate;
+            CreatedDate = createdDate;
+            AssociatedWorkspaces = associatedWorkspaces;
+            CapacityReservationProperties = capacityReservationProperties;
             CustomInit();
         }
 
@@ -84,12 +108,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public ClusterSku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the link used to get the next page of recommendations.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.nextLink")]
-        public string NextLink { get; set; }
-
-        /// <summary>
         /// Gets the ID associated with the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "properties.clusterId")]
@@ -104,10 +122,63 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets or sets configures whether cluster will use double encryption.
+        /// This Property can not be modified after cluster creation. Default
+        /// value is 'true'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isDoubleEncryptionEnabled")]
+        public bool? IsDoubleEncryptionEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets sets whether the cluster will support availability
+        /// zones. This can be set as true only in regions where Azure Data
+        /// Explorer support Availability Zones. This Property can not be
+        /// modified after cluster creation. Default value is 'true' if region
+        /// supports Availability Zones.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isAvailabilityZonesEnabled")]
+        public bool? IsAvailabilityZonesEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets configures whether billing will be only on the cluster
+        /// or each workspace will be billed by its proportional use. This does
+        /// not change the overall billing, only how it will be distributed.
+        /// Default value is 'Cluster'. Possible values include: 'Cluster',
+        /// 'Workspaces'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.billingType")]
+        public string BillingType { get; set; }
+
+        /// <summary>
         /// Gets or sets the associated key properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties.keyVaultProperties")]
         public KeyVaultProperties KeyVaultProperties { get; set; }
+
+        /// <summary>
+        /// Gets the last time the cluster was updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastModifiedDate")]
+        public string LastModifiedDate { get; private set; }
+
+        /// <summary>
+        /// Gets the cluster creation time
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createdDate")]
+        public string CreatedDate { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the list of Log Analytics workspaces associated with
+        /// the cluster
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.associatedWorkspaces")]
+        public IList<AssociatedWorkspace> AssociatedWorkspaces { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional properties for capacity reservation
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.capacityReservationProperties")]
+        public CapacityReservationProperties CapacityReservationProperties { get; set; }
 
         /// <summary>
         /// Validate the object.

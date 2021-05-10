@@ -6,6 +6,7 @@ using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core.Tests
 {
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Core.Tests
 
         private static ResourceGroupOperations GetResourceGroupOperations()
         {
-            var clientContext = new ClientContext(new ArmClientOptions(), new DefaultAzureCredential(), new Uri("http://foo.com"));
+            var clientContext = new ClientContext(new ArmClientOptions(), new DefaultAzureCredential(), new Uri("http://foo.com"), ManagementPipelineBuilder.Build(new DefaultAzureCredential(), new Uri("http://foo.com"), new ArmClientOptions()));
             var rgOp = new ResourceGroupOperations(
                             new SubscriptionOperations(
                                 clientContext,

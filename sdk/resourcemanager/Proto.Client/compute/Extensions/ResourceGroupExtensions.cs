@@ -19,6 +19,16 @@ namespace Proto.Compute
         }
 
         /// <summary>
+        /// Gets an object representing a VirtualMachineScaleSetContainer along with the instance operations that can be performed on it.
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetContainer" /> object. </returns>
+        public static VirtualMachineScaleSetContainer GetVirtualMachineScaleSet(this ResourceGroupOperations resourceGroup)
+        {
+            return new VirtualMachineScaleSetContainer(resourceGroup);
+        }
+
+        /// <summary>
         /// Gets an object representing a AvailabilitySetContainer along with the instance operations that can be performed on it.
         /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>

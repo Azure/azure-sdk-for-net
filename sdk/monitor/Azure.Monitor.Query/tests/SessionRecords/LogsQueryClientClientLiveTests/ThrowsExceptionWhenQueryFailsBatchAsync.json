@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/$batch",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "194",
+        "Content-Type": "application/json",
+        "traceparent": "00-b1d875aafbadfd4cafc81f0f96e3a1f1-2501fd0bc1cdac49-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "4a4399a7a5e3e1c433a64bc4556a6ce0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "requests": [
+          {
+            "id": "0",
+            "body": {
+              "query": "this won\u0027t work",
+              "timespan": "2021-04-26T00:00:00.0000000Z/P7D"
+            },
+            "path": "/query",
+            "method": "POST",
+            "workspace": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 04 May 2021 18:37:25 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "Via": "1.1 draft-oms-6c84644dc4-p7t8p",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "responses": [
+          {
+            "id": "0",
+            "status": 400,
+            "body": {
+              "error": {
+                "message": "The request had some invalid properties",
+                "code": "BadArgumentError",
+                "correlationId": "3e9331a5-ffab-4bb6-94ef-1629707ae52e",
+                "innererror": {
+                  "code": "SyntaxError",
+                  "message": "Request is invalid and cannot be processed: Syntax error: SYN0001: I could not parse that, sorry. [line:position=0:0]. Query: \u0027let [\u0027emptyTable\u0027] = view () { datatable(column:string)[] };restrict access to (*);\r\nthis won\u0027t work\u0027"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2021-05-04T11:37:24.3584417-07:00",
+    "RandomSeed": "1563703860",
+    "WORKSPACE_ID": "bb1b4371-062d-414d-bef3-b0d124ff721c"
+  }
+}

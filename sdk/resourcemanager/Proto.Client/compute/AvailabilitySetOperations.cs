@@ -58,27 +58,27 @@ namespace Proto.Compute
             ClientOptions.Convert<ComputeManagementClientOptions>()).AvailabilitySets;
 
         /// <inheritdoc/>
-        public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
+        public ArmResponse Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.Delete(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return ArmResponse.FromResponse(Operations.Delete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(await Operations.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return ArmResponse.FromResponse(await Operations.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
+        public ArmOperation StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.Delete(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return new PhVoidArmOperation(Operations.Delete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return new PhVoidArmOperation(await Operations.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
