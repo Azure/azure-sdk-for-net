@@ -59,7 +59,7 @@ namespace Proto.Network
         /// <param name="name"> The name of the network security group. </param>
         /// <param name="resourceDetails"> The desired network security group configuration. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{NetworkSecurityGroup}"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="Response{NetworkSecurityGroup}"/> operation for this resource. </returns>
         public Response<NetworkSecurityGroup> CreateOrUpdate(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
@@ -74,7 +74,7 @@ namespace Proto.Network
         /// <param name="name"> The name of the network security group. </param>
         /// <param name="resourceDetails"> The desired network security group configuration. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{NetworkSecurityGroup}"/> operation for this network security group. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{NetworkSecurityGroup}"/> operation for this network security group. </returns>
         public async Task<Response<NetworkSecurityGroup>> CreateOrUpdateAsync(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
@@ -89,7 +89,7 @@ namespace Proto.Network
         /// <param name="name"> The name of the network security group. </param>
         /// <param name="resourceDetails"> The desired network security group configuration. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An <see cref="ArmOperation{NetworkSecurityGroup}"/> that allows polling for completion of the operation. </returns>
+        /// <returns> An <see cref="Operation{NetworkSecurityGroup}"/> that allows polling for completion of the operation. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
@@ -106,7 +106,7 @@ namespace Proto.Network
         /// <param name="name"> The name of the network security group. </param>
         /// <param name="resourceDetails"> The desired network security group configuration. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{NetworkSecurityGroup}"/> that allows polling for completion of the operation. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="Operation{NetworkSecurityGroup}"/> that allows polling for completion of the operation. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>

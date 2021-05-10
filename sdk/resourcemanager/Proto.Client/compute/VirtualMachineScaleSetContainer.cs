@@ -47,7 +47,7 @@ namespace Proto.Compute
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="resourceDetails"> Parameters supplied to the Create Virtual Machine operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{VirtualMachineScaleSet}"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="Response{VirtualMachineScaleSet}"/> operation for this resource. </returns>
         public Response<VirtualMachineScaleSet> CreateOrUpdate(string name, VirtualMachineScaleSetData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
@@ -62,7 +62,7 @@ namespace Proto.Compute
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="resourceDetails"> Parameters supplied to the Create Virtual Machine operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{VirtualMachineScaleSet}"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{VirtualMachineScaleSet}"/> operation for this resource. </returns>
         public async Task<Response<VirtualMachineScaleSet>> CreateOrUpdateAsync(string name, VirtualMachineScaleSetData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
@@ -176,7 +176,7 @@ namespace Proto.Compute
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        /// <returns> An <see cref="ArmOperation{VirtualMachineScaleSet}"/> that allows polling for completion of the operation. </returns>
+        /// <returns> An <see cref="Operation{VirtualMachineScaleSet}"/> that allows polling for completion of the operation. </returns>
         public Operation<VirtualMachineScaleSet> StartCreateOrUpdate(string name, VirtualMachineScaleSetData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(
@@ -193,7 +193,7 @@ namespace Proto.Compute
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{VirtualMachineScaleSet}"/> that allows polling for completion of the operation. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="Operation{VirtualMachineScaleSet}"/> that allows polling for completion of the operation. </returns>
         public async Task<Operation<VirtualMachineScaleSet>> StartCreateOrUpdateAsync(string name, VirtualMachineScaleSetData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachineScaleSet, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>(

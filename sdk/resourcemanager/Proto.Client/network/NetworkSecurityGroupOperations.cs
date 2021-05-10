@@ -65,7 +65,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <param name="rules"> The rules to be updated. </param>
-        /// <returns> An <see cref="ArmOperation{NetworkSecurityGroup}"/> that allows polling for completion of the operation. </returns>
+        /// <returns> An <see cref="Operation{NetworkSecurityGroup}"/> that allows polling for completion of the operation. </returns>
         public Operation<NetworkSecurityGroup> UpdateRules(CancellationToken cancellationToken = default, params Azure.ResourceManager.Network.Models.SecurityRule[] rules)
         {
             var resource = GetResource();

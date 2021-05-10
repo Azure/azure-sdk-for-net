@@ -91,7 +91,7 @@ namespace Proto.Authorization
 
         /// <summary>
         /// Create a role assignment. This method blocks until the RoleAssignment creation is accepted on the service. It returns an
-        /// <see cref="ArmOperation{RoleAssignment}"/> allowing the caller to control polling and waiting for the creation to complete.
+        /// <see cref="Operation{RoleAssignment}"/> allowing the caller to control polling and waiting for the creation to complete.
         /// </summary>
         /// <param name="name"> The name of the role assignment. </param>
         /// <param name="resourceDetails"> The properties of the role assignment. </param>
@@ -106,7 +106,7 @@ namespace Proto.Authorization
 
         /// <summary>
         /// Create a role assignment. This method blocks until the RoleAssignment creation is accepted on the service. It returns an
-        /// <see cref="ArmOperation{RoleAssignment}"/> allowing the caller to control polling and waiting for the creation to complete.
+        /// <see cref="Operation{RoleAssignment}"/> allowing the caller to control polling and waiting for the creation to complete.
         /// </summary>
         /// <param name="name"> The name of the role assignment. </param>
         /// <param name="resourceDetails"> The properties of the role assignment. </param>
