@@ -136,5 +136,17 @@ namespace Proto.Compute
             );
         }
         #endregion
+
+        #region VMImage Operations
+        /// <summary>
+        /// Lists the AvailabilitySets for this SubscriptionOperations.
+        /// </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static VirtualMachineExtensionImageContainer GetVMImagines(this SubscriptionOperations subscription)
+        {
+            return new VirtualMachineExtensionImageContainer(subscription);
+        }
+        #endregion
     }
 }
