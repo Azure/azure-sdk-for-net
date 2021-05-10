@@ -1040,8 +1040,8 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Signals the <see cref="EventProcessorClient" /> to begin processing events.  Should this method be called while the processor
-        ///   is running, no action is taken.
+        ///   Signals the <see cref="EventProcessorClient" /> to begin processing events.  If the processor is already
+        ///   running when this is called, no action is taken.
         /// </summary>
         ///
         /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
@@ -1207,7 +1207,7 @@ namespace Azure.Messaging.EventHubs
                                                 BlobContainerClient containerClient,
                                                 CancellationToken cancellationToken = default)
         {
-            var blobClient = containerClient.GetBlobClient(Guid.NewGuid().ToString("N"));
+            var blobClient = containerClient.GetBlobClient($"EventProcessorPermissionCheck/{ Guid.NewGuid().ToString("N") }");
 
             // Write an blob with metadata, simulating the approach used for checkpoint and ownership
             // data creation.

@@ -41,8 +41,6 @@ stages:
       - stage: Release_${{artifact.safeName}}
         displayName: 'Release: ${{artifact.name}}'
         dependsOn: Signing
-        variables: 
-          SetDevVersion: $[stageDependencies.Build.Build.outputs['VersioningProperties.SetDevVersion']]
         condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
         jobs:
           - deployment: TagRepository
@@ -241,11 +239,9 @@ stages:
 
   - stage: Integration
     dependsOn: Signing
-    variables: 
-      SetDevVersion: $[stageDependencies.Build.Build.outputs['VersioningProperties.SetDevVersion']]
     jobs:
     - job: PublishPackages
-      condition: and(eq(variables['SetDevVersion'], 'true'), eq(variables['System.TeamProject'], 'internal'))
+      condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
       displayName: Publish package to daily feed
       variables:
         BlobFeedUrl: 'https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json'

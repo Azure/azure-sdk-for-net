@@ -23,7 +23,6 @@ namespace Azure.Storage.ConfidentialLedger
         public virtual HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://confidential-ledger.azure.com/.default" };
         private Uri ledgerUri;
-        private Uri identityServiceUri;
         private readonly string apiVersion;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient for mocking. </summary>
@@ -33,18 +32,13 @@ namespace Azure.Storage.ConfidentialLedger
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
-        /// <param name="identityServiceUri"> The Identity Service URL, for example https://identity.accledger.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public ConfidentialLedgerClient(Uri ledgerUri, Uri identityServiceUri, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
+        public ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
         {
             if (ledgerUri == null)
             {
                 throw new ArgumentNullException(nameof(ledgerUri));
-            }
-            if (identityServiceUri == null)
-            {
-                throw new ArgumentNullException(nameof(identityServiceUri));
             }
             if (credential == null)
             {
@@ -54,7 +48,6 @@ namespace Azure.Storage.ConfidentialLedger
             options ??= new ConfidentialLedgerClientOptions();
             Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
             this.ledgerUri = ledgerUri;
-            this.identityServiceUri = identityServiceUri;
             apiVersion = options.Version;
         }
 
@@ -609,41 +602,6 @@ namespace Azure.Storage.ConfidentialLedger
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
-        }
-
-        /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
-        /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, CancellationToken cancellationToken = default)
-        {
-            Request req = CreateGetLedgerIdentityRequest(ledgerId);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets identity information for a Confidential Ledger instance. </summary>
-        /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetLedgerIdentity(string ledgerId, CancellationToken cancellationToken = default)
-        {
-            Request req = CreateGetLedgerIdentityRequest(ledgerId);
-            return Pipeline.SendRequest(req, cancellationToken);
-        }
-
-        /// <summary> Create Request for <see cref="GetLedgerIdentity"/> and <see cref="GetLedgerIdentityAsync"/> operations. </summary>
-        /// <param name="ledgerId"> Id of the Confidential Ledger instance to get information for. </param>
-        private Request CreateGetLedgerIdentityRequest(string ledgerId)
-        {
-            var message = Pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(identityServiceUri);
-            uri.AppendPath("/ledgerIdentity/", false);
-            uri.AppendPath(ledgerId, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return request;
         }
     }

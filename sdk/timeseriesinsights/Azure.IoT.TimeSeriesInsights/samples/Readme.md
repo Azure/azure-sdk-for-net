@@ -56,7 +56,7 @@ The following section provides several code snippets using the `client` created 
 - [Time Series Insights Query](#time-series-insights-query)
 
 ## Time Series Insights ID
-A single Time Series ID value is composed of up to 3 string values that uniquely identify a Time Series instance. The keys that make up the Time Series ID are chosen when creating a Time Series Insights Gen2 environment through the Azure portal. The position of values must match Time Series ID properties specified on the environment and returned by Get Model Setting API.  For example, if your Time Series Insights environment is setup with ID properties `Building`, `Floor` and `Room`, then this code snippet illustrates creating a Time Series instance ID using `TimeSeriesId` class for building 'Millennium', 'Floor2' and room '2A01'. Visit [this page][tsi_id_learn_more] to check out the best practices for choosing a Time Series ID.
+A single Time Series ID value is composed of up to 3 string values that uniquely identify a Time Series instance. The keys that make up the Time Series ID are chosen when creating a Time Series Insights Gen2 environment through the Azure portal. The position of values must match Time Series ID properties specified on the environment and returned by Get Model Setting API.  For example, if your Time Series Insights environment is setup with ID properties `Building`, `Floor` and `Room`, then this code snippet illustrates creating a Time Series instance ID using `TimeSeriesId` class for `Building` : 'Millennium', `Floor` : 'Floor2' and `Room` : '2A01'. Visit [this page][tsi_id_learn_more] to check out the best practices for choosing a Time Series ID.
 
 ```csharp
 var instanceId =  new TimeSeriesId("Millennium", "Floor2", "2A01");
@@ -68,7 +68,13 @@ Use `ModelSettings` in [TimeSeriesInsightsClient](https://github.com/Azure/azure
 
 ```C# Snippet:TimeSeriesInsightsSampleGetModelSettings
 Response<TimeSeriesModelSettings> getModelSettingsResponse = await client.ModelSettings.GetAsync();
-Console.WriteLine($"Retrieved Time Series Insights model settings:\n{JsonSerializer.Serialize(getModelSettingsResponse.Value)}");
+Console.WriteLine($"Retrieved Time Series Insights model settings \nname : '{getModelSettingsResponse.Value.Name}', " +
+    $"default type Id: {getModelSettingsResponse.Value.DefaultTypeId}'");
+IReadOnlyList<TimeSeriesIdProperty> timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
+foreach (TimeSeriesIdProperty property in timeSeriesIdProperties)
+{
+    Console.WriteLine($"Time Series Id property name : '{property.Name}', type : '{property.Type}'.");
+}
 ```
 
 Here's what a retrieved model settings object looks like.
@@ -79,7 +85,7 @@ Here's what a retrieved model settings object looks like.
     {
       "Name": "Building",
       "Type": {
-        "HasValue": true,
+        "HasValue": true, 
         "Value": {
           
         }
@@ -112,14 +118,14 @@ You can also use `ModelSettings` object to make changes to the model settings na
 
 ```C# Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName
 Response<TimeSeriesModelSettings> updateModelSettingsNameResponse = await client.ModelSettings.UpdateNameAsync("NewModelSettingsName");
-Console.WriteLine($"Updated Time Series Insights model settings name:\n" +
-    $"{JsonSerializer.Serialize(updateModelSettingsNameResponse.Value)}");
+Console.WriteLine($"Updated Time Series Insights model settings name: " +
+    $"{updateModelSettingsNameResponse.Value.Name}");
 ```
 
 ```C# Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
 Response<TimeSeriesModelSettings> updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
-Console.WriteLine($"Updated Time Series Insights model settings default type Id:\n" +
-    $"{JsonSerializer.Serialize(updateDefaultTypeIdResponse.Value)}");
+Console.WriteLine($"Updated Time Series Insights model settings default type Id: " +
+    $"{updateDefaultTypeIdResponse.Value.Name}");
 ```
 
 ## Time Series Insights Instances
@@ -130,7 +136,7 @@ Use `Instances` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk
 
 This code snippet demonstrates retrieving all created instances in your TSI environment.
 ```C# Snippet:TimeSeriesInsightsGetAllInstances
-// Get all instances for the Time Series Insigths environment
+// Get all instances for the Time Series Insights environment
 AsyncPageable<TimeSeriesInstance> tsiInstances = client.Instances.GetAsync();
 await foreach (TimeSeriesInstance tsiInstance in tsiInstances)
 {
@@ -142,6 +148,7 @@ This code snippet demonstrates creating a list of Time Series instances in your 
 ```C# Snippet:TimeSeriesInsightsSampleCreateInstance
 // Create a Time Series Instance object with the default Time Series Insights type Id.
 // The default type Id can be obtained programmatically by using the ModelSettings client.
+// tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
 var instance = new TimeSeriesInstance(tsId, defaultTypeId)
 {
     Name = "instance1",
@@ -154,8 +161,7 @@ var tsiInstancesToCreate = new List<TimeSeriesInstance>
 
 Response<TimeSeriesOperationError[]> createInstanceErrors = await client
     .Instances
-    .CreateOrReplaceAsync(tsiInstancesToCreate)
-    .ConfigureAwait(false);
+    .CreateOrReplaceAsync(tsiInstancesToCreate);
 
 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
 // array in the request. If the error object is set to null, this means the operation was a success.
@@ -169,7 +175,9 @@ for (int i = 0; i < createInstanceErrors.Value.Length; i++)
     }
     else
     {
-        Console.WriteLine($"Failed to create a Time Series Insights instance with Id '{tsiId}'.");
+        Console.WriteLine($"Failed to create a Time Series Insights instance with Id '{tsiId}', " +
+            $"Error Message: '{createInstanceErrors.Value[i].Message}, " +
+            $"Error code: '{createInstanceErrors.Value[i].Code}'.");
     }
 }
 ```
@@ -178,15 +186,16 @@ You can also retrieve specific instances by their unique identifier, or by the T
 
 ```C# Snippet:TimeSeriesInsightsGetnstancesById
 // Get Time Series Insights instances by Id
+// tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
 var timeSeriesIds = new List<TimeSeriesId>
 {
     tsId,
 };
 
-Response<InstancesOperationResult[]> getByIdsResult = await client.Instances.GetAsync(timeSeriesIds).ConfigureAwait(false);
+Response<InstancesOperationResult[]> getByIdsResult = await client.Instances.GetAsync(timeSeriesIds);
 
-/// The response of calling the API contains a list of instance or error objects corresponding by position to the array in the request.
-/// Instance object is set when operation is successful and error object is set when operation is unsuccessful.
+// The response of calling the API contains a list of instance or error objects corresponding by position to the array in the request.
+// Instance object is set when operation is successful and error object is set when operation is unsuccessful.
 for (int i = 0; i < getByIdsResult.Value.Length; i++)
 {
     InstancesOperationResult currentOperationResult = getByIdsResult.Value[i];
@@ -205,6 +214,7 @@ for (int i = 0; i < getByIdsResult.Value.Length; i++)
 Similarly, you can delete specific instances by their unique identifier, or by the Time Series instances names.
 
 ```C# Snippet:TimeSeriesInsightsSampleDeleteInstanceById
+// tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
 var instancesToDelete = new List<TimeSeriesId>
 {
     tsId,
@@ -212,8 +222,7 @@ var instancesToDelete = new List<TimeSeriesId>
 
 Response<TimeSeriesOperationError[]> deleteInstanceErrors = await client
     .Instances
-    .DeleteAsync(instancesToDelete)
-    .ConfigureAwait(false);
+    .DeleteAsync(instancesToDelete);
 
 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
 // array in the request. If the error object is set to null, this means the operation was a success.
@@ -235,12 +244,13 @@ for (int i = 0; i < deleteInstanceErrors.Value.Length; i++)
 This code snippet demonstrates replacing an existing Time Series instance.
 ```C# Snippet:TimeSeriesInsightsReplaceInstance
 // Get Time Series Insights instances by Id
+// tsId is created above using `TimeSeriesIdHelper.CreateTimeSeriesId`.
 var instanceIdsToGet = new List<TimeSeriesId>
 {
     tsId,
 };
 
-Response<InstancesOperationResult[]> getInstancesByIdResult = await client.Instances.GetAsync(instanceIdsToGet).ConfigureAwait(false);
+Response<InstancesOperationResult[]> getInstancesByIdResult = await client.Instances.GetAsync(instanceIdsToGet);
 
 TimeSeriesInstance instanceResult = getInstancesByIdResult.Value[0].Instance;
 Console.WriteLine($"Retrieved Time Series Insights instance with Id '{instanceResult.TimeSeriesId}' and name '{instanceResult.Name}'.");
@@ -253,9 +263,9 @@ var instancesToReplace = new List<TimeSeriesInstance>
     instanceResult,
 };
 
-Response<InstancesOperationResult[]> replaceInstancesResult = await client.Instances.ReplaceAsync(instancesToReplace).ConfigureAwait(false);
+Response<InstancesOperationResult[]> replaceInstancesResult = await client.Instances.ReplaceAsync(instancesToReplace);
 
-// The response of calling the API contains a list of error objects corresponding by position to the input parameter
+// The response of calling the API contains a list of error objects corresponding by position to the input parameter.
 // array in the request. If the error object is set to null, this means the operation was a success.
 for (int i = 0; i < replaceInstancesResult.Value.Length; i++)
 {
@@ -265,7 +275,8 @@ for (int i = 0; i < replaceInstancesResult.Value.Length; i++)
 
     if (currentError != null)
     {
-        Console.WriteLine($"Failed to replace Time Series Insights instance with Id '{tsiId}'. Error Message: '{currentError.Message}'.");
+        Console.WriteLine($"Failed to replace Time Series Insights instance with Id '{tsiId}'," +
+            $" Error Message: '{currentError.Message}', Error code: '{currentError.Code}'.");
     }
     else
     {
@@ -293,8 +304,7 @@ timeSeriesTypes.Add(new TimeSeriesType("Type2", variables) { Id = "Type2Id" });
 
 Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
     .Types
-    .CreateOrReplaceAsync(timeSeriesTypes)
-    .ConfigureAwait(false);
+    .CreateOrReplaceAsync(timeSeriesTypes);
 
 // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
 // If the error object is set to null, this means the operation was a success.
@@ -329,11 +339,10 @@ This snippet highlights how you can retrieve a list of specific Time Series type
 // Code snippet below shows getting a default Type using Id
 // The default type Id can be obtained programmatically by using the ModelSettings client.
 
-TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
+TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync();
 Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await client
     .Types
-    .GetByIdAsync(new string[] { modelSettings.DefaultTypeId })
-    .ConfigureAwait(false);
+    .GetByIdAsync(new string[] { modelSettings.DefaultTypeId });
 
 // The response of calling the API contains a list of type or error objects corresponding by position to the input parameter array in the request.
 // If the error object is set to null, this means the operation was a success.
@@ -358,8 +367,7 @@ Similarly, you can delete Time Series types by providing a list of Time Series t
 var typesIdsToDelete = new List<string> { "Type1Id", " Type2Id" };
 Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
     .Types
-    .DeleteByIdAsync(typesIdsToDelete)
-    .ConfigureAwait(false);
+    .DeleteByIdAsync(typesIdsToDelete);
 
 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
 // array in the request. If the error object is set to null, this means the operation was a success.
@@ -387,8 +395,7 @@ foreach (TimeSeriesType type in timeSeriesTypes)
 
 Response<TimeSeriesTypeOperationResult[]> updateTypesResult = await client
     .Types
-    .CreateOrReplaceAsync(timeSeriesTypes)
-    .ConfigureAwait(false);
+    .CreateOrReplaceAsync(timeSeriesTypes);
 
 // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
 // If the error object is set to null, this means the operation was a success.
@@ -430,8 +437,7 @@ var timeSeriesHierarchies = new List<TimeSeriesHierarchy>
 // Create Time Series hierarchies
 Response<TimeSeriesHierarchyOperationResult[]> createHierarchiesResult = await client
     .Hierarchies
-    .CreateOrReplaceAsync(timeSeriesHierarchies)
-    .ConfigureAwait(false);
+    .CreateOrReplaceAsync(timeSeriesHierarchies);
 
 // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
 // If the error object is set to null, this means the operation was a success.
@@ -469,8 +475,7 @@ var tsiHierarchyIds = new List<string>
 
 Response<TimeSeriesHierarchyOperationResult[]> getHierarchiesByIdsResult = await client
             .Hierarchies
-            .GetByIdAsync(tsiHierarchyIds)
-            .ConfigureAwait(false);
+            .GetByIdAsync(tsiHierarchyIds);
 
 // The response of calling the API contains a list of hieararchy or error objects corresponding by position to the input parameter array in the request.
 // If the error object is set to null, this means the operation was a success.
@@ -497,8 +502,7 @@ var tsiHierarchyIdsToDelete = new List<string>
 
 Response<TimeSeriesOperationError[]> deleteHierarchiesResponse = await client
         .Hierarchies
-        .DeleteByIdAsync(tsiHierarchyIdsToDelete)
-        .ConfigureAwait(false);
+        .DeleteByIdAsync(tsiHierarchyIdsToDelete);
 
 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
 // array in the request. If the error object is set to null, this means the operation was a success.
@@ -526,8 +530,7 @@ foreach (TimeSeriesHierarchy hierarchy in timeSeriesHierarchies)
 
 Response<TimeSeriesHierarchyOperationResult[]> updateHierarchiesResult = await client
         .Hierarchies
-        .CreateOrReplaceAsync(timeSeriesHierarchies)
-        .ConfigureAwait(false);
+        .CreateOrReplaceAsync(timeSeriesHierarchies);
 
 // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
 // If the error object is set to null, this means the operation was a success.
@@ -546,14 +549,43 @@ for (int i = 0; i < updateHierarchiesResult.Value.Length; i++)
 
 ## Time Series Insights Query
 
-Use `Query` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs) to query for:
+Use `Queries` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs) to query for:
 - Raw events for a given Time Series ID and search span.
 - Computed values and the associated event timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
 - Aggregated values and the associated interval timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
 
 Response for the `Query` APIs are of type `QueryAnalyzer`. The QueryAnalyzer allows a developer to query for pages of results, while being able to perform operations on the result set as a whole. For example, to get a list of `TimeSeriesPoint` in pages, call the `GetResultsAsync` method on the `QueryAnalyzer` object. You can enumerate an AsyncPageable object using the `async foreach` loop.
 
-This code snippets demonstrates retrieving raw events from Time Series Insights environment using a start and end time.
+This code snippet demonstrates querying for raw events with using a time span interval.
+
+```C# Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
+Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
+
+QueryAnalyzer humidityEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, TimeSpan.FromSeconds(30));
+await foreach (TimeSeriesPoint point in humidityEventsQueryAnalyzer.GetResultsAsync())
+{
+    TimeSeriesValue humidityValue = point.GetValue("Humidity");
+
+    // Figure out what is the underlying type for the time series value. Since you know your Time Series Insights
+    // environment best, you probably do not need this logic and you can skip to directly casting to the proper
+    // type. This logic demonstrates how you can figure out what type to cast to in the case where you are not
+    // too familiar with the property type.
+    if (humidityValue.Type == typeof(double?))
+    {
+        Console.WriteLine($"{point.Timestamp} - Humidity: {(double?)humidityValue}");
+    }
+    else if (humidityValue.Type == typeof(int?))
+    {
+        Console.WriteLine($"{point.Timestamp} - Humidity: {(int?)humidityValue}");
+    }
+    else
+    {
+        Console.WriteLine("The type of the Time Series value for Humidity is not numeric.");
+    }
+}
+```
+
+The client library also provides a way to query for raw events using using a start and end time, as demonstrated in this code snippet.
 
 ```C# Snippet:TimeSeriesInsightsSampleQueryEvents
 Console.WriteLine("\n\nQuery for raw temperature events over the past 10 minutes.\n");
@@ -562,33 +594,58 @@ Console.WriteLine("\n\nQuery for raw temperature events over the past 10 minutes
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);
 
-QueryAnalyzer temperatureEventsQueryAnalyzer = client.Query.CreateEventsQueryAnalyzer(tsId, startTime, endTime);
+QueryAnalyzer temperatureEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, startTime, endTime);
 await foreach (TimeSeriesPoint point in temperatureEventsQueryAnalyzer.GetResultsAsync())
 {
-    double? temperatureValue = (double?)point.GetValue("Temperature");
-    Console.WriteLine($"{point.Timestamp} - Temperature: {temperatureValue}");
+    TimeSeriesValue temperatureValue = point.GetValue("Temperature");
+
+    // Figure out what is the underlying type for the time series value. Since you know your Time Series Insights
+    // environment best, you probably do not need this logic and you can skip to directly casting to the proper
+    // type. This logic demonstrates how you can figure out what type to cast to in the case where you are not
+    // too familiar with the property type.
+    if (temperatureValue.Type == typeof(double?))
+    {
+        Console.WriteLine($"{point.Timestamp} - Temperature: {(double?)temperatureValue}");
+    }
+    else if (temperatureValue.Type == typeof(int?))
+    {
+        Console.WriteLine($"{point.Timestamp} - Temperature: {(int?)temperatureValue}");
+    }
+    else
+    {
+        Console.WriteLine("The type of the Time Series value for Temperature is not numeric.");
+    }
 }
 ```
 
-The client library also provides a way to query for raw events with using a time span interval.
-```C# Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
-Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
-
-QueryAnalyzer humidityEventsQueryAnalyzer = client.Query.CreateEventsQueryAnalyzer(tsId, TimeSpan.FromSeconds(30));
-await foreach (TimeSeriesPoint point in humidityEventsQueryAnalyzer.GetResultsAsync())
-{
-    double? humidityValue = (double?)point.GetValue("Humidity");
-    Console.WriteLine($"{point.Timestamp} - Humidity: {humidityValue}");
-}
-```
-
-This code snippet demonstrates querying for series events. In this snippet, we query for the temperature both in Celsius and fahrenheit. Hence, we create two [numeric variables][tsi_numeric_variables], one for the Celsius and the other for Fahrenheit. These variables are then added as inline variables to the request options.
+This code snippet demonstrates querying for series events. In this snippet, we query for the temperature both in Celsius and fahrenheit. The Time Series instance that we query from has predefined numeric variables, one for the Celsius and the other for Fahrenheit.
 
 ```C# Snippet:TimeSeriesInsightsSampleQuerySeries
-Console.WriteLine("\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes.\n");
+Console.WriteLine($"\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes. " +
+    $"The Time Series instance belongs to a type that has predefined numeric variable that represents the temperature " +
+    $"in Celsuis, and a predefined numeric variable that represents the temperature in Fahrenheit.\n");
 
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);
+QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
+    tsId,
+    startTime,
+    endTime);
+
+await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
+{
+    double? tempInCelsius = (double?)point.GetValue(celsiusVariableName);
+    double? tempInFahrenheit = (double?)point.GetValue(fahrenheitVariableName);
+
+    Console.WriteLine($"{point.Timestamp} - Average temperature in Celsius: {tempInCelsius}. " +
+        $"Average temperature in Fahrenheit: {tempInFahrenheit}.");
+}
+```
+
+You can also query for series events with variables defined in the request options. In this snippet, we create two [numeric variables][tsi_numeric_variables], one for the Celsius and the other for Fahrenheit. These variables are then added as inline variables to the request options.
+
+```C# Snippet:TimeSeriesInsightsSampleQuerySeriesWithInlineVariables
+Console.WriteLine("\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes.\n");
 
 var celsiusVariable = new NumericVariable(
     new TimeSeriesExpression("$event.Temperature"),
@@ -601,10 +658,10 @@ var querySeriesRequestOptions = new QuerySeriesRequestOptions();
 querySeriesRequestOptions.InlineVariables["TemperatureInCelsius"] = celsiusVariable;
 querySeriesRequestOptions.InlineVariables["TemperatureInFahrenheit"] = fahrenheitVariable;
 
-QueryAnalyzer seriesQueryAnalyzer = client.Query.CreateSeriesQueryAnalyzer(
+QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
     tsId,
-    startTime,
-    endTime,
+    TimeSpan.FromMinutes(10),
+    null,
     querySeriesRequestOptions);
 
 await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
@@ -628,11 +685,13 @@ DateTimeOffset startTime = endTime.AddMinutes(-3);
 var aggregateVariable = new AggregateVariable(
     new TimeSeriesExpression("count()"));
 
-var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
-aggregateSeriesRequestOptions.InlineVariables["Count"] = aggregateVariable;
-aggregateSeriesRequestOptions.ProjectedVariables.Add("Count");
+var countVariableName = "Count";
 
-QueryAnalyzer aggregateSeriesQueryAnalyzer = client.Query.CreateAggregateSeriesQueryAnalyzer(
+var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
+aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
+aggregateSeriesRequestOptions.ProjectedVariables.Add(countVariableName);
+
+QueryAnalyzer aggregateSeriesQueryAnalyzer = client.Queries.CreateAggregateSeriesQueryAnalyzer(
     tsId,
     startTime,
     endTime,
@@ -641,7 +700,7 @@ QueryAnalyzer aggregateSeriesQueryAnalyzer = client.Query.CreateAggregateSeriesQ
 
 await foreach (TimeSeriesPoint point in aggregateSeriesQueryAnalyzer.GetResultsAsync())
 {
-    long? temperatureCount = (long?)point.GetValue("Count");
+    long? temperatureCount = (long?)point.GetValue(countVariableName);
     Console.WriteLine($"{point.Timestamp} - Temperature count: {temperatureCount}");
 }
 ```
