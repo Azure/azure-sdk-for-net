@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
-    internal class UpdateResourceGroupOperation : ArmOperation<ResourceGroup>, IOperationSource<ResourceGroup>
+    internal class UpdateResourceGroupOperation : Operation<ResourceGroup>, IOperationSource<ResourceGroup>
     {
         private readonly ResourceOperationsBase _operations;
         private readonly OperationOrResponseInternals<ResourceGroup> _operationHelper;
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Core
         {
         }
 
-        internal UpdateResourceGroupOperation(ResourceOperationsBase operations, ArmResponse<ResourceGroup> response)
+        internal UpdateResourceGroupOperation(ResourceOperationsBase operations, Response<ResourceGroup> response)
         {
             _operationHelper = new OperationOrResponseInternals<ResourceGroup>(response);
             _operations = operations;

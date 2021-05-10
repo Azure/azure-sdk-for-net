@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
 {
@@ -82,7 +81,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual ArmOperation<TestResource> GetPhArmOperation(CancellationToken cancellationToken = default)
+        public virtual Operation<TestResource> GetPhArmOperation(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetPhArmOperation");
             scope.Start();
@@ -98,14 +97,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual Task<ArmOperation<TestResource>> GetPhArmOperationAsync(CancellationToken cancellationToken = default)
+        public virtual Task<Operation<TestResource>> GetPhArmOperationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetPhArmOperation");
             scope.Start();
 
             try
             {
-                return Task.FromResult<ArmOperation<TestResource>>(new PhArmOperationTest<TestResource>(new TestResource()));
+                return Task.FromResult<Operation<TestResource>>(new PhArmOperationTest<TestResource>(new TestResource()));
             }
             catch (Exception e)
             {

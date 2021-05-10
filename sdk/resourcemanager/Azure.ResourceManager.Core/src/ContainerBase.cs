@@ -110,10 +110,24 @@ namespace Azure.ResourceManager.Core
         /// Determines whether or not the azure resource exists in this container
         /// </summary>
         /// <param name="resourceName"> The name of the resource you want to check. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool DoesExist(string resourceName)
+        public virtual bool DoesExist(string resourceName, CancellationToken cancellationToken = default)
         {
-            return TryGet(resourceName) == null ? false : true;
+            return TryGet(resourceName, cancellationToken) == null ? false : true;
+        }
+
+        /// <summary>
+        /// Determines whether or not the azure resource exists in this container
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource you want to check. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual async Task<bool> DoesExistAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            return await TryGetAsync(resourceName, cancellationToken).ConfigureAwait(false) == null ? false : true;
         }
 
         /// <summary>
