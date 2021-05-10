@@ -25,7 +25,7 @@ dotnet add package Azure.Storage.ConfidentialLedger --prerelease
 
 #### Using Azure Active Directory
 
-This document demonstrates using [DefaultAzureCredential][default_cred_ref] to authenticate to the Confidential Ledger via Azure Active Directory. However, `ConfidentialLedgerClient` accepts any [Azure.Identity][azure_identity] token credential. See the [Azure.Identity][azure_identity] documentation for more information about other credentials.
+This document demonstrates using [DefaultAzureCredential][default_cred_ref] to authenticate to the Confidential Ledger via Azure Active Directory. However, any of the credentials offered by the [Azure.Identity][azure_identity] will be accepted.  See the [Azure.Identity][azure_identity] documentation for more information about other credentials.
 
 #### Using a client certificate
 
