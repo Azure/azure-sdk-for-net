@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer
 
         public const string OperationLocationHeader = "Operation-Location";
 
-        public const string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
+        public const string DefaultCognitiveScope = "https://cognitiveservices.azure.cn/.default";
 
         public const float DefaultConfidenceValue = 1.0f;
     }
