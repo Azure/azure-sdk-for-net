@@ -2537,7 +2537,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.blob.core.windows.net/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
+            Uri expectedUri = new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
 
             BlobClient initalBlob = new BlobClient(
                 TestConfigDefault.ConnectionString,
@@ -2586,7 +2586,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
-            Uri expectedUri = new Uri($"https://{TestConfigDefault.AccountName}.blob.core.windows.net/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
+            Uri expectedUri = new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{test.Container.Name}/{Uri.EscapeDataString(blobName)}");
 
             BlobClient blobClientFromContainer = InstrumentClient(test.Container.GetBlobClient(blobName));
             BlobClient blobClientFromConnectionString = new BlobClient(

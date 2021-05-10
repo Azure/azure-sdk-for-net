@@ -142,7 +142,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directoryClient.CreateAsync();
 
             // Act
-            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};BlobEndpoint={TestConfigHierarchicalNamespace.BlobServiceEndpoint};FileEndpoint={TestConfigHierarchicalNamespace.FileServiceEndpoint};QueueEndpoint={TestConfigHierarchicalNamespace.QueueServiceEndpoint};TableEndpoint={TestConfigHierarchicalNamespace.TableServiceEndpoint}";
             DataLakeFileClient connStringFile = InstrumentClient(new DataLakeFileClient(connectionString, fileSystemName, path, GetOptions()));
 
             // Assert
@@ -161,7 +161,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directoryClient.CreateAsync();
 
             // Act
-            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};EndpointSuffix=core.windows.net";
+            string connectionString = $"DefaultEndpointsProtocol=https;AccountName={TestConfigHierarchicalNamespace.AccountName};AccountKey={TestConfigHierarchicalNamespace.AccountKey};BlobEndpoint={TestConfigHierarchicalNamespace.BlobServiceEndpoint};FileEndpoint={TestConfigHierarchicalNamespace.FileServiceEndpoint};QueueEndpoint={TestConfigHierarchicalNamespace.QueueServiceEndpoint};TableEndpoint={TestConfigHierarchicalNamespace.TableServiceEndpoint}";
             DataLakeFileClient connStringFile = InstrumentClient(new DataLakeFileClient(connectionString, fileSystemName, path, GetOptions()));
             Uri sasUri = connStringFile.GenerateSasUri(DataLakeSasPermissions.All, Recording.UtcNow.AddDays(1));
             DataLakeFileClient sasFileClient = InstrumentClient(new DataLakeFileClient(sasUri, GetOptions()));
@@ -769,7 +769,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
             await directory.CreateAsync();
             DataLakeFileClient sourceFile = await test.FileSystem.CreateFileAsync(GetNewFileName());
-            Uri expectedDestFileUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{directoryName}/{Uri.EscapeDataString(destFileName)}");
+            Uri expectedDestFileUri = new Uri($"{BlobEndpointToDfsEndpoint(TestConfigHierarchicalNamespace.BlobServiceEndpoint)}/{test.FileSystem.Name}/{directoryName}/{Uri.EscapeDataString(destFileName)}");
             string destFilePath = $"{directoryName}/{destFileName}";
 
             // Act
@@ -796,7 +796,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directory.CreateAsync();
             DataLakeFileClient sourceFile = await test.FileSystem.CreateFileAsync(sourceFileName);
             string destFileName = GetNewFileName();
-            Uri expectedDestFileUri = new Uri($"https://{test.FileSystem.AccountName}.dfs.core.windows.net/{test.FileSystem.Name}/{directoryName}/{destFileName}");
+            Uri expectedDestFileUri = new Uri($"{BlobEndpointToDfsEndpoint(TestConfigHierarchicalNamespace.BlobServiceEndpoint)}/{test.FileSystem.Name}/{directoryName}/{destFileName}");
             string destFilePath = $"{directoryName}/{destFileName}";
 
             // Act
