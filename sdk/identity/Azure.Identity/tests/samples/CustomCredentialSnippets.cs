@@ -82,8 +82,8 @@ namespace Azure.Identity.Tests.samples
         [Test]
         public void ConfidentialClientCredentialUsage()
         {
-            string clientSecret = "00000000-0000-0000-0000-00000000";
-            string clientId = "00000000-0000-0000-0000-00000000";
+            string clientSecret = "00000000-0000-0000-0000-000000000000";
+            string clientId = "00000000-0000-0000-0000-000000000000";
 
             #region Snippet:ConfidentialClientCredentialUsage
             IConfidentialClientApplication confidentialClient = ConfidentialClientApplicationBuilder.Create(clientId).WithClientSecret(clientSecret).Build();
@@ -121,9 +121,9 @@ namespace Azure.Identity.Tests.samples
 
         public void OnBehalfOfCredentialUsage()
         {
-            string clientSecret = "00000000-0000-0000-0000-00000000";
-            string clientId = "00000000-0000-0000-0000-00000000";
-            string userAccessToken = "00000000-0000-0000-0000-00000000";
+            string clientSecret = "00000000-0000-0000-0000-000000000000";
+            string clientId = "00000000-0000-0000-0000-000000000000";
+            string userAccessToken = "00000000-0000-0000-0000-000000000000";
 
             #region Snippet:OnBehalfOfCredentialUsage
             var oboCredential = new OnBehalfOfCredential(clientId, clientSecret, userAccessToken);

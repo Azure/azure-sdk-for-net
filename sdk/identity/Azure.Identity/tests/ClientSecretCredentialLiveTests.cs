@@ -48,8 +48,10 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(token.Token, cachedToken.Token);
 
+            var options2 = InstrumentClientOptions(new ClientSecretCredentialOptions());
+
             // ensure new credentials don't share tokens from the cache
-            var credential2 = new ClientSecretCredential(tenantId, clientId, secret, options);
+            var credential2 = new ClientSecretCredential(tenantId, clientId, secret, options2);
 
             AccessToken token2 = await credential2.GetTokenAsync(tokenRequestContext);
 

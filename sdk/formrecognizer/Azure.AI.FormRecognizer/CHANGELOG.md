@@ -10,6 +10,8 @@ By default the SDK targets latest supported service version.
 ### Breaking changes
 - Renamed `Id` for `Identity` in all the `StartRecognizeIdDocuments` functionalities. For example, the name of the method is now `StartRecognizeIdentityDocuments`.
 - Renamed the model `ReadingOrder` to `FormReadingOrder`.
+- The model `TextAppearance` now includes the properties `StyleName` and `StyleConfidence` that were part of the `TextStyle` object.
+- Removed the model `TextStyle`.
 
 ## 3.0.1 (2021-04-09)
 

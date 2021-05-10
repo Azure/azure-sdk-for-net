@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -17,19 +15,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public RegistryArtifactLiveTests(bool isAsync) : base(isAsync)
         {
         }
-
-        #region Setup methods
-
-        private ContainerRegistryClient CreateClient()
-        {
-            return InstrumentClient(new ContainerRegistryClient(
-                new Uri(TestEnvironment.Endpoint),
-                TestEnvironment.Credential,
-                InstrumentClientOptions(new ContainerRegistryClientOptions())
-            ));
-        }
-
-        #endregion
 
         #region Manifest Tests
         [RecordedTest]
@@ -123,6 +108,25 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest, NonParallelizable]
+        public void CanSetManifestProperties_Anonymous()
+        {
+            // Arrange
+            var client = CreateClient(anonymousAccess: true);
+            string tag = "latest";
+            var artifact = client.GetArtifact(_repositoryName, tag);
+
+            // Act
+            Assert.ThrowsAsync<RequestFailedException>(() => artifact.SetManifestPropertiesAsync(
+                new ContentProperties()
+                {
+                    CanList = false,
+                    CanRead = false,
+                    CanWrite = false,
+                    CanDelete = false
+                }));
+        }
+
+        [RecordedTest, NonParallelizable]
         public async Task CanDeleteRegistryArtifact()
         {
             // Arrange
@@ -133,7 +137,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await ImportImage(repository, tag);
+                await ImportImage(TestEnvironment.Registry, repository, tag);
             }
 
             // Act
@@ -155,10 +159,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         #region Tag Tests
         [RecordedTest]
-        public async Task CanGetTags()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetTags(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
             string tagName = "latest";
             var artifact = client.GetArtifact(_repositoryName, tagName);
 
@@ -179,10 +185,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetTagsWithCustomPageSize()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetTagsWithCustomPageSize(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
             string tagName = "latest";
             var artifact = client.GetArtifact(_repositoryName, tagName);
             int pageSize = 2;
@@ -204,7 +212,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetTagsStartingMidCollection()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetTagsStartingMidCollection(bool anonymous)
         {
             // Arrange
             var client = CreateClient();
@@ -253,16 +263,19 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetTagsOrdered()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanGetTagsOrdered(bool anonymous)
         {
             // Arrange
-            var client = CreateClient();
+            var client = CreateClient(anonymous);
+            string registry = anonymous ? TestEnvironment.AnonymousAccessRegistry : TestEnvironment.Registry;
             string tagName = "latest";
             var artifact = client.GetArtifact(_repositoryName, tagName);
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await ImportImage(_repositoryName, "newest");
+                await ImportImage(registry, _repositoryName, "newest");
             }
 
             // Act
@@ -316,6 +329,26 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest, NonParallelizable]
+        public void CanSetTagProperties_Anonymous()
+        {
+            // Arrange
+            var client = CreateClient(anonymousAccess: true);
+            string tag = "latest";
+            var artifact = client.GetArtifact(_repositoryName, tag);
+
+            // Act
+            Assert.ThrowsAsync<RequestFailedException>(() => artifact.SetTagPropertiesAsync(
+                tag,
+                new ContentProperties()
+                {
+                    CanList = false,
+                    CanRead = false,
+                    CanWrite = false,
+                    CanDelete = false
+                }));
+        }
+
+        [RecordedTest, NonParallelizable]
         public async Task CanDeleteTag()
         {
             // Arrange
@@ -325,7 +358,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await ImportImage(_repositoryName, tag);
+                await ImportImage(TestEnvironment.Registry, _repositoryName, tag);
             }
 
             // Act

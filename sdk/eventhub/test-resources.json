@@ -57,7 +57,7 @@
     },
     "perTestExecutionLimitMinutes": {
       "type": "string",
-      "defaultValue": "10",
+      "defaultValue": "15",
       "metadata": {
         "description": "The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung."
       }

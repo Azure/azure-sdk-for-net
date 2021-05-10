@@ -7,7 +7,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for an KeyNewVersionCreated event. </summary>
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.KeyNewVersionCreated event. </summary>
     public partial class KeyVaultKeyNewVersionCreatedEventData
     {
         /// <summary> Initializes a new instance of KeyVaultKeyNewVersionCreatedEventData. </summary>
