@@ -4,7 +4,6 @@ using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Core.Resources;
 using Proto.Compute.Convenience;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -47,7 +46,7 @@ namespace Proto.Compute
         /// <param name="resourceDetails"> Parameters supplied to the Create Virtual Machine operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> A response with the <see cref="ArmResponse{VirtualMachine}"/> operation for this resource. </returns>
-        public ArmResponse<VirtualMachine> CreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
+        public Response<VirtualMachine> CreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
@@ -62,7 +61,7 @@ namespace Proto.Compute
         /// <param name="resourceDetails"> Parameters supplied to the Create Virtual Machine operation. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{VirtualMachine}"/> operation for this resource. </returns>
-        public async Task<ArmResponse<VirtualMachine>> CreateOrUpdateAsync(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachine>> CreateOrUpdateAsync(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
@@ -80,7 +79,7 @@ namespace Proto.Compute
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <returns> An <see cref="ArmOperation{VirtualMachine}"/> that allows polling for completion of the operation. </returns>
-        public ArmOperation<VirtualMachine> StartCreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
+        public Operation<VirtualMachine> StartCreateOrUpdate(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
                 Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken),
@@ -97,7 +96,7 @@ namespace Proto.Compute
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{VirtualMachine}"/> that allows polling for completion of the operation. </returns>
-        public async Task<ArmOperation<VirtualMachine>> StartCreateOrUpdateAsync(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<Operation<VirtualMachine>> StartCreateOrUpdateAsync(string name, VirtualMachineData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false),
@@ -228,14 +227,14 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc />
-        public override ArmResponse<VirtualMachine> Get(string virtualMachineName, CancellationToken cancellationToken = default)
+        public override Response<VirtualMachine> Get(string virtualMachineName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(Operations.Get(Id.ResourceGroupName, virtualMachineName, cancellationToken),
                 v => new VirtualMachine(Parent, new VirtualMachineData(v)));
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<VirtualMachine>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
+        public override async Task<Response<VirtualMachine>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(await Operations.GetAsync(Id.ResourceGroupName, virtualMachineName, cancellationToken),
                 v => new VirtualMachine(Parent, new VirtualMachineData(v)));

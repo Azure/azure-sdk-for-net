@@ -1,6 +1,6 @@
 ﻿using Azure;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Network;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -48,41 +48,41 @@ namespace Proto.Network
             ClientOptions.Convert<NetworkManagementClientOptions>()).Subnets;
 
         /// <inheritdoc/>
-        public ArmResponse Delete(CancellationToken cancellationToken = default)
+        public Response Delete(CancellationToken cancellationToken = default)
         {
-            return ArmResponse.FromResponse(Operations.StartDelete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken)
-                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return Operations.StartDelete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken)
+                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return ArmResponse.FromResponse((await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken))
-                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return (await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken))
+                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
 
         /// <inheritdoc/>
-        public ArmOperation StartDelete(CancellationToken cancellationToken = default)
+        public Operation StartDelete(CancellationToken cancellationToken = default)
         {
             return new PhVoidArmOperation(Operations.StartDelete(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Operation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             return new PhVoidArmOperation(await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<Subnet> Get(CancellationToken cancellationToken = default)
+        public override Response<Subnet> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(Operations.Get(Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken),
                 n => new Subnet(this, new SubnetData(n)));
         }
         
         /// <inheritdoc/>
-        public override async Task<ArmResponse<Subnet>> GetAsync(CancellationToken cancellationToken = default)
+        public override async Task<Response<Subnet>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(await Operations.GetAsync(Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken),
                 n => new Subnet(this, new SubnetData(n)));

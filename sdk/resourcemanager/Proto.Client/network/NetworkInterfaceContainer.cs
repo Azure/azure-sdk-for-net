@@ -7,7 +7,6 @@ using Azure.ResourceManager.Core.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -49,7 +48,7 @@ namespace Proto.Network
         /// <returns> A response with the <see cref="ArmResponse{NetworkInterface}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name of the network interface cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public ArmResponse<NetworkInterface> CreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
+        public Response<NetworkInterface> CreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken);
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
@@ -66,7 +65,7 @@ namespace Proto.Network
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{NetworkInterface}"/> operation for this network interface. </returns>
         /// <exception cref="ArgumentException"> Name of the network interface cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public async Task<ArmResponse<NetworkInterface>> CreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkInterface>> CreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
@@ -86,7 +85,7 @@ namespace Proto.Network
         /// </remarks>
         /// <exception cref="ArgumentException"> Name of the network interface cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public ArmOperation<NetworkInterface> StartCreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
+        public Operation<NetworkInterface> StartCreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken),
@@ -105,7 +104,7 @@ namespace Proto.Network
         /// </remarks>
         /// <exception cref="ArgumentException"> Name of the network interface cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public async Task<ArmOperation<NetworkInterface>> StartCreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<Operation<NetworkInterface>> StartCreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false),
@@ -234,7 +233,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc />
-        public override ArmResponse<NetworkInterface> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
+        public override Response<NetworkInterface> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.Get(Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken),
@@ -242,7 +241,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
+        public override async Task<Response<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.GetAsync(Id.ResourceGroupName, networkInterfaceName, null, cancellationToken),

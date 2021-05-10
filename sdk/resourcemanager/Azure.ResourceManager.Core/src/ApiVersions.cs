@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
-using System.Reflection;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Threading;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
 {
@@ -191,18 +191,8 @@ namespace Azure.ResourceManager.Core
         {
             ApiVersions copy = new ApiVersions(_clientOptions);
             copy.ProviderOperations = ProviderOperations;
-
-            copy._loadedResourceToApiVersions = new ConcurrentDictionary<string, PropertyWrapper>();
-            foreach (var property in _loadedResourceToApiVersions)
-            {
-                copy._loadedResourceToApiVersions.TryAdd(property.Key, property.Value);
-            }
-
-            copy._nonLoadedResourceToApiVersion = new ConcurrentDictionary<string, string>();
-            foreach (var property in _nonLoadedResourceToApiVersion)
-            {
-                copy._nonLoadedResourceToApiVersion.TryAdd(property.Key, property.Value);
-            }
+            copy._loadedResourceToApiVersions = new ConcurrentDictionary<string, PropertyWrapper>(_loadedResourceToApiVersions);
+            copy._nonLoadedResourceToApiVersion = new ConcurrentDictionary<string, string>(_nonLoadedResourceToApiVersion);
             return copy;
         }
     }

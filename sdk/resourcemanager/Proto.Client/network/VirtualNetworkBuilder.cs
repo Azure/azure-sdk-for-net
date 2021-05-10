@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.Core;
+using Azure;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,9 +58,9 @@ namespace Proto.Network
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{VirtualNetwork}"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="Response{VirtualNetwork}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public ArmResponse<VirtualNetwork> CreateOrUpdate(string name, CancellationToken cancellationToken = default)
+        public Response<VirtualNetwork> CreateOrUpdate(string name, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
@@ -76,9 +76,9 @@ namespace Proto.Network
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{VirtualNetwork}"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{VirtualNetwork}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public async Task<ArmResponse<VirtualNetwork>> CreateOrUpdateAsync(
+        public async Task<Response<VirtualNetwork>> CreateOrUpdateAsync(
             string name,
             CancellationToken cancellationToken = default)
         {
@@ -101,7 +101,7 @@ namespace Proto.Network
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public ArmOperation<VirtualNetwork> StartCreateOrUpdate(string name, CancellationToken cancellationToken = default)
+        public Operation<VirtualNetwork> StartCreateOrUpdate(string name, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
@@ -122,7 +122,7 @@ namespace Proto.Network
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public async Task<ArmOperation<VirtualNetwork>> StartCreateOrUpdateAsync(
+        public async Task<Operation<VirtualNetwork>> StartCreateOrUpdateAsync(
             string name,
             CancellationToken cancellationToken = default)
         {

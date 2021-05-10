@@ -44,7 +44,7 @@ namespace Proto.Network
         /// <returns> A response with the <see cref="ArmResponse{Subnet}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name of the subnet cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public ArmResponse<Subnet> CreateOrUpdate(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
+        public Response<Subnet> CreateOrUpdate(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken);
             return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
@@ -61,7 +61,7 @@ namespace Proto.Network
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Subnet}"/> operation for this subnet. </returns>
         /// <exception cref="ArgumentException"> Name of the subnet cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public async Task<ArmResponse<Subnet>> CreateOrUpdateAsync(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<Response<Subnet>> CreateOrUpdateAsync(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
@@ -81,7 +81,7 @@ namespace Proto.Network
         /// </remarks>
         /// <exception cref="ArgumentException"> Name of the subnet cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public ArmOperation<Subnet> StartCreateOrUpdate(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
+        public Operation<Subnet> StartCreateOrUpdate(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
                 Operations.StartCreateOrUpdate(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken),
@@ -100,7 +100,7 @@ namespace Proto.Network
         /// </remarks>
         /// <exception cref="ArgumentException"> Name of the subnet cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public async Task<ArmOperation<Subnet>> StartCreateOrUpdateAsync(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<Operation<Subnet>> StartCreateOrUpdateAsync(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false),
@@ -158,14 +158,14 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<Subnet> Get(string subnetName, CancellationToken cancellationToken = default)
+        public override Response<Subnet> Get(string subnetName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(Operations.Get(Id.ResourceGroupName, Id.Name, subnetName, cancellationToken: cancellationToken),
                 n => new Subnet(Parent, new SubnetData(n)));
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<Subnet>> GetAsync(string subnetName, CancellationToken cancellationToken = default)
+        public override async Task<Response<Subnet>> GetAsync(string subnetName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(await Operations.GetAsync(Id.ResourceGroupName, Id.Name, subnetName, null, cancellationToken),
                 n => new Subnet(Parent, new SubnetData(n)));
