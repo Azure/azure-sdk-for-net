@@ -3,8 +3,14 @@
 
 namespace Azure.Storage.ConfidentialLedger
 {
-    public class ConfidentialLedgerConstants
+    /// <summary>
+    /// Constant values for Confidential Ledger.
+    /// </summary>
+    public static class ConfidentialLedgerConstants
     {
+        /// <summary>
+        /// The header value containing the ledger transaction Id.
+        /// </summary>
         public const string TransactionId = "x-ms-ccf-transaction-id";
     }
 }

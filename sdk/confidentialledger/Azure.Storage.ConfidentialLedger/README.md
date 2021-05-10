@@ -75,21 +75,19 @@ certificateChain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(0, 0, 0);
 certificateChain.ChainPolicy.ExtraStore.Add(ledgerTlsCert);
 
 // Define a validation function to ensure that the ledger certificate is trusted by the ledger identity TLS certificate.
-Func<HttpRequestMessage, X509Certificate2, X509Chain, SslPolicyErrors, bool> certValidationCheck;
-certValidationCheck = (_, cert, _, _) =>
+bool CertValidationCheck(HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain x509Chain, SslPolicyErrors sslPolicyErrors)
 {
     bool isChainValid = certificateChain.Build(cert);
     if (!isChainValid) return false;
 
-    var isCertSignedByTheTlsCert = certificateChain.ChainElements
-        .Cast<X509ChainElement>()
+    var isCertSignedByTheTlsCert = certificateChain.ChainElements.Cast<X509ChainElement>()
         .Any(x => x.Certificate.Thumbprint == ledgerTlsCert.Thumbprint);
     return isCertSignedByTheTlsCert;
-};
+}
 
 // Create an HttpClientHandler to use our certValidationCheck function.
 var httpHandler = new HttpClientHandler();
-httpHandler.ServerCertificateCustomValidationCallback = certValidationCheck;
+httpHandler.ServerCertificateCustomValidationCallback = CertValidationCheck;
 
 // Create the ledger client using a transport that uses our custom ServerCertificateCustomValidationCallback.
 var options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
@@ -105,7 +103,7 @@ Response postResponse = ledgerClient.PostLedgerEntry(
     RequestContent.Create(
         new { contents = "Hello world!" }));
 
-postResponse.Headers.TryGetValue("x-ms-ccf-transaction-id", out string transactionId);
+postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out string transactionId);
 Console.WriteLine($"Appended transaction with Id: {transactionId}");
 ```
 
@@ -151,7 +149,7 @@ When no sub-ledger id is specified on method calls, the Confidential Ledger serv
 Response postResponse = ledgerClient.PostLedgerEntry(
     RequestContent.Create(
         new { contents = "Hello world!" }));
-postResponse.Headers.TryGetValue("x-ms-ccf-transaction-id", out string transactionId);
+postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out string transactionId);
 string subLedgerId = JsonDocument.Parse(statusResponse.Content)
     .RootElement
     .GetProperty("subLedgerId")
@@ -192,7 +190,7 @@ ledgerClient.PostLedgerEntry(
     RequestContent.Create(new { contents = "Hello world sub-ledger 1" }),
     "my sub-ledger");
 
-firstPostResponse.Headers.TryGetValue("x-ms-ccf-transaction-id", out string transactionId);
+firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out string transactionId);
 
 // The ledger entry written at the transactionId in firstResponse is retrieved from the default sub-ledger.
 Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
@@ -213,7 +211,7 @@ string latestDefaultSubLedger = JsonDocument.Parse(getResponse.Content)
 Console.WriteLine($"The latest ledger entry from the default sub-ledger is {latestDefaultSubLedger}"); //"Hello world 1"
 
 // The ledger entry written at subLedgerTransactionId is retrieved from the sub-ledger 'sub-ledger'.
-subLedgerPostResponse.Headers.TryGetValue("x-ms-ccf-transaction-id", out string subLedgerTransactionId);
+subLedgerPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out string subLedgerTransactionId);
 getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
 string subLedgerEntry = JsonDocument.Parse(getResponse.Content)
     .RootElement
