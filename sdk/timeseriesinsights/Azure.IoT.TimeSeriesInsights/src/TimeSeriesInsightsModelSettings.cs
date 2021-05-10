@@ -44,7 +44,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleGetModelSettings">
         /// Response&lt;TimeSeriesModelSettings&gt; getModelSettingsResponse = await client.ModelSettings.GetAsync();
-        /// Console.WriteLine($&quot;Retrieved Time Series Insights model settings:\n{JsonSerializer.Serialize(getModelSettingsResponse.Value)}&quot;);
+        /// Console.WriteLine($&quot;Retrieved Time Series Insights model settings \nname : &apos;{getModelSettingsResponse.Value.Name}&apos;, &quot; +
+        ///     $&quot;default type Id: {getModelSettingsResponse.Value.DefaultTypeId}&apos;&quot;);
+        /// IReadOnlyList&lt;TimeSeriesIdProperty&gt; timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
+        /// foreach (TimeSeriesIdProperty property in timeSeriesIdProperties)
+        /// {
+        ///     Console.WriteLine($&quot;Time Series Id property name : &apos;{property.Name}&apos;, type : &apos;{property.Type}&apos;.&quot;);
+        /// }
         /// </code>
         /// </example>
         public virtual async Task<Response<TimeSeriesModelSettings>> GetAsync(CancellationToken cancellationToken = default)
@@ -99,8 +105,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName">
         /// Response&lt;TimeSeriesModelSettings&gt; updateModelSettingsNameResponse = await client.ModelSettings.UpdateNameAsync(&quot;NewModelSettingsName&quot;);
-        /// Console.WriteLine($&quot;Updated Time Series Insights model settings name:\n&quot; +
-        ///     $&quot;{JsonSerializer.Serialize(updateModelSettingsNameResponse.Value)}&quot;);
+        /// Console.WriteLine($&quot;Updated Time Series Insights model settings name: &quot; +
+        ///     $&quot;{updateModelSettingsNameResponse.Value.Name}&quot;);
         /// </code>
         /// </example>
         public virtual async Task<Response<TimeSeriesModelSettings>> UpdateNameAsync(string name, CancellationToken cancellationToken = default)
@@ -156,8 +162,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType">
         /// Response&lt;TimeSeriesModelSettings&gt; updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
-        /// Console.WriteLine($&quot;Updated Time Series Insights model settings default type Id:\n&quot; +
-        ///     $&quot;{JsonSerializer.Serialize(updateDefaultTypeIdResponse.Value)}&quot;);
+        /// Console.WriteLine($&quot;Updated Time Series Insights model settings default type Id: &quot; +
+        ///     $&quot;{updateDefaultTypeIdResponse.Value.Name}&quot;);
         /// </code>
         /// </example>
         public virtual async Task<Response<TimeSeriesModelSettings>> UpdateDefaultTypeIdAsync(string defaultTypeId, CancellationToken cancellationToken = default)

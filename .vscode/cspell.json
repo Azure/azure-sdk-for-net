@@ -1,0 +1,37 @@
+{
+  "version": "0.1",
+  "language": "en_US",
+  "languageId": "csharp",
+  "dictionaries": ["powershell"],
+  "ignorePaths": [
+    "**/SessionRecords/**",
+    "**/packages/**",
+    "artifacts/**/*",
+    "*.exe",
+    "*.dll",
+    "*.nupkg",
+    "*.bmp",
+    "*.png",
+    "*.gif",
+    "*.jpg",
+    "*.tiff",
+    "*.wav",
+    "*.pdf",
+    "*.zip",
+    "*.sha512",
+    "*.ico",
+    "*.pri",
+    ".vscode/cspell.json"
+  ],
+  // cspell is not case sensitive
+  // Sort words alphabetically to make this list easier to use
+  "words": ["azsdk", "pwsh"],
+  "overrides": [
+    { "filename": "**/sdk/formrecognizer/**/*.cs", "words": ["ZhHant"] },
+    {
+      "filename": "**/eng/pipelines/templates/jobs/ci.yml",
+      "words": ["warnaserror"]
+    }
+  ],
+  "allowCompoundWords": true
+}

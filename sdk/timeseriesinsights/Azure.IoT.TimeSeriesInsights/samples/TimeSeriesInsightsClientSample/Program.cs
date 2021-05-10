@@ -41,9 +41,6 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             // Run the samples
 
-            var tsiLifecycleSamples = new TimeSeriesInsightsLifecycleSamples(tsiClient, options.TsiEnvironmentFqdn);
-            await tsiLifecycleSamples.RunSamplesAsync();
-
             var tsiInstancesSamples = new InstancesSamples();
             await tsiInstancesSamples.RunSamplesAsync(tsiClient);
 

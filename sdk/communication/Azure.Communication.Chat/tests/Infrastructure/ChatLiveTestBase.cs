@@ -30,7 +30,7 @@ namespace Azure.Communication.Chat.Tests
         protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestDynamicConnectionString,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions())));
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Azure.Communication.Chat.Tests
             }
 
             CommunicationTokenCredential communicationTokenCredential = new CommunicationTokenCredential(token);
-            return InstrumentClient(new ChatClient(TestEnvironment.Endpoint, communicationTokenCredential,
+            return InstrumentClient(new ChatClient(TestEnvironment.LiveTestDynamicEndpoint, communicationTokenCredential,
                 CreateChatClientOptionsWithCorrelationVectorLogs()));
         }
 

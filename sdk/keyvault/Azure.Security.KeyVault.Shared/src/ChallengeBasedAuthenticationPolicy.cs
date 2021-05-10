@@ -47,11 +47,11 @@ namespace Azure.Security.KeyVault
                 var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
                 if (async)
                 {
-                    await AuthorizeRequestAsync(message, context).ConfigureAwait(false);
+                    await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
                 }
                 else
                 {
-                    AuthorizeRequest(message, context);
+                    AuthenticateAndAuthorizeRequest(message, context);
                 }
                 return;
             }
@@ -109,11 +109,11 @@ namespace Azure.Security.KeyVault
             var context = new TokenRequestContext(_scope.Scopes, message.Request.ClientRequestId);
             if (async)
             {
-                await AuthorizeRequestAsync(message, context).ConfigureAwait(false);
+                await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
             }
             else
             {
-                AuthorizeRequest(message, context);
+                AuthenticateAndAuthorizeRequest(message, context);
             }
             return true;
         }
