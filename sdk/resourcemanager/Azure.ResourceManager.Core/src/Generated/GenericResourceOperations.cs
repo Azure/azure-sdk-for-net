@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
         public Response<GenericResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.AddTag");
@@ -168,7 +174,13 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
         public async Task<Response<GenericResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.AddTag");
@@ -185,7 +197,16 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
         public ResourcesUpdateByIdOperation StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartAddTag");
@@ -205,7 +226,16 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
         public async Task<ResourcesUpdateByIdOperation> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartAddTag");
@@ -268,7 +298,12 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentNullException(nameof(identifier));
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
         public Response<GenericResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.SetTags");
@@ -285,7 +320,12 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
         public async Task<Response<GenericResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.SetTags");
@@ -302,7 +342,15 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
         public ResourcesUpdateByIdOperation StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartSetTags");
@@ -322,7 +370,15 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
         public async Task<ResourcesUpdateByIdOperation> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartSetTags");
@@ -342,7 +398,12 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// </summary>
+        /// <param name="key"> The key of the tag to remove. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
         public Response<GenericResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.RemoveTag");
@@ -359,7 +420,12 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// </summary>
+        /// <param name="key"> The key of the tag to remove. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
         public async Task<Response<GenericResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.RemoveTag");
@@ -376,7 +442,15 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// </summary>
+        /// <param name="key"> The key of the tag to remove. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
         public ResourcesUpdateByIdOperation StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartRemoveTag");
@@ -396,7 +470,15 @@ namespace Azure.ResourceManager.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// </summary>
+        /// <param name="key"> The key of the tag to remove. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> The updated resource with the tag added. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
         public async Task<Operation<GenericResource>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("GenericResourceOperations.StartRemoveTag");

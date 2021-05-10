@@ -26,19 +26,14 @@
     <None Update="Unit\TestAssets\SystemAssignedIdentity\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Unit\TestAssets\GenericResourceData\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\ContainerTryGetTest\" />
     <Folder Include="SessionRecords\ResourceGroupOperationsTests\" />
     <Folder Include="SessionRecords\SubscriptionOperationsTests\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Unit\TestAssets\GenericResourceData\SerializationTestType1.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Unit\TestAssets\GenericResourceData\SerializationTestType2.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
