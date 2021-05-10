@@ -7,7 +7,6 @@ using Azure.ResourceManager.Core.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -47,10 +46,10 @@ namespace Proto.Network
         /// <param name="name"> The name of the virtual network. </param>
         /// <param name="resourceDetails"> The desired virtual network configuration. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{VirtualNetwork}"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="Response{VirtualNetwork}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name of the virtual network cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public ArmResponse<VirtualNetwork> CreateOrUpdate(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
+        public Response<VirtualNetwork> CreateOrUpdate(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
@@ -64,10 +63,10 @@ namespace Proto.Network
         /// <param name="name"> The name of the virtual network. </param>
         /// <param name="resourceDetails"> The desired virtual network configuration. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{VirtualNetwork}"/> operation for this virtual network. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{VirtualNetwork}"/> operation for this virtual network. </returns>
         /// <exception cref="ArgumentException"> Name of the virtual network cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public async Task<ArmResponse<VirtualNetwork>> CreateOrUpdateAsync(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualNetwork>> CreateOrUpdateAsync(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
@@ -81,13 +80,13 @@ namespace Proto.Network
         /// <param name="name"> The name of the virtual network. </param>
         /// <param name="resourceDetails"> The desired virtual network configuration. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An <see cref="ArmOperation{VirtualNetwork}"/> that allows polling for completion of the operation. </returns>
+        /// <returns> An <see cref="Operation{VirtualNetwork}"/> that allows polling for completion of the operation. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <exception cref="ArgumentException"> Name of the virtual network cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public ArmOperation<VirtualNetwork> StartCreateOrUpdate(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
+        public Operation<VirtualNetwork> StartCreateOrUpdate(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
                 Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken),
@@ -100,13 +99,13 @@ namespace Proto.Network
         /// <param name="name"> The name of the virtual network. </param>
         /// <param name="resourceDetails"> The desired virtual network configuration. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{VirtualNetwork}"/> that allows polling for completion of the operation. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="Operation{VirtualNetwork}"/> that allows polling for completion of the operation. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <exception cref="ArgumentException"> Name of the virtual network cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
-        public async Task<ArmOperation<VirtualNetwork>> StartCreateOrUpdateAsync(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<Operation<VirtualNetwork>> StartCreateOrUpdateAsync(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false),
@@ -218,7 +217,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<VirtualNetwork> Get(string virtualNetworkName, CancellationToken cancellationToken = default)
+        public override Response<VirtualNetwork> Get(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
                 Operations.Get(Id.ResourceGroupName, virtualNetworkName, cancellationToken: cancellationToken),
@@ -226,7 +225,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<VirtualNetwork>> GetAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
+        public override async Task<Response<VirtualNetwork>> GetAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
                 await Operations.GetAsync(Id.ResourceGroupName, virtualNetworkName, null, cancellationToken),

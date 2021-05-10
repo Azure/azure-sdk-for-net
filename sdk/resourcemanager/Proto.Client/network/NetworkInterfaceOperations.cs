@@ -1,7 +1,6 @@
 ﻿using Azure;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -49,33 +48,33 @@ namespace Proto.Network
             ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkInterfaces;
 
         /// <inheritdoc/>
-        public ArmResponse Delete(CancellationToken cancellationToken = default)
+        public Response Delete(CancellationToken cancellationToken = default)
         {
-            return ArmResponse.FromResponse(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken)
-                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken)
+                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return ArmResponse.FromResponse((await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken))
-                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return (await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken))
+                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public ArmOperation StartDelete(CancellationToken cancellationToken = default)
+        public Operation StartDelete(CancellationToken cancellationToken = default)
         {
             return new PhVoidArmOperation(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Operation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             return new PhVoidArmOperation(await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<NetworkInterface> Get(CancellationToken cancellationToken = default)
+        public override Response<NetworkInterface> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken),
@@ -83,7 +82,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public async override Task<ArmResponse<NetworkInterface>> GetAsync(CancellationToken cancellationToken = default)
+        public async override Task<Response<NetworkInterface>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken),
@@ -91,10 +90,10 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmResponse<NetworkInterface> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public Response<NetworkInterface> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
@@ -103,10 +102,10 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<NetworkInterface>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkInterface>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = await GetResourceAsync(cancellationToken);
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
@@ -115,10 +114,10 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmOperation<NetworkInterface> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
+        public Operation<NetworkInterface> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
@@ -127,10 +126,10 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<NetworkInterface>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async Task<Operation<NetworkInterface>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = await GetResourceAsync(cancellationToken);
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
@@ -139,9 +138,9 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmResponse<NetworkInterface> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public Response<NetworkInterface> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(tags);
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
@@ -149,9 +148,9 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<NetworkInterface>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkInterface>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(tags);
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
@@ -159,9 +158,9 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmOperation<NetworkInterface> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public Operation<NetworkInterface> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(tags);
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
@@ -169,9 +168,9 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<NetworkInterface>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async Task<Operation<NetworkInterface>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(tags);
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
@@ -179,10 +178,10 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmResponse<NetworkInterface> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public Response<NetworkInterface> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
@@ -191,10 +190,10 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<NetworkInterface>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkInterface>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = await GetResourceAsync(cancellationToken);
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
@@ -203,10 +202,10 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmOperation<NetworkInterface> StartRemoveTag(string key, CancellationToken cancellationToken = default)
+        public Operation<NetworkInterface> StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
@@ -215,10 +214,10 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<NetworkInterface>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Operation<NetworkInterface>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = await GetResourceAsync(cancellationToken);
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(

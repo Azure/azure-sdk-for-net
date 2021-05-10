@@ -13,6 +13,14 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="Sku"/> class.
         /// </summary>
+        public Sku(string name)
+        {
+            Name = name;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Sku"/> class.
+        /// </summary>
         /// <param name="name"> SKU's name. </param>
         /// <param name="tier"> SKU's tier. </param>
         /// <param name="family"> SKU's family. </param>

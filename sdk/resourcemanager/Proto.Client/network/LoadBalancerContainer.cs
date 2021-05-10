@@ -36,7 +36,7 @@ namespace Proto.Network
             ClientOptions.Convert<NetworkManagementClientOptions>()).LoadBalancers;
 
         /// <inheritdoc/>
-        public ArmResponse<LoadBalancer> CreateOrUpdate(string name, LoadBalancerData resourceDetails, CancellationToken cancellationToken = default)
+        public Response<LoadBalancer> CreateOrUpdate(string name, LoadBalancerData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
             return new PhArmResponse<LoadBalancer, Azure.ResourceManager.Network.Models.LoadBalancer>(
@@ -45,7 +45,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<LoadBalancer>> CreateOrUpdateAsync(string name, LoadBalancerData resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<Response<LoadBalancer>> CreateOrUpdateAsync(string name, LoadBalancerData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<LoadBalancer, Azure.ResourceManager.Network.Models.LoadBalancer>(
@@ -54,7 +54,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmOperation<LoadBalancer> StartCreateOrUpdate(string name, LoadBalancerData resourceDetails, CancellationToken cancellationToken = default)
+        public Operation<LoadBalancer> StartCreateOrUpdate(string name, LoadBalancerData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<LoadBalancer, Azure.ResourceManager.Network.Models.LoadBalancer>(
                 Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken),
@@ -62,7 +62,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<LoadBalancer>> StartCreateOrUpdateAsync(string name, LoadBalancerData resourceDetails, CancellationToken cancellationToken = default)
+        public async Task<Operation<LoadBalancer>> StartCreateOrUpdateAsync(string name, LoadBalancerData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<LoadBalancer, Azure.ResourceManager.Network.Models.LoadBalancer>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false),
@@ -99,14 +99,14 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<LoadBalancer> Get(string loadBalancerName, CancellationToken cancellationToken = default)
+        public override Response<LoadBalancer> Get(string loadBalancerName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<LoadBalancer, Azure.ResourceManager.Network.Models.LoadBalancer>(Operations.Get(Id.ResourceGroupName, loadBalancerName, null, cancellationToken: cancellationToken),
                 n => new LoadBalancer(Parent, new LoadBalancerData(n)));
         }
         
         /// <inheritdoc/>
-        public override async Task<ArmResponse<LoadBalancer>> GetAsync(string loadBalancerName, CancellationToken cancellationToken = default)
+        public override async Task<Response<LoadBalancer>> GetAsync(string loadBalancerName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<LoadBalancer, Azure.ResourceManager.Network.Models.LoadBalancer>(await Operations.GetAsync(Id.ResourceGroupName, loadBalancerName, null, cancellationToken),
                 n => new LoadBalancer(Parent, new LoadBalancerData(n)));

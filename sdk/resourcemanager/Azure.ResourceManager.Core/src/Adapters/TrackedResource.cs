@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Core.Adapters
 {
     /// <summary>
@@ -21,7 +19,7 @@ namespace Azure.ResourceManager.Core.Adapters
         /// <param name="location"> The location of the resource. </param>
         /// <param name="data"> The model to copy from. </param>
         protected TrackedResource(TIdentifier id, LocationData location, TModel data)
-            :base(id, id?.Name, id?.ResourceType, null, location)
+            :base(id, id?.Name, id?.ResourceType, location, null)
         {
             Model = data;
         }
