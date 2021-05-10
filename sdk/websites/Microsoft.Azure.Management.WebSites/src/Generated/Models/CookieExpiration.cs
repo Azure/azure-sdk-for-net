@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The configuration settings of the session cookie's expiration.
+    /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class CookieExpiration : ProxyOnlyResource
     {
@@ -33,8 +36,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="name">Resource Name.</param>
         /// <param name="kind">Kind of resource.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="convention">Possible values include: 'FixedTime',
+        /// <param name="convention">The convention used when determining the
+        /// session cookie's expiration. Possible values include: 'FixedTime',
         /// 'IdentityProviderDerived'</param>
+        /// <param name="timeToExpiration">The time after the request is made
+        /// when the session cookie should expire.</param>
         public CookieExpiration(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), CookieExpirationConvention? convention = default(CookieExpirationConvention?), string timeToExpiration = default(string))
             : base(id, name, kind, type)
         {
@@ -49,13 +55,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'FixedTime',
+        /// Gets or sets the convention used when determining the session
+        /// cookie's expiration. Possible values include: 'FixedTime',
         /// 'IdentityProviderDerived'
         /// </summary>
         [JsonProperty(PropertyName = "properties.convention")]
         public CookieExpirationConvention? Convention { get; set; }
 
         /// <summary>
+        /// Gets or sets the time after the request is made when the session
+        /// cookie should expire.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeToExpiration")]
         public string TimeToExpiration { get; set; }
