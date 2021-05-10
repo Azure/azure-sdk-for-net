@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.IoT.TimeSeriesInsights.Tests
 {
-    //[LiveOnly]
+    [LiveOnly]
     public class QuerySeriesTests : E2eTestBase
     {
         private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(30);
