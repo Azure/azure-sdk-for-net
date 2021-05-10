@@ -653,7 +653,7 @@ namespace Azure.Storage.Blobs.Samples
                 BlobClient blobClient = containerClient.GetBlobClient(Randomize("sample-blob"));
                 await blobClient.UploadAsync(BinaryData.FromString(data), new BlobUploadOptions { Metadata = initialMetadata });
 
-                #region Snippet:SampleSnippetsBlobMigration_EditMetadata
+                #region Snippet:SampleSnippetsBlobMigration_EditBlobWithMetadata
                 // download blob content and metadata
                 BlobDownloadResult blobData = blobClient.DownloadContent();
 
