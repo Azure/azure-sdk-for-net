@@ -100,6 +100,10 @@ The most important field on Response contains the REST content returned from the
                 name = "Buddy"
         }));
         var content = response.Content;
+
+        var doc = JsonDocument.Parse(content.ToMemory());
+        var responseBody = JsonData.FromBytes(response.Content.ToMemory());
+        string name = doc.RootElement.GetProperty("name").GetString();
 ```
 
 Protocol methods, just like other methods that use models, throw a C# exception when an error code is returned. This default behavior can be changed using RequestOptions discussed below.
