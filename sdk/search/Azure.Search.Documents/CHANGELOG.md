@@ -1,6 +1,6 @@
 # Release History
 
-## 11.3.0-beta.2 (2021-04-12)
+## 11.3.0-beta.2 (2021-05-11)
 
 ### Added
 - Added support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview)
