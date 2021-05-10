@@ -103,7 +103,7 @@ Response postResponse = ledgerClient.PostLedgerEntry(
     RequestContent.Create(
         new { contents = "Hello world!" }));
 
-postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out string transactionId);
+postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
 Console.WriteLine($"Appended transaction with Id: {transactionId}");
 ```
 
@@ -149,7 +149,7 @@ When no sub-ledger id is specified on method calls, the Confidential Ledger serv
 Response postResponse = ledgerClient.PostLedgerEntry(
     RequestContent.Create(
         new { contents = "Hello world!" }));
-postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out string transactionId);
+postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.TransactionId, out string transactionId);
 string subLedgerId = JsonDocument.Parse(statusResponse.Content)
     .RootElement
     .GetProperty("subLedgerId")
@@ -190,7 +190,7 @@ ledgerClient.PostLedgerEntry(
     RequestContent.Create(new { contents = "Hello world sub-ledger 1" }),
     "my sub-ledger");
 
-firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out string transactionId);
+firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.TransactionId, out string transactionId);
 
 // The ledger entry written at the transactionId in firstResponse is retrieved from the default sub-ledger.
 Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
@@ -211,7 +211,7 @@ string latestDefaultSubLedger = JsonDocument.Parse(getResponse.Content)
 Console.WriteLine($"The latest ledger entry from the default sub-ledger is {latestDefaultSubLedger}"); //"Hello world 1"
 
 // The ledger entry written at subLedgerTransactionId is retrieved from the sub-ledger 'sub-ledger'.
-subLedgerPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out string subLedgerTransactionId);
+subLedgerPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string subLedgerTransactionId);
 getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
 string subLedgerEntry = JsonDocument.Parse(getResponse.Content)
     .RootElement

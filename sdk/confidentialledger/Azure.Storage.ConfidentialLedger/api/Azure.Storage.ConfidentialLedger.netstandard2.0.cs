@@ -40,7 +40,7 @@ namespace Azure.Storage.ConfidentialLedger
     }
     public static partial class ConfidentialLedgerConstants
     {
-        public const string TransactionId = "x-ms-ccf-transaction-id";
+        public const string TransactionIdHeaderName = "x-ms-ccf-transaction-id";
     }
     public partial class ConfidentialLedgerIdentityServiceClient
     {

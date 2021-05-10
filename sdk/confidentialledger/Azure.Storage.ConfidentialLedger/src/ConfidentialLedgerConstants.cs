@@ -11,6 +11,6 @@ namespace Azure.Storage.ConfidentialLedger
         /// <summary>
         /// The header value containing the ledger transaction Id.
         /// </summary>
-        public const string TransactionId = "x-ms-ccf-transaction-id";
+        public const string TransactionIdHeaderName = "x-ms-ccf-transaction-id";
     }
 }

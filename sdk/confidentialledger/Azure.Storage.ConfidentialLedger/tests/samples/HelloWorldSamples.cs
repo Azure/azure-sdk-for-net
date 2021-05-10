@@ -88,7 +88,7 @@ namespace Azure.Storage.ConfidentialLedger.Tests.samples
                 RequestContent.Create(
                     new { contents = "Hello world!" }));
 
-            postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out string transactionId);
+            postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
             Console.WriteLine($"Appended transaction with Id: {transactionId}");
 
             #endregion
@@ -137,9 +137,9 @@ namespace Azure.Storage.ConfidentialLedger.Tests.samples
                 RequestContent.Create(
                     new { contents = "Hello world!" }));
 #if SNIPPET
-            postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out string transactionId);
+            postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.TransactionId, out string transactionId);
 #else
-            postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out transactionId);
+            postResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out transactionId);
 #endif
             string subLedgerId = JsonDocument.Parse(statusResponse.Content)
                 .RootElement
@@ -182,9 +182,9 @@ namespace Azure.Storage.ConfidentialLedger.Tests.samples
                 "my sub-ledger");
 
 #if SNIPPET
-            firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out string transactionId);
+            firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.Headers.TransactionId, out string transactionId);
 #else
-            firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out transactionId);
+            firstPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out transactionId);
 #endif
 
             // The ledger entry written at the transactionId in firstResponse is retrieved from the default sub-ledger.
@@ -206,7 +206,7 @@ namespace Azure.Storage.ConfidentialLedger.Tests.samples
             Console.WriteLine($"The latest ledger entry from the default sub-ledger is {latestDefaultSubLedger}"); //"Hello world 1"
 
             // The ledger entry written at subLedgerTransactionId is retrieved from the sub-ledger 'sub-ledger'.
-            subLedgerPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionId, out string subLedgerTransactionId);
+            subLedgerPostResponse.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string subLedgerTransactionId);
             getResponse = ledgerClient.GetLedgerEntry(subLedgerTransactionId, "my sub-ledger");
             string subLedgerEntry = JsonDocument.Parse(getResponse.Content)
                 .RootElement
