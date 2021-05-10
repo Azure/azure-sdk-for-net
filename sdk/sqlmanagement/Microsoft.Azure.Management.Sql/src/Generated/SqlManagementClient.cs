@@ -770,6 +770,9 @@ namespace Microsoft.Azure.Management.Sql
             }
         }
         
+        /// <summary>
+        /// Initializes a new instance of the SqlManagementClient class.
+        /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
         /// </param>

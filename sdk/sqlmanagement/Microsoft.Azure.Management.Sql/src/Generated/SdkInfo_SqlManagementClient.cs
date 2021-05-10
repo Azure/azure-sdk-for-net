@@ -144,4 +144,3 @@ namespace Microsoft.Azure.Management.Sql
       }
   }
 }
-
