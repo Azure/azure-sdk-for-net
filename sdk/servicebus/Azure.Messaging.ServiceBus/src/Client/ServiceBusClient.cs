@@ -115,6 +115,10 @@ namespace Azure.Messaging.ServiceBus
         /// If the connection string specifies a specific entity name, any subsequent calls to
         /// <see cref="CreateSender(string)"/>, <see cref="CreateReceiver(string)"/>,
         /// <see cref="CreateProcessor(string)"/> etc. must still specify the same entity name.
+        ///
+        /// The connection string will recognize and apply properties populated by the
+        /// Azure portal such as Endpoint, SharedAccessKeyName, SharedAccessKey, and EntityPath.
+        /// Other values will be ignored; to configure the processor, please use the <see cref="ServiceBusClientOptions" />.
         /// </remarks>
         public ServiceBusClient(string connectionString) :
             this(connectionString, new ServiceBusClientOptions())
@@ -134,6 +138,10 @@ namespace Azure.Messaging.ServiceBus
         /// If the connection string specifies a specific entity name, any subsequent calls to
         /// <see cref="CreateSender(string)"/>, <see cref="CreateReceiver(string)"/>,
         /// <see cref="CreateProcessor(string)"/> etc. must still specify the same entity name.
+        ///
+        /// The connection string will recognize and apply properties populated by the
+        /// Azure portal such as Endpoint, SharedAccessKeyName, SharedAccessKey, and EntityPath.
+        /// Other values will be ignored; to configure the processor, please use the <see cref="ServiceBusClientOptions" />.
         /// </remarks>
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
@@ -142,6 +150,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
             Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
             Plugins = _options.Plugins;
+            TransportType = _options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 
@@ -218,14 +227,15 @@ namespace Azure.Messaging.ServiceBus
             object credential,
             ServiceBusClientOptions options)
         {
-            _options = options?.Clone() ?? new ServiceBusClientOptions();
             Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
+            _options = options?.Clone() ?? new ServiceBusClientOptions();
             Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
             Connection = ServiceBusConnection.CreateWithCredential(
                 fullyQualifiedNamespace,
                 credential,
                 _options);
             Plugins = _options.Plugins;
+            TransportType = _options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
 

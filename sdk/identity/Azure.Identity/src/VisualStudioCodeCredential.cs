@@ -38,7 +38,8 @@ namespace Azure.Identity
         /// <param name="options">Options for configuring the credential.</param>
         public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options) : this(options, default, default, default, default) { }
 
-        internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
+        internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem,
+            IVisualStudioCodeAdapter vscAdapter)
         {
             _tenantId = options?.TenantId ?? "common";
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
@@ -71,12 +72,16 @@ namespace Azure.Identity
                 var cloudInstance = GetAzureCloudInstance(environmentName);
                 string storedCredentials = GetStoredCredentials(environmentName);
 
-                var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
+                var result = await _client.AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenant, async, cancellationToken)
+                    .ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (MsalUiRequiredException e)
             {
-                throw scope.FailWrapAndThrow(new CredentialUnavailableException($"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account.", e));
+                throw scope.FailWrapAndThrow(
+                    new CredentialUnavailableException(
+                        $"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account.",
+                        e));
             }
             catch (Exception e)
             {

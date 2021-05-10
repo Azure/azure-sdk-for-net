@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Microsoft.Azure.Amqp;
@@ -498,6 +499,32 @@ namespace Azure.Messaging.EventHubs.Tests
             await consumer.CloseAsync(cancellationSource.Token);
 
             Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.ReceiveAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ReceiveAsyncValidatesConnectionClosed()
+        {
+            var endpoint = new Uri("amqps://not.real.com");
+            var eventHub = "eventHubName";
+            var consumerGroup = "$DEFAULT";
+            var partition = "3";
+            var eventPosition = EventPosition.FromOffset(123);
+            var options = new EventHubConsumerClientOptions();
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+            var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());
+
+            var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null);
+            var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, true, null, null, null, scope, Mock.Of<AmqpMessageConverter>(), retryPolicy);
+
+            scope.Dispose();
+
+            Assert.That(async () => await consumer.ReceiveAsync(100, null, CancellationToken.None),
+                Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
     }
 }

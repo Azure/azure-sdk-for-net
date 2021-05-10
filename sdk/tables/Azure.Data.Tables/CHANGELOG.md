@@ -1,5 +1,28 @@
 # Release History
 
+## 12.0.0-beta.8 (2021-05-11)
+
+### Breaking Changes
+
+- Eliminated the `TableTransactionalBatch` type and added the `TableTransactionAction` type.
+  - Submitting a batch transaction is now accomplished via the `TableClient.SubmitTransaction` or `TableClient.SubmitTransactionAsync` methods which accepts
+    an `IEnumerable<TableTransactionAction>`.
+- `TableClient.SubmitTransaction` and `TableClient.SubmitTransactionAsync` now return `Response<IReadOnlyList<Response>>` rather than `TableBatchResponse`.
+  - `TableBatchResponse.GetResponseForEntity` is no longer necessary as the responses can now be correlated directly between the `Response<IReadOnlyList<Response>>`
+    and the list of `TableTransactionAction`s provided to the submit method.
+    
+### Changed
+- Failed batch transaction operations now throw `TableTransactionFailedException` which contains a `FailedTransactionActionIndex` property to indicate which 
+`TableTransactionAction` caused the failure.
+  
+### Added
+
+- Added `TableOdataFilter` to assist with odata string filter quoting and escaping.
+
+### Key Bug Fixes
+
+- Merge operations no longer fail for Cosmos table endpoints.
+
 ## 12.0.0-beta.7 (2021-04-06)
 
 ### Acknowledgments
@@ -11,6 +34,7 @@ Thank you to our developer community members who helped to make Azure Tables bet
 ### Added
 
 - Added the `TableErrorCode` type which allows comparison of the `ErrorCode` on `RequestFailedException`s thrown from client operations with a known error value.
+- `TableEntity` and custom entity types now support `BinaryData` properties.
 
 ### Key Bug Fixes
 

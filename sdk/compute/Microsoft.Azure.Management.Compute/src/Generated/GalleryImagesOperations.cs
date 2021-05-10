@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Compute
         public ComputeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Create or update a gallery Image Definition.
+        /// Create or update a gallery image definition.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Compute
         /// created.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition to be created or updated. The
+        /// The name of the gallery image definition to be created or updated. The
         /// allowed characters are alphabets and numbers with dots, dashes, and periods
         /// allowed in the middle. The maximum length is 80 characters.
         /// </param>
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Update a gallery Image Definition.
+        /// Update a gallery image definition.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Compute
         /// updated.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition to be updated. The allowed
+        /// The name of the gallery image definition to be updated. The allowed
         /// characters are alphabets and numbers with dots, dashes, and periods allowed
         /// in the middle. The maximum length is 80 characters.
         /// </param>
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Retrieves information about a gallery Image Definition.
+        /// Retrieves information about a gallery image definition.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.Compute
         /// to be retrieved.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition to be retrieved.
+        /// The name of the gallery image definition to be retrieved.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryImageName");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.Compute
         /// deleted.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition to be deleted.
+        /// The name of the gallery image definition to be deleted.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// List gallery Image Definitions in a gallery.
+        /// List gallery image definitions in a gallery.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -387,7 +387,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryName");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -538,7 +538,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Create or update a gallery Image Definition.
+        /// Create or update a gallery image definition.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -548,7 +548,7 @@ namespace Microsoft.Azure.Management.Compute
         /// created.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition to be created or updated. The
+        /// The name of the gallery image definition to be created or updated. The
         /// allowed characters are alphabets and numbers with dots, dashes, and periods
         /// allowed in the middle. The maximum length is 80 characters.
         /// </param>
@@ -602,7 +602,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 galleryImage.Validate();
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -798,7 +798,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Update a gallery Image Definition.
+        /// Update a gallery image definition.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -808,7 +808,7 @@ namespace Microsoft.Azure.Management.Compute
         /// updated.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition to be updated. The allowed
+        /// The name of the gallery image definition to be updated. The allowed
         /// characters are alphabets and numbers with dots, dashes, and periods allowed
         /// in the middle. The maximum length is 80 characters.
         /// </param>
@@ -858,7 +858,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryImage");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1028,7 +1028,7 @@ namespace Microsoft.Azure.Management.Compute
         /// deleted.
         /// </param>
         /// <param name='galleryImageName'>
-        /// The name of the gallery Image Definition to be deleted.
+        /// The name of the gallery image definition to be deleted.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1066,7 +1066,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryImageName");
             }
-            string apiVersion = "2019-12-01";
+            string apiVersion = "2020-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1201,7 +1201,7 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// List gallery Image Definitions in a gallery.
+        /// List gallery image definitions in a gallery.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

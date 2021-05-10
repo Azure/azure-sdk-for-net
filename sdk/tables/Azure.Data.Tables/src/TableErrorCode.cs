@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace Azure.Data.Tables.Models
 {
@@ -55,11 +54,11 @@ namespace Azure.Data.Tables.Models
         private const string MediaTypeNotSupportedValue = "MediaTypeNotSupported";
         private const string MethodNotAllowedValue = "MethodNotAllowed";
         private const string ContentLengthExceededValue = "ContentLengthExceeded";
-        private const string AccountIOPSLimitExceededValue = "AccountIOPSLimitExceeded";
-        private const string CannotCreateTableWithIOPSGreaterThanMaxAllowedPerTableValue = "CannotCreateTableWithIOPSGreaterThanMaxAllowedPerTable";
-        private const string PerTableIOPSIncrementLimitReachedValue = "PerTableIOPSIncrementLimitReached";
-        private const string PerTableIOPSDecrementLimitReachedValue = "PerTableIOPSDecrementLimitReached";
-        private const string SettingIOPSForATableInProvisioningNotAllowedValue = "SettingIOPSForATableInProvisioningNotAllowed";
+        private const string AccountIopsLimitExceededValue = "AccountIOPSLimitExceeded";
+        private const string CannotCreateTableWithIopsGreaterThanMaxAllowedPerTableValue = "CannotCreateTableWithIOPSGreaterThanMaxAllowedPerTable";
+        private const string PerTableIopsIncrementLimitReachedValue = "PerTableIOPSIncrementLimitReached";
+        private const string PerTableIopsDecrementLimitReachedValue = "PerTableIOPSDecrementLimitReached";
+        private const string SettingIopsForATableInProvisioningNotAllowedValue = "SettingIOPSForATableInProvisioningNotAllowed";
         private const string PartitionKeyEqualityComparisonExpectedValue = "PartitionKeyEqualityComparisonExpected";
         private const string PartitionKeySpecifiedMoreThanOnceValue = "PartitionKeySpecifiedMoreThanOnce";
         private const string InvalidInputValue = "InvalidInput";
@@ -174,19 +173,19 @@ namespace Azure.Data.Tables.Models
         public static TableErrorCode ContentLengthExceeded { get; } = new TableErrorCode(ContentLengthExceededValue);
 
         /// <summary> AccountIOPSLimitExceeded. </summary>
-        public static TableErrorCode AccountIOPSLimitExceeded { get; } = new TableErrorCode(AccountIOPSLimitExceededValue);
+        public static TableErrorCode AccountIOPSLimitExceeded { get; } = new TableErrorCode(AccountIopsLimitExceededValue);
 
         /// <summary> CannotCreateTableWithIOPSGreaterThanMaxAllowedPerTable. </summary>
-        public static TableErrorCode CannotCreateTableWithIOPSGreaterThanMaxAllowedPerTable { get; } = new TableErrorCode(CannotCreateTableWithIOPSGreaterThanMaxAllowedPerTableValue);
+        public static TableErrorCode CannotCreateTableWithIOPSGreaterThanMaxAllowedPerTable { get; } = new TableErrorCode(CannotCreateTableWithIopsGreaterThanMaxAllowedPerTableValue);
 
         /// <summary> PerTableIOPSIncrementLimitReached. </summary>
-        public static TableErrorCode PerTableIOPSIncrementLimitReached { get; } = new TableErrorCode(PerTableIOPSIncrementLimitReachedValue);
+        public static TableErrorCode PerTableIOPSIncrementLimitReached { get; } = new TableErrorCode(PerTableIopsIncrementLimitReachedValue);
 
         /// <summary> PerTableIOPSDecrementLimitReached. </summary>
-        public static TableErrorCode PerTableIOPSDecrementLimitReached { get; } = new TableErrorCode(PerTableIOPSDecrementLimitReachedValue);
+        public static TableErrorCode PerTableIOPSDecrementLimitReached { get; } = new TableErrorCode(PerTableIopsDecrementLimitReachedValue);
 
         /// <summary> SettingIOPSForATableInProvisioningNotAllowed. </summary>
-        public static TableErrorCode SettingIOPSForATableInProvisioningNotAllowed { get; } = new TableErrorCode(SettingIOPSForATableInProvisioningNotAllowedValue);
+        public static TableErrorCode SettingIOPSForATableInProvisioningNotAllowed { get; } = new TableErrorCode(SettingIopsForATableInProvisioningNotAllowedValue);
 
         /// <summary> PartitionKeyEqualityComparisonExpected. </summary>
         public static TableErrorCode PartitionKeyEqualityComparisonExpected { get; } = new TableErrorCode(PartitionKeyEqualityComparisonExpectedValue);

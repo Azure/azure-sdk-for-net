@@ -1,7 +1,26 @@
 # Release History
 
-## 7.2.0-beta.2 (Unreleased)
+## 7.2.0-beta.3 (Unreleased)
 
+
+## 7.2.0-beta.2 (2021-04-07)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+- Mikael Kolkinn _([GitHub](https://github.com/mikaelkolkinn))_
+
+### Added
+- Updated dependency on Azure.Core.Amqp to support Value/Sequence AMQP message bodies.
+- Updated dependency on Microsoft.Azure.Amqp to benefit from a performance enhancement involving message settlement.
+- Added `OnProcessMessageAsync` and `OnProcessErrorAsync` methods to help with mocking scenarios involving the processor.
+- Added the ability to construct a `ServiceBusClient` and `ServiceBusAdministrationClient` using the `AzureNamedKeyCredential` and `AzureSasCredential` types to allow for updating credentials for long-lived clients.
+- Added the ability to cancel receive operations which allows `StopProcessingAsync` calls on the processor to complete more quickly. (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
+
+### Fixed
+- Multiple enhancements were made to the transport paths for publishing and reading events to reduce memory allocations and increase performance. (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
+- Fixed an issue where constructing a new `CreateRuleOption` from a `RuleProperties` would fail if the `CorrelationId` was null. (A community contribution, courtesy of _[mikaelkolkinn](https://github.com/mikaelkolkinn))_
 
 ## 7.2.0-beta.1 (2021-03-08)
 ### Added

@@ -1,5 +1,10 @@
 # Release History
 
+## 1.0.0-preview.9 (2021-05-11)
+### Key Bug Fixes
+- Updated dependency versions.
+- Improved deserialization of optional parameters (https://github.com/Azure/azure-sdk-for-net/issues/20051) 
+
 ## 1.0.0-preview.8 (2021-04-06)
 
 ### Added

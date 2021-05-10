@@ -118,7 +118,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 };
 
                 Response<InstancesOperationResult[]> getInstancesResult = await tsiClient
-                    .GetInstancesAsync(new List<TimeSeriesId> { tsId })
+                    .Instances
+                    .GetAsync(new List<TimeSeriesId> { tsId })
                     .ConfigureAwait(false);
 
                 if (getInstancesResult.Value?.First()?.Error != null)
@@ -132,7 +133,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
         protected async Task<string> getDefaultTypeIdAsync(TimeSeriesInsightsClient client)
         {
-            Response<TimeSeriesModelSettings> currentSettings = await client.GetModelSettingsAsync().ConfigureAwait(false);
+            Response<TimeSeriesModelSettings> currentSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
             return currentSettings.Value.DefaultTypeId;
         }
 

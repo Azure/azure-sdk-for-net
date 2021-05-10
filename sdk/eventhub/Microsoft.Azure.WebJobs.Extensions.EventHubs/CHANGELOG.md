@@ -1,7 +1,18 @@
 # Release History
 
-## 5.0.0-beta.4 (Unreleased)
+## 5.0.0-beta.5 (2021-05-11)
 
+### Changes
+
+#### Key Bug Fixes
+
+- The web proxy specified in configuration is now respected.
+
+## 5.0.0-beta.4 (2021-04-06)
+
+### Changes
+
+- Single dispatch triggers were disabled.
 
 ## 5.0.0-beta.3 (2021-03-11)
 

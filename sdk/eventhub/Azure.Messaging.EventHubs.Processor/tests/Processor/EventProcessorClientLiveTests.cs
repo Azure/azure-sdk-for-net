@@ -13,6 +13,7 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
+using Azure.Storage.Blobs;
 using Moq;
 using NUnit.Framework;
 
@@ -529,6 +530,184 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ProcessorClientDetectsAnInvalidEventHubsConnectionString(bool async)
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+            var connectionString = "Endpoint=sb://fake.servicebus.windows.net/;SharedAccessKeyName=FakeSharedAccessKey;SharedAccessKey=<< FAKE >>";
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Create the processor and attempt to start.
+
+            var processor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, connectionString, scope.EventHubName);
+            processor.ProcessErrorAsync += _ => Task.CompletedTask;
+            processor.ProcessEventAsync += _ => Task.CompletedTask;
+
+            if (async)
+            {
+                Assert.That(async () => await processor.StartProcessingAsync(cancellationSource.Token), Throws.InstanceOf<AggregateException>());
+            }
+            else
+            {
+                Assert.That(() => processor.StartProcessing(cancellationSource.Token), Throws.InstanceOf<AggregateException>());
+            }
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ProcessorClientDetectsAnInvalidEventHubName(bool async)
+        {
+            // Setup the environment.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Create the processor and attempt to start.
+
+            var processor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.EventHubsConnectionString, "fake");
+            processor.ProcessErrorAsync += _ => Task.CompletedTask;
+            processor.ProcessEventAsync += _ => Task.CompletedTask;
+
+            if (async)
+            {
+                Assert.That(async () => await processor.StartProcessingAsync(cancellationSource.Token), Throws.InstanceOf<AggregateException>());
+            }
+            else
+            {
+                Assert.That(() => processor.StartProcessing(cancellationSource.Token), Throws.InstanceOf<AggregateException>());
+            }
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ProcessorClientDetectsAnInvalidConsumerGroup(bool async)
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Create the processor and attempt to start.
+
+            var processor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "fake", EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+            processor.ProcessErrorAsync += _ => Task.CompletedTask;
+            processor.ProcessEventAsync += _ => Task.CompletedTask;
+
+            if (async)
+            {
+                Assert.That(async () => await processor.StartProcessingAsync(cancellationSource.Token), Throws.InstanceOf<AggregateException>());
+            }
+            else
+            {
+                Assert.That(() => processor.StartProcessing(cancellationSource.Token), Throws.InstanceOf<AggregateException>());
+            }
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ProcessorClientDetectsAnInvalidStorageConnectionString(bool async)
+        {
+            // Setup the environment.
+
+            await using EventHubScope eventHubScope = await EventHubScope.CreateAsync(2);
+            await using StorageScope storageScope = await StorageScope.CreateAsync();
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Create the processor and attempt to start.
+
+            var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString.Replace(StorageTestEnvironment.Instance.StorageEndpointSuffix, "fake.com");
+            var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
+            var processor = new EventProcessorClient(containerClient, eventHubScope.ConsumerGroups[0], EventHubsTestEnvironment.Instance.EventHubsConnectionString, eventHubScope.EventHubName);
+            processor.ProcessErrorAsync += _ => Task.CompletedTask;
+            processor.ProcessEventAsync += _ => Task.CompletedTask;
+
+            if (async)
+            {
+                Assert.That(async () => await processor.StartProcessingAsync(cancellationSource.Token), Throws.InstanceOf<AggregateException>());
+            }
+            else
+            {
+                Assert.That(() => processor.StartProcessing(cancellationSource.Token), Throws.InstanceOf<AggregateException>());
+            }
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ProcessorClientDetectsAnInvalidStorageContainer(bool async)
+        {
+            // Setup the environment.
+
+            await using EventHubScope eventHubScope = await EventHubScope.CreateAsync(2);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Create the processor and attempt to start.
+
+            var containerClient = new BlobContainerClient(StorageTestEnvironment.Instance.StorageConnectionString, "fake");
+            var processor = new EventProcessorClient(containerClient, eventHubScope.ConsumerGroups[0], EventHubsTestEnvironment.Instance.EventHubsConnectionString, eventHubScope.EventHubName);
+            processor.ProcessErrorAsync += _ => Task.CompletedTask;
+            processor.ProcessEventAsync += _ => Task.CompletedTask;
+
+            if (async)
+            {
+                Assert.That(async () => await processor.StartProcessingAsync(cancellationSource.Token), Throws.InstanceOf<AggregateException>());
+            }
+            else
+            {
+                Assert.That(() => processor.StartProcessing(cancellationSource.Token), Throws.InstanceOf<AggregateException>());
+            }
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
         }
 
         /// <summary>

@@ -251,7 +251,7 @@ namespace Azure.Search.Documents.Tests
 
             // TODO: Replace with comparison of actual SearchIndex once test framework uses Azure.Search.Documents instead.
             Assert.AreEqual(resources.IndexName, index.Name);
-            Assert.AreEqual(13, index.Fields.Count);
+            Assert.AreEqual(14, index.Fields.Count);
         }
 
         [Test]

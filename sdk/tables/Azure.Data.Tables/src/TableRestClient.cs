@@ -16,7 +16,6 @@ namespace Azure.Data.Tables
 {
     internal partial class TableRestClient
     {
-        internal ClientDiagnostics clientDiagnostics => _clientDiagnostics;
         internal string endpoint => url;
         internal string clientVersion => version;
 
@@ -55,7 +54,7 @@ namespace Azure.Data.Tables
         /// <param name="message">The message to send.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public async Task<Response<List<Response>>> SendBatchRequestAsync(HttpMessage message, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<Response>>> SendBatchRequestAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
             if (message == null)
             {
@@ -68,18 +67,23 @@ namespace Azure.Data.Tables
                 case 202:
                     {
                         var responses = await Multipart.ParseAsync(
-                            message.Response.ContentStream,
-                            message.Response.Headers.ContentType,
-                            expectBoundariesWithCRLF: false,
-                            async: true,
-                            cancellationToken).ConfigureAwait(false);
+                                message.Response.ContentStream,
+                                message.Response.Headers.ContentType,
+                                false,
+                                true,
+                                cancellationToken)
+                            .ConfigureAwait(false);
 
-                        if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
+                        var failedSubResponse = responses.FirstOrDefault(r => r.Status >= 400);
+                        if (failedSubResponse == null)
                         {
-                            var ex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(responses[0]).ConfigureAwait(false);
+                            return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
                         }
 
-                        return Response.FromValue(responses.ToList(), message.Response);
+                        RequestFailedException rfex = await _clientDiagnostics.CreateRequestFailedExceptionAsync(failedSubResponse).ConfigureAwait(false);
+
+                        var ex = new TableTransactionFailedException(rfex);
+                        throw ex;
                     }
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -90,7 +94,7 @@ namespace Azure.Data.Tables
         /// <param name="message">The message to send.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public Response<List<Response>> SendBatchRequest(HttpMessage message, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<Response>> SendBatchRequest(HttpMessage message, CancellationToken cancellationToken = default)
         {
             if (message == null)
             {
@@ -103,18 +107,22 @@ namespace Azure.Data.Tables
                 case 202:
                     {
                         var responses = Multipart.ParseAsync(
-                            message.Response.ContentStream,
-                            message.Response.Headers.ContentType,
-                            expectBoundariesWithCRLF: false,
-                            async: false,
-                            cancellationToken).EnsureCompleted();
+                                message.Response.ContentStream,
+                                message.Response.Headers.ContentType,
+                                false,
+                                false,
+                                cancellationToken)
+                            .EnsureCompleted();
 
-                        if (responses.Length == 1 && responses.Any(r => r.Status >= 400))
+                        var failedSubResponse = responses.FirstOrDefault(r => r.Status >= 400);
+                        if (failedSubResponse == null)
                         {
-                            var ex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
+                            return Response.FromValue(responses.ToList() as IReadOnlyList<Response>, message.Response);
                         }
 
-                        return Response.FromValue(responses.ToList(), message.Response);
+                        RequestFailedException rfex = _clientDiagnostics.CreateRequestFailedException(responses[0]);
+                        var ex = new TableTransactionFailedException(rfex);
+                        throw ex;
                     }
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);

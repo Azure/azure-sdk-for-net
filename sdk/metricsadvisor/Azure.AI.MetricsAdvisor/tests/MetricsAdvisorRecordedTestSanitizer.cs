@@ -13,11 +13,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             SanitizedHeaders.Add(Constants.SubscriptionAuthorizationHeader);
             SanitizedHeaders.Add(Constants.ApiAuthorizationHeader);
-            JsonPathSanitizers.Add("$..connectionString");
-            JsonPathSanitizers.Add("$..apiKey");
-            JsonPathSanitizers.Add("$..accountKey");
-            JsonPathSanitizers.Add("$..authHeader");
-            JsonPathSanitizers.Add("$..httpHeader");
+            AddJsonPathSanitizer("$..connectionString");
+            AddJsonPathSanitizer("$..apiKey");
+            AddJsonPathSanitizer("$..accountKey");
+            AddJsonPathSanitizer("$..authHeader");
+            AddJsonPathSanitizer("$..httpHeader");
             // TODO: Remove when re-recording
             LegacyConvertJsonDateTokens = true;
         }

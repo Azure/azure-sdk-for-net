@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/cf9d9c44d990d82a763cf8c23a324de337e387a5/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a7292a40170e8ebb10ad12332022798c2fe72f8a/specification/eventgrid/data-plane/readme.md
 
 ```
 
@@ -83,4 +83,13 @@ directive:
           $[path]["properties"]["x509Thumbprint"]["x-csharp-formats"] = "json";
       }
     }
+```
+
+### Discriminator properties have to be required
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.MediaJobOutput
+  transform: $.required.push("@odata.type")
 ```
