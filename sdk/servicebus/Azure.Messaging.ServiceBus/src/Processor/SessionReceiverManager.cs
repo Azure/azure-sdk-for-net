@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -141,7 +142,8 @@ namespace Azure.Messaging.ServiceBus
                     plugins: _plugins,
                     options: _sessionReceiverOptions,
                     sessionId: _sessionId,
-                    cancellationToken: processorCancellationToken).ConfigureAwait(false);
+                    cancellationToken: processorCancellationToken,
+                    isProcessor: true).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
@@ -259,9 +261,13 @@ namespace Azure.Messaging.ServiceBus
                 while (!_sessionCancellationSource.Token.IsCancellationRequested)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
-                    ServiceBusReceivedMessage message = await _receiver.ReceiveMessageAsync(
-                        _maxReceiveWaitTime,
-                        _sessionCancellationSource.Token).ConfigureAwait(false);
+                    // ReSharper disable once CA1826
+#pragma warning disable CA1826 // Do not use Enumerable methods on indexable collections
+                    ServiceBusReceivedMessage message = (await _receiver.ReceiveMessagesAsync(
+                        maxMessages: 1,
+                        maxWaitTime: _maxReceiveWaitTime,
+                        isProcessor: true, cancellationToken: _sessionCancellationSource.Token).ConfigureAwait(false)).FirstOrDefault();
+#pragma warning restore CA1826 // Do not use Enumerable methods on indexable collections
                     if (message == null)
                     {
                         // Break out of the loop to allow a new session to
