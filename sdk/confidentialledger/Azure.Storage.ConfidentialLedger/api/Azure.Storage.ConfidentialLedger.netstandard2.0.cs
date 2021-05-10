@@ -3,7 +3,7 @@ namespace Azure.Storage.ConfidentialLedger
     public partial class ConfidentialLedgerClient
     {
         protected ConfidentialLedgerClient() { }
-        public ConfidentialLedgerClient(System.Uri ledgerUri, System.Uri identityServiceUri, Azure.Core.TokenCredential credential, Azure.Storage.ConfidentialLedger.ConfidentialLedgerClientOptions options = null) { }
+        public ConfidentialLedgerClient(System.Uri ledgerUri, Azure.Core.TokenCredential credential, Azure.Storage.ConfidentialLedger.ConfidentialLedgerClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateOrUpdateUser(string userId, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateUserAsync(string userId, Azure.Core.RequestContent requestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -21,8 +21,6 @@ namespace Azure.Storage.ConfidentialLedger
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerEntriesAsync(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetLedgerEntry(string transactionId, string subLedgerId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerEntryAsync(string transactionId, string subLedgerId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetLedgerIdentity(string ledgerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerIdentityAsync(string ledgerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetReceipt(string transactionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetReceiptAsync(string transactionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetTransactionStatus(string transactionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -39,5 +37,13 @@ namespace Azure.Storage.ConfidentialLedger
         {
             V0_1_preview = 1,
         }
+    }
+    public partial class ConfidentialLedgerIdentityServiceClient
+    {
+        protected ConfidentialLedgerIdentityServiceClient() { }
+        public ConfidentialLedgerIdentityServiceClient(System.Uri identityServiceUri, Azure.Core.TokenCredential credential, Azure.Storage.ConfidentialLedger.ConfidentialLedgerClientOptions options = null) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response GetLedgerIdentity(string ledgerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerIdentityAsync(string ledgerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
