@@ -42,6 +42,7 @@
   "Variables": {
     "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
     "AZURE_PHONE_NUMBER": "\u002B14255550123",
-    "RandomSeed": "257421069"
+    "RandomSeed": "257421069",
+    "SKIP_INT_SMS_TEST": "FALSE",
   }
 }
