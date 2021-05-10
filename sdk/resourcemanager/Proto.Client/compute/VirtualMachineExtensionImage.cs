@@ -24,17 +24,5 @@ namespace Proto.Compute
         {
             Data = resource;
         }
-
-        ///// <inheritdoc />
-        //protected override VirtualMachineExtensionImage GetResource(CancellationToken cancellation = default)
-        //{
-        //    return this;
-        //}
-
-        ///// <inheritdoc />
-        //protected override Task<VirtualMachineExtensionImage> GetResourceAsync(CancellationToken cancellationToken = default)
-        //{
-        //    return Task.FromResult(this);
-        //}
     }
 }
