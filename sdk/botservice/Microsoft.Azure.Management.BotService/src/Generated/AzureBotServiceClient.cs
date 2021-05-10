@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Management.BotService
             Channels = new ChannelsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-12-01";
+            ApiVersion = "2021-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
