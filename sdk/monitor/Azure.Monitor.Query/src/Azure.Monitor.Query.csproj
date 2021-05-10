@@ -9,9 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- TODO: Remove before shipping -->
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
-
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

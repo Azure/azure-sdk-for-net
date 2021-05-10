@@ -1,5 +1,8 @@
 # Release History
 
+## 4.4.0-beta.1 (Unreleased)
+
+
 ## 4.3.2 (2021-04-26)
 
 Update package description to include pointer to the new Azure.Messaging.EventHubs.Processor package and the migration guide.

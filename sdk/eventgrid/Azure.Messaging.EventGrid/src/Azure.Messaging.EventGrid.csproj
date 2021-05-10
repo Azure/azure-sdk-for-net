@@ -10,11 +10,10 @@
   </PropertyGroup> 
   
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
-
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
