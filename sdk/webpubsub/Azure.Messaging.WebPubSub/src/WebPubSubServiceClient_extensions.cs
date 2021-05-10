@@ -20,6 +20,16 @@ namespace Azure.Messaging.WebPubSub
 
         private const string JsonContent = "application/json";
 
+        /// <summary>
+        /// The hub.
+        /// </summary>
+        public string Hub => hub;
+
+        /// <summary>
+        /// The service endpoint.
+        /// </summary>
+        public Uri Endpoint => endpoint;
+
         /// <summary> Initializes a new instance of WebPubSubServiceClient. </summary>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
