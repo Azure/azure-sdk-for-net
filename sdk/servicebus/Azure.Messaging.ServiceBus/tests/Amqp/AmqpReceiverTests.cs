@@ -130,7 +130,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
-                default, false,
+                default,
+                false,
                 cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
@@ -175,7 +176,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession, false, CancellationToken.None);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
-                default, false,
+                default,
+                false,
                 cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.GeneralError));
 
             mockScope
@@ -231,7 +233,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession, false, CancellationToken.None);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
-                default, false,
+                default,
+                false,
                 cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceTimeout));
 
             mockScope
@@ -295,7 +298,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession, false, CancellationToken.None);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
-                default, false,
+                default,
+                false,
                 cancellationSource.Token), Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.ServiceBusy));
             mockScope
                 .Verify(scope => scope.OpenReceiverLinkAsync(
@@ -354,7 +358,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession, false, CancellationToken.None);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
-                default, false,
+                default,
+                false,
                 cancellationSource.Token), Throws.InstanceOf<ArgumentNullException>());
 
             mockScope
@@ -409,7 +414,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession, false, CancellationToken.None);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
-                default, false,
+                default,
+                false,
                 cancellationSource.Token), Throws.InstanceOf<ArgumentException>());
 
             mockScope
@@ -464,7 +470,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var receiver = new AmqpReceiver(entityName, ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object, retryPolicy, "someIdentifier", sessionId, isSession, false, CancellationToken.None);
             Assert.That(async () => await receiver.ReceiveMessagesAsync(
                 100,
-                default, false,
+                default,
+                false,
                 cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
 
             mockScope
@@ -489,7 +496,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 Mock.Of<ServiceBusRetryPolicy>(),
                 "someIdentifier",
                 default,
-                default, false,
+                default,
+                false,
                 default);
     }
 }
