@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Most Azure SDK Clients expose methods that take 'model' parameters, C# classes which to the input\output of a REST JSON API call.
+Most Azure SDK Clients expose methods that take 'model' parameters, C# classes which map to the input\output of a REST JSON API call.
 
 Imagine a service that stores information about pets, with a GetDog and SetDog pair of operations. 
 
