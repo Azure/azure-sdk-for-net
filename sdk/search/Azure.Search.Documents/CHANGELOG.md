@@ -3,7 +3,7 @@
 ## 11.3.0-beta.2 (2021-05-11)
 
 ### Added
-- Added support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview)
+- Added support for [Semantic Search](https://docs.microsoft.com/azure/search/semantic-search-overview).
 
 ## 11.3.0-beta.1 (2021-04-06)
 
