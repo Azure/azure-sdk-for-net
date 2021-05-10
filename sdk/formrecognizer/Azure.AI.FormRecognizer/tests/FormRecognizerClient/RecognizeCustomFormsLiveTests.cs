@@ -28,7 +28,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsCanAuthenticateWithTokenCredential(bool useTrainingLabels)
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -78,7 +77,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(true, false)]
         [TestCase(false, true)]
         [TestCase(false, false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithLabels(bool useStream, bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
@@ -180,7 +178,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -238,7 +235,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -274,7 +270,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageFormWithBlankPage(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -366,7 +361,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(true, false)]
         [TestCase(false, true)]
         [TestCase(false, false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithoutLabels(bool useStream, bool includeFieldElements)
         {
             var client = CreateFormRecognizerClient();
@@ -427,7 +421,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -482,7 +475,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -519,7 +511,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -607,7 +598,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
         {
             var client = CreateFormRecognizerClient();
@@ -670,14 +660,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
-        public async Task StartRecognizeCustomFormsWithTableVariableRows()
+        public async Task StartRecognizeCustomFormsWithTableDynamicRows()
         {
             var client = CreateFormRecognizerClient();
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.TableVariableRows);
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormTableVariableRows);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormTableDynamicRows);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);

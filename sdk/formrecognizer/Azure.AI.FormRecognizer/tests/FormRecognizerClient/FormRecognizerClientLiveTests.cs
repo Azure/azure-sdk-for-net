@@ -1,12 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -41,6 +35,39 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentAsync(stream));
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = FormRecognizerClientOptions.ServiceVersion.V2_0)]
+        public void StartRecognizeBusinessCardsWithV2()
+        {
+            var client = CreateFormRecognizerClient();
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.BusinessCardJpg);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsFromUriAsync(uri));
+            Assert.AreEqual("404", ex.ErrorCode);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = FormRecognizerClientOptions.ServiceVersion.V2_0)]
+        public void StartRecognizeIdentityDocumentsWithV2()
+        {
+            var client = CreateFormRecognizerClient();
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.DriverLicenseJpg);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeIdentityDocumentsFromUriAsync(uri));
+            Assert.AreEqual("404", ex.ErrorCode);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = FormRecognizerClientOptions.ServiceVersion.V2_0)]
+        public void StartRecognizeInvoicesWithV2()
+        {
+            var client = CreateFormRecognizerClient();
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceJpg);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeInvoicesFromUriAsync(uri));
+            Assert.AreEqual("404", ex.ErrorCode);
         }
     }
 }

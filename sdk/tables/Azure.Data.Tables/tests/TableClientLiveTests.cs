@@ -67,7 +67,7 @@ namespace Azure.Data.Tables.Tests
             await CosmosThrottleWrapper(async () => await tableClient.CreateAsync().ConfigureAwait(false));
 
             // Check that the table was created.
-            var tableResponses = (await service.GetTablesAsync(filter: TableOdataFilter.Create($"TableName eq {validTableName}"))
+            var tableResponses = (await service.QueryAsync(TableOdataFilter.Create($"TableName eq {validTableName}"))
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).ToList();
             Assert.That(() => tableResponses, Is.Not.Empty);
@@ -75,8 +75,11 @@ namespace Azure.Data.Tables.Tests
             // Delete the table using the TableClient method.
             await CosmosThrottleWrapper(async () => await tableClient.DeleteAsync().ConfigureAwait(false));
 
+            // Validate that we can call delete again without throwing.
+            await CosmosThrottleWrapper(async () => await tableClient.DeleteAsync().ConfigureAwait(false));
+
             // Check that the table was deleted.
-            tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{validTableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            tableResponses = (await service.QueryAsync($"TableName eq '{validTableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
             Assert.That(() => tableResponses, Is.Empty);
         }
 
@@ -102,7 +105,7 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClient using the SAS URI.
             TableClient sasTableclient =
-                InstrumentClient(new TableClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
+                InstrumentClient(new TableClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TablesClientOptions())));
 
             // Validate that we are able to query the table from the service.
 
@@ -150,7 +153,7 @@ namespace Azure.Data.Tables.Tests
             // Create the TableServiceClient using the SAS URI.
             // Intentionally add the SAS to the endpoint arg as well as the credential to validate de-duping
             TableClient sasTableclient =
-                InstrumentClient(new TableClient(sasUri.Uri, new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
+                InstrumentClient(new TableClient(sasUri.Uri, new AzureSasCredential(token), InstrumentClientOptions(new TablesClientOptions())));
 
             // Validate that we are able to query the table from the service.
 
@@ -203,7 +206,7 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClient using the SAS URI.
             var sasAuthedService =
-                InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
+                InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TablesClientOptions())));
             var sasTableclient = sasAuthedService.GetTableClient(tableName);
 
             // Insert the entities
@@ -269,7 +272,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'")
+            entityResults = await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
@@ -291,7 +294,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'")
+            entityResults = await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
@@ -319,7 +322,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var entityToUpdate = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var entityToUpdate = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -328,7 +331,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the updated entity from the service.
 
-            var updatedEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var updatedEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -356,7 +359,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var originalEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
             originalEntity[propertyName] = updatedValue;
@@ -367,7 +370,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the updated entity from the service.
 
-            var updatedEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var updatedEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -388,7 +391,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the newly updated entity from the service.
 
-            updatedEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            updatedEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -416,7 +419,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var originalEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
             originalEntity[propertyName] = updatedValue;
@@ -427,7 +430,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the updated entity from the service.
 
-            var updatedEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var updatedEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -448,7 +451,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the newly updated entity from the service.
 
-            updatedEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            updatedEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -478,7 +481,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var originalEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -491,7 +494,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the updated entity from the service.
 
-            var mergedEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var mergedEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -507,7 +510,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the updated entity from the service.
 
-            mergedEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            mergedEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -523,8 +526,6 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task EntityDeleteRespectsEtag()
         {
-            string tableName = $"testtable{Recording.GenerateId()}";
-
             const string rowKeyValue = "1";
             const string propertyName = "SomeStringProperty";
             const string originalValue = "This is the original";
@@ -536,18 +537,22 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var originalEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
+
             var staleEtag = originalEntity.ETag;
 
             // Use a wildcard ETag to delete unconditionally.
 
             await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue).ConfigureAwait(false);
 
+            // Ensure that Delete does not throw when the entity does not exist.
+            await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue).ConfigureAwait(false);
+
             // Validate that the entity is deleted.
 
-            var emptyresult = await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var emptyresult = await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
@@ -559,7 +564,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            originalEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -576,7 +581,7 @@ namespace Azure.Data.Tables.Tests
 
             // Validate that the entity is deleted.
 
-            emptyresult = await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            emptyresult = await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
@@ -598,7 +603,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'")
+            entityResults = await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
@@ -636,7 +641,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'")
+            entityResults = await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
@@ -717,7 +722,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'")
+            entityResults = await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
@@ -765,7 +770,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = await client.QueryAsync<TestEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'")
+            entityResults = await client.QueryAsync<TestEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
@@ -793,7 +798,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var entityToUpdate = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var entityToUpdate = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -802,7 +807,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the updated entity from the service.
 
-            var updatedEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var updatedEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -830,7 +835,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var originalEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
             originalEntity[propertyName] = updatedValue;
@@ -841,7 +846,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the updated entity from the service.
 
-            var updatedEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var updatedEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -862,7 +867,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the newly updated entity from the service.
 
-            updatedEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            updatedEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -890,7 +895,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var originalEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
             originalEntity[propertyName] = updatedValue;
@@ -901,7 +906,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the updated entity from the service.
 
-            var updatedEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var updatedEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -922,7 +927,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the newly updated entity from the service.
 
-            updatedEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            updatedEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -947,7 +952,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var originalEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
             var staleEtag = originalEntity.ETag;
@@ -958,7 +963,7 @@ namespace Azure.Data.Tables.Tests
 
             // Validate that the entity is deleted.
 
-            var emptyresult = await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            var emptyresult = await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
@@ -970,7 +975,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            originalEntity = (await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            originalEntity = (await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
@@ -988,7 +993,7 @@ namespace Azure.Data.Tables.Tests
 
             // Validate that the entity is deleted.
 
-            emptyresult = await client.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+            emptyresult = await client.QueryAsync<TableEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
@@ -1013,7 +1018,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = await client.QueryAsync<TestEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'")
+            entityResults = await client.QueryAsync<TestEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
             entityResults.Sort((first, second) => first.IntTypeProperty.CompareTo(second.IntTypeProperty));
@@ -1059,7 +1064,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = await client.QueryAsync<EnumEntity>(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'")
+            entityResults = await client.QueryAsync<EnumEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '01'")
                 .ToEnumerableAsync()
                 .ConfigureAwait(false);
 
@@ -1080,9 +1085,9 @@ namespace Azure.Data.Tables.Tests
         {
             // Create some policies.
 
-            var policyToCreate = new List<SignedIdentifier>
+            var policyToCreate = new List<TableSignedIdentifier>
             {
-                new SignedIdentifier(
+                new TableSignedIdentifier(
                     "MyPolicy",
                     new TableAccessPolicy(
                         new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc),
@@ -1090,11 +1095,11 @@ namespace Azure.Data.Tables.Tests
                         "r"))
             };
 
-            await client.SetAccessPolicyAsync(tableAcl: policyToCreate);
+            await client.SetAccessPolicyAsync(policyToCreate);
 
             // Get the created policy.
 
-            var policies = await client.GetAccessPolicyAsync();
+            var policies = await client.GetAccessPoliciesAsync();
 
             Assert.That(policies.Value[0].Id, Is.EqualTo(policyToCreate[0].Id));
             Assert.That(policies.Value[0].AccessPolicy.ExpiresOn, Is.EqualTo(policyToCreate[0].AccessPolicy.ExpiresOn));

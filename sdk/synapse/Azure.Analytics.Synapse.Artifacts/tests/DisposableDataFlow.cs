@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         public async ValueTask DisposeAsync()
         {
             DataFlowDeleteDataFlowOperation operation = await _client.StartDeleteDataFlowAsync (Name);
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionResponseAsync();
         }
     }
 }

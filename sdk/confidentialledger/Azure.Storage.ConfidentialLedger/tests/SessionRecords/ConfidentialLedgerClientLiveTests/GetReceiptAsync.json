@@ -1,0 +1,153 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://lyshi-sdk-ledger-2.eastus.cloudapp.azure.com/app/transactions?api-version=0.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ee783874a47ecf4f8960b97a4a953f87-4a56e9fbb905904c-00",
+        "User-Agent": [
+          "azsdk-net-Storage.ConfidentialLedger/1.0.1-alpha.20210505.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "2ad73a22d2abe6b0feac66fc4df55aad",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "130",
+        "Content-Type": "application/json",
+        "x-ms-ccf-transaction-id": "8.4141"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022@nextLink\u0022: \u0022/app/transactions?api-version=0.1-preview\u0026subLedgerId=subledger:0\u0026fromTransactionId=2.1\u0022,\n",
+        "  \u0022state\u0022: \u0022Loading\u0022\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://lyshi-sdk-ledger-2.eastus.cloudapp.azure.com/app/transactions?api-version=0.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fd0e13797a93c848b4cd40a871a74670-ab6d22a2f2436648-00",
+        "User-Agent": [
+          "azsdk-net-Storage.ConfidentialLedger/1.0.1-alpha.20210505.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "a44b132f57ee35748c7453d7fa8024b2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "130",
+        "Content-Type": "application/json",
+        "x-ms-ccf-transaction-id": "8.4141"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022@nextLink\u0022: \u0022/app/transactions?api-version=0.1-preview\u0026subLedgerId=subledger:0\u0026fromTransactionId=2.1\u0022,\n",
+        "  \u0022state\u0022: \u0022Loading\u0022\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://lyshi-sdk-ledger-2.eastus.cloudapp.azure.com/app/transactions?api-version=0.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f25e2144466bfb4b9396467aca02c538-d8e3462d34b40c42-00",
+        "User-Agent": [
+          "azsdk-net-Storage.ConfidentialLedger/1.0.1-alpha.20210505.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "f64d7caa4827a266d9d9e2574601b55f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "405",
+        "Content-Type": "application/json",
+        "x-ms-ccf-transaction-id": "8.4141"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022@nextLink\u0022: \u0022/app/transactions?api-version=0.1-preview\u0026subLedgerId=subledger:0\u0026fromTransactionId=2.102\u0022,\n",
+        "  \u0022entries\u0022: [\n",
+        "    {\n",
+        "      \u0022contents\u0022: \u0022Test entry from Python SDK\u0022,\n",
+        "      \u0022subLedgerId\u0022: \u0022subledger:0\u0022,\n",
+        "      \u0022transactionId\u0022: \u00222.23\u0022\n",
+        "    },\n",
+        "    {\n",
+        "      \u0022contents\u0022: \u0022Test entry 2 from Python SDK\u0022,\n",
+        "      \u0022subLedgerId\u0022: \u0022subledger:0\u0022,\n",
+        "      \u0022transactionId\u0022: \u00222.25\u0022\n",
+        "    }\n",
+        "  ],\n",
+        "  \u0022state\u0022: \u0022Ready\u0022\n",
+        "}"
+      ]
+    },
+    {
+      "RequestUri": "https://lyshi-sdk-ledger-2.eastus.cloudapp.azure.com/app/transactions/2.23/receipt?api-version=0.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d1595a0191a71149b46a9e8095c3e635-1373c46f428fe445-00",
+        "User-Agent": [
+          "azsdk-net-Storage.ConfidentialLedger/1.0.1-alpha.20210505.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "154c5ceae505cbfac6a29e367ed9ec7e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "893",
+        "Content-Type": "application/json",
+        "x-ms-ccf-transaction-id": "8.4141"
+      },
+      "ResponseBody": [
+        "{\n",
+        "  \u0022receipt\u0022: {\n",
+        "    \u0022leaf\u0022: \u002257486fff22b7ba9c8b610d1655e2bf392e527966da450e0bc5da7d778d1e9e4b\u0022,\n",
+        "    \u0022node_id\u0022: \u0022d115c6b83f3728dea4daec1f51a7d0bfc23d9d240d013d6b09ff5c63256599ba\u0022,\n",
+        "    \u0022proof\u0022: [\n",
+        "      {\n",
+        "        \u0022left\u0022: \u0022d3c10d6d731c46ed11e7c00aaed23efb327ab2d56da0d5936b86dc13622af62f\u0022\n",
+        "      },\n",
+        "      {\n",
+        "        \u0022left\u0022: \u002283492fbc8477b373c31ed707d98155e04abdb1bc004efb4925a5b0be4847ba8a\u0022\n",
+        "      },\n",
+        "      {\n",
+        "        \u0022left\u0022: \u0022c0b9197739f8ef8b514a5f047c22c62366f9b6aac8f8ddf6004142e8db536cd9\u0022\n",
+        "      },\n",
+        "      {\n",
+        "        \u0022left\u0022: \u0022d85d87fefd18fbe250e5d557891070ccf7bea11217a2ee76675d984d51bf3306\u0022\n",
+        "      }\n",
+        "    ],\n",
+        "    \u0022root\u0022: \u00222c72679a5fad492d12a79a1c7bd767fc366665ae56752c14cec738c3f3a580c8\u0022,\n",
+        "    \u0022signature\u0022: \u0022MGUCMQDAz1OmrMcbB\u002BXX/HF65F92zmxG0YFg/SMVG1ZdNE\u002BjMk7hPRkxWBrpFmu2b0dTTxQCMGBc4d3QsnZey9mV5voDFoeoMQPi87aHiSS8tk3QV3u0Jj3JE4IYS6Y5xwR7YYdskA==\u0022\n",
+        "  },\n",
+        "  \u0022state\u0022: \u0022Ready\u0022,\n",
+        "  \u0022transactionId\u0022: \u00222.23\u0022\n",
+        "}"
+      ]
+    }
+  ],
+  "Variables": {
+    "CONFIDENTIALLEDGER_IDENTITY_URL": "https://identity.accledger.azure.com/ledgerIdentity/lyshi-sdk-ledger-2",
+    "CONFIDENTIALLEDGER_URL": "https://lyshi-sdk-ledger-2.eastus.cloudapp.azure.com",
+    "RandomSeed": "720381566"
+  }
+}

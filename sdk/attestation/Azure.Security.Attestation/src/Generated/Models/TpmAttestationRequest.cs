@@ -8,7 +8,7 @@
 namespace Azure.Security.Attestation
 {
     /// <summary> Attestation request for Trusted Platform Module (TPM) attestation. </summary>
-    internal partial class TpmAttestationRequest
+    public partial class TpmAttestationRequest
     {
         /// <summary> Initializes a new instance of TpmAttestationRequest. </summary>
         public TpmAttestationRequest()

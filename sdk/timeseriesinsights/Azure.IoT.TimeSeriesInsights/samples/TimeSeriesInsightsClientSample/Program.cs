@@ -41,9 +41,6 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             // Run the samples
 
-            var tsiLifecycleSamples = new TimeSeriesInsightsLifecycleSamples(tsiClient, options.TsiEnvironmentFqdn);
-            await tsiLifecycleSamples.RunSamplesAsync();
-
             var tsiInstancesSamples = new InstancesSamples();
             await tsiInstancesSamples.RunSamplesAsync(tsiClient);
 
@@ -74,7 +71,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             #region Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret
 
-            // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+            // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based on the environment it is executing in.
             // It attempts to use multiple credential types in an order until it finds a working credential.
             var tokenCredential = new DefaultAzureCredential();
 
