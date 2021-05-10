@@ -865,7 +865,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 WriteEvent(ProcessorStoppingAcceptSessionCanceledEvent, fullyQualifiedNamespace, entityPath, exception);
             }
         }
-        
+
         [Event(ProcessorAcceptSessionTimeoutEvent, Level = EventLevel.Verbose, Message = "The processor accept session call timed out. It will be tried again. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
         public virtual void ProcessorAcceptSessionTimeout(
             string fullyQualifiedNamespace,
