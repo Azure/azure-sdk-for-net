@@ -2,11 +2,11 @@
 
 ## Introduction
 
-Most Azure SDK Clients expose methods that take 'model' parameters, C# classes which map to the input\output of a REST JSON API call.
+Most Azure SDK Clients expose methods that take 'model' parameters, C# classes which map to the request or response content of the REST call.
 
 Imagine a service that stores information about pets, with a GetDog and SetDog pair of operations. 
 
-Pets are represented in the request by a JSON hash:
+Pets are represented in the request by a JSON object:
 
 ```json
 {
@@ -19,6 +19,7 @@ Pets are represented in the request by a JSON hash:
 An API using models might be:
 
 ```csharp
+        // This is an example model class
         public class Pet
         {
                 string Name { get; }
@@ -75,11 +76,18 @@ Protocol methods need a JSON object of the shape required by the service in ques
 See the specific service documentation for details, but as an example:
 
 ```csharp
-        var data = new Dictionary<string, object> {
-                ["name"] = "Buddy",
-                ["id"] = 2,
-                ["color"] = "Brown"
+	var data = new {
+                name = "Buddy",
+                id = 2,
+                color = "Brown"
         };
+        /*
+        {
+            "name": "Buddy",
+            "id": 2,
+            "color": "Brown"
+        }
+        */
         client.SetDog(RequestContent.Create(data));
 ```
 
@@ -90,8 +98,8 @@ Protocol methods all return a `Response` object which contains information retur
 The most important field on Response indicates the status code returned:
 
 ```csharp
-        Response response = client.GetDog(RequestContent.Create(new Dictionary<string, object> {
-                ["name"] = "Buddy"
+        Response response = client.GetDog(RequestContent.Create(new {
+                name = "Buddy"
         }));
         int code = response.Status;
 ```
@@ -108,8 +116,8 @@ Protocol methods allow customization of exception behavior by use of the optiona
 
 ```csharp
         RequestOptions options = new RequestOptions (ResponseStatusOption.NoThrow);
-        Response response = client.GetDog(RequestContent.Create(new Dictionary<string, object> {
-                ["name"] = "Buddy"
+        Response response = client.GetDog(RequestContent.Create(new {
+                name = "Buddy"
         }), options);
         int code = response.Status;
 ```
@@ -119,8 +127,8 @@ Some service methods return detailed information within the response. An easy wa
 See the service documentation for details, but as an example:
 
 ```csharp
-        Response response = client.GetDog(RequestContent.Create(new Dictionary<string, object> {
-                ["name"] = "Buddy"
+        Response response = client.GetDog(RequestContent.Create(new {
+                name = "Buddy"
         }));
         var doc = JsonDocument.Parse(result.Content.ToMemory());
         var responseBody = JsonData.FromBytes(response.Content.ToMemory());
@@ -133,7 +141,7 @@ The `RequestOptions` type also allows easy access to callbacks when a request is
 
 ```csharp
         RequestOptions options = new RequestOptions (message => Console.WriteLine ("Sending dog request: " + message)));
-        return client.GetDog(RequestContent.Create(new Dictionary<string, object> {
-                ["name"] = "Buddy"
+        return client.GetDog(RequestContent.Create(new {
+                name = "Buddy"
         }), options);
 ```
