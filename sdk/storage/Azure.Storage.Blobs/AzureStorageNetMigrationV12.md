@@ -486,15 +486,15 @@ v12 samples:
 
 The modern SDK requires you to hold onto metadata and update it approprately before sending off. You cannot just add a new key-value pair, you must update the collection and send the collection.
 
-```csharp
-IDictionary<string, string> metadata = blobClient.GetProperties().Metadata;
+```C# Snippet:SampleSnippetsBlobMigration_EditMetadata
+IDictionary<string, string> metadata = blobClient.GetProperties().Value.Metadata;
 metadata.Add("foo", "bar");
 blobClient.SetMetadata(metadata);
 ```
 
 Additionally with blob content edits, if your blobs have metadata you need to get the metadata and reupload with that metadata, telling the service what metadata goes with this new blob state.
 
-```csharp
+```C# Snippet:SampleSnippetsBlobMigration_EditBlobWithMetadata
 // download blob content and metadata
 BlobDownloadResult blobData = blobClient.DownloadContent();
 
