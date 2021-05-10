@@ -40,7 +40,7 @@ parameters:
   default: not-specified
 - name: Project
   type: string
-  default: '**'
+  default: not-specified
 - name: TestSetupSteps
   type: stepList
   default: []
