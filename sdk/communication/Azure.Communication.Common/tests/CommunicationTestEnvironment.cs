@@ -30,9 +30,9 @@ namespace Azure.Communication.Tests
 
         public string CommunicationTestPhoneNumber => GetVariable(AzurePhoneNumber);
 
-        public string SkipSmsTest => GetRecordedVariable(SkipSmsTestEnvironmentVariableName);
+        public string SkipSmsTest => GetOptionalVariable(SkipSmsTestEnvironmentVariableName) ?? "False";
 
-        public string SkipPhoneNumbersTest => GetRecordedVariable(SkipPhoneNumbersTestEnvironmentVariableName);
+        public string SkipPhoneNumbersTest => GetOptionalVariable(SkipPhoneNumbersTestEnvironmentVariableName) ?? "False";
 
         public virtual string ExpectedTestPackagesEnabled { get { return TestPackagesEnabledDefaultValue; } }
 
