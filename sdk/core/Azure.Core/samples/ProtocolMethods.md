@@ -27,17 +27,17 @@ An API using models might be:
                 string Color { get; }
         }
 
-        Task<Response<Pet>> GetDog(string dogName);
-        Task<Response> SetDog(Pet dog);
+        Response<Pet> GetDog(string dogName);
+        Response SetDog(Pet dog);
 ```
 
-Some SDK Clients however expose methods which often take `RequestContent` parameters and return `Response` instead.
+Some SDK Clients however expose methods which take a RequestContent instead of a model type, and return Response instead of returning Response<Model>.
 
 For example:
 
 ```csharp
-        Task<Response> GetDog(RequestContent requestBody, RequestOptions options = default);
-        Task<Response> SetDog(RequestContent requestBody, RequestOptions options = default);
+        Response GetDog(RequestContent requestBody, RequestOptions options = default);
+        Response SetDog(RequestContent requestBody, RequestOptions options = default);
 ```
 
 Those methods are called '**protocol methods**', as they provide more direct access to the REST protocol used by the client library.
@@ -67,8 +67,6 @@ var credential = new AzureKeyCredential(/*..*/);
 var client = new PetsClient(endpoint, credential);
 ```
 
-The only difference is that sometimes these clients will be more specific in the credential required ('AzureKeyCredential' or 'TokenCredential' for example).
-
 ## 2. Create and Send a Request
 
 Protocol methods need a JSON object of the shape required by the service in question.
@@ -95,16 +93,16 @@ See the specific service documentation for details, but as an example:
 
 Protocol methods all return a `Response` object which contains information returned from the service request. 
 
-The most important field on Response indicates the status code returned:
+The most important field on Response contains the REST content returned from the service:
 
 ```csharp
         Response response = client.GetDog(RequestContent.Create(new {
                 name = "Buddy"
         }));
-        int code = response.Status;
+        var content = response.Content;
 ```
 
-Protocol methods, just like other methods that use models, throw a C# exception when an error code is returned.
+Protocol methods, just like other methods that use models, throw a C# exception when an error code is returned. This default behavior can be changed using RequestOptions discussed below.
 
 ## Using `RequestOptions` to customize behavior
 
@@ -137,7 +135,7 @@ See the service documentation for details, but as an example:
 
 ### Request Callback
 
-The `RequestOptions` type also allows easy access to callbacks when a request is sent:
+The `RequestOptions` type also allows registering for a callback that is called when the request is sent:
 
 ```csharp
         RequestOptions options = new RequestOptions (message => Console.WriteLine ("Sending dog request: " + message)));
