@@ -114,7 +114,7 @@ Protocol methods allow customization of exception behavior by use of the optiona
         int code = response.Status;
 ```
 
-Some service methods return detailed information within the response. The an easy way to access that is to convert it to `JsonDocument`.
+Some service methods return detailed information within the response. An easy way to access that is to convert it to `JsonDocument`.
 
 See the service documentation for details, but as an example:
 
