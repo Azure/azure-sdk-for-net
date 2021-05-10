@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Core
                 cancellationToken);
         }
 
-        private static GenericResourceContainer GetRestClient(ResourceOperationsBase resourceOperations)
+        private static GenericResourceContainer GetGenericResourceContainer(ResourceOperationsBase resourceOperations)
         {
             var subscription = resourceOperations.Id as SubscriptionResourceIdentifier;
             return new GenericResourceContainer(new ClientContext(resourceOperations.ClientOptions, resourceOperations.Credential, resourceOperations.BaseUri, resourceOperations.Pipeline), subscription);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Core
             int? top = null,
             CancellationToken cancellationToken = default)
         {
-            var restClient = GetRestClient(resourceOperations);
+            var restClient = GetGenericResourceContainer(resourceOperations);
             AsyncPageable<GenericResource> result;
             if (scopeFilter == null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Core
             int? top = null,
             CancellationToken cancellationToken = default)
         {
-            var restClient = GetRestClient(resourceOperations);
+            var restClient = GetGenericResourceContainer(resourceOperations);
             Pageable<GenericResource> result;
             if (scopeFilter == null)
             {
