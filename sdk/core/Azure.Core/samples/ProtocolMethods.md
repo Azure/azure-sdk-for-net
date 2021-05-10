@@ -2,11 +2,19 @@
 
 ## Introduction
 
-Most Azure SDK Clients expose methods that take 'model' parameters, C# classes which map to the request or response content of the REST call.
+Azure SDK clients provide an interface to Azure services by translating API requests to REST API calls. When there's a schematized body in the request or response we call this a 'model' in the REST API.
 
-Imagine a service that stores information about pets, with a GetDog and SetDog pair of operations. 
+There are two different ways this rest 'model' can be exposed in the Azure SDK client:
 
-Pets are represented in the request by a JSON object:
+Most Azure SDK Clients expose methods that take ['model types'](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-model-types) as parameters, C# classes which map to the request or response body of the REST call. Those methods can be called '**standard model methods**',
+
+However, some clients expose methods that mirror the REST API directly. Those methods are called '**protocol methods**', as they provide more direct access to the REST protocol used by the client library.
+
+### Pet's Example 
+
+To compare the two approaches, imagine a service that stores information about pets, with a GetDog and SetDog pair of operations. 
+
+Pets are represented in the request as a JSON object:
 
 ```json
 {
@@ -16,7 +24,7 @@ Pets are represented in the request by a JSON object:
 }
 ```
 
-An API using models might be:
+An API using model types could be:
 
 ```csharp
         // This is an example model class
@@ -31,18 +39,30 @@ An API using models might be:
         Response SetDog(Pet dog);
 ```
 
-Some SDK Clients however expose methods which take a RequestContent instead of a model type, and return Response instead of returning Response&lt;Model&gt;.
+While the protocol methods version would be:
 
 For example:
 
 ```csharp
+        // Request: {
+        //      "name": "Buddy",
+        // }
+        // Response: {
+        //      "name": "Buddy",
+        //      "id": 2,
+        //      "color": "Brown"
+        // }
         Response GetDog(RequestContent requestBody, RequestOptions options = default);
+        // Request: {
+        //      "name": "Buddy",
+        //      "id": 2,
+        //      "color": "Brown"
+        // }
+        // Response: {}
         Response SetDog(RequestContent requestBody, RequestOptions options = default);
 ```
 
-Those methods are called '**protocol methods**', as they provide more direct access to the REST protocol used by the client library.
-
-This quick start is designed to review their use.
+This document will be a quickstart in using SDK Clients that expose 'protocol methods'.
 
 ## Usage
 
