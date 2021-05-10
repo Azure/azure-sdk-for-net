@@ -362,7 +362,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             // Filter out Azure SDK and custom processor logs for easier validation.
             logMessages = logMessages.Where(
-                m => !m.Category.StartsWith("Azure.") &&
+                m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCulture) &&
                      m.Category != CustomMessagingProvider.CustomMessagingCategory);
 
             string[] consoleOutputLines = logMessages

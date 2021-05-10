@@ -261,13 +261,12 @@ namespace Azure.Messaging.ServiceBus
                 while (!_sessionCancellationSource.Token.IsCancellationRequested)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
-                    // ReSharper disable once CA1826
-#pragma warning disable CA1826 // Do not use Enumerable methods on indexable collections
-                    ServiceBusReceivedMessage message = (await _receiver.ReceiveMessagesAsync(
+                    IReadOnlyList<ServiceBusReceivedMessage> messages = await Receiver.ReceiveMessagesAsync(
                         maxMessages: 1,
                         maxWaitTime: _maxReceiveWaitTime,
-                        isProcessor: true, cancellationToken: _sessionCancellationSource.Token).ConfigureAwait(false)).FirstOrDefault();
-#pragma warning restore CA1826 // Do not use Enumerable methods on indexable collections
+                        isProcessor: true,
+                        cancellationToken: _sessionCancellationSource.Token).ConfigureAwait(false);
+                    ServiceBusReceivedMessage message = messages.Count == 0 ? null : messages[0];
                     if (message == null)
                     {
                         // Break out of the loop to allow a new session to

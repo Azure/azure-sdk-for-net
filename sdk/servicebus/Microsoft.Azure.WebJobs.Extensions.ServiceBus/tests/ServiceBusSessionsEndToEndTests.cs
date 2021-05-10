@@ -305,7 +305,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.False(logMessages.Any(p => p.Level == LogLevel.Error));
 
             // Filter out Azure SDK and custom processor logs for easier validation.
-            return logMessages.Where(m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCultureIgnoreCase)).ToList();
+            return logMessages.Where(m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCulture)).ToList();
         }
 
         [Test]

@@ -51,7 +51,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 retryPolicy: Mock.Of<ServiceBusRetryPolicy>(),
                 identifier: "someIdentifier",
                 sessionId: default,
-                isSessionReceiver: default, isProcessor: false, cancellationToken: CancellationToken.None),
+                isSessionReceiver: default,
+                isProcessor: false,
+                cancellationToken: CancellationToken.None),
                 Throws.InstanceOf<ArgumentException>());
         }
 
@@ -70,7 +72,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 retryPolicy: Mock.Of<ServiceBusRetryPolicy>(),
                 identifier: "someIdentifier",
                 sessionId: default,
-                isSessionReceiver: default, isProcessor: false,
+                isSessionReceiver: default,
+                isProcessor: false,
                 cancellationToken: CancellationToken.None),
             Throws.InstanceOf<ArgumentNullException>());
         }
@@ -90,7 +93,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 retryPolicy: null,
                 identifier: "someIdentifier",
                 sessionId: default,
-                isSessionReceiver: default, isProcessor: false,
+                isSessionReceiver: default,
+                isProcessor: false,
                 cancellationToken: CancellationToken.None),
             Throws.InstanceOf<ArgumentNullException>());
         }

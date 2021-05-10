@@ -85,12 +85,12 @@ namespace Azure.Messaging.ServiceBus
                 while (!cancellationToken.IsCancellationRequested && !Processor.Connection.IsClosed)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
-#pragma warning disable CA1826 // Do not use Enumerable methods on indexable collections
-                    ServiceBusReceivedMessage message = (await Receiver.ReceiveMessagesAsync(
+                    IReadOnlyList<ServiceBusReceivedMessage> messages = await Receiver.ReceiveMessagesAsync(
                         maxMessages: 1,
                         maxWaitTime: _maxReceiveWaitTime,
-                        isProcessor: true, cancellationToken: cancellationToken).ConfigureAwait(false)).FirstOrDefault();
-#pragma warning restore CA1826 // Do not use Enumerable methods on indexable collections
+                        isProcessor: true,
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ServiceBusReceivedMessage message = messages.Count == 0 ? null : messages[0];
                     if (message == null)
                     {
                         continue;

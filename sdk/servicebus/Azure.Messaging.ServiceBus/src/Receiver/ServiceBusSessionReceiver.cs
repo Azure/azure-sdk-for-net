@@ -76,7 +76,7 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
             catch (TaskCanceledException exception)
-            when (isProcessor)
+                when (isProcessor)
             {
                 receiver.Logger.ProcessorStoppingAcceptSessionCanceled(receiver.FullyQualifiedNamespace, entityPath, exception.ToString());
                 throw;

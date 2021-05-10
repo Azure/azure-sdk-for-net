@@ -391,7 +391,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = CreateNoRetryClient();
+                await using var client = CreateNoRetryClient(5);
                 await using var processor = client.CreateSessionProcessor(scope.QueueName);
 
                 processor.ProcessMessageAsync += args => Task.CompletedTask;
@@ -400,7 +400,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
 
                 // wait twice as long as the try timeout to ensure that the Accept session will timeout
-                await Task.Delay(TimeSpan.FromSeconds(20));
+                await Task.Delay(TimeSpan.FromSeconds(10));
 
                 await processor.StopProcessingAsync();
 
@@ -416,7 +416,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = CreateNoRetryClient();
+                await using var client = CreateNoRetryClient(5);
                 await using var processor = client.CreateProcessor(scope.QueueName);
 
                 processor.ProcessMessageAsync += args => Task.CompletedTask;
@@ -425,7 +425,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
 
                 // wait twice as long as the try timeout to ensure that the Accept session will timeout
-                await Task.Delay(TimeSpan.FromSeconds(20));
+                await Task.Delay(TimeSpan.FromSeconds(10));
 
                 await processor.StopProcessingAsync();
 
@@ -440,7 +440,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = CreateNoRetryClient();
+                await using var client = CreateNoRetryClient(5);
                 await using var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     new ServiceBusSessionProcessorOptions
@@ -455,7 +455,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
 
                 // wait twice as long as the try timeout to ensure that the Accept session will timeout
-                await Task.Delay(TimeSpan.FromSeconds(20));
+                await Task.Delay(TimeSpan.FromSeconds(10));
 
                 await processor.StopProcessingAsync();
 
