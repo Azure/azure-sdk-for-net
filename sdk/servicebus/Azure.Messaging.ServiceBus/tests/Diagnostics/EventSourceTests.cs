@@ -328,7 +328,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             mockTransportReceiver.Setup(
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
-                    It.IsAny<TimeSpan?>(), false,
+                    It.IsAny<TimeSpan?>(),
+                    false,
                     It.IsAny<CancellationToken>()))
                 .Returns(
                 Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>)
@@ -377,7 +378,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             mockTransportReceiver.Setup(
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     maxMessages,
-                    It.IsAny<TimeSpan?>(), false,
+                    It.IsAny<TimeSpan?>(),
+                    false,
                     It.IsAny<CancellationToken>()))
                 .Returns(
                 Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>)
@@ -432,7 +434,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             mockTransportReceiver.Setup(
                 transportReceiver => transportReceiver.ReceiveMessagesAsync(
                     1,
-                    It.IsAny<TimeSpan?>(), false,
+                    It.IsAny<TimeSpan?>(),
+                    false,
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
             var receiver = new ServiceBusReceiver(

@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="maximumMessageCount">The maximum number of messages that will be received.</param>
         /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.
         ///     If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
-        /// <param name="isProcessor"></param>
+        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public abstract Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(

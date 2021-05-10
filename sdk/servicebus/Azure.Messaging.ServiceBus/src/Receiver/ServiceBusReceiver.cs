@@ -124,7 +124,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
         /// <param name="sessionId">An optional session Id to scope the receiver to. If not specified,
         ///     the next available session returned from the service will be used.</param>
-        /// <param name="isProcessor"></param>
+        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">The cancellation token to use when opening the receiver link.</param>
         internal ServiceBusReceiver(
             ServiceBusConnection connection,

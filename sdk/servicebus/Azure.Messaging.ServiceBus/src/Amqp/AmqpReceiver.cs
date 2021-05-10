@@ -276,7 +276,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
-        public override async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(int maxMessages,
+        public override async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
+            int maxMessages,
             TimeSpan? maxWaitTime,
             bool isProcessor,
             CancellationToken cancellationToken)
@@ -1405,7 +1406,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         /// Opens an AMQP link for use with receiver operations.
         /// </summary>
-        /// <param name="isProcessor"></param>
+        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task OpenLinkAsync(bool isProcessor, CancellationToken cancellationToken)
