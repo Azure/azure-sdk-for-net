@@ -3,6 +3,7 @@
     <SDKType Condition="'$(SDKType)' == ''">all</SDKType>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == '' and '$(Scope)' != ''">$(Scope)</ServiceDirectory>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == ''">*</ServiceDirectory>
+    <ServiceDirectory Condition="'$(Project)' == ''">**</ServiceDirectory>
     <IncludeTests Condition="'$(IncludeTests)' == ''">true</IncludeTests>
     <IncludeSrc Condition="'$(IncludeSrc)' == ''">true</IncludeSrc>
     <IncludeSamples Condition="'$(IncludeSamples)' == ''">true</IncludeSamples>
