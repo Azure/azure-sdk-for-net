@@ -554,15 +554,15 @@ Use `Queries` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-f
 - Computed values and the associated event timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
 - Aggregated values and the associated interval timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
 
-Response for the `Query` APIs are of type `QueryAnalyzer`. The QueryAnalyzer allows a developer to query for pages of results, while being able to perform operations on the result set as a whole. For example, to get a list of `TimeSeriesPoint` in pages, call the `GetResultsAsync` method on the `QueryAnalyzer` object. You can enumerate an AsyncPageable object using the `async foreach` loop.
+Response for the `Query` APIs are of type `TimeSeriesQuery`. The TimeSeriesQuery allows a developer to query for pages of results, while being able to perform operations on the result set as a whole. For example, to get a list of `TimeSeriesPoint` in pages, call the `GetResultsAsync` method on the `TimeSeriesQuery` object. You can enumerate an AsyncPageable object using the `async foreach` loop.
 
 This code snippet demonstrates querying for raw events with using a time span interval.
 
 ```C# Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
 Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
 
-QueryAnalyzer humidityEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, TimeSpan.FromSeconds(30));
-await foreach (TimeSeriesPoint point in humidityEventsQueryAnalyzer.GetResultsAsync())
+TimeSeriesQuery humidityEventsQuery = client.Queries.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
+await foreach (TimeSeriesPoint point in humidityEventsQuery.GetResultsAsync())
 {
     TimeSeriesValue humidityValue = point.GetValue("Humidity");
 
@@ -594,8 +594,8 @@ Console.WriteLine("\n\nQuery for raw temperature events over the past 10 minutes
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);
 
-QueryAnalyzer temperatureEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, startTime, endTime);
-await foreach (TimeSeriesPoint point in temperatureEventsQueryAnalyzer.GetResultsAsync())
+TimeSeriesQuery temperatureEventsQuery = client.Queries.CreateEventsQuery(tsId, startTime, endTime);
+await foreach (TimeSeriesPoint point in temperatureEventsQuery.GetResultsAsync())
 {
     TimeSeriesValue temperatureValue = point.GetValue("Temperature");
 
@@ -627,12 +627,12 @@ Console.WriteLine($"\n\nQuery for temperature series in Celsius and Fahrenheit o
 
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);
-QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
+TimeSeriesQuery seriesQuery = client.Queries.CreateSeriesQuery(
     tsId,
     startTime,
     endTime);
 
-await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
+await foreach (TimeSeriesPoint point in seriesQuery.GetResultsAsync())
 {
     double? tempInCelsius = (double?)point.GetValue(celsiusVariableName);
     double? tempInFahrenheit = (double?)point.GetValue(fahrenheitVariableName);
@@ -658,13 +658,13 @@ var querySeriesRequestOptions = new QuerySeriesRequestOptions();
 querySeriesRequestOptions.InlineVariables["TemperatureInCelsius"] = celsiusVariable;
 querySeriesRequestOptions.InlineVariables["TemperatureInFahrenheit"] = fahrenheitVariable;
 
-QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
+TimeSeriesQuery seriesQuery = client.Queries.CreateSeriesQuery(
     tsId,
     TimeSpan.FromMinutes(10),
     null,
     querySeriesRequestOptions);
 
-await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
+await foreach (TimeSeriesPoint point in seriesQuery.GetResultsAsync())
 {
     double? tempInCelsius = (double?)point.GetValue("TemperatureInCelsius");
     double? tempInFahrenheit = (double?)point.GetValue("TemperatureInFahrenheit");
@@ -689,16 +689,16 @@ var countVariableName = "Count";
 
 var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
 aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
-aggregateSeriesRequestOptions.ProjectedVariables.Add(countVariableName);
+aggregateSeriesRequestOptions.ProjectedVariableNames.Add(countVariableName);
 
-QueryAnalyzer aggregateSeriesQueryAnalyzer = client.Queries.CreateAggregateSeriesQueryAnalyzer(
+TimeSeriesQuery query = client.Queries.CreateAggregateSeriesQuery(
     tsId,
     startTime,
     endTime,
     TimeSpan.FromSeconds(60),
     aggregateSeriesRequestOptions);
 
-await foreach (TimeSeriesPoint point in aggregateSeriesQueryAnalyzer.GetResultsAsync())
+await foreach (TimeSeriesPoint point in query.GetResultsAsync())
 {
     long? temperatureCount = (long?)point.GetValue(countVariableName);
     Console.WriteLine($"{point.Timestamp} - Temperature count: {temperatureCount}");

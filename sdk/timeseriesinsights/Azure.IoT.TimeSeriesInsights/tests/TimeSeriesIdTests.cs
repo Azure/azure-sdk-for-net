@@ -154,5 +154,32 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             // Assert
             idAsArray.Should().Equal(new string[] { key1, key2, key3 });
         }
+
+        [Test]
+        public void TimeSeriesId_IdsEqual()
+        {
+            // Arrange
+            var tsiId1 = new TimeSeriesId("B17", "F1");
+            var tsiId2 = new TimeSeriesId("B17", "F1");
+            tsiId1.Equals(tsiId2).Should().BeTrue();
+        }
+
+        [Test]
+        public void TimeSeriesId_IdsNotEqual()
+        {
+            // Arrange
+            var tsiId1 = new TimeSeriesId("B17", "F1");
+            var tsiId2 = new TimeSeriesId("B17", "F2");
+            tsiId1.Equals(tsiId2).Should().BeFalse();
+        }
+
+        [Test]
+        public void TimeSeriesId_IdsWithNullEqual()
+        {
+            // Arrange
+            var tsiId1 = new TimeSeriesId("B17", null, "R1");
+            var tsiId2 = new TimeSeriesId("B17", null, "R1");
+            tsiId1.Equals(tsiId2).Should().BeTrue();
+        }
     }
 }

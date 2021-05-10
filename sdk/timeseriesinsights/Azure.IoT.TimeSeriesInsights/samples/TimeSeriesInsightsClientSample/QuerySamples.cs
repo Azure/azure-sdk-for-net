@@ -55,8 +55,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             DateTimeOffset endTime = DateTime.UtcNow;
             DateTimeOffset startTime = endTime.AddMinutes(-10);
 
-            QueryAnalyzer temperatureEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, startTime, endTime);
-            await foreach (TimeSeriesPoint point in temperatureEventsQueryAnalyzer.GetResultsAsync())
+            TimeSeriesQuery temperatureEventsQuery = client.Queries.CreateEventsQuery(tsId, startTime, endTime);
+            await foreach (TimeSeriesPoint point in temperatureEventsQuery.GetResultsAsync())
             {
                 TimeSeriesValue temperatureValue = point.GetValue("Temperature");
 
@@ -83,8 +83,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #region Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
             Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
 
-            QueryAnalyzer humidityEventsQueryAnalyzer = client.Queries.CreateEventsQueryAnalyzer(tsId, TimeSpan.FromSeconds(30));
-            await foreach (TimeSeriesPoint point in humidityEventsQueryAnalyzer.GetResultsAsync())
+            TimeSeriesQuery humidityEventsQuery = client.Queries.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
+            await foreach (TimeSeriesPoint point in humidityEventsQuery.GetResultsAsync())
             {
                 TimeSeriesValue humidityValue = point.GetValue("Humidity");
 
@@ -171,12 +171,12 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             DateTimeOffset endTime = DateTime.UtcNow;
             DateTimeOffset startTime = endTime.AddMinutes(-10);
-            QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
+            TimeSeriesQuery seriesQuery = client.Queries.CreateSeriesQuery(
                 tsId,
                 startTime,
                 endTime);
 
-            await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
+            await foreach (TimeSeriesPoint point in seriesQuery.GetResultsAsync())
             {
                 double? tempInCelsius = (double?)point.GetValue(celsiusVariableName);
                 double? tempInFahrenheit = (double?)point.GetValue(fahrenheitVariableName);
@@ -204,13 +204,13 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             querySeriesRequestOptions.InlineVariables["TemperatureInCelsius"] = celsiusVariable;
             querySeriesRequestOptions.InlineVariables["TemperatureInFahrenheit"] = fahrenheitVariable;
 
-            QueryAnalyzer seriesQueryAnalyzer = client.Queries.CreateSeriesQueryAnalyzer(
+            TimeSeriesQuery seriesQuery = client.Queries.CreateSeriesQuery(
                 tsId,
                 TimeSpan.FromMinutes(10),
                 null,
                 querySeriesRequestOptions);
 
-            await foreach (TimeSeriesPoint point in seriesQueryAnalyzer.GetResultsAsync())
+            await foreach (TimeSeriesPoint point in seriesQuery.GetResultsAsync())
             {
                 double? tempInCelsius = (double?)point.GetValue("TemperatureInCelsius");
                 double? tempInFahrenheit = (double?)point.GetValue("TemperatureInFahrenheit");
@@ -231,16 +231,16 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             var requestOptions = new QueryAggregateSeriesRequestOptions();
             requestOptions.InlineVariables["Temperature"] = numericVariable;
-            requestOptions.ProjectedVariables.Add("Temperature");
+            requestOptions.ProjectedVariableNames.Add("Temperature");
 
-            QueryAnalyzer queryAggregateSeriesAnalyzer = client.Queries.CreateAggregateSeriesQueryAnalyzer(
+            TimeSeriesQuery aggregateSeriesQuery = client.Queries.CreateAggregateSeriesQuery(
                 tsId,
                 TimeSpan.FromSeconds(2),
                 TimeSpan.FromSeconds(30),
                 null,
                 requestOptions);
 
-            await foreach (TimeSeriesPoint point in queryAggregateSeriesAnalyzer.GetResultsAsync())
+            await foreach (TimeSeriesPoint point in aggregateSeriesQuery.GetResultsAsync())
             {
                 double? averageTemperature = (double?)point.GetValue("Temperature");
                 if (averageTemperature != null)
@@ -264,16 +264,16 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
             aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
-            aggregateSeriesRequestOptions.ProjectedVariables.Add(countVariableName);
+            aggregateSeriesRequestOptions.ProjectedVariableNames.Add(countVariableName);
 
-            QueryAnalyzer aggregateSeriesQueryAnalyzer = client.Queries.CreateAggregateSeriesQueryAnalyzer(
+            TimeSeriesQuery query = client.Queries.CreateAggregateSeriesQuery(
                 tsId,
                 startTime,
                 endTime,
                 TimeSpan.FromSeconds(60),
                 aggregateSeriesRequestOptions);
 
-            await foreach (TimeSeriesPoint point in aggregateSeriesQueryAnalyzer.GetResultsAsync())
+            await foreach (TimeSeriesPoint point in query.GetResultsAsync())
             {
                 long? temperatureCount = (long?)point.GetValue(countVariableName);
                 Console.WriteLine($"{point.Timestamp} - Temperature count: {temperatureCount}");

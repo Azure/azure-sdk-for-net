@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.IoT.TimeSeriesInsights.Tests
 {
-    [LiveOnly]
+    //[LiveOnly]
     public class TimeSeriesInsightsQueryAggregateSeriesTests : E2eTestBase
     {
         private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(30);
@@ -60,12 +60,12 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 var queryAggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
                 queryAggregateSeriesRequestOptions.InlineVariables[QueryTestsHelper.Temperature] = temperatureNumericVariable;
-                queryAggregateSeriesRequestOptions.ProjectedVariables.Add(QueryTestsHelper.Temperature);
+                queryAggregateSeriesRequestOptions.ProjectedVariableNames.Add(QueryTestsHelper.Temperature);
 
                 // This retry logic was added as the TSI instance are not immediately available after creation
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
-                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Queries.CreateAggregateSeriesQueryAnalyzer(
+                    TimeSeriesQuery queryAggregateSeriesPages = tsiClient.Queries.CreateAggregateSeriesQuery(
                         tsiId,
                         startTime,
                         endTime,
@@ -98,7 +98,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     new TimeSeriesExpression($"$event.{QueryTestsHelper.Temperature}"),
                     new TimeSeriesExpression("left($value)"));
 
-                linearInterpolationNumericVariable.Interpolation = new InterpolationOperation
+                linearInterpolationNumericVariable.Interpolation = new TimeSeriesInterpolation
                 {
                     Kind = InterpolationKind.Linear,
                     Boundary = new InterpolationBoundary()
@@ -109,11 +109,11 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 const string linearInterpolation = "linearInterpolation";
                 queryAggregateSeriesRequestOptions.InlineVariables[linearInterpolation] = linearInterpolationNumericVariable;
-                queryAggregateSeriesRequestOptions.ProjectedVariables.Add(linearInterpolation);
+                queryAggregateSeriesRequestOptions.ProjectedVariableNames.Add(linearInterpolation);
 
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
-                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Queries.CreateAggregateSeriesQueryAnalyzer(
+                    TimeSeriesQuery queryAggregateSeriesPages = tsiClient.Queries.CreateAggregateSeriesQuery(
                         tsiId,
                         startTime,
                         endTime,
@@ -155,9 +155,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 // Query for the two events with a filter
                 queryAggregateSeriesRequestOptions.Filter = "$event.Temperature.Double = 1.2";
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
-                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Queries.CreateAggregateSeriesQueryAnalyzer(
+                    TimeSeriesQuery queryAggregateSeriesPages = tsiClient.Queries.CreateAggregateSeriesQuery(
                         tsiId,
                         startTime,
                         endTime,
@@ -226,12 +226,12 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 var queryAggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
                 queryAggregateSeriesRequestOptions.InlineVariables["Count"] = aggregateVariable;
-                queryAggregateSeriesRequestOptions.ProjectedVariables.Add("Count");
+                queryAggregateSeriesRequestOptions.ProjectedVariableNames.Add("Count");
 
                 // This retry logic was added as the TSI instance are not immediately available after creation
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
-                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Queries.CreateAggregateSeriesQueryAnalyzer(
+                    TimeSeriesQuery queryAggregateSeriesPages = tsiClient.Queries.CreateAggregateSeriesQuery(
                         tsiId,
                         startTime,
                         endTime,
@@ -293,9 +293,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 queryAggregateSeriesRequestOptions.InlineVariables["categorical"] = categoricalVariable;
 
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
-                    QueryAnalyzer queryAggregateSeriesPages = tsiClient.Queries.CreateAggregateSeriesQueryAnalyzer(
+                    TimeSeriesQuery queryAggregateSeriesPages = tsiClient.Queries.CreateAggregateSeriesQuery(
                         tsiId,
                         startTime,
                         endTime,

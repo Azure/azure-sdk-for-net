@@ -13,7 +13,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// This parameter in the query defines which store the query should be executed on. If not defined, the query
         /// will be executed on the cold store.
         /// </summary>
-        public StoreType StoreType { get; set; }
+        public StoreType Store { get; set; }
 
         /// <summary>
         /// A Time Series Expression (TSX) filter written as a single string.

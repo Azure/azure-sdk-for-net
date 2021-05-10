@@ -9,9 +9,9 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// The query analyzer allows a user to query for pages of data.
+    /// TimeSeriesQuery allows a user to query for pages of data.
     /// </summary>
-    public class QueryAnalyzer
+    public class TimeSeriesQuery
     {
         private readonly QueryRequest _queryRequest;
         private readonly QueryRestClient _queryClient;
@@ -25,13 +25,13 @@ namespace Azure.IoT.TimeSeriesInsights
         public double? Progress { get; internal set; }
 
         /// <summary>
-        /// Initializes a new instance of the QueryAnalyzer class.
+        /// Initializes a new instance of the TimeSeriesQuery class.
         /// </summary>
         /// <param name="queryClient">The query REST client that talks to the Time Series Insights service.</param>
         /// <param name="queryRequest">The query request payload.</param>
         /// <param name="storeType">The store the query should be executed on.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        internal QueryAnalyzer(QueryRestClient queryClient, QueryRequest queryRequest, string storeType, CancellationToken cancellationToken)
+        internal TimeSeriesQuery(QueryRestClient queryClient, QueryRequest queryRequest, string storeType, CancellationToken cancellationToken)
         {
             _queryRequest = queryRequest;
             _storeType = storeType;
