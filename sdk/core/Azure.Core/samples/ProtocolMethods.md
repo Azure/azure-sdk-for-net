@@ -26,8 +26,8 @@ An API using models might be:
                 string Color { get; }
         }
 
-        Task<Response<Pet>> GetDog(string dogName, CancellationToken cancellation = default);
-        Task<Response> SetDog(Pet dog, CancellationToken cancellation = default);
+        Task<Response<Pet>> GetDog(string dogName);
+        Task<Response> SetDog(Pet dog);
 ```
 
 Some SDK Clients however expose methods which often take `RequestContent` parameters and return `Response` instead.
