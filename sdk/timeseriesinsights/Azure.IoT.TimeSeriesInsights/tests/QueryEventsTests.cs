@@ -105,7 +105,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // Only project Temperature and one of the Id properties
                 var queryRequestOptions = new QueryEventsRequestOptions
                 {
-                    Filter = "$event.Temperature.Double = 1.2",
+                    Filter = new TimeSeriesExpression("$event.Temperature.Double = 1.2"),
                     Store = StoreType.WarmStore,
                 };
                 queryRequestOptions.ProjectedProperties.Add(

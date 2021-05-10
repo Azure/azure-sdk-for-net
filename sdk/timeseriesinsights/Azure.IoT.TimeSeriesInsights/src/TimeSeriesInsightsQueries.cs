@@ -449,7 +449,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 if (options.Filter != null)
                 {
-                    queryRequest.GetEvents.Filter = new TimeSeriesExpression(options.Filter);
+                    queryRequest.GetEvents.Filter = options.Filter;
                 }
 
                 if (options.ProjectedProperties != null)
@@ -470,7 +470,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 if (options.Filter != null)
                 {
-                    queryRequest.GetSeries.Filter = new TimeSeriesExpression(options.Filter);
+                    queryRequest.GetSeries.Filter = options.Filter;
                 }
 
                 if (options.ProjectedVariableNames != null)
@@ -499,7 +499,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 if (options.Filter != null)
                 {
-                    queryRequest.AggregateSeries.Filter = new TimeSeriesExpression(options.Filter);
+                    queryRequest.AggregateSeries.Filter = options.Filter;
                 }
 
                 if (options.ProjectedVariableNames != null)

@@ -154,7 +154,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 sendEventAct.Should().NotThrow();
 
                 // Query for the two events with a filter
-                queryAggregateSeriesRequestOptions.Filter = "$event.Temperature.Double = 1.2";
+                queryAggregateSeriesRequestOptions.Filter = new TimeSeriesExpression("$event.Temperature.Double = 1.2");
                 await TestRetryHelper.RetryAsync<AsyncPageable<TimeSeriesPoint>>(async () =>
                 {
                     TimeSeriesQuery queryAggregateSeriesPages = tsiClient.Queries.CreateAggregateSeriesQuery(

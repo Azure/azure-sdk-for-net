@@ -16,13 +16,13 @@ namespace Azure.IoT.TimeSeriesInsights
         public StoreType Store { get; set; }
 
         /// <summary>
-        /// A Time Series Expression (TSX) filter written as a single string.
+        /// A Time Series Expression (TSX) filter.
         /// Refer to the documentation on how to write Time Series expressions.
         /// </summary>
         /// <remarks>
         /// For filter examples, check out the TSX documentation
         /// <see href="https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax">here.</see>.
         /// </remarks>
-        public string Filter { get; set; }
+        public TimeSeriesExpression Filter { get; set; }
     }
 }

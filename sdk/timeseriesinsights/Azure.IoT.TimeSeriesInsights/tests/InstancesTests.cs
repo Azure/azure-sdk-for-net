@@ -77,24 +77,18 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         instanceResult.Instance.InstanceFields.Count.Should().Be(0);
                     }
 
-                    return null;
-                }, MaxNumberOfRetries, s_retryDelay);
+                    // Update the instances by adding descriptions to them
+                    timeSeriesInstances.ForEach((timeSeriesInstance) =>
+                        timeSeriesInstance.Description = "Description");
 
-                // Update the instances by adding descriptions to them
-                timeSeriesInstances.ForEach((timeSeriesInstance) =>
-                    timeSeriesInstance.Description = "Description");
+                    Response<InstancesOperationResult[]> replaceInstancesResult = await client
+                        .Instances
+                        .ReplaceAsync(timeSeriesInstances)
+                        .ConfigureAwait(false);
 
-                Response<InstancesOperationResult[]> replaceInstancesResult = await client
-                    .Instances
-                    .ReplaceAsync(timeSeriesInstances)
-                    .ConfigureAwait(false);
+                    replaceInstancesResult.Value.Length.Should().Be(timeSeriesInstances.Count);
+                    replaceInstancesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
 
-                replaceInstancesResult.Value.Length.Should().Be(timeSeriesInstances.Count);
-                replaceInstancesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
-
-                // This retry logic was added as the TSI instance are not immediately available after creation
-                await TestRetryHelper.RetryAsync<Response<InstancesOperationResult[]>>(async () =>
-                {
                     // Get instances by name
                     Response<InstancesOperationResult[]> getInstancesByNameResult = await client
                         .Instances
@@ -112,19 +106,18 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         instanceResult.Instance.InstanceFields.Count.Should().Be(0);
                     }
 
+                    // Get all Time Series instances in the environment
+                    AsyncPageable<TimeSeriesInstance> getAllInstancesResponse = client.Instances.GetAsync();
+
+                    int numOfInstances = 0;
+                    await foreach (TimeSeriesInstance tsiInstance in getAllInstancesResponse)
+                    {
+                        numOfInstances++;
+                        tsiInstance.Should().NotBeNull();
+                    }
+                    numOfInstances.Should().BeGreaterOrEqualTo(numOfInstancesToSetup);
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);
-
-                // Get all Time Series instances in the environment
-                AsyncPageable<TimeSeriesInstance> getAllInstancesResponse = client.Instances.GetAsync();
-
-                int numOfInstances = 0;
-                await foreach (TimeSeriesInstance tsiInstance in getAllInstancesResponse)
-                {
-                    numOfInstances++;
-                    tsiInstance.Should().NotBeNull();
-                }
-                numOfInstances.Should().BeGreaterOrEqualTo(numOfInstancesToSetup);
             }
             finally
             {
