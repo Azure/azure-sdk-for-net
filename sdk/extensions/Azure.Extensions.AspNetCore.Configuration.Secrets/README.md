@@ -26,7 +26,7 @@ az keyvault create --name MyVault --resource-group MyResourceGroup --location we
 az keyvault secret set --vault-name MyVault --name MySecret --value "hVFkk965BuUv"
 ```
 
-The identity you are authenticating with has to have "Key Vault Reader" and "Key Vault Secrets User" [roles](https://docs.microsoft.com/en-us/azure/key-vault/general/rbac-guide).
+The identity you are authenticating with has to have "Key Vault Reader" and "Key Vault Secrets User" [roles](https://docs.microsoft.com/azure/key-vault/general/rbac-guide).
 The "Key Vault Reader" role allows the extension to list secrets while "Key Vault Secrets User" allows retrieving their values.
 
 ```powershell
