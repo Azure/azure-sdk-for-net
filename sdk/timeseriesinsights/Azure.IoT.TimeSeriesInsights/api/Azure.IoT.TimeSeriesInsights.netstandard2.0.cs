@@ -69,7 +69,7 @@ namespace Azure.IoT.TimeSeriesInsights
     public abstract partial class QueryRequestOptions
     {
         protected QueryRequestOptions() { }
-        public string Filter { get { throw null; } set { } }
+        public Azure.IoT.TimeSeriesInsights.TimeSeriesExpression Filter { get { throw null; } set { } }
         public Azure.IoT.TimeSeriesInsights.StoreType Store { get { throw null; } set { } }
     }
     public partial class QuerySeriesRequestOptions : Azure.IoT.TimeSeriesInsights.QueryRequestOptions
