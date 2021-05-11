@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -10,6 +11,15 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public partial class SubscriptionData : TrackedResource<SubscriptionResourceIdentifier>
     {
+        /// <summary> Initializes a new instance of Subscription. </summary>
+        internal SubscriptionData(string id,
+            string displayName,
+            IDictionary<string, string> tags,
+            string resourceType = "Microsoft.Resources/subscriptions") : base(id, displayName, resourceType, null, tags)
+        {
+            ManagedByTenants = new ChangeTrackingList<ManagedByTenant>();
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionData"/> class.
         /// </summary>
@@ -23,7 +33,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="authorizationSource"> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, &apos;Legacy, RoleBased&apos;. </param>
         /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
         /// <param name="tags"> The tags attached to the subscription. </param>
-        public SubscriptionData(string id,
+        internal SubscriptionData(string id,
             string displayName,
             string subscriptionId,
             string tenantId,
@@ -33,7 +43,7 @@ namespace Azure.ResourceManager.Core
             IReadOnlyList<ManagedByTenant> managedByTenants,
             IDictionary<string, string> tags,
             string resourceType = "Microsoft.Resources/subscriptions")
-            : base(id, displayName, resourceType, tags, null)
+            : base(id, displayName, resourceType, null, tags)
         {
             Name = displayName;
             SubscriptionGuid = subscriptionId;

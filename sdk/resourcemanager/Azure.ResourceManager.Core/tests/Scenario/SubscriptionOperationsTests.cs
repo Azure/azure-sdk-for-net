@@ -125,14 +125,6 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [RecordedTest]
-        public async Task TestListSubscriptions()
-        {
-            var subOps = Client.DefaultSubscription;
-            var subscriptions = await subOps.ListAsync().ToEnumerableAsync();
-            Assert.IsTrue(subscriptions.Count != 0);
-        }
-
-        [RecordedTest]
         public async Task TestListLocations()
         {
             var subOps = Client.DefaultSubscription;

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Core
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.Core
         internal SubscriptionContainer(ClientContext clientContext)
             : base(clientContext, null)
         {
-            Operations = new SubscriptionOperations(clientContext, Guid.NewGuid().ToString());
+            RestClient = new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline);
         }
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the operations that can be performed on the container.
         /// </summary>
-        private SubscriptionOperations Operations;
+        private SubscriptionsRestOperations RestClient;
 
         /// <summary>
         /// Lists all subscriptions in the current container.
@@ -48,18 +50,37 @@ namespace Azure.ResourceManager.Core
         [ForwardsClientCalls]
         public virtual Pageable<Subscription> List(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
-            scope.Start();
-
-            try
+            Page<Subscription> FirstPageFunc(int? pageSizeHint)
             {
-                return Operations.List(cancellationToken);
+                using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.List(cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<Subscription> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = RestClient.ListNextPage(nextLink, cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -71,18 +92,37 @@ namespace Azure.ResourceManager.Core
         [ForwardsClientCalls]
         public virtual AsyncPageable<Subscription> ListAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
-            scope.Start();
-
-            try
+            async Task<Page<Subscription>> FirstPageFunc(int? pageSizeHint)
             {
-                return Operations.ListAsync(cancellationToken);
+                using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListAsync(cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<Subscription>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+                scope.Start();
+                try
+                {
+                    var response = await RestClient.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>

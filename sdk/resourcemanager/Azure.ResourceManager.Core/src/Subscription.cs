@@ -30,6 +30,17 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Subscription"/> class.
+        /// </summary>
+        /// <param name="operations"> The operations object to copy the client parameters from. </param>
+        /// <param name="subscriptionData"> The data model representing the generic azure resource. </param>
+        internal Subscription(OperationsBase operations, SubscriptionData subscriptionData)
+            : base(operations, subscriptionData.Id)
+        {
+            Data = subscriptionData;
+        }
+
+        /// <summary>
         /// Gets the subscription data model.
         /// </summary>
         public virtual SubscriptionData Data { get; }

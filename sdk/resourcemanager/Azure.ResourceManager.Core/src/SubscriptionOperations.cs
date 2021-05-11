@@ -48,6 +48,16 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class.
+        /// </summary>
+        /// <param name="operations"> The resource operations to copy the options from. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal SubscriptionOperations(OperationsBase operations, TenantResourceIdentifier id)
+            : base(operations, id)
+        {
+        }
+
+        /// <summary>
         /// ListResources of type T
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -74,7 +84,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private SubscriptionsRestOperations SubscriptionsRestOperations => new SubscriptionsRestOperations(new ClientDiagnostics(this.ClientOptions), this.Pipeline, BaseUri);
+        private SubscriptionsRestOperations SubscriptionsRestOperations => new SubscriptionsRestOperations(this.Diagnostics, this.Pipeline, BaseUri);
 
         /// <summary>
         /// Gets the resource group container under this subscription.
@@ -97,91 +107,37 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override Response<Subscription> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subscription, SubscriptionData>(
+            using var scope = Diagnostics.CreateScope("SubscriptionOperations.Get");
+            scope.Start();
+            try
+            {
+                return new PhArmResponse<Subscription, SubscriptionData>(
                 SubscriptionsRestOperations.Get(Id.Name, cancellationToken),
                 Converter());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
         public override async Task<Response<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subscription, SubscriptionData>(
+            using var scope = Diagnostics.CreateScope("SubscriptionOperations.Get");
+            scope.Start();
+            try
+            {
+                return new PhArmResponse<Subscription, SubscriptionData>(
                 await SubscriptionsRestOperations.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
                 Converter());
-        }
-
-        /// <summary> Gets all subscriptions for a tenant. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Subscription> ListAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Subscription>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = Diagnostics.CreateScope("SubscriptionOperations.List");
-                scope.Start();
-                try
-                {
-                    var response = await SubscriptionsRestOperations.ListAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
             }
-            async Task<Page<Subscription>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = Diagnostics.CreateScope("SubscriptionOperations.List");
-                scope.Start();
-                try
-                {
-                    var response = await SubscriptionsRestOperations.ListNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Gets all subscriptions for a tenant. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Subscription> List(CancellationToken cancellationToken = default)
-        {
-            Page<Subscription> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = Diagnostics.CreateScope("SubscriptionOperations.List");
-                scope.Start();
-                try
-                {
-                    var response = SubscriptionsRestOperations.List(cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Subscription> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = Diagnostics.CreateScope("SubscriptionOperations.List");
-                scope.Start();
-                try
-                {
-                    var response = SubscriptionsRestOperations.ListNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(data => new Subscription(this, data)).ToList(), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list. </summary>
