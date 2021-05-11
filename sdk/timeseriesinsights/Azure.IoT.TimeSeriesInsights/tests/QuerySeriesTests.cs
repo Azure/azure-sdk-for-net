@@ -52,7 +52,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 // Act
 
-                // Query for temperature events with two calculateions. First with the temperature value as is, and the second
+                // Query for temperature events with two calculations. First with the temperature value as is, and the second
                 // with the temperature value multiplied by 2.
                 DateTimeOffset now = Recording.UtcNow;
                 DateTimeOffset endTime = now.AddMinutes(10);
@@ -73,45 +73,46 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // This retry logic was added as the TSI instance are not immediately available after creation
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
-                    AsyncPageable<QueryResultPage> querySeriesEventsPages = tsiClient.Query.GetSeriesAsync(
+                    QueryAnalyzer querySeriesEventsPages = tsiClient.Queries.CreateSeriesQueryAnalyzer(
                         tsiId,
                         startTime,
                         endTime,
                         querySeriesRequestOptions);
 
-                    await foreach (QueryResultPage seriesEventsPage in querySeriesEventsPages)
+                    await foreach (Page<TimeSeriesPoint> seriesEventsPage in querySeriesEventsPages.GetResultsAsync().AsPages())
                     {
-                        seriesEventsPage.Timestamps.Should().HaveCount(10);
-                        seriesEventsPage.Timestamps.Should().OnlyContain(timeStamp => timeStamp >= startTime)
-                        .And
-                         .OnlyContain(timeStamp => timeStamp <= endTime);
-                        seriesEventsPage.Properties.Count.Should().Be(3); // EventCount, Temperature and TemperatureTimesTwo
-                        seriesEventsPage.Properties.Should().Contain((property) => property.Name == QueryTestsHelper.Temperature)
-                        .And
-                         .Contain((property) => property.Name == temperatureTimesTwoVariableName);
+                        seriesEventsPage.Values.Should().HaveCount(10);
+                        for (int index = 0; index < seriesEventsPage.Values.Count; index++)
+                        {
+                            TimeSeriesPoint point = seriesEventsPage.Values[index];
+                            point.Timestamp.Should().BeAfter(startTime).And.BeBefore(endTime);
+                            point.GetUniquePropertyNames().Should().HaveCount(3);
+                            point.GetUniquePropertyNames().Should().Contain((property) => property == QueryTestsHelper.Temperature)
+                                .And
+                                .Contain((property) => property == temperatureTimesTwoVariableName);
 
-                        // Assert that the values for the Temperature property is equal to the values for the other property, multiplied by 2
-                        var temperatureValues = seriesEventsPage
-                        .Properties
-                        .First((property) => property.Name == QueryTestsHelper.Temperature)
-                        .Values.Cast<double>().ToList();
-
-                        var temperatureTimesTwoValues = seriesEventsPage
-                        .Properties
-                        .First((property) => property.Name == temperatureTimesTwoVariableName)
-                        .Values.Cast<double>().ToList();
-                        temperatureTimesTwoValues.Should().Equal(temperatureValues.Select((property) => property * 2).ToList());
+                            // Assert that the values for the Temperature property is equal to the values for the other property, multiplied by 2
+                            var temperatureTimesTwoValue = (double?)point.GetValue(temperatureTimesTwoVariableName);
+                            var temperatureValue = (double?)point.GetValue(QueryTestsHelper.Temperature);
+                            temperatureTimesTwoValue.Should().Be(temperatureValue * 2);
+                        }
                     }
 
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);
 
                 // Query for all the series events using a timespan
-                AsyncPageable<QueryResultPage> querySeriesEventsPagesWithTimespan = tsiClient.Query.GetSeriesAsync(tsiId, TimeSpan.FromMinutes(10), null, querySeriesRequestOptions);
-                await foreach (QueryResultPage seriesEventsPage in querySeriesEventsPagesWithTimespan)
+                QueryAnalyzer querySeriesEventsPagesWithTimespan = tsiClient
+                    .Queries
+                    .CreateSeriesQueryAnalyzer(tsiId, TimeSpan.FromMinutes(10), null, querySeriesRequestOptions);
+
+                await foreach (Page<TimeSeriesPoint> seriesEventsPage in querySeriesEventsPagesWithTimespan.GetResultsAsync().AsPages())
                 {
-                    seriesEventsPage.Timestamps.Should().HaveCount(10);
-                    seriesEventsPage.Properties.Count.Should().Be(3); // EventCount, Temperature and TemperatureTimesTwo
+                    seriesEventsPage.Values.Should().HaveCount(10);
+                    foreach (TimeSeriesPoint point in seriesEventsPage.Values)
+                    {
+                        point.GetUniquePropertyNames().Should().HaveCount(3);
+                    }
                 }
 
                 // Query for temperature and humidity
@@ -123,18 +124,20 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 querySeriesRequestOptions.ProjectedVariables.Add(QueryTestsHelper.Humidity);
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
-                    AsyncPageable<QueryResultPage> querySeriesEventsPages = tsiClient.Query.GetSeriesAsync(tsiId, startTime, endTime, querySeriesRequestOptions);
+                    QueryAnalyzer querySeriesEventsPages = tsiClient.Queries.CreateSeriesQueryAnalyzer(tsiId, startTime, endTime, querySeriesRequestOptions);
 
-                    await foreach (QueryResultPage seriesEventsPage in querySeriesEventsPages)
+                    await foreach (Page<TimeSeriesPoint> seriesEventsPage in querySeriesEventsPages.GetResultsAsync().AsPages())
                     {
-                        seriesEventsPage.Timestamps.Should().HaveCount(10);
-                        seriesEventsPage.Timestamps.Should().OnlyContain(timeStamp => timeStamp >= startTime)
-                        .And
-                         .OnlyContain(timeStamp => timeStamp <= endTime);
-                        seriesEventsPage.Properties.Count.Should().Be(2); // Temperature and Humidity
-                        seriesEventsPage.Properties.Should().Contain((property) => property.Name == QueryTestsHelper.Temperature)
-                        .And
-                         .Contain((property) => property.Name == QueryTestsHelper.Humidity);
+                        seriesEventsPage.Values.Should().HaveCount(10);
+                        foreach (TimeSeriesPoint point in seriesEventsPage.Values)
+                        {
+                            point.Timestamp.Should().BeAfter(startTime).And.BeBefore(endTime);
+                            point.GetUniquePropertyNames().Should().HaveCount(2)
+                                .And
+                                 .Contain((property) => property == QueryTestsHelper.Temperature)
+                                .And
+                                 .Contain((property) => property == QueryTestsHelper.Humidity);
+                        }
                     }
 
                     return null;
@@ -161,21 +164,16 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 querySeriesRequestOptions.Filter = "$event.Temperature.Double = 1.2";
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
-                    AsyncPageable<QueryResultPage> querySeriesEventsPages = tsiClient.Query.GetSeriesAsync(tsiId, startTime, endTime, querySeriesRequestOptions);
-                    await foreach (QueryResultPage seriesEventsPage in querySeriesEventsPages)
+                    QueryAnalyzer querySeriesEventsPages = tsiClient.Queries.CreateSeriesQueryAnalyzer(tsiId, startTime, endTime, querySeriesRequestOptions);
+                    await foreach (Page<TimeSeriesPoint> seriesEventsPage in querySeriesEventsPages.GetResultsAsync().AsPages())
                     {
-                        seriesEventsPage.Timestamps.Should().HaveCount(2);
-                        seriesEventsPage.Properties.Should().HaveCount(2)
-                        .And
-                         .Contain((property) => property.Name == QueryTestsHelper.Temperature)
-                        .And
-                         .Contain((property) => property.Name == QueryTestsHelper.Humidity);
-
-                        var temperatureValues = seriesEventsPage
-                        .Properties
-                        .First((property) => property.Name == QueryTestsHelper.Temperature)
-                        .Values.Cast<double>().ToList();
-                        temperatureValues.Should().AllBeEquivalentTo(1.2);
+                        seriesEventsPage.Values.Should().HaveCount(2);
+                        foreach (TimeSeriesPoint point in seriesEventsPage.Values)
+                        {
+                            point.GetUniquePropertyNames().Should().HaveCount(2);
+                            var temperatureValue = (double?)point.GetValue(QueryTestsHelper.Temperature);
+                            temperatureValue.Should().Be(1.2);
+                        }
                     }
 
                     return null;
@@ -183,21 +181,10 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 // Query for the two events with a filter, but only take 1
                 querySeriesRequestOptions.MaximumNumberOfEvents = 1;
-                AsyncPageable<QueryResultPage> querySeriesEventsPagesWithFilter = tsiClient.Query.GetSeriesAsync(tsiId, startTime, endTime, querySeriesRequestOptions);
-                await foreach (QueryResultPage seriesEventsPage in querySeriesEventsPagesWithFilter)
+                QueryAnalyzer querySeriesEventsPagesWithFilter = tsiClient.Queries.CreateSeriesQueryAnalyzer(tsiId, startTime, endTime, querySeriesRequestOptions);
+                await foreach (Page<TimeSeriesPoint> seriesEventsPage in querySeriesEventsPagesWithFilter.GetResultsAsync().AsPages())
                 {
-                    seriesEventsPage.Timestamps.Should().HaveCount(1);
-                    seriesEventsPage.Properties.Should().HaveCount(2)
-                    .And
-                     .Contain((property) => property.Name == QueryTestsHelper.Temperature)
-                    .And
-                     .Contain((property) => property.Name == QueryTestsHelper.Humidity);
-
-                    var temperatureValues = seriesEventsPage
-                    .Properties
-                    .First((property) => property.Name == QueryTestsHelper.Temperature)
-                    .Values.Cast<double>().ToList();
-                    temperatureValues.Should().AllBeEquivalentTo(1.2);
+                    seriesEventsPage.Values.Should().HaveCount(1);
                 }
             }
             finally

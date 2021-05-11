@@ -202,7 +202,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
         }
 
         [Test]
-        public async Task RecognizeIdDocumentsOperationCreatesDiagnosticScopeOnUpdate()
+        public async Task RecognizeIdentityDocumentsOperationCreatesDiagnosticScopeOnUpdate()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
@@ -214,7 +214,7 @@ namespace Azure.AI.FormRecognizer.Tests.Models
             var options = new FormRecognizerClientOptions() { Transport = mockTransport };
             var client = CreateFormRecognizerClient(options);
 
-            var operation = new RecognizeIdDocumentsOperation("00000000-0000-0000-0000-000000000000", client);
+            var operation = new RecognizeIdentityDocumentsOperation("00000000-0000-0000-0000-000000000000", client);
 
             if (IsAsync)
             {
@@ -225,15 +225,15 @@ namespace Azure.AI.FormRecognizer.Tests.Models
                 operation.UpdateStatus();
             }
 
-            testListener.AssertScope($"{nameof(RecognizeIdDocumentsOperation)}.{nameof(RecognizeIdDocumentsOperation.UpdateStatus)}");
+            testListener.AssertScope($"{nameof(RecognizeIdentityDocumentsOperation)}.{nameof(RecognizeIdentityDocumentsOperation.UpdateStatus)}");
         }
 
         [Test]
-        public void RecognizeIdDocumentsOperationRequiredParameters()
+        public void RecognizeIdentityDocumentsOperationRequiredParameters()
         {
             FormRecognizerClient client = CreateFormRecognizerClient();
 
-            Assert.Throws<ArgumentNullException>(() => new RecognizeIdDocumentsOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
+            Assert.Throws<ArgumentNullException>(() => new RecognizeIdentityDocumentsOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
         }
 
         [Test]

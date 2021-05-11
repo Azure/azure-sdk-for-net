@@ -20,7 +20,7 @@ namespace Azure.Monitor.Query.Tests
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        public LogSenderClient(string workspaceId, string ingestEndpointSuffix, string sharedKey, LogSenderClientOptions options = null)
+        public LogSenderClient(string workspaceId, string ingestEndpointSuffix, string sharedKey, SenderClientOptions options = null)
         {
             options ??= new();
             _workspaceId = workspaceId;

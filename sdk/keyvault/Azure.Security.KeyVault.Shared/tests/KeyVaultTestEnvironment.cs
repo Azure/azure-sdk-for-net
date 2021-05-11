@@ -19,6 +19,11 @@ namespace Azure.Security.KeyVault.Tests
         private const string StorageUriFormat = "https://{0}.blob.core.windows.net";
 
         /// <summary>
+        /// Gets the default polling interval to use in tests.
+        /// </summary>
+        public static TimeSpan DefaultPollingInterval { get; } = TimeSpan.FromSeconds(5);
+
+        /// <summary>
         /// Gets the URI to Key Vault.
         /// </summary>
         public string KeyVaultUrl => GetRecordedVariable("AZURE_KEYVAULT_URL");

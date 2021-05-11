@@ -85,8 +85,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             var mockTransportReceiver = new Mock<TransportReceiver>();
             mockTransportReceiver
-                .Setup(receiver => receiver.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .Returns(async (int maximumMessageCount, TimeSpan? maxWaitTime, CancellationToken cancellationToken) =>
+                .Setup(receiver => receiver.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .Returns(async (int maximumMessageCount, TimeSpan? maxWaitTime, bool isProcessor, CancellationToken cancellationToken) =>
                 {
                     await Task.Delay(Timeout.Infinite, cancellationToken);
                     throw new NotImplementedException();
@@ -102,6 +102,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     It.IsAny<uint>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
+                    It.IsAny<bool>(),
                     It.IsAny<bool>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(mockTransportReceiver.Object);

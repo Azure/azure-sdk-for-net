@@ -197,7 +197,7 @@ namespace Azure.Messaging.ServiceBus
 
             Options = options?.Clone() ?? new ServiceBusProcessorOptions();
             Connection = connection;
-            EntityPath = entityPath;
+            EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, Options.SubQueue);
             Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
 
             ReceiveMode = Options.ReceiveMode;
@@ -225,7 +225,6 @@ namespace Azure.Messaging.ServiceBus
 
             AutoCompleteMessages = Options.AutoCompleteMessages;
 
-            EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
             _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
             _plugins = plugins;
@@ -809,7 +808,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusProcessor" />.
-        ///   This is equivalent to calling <see cref="CloseAsync"/> with the default <see cref="LinkCloseMode"/>.
+        ///   This is equivalent to calling <see cref="CloseAsync"/>.
         /// </summary>
         public async ValueTask DisposeAsync() =>
             await CloseAsync().ConfigureAwait(false);

@@ -1,36 +1,34 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/9a15b791-8d2f-436f-a734-25d128c72254/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/bb1b4371-062d-414d-bef3-b0d124ff721c/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "121",
+        "Content-Length": "167",
         "Content-Type": "application/json",
-        "traceparent": "00-b05ecd684ee76949bf009cf83196625c-38652f32ccc80948-00",
-        "User-Agent": [
-          "azsdk-net-Monitory.Query/1.0.0-alpha.20210420.1",
-          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
-        ],
+        "traceparent": "00-ee53899ba020294d9b41abed35862ded-f9f139b96f26124d-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "91aaebec519299707985f730f4827852",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA1_102_CL |project-rename Name = StringColumn_s, Age = IntColumn_d |project Name, Age |order by Name asc"
+        "query": "TableA1_116_CL |project-rename Name = StringColumn_s, Age = IntColumn_d |project Name, Age |order by Name asc",
+        "timespan": "2021-04-26T00:00:00.0000000Z/P7D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "3",
+        "Age": "90",
         "Connection": "keep-alive",
         "Content-Length": "143",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 20 Apr 2021 22:12:17 GMT",
+        "Date": "Tue, 04 May 2021 18:37:18 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6ddc976cfd-zqd9x",
+        "Via": "1.1 draft-oms-6c84644dc4-vmfjp",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -67,8 +65,8 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-20T15:12:17.2617128-07:00",
+    "DateTimeOffsetNow": "2021-05-04T11:37:18.6861609-07:00",
     "RandomSeed": "339337094",
-    "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254"
+    "WORKSPACE_ID": "bb1b4371-062d-414d-bef3-b0d124ff721c"
   }
 }

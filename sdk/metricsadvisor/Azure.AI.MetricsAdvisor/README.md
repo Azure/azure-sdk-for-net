@@ -254,7 +254,7 @@ var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 var endTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
 var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime)
 {
-    TopCount = 5
+    MaxPageSize = 5
 };
 
 Console.WriteLine("Ingestion statuses:");
@@ -373,7 +373,7 @@ var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
 var endTime = DateTimeOffset.UtcNow;
 var options = new GetAlertsOptions(startTime, endTime, AlertQueryTimeMode.AnomalyTime)
 {
-    TopCount = 5
+    MaxPageSize = 5
 };
 
 int alertCount = 0;
@@ -399,7 +399,7 @@ Once you know an alert's ID, list the [anomalies](#data-point-anomaly) that trig
 string alertConfigurationId = "<alertConfigurationId>";
 string alertId = "<alertId>";
 
-var options = new GetAnomaliesForAlertOptions() { TopCount = 3 };
+var options = new GetAnomaliesForAlertOptions() { MaxPageSize = 3 };
 
 int anomalyCount = 0;
 

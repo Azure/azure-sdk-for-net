@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Models
         /// <param name="expiresOn"> The datetime that the policy expires. </param>
         /// <param name="permission"> The permissions for the acl policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> is null. </exception>
-        public TableAccessPolicy(DateTimeOffset startsOn, DateTimeOffset expiresOn, string permission)
+        public TableAccessPolicy(DateTimeOffset? startsOn, DateTimeOffset? expiresOn, string permission)
         {
             if (permission == null)
             {

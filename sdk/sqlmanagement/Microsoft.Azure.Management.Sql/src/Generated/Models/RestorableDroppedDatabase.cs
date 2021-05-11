@@ -13,10 +13,12 @@ namespace Microsoft.Azure.Management.Sql.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A restorable dropped database
+    /// A restorable dropped database resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class RestorableDroppedDatabase : ProxyResource
@@ -35,31 +37,29 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
-        /// <param name="databaseName">The name of the database</param>
-        /// <param name="edition">The edition of the database</param>
-        /// <param name="maxSizeBytes">The max size in bytes of the
-        /// database</param>
-        /// <param name="serviceLevelObjective">The service level objective
-        /// name of the database</param>
-        /// <param name="elasticPoolName">The elastic pool name of the
-        /// database</param>
+        /// <param name="sku">The name and tier of the SKU.</param>
+        /// <param name="location">Resource location.</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="databaseName">The name of the database.</param>
+        /// <param name="maxSizeBytes">The max size of the database expressed
+        /// in bytes.</param>
+        /// <param name="elasticPoolId">The resource name of the elastic pool
+        /// containing this database.</param>
         /// <param name="creationDate">The creation date of the database
-        /// (ISO8601 format)</param>
+        /// (ISO8601 format).</param>
         /// <param name="deletionDate">The deletion date of the database
-        /// (ISO8601 format)</param>
+        /// (ISO8601 format).</param>
         /// <param name="earliestRestoreDate">The earliest restore date of the
-        /// database (ISO8601 format)</param>
-        public RestorableDroppedDatabase(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string databaseName = default(string), string edition = default(string), string maxSizeBytes = default(string), string serviceLevelObjective = default(string), string elasticPoolName = default(string), System.DateTime? creationDate = default(System.DateTime?), System.DateTime? deletionDate = default(System.DateTime?), System.DateTime? earliestRestoreDate = default(System.DateTime?))
+        /// database (ISO8601 format).</param>
+        public RestorableDroppedDatabase(string id = default(string), string name = default(string), string type = default(string), Sku sku = default(Sku), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string databaseName = default(string), long? maxSizeBytes = default(long?), string elasticPoolId = default(string), System.DateTime? creationDate = default(System.DateTime?), System.DateTime? deletionDate = default(System.DateTime?), System.DateTime? earliestRestoreDate = default(System.DateTime?))
             : base(id, name, type)
         {
+            Sku = sku;
             Location = location;
+            Tags = tags;
             DatabaseName = databaseName;
-            Edition = edition;
             MaxSizeBytes = maxSizeBytes;
-            ServiceLevelObjective = serviceLevelObjective;
-            ElasticPoolName = elasticPoolName;
+            ElasticPoolId = elasticPoolId;
             CreationDate = creationDate;
             DeletionDate = deletionDate;
             EarliestRestoreDate = earliestRestoreDate;
@@ -72,58 +72,72 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the geo-location where the resource lives
+        /// Gets or sets the name and tier of the SKU.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; private set; }
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets the name of the database
+        /// Gets or sets resource location.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets the name of the database.
         /// </summary>
         [JsonProperty(PropertyName = "properties.databaseName")]
         public string DatabaseName { get; private set; }
 
         /// <summary>
-        /// Gets the edition of the database
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.edition")]
-        public string Edition { get; private set; }
-
-        /// <summary>
-        /// Gets the max size in bytes of the database
+        /// Gets the max size of the database expressed in bytes.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxSizeBytes")]
-        public string MaxSizeBytes { get; private set; }
+        public long? MaxSizeBytes { get; private set; }
 
         /// <summary>
-        /// Gets the service level objective name of the database
+        /// Gets the resource name of the elastic pool containing this
+        /// database.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.serviceLevelObjective")]
-        public string ServiceLevelObjective { get; private set; }
+        [JsonProperty(PropertyName = "properties.elasticPoolId")]
+        public string ElasticPoolId { get; private set; }
 
         /// <summary>
-        /// Gets the elastic pool name of the database
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.elasticPoolName")]
-        public string ElasticPoolName { get; private set; }
-
-        /// <summary>
-        /// Gets the creation date of the database (ISO8601 format)
+        /// Gets the creation date of the database (ISO8601 format).
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationDate")]
         public System.DateTime? CreationDate { get; private set; }
 
         /// <summary>
-        /// Gets the deletion date of the database (ISO8601 format)
+        /// Gets the deletion date of the database (ISO8601 format).
         /// </summary>
         [JsonProperty(PropertyName = "properties.deletionDate")]
         public System.DateTime? DeletionDate { get; private set; }
 
         /// <summary>
-        /// Gets the earliest restore date of the database (ISO8601 format)
+        /// Gets the earliest restore date of the database (ISO8601 format).
         /// </summary>
         [JsonProperty(PropertyName = "properties.earliestRestoreDate")]
         public System.DateTime? EarliestRestoreDate { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
+        }
     }
 }

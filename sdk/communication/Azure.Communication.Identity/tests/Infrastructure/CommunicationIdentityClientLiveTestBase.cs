@@ -31,20 +31,20 @@ namespace Azure.Communication.Identity.Tests
         protected CommunicationIdentityClient CreateClientWithConnectionString()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestDynamicConnectionString,
                     CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
         protected CommunicationIdentityClient CreateClientWithAzureKeyCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.Endpoint,
-                    new AzureKeyCredential(TestEnvironment.AccessKey),
+                    TestEnvironment.LiveTestDynamicEndpoint,
+                    new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey),
                     CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
         protected CommunicationIdentityClient CreateClientWithTokenCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.Endpoint,
+                    TestEnvironment.LiveTestDynamicEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     CreateIdentityClientOptionsWithCorrelationVectorLogs()));
 
