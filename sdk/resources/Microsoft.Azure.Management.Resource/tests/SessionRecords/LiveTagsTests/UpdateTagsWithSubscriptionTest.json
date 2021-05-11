@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"tags\": {\r\n      \"tagKey1\": \"tagValue1\",\r\n      \"tagKey2\": \"tagValue2\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "87145c88-7cf9-43d6-946e-727da0ebcd6e"
+          "c9fd0035-c871-425d-8e89-2f0442f6d43d"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "f21c2c9a-9dbf-43fa-b460-8d7442a8fdaf"
+          "499aebc3-fa2c-4f1a-bd96-45eb7405a60c"
         ],
         "x-ms-correlation-request-id": [
-          "f21c2c9a-9dbf-43fa-b460-8d7442a8fdaf"
+          "499aebc3-fa2c-4f1a-bd96-45eb7405a60c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210511T010608Z:f21c2c9a-9dbf-43fa-b460-8d7442a8fdaf"
+          "WESTUS:20210511T205807Z:499aebc3-fa2c-4f1a-bd96-45eb7405a60c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 May 2021 01:06:07 GMT"
+          "Tue, 11 May 2021 20:58:06 GMT"
         ],
         "Content-Length": [
           "222"
@@ -73,7 +73,7 @@
       "RequestBody": "{\r\n  \"operation\": \"Merge\",\r\n  \"properties\": {\r\n    \"tags\": {\r\n      \"tagKey1\": \"tagValue3\",\r\n      \"tagKey3\": \"tagValue3\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1660f3d3-a6e7-4dd7-b6d9-8eed702383c5"
+          "d6911af6-9c52-410c-95e9-a78c291b4256"
         ],
         "Accept-Language": [
           "en-US"
@@ -82,7 +82,7 @@
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -102,13 +102,13 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "f3d2e4a5-9c72-4eec-9b9d-1a6ba07e0290"
+          "f3008084-b8d2-468c-a622-8766d0192f70"
         ],
         "x-ms-correlation-request-id": [
-          "f3d2e4a5-9c72-4eec-9b9d-1a6ba07e0290"
+          "f3008084-b8d2-468c-a622-8766d0192f70"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210511T010611Z:f3d2e4a5-9c72-4eec-9b9d-1a6ba07e0290"
+          "WESTUS:20210511T205810Z:f3008084-b8d2-468c-a622-8766d0192f70"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,7 +117,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 May 2021 01:06:10 GMT"
+          "Tue, 11 May 2021 20:58:10 GMT"
         ],
         "Content-Length": [
           "244"
@@ -139,7 +139,7 @@
       "RequestBody": "{\r\n  \"operation\": \"Replace\",\r\n  \"properties\": {\r\n    \"tags\": {\r\n      \"tagKey1\": \"tagValue3\",\r\n      \"tagKey3\": \"tagValue3\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "43751236-0274-4388-a735-4f90165b1f3f"
+          "a7fc5d2f-2a07-46b6-a755-03a485e3fb4e"
         ],
         "Accept-Language": [
           "en-US"
@@ -148,7 +148,7 @@
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -168,13 +168,13 @@
           "1197"
         ],
         "x-ms-request-id": [
-          "4d5ea6af-b7ba-4ab0-9867-8b73b804285b"
+          "df19553c-4544-40c6-9df6-d2dc2daca12a"
         ],
         "x-ms-correlation-request-id": [
-          "4d5ea6af-b7ba-4ab0-9867-8b73b804285b"
+          "df19553c-4544-40c6-9df6-d2dc2daca12a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210511T010611Z:4d5ea6af-b7ba-4ab0-9867-8b73b804285b"
+          "WESTUS:20210511T205811Z:df19553c-4544-40c6-9df6-d2dc2daca12a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -183,7 +183,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 May 2021 01:06:11 GMT"
+          "Tue, 11 May 2021 20:58:10 GMT"
         ],
         "Content-Length": [
           "222"
@@ -205,7 +205,7 @@
       "RequestBody": "{\r\n  \"operation\": \"Delete\",\r\n  \"properties\": {\r\n    \"tags\": {\r\n      \"tagKey1\": \"tagValue3\",\r\n      \"tagKey3\": \"tagValue3\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "94f0e4f4-bc28-4290-a27d-cb68ec2ed990"
+          "9e720086-cd65-4638-9ca4-9e675aa7f7fc"
         ],
         "Accept-Language": [
           "en-US"
@@ -214,7 +214,7 @@
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -234,13 +234,13 @@
           "1196"
         ],
         "x-ms-request-id": [
-          "37f90c6a-7750-4fa2-a4d9-fb1015c2f1cb"
+          "de26270e-923a-4efe-a838-56224508c1c9"
         ],
         "x-ms-correlation-request-id": [
-          "37f90c6a-7750-4fa2-a4d9-fb1015c2f1cb"
+          "de26270e-923a-4efe-a838-56224508c1c9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210511T010612Z:37f90c6a-7750-4fa2-a4d9-fb1015c2f1cb"
+          "WESTUS:20210511T205811Z:de26270e-923a-4efe-a838-56224508c1c9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -249,7 +249,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 May 2021 01:06:11 GMT"
+          "Tue, 11 May 2021 20:58:10 GMT"
         ],
         "Content-Length": [
           "179"

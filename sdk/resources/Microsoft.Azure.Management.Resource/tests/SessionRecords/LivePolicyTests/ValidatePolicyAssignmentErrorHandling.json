@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1488?api-version=2020-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MTQ4OD9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet6561?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0NjU2MT9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"ValidatePolicyAssignmentErrorHandling Policy Definition $[Auto Test]\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "47a3e8c8-3a4c-4ff8-98a5-c72aa5f59d7a"
+          "34dfa266-f1ed-4a9d-93e0-73b2735fd725"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.1.0"
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -42,19 +42,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "973b2a57-0616-415c-9b40-6aa58536fab8"
+          "648af5cb-5fc8-4ad1-b9aa-9f94121161fc"
         ],
         "x-ms-correlation-request-id": [
-          "973b2a57-0616-415c-9b40-6aa58536fab8"
+          "648af5cb-5fc8-4ad1-b9aa-9f94121161fc"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210511T012714Z:973b2a57-0616-415c-9b40-6aa58536fab8"
+          "SOUTHCENTRALUS:20210511T204621Z:648af5cb-5fc8-4ad1-b9aa-9f94121161fc"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 May 2021 01:27:14 GMT"
+          "Tue, 11 May 2021 20:46:21 GMT"
         ],
         "Content-Length": [
           "626"
@@ -66,17 +66,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"ValidatePolicyAssignmentErrorHandling Policy Definition $[Auto Test]\",\r\n    \"policyType\": \"Custom\",\r\n    \"mode\": \"Indexed\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"06cdd65b-57f9-4fd0-8285-302a9681a2de\",\r\n      \"createdOn\": \"2021-05-11T01:27:14.8294285Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1488\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet1488\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"ValidatePolicyAssignmentErrorHandling Policy Definition $[Auto Test]\",\r\n    \"policyType\": \"Custom\",\r\n    \"mode\": \"Indexed\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"06cdd65b-57f9-4fd0-8285-302a9681a2de\",\r\n      \"createdOn\": \"2021-05-11T20:46:21.5735789Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet6561\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet6561\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "//subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyAssignments/azsmnet8297?api-version=2020-09-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ1MDc2ZDFkLWEzZTAtNDE4Yi04MTg3LWUxNDIyYThjZjVmNC9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDgyOTc/YXBpLXZlcnNpb249MjAyMC0wOS0wMQ==",
+      "RequestUri": "//subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyAssignments/azsmnet7975?api-version=2020-09-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ1MDc2ZDFkLWEzZTAtNDE4Yi04MTg3LWUxNDIyYThjZjVmNC9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDc5NzU/YXBpLXZlcnNpb249MjAyMC0wOS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"ValidatePolicyAssignmentErrorHandling Bad Assignment - Missing Policy Definition Id [Auto Test]\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "99910700-bad5-4ec0-8cb3-8073a2c52294"
+          "2fbbdbfa-45f4-415a-ae2c-ce9aef7ed854"
         ],
         "Accept-Language": [
           "en-US"
@@ -85,7 +85,7 @@
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.1.0"
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -108,13 +108,13 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "c627c76e-4b7b-49b0-9a52-aba9686bcc6a"
+          "d43daa4d-91c2-48c1-9a99-2c7108ac5468"
         ],
         "x-ms-correlation-request-id": [
-          "c627c76e-4b7b-49b0-9a52-aba9686bcc6a"
+          "d43daa4d-91c2-48c1-9a99-2c7108ac5468"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210511T012714Z:c627c76e-4b7b-49b0-9a52-aba9686bcc6a"
+          "SOUTHCENTRALUS:20210511T204621Z:d43daa4d-91c2-48c1-9a99-2c7108ac5468"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,7 +123,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 May 2021 01:27:14 GMT"
+          "Tue, 11 May 2021 20:46:21 GMT"
         ],
         "Content-Length": [
           "217"
@@ -139,13 +139,13 @@
       "StatusCode": 400
     },
     {
-      "RequestUri": "//subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyAssignments/azsmnet8297?api-version=2020-09-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ1MDc2ZDFkLWEzZTAtNDE4Yi04MTg3LWUxNDIyYThjZjVmNC9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDgyOTc/YXBpLXZlcnNpb249MjAyMC0wOS0wMQ==",
+      "RequestUri": "//subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyAssignments/azsmnet7975?api-version=2020-09-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ1MDc2ZDFkLWEzZTAtNDE4Yi04MTg3LWUxNDIyYThjZjVmNC9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDc5NzU/YXBpLXZlcnNpb249MjAyMC0wOS0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"ValidatePolicyAssignmentErrorHandling Bad Assignment - Bad Policy Definition Id [Auto Test]\",\r\n    \"policyDefinitionId\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet9890\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"ValidatePolicyAssignmentErrorHandling Bad Assignment - Bad Policy Definition Id [Auto Test]\",\r\n    \"policyDefinitionId\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet4214\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c1e285ac-e6cb-4556-a9f8-c66220d6d8f7"
+          "1e1ac4be-a0da-4928-b1e1-455b4e183982"
         ],
         "Accept-Language": [
           "en-US"
@@ -154,7 +154,7 @@
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.1.0"
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -177,13 +177,13 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "62243754-a4ef-4bdc-8eb6-681ac34aaaf8"
+          "d5b025a2-ce57-4c58-9b00-2e5141eb5192"
         ],
         "x-ms-correlation-request-id": [
-          "62243754-a4ef-4bdc-8eb6-681ac34aaaf8"
+          "d5b025a2-ce57-4c58-9b00-2e5141eb5192"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210511T012715Z:62243754-a4ef-4bdc-8eb6-681ac34aaaf8"
+          "SOUTHCENTRALUS:20210511T204621Z:d5b025a2-ce57-4c58-9b00-2e5141eb5192"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -192,7 +192,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 May 2021 01:27:14 GMT"
+          "Tue, 11 May 2021 20:46:21 GMT"
         ],
         "Content-Length": [
           "266"
@@ -204,17 +204,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PolicyDefinitionNotFound\",\r\n    \"message\": \"The policy assignment create request is invalid. The policy definition '/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet9890' could not be found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PolicyDefinitionNotFound\",\r\n    \"message\": \"The policy assignment create request is invalid. The policy definition '/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet4214' could not be found.\"\r\n  }\r\n}",
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1488?api-version=2020-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MTQ4OD9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet6561?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0NjU2MT9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "959d24c9-3625-4fd1-ba05-45d692e01feb"
+          "7dbfc7e5-380e-4180-8ae9-5d579d4992c3"
         ],
         "Accept-Language": [
           "en-US"
@@ -223,7 +223,7 @@
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.1.0"
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -243,19 +243,19 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "2e7a1300-1e80-4be4-b0e7-cf0fc4eef352"
+          "9edc15ee-3555-4f65-98a2-b305a3dfa69c"
         ],
         "x-ms-correlation-request-id": [
-          "2e7a1300-1e80-4be4-b0e7-cf0fc4eef352"
+          "9edc15ee-3555-4f65-98a2-b305a3dfa69c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210511T012715Z:2e7a1300-1e80-4be4-b0e7-cf0fc4eef352"
+          "SOUTHCENTRALUS:20210511T204621Z:9edc15ee-3555-4f65-98a2-b305a3dfa69c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 May 2021 01:27:15 GMT"
+          "Tue, 11 May 2021 20:46:21 GMT"
         ],
         "Content-Length": [
           "626"
@@ -267,17 +267,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"ValidatePolicyAssignmentErrorHandling Policy Definition $[Auto Test]\",\r\n    \"policyType\": \"Custom\",\r\n    \"mode\": \"Indexed\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"06cdd65b-57f9-4fd0-8285-302a9681a2de\",\r\n      \"createdOn\": \"2021-05-11T01:27:14.8294285Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1488\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet1488\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"ValidatePolicyAssignmentErrorHandling Policy Definition $[Auto Test]\",\r\n    \"policyType\": \"Custom\",\r\n    \"mode\": \"Indexed\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"06cdd65b-57f9-4fd0-8285-302a9681a2de\",\r\n      \"createdOn\": \"2021-05-11T20:46:21.5735789Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet6561\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet6561\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1488?api-version=2020-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MTQ4OD9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet6561?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0NjU2MT9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fd810239-40c2-4e33-8660-9c715998f5df"
+          "88ac9648-749c-4486-a0db-d1ab153322ce"
         ],
         "Accept-Language": [
           "en-US"
@@ -286,7 +286,7 @@
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.1.0"
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -303,13 +303,13 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "3857b87b-db6e-4028-84f3-bf7510c64884"
+          "d6b05d0b-d908-470b-8133-a4395307b263"
         ],
         "x-ms-correlation-request-id": [
-          "3857b87b-db6e-4028-84f3-bf7510c64884"
+          "d6b05d0b-d908-470b-8133-a4395307b263"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210511T012715Z:3857b87b-db6e-4028-84f3-bf7510c64884"
+          "SOUTHCENTRALUS:20210511T204622Z:d6b05d0b-d908-470b-8133-a4395307b263"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -318,7 +318,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 May 2021 01:27:15 GMT"
+          "Tue, 11 May 2021 20:46:21 GMT"
         ],
         "Content-Length": [
           "113"
@@ -330,7 +330,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PolicyDefinitionNotFound\",\r\n    \"message\": \"The policy definition 'azsmnet1488' could not be found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PolicyDefinitionNotFound\",\r\n    \"message\": \"The policy definition 'azsmnet6561' could not be found.\"\r\n  }\r\n}",
       "StatusCode": 404
     },
     {
@@ -340,7 +340,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6850d1d1-8514-4f74-9b13-d197caf61cc1"
+          "54c2c54e-49fd-4118-acb6-604ef6745c01"
         ],
         "Accept-Language": [
           "en-US"
@@ -349,7 +349,7 @@
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.1.0"
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -369,19 +369,19 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "b92fcf5d-e732-4ede-a625-0187bdaf420a"
+          "0740950e-064a-4270-813b-b2738bf92931"
         ],
         "x-ms-correlation-request-id": [
-          "b92fcf5d-e732-4ede-a625-0187bdaf420a"
+          "0740950e-064a-4270-813b-b2738bf92931"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210511T012715Z:b92fcf5d-e732-4ede-a625-0187bdaf420a"
+          "SOUTHCENTRALUS:20210511T204622Z:0740950e-064a-4270-813b-b2738bf92931"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 May 2021 01:27:15 GMT"
+          "Tue, 11 May 2021 20:46:22 GMT"
         ],
         "Content-Length": [
           "910546"
@@ -399,9 +399,9 @@
   ],
   "Names": {
     "ValidatePolicyAssignmentErrorHandling": [
-      "azsmnet1488",
-      "azsmnet8297",
-      "azsmnet9890"
+      "azsmnet6561",
+      "azsmnet7975",
+      "azsmnet4214"
     ]
   },
   "Variables": {

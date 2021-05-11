@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c3e68c4c-24d2-4019-b04a-ca2c9ce50271"
+          "47742832-c3e3-45a5-b33a-08067ce9fa41"
         ],
         "Accept-Language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.29916.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/3.13.1.0"
+          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/3.13.2.0"
         ]
       },
       "ResponseHeaders": {
@@ -30,13 +30,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "bc5bc2f0-f5d5-46b1-a975-2ad4e2286eef"
+          "3914fb2f-b2a0-4e70-bf57-77593cc64d5e"
         ],
         "x-ms-correlation-request-id": [
-          "bc5bc2f0-f5d5-46b1-a975-2ad4e2286eef"
+          "3914fb2f-b2a0-4e70-bf57-77593cc64d5e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20210511T011432Z:bc5bc2f0-f5d5-46b1-a975-2ad4e2286eef"
+          "WESTUS:20210511T210210Z:3914fb2f-b2a0-4e70-bf57-77593cc64d5e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 May 2021 01:14:32 GMT"
+          "Tue, 11 May 2021 21:02:09 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -54,10 +54,10 @@
           "-1"
         ],
         "Content-Length": [
-          "420"
+          "463"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4\",\r\n  \"authorizationSource\": \"RoleBased\",\r\n  \"managedByTenants\": [],\r\n  \"tags\": {},\r\n  \"subscriptionId\": \"45076d1d-a3e0-418b-8187-e1422a8cf5f4\",\r\n  \"tenantId\": \"44ec3bd9-305f-48b9-a0dc-5d3ac5a736e3\",\r\n  \"displayName\": \"Visual Studio Enterprise Subscription\",\r\n  \"state\": \"Enabled\",\r\n  \"subscriptionPolicies\": {\r\n    \"locationPlacementId\": \"Public_2014-09-01\",\r\n    \"quotaId\": \"MSDN_2014-09-01\",\r\n    \"spendingLimit\": \"On\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4\",\r\n  \"authorizationSource\": \"RoleBased\",\r\n  \"managedByTenants\": [],\r\n  \"tags\": {\r\n    \"tagKey1\": \"tagValue1\",\r\n    \"tagKey2\": \"tagValue2\"\r\n  },\r\n  \"subscriptionId\": \"45076d1d-a3e0-418b-8187-e1422a8cf5f4\",\r\n  \"tenantId\": \"44ec3bd9-305f-48b9-a0dc-5d3ac5a736e3\",\r\n  \"displayName\": \"Visual Studio Enterprise Subscription\",\r\n  \"state\": \"Enabled\",\r\n  \"subscriptionPolicies\": {\r\n    \"locationPlacementId\": \"Public_2014-09-01\",\r\n    \"quotaId\": \"MSDN_2014-09-01\",\r\n    \"spendingLimit\": \"On\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
