@@ -10,20 +10,8 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DataSourceCredential. </summary>
-    internal partial class DataSourceCredentialIdentity
+    public partial class DataSourceCredentialIdentity
     {
-        /// <summary> Initializes a new instance of DataSourceCredentialIdentity. </summary>
-        /// <param name="name"> Name of data source credential. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public DataSourceCredentialIdentity(string name)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            Name = name;
-        }
 
         /// <summary> Initializes a new instance of DataSourceCredentialIdentity. </summary>
         /// <param name="dataSourceCredentialType"> Type of data source credential. </param>

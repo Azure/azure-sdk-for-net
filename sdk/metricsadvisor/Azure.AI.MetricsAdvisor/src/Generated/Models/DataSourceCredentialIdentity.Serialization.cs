@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DataSourceCredentialIdentity : IUtf8JsonSerializable
+    public partial class DataSourceCredentialIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     case "AzureSQLConnectionString": return AzureSQLConnectionStringCredential.DeserializeAzureSQLConnectionStringCredential(element);
                     case "DataLakeGen2SharedKey": return DataLakeGen2SharedKeyCredential.DeserializeDataLakeGen2SharedKeyCredential(element);
-                    case "ServicePrincipal": return ServicePrincipalCredential.DeserializeServicePrincipalCredential(element);
+                    case "ServicePrincipal": return ServicePrincipalCredentialIdentity.DeserializeServicePrincipalCredentialIdentity(element);
                     case "ServicePrincipalInKV": return ServicePrincipalInKVCredential.DeserializeServicePrincipalInKVCredential(element);
                 }
             }
