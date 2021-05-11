@@ -1,3 +1,7 @@
 {
-  "profiles": {}
+  "profiles": {
+    "Microsoft.Azure.Management.Resource.Tests": {
+      "commandName": "Project"
+    }
+  }
 }

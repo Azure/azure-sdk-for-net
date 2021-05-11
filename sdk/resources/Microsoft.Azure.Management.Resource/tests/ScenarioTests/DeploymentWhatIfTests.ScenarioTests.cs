@@ -190,7 +190,7 @@ namespace ResourceGroups.Tests
                 Assert.NotEmpty(result.Changes);
 
                 WhatIfChange storageAccountChange = result.Changes.FirstOrDefault(change =>
-                    change.ResourceId.EndsWith("Microsoft.Storage/storageAccounts/shenglolsdktestsa"));
+                    change.ResourceId.EndsWith("Microsoft.Storage/storageAccounts/wendysdktestsa"));
 
                 Assert.NotNull(storageAccountChange);
                 Assert.Equal(ChangeType.Modify, storageAccountChange.ChangeType);

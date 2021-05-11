@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourcegroups/azsmnet4011?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTk2YTJmM2YtZWUwMS00ZmZkLTk3NjUtZDJjM2ZjOThmMzBhL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ0MDExP2FwaS12ZXJzaW9uPTIwMjEtMDEtMDE=",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourcegroups/azsmnet6439?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ2NDM5P2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cda1d6bd-2d72-4f3c-b70a-705a4c41a6d8"
+          "001f7c36-87b2-4151-880c-b29043687b09"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.12.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "1e442804-e7fd-4139-9237-a3b54cbd71d6"
+          "32b78079-4c47-4ba7-a63a-a0b751706a0a"
         ],
         "x-ms-correlation-request-id": [
-          "1e442804-e7fd-4139-9237-a3b54cbd71d6"
+          "32b78079-4c47-4ba7-a63a-a0b751706a0a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210423T231734Z:1e442804-e7fd-4139-9237-a3b54cbd71d6"
+          "WESTUS:20210511T013159Z:32b78079-4c47-4ba7-a63a-a0b751706a0a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 23 Apr 2021 23:17:34 GMT"
+          "Tue, 11 May 2021 01:31:59 GMT"
         ],
         "Content-Length": [
           "220"
@@ -63,26 +63,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011\",\r\n  \"name\": \"azsmnet4011\",\r\n  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439\",\r\n  \"name\": \"azsmnet6439\",\r\n  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyDefinitions/azsmnet1542?api-version=2020-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTk2YTJmM2YtZWUwMS00ZmZkLTk3NjUtZDJjM2ZjOThmMzBhL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MTU0Mj9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1311?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MTMxMT9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Definition\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "47ba5d5a-5295-4a7f-abb5-9996cc36621b"
+          "a75a2aed-ed6b-4bcb-b6fa-11aa68ddc25f"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.12.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -108,19 +108,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "23617cca-2c82-48dc-bb5b-b10222400973"
+          "53720d6c-2f68-4c03-8b21-acd1315eaa8e"
         ],
         "x-ms-correlation-request-id": [
-          "23617cca-2c82-48dc-bb5b-b10222400973"
+          "53720d6c-2f68-4c03-8b21-acd1315eaa8e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210423T231734Z:23617cca-2c82-48dc-bb5b-b10222400973"
+          "WESTUS:20210511T013159Z:53720d6c-2f68-4c03-8b21-acd1315eaa8e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 23 Apr 2021 23:17:34 GMT"
+          "Tue, 11 May 2021 01:31:58 GMT"
         ],
         "Content-Length": [
           "614"
@@ -132,26 +132,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"mode\": \"Indexed\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"bdef9655-c830-46d2-90d4-00f07352bf75\",\r\n      \"createdOn\": \"2021-04-23T23:17:34.5553271Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyDefinitions/azsmnet1542\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet1542\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"mode\": \"Indexed\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"06cdd65b-57f9-4fd0-8285-302a9681a2de\",\r\n      \"createdOn\": \"2021-05-11T01:31:59.5469644Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1311\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet1311\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "//subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011/providers/Microsoft.Authorization/policyAssignments/azsmnet9609?api-version=2020-09-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzk5NmEyZjNmLWVlMDEtNGZmZC05NzY1LWQyYzNmYzk4ZjMwYS9yZXNvdXJjZUdyb3Vwcy9henNtbmV0NDAxMS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDk2MDk/YXBpLXZlcnNpb249MjAyMC0wOS0wMQ==",
+      "RequestUri": "//subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439/providers/Microsoft.Authorization/policyAssignments/azsmnet3145?api-version=2020-09-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ1MDc2ZDFkLWEzZTAtNDE4Yi04MTg3LWUxNDIyYThjZjVmNC9yZXNvdXJjZUdyb3Vwcy9henNtbmV0NjQzOS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDMxNDU/YXBpLXZlcnNpb249MjAyMC0wOS0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyDefinitions/azsmnet1542\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1311\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f2ea163f-4985-4f49-b953-69712b0190bd"
+          "d8418a4b-7bee-45a9-b8a6-58b4f67b466b"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.12.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -177,19 +177,19 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "abd31df0-7911-4a4f-8993-2a7acaf4286f"
+          "3789dcb9-590a-477d-b38d-eb6a8f2dad52"
         ],
         "x-ms-correlation-request-id": [
-          "abd31df0-7911-4a4f-8993-2a7acaf4286f"
+          "3789dcb9-590a-477d-b38d-eb6a8f2dad52"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210423T231734Z:abd31df0-7911-4a4f-8993-2a7acaf4286f"
+          "WESTUS:20210511T013159Z:3789dcb9-590a-477d-b38d-eb6a8f2dad52"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 23 Apr 2021 23:17:34 GMT"
+          "Tue, 11 May 2021 01:31:58 GMT"
         ],
         "Content-Length": [
           "708"
@@ -201,26 +201,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyDefinitions/azsmnet1542\",\r\n    \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"bdef9655-c830-46d2-90d4-00f07352bf75\",\r\n      \"createdOn\": \"2021-04-23T23:17:34.8281302Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"enforcementMode\": \"Default\"\r\n  },\r\n  \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011/providers/Microsoft.Authorization/policyAssignments/azsmnet9609\",\r\n  \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n  \"name\": \"azsmnet9609\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1311\",\r\n    \"scope\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"06cdd65b-57f9-4fd0-8285-302a9681a2de\",\r\n      \"createdOn\": \"2021-05-11T01:31:59.6342357Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"enforcementMode\": \"Default\"\r\n  },\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439/providers/Microsoft.Authorization/policyAssignments/azsmnet3145\",\r\n  \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n  \"name\": \"azsmnet3145\"\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011/providers/Microsoft.Authorization/policyAssignments?api-version=2020-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTk2YTJmM2YtZWUwMS00ZmZkLTk3NjUtZDJjM2ZjOThmMzBhL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ0MDExL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lBc3NpZ25tZW50cz9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439/providers/Microsoft.Authorization/policyAssignments?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Jlc291cmNlR3JvdXBzL2F6c21uZXQ2NDM5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lBc3NpZ25tZW50cz9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bae33f6d-9a13-4e85-87c8-97c5a06c9262"
+          "4d50659e-0510-4450-a43a-99dd337ca9fb"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.12.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -240,22 +240,22 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "aa957d17-2287-44a1-89e6-8a06097b6a66"
+          "bd8b7b4c-f8ef-4375-8cd5-4b8dda56d4a7"
         ],
         "x-ms-correlation-request-id": [
-          "aa957d17-2287-44a1-89e6-8a06097b6a66"
+          "bd8b7b4c-f8ef-4375-8cd5-4b8dda56d4a7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210423T231734Z:aa957d17-2287-44a1-89e6-8a06097b6a66"
+          "WESTUS:20210511T013159Z:bd8b7b4c-f8ef-4375-8cd5-4b8dda56d4a7"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 23 Apr 2021 23:17:34 GMT"
+          "Tue, 11 May 2021 01:31:59 GMT"
         ],
         "Content-Length": [
-          "13254"
+          "1362"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -264,26 +264,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Assignment\",\r\n        \"policyDefinitionId\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyDefinitions/azsmnet1542\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011\",\r\n        \"metadata\": {\r\n          \"createdBy\": \"bdef9655-c830-46d2-90d4-00f07352bf75\",\r\n          \"createdOn\": \"2021-04-23T23:17:34.8281302Z\",\r\n          \"updatedBy\": null,\r\n          \"updatedOn\": null\r\n        },\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011/providers/Microsoft.Authorization/policyAssignments/azsmnet9609\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"azsmnet9609\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CSEO Block WVD resource creation\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Management/managementGroups/72f988bf-86f1-41af-91ab-2d7cd011db47/providers/Microsoft.Authorization/policyDefinitions/Deny WVD creation\",\r\n        \"scope\": \"/providers/Microsoft.Management/managementGroups/72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"notScopes\": [\r\n          \"/providers/Microsoft.Management/managementGroups/MSFT-DSRE-ISO-IAM\",\r\n          \"/providers/Microsoft.Management/managementGroups/9ce3369a-545b-cfba-c329-3631400b552f\",\r\n          \"/providers/Microsoft.Management/managementGroups/WVDSelfhost\",\r\n          \"/subscriptions/3ae2e9a4-54bd-459f-8211-6f920ecd52c4\",\r\n          \"/providers/Microsoft.Management/managementGroups/595d008b-0e4c-41f8-af09-254420fd7571\",\r\n          \"/providers/Microsoft.Management/managementGroups/CloudPCMSFTSubscriptions\",\r\n          \"/providers/Microsoft.Management/managementGroups/64cd7b97-58e0-44d3-832b-55657739bde3\"\r\n        ],\r\n        \"description\": \"IAMAADENG@microsoft.com\",\r\n        \"metadata\": {\r\n          \"createdBy\": \"7f1579a6-c648-43a1-ac1e-0c3020dd9b8e\",\r\n          \"createdOn\": \"2020-11-17T19:41:36.3082667Z\",\r\n          \"updatedBy\": \"7f1579a6-c648-43a1-ac1e-0c3020dd9b8e\",\r\n          \"updatedOn\": \"2021-03-03T20:26:00.9826574Z\"\r\n        },\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/72f988bf-86f1-41af-91ab-2d7cd011db47/providers/Microsoft.Authorization/policyAssignments/Block WVD creation\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"Block WVD creation\"\r\n    },\r\n    {\r\n      \"identity\": {\r\n        \"principalId\": \"69d0ec78-495b-4953-bad6-f3e6e7b899f2\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"type\": \"SystemAssigned\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"policyParameterType\",\r\n        \"policyDefinitionId\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyDefinitions/50237aa6-02ff-4c83-b701-7cfdb8b764e3\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"daysToExpire\": {\r\n            \"value\": 14\r\n          },\r\n          \"tagName\": {\r\n            \"value\": \"expiredOn\"\r\n          }\r\n        },\r\n        \"description\": \"\",\r\n        \"metadata\": {\r\n          \"createdBy\": \"95b89def-9556-4dbe-9bd9-ad7e6f626ebc\",\r\n          \"createdOn\": \"2020-03-18T19:25:02.0596148Z\",\r\n          \"updatedBy\": null,\r\n          \"updatedOn\": null\r\n        },\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/22462169b9ec0c8625e58aaf6cc49413c55f65cde7a78a11a1954193ebbc651b\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"22462169b9ec0c8625e58aaf6cc49413c55f65cde7a78a11a1954193ebbc651b\",\r\n      \"location\": \"westus2\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Apply tag and its default value\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"tagName\": {\r\n            \"value\": \"myTag\"\r\n          },\r\n          \"tagValue\": {\r\n            \"value\": \"myValue\"\r\n          }\r\n        },\r\n        \"description\": \"\",\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/6a7627dffb14ea1d08f909c6640c1237ef0e302c1bcb2f26e8990b46365e046e\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"6a7627dffb14ea1d08f909c6640c1237ef0e302c1bcb2f26e8990b46365e046e\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Audit enabling of diagnostic logs in Azure Data Lake Store\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/057ef27e-665e-4328-8ea3-04b3122bd9fb\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"value\": \"AuditIfNotExists\"\r\n          },\r\n          \"requiredRetentionDays\": {\r\n            \"value\": \"30\"\r\n          }\r\n        },\r\n        \"description\": \"\",\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/7c13ece57a7bc430696858bca1f4223660cd34ca7cc1fe3f55e69f33df328bab\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"7c13ece57a7bc430696858bca1f4223660cd34ca7cc1fe3f55e69f33df328bab\"\r\n    },\r\n    {\r\n      \"identity\": {\r\n        \"principalId\": \"2c5723f0-17f9-4d51-b532-cf8fbc518cc0\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"type\": \"SystemAssigned\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Deploy Log Analytics Agent for Linux VMs\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/053d3325-282c-4e5c-b944-24faffd30d77\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"logAnalytics\": {\r\n            \"value\": \"testworkspace\"\r\n          },\r\n          \"listOfImageIdToInclude\": {\r\n            \"value\": [\r\n              \"none\"\r\n            ]\r\n          }\r\n        },\r\n        \"description\": \"\",\r\n        \"metadata\": {\r\n          \"createdBy\": \"9b60a3b6-a8e7-4974-a70b-43a80c89c70c\",\r\n          \"createdOn\": \"2019-04-11T20:39:49.1565328Z\",\r\n          \"updatedBy\": \"9b60a3b6-a8e7-4974-a70b-43a80c89c70c\",\r\n          \"updatedOn\": \"2019-04-11T20:41:18.190699Z\"\r\n        },\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/be67c5fe01907470f0020a98046967db729e30e79ff34b3668700dd5a036c8ee\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"be67c5fe01907470f0020a98046967db729e30e79ff34b3668700dd5a036c8ee\",\r\n      \"location\": \"westus2\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Préversion] : Surveiller l'éventuel accès juste-à-temps (JIT) au réseau dans Azure Security Center\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/b0f33259-77d7-4c9e-aac6-3aabcfae693c\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"value\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"description\": \"\",\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/c01ae07703d7a2c501c5bb07666f80de10d16e1688b64aa134a14152cfbf089e\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"c01ae07703d7a2c501c5bb07666f80de10d16e1688b64aa134a14152cfbf089e\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Deploy Log Analytics Agent for Linux VMs\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/053d3325-282c-4e5c-b944-24faffd30d77\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"logAnalytics\": {\r\n            \"value\": \"test\"\r\n          },\r\n          \"listOfImageIdToInclude\": {\r\n            \"value\": [\r\n              \"test\"\r\n            ]\r\n          }\r\n        },\r\n        \"description\": \"\",\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/c5075f0ef6f2486a8395aa72103dca4208ff8601c13c6ca7756337b188376cb4\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"c5075f0ef6f2486a8395aa72103dca4208ff8601c13c6ca7756337b188376cb4\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Not allowed resource types\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/6c112d4e-5bc7-47ae-a041-ea2d9dccd749\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"listOfResourceTypesNotAllowed\": {\r\n            \"value\": []\r\n          }\r\n        },\r\n        \"description\": \"\",\r\n        \"metadata\": {\r\n          \"createdBy\": \"a79b1d71-1588-4545-918e-3e6291327fda\",\r\n          \"createdOn\": \"2019-09-17T17:51:57.656624Z\",\r\n          \"updatedBy\": null,\r\n          \"updatedOn\": null\r\n        },\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/d4aefeb573591a6ff12a1503b5e87277b06a6e59912346353f5765c62b034110\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"d4aefeb573591a6ff12a1503b5e87277b06a6e59912346353f5765c62b034110\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Audit VMs that do not use managed disks\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {},\r\n        \"description\": \"\",\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/d96840210ea3ce9af259030a8ba55c02b99839951daed414d91715e7d50f1b8b\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"d96840210ea3ce9af259030a8ba55c02b99839951daed414d91715e7d50f1b8b\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor possible network Just In Time (JIT) access in Azure Security Center\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/b0f33259-77d7-4c9e-aac6-3aabcfae693c\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"value\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"description\": \"\",\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/ddeb9c1af9d37635085c64082c6a2b518679e623ab4159c4cffd3305e78c12c5\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"ddeb9c1af9d37635085c64082c6a2b518679e623ab4159c4cffd3305e78c12c5\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Audit enabling of diagnostic logs in Azure Data Lake Store\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/057ef27e-665e-4328-8ea3-04b3122bd9fb\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"value\": \"AuditIfNotExists\"\r\n          },\r\n          \"requiredRetentionDays\": {\r\n            \"value\": \"30\"\r\n          }\r\n        },\r\n        \"description\": \"\",\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/defeee3542dda1bfc1f0412b1604d5e91b1dac302ddf73247c29eba8f70ce957\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"defeee3542dda1bfc1f0412b1604d5e91b1dac302ddf73247c29eba8f70ce957\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Deploy Log Analytics Agent for Linux VMs\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/053d3325-282c-4e5c-b944-24faffd30d77\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"logAnalytics\": {\r\n            \"value\": \"Test\"\r\n          },\r\n          \"listOfImageIdToInclude\": {\r\n            \"value\": [\r\n              \"Test\"\r\n            ]\r\n          }\r\n        },\r\n        \"description\": \"\",\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/e2f25b9ba5bd32e4fa1631d9bc4c7d70a0d5bf08ed382ac36ccdf8e629f097cf\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"e2f25b9ba5bd32e4fa1631d9bc4c7d70a0d5bf08ed382ac36ccdf8e629f097cf\"\r\n    },\r\n    {\r\n      \"identity\": {\r\n        \"principalId\": \"3a2c5092-2223-44c9-be61-d0870c57cd19\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"type\": \"SystemAssigned\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Deploy Log Analytics Agent for Linux VMs\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/053d3325-282c-4e5c-b944-24faffd30d77\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"logAnalytics\": {\r\n            \"value\": \"30\"\r\n          },\r\n          \"listOfImageIdToInclude\": {\r\n            \"value\": [\r\n              \"30\"\r\n            ]\r\n          }\r\n        },\r\n        \"description\": \"\",\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/fab7a09654923f75c73abf6a1bcb3d041f019afed655ed285b16321b7ee24a3b\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"fab7a09654923f75c73abf6a1bcb3d041f019afed655ed285b16321b7ee24a3b\",\r\n      \"location\": \"westus2\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"policyDefinitionId\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"metadata\": {\r\n          \"createdBy\": \"414d10da-615f-49a7-90a0-a7008fb31cd3\",\r\n          \"createdOn\": \"2020-07-31T15:31:51.4896078Z\",\r\n          \"updatedBy\": \"bdef9655-c830-46d2-90d4-00f07352bf75\",\r\n          \"updatedOn\": \"2021-04-23T22:26:38.2524561Z\"\r\n        },\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"location-lock\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"ASC Default (subscription: 996a2f3f-ee01-4ffd-9765-d2c3fc98f30a)\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8\",\r\n        \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a\",\r\n        \"parameters\": {\r\n          \"certificatesValidityPeriodMonitoringEffect\": {\r\n            \"value\": \"audit\"\r\n          },\r\n          \"secretsExpirationSetEffect\": {\r\n            \"value\": \"Audit\"\r\n          },\r\n          \"keysExpirationSetEffect\": {\r\n            \"value\": \"Audit\"\r\n          }\r\n        },\r\n        \"description\": \"This is the default set of policies monitored by Azure Security Center. It was automatically assigned as part of onboarding to Security Center. The default assignment contains only audit policies. For more information please visit https://aka.ms/ascpolicies\",\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Security Center\",\r\n          \"createdBy\": null,\r\n          \"createdOn\": null,\r\n          \"updatedBy\": \"6878917f-bc1d-4e4e-bb24-12924205b215\",\r\n          \"updatedOn\": \"2020-12-17T16:00:42.8425562Z\"\r\n        },\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyAssignments/SecurityCenterBuiltIn\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"SecurityCenterBuiltIn\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Assignment\",\r\n        \"policyDefinitionId\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1311\",\r\n        \"scope\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439\",\r\n        \"metadata\": {\r\n          \"createdBy\": \"06cdd65b-57f9-4fd0-8285-302a9681a2de\",\r\n          \"createdOn\": \"2021-05-11T01:31:59.6342357Z\",\r\n          \"updatedBy\": null,\r\n          \"updatedOn\": null\r\n        },\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439/providers/Microsoft.Authorization/policyAssignments/azsmnet3145\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"azsmnet3145\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"policyDefinitionId\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n        \"scope\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4\",\r\n        \"metadata\": {\r\n          \"createdBy\": \"06cdd65b-57f9-4fd0-8285-302a9681a2de\",\r\n          \"createdOn\": \"2021-05-11T00:19:51.0360012Z\",\r\n          \"updatedBy\": \"06cdd65b-57f9-4fd0-8285-302a9681a2de\",\r\n          \"updatedOn\": \"2021-05-11T00:51:18.4879535Z\"\r\n        },\r\n        \"enforcementMode\": \"Default\"\r\n      },\r\n      \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"location-lock\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011/providers/Microsoft.Authorization/policyAssignments/azsmnet9609?api-version=2020-09-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzk5NmEyZjNmLWVlMDEtNGZmZC05NzY1LWQyYzNmYzk4ZjMwYS9yZXNvdXJjZUdyb3Vwcy9henNtbmV0NDAxMS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDk2MDk/YXBpLXZlcnNpb249MjAyMC0wOS0wMQ==",
+      "RequestUri": "//subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439/providers/Microsoft.Authorization/policyAssignments/azsmnet3145?api-version=2020-09-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ1MDc2ZDFkLWEzZTAtNDE4Yi04MTg3LWUxNDIyYThjZjVmNC9yZXNvdXJjZUdyb3Vwcy9henNtbmV0NjQzOS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDMxNDU/YXBpLXZlcnNpb249MjAyMC0wOS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9db15528-8c24-4199-8527-8347aef4c30a"
+          "71188b8f-a8e7-43a8-a236-c9d39a324778"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.12.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -303,19 +303,19 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "64b69703-3ab1-4ab3-927d-e064f2fe8a1a"
+          "541bc460-3845-45f0-a2e1-a9f65dcc4528"
         ],
         "x-ms-correlation-request-id": [
-          "64b69703-3ab1-4ab3-927d-e064f2fe8a1a"
+          "541bc460-3845-45f0-a2e1-a9f65dcc4528"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210423T231735Z:64b69703-3ab1-4ab3-927d-e064f2fe8a1a"
+          "WESTUS:20210511T013159Z:541bc460-3845-45f0-a2e1-a9f65dcc4528"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 23 Apr 2021 23:17:34 GMT"
+          "Tue, 11 May 2021 01:31:59 GMT"
         ],
         "Content-Length": [
           "708"
@@ -327,26 +327,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyDefinitions/azsmnet1542\",\r\n    \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"bdef9655-c830-46d2-90d4-00f07352bf75\",\r\n      \"createdOn\": \"2021-04-23T23:17:34.8281302Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"enforcementMode\": \"Default\"\r\n  },\r\n  \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011/providers/Microsoft.Authorization/policyAssignments/azsmnet9609\",\r\n  \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n  \"name\": \"azsmnet9609\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1311\",\r\n    \"scope\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"06cdd65b-57f9-4fd0-8285-302a9681a2de\",\r\n      \"createdOn\": \"2021-05-11T01:31:59.6342357Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"enforcementMode\": \"Default\"\r\n  },\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439/providers/Microsoft.Authorization/policyAssignments/azsmnet3145\",\r\n  \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n  \"name\": \"azsmnet3145\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011/providers/Microsoft.Authorization/policyAssignments/azsmnet9609?api-version=2020-09-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzk5NmEyZjNmLWVlMDEtNGZmZC05NzY1LWQyYzNmYzk4ZjMwYS9yZXNvdXJjZUdyb3Vwcy9henNtbmV0NDAxMS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDk2MDk/YXBpLXZlcnNpb249MjAyMC0wOS0wMQ==",
+      "RequestUri": "//subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439/providers/Microsoft.Authorization/policyAssignments/azsmnet3145?api-version=2020-09-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzQ1MDc2ZDFkLWEzZTAtNDE4Yi04MTg3LWUxNDIyYThjZjVmNC9yZXNvdXJjZUdyb3Vwcy9henNtbmV0NjQzOS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDMxNDU/YXBpLXZlcnNpb249MjAyMC0wOS0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "223b70a2-6bdb-406e-bddf-7d3954acfd10"
+          "8cee2659-b577-46d0-a614-ff15efb42a43"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.12.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -366,19 +366,19 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "a554dd8a-4b7a-4fb4-acff-32558999c325"
+          "ccb8b66e-ffed-4e90-b07d-01a2b8b5c509"
         ],
         "x-ms-correlation-request-id": [
-          "a554dd8a-4b7a-4fb4-acff-32558999c325"
+          "ccb8b66e-ffed-4e90-b07d-01a2b8b5c509"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210423T231735Z:a554dd8a-4b7a-4fb4-acff-32558999c325"
+          "WESTUS:20210511T013159Z:ccb8b66e-ffed-4e90-b07d-01a2b8b5c509"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 23 Apr 2021 23:17:35 GMT"
+          "Tue, 11 May 2021 01:31:59 GMT"
         ],
         "Content-Length": [
           "708"
@@ -390,26 +390,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyDefinitions/azsmnet1542\",\r\n    \"scope\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"bdef9655-c830-46d2-90d4-00f07352bf75\",\r\n      \"createdOn\": \"2021-04-23T23:17:34.8281302Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"enforcementMode\": \"Default\"\r\n  },\r\n  \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourceGroups/azsmnet4011/providers/Microsoft.Authorization/policyAssignments/azsmnet9609\",\r\n  \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n  \"name\": \"azsmnet9609\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1311\",\r\n    \"scope\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"06cdd65b-57f9-4fd0-8285-302a9681a2de\",\r\n      \"createdOn\": \"2021-05-11T01:31:59.6342357Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"enforcementMode\": \"Default\"\r\n  },\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourceGroups/azsmnet6439/providers/Microsoft.Authorization/policyAssignments/azsmnet3145\",\r\n  \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n  \"name\": \"azsmnet3145\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyDefinitions/azsmnet1542?api-version=2020-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTk2YTJmM2YtZWUwMS00ZmZkLTk3NjUtZDJjM2ZjOThmMzBhL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MTU0Mj9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1311?api-version=2020-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MTMxMT9hcGktdmVyc2lvbj0yMDIwLTA5LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e6f2836b-a2ad-4d1c-b583-308092d8ca52"
+          "a86ab77d-c8bb-4196-88a7-aa45702bec7b"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.12.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/3.13.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -429,19 +429,19 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "ac43c533-9e8e-4d94-aa1d-bf35dabce989"
+          "cd072820-c3a3-42f2-a252-7767d49da320"
         ],
         "x-ms-correlation-request-id": [
-          "ac43c533-9e8e-4d94-aa1d-bf35dabce989"
+          "cd072820-c3a3-42f2-a252-7767d49da320"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210423T231735Z:ac43c533-9e8e-4d94-aa1d-bf35dabce989"
+          "WESTUS:20210511T013159Z:cd072820-c3a3-42f2-a252-7767d49da320"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Fri, 23 Apr 2021 23:17:35 GMT"
+          "Tue, 11 May 2021 01:31:59 GMT"
         ],
         "Content-Length": [
           "614"
@@ -453,26 +453,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"mode\": \"Indexed\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"bdef9655-c830-46d2-90d4-00f07352bf75\",\r\n      \"createdOn\": \"2021-04-23T23:17:34.5553271Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/providers/Microsoft.Authorization/policyDefinitions/azsmnet1542\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet1542\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResourceGroup Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"mode\": \"Indexed\",\r\n    \"metadata\": {\r\n      \"createdBy\": \"06cdd65b-57f9-4fd0-8285-302a9681a2de\",\r\n      \"createdOn\": \"2021-05-11T01:31:59.5469644Z\",\r\n      \"updatedBy\": null,\r\n      \"updatedOn\": null\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/providers/Microsoft.Authorization/policyDefinitions/azsmnet1311\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet1311\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/resourcegroups/azsmnet4011?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTk2YTJmM2YtZWUwMS00ZmZkLTk3NjUtZDJjM2ZjOThmMzBhL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ0MDExP2FwaS12ZXJzaW9uPTIwMjEtMDEtMDE=",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/resourcegroups/azsmnet6439?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ2NDM5P2FwaS12ZXJzaW9uPTIwMjEtMDQtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "22ccbc80-ef5c-46e7-805e-bab17ed0255c"
+          "5b41b2c5-db36-44a9-85b3-f8efdfd45d95"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.12.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -483,7 +483,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNDAxMS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-01-01"
+          "https://management.azure.com/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNjQzOS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-04-01"
         ],
         "Retry-After": [
           "15"
@@ -492,13 +492,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "36df78f8-2f44-4258-bace-ade48c0c04fa"
+          "835dff26-0fc2-4dd7-983c-d6b73dc710ed"
         ],
         "x-ms-correlation-request-id": [
-          "36df78f8-2f44-4258-bace-ade48c0c04fa"
+          "835dff26-0fc2-4dd7-983c-d6b73dc710ed"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210423T231735Z:36df78f8-2f44-4258-bace-ade48c0c04fa"
+          "WESTUS:20210511T013200Z:835dff26-0fc2-4dd7-983c-d6b73dc710ed"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -507,7 +507,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 23 Apr 2021 23:17:35 GMT"
+          "Tue, 11 May 2021 01:32:00 GMT"
         ],
         "Expires": [
           "-1"
@@ -520,16 +520,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNDAxMS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTk2YTJmM2YtZWUwMS00ZmZkLTk3NjUtZDJjM2ZjOThmMzBhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOREF4TVMxWFJWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNjQzOS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOalF6T1MxWFJWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.12.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -540,7 +540,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNDAxMS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-01-01"
+          "https://management.azure.com/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNjQzOS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-04-01"
         ],
         "Retry-After": [
           "15"
@@ -549,13 +549,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "8a90b1ba-33f3-427a-9de9-2e47bb35bc17"
+          "441b9cbb-273e-450b-bf6b-20087fcdf05c"
         ],
         "x-ms-correlation-request-id": [
-          "8a90b1ba-33f3-427a-9de9-2e47bb35bc17"
+          "441b9cbb-273e-450b-bf6b-20087fcdf05c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210423T231750Z:8a90b1ba-33f3-427a-9de9-2e47bb35bc17"
+          "WESTUS:20210511T013215Z:441b9cbb-273e-450b-bf6b-20087fcdf05c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -564,7 +564,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 23 Apr 2021 23:17:50 GMT"
+          "Tue, 11 May 2021 01:32:15 GMT"
         ],
         "Expires": [
           "-1"
@@ -577,16 +577,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNDAxMS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTk2YTJmM2YtZWUwMS00ZmZkLTk3NjUtZDJjM2ZjOThmMzBhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOREF4TVMxWFJWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNjQzOS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOalF6T1MxWFJWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.12.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -597,7 +597,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNDAxMS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-01-01"
+          "https://management.azure.com/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNjQzOS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-04-01"
         ],
         "Retry-After": [
           "15"
@@ -606,13 +606,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "5f7b1a4f-e710-4f02-b708-2bedad3473af"
+          "c59b6ca4-730e-405c-aadb-25a499cf75f0"
         ],
         "x-ms-correlation-request-id": [
-          "5f7b1a4f-e710-4f02-b708-2bedad3473af"
+          "c59b6ca4-730e-405c-aadb-25a499cf75f0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210423T231805Z:5f7b1a4f-e710-4f02-b708-2bedad3473af"
+          "WESTUS:20210511T013230Z:c59b6ca4-730e-405c-aadb-25a499cf75f0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -621,7 +621,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 23 Apr 2021 23:18:04 GMT"
+          "Tue, 11 May 2021 01:32:30 GMT"
         ],
         "Expires": [
           "-1"
@@ -634,16 +634,16 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNDAxMS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTk2YTJmM2YtZWUwMS00ZmZkLTk3NjUtZDJjM2ZjOThmMzBhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOREF4TVMxWFJWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNjQzOS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOalF6T1MxWFJWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.12.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -657,13 +657,13 @@
           "11997"
         ],
         "x-ms-request-id": [
-          "99268829-b306-44ff-b9bd-a5307206c8a3"
+          "76c5f637-29e7-421f-909e-e7cbfd9ae634"
         ],
         "x-ms-correlation-request-id": [
-          "99268829-b306-44ff-b9bd-a5307206c8a3"
+          "76c5f637-29e7-421f-909e-e7cbfd9ae634"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210423T231820Z:99268829-b306-44ff-b9bd-a5307206c8a3"
+          "WESTUS:20210511T013245Z:76c5f637-29e7-421f-909e-e7cbfd9ae634"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -672,7 +672,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 23 Apr 2021 23:18:19 GMT"
+          "Tue, 11 May 2021 01:32:45 GMT"
         ],
         "Expires": [
           "-1"
@@ -685,16 +685,16 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/996a2f3f-ee01-4ffd-9765-d2c3fc98f30a/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNDAxMS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTk2YTJmM2YtZWUwMS00ZmZkLTk3NjUtZDJjM2ZjOThmMzBhL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOREF4TVMxWFJWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestUri": "/subscriptions/45076d1d-a3e0-418b-8187-e1422a8cf5f4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNjQzOS1XRVNUVVMyIiwiam9iTG9jYXRpb24iOiJ3ZXN0dXMyIn0?api-version=2021-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDUwNzZkMWQtYTNlMC00MThiLTgxODctZTE0MjJhOGNmNWY0L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOalF6T1MxWFJWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUozWlhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAyMS0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29812.02",
+          "FxVersion/4.6.29916.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.12.1.0"
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.13.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -708,13 +708,13 @@
           "11996"
         ],
         "x-ms-request-id": [
-          "b88d5794-04e1-44ec-9cce-69729bf38627"
+          "3a4aa67a-b583-4b04-8630-9937bf827adb"
         ],
         "x-ms-correlation-request-id": [
-          "b88d5794-04e1-44ec-9cce-69729bf38627"
+          "3a4aa67a-b583-4b04-8630-9937bf827adb"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210423T231820Z:b88d5794-04e1-44ec-9cce-69729bf38627"
+          "WESTUS:20210511T013245Z:3a4aa67a-b583-4b04-8630-9937bf827adb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -723,7 +723,7 @@
           "nosniff"
         ],
         "Date": [
-          "Fri, 23 Apr 2021 23:18:19 GMT"
+          "Tue, 11 May 2021 01:32:45 GMT"
         ],
         "Expires": [
           "-1"
@@ -738,12 +738,12 @@
   ],
   "Names": {
     "CanCrudPolicyAssignmentAtResourceGroup": [
-      "azsmnet4011",
-      "azsmnet1542",
-      "azsmnet9609"
+      "azsmnet6439",
+      "azsmnet1311",
+      "azsmnet3145"
     ]
   },
   "Variables": {
-    "SubscriptionId": "996a2f3f-ee01-4ffd-9765-d2c3fc98f30a"
+    "SubscriptionId": "45076d1d-a3e0-418b-8187-e1422a8cf5f4"
   }
 }

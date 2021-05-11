@@ -345,7 +345,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                string subscriptionId = "996a2f3f-ee01-4ffd-9765-d2c3fc98f30a";
+                string subscriptionId = "45076d1d-a3e0-418b-8187-e1422a8cf5f4";
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var client = GetResourceManagementClient(context, handler);
@@ -411,9 +411,9 @@ namespace ResourceGroups.Tests
                 );
 
                 var listResult = client.Resources.List(new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Microsoft.Web/serverFarms"));
-
+                
                 Assert.NotEmpty(listResult);
-                Assert.Equal(2, listResult.First().Tags.Count);
+                Assert.Equal(2, listResult.FirstOrDefault(resource => resource.Id.Contains(groupName)).Tags.Count);
             }
         }
     }
