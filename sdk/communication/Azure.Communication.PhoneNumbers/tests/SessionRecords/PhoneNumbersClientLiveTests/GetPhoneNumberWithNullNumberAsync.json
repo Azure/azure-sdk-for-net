@@ -2,6 +2,7 @@
   "Entries": [],
   "Variables": {
     "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "478917768"
+    "RandomSeed": "478917768",
+    "SKIP_INT_PHONENUMBERS_TEST": "FALSE"
   }
 }
