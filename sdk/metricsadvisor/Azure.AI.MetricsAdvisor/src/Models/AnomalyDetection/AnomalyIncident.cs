@@ -81,12 +81,16 @@ namespace Azure.AI.MetricsAdvisor.Models
         public AnomalyIncidentStatus Status { get; }
 
         /// <summary>
-        /// TODO: what's a root node?
+        /// The value of the data point at the root node of this incident. The root node is defined as
+        /// the data point at the root of this incident's root-cause analysis tree.
         /// </summary>
         public double ValueOfRootNode { get; }
 
         /// <summary>
-        /// TODO: what's a root node?
+        /// The value the data point at the root node of this incident was expected to have according to
+        /// the service's smart detector. The root node is defined as the data point at the root of this
+        /// incident's root-cause analysis tree. <c>null</c> if the quantity of historical points is not
+        /// enough to make a prediction.
         /// </summary>
         public double? ExpectedValueOfRootNode { get; }
     }
