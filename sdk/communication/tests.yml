@@ -18,3 +18,4 @@ extends:
     EnvVars:
       # SKIP_PHONENUMBER_LIVE_TESTS skips certain phone number tests such as purchase and release
       SKIP_PHONENUMBER_LIVE_TESTS: TRUE
+      TEST_PACKAGES_ENABLED: ${{ parameters.TestPackagesEnabled }}
