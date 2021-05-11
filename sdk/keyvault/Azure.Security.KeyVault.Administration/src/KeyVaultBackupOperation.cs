@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// A long-running operation for <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.
     /// </summary>
-    public class BackupOperation : Operation<BackupResult>
+    public class KeyVaultBackupOperation : Operation<KeyVaultBackupResult>
     {
         /// <summary>
         /// The number of seconds recommended by the service to delay before checking on completion status.
@@ -31,9 +31,9 @@ namespace Azure.Security.KeyVault.Administration
         /// to re-populate the details of this operation.
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        /// <param name="id">The <see cref="Id" /> from a previous <see cref="BackupOperation" />.</param>
+        /// <param name="id">The <see cref="Id" /> from a previous <see cref="KeyVaultBackupOperation" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
-        public BackupOperation(KeyVaultBackupClient client, string id)
+        public KeyVaultBackupOperation(KeyVaultBackupClient client, string id)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(client, nameof(client));
@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.</param>
-        internal BackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullBackupHeaders> response)
+        internal KeyVaultBackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullBackupHeaders> response)
         {
             _client = client;
             _response = response;
@@ -61,7 +61,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="value">The <see cref="FullBackupDetailsInternal" /> that will be returned from <see cref="Value" />.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        internal BackupOperation(FullBackupDetailsInternal value, Response response, KeyVaultBackupClient client)
+        internal KeyVaultBackupOperation(FullBackupDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
             Argument.AssertNotNull(value, nameof(value));
             Argument.AssertNotNull(response, nameof(response));
@@ -73,8 +73,8 @@ namespace Azure.Security.KeyVault.Administration
             _client = client;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupOperation" /> for mocking. </summary>
-        protected BackupOperation() {}
+        /// <summary> Initializes a new instance of <see cref="KeyVaultBackupOperation" /> for mocking. </summary>
+        protected KeyVaultBackupOperation() {}
 
         /// <summary>
         /// The start time of the backup operation.
@@ -93,7 +93,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Gets the <see cref="FullBackupDetailsInternal"/> of the backup operation.
         /// You should await <see cref="WaitForCompletionAsync(CancellationToken)"/> before attempting to use a key in this pending state.
         /// </summary>
-        public override BackupResult Value
+        public override KeyVaultBackupResult Value
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Azure.Security.KeyVault.Administration
                     throw _requestFailedException;
                 }
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-                return new BackupResult(new Uri(_value.AzureStorageBlobContainerUri), _value.StartTime.Value, _value.EndTime.Value);
+                return new KeyVaultBackupResult(new Uri(_value.AzureStorageBlobContainerUri), _value.StartTime.Value, _value.EndTime.Value);
             }
         }
 
@@ -162,12 +162,12 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <inheritdoc/>
-        public override ValueTask<Response<BackupResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<KeyVaultBackupResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             _retryAfterSeconds.HasValue ? this.DefaultWaitForCompletionAsync(TimeSpan.FromSeconds(_retryAfterSeconds.Value), cancellationToken) :
                 this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<BackupResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        public override ValueTask<Response<KeyVaultBackupResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
                 this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

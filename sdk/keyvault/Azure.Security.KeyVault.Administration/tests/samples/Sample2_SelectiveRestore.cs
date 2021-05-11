@@ -36,10 +36,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
             RegisterKeyForCleanup(keyName);
 
             // Start the backup.
-            BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
+            KeyVaultBackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
 
             // Wait for completion of the BackupOperation.
-            Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
+            Response<KeyVaultBackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
             await WaitForOperationAsync();
 
@@ -55,10 +55,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
 #endif
 
             // Start the restore for a specific key that was previously backed up using the backupBlobUri returned from a previous BackupOperation.
-            SelectiveKeyRestoreOperation restoreOperation = await Client.StartSelectiveRestoreAsync(keyName, folderUri, sasToken);
+            KeyVaultSelectiveRestoreOperation restoreOperation = await Client.StartSelectiveRestoreAsync(keyName, folderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
-            SelectiveKeyRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
+            KeyVaultSelectiveRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
             #endregion
 
             Assert.That(restoreOperation.HasValue, Is.True);

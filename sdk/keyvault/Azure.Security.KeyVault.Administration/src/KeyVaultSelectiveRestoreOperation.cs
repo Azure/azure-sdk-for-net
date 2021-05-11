@@ -10,11 +10,11 @@ using Azure.Security.KeyVault.Administration.Models;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary>
-    /// A long-running operation for <see cref="KeyVaultBackupClient.StartRestore"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync"/>.
+    /// A long-running operation for <see cref="KeyVaultBackupClient.StartSelectiveRestore"/> or <see cref="KeyVaultBackupClient.StartSelectiveRestoreAsync"/>.
     /// </summary>
-    public class SelectiveKeyRestoreOperation : Operation<SelectiveKeyRestoreResult>
+    public class KeyVaultSelectiveRestoreOperation : Operation<KeyVaultSelectiveRestoreResult>
     {
-        private readonly RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult, SelectiveKeyRestoreDetailsInternal> _operationInternal;
+        private readonly RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, KeyVaultSelectiveRestoreResult, SelectiveKeyRestoreDetailsInternal> _operationInternal;
 
         /// <summary>
         /// Creates an instance of a SelectiveKeyRestoreOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
@@ -22,11 +22,11 @@ namespace Azure.Security.KeyVault.Administration
         /// to re-populate the details of this operation.
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        /// <param name="id">The <see cref="Id" /> from a previous <see cref="BackupOperation" />.</param>
+        /// <param name="id">The <see cref="Id" /> from a previous <see cref="KeyVaultBackupOperation" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
-        public SelectiveKeyRestoreOperation(KeyVaultBackupClient client, string id)
+        public KeyVaultSelectiveRestoreOperation(KeyVaultBackupClient client, string id)
         {
-            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult, SelectiveKeyRestoreDetailsInternal>(client, id);
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, KeyVaultSelectiveRestoreResult, SelectiveKeyRestoreDetailsInternal>(client, id);
         }
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartRestore"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
-        internal SelectiveKeyRestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders> response)
+        internal KeyVaultSelectiveRestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders> response)
         {
-            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult, SelectiveKeyRestoreDetailsInternal>(client, response);
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, KeyVaultSelectiveRestoreResult, SelectiveKeyRestoreDetailsInternal>(client, response);
         }
 
         /// <summary>
@@ -47,13 +47,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> or <paramref name="response"/> or <paramref name="client"/> is null.</exception>
-        internal SelectiveKeyRestoreOperation(SelectiveKeyRestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
+        internal KeyVaultSelectiveRestoreOperation(SelectiveKeyRestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
-            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult, SelectiveKeyRestoreDetailsInternal>(value, response, client);
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, KeyVaultSelectiveRestoreResult, SelectiveKeyRestoreDetailsInternal>(value, response, client);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreOperation" /> for mocking. </summary>
-        protected SelectiveKeyRestoreOperation() {}
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSelectiveRestoreOperation" /> for mocking. </summary>
+        protected KeyVaultSelectiveRestoreOperation() {}
 
         /// <summary>
         /// The start time of the restore operation.
@@ -69,7 +69,7 @@ namespace Azure.Security.KeyVault.Administration
         public override string Id => _operationInternal.Id;
 
         /// <inheritdoc/>
-        public override SelectiveKeyRestoreResult Value => _operationInternal.Value;
+        public override KeyVaultSelectiveRestoreResult Value => _operationInternal.Value;
 
         /// <inheritdoc/>
         public override bool HasCompleted => _operationInternal.HasCompleted;
@@ -88,11 +88,11 @@ namespace Azure.Security.KeyVault.Administration
             await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<SelectiveKeyRestoreResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<KeyVaultSelectiveRestoreResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             _operationInternal.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<SelectiveKeyRestoreResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        public override ValueTask<Response<KeyVaultSelectiveRestoreResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

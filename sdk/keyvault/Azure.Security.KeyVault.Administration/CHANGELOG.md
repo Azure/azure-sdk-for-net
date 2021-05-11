@@ -2,6 +2,14 @@
 
 ## 4.0.0-beta.5 (Unreleased)
 
+### Breaking Changes
+
+- Moved all classes from the `Azure.Security.KeyVault.Administration.Models` namespace to `Azure.Security.KeyVault.Administration`.
+- Renamed `BackupOperation` to `KeyVaultBackupOperation`.
+- Renamed `RestoreOperation` to `KeyVaultRestoreOperation`.
+- Renamed `SelectiveKeyRestoreOperation` to `KeyVaultSelectiveRestoreOperation`.
+- Renamed `SelectiveKeyRestoreResult` to `KeyVaultSelectiveRestoreResult`.
+
 ## 4.0.0-beta.4 (2021-02-10)
 
 ### Added
