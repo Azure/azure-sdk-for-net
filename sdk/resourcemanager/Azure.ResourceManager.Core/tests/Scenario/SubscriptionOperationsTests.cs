@@ -132,6 +132,13 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.IsTrue(locations.Count != 0);
         }
 
+        [RecordedTest]
+        public async Task TestGetSubscription()
+        {
+            var subscription = await Client.DefaultSubscription.GetAsync();
+            Assert.NotNull(subscription.Value.Data.Id);
+        }
+
         private string GetLongString(int length)
         {
             StringBuilder builder = new StringBuilder();

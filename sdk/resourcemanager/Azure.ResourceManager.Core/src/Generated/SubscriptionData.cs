@@ -11,7 +11,11 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public partial class SubscriptionData : TrackedResource<SubscriptionResourceIdentifier>
     {
-        /// <summary> Initializes a new instance of Subscription. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionData"/> class. </summary>
+        /// <param name="id"> The subscription id. </param>
+        /// <param name="displayName"> The subscription name. </param>
+        /// <param name="tags"> The tags attached to the subscription. </param>
+        /// <param name="resourceType"> The subscription resource type. </param>
         internal SubscriptionData(string id,
             string displayName,
             IDictionary<string, string> tags,
