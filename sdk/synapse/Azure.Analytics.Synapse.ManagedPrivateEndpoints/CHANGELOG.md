@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-beta.4 (Unreleased)
+
+
 ## 1.0.0-beta.3 (2021-05-11)
 ### Key Bug Fixes
 - Updated dependency versions.
