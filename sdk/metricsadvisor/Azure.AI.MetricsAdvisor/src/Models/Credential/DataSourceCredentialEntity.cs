@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// TODO.
+    /// The credential used to authenticate a <see cref="DataFeedSource"/> for data ingestion.
     /// </summary>
     [CodeGenModel("DataSourceCredential")]
     public partial class DataSourceCredentialEntity
@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public string Id { get; }
 
         /// <summary>
-        /// A custom name for this <see cref="DataSourceCredentialEntity"/> to be displayed on the web portal.
+        /// A custom unique name for this <see cref="DataSourceCredentialEntity"/> to be displayed on the web portal.
         /// </summary>
         [CodeGenMember("DataSourceCredentialName")]
         public string Name { get; set; }

@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
-    /// TODO.
+    /// Authenticates to an Azure service via service principal.
     /// </summary>
     [CodeGenModel("ServicePrincipalCredential")]
     [CodeGenSuppress(nameof(ServicePrincipalCredentialEntity), typeof(string), typeof(ServicePrincipalParam))]
@@ -15,10 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="ServicePrincipalCredentialEntity"/> class.
         /// </summary>
-        /// <param name="name">TODO.</param>
-        /// <param name="clientId"></param>
-        /// <param name="clientSecret"></param>
-        /// <param name="tenantId"></param>
+        /// <param name="name">A custom unique name for this <see cref="ServicePrincipalCredentialEntity"/> to be displayed on the web portal.</param>
+        /// <param name="clientId">The client ID of the service principal used for authentication.</param>
+        /// <param name="clientSecret">The client Secret of the service principal used for authentication.</param>
+        /// <param name="tenantId">The tenant ID of the service principal used for authentication.</param>
         public ServicePrincipalCredentialEntity(string name, string clientId, string clientSecret, string tenantId) : base(name)
         {
             Argument.AssertNotNullOrEmpty(clientId, nameof(clientId));
@@ -40,17 +40,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// TODO.
+        /// The client ID of the service principal used for authentication.
         /// </summary>
         public string ClientId { get; set; }
 
         /// <summary>
-        /// TODO.
+        /// The client Secret of the service principal used for authentication.
         /// </summary>
         public string ClientSecret { get; set; }
 
         /// <summary>
-        /// TODO.
+        /// The tenant ID of the service principal used for authentication.
         /// </summary>
         public string TenantId { get; set; }
 
