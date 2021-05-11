@@ -377,7 +377,7 @@ Now in `Azure.Messaging.ServiceBus`, there is an `EnableCrossEntityTransactions`
 
 The below code snippet shows you how to perform cross-entity transactions.
 
-```C# Snippet:ServiceBusTransactionGroup
+```C# Snippet:ServiceBusCrossEntityTransaction
 var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
 await using var client = new ServiceBusClient(connectionString, options);
 

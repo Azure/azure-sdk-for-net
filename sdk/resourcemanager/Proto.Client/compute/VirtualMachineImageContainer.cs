@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading;
+using Azure;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
@@ -34,7 +35,7 @@ namespace Proto.Compute
 
         protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
 
-        public ArmResponse<VirtualMachineImage> Get(
+        public Response<VirtualMachineImage> Get(
             string location,
             string publisher,
             string offer,

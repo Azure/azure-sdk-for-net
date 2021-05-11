@@ -22,6 +22,31 @@ namespace Azure.Containers.ContainerRegistry
         private readonly string AcrAadScope = "https://management.core.windows.net/.default";
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts,
+        /// using anonymous access to the registry.  Only operations that support anonymous access are enabled.  Other service
+        /// methods will throw <see cref="RequestFailedException"/> if called.
+        /// </summary>
+        /// <param name="registryUri">The URI endpoint of the container registry.  This is likely to be similar
+        /// to "https://{registry-name}.azurecr.io".</param>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> is null. </exception>
+        public ContainerRegistryClient(Uri registryUri) : this(registryUri, new ContainerRegistryAnonymousAccessCredential(), new ContainerRegistryClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ContainerRegistryClient for managing container images and artifacts,
+        /// using anonymous access to the registry.  Only operations that support anonymous access are enabled.  Other service
+        /// methods will throw <see cref="RequestFailedException"/> if called.
+        /// </summary>
+        /// <param name="registryUri">The URI endpoint of the container registry.  This is likely to be similar
+        /// to "https://{registry-name}.azurecr.io".</param>
+        /// <param name="options">Client configuration options for connecting to Azure Container Registry.</param>
+        /// <exception cref="ArgumentNullException"> Thrown when the <paramref name="registryUri"/> is null. </exception>
+        public ContainerRegistryClient(Uri registryUri, ContainerRegistryClientOptions options) : this(registryUri, new ContainerRegistryAnonymousAccessCredential(), options)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ContainerRegistryClient"/> for managing container images and artifacts.
         /// </summary>
         /// <param name="registryUri">The URI endpoint of the container registry.  This is likely to be similar

@@ -1,9 +1,10 @@
-﻿using Proto.Compute;
+﻿using Azure;
+using Azure.Identity;
 using Azure.ResourceManager.Core;
+using Proto.Compute;
 using Proto.Network;
 using System;
 using System.Collections.Generic;
-using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -46,7 +47,7 @@ namespace Proto.Client
 
         private void CreateVms(ResourceGroup resourceGroup, AvailabilitySet aset, SubnetOperations subnet)
         {
-            List<ArmOperation<VirtualMachine>> operations = new List<ArmOperation<VirtualMachine>>();
+            List<Operation<VirtualMachine>> operations = new List<Operation<VirtualMachine>>();
             for (int i = 0; i < 10; i++)
             {
                 // Create Network Interface

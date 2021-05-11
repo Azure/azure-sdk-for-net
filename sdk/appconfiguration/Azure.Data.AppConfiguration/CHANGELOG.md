@@ -1,7 +1,10 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.3 (2021-05-11)
 
+### Key Bug Fixes
+
+- `FeatureFlagFilter` now allows parameter modification.
 
 ## 1.1.0-beta.2 (2021-04-06)
 

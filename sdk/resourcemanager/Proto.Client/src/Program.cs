@@ -1,6 +1,6 @@
-﻿using Azure.ResourceManager.Core;
+﻿using Azure.Identity;
+using Azure.ResourceManager.Core;
 using System;
-using Azure.Identity;
 
 namespace Proto.Client
 {

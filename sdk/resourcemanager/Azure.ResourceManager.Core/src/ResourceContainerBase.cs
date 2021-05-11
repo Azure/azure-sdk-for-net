@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Core
     /// <typeparam name="TOperations"> The type of the class containing operations for the underlying resource. </typeparam>
     /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
     public abstract class ResourceContainerBase<TIdentifier, TOperations, TResource> : ContainerBase<TIdentifier>
-        where TIdentifier : TenantResourceIdentifier
+        where TIdentifier : ResourceIdentifier
         where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
         where TResource : class
     {
@@ -30,13 +30,12 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceContainerBase{TIdentifier, TOperations, TData}"/> class.
-        /// Note: This is only used by SubscriptionContainers. Hence internal only.
+        /// Initializes a new instance of the <see cref="ResourceContainerBase{TIdentifier, TOperations, TResource}"/> class.
         /// </summary>
-        /// <param name="clientContext"></param>
-        /// <param name="id"></param>
-        internal ResourceContainerBase(ClientContext clientContext, TIdentifier id)
-            : base(clientContext, id)
+        /// <param name="clientContext"> The client context to use. </param>
+        /// <param name="parentId"> The identifier of the resource that is the target of operations. </param>
+        internal ResourceContainerBase(ClientContext clientContext, TIdentifier parentId)
+            : base(clientContext, parentId)
         {
         }
 
@@ -95,18 +94,18 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="resourceName"> The name of the resource to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> resourceName cannot be null or a whitespace. </exception>
-        public abstract ArmResponse<TOperations> Get(string resourceName, CancellationToken cancellationToken = default);
+        public abstract Response<TOperations> Get(string resourceName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets details for this resource from the service.
         /// </summary>
         /// <param name="resourceName"> The name of the resource to get. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> resourceName cannot be null or a whitespace. </exception>
-        public abstract Task<ArmResponse<TOperations>> GetAsync(string resourceName, CancellationToken cancellationToken = default);
+        public abstract Task<Response<TOperations>> GetAsync(string resourceName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns the resource from Azure if it exists.
@@ -170,10 +169,24 @@ namespace Azure.ResourceManager.Core
         /// Determines whether or not the azure resource exists in this container
         /// </summary>
         /// <param name="resourceName"> The name of the resource you want to check. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool DoesExist(string resourceName)
+        public virtual bool DoesExist(string resourceName, CancellationToken cancellationToken = default)
         {
-            return TryGet(resourceName) == null ? false : true;
+            return TryGet(resourceName, cancellationToken) != null;
+        }
+
+        /// <summary>
+        /// Determines whether or not the azure resource exists in this container
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource you want to check. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual async Task<bool> DoesExistAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            return await TryGetAsync(resourceName, cancellationToken).ConfigureAwait(false) != null;
         }
 
         /// <summary>

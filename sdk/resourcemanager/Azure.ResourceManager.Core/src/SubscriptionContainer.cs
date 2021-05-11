@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc />
-        public override ArmResponse<Subscription> Get(string subscriptionGuid, CancellationToken cancellationToken = default)
+        public override Response<Subscription> Get(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
             return new SubscriptionOperations(
                     new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc />
-        public override Task<ArmResponse<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
+        public override Task<Response<Subscription>> GetAsync(string subscriptionGuid, CancellationToken cancellationToken = default)
         {
             return new SubscriptionOperations(
                 new ClientContext(ClientOptions, Credential, BaseUri, Pipeline),

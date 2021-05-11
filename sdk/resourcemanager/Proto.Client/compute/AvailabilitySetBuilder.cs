@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.Core;
+using Azure;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,9 +58,9 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{AvailabilitySet}"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="Response{AvailabilitySet}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public ArmResponse<AvailabilitySet> CreateOrUpdate(string name, CancellationToken cancellationToken = default)
+        public Response<AvailabilitySet> CreateOrUpdate(string name, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
@@ -76,9 +76,9 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{AvailabilitySet}"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{AvailabilitySet}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public async Task<ArmResponse<AvailabilitySet>> CreateOrUpdateAsync(
+        public async Task<Response<AvailabilitySet>> CreateOrUpdateAsync(
             string name,
             CancellationToken cancellationToken = default)
         {
@@ -96,12 +96,12 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An <see cref="ArmOperation{AvailabilitySet}"/> that allows polling for completion of the operation. </returns>
+        /// <returns> An <see cref="Operation{AvailabilitySet}"/> that allows polling for completion of the operation. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public ArmOperation<AvailabilitySet> StartCreateOrUpdate(string name, CancellationToken cancellationToken = default)
+        public Operation<AvailabilitySet> StartCreateOrUpdate(string name, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
@@ -117,12 +117,12 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="name"> The name of the new resource to create. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{AvailabilitySet}"/> that allows polling for completion of the operation. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="Operation{AvailabilitySet}"/> that allows polling for completion of the operation. </returns>
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public async Task<ArmOperation<AvailabilitySet>> StartCreateOrUpdateAsync(
+        public async Task<Operation<AvailabilitySet>> StartCreateOrUpdateAsync(
             string name,
             CancellationToken cancellationToken = default)
         {

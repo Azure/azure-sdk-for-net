@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
-using Azure.Monitor.Query;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
 
@@ -23,7 +21,7 @@ namespace Azure.Monitor.Query.Tests
             LogsClient client = new LogsClient(new DefaultAzureCredential());
             /*@@*/string workspaceId = TestEnvironment.WorkspaceId;
             //@@string workspaceId = "<workspace_id>";
-            Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated");
+            Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
             LogsQueryResultTable table = response.Value.PrimaryTable;
 
@@ -46,7 +44,7 @@ namespace Azure.Monitor.Query.Tests
 #else
             string workspaceId = TestEnvironment.WorkspaceId;
 #endif
-            Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated");
+            Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated", TimeSpan.FromDays(1));
 
             LogsQueryResultTable table = response.Value.PrimaryTable;
 
@@ -85,7 +83,8 @@ namespace Azure.Monitor.Query.Tests
 
             // Query TOP 10 resource groups by event count
             Response<IReadOnlyList<string>> response = await client.QueryAsync<string>(workspaceId,
-                "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup");
+                "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count | project ResourceGroup",
+                TimeSpan.FromDays(1));
 
             foreach (var resourceGroup in response.Value)
             {
@@ -109,7 +108,8 @@ namespace Azure.Monitor.Query.Tests
 
             // Query TOP 10 resource groups by event count
             Response<IReadOnlyList<MyLogEntryModel>> response = await client.QueryAsync<MyLogEntryModel>(workspaceId,
-                "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count");
+                "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
+                TimeSpan.FromDays(1));
 
             foreach (var logEntryModel in response.Value)
             {
@@ -134,8 +134,8 @@ namespace Azure.Monitor.Query.Tests
             // Query TOP 10 resource groups by event count
             // And total event count
             LogsBatchQuery batch = client.CreateBatchQuery();
-            string countQueryId = batch.AddQuery(workspaceId, "AzureActivity | count");
-            string topQueryId = batch.AddQuery(workspaceId, "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count");
+            string countQueryId = batch.AddQuery(workspaceId, "AzureActivity | count", TimeSpan.FromDays(1));
+            string topQueryId = batch.AddQuery(workspaceId, "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count", TimeSpan.FromDays(1));
 
             Response<LogsBatchQueryResult> response = await batch.SubmitAsync();
 
@@ -166,6 +166,7 @@ namespace Azure.Monitor.Query.Tests
             // Query TOP 10 resource groups by event count
             Response<IReadOnlyList<int>> response = await client.QueryAsync<int>(workspaceId,
                 "AzureActivity | summarize count()",
+                TimeSpan.FromDays(1),
                 options: new LogsQueryOptions()
                 {
                     Timeout = TimeSpan.FromMinutes(10)
@@ -191,7 +192,7 @@ namespace Azure.Monitor.Query.Tests
             LogsClient client = new LogsClient(new DefaultAzureCredential());
             try
             {
-                await client.QueryAsync(workspaceId, "My Not So Valid Query");
+                await client.QueryAsync(workspaceId, "My Not So Valid Query", TimeSpan.FromDays(1));
             }
             catch (Exception e)
             {

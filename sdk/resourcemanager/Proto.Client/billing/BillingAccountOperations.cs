@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
 using Azure.ResourceManager.Billing;
 using Azure.ResourceManager.Core;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Proto.Billing
 {
@@ -56,7 +56,7 @@ namespace Proto.Billing
 
 
         /// <inheritdoc/>
-        public override ArmResponse<BillingAccount> Get(CancellationToken cancellationToken = default)
+        public override Response<BillingAccount> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<BillingAccount, Azure.ResourceManager.Billing.Models.BillingAccount>(
                 Operations.Get(Id.Name, cancellationToken: cancellationToken),
@@ -64,7 +64,7 @@ namespace Proto.Billing
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<BillingAccount>> GetAsync(CancellationToken cancellationToken = default)
+        public override async Task<Response<BillingAccount>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<BillingAccount, Azure.ResourceManager.Billing.Models.BillingAccount>(
                 await Operations.GetAsync(Id.Name, null, cancellationToken).ConfigureAwait(false),

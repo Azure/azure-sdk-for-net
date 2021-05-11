@@ -136,6 +136,11 @@ if ($null -eq $newVersionParsed)
   -packageType $packageProperties.SDKType `
   -packageNewLibrary $packageProperties.IsNewSDK
 
+if ($LASTEXITCODE -ne 0) {
+  Write-Error "Updating of the Devops Release WorkItem failed."
+  exit 1
+}
+
 if ($releaseTrackingOnly)
 {
   Write-Host

@@ -1,7 +1,7 @@
-﻿using Proto.Compute;
+﻿using Azure.Identity;
 using Azure.ResourceManager.Core;
+using Proto.Compute;
 using System;
-using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -13,8 +13,10 @@ namespace Proto.Client
             createVm.Execute();
             var client = new ArmClient(new DefaultAzureCredential());
 
+            var id = $"/subscriptions/{Context.SubscriptionId}/resourceGroups/{Context.RgName}/providers/Microsoft.Compute/virtualMachines/{Context.VmName}";
+
             //retrieve from lowest level, doesn't give ability to walk up and down the container structure
-            var vmOp = client.GetResourceOperations<VirtualMachineOperations>(Context.SubscriptionId, Context.RgName, Context.VmName);
+            var vmOp = client.GetVirtualMachineOperations(id);
             var vm = vmOp.Get().Value.Data;
             Console.WriteLine($"Found VM {vm.Id}");
 
