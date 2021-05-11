@@ -283,8 +283,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         // We want to ensure messages can be completed in the function code before signaling success to the test
                         sbOptions.AutoCompleteMessages = false;
-                        sbOptions.MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin);
-                        sbOptions.MaxConcurrentCalls = 1;
+                        sbOptions.SingleMessageOptions.MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin);
+                        sbOptions.SingleMessageOptions.MaxConcurrentCalls = 1;
                     }));
         }
 
@@ -421,11 +421,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "{",
                 "  \"PrefetchCount\": 0,",
                 "  \"AutoCompleteMessages\": true,",
-                "  \"MaxAutoLockRenewalDuration\": \"00:05:00\",",
-               $"  \"MaxConcurrentCalls\": {16 * Utility.GetProcessorCount()},",
-                "  \"MaxConcurrentSessions\": 8,",
-                "  \"MaxMessages\": 1000,",
-                "  \"SessionIdleTimeout\": \"\"",
+                "  \"SingleMessageOptions\": {",
+                "       \"MaxAutoLockRenewalDuration\":  \"00:05:00\",",
+                $"       \"MaxConcurrentCalls\": {16 * Utility.GetProcessorCount()},",
+                "       \"MaxConcurrentSessions\": 8,",
+                "       \"SessionIdleTimeout\": \"\"",
+                "  }",
+                "  \"BatchMessageOptions\": {",
+                "       \"MaxMessages\": 1000,",
+                "       \"MaxReceiveWaitTime\": \"\"",
+                "  }",
                 "  \"ClientRetryOptions\": {",
                 "       \"Mode\": \"Exponential\",",
                 "       \"TryTimeout\": \"00:00:10\",",

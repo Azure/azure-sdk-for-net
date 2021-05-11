@@ -266,7 +266,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         }
 
                         IReadOnlyList<ServiceBusReceivedMessage> messages =
-                            await receiver.ReceiveMessagesAsync(_serviceBusOptions.MaxMessages).ConfigureAwait(false);
+                            await receiver.ReceiveMessagesAsync(
+                                _serviceBusOptions.BatchMessageOptions.MaxMessages,
+                                _serviceBusOptions.BatchMessageOptions.MaxReceiveWaitTime,
+                                cancellationToken).ConfigureAwait(false);
 
                         if (messages != null)
                         {

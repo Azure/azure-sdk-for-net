@@ -22,7 +22,21 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// </summary>
         public ServiceBusOptions()
         {
+            BatchMessageOptions = new BatchMessageOptions();
+            SingleMessageOptions = new SingleMessageOptions();
         }
+
+        /// <summary>
+        /// Gets or sets the options to use for functions that bind
+        /// to multiple <see cref="ServiceBusReceivedMessage"/>.
+        /// </summary>
+        public BatchMessageOptions BatchMessageOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the options to use for functions that bind
+        /// to a single <see cref="ServiceBusReceivedMessage"/>.
+        /// </summary>
+        public SingleMessageOptions SingleMessageOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the PrefetchCount that will be used when receiving messages. The default value is 0.
@@ -69,77 +83,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public bool AutoCompleteMessages { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
-        /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
-        /// The default value is 5 minutes. This does not apply for functions that receive a batch of messages.
-        /// </summary>
-        public TimeSpan MaxAutoLockRenewalDuration
-        {
-            get => _maxAutoRenewDuration;
-
-            set
-            {
-                Argument.AssertNotNegative(value, nameof(MaxAutoLockRenewalDuration));
-                _maxAutoRenewDuration = value;
-            }
-        }
-        private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
-
-        /// <summary>Gets or sets the maximum number of concurrent calls to a function. Note each call
-        /// would be passing a different message. This does not apply for functions that receive a batch of messages.
-        /// The default is 16 times the return value of <see cref="Utility.GetProcessorCount"/>.
-        /// </summary>
-        public int MaxConcurrentCalls
-        {
-            get => _maxConcurrentCalls;
-
-            set
-            {
-                Argument.AssertAtLeast(value, 1, nameof(MaxConcurrentCalls));
-                _maxConcurrentCalls = value;
-            }
-        }
-        private int _maxConcurrentCalls = Utility.GetProcessorCount() * 16;
-
-        /// <summary>
-        /// Gets or sets the maximum number of sessions that can be processed concurrently by a function.
-        /// The default value is 8. This does not apply for functions that receive a batch of messages.
-        /// </summary>
-        public int MaxConcurrentSessions
-        {
-            get => _maxConcurrentSessions;
-
-            set
-            {
-                Argument.AssertAtLeast(value, 1, nameof(MaxConcurrentSessions));
-                _maxConcurrentSessions = value;
-            }
-        }
-        // TODO the default value in Track 1 was the default value from the Track 1 SDK, which was 2000.
-        // Verify that we are okay to diverge here.
-        private int _maxConcurrentSessions = 8;
-
-        /// <summary>
-        /// Gets or sets an optional exception handler that will be invoked if an exception occurs while attempting to process
-        /// a message. This does not apply for functions that receive a batch of messages.
-        /// </summary>
-        public Func<ProcessErrorEventArgs, Task> ExceptionHandler { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
-        /// a batch of messages. The default value is 1000.
-        /// </summary>
-        public int MaxMessages { get; set; } = 1000;
-
-        /// <summary>
-        /// Gets or sets the maximum amount of time to wait for a message to be received for the
-        /// currently active session. After this time has elapsed, the processor will close the session
-        /// and attempt to process another session.
-        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
-        /// </summary>
-        public TimeSpan? SessionIdleTimeout { get; set; }
-
-        /// <summary>
         /// Formats the options as JSON objects for display.
         /// </summary>
         /// <returns>Options formatted as JSON.</returns>
@@ -162,19 +105,36 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },
                 { nameof(AutoCompleteMessages), AutoCompleteMessages },
                 { nameof(PrefetchCount), PrefetchCount },
-                { nameof(MaxAutoLockRenewalDuration), MaxAutoLockRenewalDuration },
-                { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
-                { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
-                { nameof(MaxMessages), MaxMessages },
-                { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty }
+                { nameof(SingleMessageOptions), ConstructProcessingJObject()},
+                { nameof(BatchMessageOptions), ConstructBatchProcessingJObject() },
             };
 
             return options.ToString(Formatting.Indented);
         }
 
+        private JObject ConstructBatchProcessingJObject()
+        {
+            return new()
+            {
+                { nameof(BatchMessageOptions.MaxMessages), BatchMessageOptions.MaxMessages },
+                { nameof(BatchMessageOptions.MaxReceiveWaitTime), BatchMessageOptions.MaxReceiveWaitTime.ToString() ?? string.Empty }
+            };
+        }
+
+        private JObject ConstructProcessingJObject()
+        {
+            return new()
+            {
+                {nameof(SingleMessageOptions.MaxAutoLockRenewalDuration), SingleMessageOptions.MaxAutoLockRenewalDuration},
+                {nameof(SingleMessageOptions.MaxConcurrentCalls), SingleMessageOptions.MaxConcurrentCalls},
+                {nameof(SingleMessageOptions.MaxConcurrentSessions), SingleMessageOptions.MaxConcurrentSessions},
+                {nameof(SingleMessageOptions.SessionIdleTimeout), SingleMessageOptions.SessionIdleTimeout.ToString() ?? string.Empty},
+            };
+        }
+
         internal Task ExceptionReceivedHandler(ProcessErrorEventArgs args)
         {
-            ExceptionHandler?.Invoke(args);
+            SingleMessageOptions.ExceptionHandler?.Invoke(args);
 
             return Task.CompletedTask;
         }
@@ -184,8 +144,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 AutoCompleteMessages = AutoCompleteMessages,
                 PrefetchCount = PrefetchCount,
-                MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxConcurrentCalls = MaxConcurrentCalls
+                MaxAutoLockRenewalDuration = SingleMessageOptions.MaxAutoLockRenewalDuration,
+                MaxConcurrentCalls = SingleMessageOptions.MaxConcurrentCalls
             };
 
         internal ServiceBusSessionProcessorOptions ToSessionProcessorOptions() =>
@@ -193,9 +153,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             {
                 AutoCompleteMessages = AutoCompleteMessages,
                 PrefetchCount = PrefetchCount,
-                MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxConcurrentSessions = MaxConcurrentSessions,
-                SessionIdleTimeout = SessionIdleTimeout
+                MaxAutoLockRenewalDuration = SingleMessageOptions.MaxAutoLockRenewalDuration,
+                MaxConcurrentSessions = SingleMessageOptions.MaxConcurrentSessions,
+                SessionIdleTimeout = SingleMessageOptions.SessionIdleTimeout
             };
 
         internal ServiceBusClientOptions ToClientOptions() =>

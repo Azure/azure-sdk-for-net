@@ -375,8 +375,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         // Will be disabled for drain mode validation as messages are completed by functoin code to validate draining allows completion
                         sbOptions.AutoCompleteMessages = autoComplete;
-                        sbOptions.MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin);
-                        sbOptions.MaxConcurrentSessions = 1;
+                        sbOptions.SingleMessageOptions.MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin);
+                        sbOptions.SingleMessageOptions.MaxConcurrentSessions = 1;
                     }))
                 .ConfigureServices(services =>
                 {
@@ -713,8 +713,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 : base(serviceBusOptions)
             {
                 _options = serviceBusOptions.Value;
-                _options.SessionIdleTimeout = TimeSpan.FromSeconds(90);
-                _options.MaxConcurrentSessions = 1;
+                _options.SingleMessageOptions.SessionIdleTimeout = TimeSpan.FromSeconds(90);
+                _options.SingleMessageOptions.MaxConcurrentSessions = 1;
                 _logger = loggerFactory?.CreateLogger(CustomMessagingCategory);
             }
 

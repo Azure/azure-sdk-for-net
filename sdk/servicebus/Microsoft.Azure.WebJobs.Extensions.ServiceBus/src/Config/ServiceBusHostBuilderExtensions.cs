@@ -64,16 +64,16 @@ namespace Microsoft.Extensions.Hosting
 
                     if (maxAutoLockDuration != null)
                     {
-                        options.MaxAutoLockRenewalDuration = maxAutoLockDuration.Value;
+                        options.SingleMessageOptions.MaxAutoLockRenewalDuration = maxAutoLockDuration.Value;
                     }
 
-                    options.MaxConcurrentCalls = section.GetValue(
+                    options.SingleMessageOptions.MaxConcurrentCalls = section.GetValue(
                         "MessageHandlerOptions:MaxConcurrentCalls",
-                        options.MaxConcurrentCalls);
+                        options.SingleMessageOptions.MaxConcurrentCalls);
 
-                    options.MaxConcurrentSessions = section.GetValue(
+                    options.SingleMessageOptions.MaxConcurrentSessions = section.GetValue(
                         "SessionHandlerOptions:MaxConcurrentSessions",
-                        options.MaxConcurrentSessions);
+                        options.SingleMessageOptions.MaxConcurrentSessions);
 
                     var proxy = section.GetValue<string>("WebProxy");
                     if (!string.IsNullOrEmpty(proxy))
@@ -81,7 +81,7 @@ namespace Microsoft.Extensions.Hosting
                         options.WebProxy = new WebProxy(proxy);
                     }
 
-                    options.SessionIdleTimeout = section.GetValue("SessionHandlerOptions:MessageWaitTime", options.SessionIdleTimeout);
+                    options.SingleMessageOptions.SessionIdleTimeout = section.GetValue("SessionHandlerOptions:MessageWaitTime", options.SingleMessageOptions.SessionIdleTimeout);
 
                     section.Bind(options);
 

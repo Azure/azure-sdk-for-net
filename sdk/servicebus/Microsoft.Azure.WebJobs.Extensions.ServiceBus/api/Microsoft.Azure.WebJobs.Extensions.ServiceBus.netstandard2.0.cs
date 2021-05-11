@@ -36,6 +36,12 @@ namespace Microsoft.Azure.WebJobs
 }
 namespace Microsoft.Azure.WebJobs.ServiceBus
 {
+    public partial class BatchMessageOptions
+    {
+        public BatchMessageOptions() { }
+        public int MaxMessages { get { throw null; } set { } }
+        public System.TimeSpan? MaxReceiveWaitTime { get { throw null; } set { } }
+    }
     public static partial class Constants
     {
         public const string AzureWebsiteSku = "WEBSITE_SKU";
@@ -83,14 +89,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     {
         public ServiceBusOptions() { }
         public bool AutoCompleteMessages { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.ServiceBus.BatchMessageOptions BatchMessageOptions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusRetryOptions ClientRetryOptions { get { throw null; } set { } }
-        public System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ExceptionHandler { get { throw null; } set { } }
-        public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
-        public int MaxConcurrentCalls { get { throw null; } set { } }
-        public int MaxConcurrentSessions { get { throw null; } set { } }
-        public int MaxMessages { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
-        public System.TimeSpan? SessionIdleTimeout { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.ServiceBus.SingleMessageOptions SingleMessageOptions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } set { } }
         public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
         string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
@@ -113,6 +115,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         protected internal Azure.Messaging.ServiceBus.ServiceBusSessionProcessor Processor { get { throw null; } set { } }
         public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusSessionMessageActions sessionActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusSessionMessageActions sessionActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class SingleMessageOptions
+    {
+        public SingleMessageOptions() { }
+        public System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ExceptionHandler { get { throw null; } set { } }
+        public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
+        public int MaxConcurrentCalls { get { throw null; } set { } }
+        public int MaxConcurrentSessions { get { throw null; } set { } }
+        public System.TimeSpan? SessionIdleTimeout { get { throw null; } set { } }
     }
 }
 namespace Microsoft.Extensions.Hosting

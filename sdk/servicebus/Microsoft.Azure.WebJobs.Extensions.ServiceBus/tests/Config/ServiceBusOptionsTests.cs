@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         public void Constructor_SetsExpectedDefaults()
         {
             ServiceBusOptions config = new ServiceBusOptions();
-            Assert.AreEqual(16 * Utility.GetProcessorCount(), config.MaxConcurrentCalls);
+            Assert.AreEqual(16 * Utility.GetProcessorCount(), config.SingleMessageOptions.MaxConcurrentCalls);
             Assert.AreEqual(0, config.PrefetchCount);
         }
 

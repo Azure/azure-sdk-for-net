@@ -51,12 +51,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreNotSame(processor, processor2);
 
             options.PrefetchCount = 100;
-            options.MaxConcurrentCalls = 5;
-            options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(30);
+            options.SingleMessageOptions.MaxConcurrentCalls = 5;
+            options.SingleMessageOptions.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(30);
             processor = provider.CreateProcessor(_client, "entityPath1");
             Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
-            Assert.AreEqual(options.MaxConcurrentCalls, processor.MaxConcurrentCalls);
-            Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(options.SingleMessageOptions.MaxConcurrentCalls, processor.MaxConcurrentCalls);
+            Assert.AreEqual(options.SingleMessageOptions.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
         }
 
         [Test]
