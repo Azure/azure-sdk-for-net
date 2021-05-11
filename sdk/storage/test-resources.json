@@ -383,7 +383,7 @@
              ],
              "output": {
                "type": "string",
-               "value": "[substring(parameters('endpoint'), add(indexOf(parameters('endpoint'), '.'),1))]"
+               "value": "[substring(parameters('endpoint'), add(indexOf(parameters('endpoint'), '.'),1), sub(length(parameters('endpoint')), add(indexOf(parameters('endpoint'), '.'),2)))]"
              }
           }
         }
