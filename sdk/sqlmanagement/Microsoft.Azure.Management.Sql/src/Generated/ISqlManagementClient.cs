@@ -518,16 +518,6 @@ namespace Microsoft.Azure.Management.Sql
         IRecoverableManagedDatabasesOperations RecoverableManagedDatabases { get; }
 
         /// <summary>
-        /// Gets the IRestorableDroppedDatabasesOperations.
-        /// </summary>
-        IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
-
-        /// <summary>
-        /// Gets the IRestorableDroppedManagedDatabasesOperations.
-        /// </summary>
-        IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; }
-
-        /// <summary>
         /// Gets the IRestorePointsOperations.
         /// </summary>
         IRestorePointsOperations RestorePoints { get; }
@@ -553,9 +543,9 @@ namespace Microsoft.Azure.Management.Sql
         IServerAutomaticTuningOperations ServerAutomaticTuning { get; }
 
         /// <summary>
-        /// Gets the IServerAzureADAdministratorsOperations.
+        /// Gets the IServerAutomaticTuningOperations.
         /// </summary>
-        IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
+        IServerAutomaticTuningOperations ServerAutomaticTuning { get; }
 
         /// <summary>
         /// Gets the IServerAzureADOnlyAuthenticationsOperations.
@@ -620,12 +610,12 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Gets the ISyncGroupsOperations.
         /// </summary>
-        ISyncGroupsOperations SyncGroups { get; }
+        IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
 
         /// <summary>
-        /// Gets the ISyncMembersOperations.
+        /// Gets the IServerAzureADOnlyAuthenticationsOperations.
         /// </summary>
-        ISyncMembersOperations SyncMembers { get; }
+        IServerAzureADOnlyAuthenticationsOperations ServerAzureADOnlyAuthentications { get; }
 
         /// <summary>
         /// Gets the ITdeCertificatesOperations.
@@ -656,6 +646,26 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IWorkloadGroupsOperations.
         /// </summary>
         IWorkloadGroupsOperations WorkloadGroups { get; }
+
+        /// <summary>
+        /// Gets the ILedgerDigestUploadsOperations.
+        /// </summary>
+        ILedgerDigestUploadsOperations LedgerDigestUploads { get; }
+
+        /// <summary>
+        /// Gets the IOutboundFirewallRulesOperations.
+        /// </summary>
+        IOutboundFirewallRulesOperations OutboundFirewallRules { get; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedDatabasesOperations.
+        /// </summary>
+        IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedManagedDatabasesOperations.
+        /// </summary>
+        IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; }
 
     }
 }
