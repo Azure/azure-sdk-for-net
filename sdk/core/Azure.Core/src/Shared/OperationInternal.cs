@@ -136,19 +136,22 @@ namespace Azure.Core
 
             RawResponse = state.RawResponse;
 
-            if (state.Succeeded == true)
+            if (state.HasCompleted)
             {
-                Value = state.Value;
-                HasCompleted = true;
-            }
-            else if (state.Succeeded == false)
-            {
-                _operationFailedException = state.OperationFailedException ?? (async
-                    ? await _diagnostics.CreateRequestFailedExceptionAsync(state.RawResponse).ConfigureAwait(false)
-                    : _diagnostics.CreateRequestFailedException(state.RawResponse));
-                HasCompleted = true;
+                if (state.HasSucceeded)
+                {
+                    Value = state.Value;
+                    HasCompleted = true;
+                }
+                else
+                {
+                    _operationFailedException = state.OperationFailedException ?? (async
+                        ? await _diagnostics.CreateRequestFailedExceptionAsync(state.RawResponse).ConfigureAwait(false)
+                        : _diagnostics.CreateRequestFailedException(state.RawResponse));
+                    HasCompleted = true;
 
-                throw _operationFailedException;
+                    throw _operationFailedException;
+                }
             }
 
             return state.RawResponse;
@@ -184,29 +187,32 @@ namespace Azure.Core
 
     internal readonly struct OperationState<TResult>
     {
-        private OperationState(Response rawResponse, bool? succeeded, TResult value, RequestFailedException operationFailedException)
+        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, TResult value, RequestFailedException operationFailedException)
         {
             RawResponse = rawResponse;
-            Succeeded = succeeded;
+            HasCompleted = hasCompleted;
+            HasSucceeded = hasSucceeded;
             Value = value;
             OperationFailedException = operationFailedException;
         }
 
         public Response RawResponse { get; }
 
-        public bool? Succeeded { get; }
+        public bool HasCompleted { get; }
+
+        public bool HasSucceeded { get; }
 
         public TResult Value { get; }
 
         public RequestFailedException OperationFailedException { get; }
 
         public static OperationState<TResult> Success(Response rawResponse, TResult value) =>
-            new OperationState<TResult>(rawResponse, true, value, default);
+            new OperationState<TResult>(rawResponse, true, true, value, default);
 
         public static OperationState<TResult> Failure(Response rawResponse, RequestFailedException operationFailedException = null) =>
-            new OperationState<TResult>(rawResponse, false, default, operationFailedException);
+            new OperationState<TResult>(rawResponse, true, false, default, operationFailedException);
 
         public static OperationState<TResult> Pending(Response rawResponse) =>
-            new OperationState<TResult>(rawResponse, default, default, default);
+            new OperationState<TResult>(rawResponse, false, default, default, default);
     }
 }
