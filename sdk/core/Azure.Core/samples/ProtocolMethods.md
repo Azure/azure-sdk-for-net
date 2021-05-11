@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Azure SDK clients provide an interface to Azure services by translating API requests to REST API calls. When there's a schematized body in the request or response we call this a 'model' in the REST API.
+Azure SDK clients provide an interface to Azure services translating library calls to REST requests. When there's a schematized body in the request or response we call this a 'model' in the REST API.
 
 There are two different ways this rest 'model' can be exposed in the Azure SDK client:
 
