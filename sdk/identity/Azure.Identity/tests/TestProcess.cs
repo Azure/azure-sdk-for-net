@@ -41,7 +41,7 @@ namespace Azure.Identity.Tests
         public Exception ExceptionOnProcessKill { get; set; }
 
         // An Action that will throw if the ProcessStartInfo conditions are met.
-        public Action<ProcessStartInfo> ExceptionOnStartHandler { get; set; }
+        public Action<TestProcess> ExceptionOnStartHandler { get; set; }
 
         public void Dispose() { }
 
@@ -80,7 +80,7 @@ namespace Azure.Identity.Tests
         {
             if (ExceptionOnStartHandler != null)
             {
-                ExceptionOnStartHandler(StartInfo);
+                ExceptionOnStartHandler(this);
             }
 
             if (FailedToStart)

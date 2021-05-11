@@ -164,7 +164,10 @@ namespace Azure.Identity
             {
                 throw new CredentialUnavailableException(AzurePowerShellModuleNotInstalledError);
             }
-
+            if (output.IndexOf("is not recognized as an internal or external command", StringComparison.OrdinalIgnoreCase) != -1)
+            {
+                throw new Win32Exception(ERROR_FILE_NOT_FOUND);
+            }
             if (output.IndexOf("Microsoft.Azure.Commands.Profile.Models.PSAccessToken", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 throw new CredentialUnavailableException("PowerShell did not return a valid response.");

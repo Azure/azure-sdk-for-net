@@ -15,6 +15,9 @@ namespace Azure.Identity.Tests
 {
     public class AzurePowerShellCredentialsTests : ClientTestBase
     {
+        private string tokenXML =
+            "<Object Type=\"Microsoft.Azure.Commands.Profile.Models.PSAccessToken\"><Property Name=\"Token\" Type=\"System.String\">Kg==</Property><Property Name=\"ExpiresOn\" Type=\"System.DateTimeOffset\">5/11/2021 8:20:03 PM +00:00</Property><Property Name=\"TenantId\" Type=\"System.String\">72f988bf-86f1-41af-91ab-2d7cd011db47</Property><Property Name=\"UserId\" Type=\"System.String\">chriss@microsoft.com</Property><Property Name=\"Type\" Type=\"System.String\">Bearer</Property></Object>";
+
         public AzurePowerShellCredentialsTests(bool isAsync) : base(isAsync)
         { }
 
@@ -46,19 +49,18 @@ namespace Azure.Identity.Tests
 
         [Test]
         [RunOnlyOnPlatforms(Windows = true)]
-        public void FallsBackToLegacyPowershell()
+        public async Task FallsBackToLegacyPowershell()
         {
             bool fellBackToPowerShell = false;
+            //var testProcess = new TestProcess { Output = "'pwsh' is not recognized as an internal or external command," };
             var testProcess = new TestProcess
             {
-                ExceptionOnStartHandler = (ps) =>
+                Output = "'pwsh' is not recognized as an internal or external command,",
+                ExceptionOnStartHandler = (p) =>
                 {
-                    if (ps.Arguments.Contains("pwsh"))
+                    if (p.StartInfo.Arguments.Contains("pwsh"))
                     {
-                        throw new Win32Exception(2);
-                    }
-                    if (ps.Arguments.Contains("powershell"))
-                    {
+                        p.Output = tokenXML;
                         fellBackToPowerShell = true;
                     }
                 }
@@ -68,7 +70,7 @@ namespace Azure.Identity.Tests
                     new AzurePowerShellCredentialOptions(),
                     CredentialPipeline.GetInstance(null),
                     new TestProcessService(testProcess, true)));
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
             Assert.IsTrue(fellBackToPowerShell);
         }
 
