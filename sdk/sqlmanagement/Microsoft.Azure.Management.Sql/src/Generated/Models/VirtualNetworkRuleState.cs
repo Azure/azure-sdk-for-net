@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public const string Initializing = "Initializing";
         public const string InProgress = "InProgress";
         public const string Ready = "Ready";
+        public const string Failed = "Failed";
         public const string Deleting = "Deleting";
         public const string Unknown = "Unknown";
     }
