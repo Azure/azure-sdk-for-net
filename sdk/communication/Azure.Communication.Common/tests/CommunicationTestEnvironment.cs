@@ -39,11 +39,9 @@ namespace Azure.Communication.Tests
         public bool ShouldIgnoreTests => TestPackagesEnabled != TestPackagesEnabledDefaultValue
             && TestPackagesEnabled != ExpectedTestPackagesEnabled;
 
-        public bool ShouldIgnoreSMSTests => TestPackagesEnabled != TestPackagesEnabledDefaultValue
-            && TestPackagesEnabled != ExpectedTestPackagesEnabled
-            || bool.Parse(SkipSmsTest);
+        public bool ShouldIgnoreSMSTests => ShouldIgnoreTests || bool.Parse(SkipSmsTest);
 
-        public bool ShouldIgnorePhoneNumbersTests => bool.Parse(SkipPhoneNumbersTest);
+        public bool ShouldIgnorePhoneNumbersTests => ShouldIgnoreTests || bool.Parse(SkipPhoneNumbersTest);
 
         public string TestPackagesEnabled => GetTestPackageEnabled();
 
