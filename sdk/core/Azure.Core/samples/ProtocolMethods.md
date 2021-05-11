@@ -149,7 +149,7 @@ Protocol methods allow customization of exception behavior by use of the optiona
 The `RequestOptions` type also allows registering for a callback that is called when the request is sent:
 
 ```csharp
-        RequestOptions options = new RequestOptions (message => Console.WriteLine ("Sending dog request: " + message)));
+        RequestOptions options = new RequestOptions(message => Console.WriteLine ("Sending dog request: " + message)));
         return client.GetDog(RequestContent.Create(new {
                 name = "Buddy"
         }), options);
