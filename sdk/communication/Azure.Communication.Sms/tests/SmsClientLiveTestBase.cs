@@ -17,7 +17,7 @@ namespace Azure.Communication.Sms.Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            if (TestEnvironment.ShouldIgnoreTests)
+            if (TestEnvironment.ShouldIgnoreSMSTests)
             {
                 Assert.Ignore("SMS tests are skipped " +
                     "because sms package is not included in the TEST_PACKAGES_ENABLED variable");
