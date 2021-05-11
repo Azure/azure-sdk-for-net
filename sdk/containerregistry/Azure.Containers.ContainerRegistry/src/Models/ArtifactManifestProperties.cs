@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Manifest attributes details. </summary>
     public partial class ArtifactManifestProperties
     {
-        internal ArtifactManifestProperties(string digest, string architecture, string operatingSystem)
+        internal ArtifactManifestProperties(string digest, ArtifactArchitecture architecture, ArtifactOperatingSystem operatingSystem)
         {
             this.Digest = digest;
             this.Architecture = architecture;
@@ -41,7 +41,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             return new ArtifactManifestProperties(
                 reference.Digest,
-                reference.CpuArchitecture,
+                reference.Architecture,
                 reference.OperatingSystem);
         }
     }
