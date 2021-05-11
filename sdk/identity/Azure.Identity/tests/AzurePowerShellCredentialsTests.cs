@@ -45,6 +45,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [RunOnlyOnPlatforms(Windows = true)]
         public void FallsBackToLegacyPowershell()
         {
             bool fellBackToPowerShell = false;
