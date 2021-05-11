@@ -117,7 +117,7 @@ namespace Azure.AI.MetricsAdvisor
                 DimensionValueFilter = options?.DimensionValueToFilter
             };
             int? skip = options?.SkipCount;
-            int? maxPageSize = options?.MaximumPageSize;
+            int? maxPageSize = options?.MaxPageSize;
 
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
             {
@@ -177,7 +177,7 @@ namespace Azure.AI.MetricsAdvisor
                 DimensionValueFilter = options?.DimensionValueToFilter
             };
             int? skip = options?.SkipCount;
-            int? maxPageSize = options?.MaximumPageSize;
+            int? maxPageSize = options?.MaxPageSize;
 
             Page<string> FirstPageFunc(int? pageSizeHint)
             {
@@ -234,7 +234,7 @@ namespace Azure.AI.MetricsAdvisor
             MetricSeriesQueryOptions queryOptions = new MetricSeriesQueryOptions(ClientCommon.NormalizeDateTimeOffset(options.ActiveSince));
 
             int? skip = options.SkipCount;
-            int? maxPageSize = options.MaximumPageSize;
+            int? maxPageSize = options.MaxPageSize;
 
             // Deep copy filter contents from options to queryOptions.
 
@@ -298,7 +298,7 @@ namespace Azure.AI.MetricsAdvisor
             MetricSeriesQueryOptions queryOptions = new MetricSeriesQueryOptions(ClientCommon.NormalizeDateTimeOffset(options.ActiveSince));
 
             int? skip = options.SkipCount;
-            int? maxPageSize = options.MaximumPageSize;
+            int? maxPageSize = options.MaxPageSize;
 
             // Deep copy filter contents from options to queryOptions.
 
@@ -437,7 +437,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime));
             int? skip = options.SkipCount;
-            int? maxPageSize = options.MaximumPageSize;
+            int? maxPageSize = options.MaxPageSize;
 
             async Task<Page<EnrichmentStatus>> FirstPageFunc(int? pageSizeHint)
             {
@@ -491,7 +491,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid metricGuid = ClientCommon.ValidateGuid(metricId, nameof(metricId));
             EnrichmentStatusQueryOption queryOptions = new EnrichmentStatusQueryOption(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime));
             int? skip = options.SkipCount;
-            int? maxPageSize = options.MaximumPageSize;
+            int? maxPageSize = options.MaxPageSize;
 
             Page<EnrichmentStatus> FirstPageFunc(int? pageSizeHint)
             {
@@ -560,7 +560,7 @@ namespace Azure.AI.MetricsAdvisor
                 TimeMode = options?.TimeMode
             };
             int? skip = options?.SkipCount;
-            int? maxPageSize = options?.MaximumPageSize;
+            int? maxPageSize = options?.MaxPageSize;
 
             async Task<Page<MetricFeedback>> FirstPageFunc(int? pageSizeHint)
             {
@@ -625,7 +625,7 @@ namespace Azure.AI.MetricsAdvisor
                 TimeMode = options?.TimeMode
             };
             int? skip = options?.SkipCount;
-            int? maxPageSize = options?.MaximumPageSize;
+            int? maxPageSize = options?.MaxPageSize;
 
             Page<MetricFeedback> FirstPageFunc(int? pageSizeHint)
             {
@@ -824,7 +824,7 @@ namespace Azure.AI.MetricsAdvisor
                 Filter = options.Filter?.GetDetectionAnomalyFilterCondition()
             };
             int? skip = options.SkipCount;
-            int? maxPageSize = options.MaximumPageSize;
+            int? maxPageSize = options.MaxPageSize;
 
             async Task<Page<DataPointAnomaly>> FirstPageFunc(int? pageSizeHint)
             {
@@ -883,7 +883,7 @@ namespace Azure.AI.MetricsAdvisor
                 Filter = options.Filter?.GetDetectionAnomalyFilterCondition()
             };
             int? skip = options.SkipCount;
-            int? maxPageSize = options.MaximumPageSize;
+            int? maxPageSize = options.MaxPageSize;
 
             Page<DataPointAnomaly> FirstPageFunc(int? pageSizeHint)
             {
@@ -941,7 +941,7 @@ namespace Azure.AI.MetricsAdvisor
             {
                 Filter = options.GetDetectionIncidentFilterCondition()
             };
-            int? maxPageSize = options.MaximumPageSize;
+            int? maxPageSize = options.MaxPageSize;
 
             async Task<Page<AnomalyIncident>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1001,7 +1001,7 @@ namespace Azure.AI.MetricsAdvisor
             {
                 Filter = options.GetDetectionIncidentFilterCondition()
             };
-            int? maxPageSize = options.MaximumPageSize;
+            int? maxPageSize = options.MaxPageSize;
 
             Page<AnomalyIncident> FirstPageFunc(int? pageSizeHint)
             {
@@ -1205,7 +1205,7 @@ namespace Azure.AI.MetricsAdvisor
                 DimensionFilter = options.DimensionToFilter?.Clone()
             };
             int? skip = options.SkipCount;
-            int? maxPageSize = options.MaximumPageSize;
+            int? maxPageSize = options.MaxPageSize;
 
             async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1267,7 +1267,7 @@ namespace Azure.AI.MetricsAdvisor
                 DimensionFilter = options.DimensionToFilter?.Clone()
             };
             int? skip = options.SkipCount;
-            int? maxPageSize = options.MaximumPageSize;
+            int? maxPageSize = options.MaxPageSize;
 
             Page<string> FirstPageFunc(int? pageSizeHint)
             {
@@ -1415,7 +1415,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             AlertingResultQuery queryOptions = new AlertingResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), options.TimeMode);
             int? skip = options.SkipCount;
-            int? maxPageSize = options.MaximumPageSize;
+            int? maxPageSize = options.MaxPageSize;
 
             async Task<Page<AnomalyAlert>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1471,7 +1471,7 @@ namespace Azure.AI.MetricsAdvisor
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             AlertingResultQuery queryOptions = new AlertingResultQuery(ClientCommon.NormalizeDateTimeOffset(options.StartTime), ClientCommon.NormalizeDateTimeOffset(options.EndTime), options.TimeMode);
             int? skip = options.SkipCount;
-            int? maxPageSize = options.MaximumPageSize;
+            int? maxPageSize = options.MaxPageSize;
 
             Page<AnomalyAlert> FirstPageFunc(int? pageSizeHint)
             {
@@ -1528,7 +1528,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             int? skip = options?.SkipCount;
-            int? maxPageSize = options?.MaximumPageSize;
+            int? maxPageSize = options?.MaxPageSize;
 
             async Task<Page<DataPointAnomaly>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1585,7 +1585,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             int? skip = options?.SkipCount;
-            int? maxPageSize = options?.MaximumPageSize;
+            int? maxPageSize = options?.MaxPageSize;
 
             Page<DataPointAnomaly> FirstPageFunc(int? pageSizeHint)
             {
@@ -1642,7 +1642,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             int? skip = options?.SkipCount;
-            int? maxPageSize = options?.MaximumPageSize;
+            int? maxPageSize = options?.MaxPageSize;
 
             async Task<Page<AnomalyIncident>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1699,7 +1699,7 @@ namespace Azure.AI.MetricsAdvisor
 
             Guid alertConfigurationGuid = ClientCommon.ValidateGuid(alertConfigurationId, nameof(alertConfigurationId));
             int? skip = options?.SkipCount;
-            int? maxPageSize = options?.MaximumPageSize;
+            int? maxPageSize = options?.MaxPageSize;
 
             Page<AnomalyIncident> FirstPageFunc(int? pageSizeHint)
             {

@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var options = new GetIncidentsForDetectionConfigurationOptions(startTime, endTime)
             {
                 DimensionsToFilter = new List<DimensionKey>() { groupKey1, groupKey2 },
-                MaximumPageSize = 3
+                MaxPageSize = 3
             };
 
             int incidentCount = 0;
@@ -81,7 +81,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             string alertConfigurationId = AlertConfigurationId;
             string alertId = AlertId;
 
-            var options = new GetIncidentsForAlertOptions() { MaximumPageSize = 3 };
+            var options = new GetIncidentsForAlertOptions() { MaxPageSize = 3 };
 
             int incidentCount = 0;
 

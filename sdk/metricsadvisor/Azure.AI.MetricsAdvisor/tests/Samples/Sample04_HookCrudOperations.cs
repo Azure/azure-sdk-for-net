@@ -134,7 +134,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var options = new GetHooksOptions()
             {
-                MaximumPageSize = 5
+                MaxPageSize = 5
             };
 
             int hookCount = 0;

@@ -170,7 +170,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var options = new GetDataFeedsOptions()
             {
                 GetDataFeedsFilter = filter,
-                MaximumPageSize = 5
+                MaxPageSize = 5
             };
 
             int dataFeedCount = 0;
