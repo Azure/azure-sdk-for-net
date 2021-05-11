@@ -3,6 +3,7 @@
 ## 1.0.0-beta.4 (Unreleased)
 
 ### Breaking Changes
+- Renamed all `SkipCount` listing options to `Skip`. Affected classes include `GetAlertsOptions`, `GetDataFeedsOptions`, `GetHooksOptions`, and others.
 - Renamed all `TopCount` listing options to `MaxPageSize`. Affected classes include `GetAlertsOptions`, `GetDataFeedsOptions`, `GetHooksOptions`, and others.
 
 ## 1.0.0-beta.3 (2021-02-09)

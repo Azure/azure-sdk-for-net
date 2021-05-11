@@ -172,7 +172,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             DataFeedGranularityType? granularityType = options?.GetDataFeedsFilter?.GranularityType;
             DataFeedStatus? status = options?.GetDataFeedsFilter?.Status;
             string creator = options?.GetDataFeedsFilter?.Creator;
-            int? skip = options?.SkipCount;
+            int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 
             async Task<Page<DataFeed>> FirstPageFunc(int? pageSizeHint)
@@ -226,7 +226,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             DataFeedGranularityType? granularityType = options?.GetDataFeedsFilter?.GranularityType;
             DataFeedStatus? status = options?.GetDataFeedsFilter?.Status;
             string creator = options?.GetDataFeedsFilter?.Creator;
-            int? skip = options?.SkipCount;
+            int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 
             Page<DataFeed> FirstPageFunc(int? pageSizeHint)
@@ -595,7 +595,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Argument.AssertNotNull(options, nameof(options));
 
             IngestionStatusQueryOptions queryOptions = new IngestionStatusQueryOptions(options.StartTime, options.EndTime);
-            int? skip = options.SkipCount;
+            int? skip = options.Skip;
             int? maxPageSize = options.MaxPageSize;
 
             async Task<Page<DataFeedIngestionStatus>> FirstPageFunc(int? pageSizeHint)
@@ -648,7 +648,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
             Argument.AssertNotNull(options, nameof(options));
 
             IngestionStatusQueryOptions queryOptions = new IngestionStatusQueryOptions(options.StartTime, options.EndTime);
-            int? skip = options.SkipCount;
+            int? skip = options.Skip;
             int? maxPageSize = options.MaxPageSize;
 
             Page<DataFeedIngestionStatus> FirstPageFunc(int? pageSizeHint)
@@ -1672,7 +1672,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<HookList> response = await _serviceRestClient.ListHooksAsync(options?.HookNameFilter, options?.SkipCount, options?.MaxPageSize, cancellationToken).ConfigureAwait(false);
+                    Response<HookList> response = await _serviceRestClient.ListHooksAsync(options?.HookNameFilter, options?.Skip, options?.MaxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1689,7 +1689,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<HookList> response = await _serviceRestClient.ListHooksNextPageAsync(nextLink, options?.HookNameFilter, options?.SkipCount, options?.MaxPageSize, cancellationToken).ConfigureAwait(false);
+                    Response<HookList> response = await _serviceRestClient.ListHooksNextPageAsync(nextLink, options?.HookNameFilter, options?.Skip, options?.MaxPageSize, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1717,7 +1717,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<HookList> response = _serviceRestClient.ListHooks(options?.HookNameFilter, options?.SkipCount, options?.MaxPageSize, cancellationToken);
+                    Response<HookList> response = _serviceRestClient.ListHooks(options?.HookNameFilter, options?.Skip, options?.MaxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1734,7 +1734,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
                 try
                 {
-                    Response<HookList> response = _serviceRestClient.ListHooksNextPage(nextLink, options?.HookNameFilter, options?.SkipCount, options?.MaxPageSize, cancellationToken);
+                    Response<HookList> response = _serviceRestClient.ListHooksNextPage(nextLink, options?.HookNameFilter, options?.Skip, options?.MaxPageSize, cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
