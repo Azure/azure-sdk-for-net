@@ -26,7 +26,7 @@ namespace Azure.Communication.Sms.Tests
 
         public SmsClient CreateSmsClient()
         {
-            var connectionString = TestEnvironment.LiveTestConnectionString;
+            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
             SmsClient client = new SmsClient(connectionString, CreateSmsClientOptionsWithCorrelationVectorLogs());
 
             #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClient
@@ -38,7 +38,7 @@ namespace Azure.Communication.Sms.Tests
 
         public SmsClient CreateSmsClientWithToken()
         {
-            Uri endpoint = TestEnvironment.LiveTestEndpoint;
+            Uri endpoint = TestEnvironment.LiveTestStaticEndpoint;
             TokenCredential tokenCredential;
             if (Mode == RecordedTestMode.Playback)
             {

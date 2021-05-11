@@ -436,7 +436,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var pageNumber = 389;
             var text = "Bhaskara";
             var words = new List<FormWord>() { formWord };
-            var appearance = new TextAppearance();
+            var appearance = new TextAppearance(default, default);
 
             var formLine = FormRecognizerModelFactory.FormLine(boundingBox, pageNumber, text, words, appearance);
 
@@ -645,23 +645,13 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void FormRecognizerModelFactoryCanInstantiateTextAppearance()
         {
-            var style = new TextStyle(default, default);
-
-            var textAppearance = FormRecognizerModelFactory.TextAppearance(style);
-
-            Assert.AreEqual(style, textAppearance.Style);
-        }
-
-        [Test]
-        public void FormRecognizerModelFactoryCanInstantiateTextStyle()
-        {
             var name = TextStyleName.Handwriting;
             var confidence = 0.299792f;
 
-            var textStyle = FormRecognizerModelFactory.TextStyle(name, confidence);
+            var textAppearance = FormRecognizerModelFactory.TextAppearance(name, confidence);
 
-            Assert.AreEqual(name, textStyle.Name);
-            Assert.AreEqual(confidence, textStyle.Confidence);
+            Assert.AreEqual(name, textAppearance.StyleName);
+            Assert.AreEqual(confidence, textAppearance.StyleConfidence);
         }
 
         [Test]

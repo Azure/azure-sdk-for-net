@@ -47,9 +47,9 @@ namespace Azure.IoT.TimeSeriesInsights
         public virtual TimeSeriesInsightsHierarchies Hierarchies { get; private set; }
 
         /// <summary>
-        /// Query client that can be used to perform query operations on Time Series Insights.
+        /// A client that can be used can be used to perform query operations on Time Series Insights.
         /// </summary>
-        public virtual TimeSeriesInsightsQuery Query { get; private set; }
+        public virtual TimeSeriesInsightsQueries Queries { get; private set; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="TimeSeriesInsightsClient"/> class.
@@ -65,7 +65,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </seealso>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateServiceClientWithClientSecret">
-        /// // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based of the environment it is executing in.
+        /// // DefaultAzureCredential supports different authentication mechanisms and determines the appropriate credential type based on the environment it is executing in.
         /// // It attempts to use multiple credential types in an order until it finds a working credential.
         /// var tokenCredential = new DefaultAzureCredential();
         ///
@@ -116,7 +116,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Instances = new TimeSeriesInsightsInstances(_timeSeriesInstancesRestClient, _clientDiagnostics);
             Types = new TimeSeriesInsightsTypes(_timeSeriesTypesRestClient, _clientDiagnostics);
             Hierarchies = new TimeSeriesInsightsHierarchies(_timeSeriesHierarchiesRestClient, _clientDiagnostics);
-            Query = new TimeSeriesInsightsQuery(_queryRestClient, _clientDiagnostics);
+            Queries = new TimeSeriesInsightsQueries(_queryRestClient, _clientDiagnostics);
         }
 
         /// <summary>

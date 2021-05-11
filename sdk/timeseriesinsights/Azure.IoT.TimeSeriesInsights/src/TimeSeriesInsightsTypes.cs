@@ -290,11 +290,10 @@ namespace Azure.IoT.TimeSeriesInsights
         /// // Code snippet below shows getting a default Type using Id
         /// // The default type Id can be obtained programmatically by using the ModelSettings client.
         ///
-        /// TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
+        /// TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync();
         /// Response&lt;TimeSeriesTypeOperationResult[]&gt; getTypeByIdResults = await client
         ///     .Types
-        ///     .GetByIdAsync(new string[] { modelSettings.DefaultTypeId })
-        ///     .ConfigureAwait(false);
+        ///     .GetByIdAsync(new string[] { modelSettings.DefaultTypeId });
         ///
         /// // The response of calling the API contains a list of type or error objects corresponding by position to the input parameter array in the request.
         /// // If the error object is set to null, this means the operation was a success.
@@ -416,34 +415,20 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleCreateType">
-        /// // Create an aggregate type
+        /// // Create a type with an aggregate variable
         /// var timeSeriesTypes = new List&lt;TimeSeriesType&gt;();
         ///
         /// var countExpression = new TimeSeriesExpression(&quot;count()&quot;);
         /// var aggregateVariable = new AggregateVariable(countExpression);
         /// var variables = new Dictionary&lt;string, TimeSeriesVariable&gt;();
-        /// var variableName = &quot;aggregateVariable&quot;;
-        /// variables.Add(variableName, aggregateVariable);
+        /// variables.Add(&quot;aggregateVariable&quot;, aggregateVariable);
         ///
-        /// var timeSeriesTypesProperties = new Dictionary&lt;string, string&gt;
-        /// {
-        ///     { &quot;Type1&quot;, &quot;Type1Id&quot;},
-        ///     { &quot;Type2&quot;, &quot;Type2Id&quot;}
-        /// };
-        ///
-        /// foreach (KeyValuePair&lt;string, string&gt; property in timeSeriesTypesProperties)
-        /// {
-        ///     var type = new TimeSeriesType(property.Key, variables)
-        ///     {
-        ///         Id = property.Value
-        ///     };
-        ///     timeSeriesTypes.Add(type);
-        /// }
+        /// timeSeriesTypes.Add(new TimeSeriesType(&quot;Type1&quot;, variables) { Id = &quot;Type1Id&quot; });
+        /// timeSeriesTypes.Add(new TimeSeriesType(&quot;Type2&quot;, variables) { Id = &quot;Type2Id&quot; });
         ///
         /// Response&lt;TimeSeriesTypeOperationResult[]&gt; createTypesResult = await client
         ///     .Types
-        ///     .CreateOrReplaceAsync(timeSeriesTypes)
-        ///     .ConfigureAwait(false);
+        ///     .CreateOrReplaceAsync(timeSeriesTypes);
         ///
         /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
         /// // If the error object is set to null, this means the operation was a success.
@@ -669,8 +654,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// var typesIdsToDelete = new List&lt;string&gt; { &quot;Type1Id&quot;, &quot; Type2Id&quot; };
         /// Response&lt;TimeSeriesOperationError[]&gt; deleteTypesResponse = await client
         ///     .Types
-        ///     .DeleteByIdAsync(typesIdsToDelete)
-        ///     .ConfigureAwait(false);
+        ///     .DeleteByIdAsync(typesIdsToDelete);
         ///
         /// // The response of calling the API contains a list of error objects corresponding by position to the input parameter
         /// // array in the request. If the error object is set to null, this means the operation was a success.

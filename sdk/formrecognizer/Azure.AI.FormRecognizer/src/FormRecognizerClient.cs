@@ -32,8 +32,8 @@ namespace Azure.AI.FormRecognizer
         /// <remarks>
         /// Both the <paramref name="endpoint"/> URI string and the <paramref name="credential"/> <c>string</c> key
         /// can be found in the Azure Portal.
+        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
         /// </remarks>
-        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
         public FormRecognizerClient(Uri endpoint, AzureKeyCredential credential)
             : this(endpoint, credential, new FormRecognizerClientOptions())
         {
@@ -48,8 +48,8 @@ namespace Azure.AI.FormRecognizer
         /// <remarks>
         /// Both the <paramref name="endpoint"/> URI string and the <paramref name="credential"/> <c>string</c> key
         /// can be found in the Azure Portal.
+        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
         /// </remarks>
-        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
         public FormRecognizerClient(Uri endpoint, AzureKeyCredential credential, FormRecognizerClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -68,8 +68,8 @@ namespace Azure.AI.FormRecognizer
         /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
         /// <remarks>
         /// The <paramref name="endpoint"/> URI string can be found in the Azure Portal.
+        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
         /// </remarks>
-        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
         public FormRecognizerClient(Uri endpoint, TokenCredential credential)
             : this(endpoint, credential, new FormRecognizerClientOptions())
         {
@@ -83,8 +83,8 @@ namespace Azure.AI.FormRecognizer
         /// <param name="options">A set of options to apply when configuring the client.</param>
         /// <remarks>
         /// The <paramref name="endpoint"/> URI string can be found in the Azure Portal.
+        /// For more information see <see href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"> here</see>.
         /// </remarks>
-        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
         public FormRecognizerClient(Uri endpoint, TokenCredential credential, FormRecognizerClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -278,7 +278,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more receipts.
-        /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/receiptfields">receipt fields</see> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receipt">The stream containing the one or more receipts to recognize values from.</param>
         /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
@@ -319,7 +319,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more receipts.
-        /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/receiptfields">receipt fields</see> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receipt">The stream containing the one or more receipts to recognize values from.</param>
         /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
@@ -360,7 +360,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more receipts.
-        /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/receiptfields">receipt fields</see> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receiptUri">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
@@ -399,7 +399,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more receipts.
-        /// <para>See <a href="https://aka.ms/formrecognizer/receiptfields"/> for a list of available fields on a receipt.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/receiptfields">receipt fields</see> for a list of available fields on a receipt.</para>
         /// </summary>
         /// <param name="receiptUri">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="recognizeReceiptsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
@@ -442,12 +442,15 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more business cards.
-        /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/businesscardfields">business card fields</see> for a list of available fields on a business card.</para>
         /// </summary>
         /// <param name="businessCard">The stream containing the one or more business cards to recognize values from.</param>
         /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
         public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsAsync(Stream businessCard, RecognizeBusinessCardsOptions recognizeBusinessCardsOptions = default, CancellationToken cancellationToken = default)
@@ -483,12 +486,15 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more business cards.
-        /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/businesscardfields">business card fields</see> for a list of available fields on a business card.</para>
         /// </summary>
         /// <param name="businessCard">The stream containing the one or more business cards to recognize values from.</param>
         /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
         public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCards(Stream businessCard, RecognizeBusinessCardsOptions recognizeBusinessCardsOptions = default, CancellationToken cancellationToken = default)
@@ -524,12 +530,15 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more business cards.
-        /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/businesscardfields">business card fields</see> for a list of available fields on a business card.</para>
         /// </summary>
         /// <param name="businessCardUri">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
         public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsFromUriAsync(Uri businessCardUri, RecognizeBusinessCardsOptions recognizeBusinessCardsOptions = default, CancellationToken cancellationToken = default)
@@ -563,12 +572,15 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more business cards.
-        /// <para>See <a href="https://aka.ms/formrecognizer/businesscardfields"/> for a list of available fields on a business card.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/businesscardfields">business card fields</see> for a list of available fields on a business card.</para>
         /// </summary>
         /// <param name="businessCardUri">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="recognizeBusinessCardsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation.Value"/> upon successful
         /// completion will contain the extracted business cards.</returns>
         public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCardsFromUri(Uri businessCardUri, RecognizeBusinessCardsOptions recognizeBusinessCardsOptions = default, CancellationToken cancellationToken = default)
@@ -606,12 +618,15 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more invoices.
-        /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/invoicefields">invoice fields</see> for a list of available fields on an invoice.</para>
         /// </summary>
         /// <param name="invoice">The stream containing the one or more invoices to recognize values from.</param>
         /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
         public virtual async Task<RecognizeInvoicesOperation> StartRecognizeInvoicesAsync(Stream invoice, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
@@ -647,12 +662,15 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more invoices.
-        /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/invoicefields">invoice fields</see> for a list of available fields on an invoice.</para>
         /// </summary>
         /// <param name="invoice">The stream containing the one or more invoices to recognize values from.</param>
         /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
         public virtual RecognizeInvoicesOperation StartRecognizeInvoices(Stream invoice, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
@@ -688,12 +706,15 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more invoices.
-        /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/invoicefields">invoice fields</see> for a list of available fields on an invoice.</para>
         /// </summary>
         /// <param name="invoiceUri">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
         public virtual async Task<RecognizeInvoicesOperation> StartRecognizeInvoicesFromUriAsync(Uri invoiceUri, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
@@ -727,12 +748,15 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary>
         /// Recognizes values from one or more invoices.
-        /// <para>See <a href="https://aka.ms/formrecognizer/invoicefields"/> for a list of available fields on an invoice.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/invoicefields">invoice fields</see> for a list of available fields on an invoice.</para>
         /// </summary>
         /// <param name="invoiceUri">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="recognizeInvoicesOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, the locale of the form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeInvoicesOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeInvoicesOperation.Value"/> upon successful
         /// completion will contain the extracted invoices.</returns>
         public virtual RecognizeInvoicesOperation StartRecognizeInvoicesFromUri(Uri invoiceUri, RecognizeInvoicesOptions recognizeInvoicesOptions = default, CancellationToken cancellationToken = default)
@@ -770,12 +794,15 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Analyze identity documents using optical character recognition (OCR) and a prebuilt model trained on identity documents
         /// to extract key information from passports and US driver licenses.
-        /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an identity document.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/iddocumentfields">identity document fields</see> for a list of available fields on an identity document.</para>
         /// </summary>
         /// <param name="identityDocument">The stream containing the one or more identity documents to recognize values from.</param>
         /// <param name="recognizeIdentityDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeIdentityDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdentityDocumentsOperation.Value"/> upon successful
         /// completion will contain the extracted identity document information.</returns>
         public virtual async Task<RecognizeIdentityDocumentsOperation> StartRecognizeIdentityDocumentsAsync(Stream identityDocument, RecognizeIdentityDocumentsOptions recognizeIdentityDocumentsOptions = default, CancellationToken cancellationToken = default)
@@ -811,12 +838,15 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Analyze identity documents using optical character recognition (OCR) and a prebuilt model trained on identity documents
         /// to extract key information from passports and US driver licenses.
-        /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an identity document.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/iddocumentfields">identity document fields</see> for a list of available fields on an identity document.</para>
         /// </summary>
         /// <param name="identityDocument">The stream containing the one or more identity documents to recognize values from.</param>
         /// <param name="recognizeIdentityDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeIdentityDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdentityDocumentsOperation.Value"/> upon successful
         /// completion will contain the extracted identity document information.</returns>
         public virtual RecognizeIdentityDocumentsOperation StartRecognizeIdentityDocuments(Stream identityDocument, RecognizeIdentityDocumentsOptions recognizeIdentityDocumentsOptions = default, CancellationToken cancellationToken = default)
@@ -852,12 +882,15 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Analyze identity documents using optical character recognition (OCR) and a prebuilt model trained on identity documents
         /// to extract key information from passports and US driver licenses.
-        /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an identity document.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/iddocumentfields">identity document fields</see> for a list of available fields on an identity document.</para>
         /// </summary>
         /// <param name="identityDocumentUri">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="recognizeIdentityDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeIdentityDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdentityDocumentsOperation.Value"/> upon successful
         /// completion will contain the extracted identity document information.</returns>
         public virtual async Task<RecognizeIdentityDocumentsOperation> StartRecognizeIdentityDocumentsFromUriAsync(Uri identityDocumentUri, RecognizeIdentityDocumentsOptions recognizeIdentityDocumentsOptions = default, CancellationToken cancellationToken = default)
@@ -891,12 +924,15 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Analyze identity documents using optical character recognition (OCR) and a prebuilt model trained on identity documents
         /// to extract key information from passports and US driver licenses.
-        /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an identity document.</para>
+        /// <para>See <see href="https://aka.ms/formrecognizer/iddocumentfields">identity document fields</see> for a list of available fields on an identity document.</para>
         /// </summary>
         /// <param name="identityDocumentUri">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="recognizeIdentityDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// Method is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3"/> and up.
+        /// </remarks>
         /// <returns>A <see cref="RecognizeIdentityDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdentityDocumentsOperation.Value"/> upon successful
         /// completion will contain the extracted identity document information.</returns>
         public virtual RecognizeIdentityDocumentsOperation StartRecognizeIdentityDocumentsFromUri(Uri identityDocumentUri, RecognizeIdentityDocumentsOptions recognizeIdentityDocumentsOptions = default, CancellationToken cancellationToken = default)

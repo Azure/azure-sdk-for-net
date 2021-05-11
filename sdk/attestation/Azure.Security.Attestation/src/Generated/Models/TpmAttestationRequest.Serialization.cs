@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class TpmAttestationRequest : IUtf8JsonSerializable
+    public partial class TpmAttestationRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

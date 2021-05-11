@@ -21,34 +21,20 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             PrintHeader("TIME SERIES INSIGHTS TYPES SAMPLE");
 
             #region Snippet:TimeSeriesInsightsSampleCreateType
-            // Create an aggregate type
+            // Create a type with an aggregate variable
             var timeSeriesTypes = new List<TimeSeriesType>();
 
             var countExpression = new TimeSeriesExpression("count()");
             var aggregateVariable = new AggregateVariable(countExpression);
             var variables = new Dictionary<string, TimeSeriesVariable>();
-            var variableName = "aggregateVariable";
-            variables.Add(variableName, aggregateVariable);
+            variables.Add("aggregateVariable", aggregateVariable);
 
-            var timeSeriesTypesProperties = new Dictionary<string, string>
-            {
-                { "Type1", "Type1Id"},
-                { "Type2", "Type2Id"}
-            };
-
-            foreach (KeyValuePair<string, string> property in timeSeriesTypesProperties)
-            {
-                var type = new TimeSeriesType(property.Key, variables)
-                {
-                    Id = property.Value
-                };
-                timeSeriesTypes.Add(type);
-            }
+            timeSeriesTypes.Add(new TimeSeriesType("Type1", variables) { Id = "Type1Id" });
+            timeSeriesTypes.Add(new TimeSeriesType("Type2", variables) { Id = "Type2Id" });
 
             Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
                 .Types
-                .CreateOrReplaceAsync(timeSeriesTypes)
-                .ConfigureAwait(false);
+                .CreateOrReplaceAsync(timeSeriesTypes);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
             // If the error object is set to null, this means the operation was a success.
@@ -69,11 +55,10 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             // Code snippet below shows getting a default Type using Id
             // The default type Id can be obtained programmatically by using the ModelSettings client.
 
-            TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
+            TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync();
             Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await client
                 .Types
-                .GetByIdAsync(new string[] { modelSettings.DefaultTypeId })
-                .ConfigureAwait(false);
+                .GetByIdAsync(new string[] { modelSettings.DefaultTypeId });
 
             // The response of calling the API contains a list of type or error objects corresponding by position to the input parameter array in the request.
             // If the error object is set to null, this means the operation was a success.
@@ -99,8 +84,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             Response<TimeSeriesTypeOperationResult[]> updateTypesResult = await client
                 .Types
-                .CreateOrReplaceAsync(timeSeriesTypes)
-                .ConfigureAwait(false);
+                .CreateOrReplaceAsync(timeSeriesTypes);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
             // If the error object is set to null, this means the operation was a success.
@@ -137,8 +121,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 var typesIdsToDelete = new List<string> { "Type1Id", " Type2Id" };
                 Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
                     .Types
-                    .DeleteByIdAsync(typesIdsToDelete)
-                    .ConfigureAwait(false);
+                    .DeleteByIdAsync(typesIdsToDelete);
 
                 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
                 // array in the request. If the error object is set to null, this means the operation was a success.

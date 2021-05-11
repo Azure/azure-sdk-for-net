@@ -660,14 +660,14 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
-        public async Task StartRecognizeCustomFormsWithTableVariableRows()
+        public async Task StartRecognizeCustomFormsWithTableDynamicRows()
         {
             var client = CreateFormRecognizerClient();
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.TableVariableRows);
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormTableVariableRows);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.FormTableDynamicRows);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
