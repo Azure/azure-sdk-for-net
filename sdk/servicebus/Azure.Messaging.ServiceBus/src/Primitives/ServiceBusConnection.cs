@@ -240,6 +240,7 @@ namespace Azure.Messaging.ServiceBus
             string identifier,
             string sessionId,
             bool isSessionReceiver,
+            bool isProcessor,
             CancellationToken cancellationToken) =>
                 _innerClient.CreateReceiver(
                     entityPath,
@@ -249,6 +250,7 @@ namespace Azure.Messaging.ServiceBus
                     identifier,
                     sessionId,
                     isSessionReceiver,
+                    isProcessor,
                     cancellationToken);
 
         /// <summary>
