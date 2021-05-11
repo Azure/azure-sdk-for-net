@@ -34,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal ServicePrincipalCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters) : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;
-            ClientId = parameters.ClientId; // Can these be null?
+            ClientId = parameters.ClientId;
             ClientSecret = parameters.ClientSecret;
             TenantId = parameters.TenantId;
         }
@@ -42,17 +42,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// TODO.
         /// </summary>
-        public string ClientId { get; }
+        public string ClientId { get; set; }
 
         /// <summary>
         /// TODO.
         /// </summary>
-        public string ClientSecret { get; }
+        public string ClientSecret { get; set; }
 
         /// <summary>
         /// TODO.
         /// </summary>
-        public string TenantId { get; }
+        public string TenantId { get; set; }
 
         /// <summary>
         /// Used by CodeGen during serialization.
