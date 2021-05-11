@@ -6,6 +6,7 @@
 
 - Changed parameter order in `KeyVaultAccessControlClient.DeleteRoleDefinition` and `KeyVaultAccessControlClient.DeleteRoleDefinitionAsync`.
 - Changed parameter order in `KeyVaultAccessControlClient.GetRoleDefinition` and `KeyVaultAccessControlClient.GetRoleDefinitionAsync`.
+- Changed parameters for `KeyVaultAccessControlClient.CreateOrUpdateRoleDefinition` and `KeyVaultAccessControlClient.CreateOrUpdateRoleDefinitionAsync` to accept new `CreateOrUpdateRoleDefinitionOptions` class.
 - Moved all classes from the `Azure.Security.KeyVault.Administration.Models` namespace to `Azure.Security.KeyVault.Administration`.
 - Renamed `BackupOperation` to `KeyVaultBackupOperation`.
 - Renamed `RestoreOperation` to `KeyVaultRestoreOperation`.

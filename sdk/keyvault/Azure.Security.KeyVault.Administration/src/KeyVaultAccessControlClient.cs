@@ -198,36 +198,46 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Creates or updates a role definition.
+        /// Creates or updates a role definition. If the named role definition is already defined it will be updated.
         /// </summary>
-        /// <param name="roleDefinitionDescription">The description for the role definition.</param>
-        /// <param name="permissions">The permissions granted by the role definition when assigned to a principal.</param>
-        /// <param name="roleScope">The scope of the <see cref="KeyVaultRoleDefinition"/> to create. The default value is <see cref="KeyVaultRoleScope.Global"/>.</param>
-        /// <param name="roleDefinitionName">Optional name used to create the role definition. A new <see cref="Guid"/> will be generated if not specified.</param>
+        /// <param name="roleScope">The <see cref="KeyVaultRoleScope"/> to which the definition applies.</param>
+        /// <param name="roleDefinitionName">The unique role definition name. If null a unique role definition name will be generated.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response<KeyVaultRoleDefinition>> CreateOrUpdateRoleDefinitionAsync(string roleDefinitionDescription, KeyVaultPermission permissions, KeyVaultRoleScope roleScope = default, Guid? roleDefinitionName = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<KeyVaultRoleDefinition>> CreateOrUpdateRoleDefinitionAsync(KeyVaultRoleScope roleScope, Guid? roleDefinitionName = null, CancellationToken cancellationToken = default) =>
+            CreateOrUpdateRoleDefinitionAsync(new CreateOrUpdateRoleDefinitionOptions(roleScope, roleDefinitionName ?? Guid.NewGuid()), cancellationToken);
+
+        /// <summary>
+        /// Creates or updates a role definition. If the named role definition is already defined it will be updated.
+        /// </summary>
+        /// <param name="roleScope">The <see cref="KeyVaultRoleScope"/> to which the definition applies.</param>
+        /// <param name="roleDefinitionName">The unique role definition name. If null a unique role definition name will be generated.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual Response<KeyVaultRoleDefinition> CreateOrUpdateRoleDefinition(KeyVaultRoleScope roleScope, Guid? roleDefinitionName = null, CancellationToken cancellationToken = default) =>
+            CreateOrUpdateRoleDefinition(new CreateOrUpdateRoleDefinitionOptions(roleScope, roleDefinitionName ?? Guid.NewGuid()), cancellationToken);
+
+        /// <summary>
+        /// Creates or updates a role definition.
+        /// </summary>
+        /// <param name="options">An instance of <see cref="CreateOrUpdateRoleDefinitionOptions"/> that define parameters for creating a role definition.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        public virtual async Task<Response<KeyVaultRoleDefinition>> CreateOrUpdateRoleDefinitionAsync(CreateOrUpdateRoleDefinitionOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateOrUpdateRoleDefinition)}");
             scope.Start();
             try
             {
-                var name = (roleDefinitionName ?? Guid.NewGuid()).ToString();
-                var properties = new RoleDefinitionProperties()
-                {
-                    Description = roleDefinitionDescription,
-                    RoleName = name,
-                    RoleType = KeyVaultRoleType.CustomRole
-                };
-                properties.AssignableScopes.Add(roleScope);
-                properties.Permissions.Add(permissions);
-
-                var parameters = new RoleDefinitionCreateParameters(properties);
+                RoleDefinitionCreateParameters parameters = options.ToParameters(KeyVaultRoleType.CustomRole);
 
                 return await _definitionsRestClient.CreateOrUpdateAsync(
                     vaultBaseUrl: VaultUri.AbsoluteUri,
-                    scope: roleScope == default ? roleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
-                    roleDefinitionName: name,
+                    scope: options.RoleScope == default ? options.RoleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
+                    roleDefinitionName: options.RoleDefinitionName.ToString(),
                     parameters: parameters,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -242,34 +252,24 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Creates or updates a role definition.
         /// </summary>
-        /// <param name="roleDefinitionDescription">The description for the role definition.</param>
-        /// <param name="permissions">The permissions granted by the role definition when assigned to a principal.</param>
-        /// <param name="roleScope">The scope of the <see cref="KeyVaultRoleDefinition"/> to create. The default value is <see cref="KeyVaultRoleScope.Global"/>.</param>
-        /// <param name="roleDefinitionName">Optional name used to create the role definition. A new <see cref="Guid"/> will be generated if not specified.</param>
+        /// <param name="options">An instance of <see cref="CreateOrUpdateRoleDefinitionOptions"/> that define parameters for creating a role definition.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{TResult}"/> containing the result of the operation.</returns>
-        public virtual Response<KeyVaultRoleDefinition> CreateOrUpdateRoleDefinition(string roleDefinitionDescription, KeyVaultPermission permissions, KeyVaultRoleScope roleScope = default, Guid? roleDefinitionName = null, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        public virtual Response<KeyVaultRoleDefinition> CreateOrUpdateRoleDefinition(CreateOrUpdateRoleDefinitionOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(options, nameof(options));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateOrUpdateRoleDefinition)}");
             scope.Start();
             try
             {
-                var name = (roleDefinitionName ?? Guid.NewGuid()).ToString();
-                var properties = new RoleDefinitionProperties()
-                {
-                    Description = roleDefinitionDescription,
-                    RoleName = name,
-                    RoleType = KeyVaultRoleType.CustomRole
-                };
-                properties.AssignableScopes.Add(roleScope);
-                properties.Permissions.Add(permissions);
-
-                var parameters = new RoleDefinitionCreateParameters(properties);
+                RoleDefinitionCreateParameters parameters = options.ToParameters(KeyVaultRoleType.CustomRole);
 
                 return _definitionsRestClient.CreateOrUpdate(
                     vaultBaseUrl: VaultUri.AbsoluteUri,
-                    scope: roleScope == default ? roleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
-                    roleDefinitionName: name,
+                    scope: options.RoleScope == default ? options.RoleScope.ToString() : KeyVaultRoleScope.Global.ToString(),
+                    roleDefinitionName: options.RoleDefinitionName.ToString(),
                     parameters: parameters,
                     cancellationToken: cancellationToken);
             }
