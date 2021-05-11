@@ -144,7 +144,7 @@ namespace Azure.Monitor.Query
         {
             Argument.AssertNotNull(batch, nameof(batch));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsBatchQuery)}.{nameof(QueryBatch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(QueryBatch)}");
             scope.Start();
             try
             {
@@ -169,7 +169,7 @@ namespace Azure.Monitor.Query
         {
             Argument.AssertNotNull(batch, nameof(batch));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsBatchQuery)}.{nameof(QueryBatch)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(QueryBatch)}");
             scope.Start();
             try
             {

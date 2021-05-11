@@ -148,7 +148,7 @@ namespace Azure.Monitor.Query.Tests
         public async Task CanQueryBatch()
         {
             var client = CreateClient();
-            LogsBatchQuery batch = InstrumentClient(new LogsBatchQuery());
+            LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
             string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat", _logsTestData.DataTimeRange);
             Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
@@ -380,7 +380,7 @@ namespace Azure.Monitor.Query.Tests
             timespan = timespan.Add(TimeSpan.FromDays(1));
 
             var client = CreateClient();
-            LogsBatchQuery batch = InstrumentClient(new LogsBatchQuery());
+            LogsBatchQuery batch = new LogsBatchQuery();
             string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}", _logsTestData.DataTimeRange);
             string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, $"{_logsTestData.TableAName} | project {LogsTestData.TimeGeneratedColumnName}", timespan);
             Response<LogsBatchQueryResult> response = await client.QueryBatchAsync(batch);
@@ -410,7 +410,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            LogsBatchQuery batch = InstrumentClient(new LogsBatchQuery());
+            LogsBatchQuery batch = new LogsBatchQuery();
             var queryId = batch.AddQuery(TestEnvironment.WorkspaceId, "this won't work", _logsTestData.DataTimeRange);
             var batchResult = await client.QueryBatchAsync(batch);
 
@@ -425,7 +425,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            LogsBatchQuery batch = InstrumentClient(new LogsBatchQuery());
+            LogsBatchQuery batch = new LogsBatchQuery();
             batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName, _logsTestData.DataTimeRange);
             var batchResult = await client.QueryBatchAsync(batch);
 
@@ -464,7 +464,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            LogsBatchQuery batch = InstrumentClient(new LogsBatchQuery());
+            LogsBatchQuery batch = new LogsBatchQuery();
             var queryId = batch.AddQuery(TestEnvironment.WorkspaceId, _logsTestData.TableAName, _logsTestData.DataTimeRange, options: new LogsQueryOptions()
             {
                 IncludeStatistics = include
