@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 title: PurviewCatalog
-input-file: https://github.com/Azure/azure-rest-api-specs/blob/57b326de1cb57a447ab4bd0555e70de2adbb3f7d/specification/purview/data-plane/Azure.Purview.Catalog/preview/2021-05-01-preview/purviewcatalog.json
+input-file: https://github.com/Azure/azure-rest-api-specs/blob/0bfd6032ae89b4d8d7c55ac23309cb6e30b6c1e0/specification/purview/data-plane/Azure.Analytics.Purview.Catalog/preview/2021-05-01-preview/purviewcatalog.json
 namespace: Azure.Analytics.Purview.Catalog
 low-level-client: true
 credential-types: TokenCredential
@@ -22,6 +22,29 @@ directive:
         $.format = "url";
       }
 ```
+
+# Promote Discovery members to PurviewCatalogClient
+
+```yaml
+directive:
+  - from: swagger-document
+    where: $..[?(@.operationId !== undefined)]
+    transform: >
+      if ($.operationId.startsWith("Discovery_")) {
+        $.operationId = $.operationId.replace("Discovery_", "");
+      }
+```
+
+# Rename Query to Search (to follow .NET Naming Conventions)
+
+```yaml
+directive:
+  - from: swagger-document
+    where: $..[?(@.operationId === "Query")]
+    transform: >
+        $.operationId = "Search";
+```
+
 
 # Add `Purview` To Sub Clients
 

@@ -2211,16 +2211,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateByGuidAsync(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateByGuidRequest(guid, name, requestBody, requestOptions);
+            HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
             {
@@ -2258,16 +2258,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdateByGuid(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response PartialUpdateEntityAttributeByGuid(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateByGuidRequest(guid, name, requestBody, requestOptions);
+            HttpMessage message = CreatePartialUpdateEntityAttributeByGuidRequest(guid, name, requestBody, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateByGuid");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityAttributeByGuid");
             scope.Start();
             try
             {
@@ -2294,12 +2294,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateByGuid"/> and <see cref="CreateOrUpdateByGuidAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="PartialUpdateEntityAttributeByGuid"/> and <see cref="PartialUpdateEntityAttributeByGuidAsync"/> operations. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="name"> The name of the attribute. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateByGuidRequest(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreatePartialUpdateEntityAttributeByGuidRequest(string guid, string name, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -3767,16 +3767,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateOrUpdateByUniqueAttributeAsync(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> PartialUpdateEntityByUniqueAttributesAsync(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateByUniqueAttributeRequest(typeName, requestBody, attrQualifiedName, requestOptions);
+            HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, requestBody, attrQualifiedName, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateByUniqueAttribute");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
             {
@@ -4144,16 +4144,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateOrUpdateByUniqueAttribute(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        public virtual Response PartialUpdateEntityByUniqueAttributes(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateOrUpdateByUniqueAttributeRequest(typeName, requestBody, attrQualifiedName, requestOptions);
+            HttpMessage message = CreatePartialUpdateEntityByUniqueAttributesRequest(typeName, requestBody, attrQualifiedName, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.CreateOrUpdateByUniqueAttribute");
+            using var scope = _clientDiagnostics.CreateScope("PurviewEntities.PartialUpdateEntityByUniqueAttributes");
             scope.Start();
             try
             {
@@ -4180,12 +4180,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="CreateOrUpdateByUniqueAttribute"/> and <see cref="CreateOrUpdateByUniqueAttributeAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="PartialUpdateEntityByUniqueAttributes"/> and <see cref="PartialUpdateEntityByUniqueAttributesAsync"/> operations. </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateOrUpdateByUniqueAttributeRequest(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
+        private HttpMessage CreatePartialUpdateEntityByUniqueAttributesRequest(string typeName, RequestContent requestBody, string attrQualifiedName = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

@@ -40,10 +40,6 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> AddClassificationsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent requestBody, string attrQualifiedName = null, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual Azure.Response CreateOrUpdate(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual Azure.Response CreateOrUpdateByGuid(string guid, string name, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateByGuidAsync(string guid, string name, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual Azure.Response CreateOrUpdateByUniqueAttribute(string typeName, Azure.Core.RequestContent requestBody, string attrQualifiedName = null, Azure.RequestOptions requestOptions = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent requestBody, string attrQualifiedName = null, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateEntities(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateEntitiesAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual Azure.Response DeleteByGuid(string guid, Azure.RequestOptions requestOptions = null) { throw null; }
@@ -70,6 +66,10 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEntitiesByUniqueAttributesAsync(string typeName, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), string attrNQualifiedName = null, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual Azure.Response GetHeader(string guid, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetHeaderAsync(string guid, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response PartialUpdateEntityAttributeByGuid(string guid, string name, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual Azure.Response PartialUpdateEntityByUniqueAttributes(string typeName, Azure.Core.RequestContent requestBody, string attrQualifiedName = null, Azure.RequestOptions requestOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> PartialUpdateEntityByUniqueAttributesAsync(string typeName, Azure.Core.RequestContent requestBody, string attrQualifiedName = null, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual Azure.Response SetClassifications(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetClassificationsAsync(Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
         public virtual Azure.Response UpdateClassifications(string guid, Azure.Core.RequestContent requestBody, Azure.RequestOptions requestOptions = null) { throw null; }
