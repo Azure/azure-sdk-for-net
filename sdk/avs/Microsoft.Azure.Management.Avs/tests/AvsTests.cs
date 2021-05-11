@@ -45,7 +45,7 @@ namespace Avs.Tests
                     Sku = new Sku { Name = "av20" },
                     ManagementCluster = new ManagementCluster
                     {
-                        ClusterSize = 4,
+                        ClusterSize = 3,
                     },
                     NetworkBlock = "192.168.48.0/22"
                 });
@@ -120,5 +120,28 @@ namespace Avs.Tests
             }
         }
 
+        [Fact]
+        public void PasswordResets()
+        {
+            using var context = MockContext.Start(this.GetType());
+            string rgName = "aumarcel-eastus2-rg";
+            string cloudName = "aumarcel-2021-05-06-hcx";
+            
+            using var avsClient = context.GetServiceClient<AvsClient>();
+            avsClient.HttpClient.Timeout = System.Threading.Timeout.InfiniteTimeSpan;
+
+            var credsA = avsClient.PrivateClouds.ListAdminCredentials(rgName, cloudName);
+
+            var credsB = avsClient.PrivateClouds.ListAdminCredentials(rgName, cloudName);
+            Assert.Equal(credsA.NsxtPassword, credsB.NsxtPassword);
+            Assert.Equal(credsA.VcenterPassword, credsB.VcenterPassword);
+
+            avsClient.PrivateClouds.RotateNsxtPassword(rgName, cloudName);
+            avsClient.PrivateClouds.RotateVcenterPassword(rgName, cloudName);
+
+            var credsC = avsClient.PrivateClouds.ListAdminCredentials(rgName, cloudName);
+            Assert.NotEqual(credsA.NsxtPassword, credsC.NsxtPassword);
+            Assert.NotEqual(credsA.VcenterPassword, credsC.VcenterPassword);
+        }
     }
 }
