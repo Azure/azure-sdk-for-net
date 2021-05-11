@@ -32,8 +32,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         private TimeSpan _maxAutoRenewDuration = TimeSpan.FromMinutes(5);
 
         /// <summary>Gets or sets the maximum number of concurrent calls to a function. Note each call
-        /// would be passing a different message. The default is 16 times the return value of
-        /// <see cref="Utility.GetProcessorCount"/>.
+        /// would be passing a different message. The default is 16 times the the count of available processors.
         /// </summary>
         public int MaxConcurrentCalls
         {
