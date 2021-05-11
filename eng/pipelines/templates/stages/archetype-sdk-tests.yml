@@ -38,6 +38,9 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
+- name: Project
+  type: string
+  default: '**'
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -124,6 +127,7 @@ stages:
               Location: ${{ parameters.Location }}
               SDKType: ${{ parameters.SDKType }}
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              Project: ${{ parameters.Project }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
             MatrixConfigs:
               # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
