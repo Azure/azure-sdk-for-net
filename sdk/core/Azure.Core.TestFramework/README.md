@@ -149,6 +149,15 @@ public class AppConfigurationTestEnvironment : TestEnvironment
 }
 ```
 
+## Test settings
+
+Test settings can be configured via `.runsettings` files. See [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/nunit.runsettings) for available knobs.
+
+There are two ways to work with `.runsettings`. Both are picked up by Visual Studio without restart.
+- You can edit [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/nunit.runsettings) locally to achieve desired configuration.
+- You can prepare few copies of `.runsettings` by cloning [nunit.runsettings](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/nunit.runsettings).
+Load them in Visual Studio (`Test>Configure Run Settings` menu) and switch between them. This option requires setting an environment variable `AZURE_SKIP_DEFAULT_RUN_SETTINGS=true`.
+
 ## TokenCredential
 
 If a test or sample uses `TokenCredential` to construct the client use `TestEnvironment.Credential` to retrieve it.
@@ -256,7 +265,8 @@ For example:
     }
 ```
 
-Another sanitizer property that is available for sanitizing Json payloads is the `JsonPathSanitizers`. This property contains a list of [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) format strings that will be validated against the body. If a match exists, the value will be sanitized.
+Another sanitizer feature that is available for sanitizing Json payloads is the `AddJsonPathSanitizer`.
+This method allows adding a [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) format strings that will be validated against the body. If a match exists, the value will be sanitized.
 
 ```c#
     public class FormRecognizerRecordedTestSanitizer : RecordedTestSanitizer
@@ -264,11 +274,19 @@ Another sanitizer property that is available for sanitizing Json payloads is the
         public FormRecognizerRecordedTestSanitizer()
             : base()
         {
-            JsonPathSanitizers.Add("$..accessToken");
-            JsonPathSanitizers.Add("$..source");
+            AddJsonPathSanitizer("$..accessToken");
+            AddJsonPathSanitizer("$..source");
         }
     }
 ```
+
+Sometimes it's useful to be able to have a custom replacement values for JsonPath-based sanitization (connection strings, JWT tokens).
+To enable this the `AddJsonPathSanitizer` provides an additional callback that would be called for every match.
+
+```C#
+AddJsonPathSanitizer("$..jwt_token", token => SanitizeJwt(token));
+```
+
 
 ### Matching
 

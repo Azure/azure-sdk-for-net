@@ -1,13 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure SDK client library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK for WebPubSub</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure, WebPubSub, SignalR</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
@@ -24,8 +25,6 @@
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
-
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- HACK -->
   <!-- Hack around lack of support for RequestContent in the code generators -->
@@ -48,14 +47,8 @@ File.WriteAllText(FileName, Regex.Replace(File.ReadAllText(FileName), Pattern, R
   </UsingTask>
   <Target Name="HackGeneratedCode" AfterTargets="GenerateCode" Condition="'$(_GenerateCode)' == 'true'">
     <Message Importance="high" Text="Hacking RequestContent into Generated Code" />
-    <ReplaceText
-      Filename="$(MSBuildThisFileDirectory)\Generated\WebPubSubRestClient.cs"
-      Pattern="Stream message"
-      Replacement="RequestContent message" />
-    <ReplaceText
-      Filename="$(MSBuildThisFileDirectory)\Generated\WebPubSubRestClient.cs"
-      Pattern="RequestContent\.Create\(message\)"
-      Replacement="message" />
+    <ReplaceText Filename="$(MSBuildThisFileDirectory)\Generated\WebPubSubRestClient.cs" Pattern="Stream message" Replacement="RequestContent message" />
+    <ReplaceText Filename="$(MSBuildThisFileDirectory)\Generated\WebPubSubRestClient.cs" Pattern="RequestContent\.Create\(message\)" Replacement="message" />
   </Target>
   <!-- /HACK -->
 </Project>

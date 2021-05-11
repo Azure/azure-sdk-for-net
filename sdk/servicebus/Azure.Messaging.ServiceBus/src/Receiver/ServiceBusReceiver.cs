@@ -61,13 +61,6 @@ namespace Azure.Messaging.ServiceBus
         internal string Identifier { get; }
 
         /// <summary>
-        /// Gets the transaction group associated with the receiver. This is an
-        /// arbitrary string that is used to all senders, receivers, and processors that you
-        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
-        /// </summary>
-        public virtual string TransactionGroup { get; }
-
-        /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been closed.
         /// </summary>
         ///
@@ -162,18 +155,7 @@ namespace Azure.Messaging.ServiceBus
                 ReceiveMode = options.ReceiveMode;
                 PrefetchCount = options.PrefetchCount;
 
-                switch (options.SubQueue)
-                {
-                    case SubQueue.None:
-                        EntityPath = entityPath;
-                        break;
-                    case SubQueue.DeadLetter:
-                        EntityPath = EntityNameFormatter.FormatDeadLetterPath(entityPath);
-                        break;
-                    case SubQueue.TransferDeadLetter:
-                        EntityPath = EntityNameFormatter.FormatTransferDeadLetterPath(entityPath);
-                        break;
-                }
+                EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, options.SubQueue);
 
                 IsSessionReceiver = isSessionEntity;
                 _innerReceiver = _connection.CreateTransportReceiver(
@@ -721,11 +703,12 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockTokenGuid"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the dead-letter queue, you will need a new <see cref="ServiceBusReceiver"/>, with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
-        /// This operation can only be performed on messages that were received by this receiver.
+        /// In order to receive a message from the dead-letter queue or transfer dead-letter queue,
+        /// set the <see cref="ServiceBusReceiverOptions.SubQueue"/> property to <see cref="SubQueue.DeadLetter"/>
+        /// or <see cref="SubQueue.TransferDeadLetter"/> when calling
+        /// <see cref="ServiceBusClient.CreateReceiver(string, ServiceBusReceiverOptions)"/> or
+        /// <see cref="ServiceBusClient.CreateReceiver(string, string, ServiceBusReceiverOptions)"/>.
+        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </remarks>
         ///  <exception cref="ServiceBusException">
         ///   The lock for the message has expired or the message has already been completed. This does not apply for session-enabled
@@ -842,8 +825,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockTokenGuid"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// In order to receive this message again in the future, you will need to save the
         /// <see cref="ServiceBusReceivedMessage.SequenceNumber"/>
         /// and receive it using <see cref="ReceiveDeferredMessageAsync(long, CancellationToken)"/>.
@@ -1119,7 +1100,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiver" />.
-        /// This is equivalent to calling <see cref="CloseAsync"/> with the default <see cref="LinkCloseMode"/>.
+        /// This is equivalent to calling <see cref="CloseAsync"/>.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>

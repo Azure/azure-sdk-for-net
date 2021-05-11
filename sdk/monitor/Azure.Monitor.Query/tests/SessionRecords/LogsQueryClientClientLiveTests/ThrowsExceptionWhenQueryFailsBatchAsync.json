@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "148",
+        "Content-Length": "194",
         "Content-Type": "application/json",
-        "traceparent": "00-391bd40a9f352b4eb52f821c87713f9e-974d2aad4351c141-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210422.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-b1d875aafbadfd4cafc81f0f96e3a1f1-2501fd0bc1cdac49-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.0.0-alpha.20210504.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "4a4399a7a5e3e1c433a64bc4556a6ce0",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,11 +18,12 @@
           {
             "id": "0",
             "body": {
-              "query": "this won\u0027t work"
+              "query": "this won\u0027t work",
+              "timespan": "2021-04-26T00:00:00.0000000Z/P7D"
             },
             "path": "/query",
             "method": "POST",
-            "workspace": "9a15b791-8d2f-436f-a734-25d128c72254"
+            "workspace": "bb1b4371-062d-414d-bef3-b0d124ff721c"
           }
         ]
       },
@@ -32,14 +33,14 @@
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 22 Apr 2021 17:23:13 GMT",
+        "Date": "Tue, 04 May 2021 18:37:25 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "Vary": [
           "Accept-Encoding",
           "Accept-Encoding"
         ],
-        "Via": "1.1 draft-oms-778c644d5b-fs9qc",
+        "Via": "1.1 draft-oms-6c84644dc4-p7t8p",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -51,7 +52,7 @@
               "error": {
                 "message": "The request had some invalid properties",
                 "code": "BadArgumentError",
-                "correlationId": "b2c76f21-ecfd-4983-8a54-38a3a3378e58",
+                "correlationId": "3e9331a5-ffab-4bb6-94ef-1629707ae52e",
                 "innererror": {
                   "code": "SyntaxError",
                   "message": "Request is invalid and cannot be processed: Syntax error: SYN0001: I could not parse that, sorry. [line:position=0:0]. Query: \u0027let [\u0027emptyTable\u0027] = view () { datatable(column:string)[] };restrict access to (*);\r\nthis won\u0027t work\u0027"
@@ -64,8 +65,8 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-22T10:23:10.4570553-07:00",
+    "DateTimeOffsetNow": "2021-05-04T11:37:24.3584417-07:00",
     "RandomSeed": "1563703860",
-    "WORKSPACE_ID": "9a15b791-8d2f-436f-a734-25d128c72254"
+    "WORKSPACE_ID": "bb1b4371-062d-414d-bef3-b0d124ff721c"
   }
 }
