@@ -96,9 +96,9 @@ namespace Azure.Core
                     return Response.FromValue(Value, response);
                 }
 
-                var serverDelay = GetServerDelay(response);
+                TimeSpan serverDelay = GetServerDelay(response);
 
-                var delay = serverDelay > pollingInterval
+                TimeSpan delay = serverDelay > pollingInterval
                     ? serverDelay : pollingInterval;
 
                 await WaitAsync(delay, cancellationToken).ConfigureAwait(false);
@@ -132,7 +132,7 @@ namespace Azure.Core
 
         private async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
+            OperationState<TResult> state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
 
             RawResponse = state.RawResponse;
 

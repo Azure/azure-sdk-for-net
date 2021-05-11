@@ -20,8 +20,8 @@ namespace Azure.Core.Tests
         [Test]
         public void DefaultPropertyInitialization()
         {
-            var testOperation = new TestOperation();
-            var operationInternal = testOperation.MockOperationInternal;
+            TestOperation testOperation = new TestOperation();
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.DefaultPollingInterval);
             Assert.IsNotNull(operationInternal.ScopeAttributes);
@@ -36,9 +36,9 @@ namespace Azure.Core.Tests
         [Test]
         public void RawResponseInitialization()
         {
-            var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation(mockResponse);
-            var operationInternal = testOperation.MockOperationInternal;
+            MockResponse mockResponse = new MockResponse(200);
+            TestOperation testOperation = new TestOperation(mockResponse);
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             Assert.AreEqual(TimeSpan.FromSeconds(1), operationInternal.DefaultPollingInterval);
             Assert.IsNotNull(operationInternal.ScopeAttributes);
@@ -55,14 +55,14 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public async Task UpdateStatusWhenOperationIsPending(bool async)
         {
-            var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation()
+            MockResponse mockResponse = new MockResponse(200);
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
-            var operationResponse = async
+            Response operationResponse = async
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
                 : operationInternal.UpdateStatus(CancellationToken.None);
 
@@ -79,15 +79,15 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public async Task UpdateStatusWhenOperationSucceeds(bool async)
         {
-            var expectedValue = 50;
-            var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation()
+            int expectedValue = 50;
+            MockResponse mockResponse = new MockResponse(200);
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = _ => OperationState<int>.Success(mockResponse, expectedValue)
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
-            var operationResponse = async
+            Response operationResponse = async
                 ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
                 : operationInternal.UpdateStatus(CancellationToken.None);
 
@@ -104,17 +104,17 @@ namespace Azure.Core.Tests
             [Values(true, false)] bool async,
             [Values(true, false)] bool useDefaultException)
         {
-            var originalException = new RequestFailedException("");
-            var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation()
+            RequestFailedException originalException = new RequestFailedException("");
+            MockResponse mockResponse = new MockResponse(200);
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = _ => useDefaultException
                     ? OperationState<int>.Failure(mockResponse)
                     : OperationState<int>.Failure(mockResponse, originalException)
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
-            var thrownException = async
+            RequestFailedException thrownException = async
                 ? Assert.ThrowsAsync<RequestFailedException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
                 : Assert.Throws<RequestFailedException>(() => operationInternal.UpdateStatus(CancellationToken.None));
 
@@ -127,7 +127,7 @@ namespace Azure.Core.Tests
             Assert.True(operationInternal.HasCompleted);
             Assert.False(operationInternal.HasValue);
 
-            var valueException = Assert.Throws<RequestFailedException>(() => _ = operationInternal.Value);
+            RequestFailedException valueException = Assert.Throws<RequestFailedException>(() => _ = operationInternal.Value);
             Assert.AreEqual(thrownException, valueException);
         }
 
@@ -136,14 +136,14 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public void UpdateStatusWhenOperationThrows(bool async)
         {
-            var originalException = new StackOverflowException();
-            var testOperation = new TestOperation()
+            StackOverflowException originalException = new StackOverflowException();
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = _ => throw originalException
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
-            var thrownException = async
+            StackOverflowException thrownException = async
                 ? Assert.ThrowsAsync<StackOverflowException>(async () => await operationInternal.UpdateStatusAsync(CancellationToken.None))
                 : Assert.Throws<StackOverflowException>(() => operationInternal.UpdateStatus(CancellationToken.None));
 
@@ -161,23 +161,23 @@ namespace Azure.Core.Tests
             [Values(true, false)] bool useDefaultTypeName)
         {
             const string customTypeName = "CustomTypeName";
-            using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
+            using ClientDiagnosticListener testListener = new ClientDiagnosticListener(DiagnosticNamespace);
 
-            var expectedTypeName = useDefaultTypeName ? nameof(TestOperation) : customTypeName;
-            var expectedAttributes = new KeyValuePair<string, string>[]
+            string expectedTypeName = useDefaultTypeName ? nameof(TestOperation) : customTypeName;
+            KeyValuePair<string, string>[] expectedAttributes = new KeyValuePair<string, string>[]
             {
                 new KeyValuePair<string, string>("key1", "value1"),
                 new KeyValuePair<string, string>("key2", "value2")
             };
 
-            var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation(operationTypeName: useDefaultTypeName ? null : customTypeName)
+            MockResponse mockResponse = new MockResponse(200);
+            TestOperation testOperation = new TestOperation(operationTypeName: useDefaultTypeName ? null : customTypeName)
             {
                 OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
-            foreach (var kvp in expectedAttributes)
+            foreach (KeyValuePair<string, string> kvp in expectedAttributes)
             {
                 operationInternal.ScopeAttributes.Add(kvp);
             }
@@ -194,15 +194,15 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public async Task UpdateStatusSetsFailedScopeWhenOperationFails(bool async)
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
+            using ClientDiagnosticListener testListener = new ClientDiagnosticListener(DiagnosticNamespace);
 
-            var originalException = new RequestFailedException("");
-            var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation()
+            RequestFailedException originalException = new RequestFailedException("");
+            MockResponse mockResponse = new MockResponse(200);
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = _ => OperationState<int>.Failure(mockResponse, originalException)
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             try
             {
@@ -223,14 +223,14 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public async Task UpdateStatusSetsFailedScopeWhenOperationThrows(bool async)
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
+            using ClientDiagnosticListener testListener = new ClientDiagnosticListener(DiagnosticNamespace);
 
-            var originalException = new StackOverflowException();
-            var testOperation = new TestOperation()
+            StackOverflowException originalException = new StackOverflowException();
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = _ => throw originalException
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             try
             {
@@ -249,12 +249,12 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public async Task UpdateStatusPassesTheCancellationTokenToUpdateState(bool async)
         {
-            using var tokenSource = new CancellationTokenSource();
-            var originalToken = tokenSource.Token;
+            using CancellationTokenSource tokenSource = new CancellationTokenSource();
+            CancellationToken originalToken = tokenSource.Token;
             CancellationToken passedToken = default;
 
-            var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation()
+            MockResponse mockResponse = new MockResponse(200);
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = cancellationToken =>
                 {
@@ -262,7 +262,7 @@ namespace Azure.Core.Tests
                     return OperationState<int>.Pending(mockResponse);
                 }
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             _ = async
                 ? await operationInternal.UpdateStatusAsync(originalToken)
@@ -276,21 +276,21 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public async Task WaitForCompletionCallsUntilOperationCompletes(bool useDefaultPollingInterval)
         {
-            var callsCount = 0;
-            var expectedCalls = 5;
-            var expectedValue = 50;
-            var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation()
+            int callsCount = 0;
+            int expectedCalls = 5;
+            int expectedValue = 50;
+            MockResponse mockResponse = new MockResponse(200);
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = _ => ++callsCount >= expectedCalls
                     ? OperationState<int>.Success(mockResponse, expectedValue)
                     : OperationState<int>.Pending(mockResponse)
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             operationInternal.DefaultPollingInterval = TimeSpan.Zero;
 
-            var operationResponse = useDefaultPollingInterval
+            Response<int> operationResponse = useDefaultPollingInterval
                 ? await operationInternal.WaitForCompletionAsync(CancellationToken.None)
                 : await operationInternal.WaitForCompletionAsync(TimeSpan.Zero, CancellationToken.None);
 
@@ -308,18 +308,18 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public async Task WaitForCompletionUsesRightPollingInterval(bool useDefaultPollingInterval)
         {
-            var expectedDelay = TimeSpan.FromMilliseconds(100);
+            TimeSpan expectedDelay = TimeSpan.FromMilliseconds(100);
             TimeSpan passedDelay = default;
 
-            var callsCount = 0;
-            var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation()
+            int callsCount = 0;
+            MockResponse mockResponse = new MockResponse(200);
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = _ => ++callsCount >= 2
                     ? OperationState<int>.Success(mockResponse, 50)
                     : OperationState<int>.Pending(mockResponse)
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             operationInternal.OnWait = delay => passedDelay = delay;
 
@@ -341,19 +341,19 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public async Task WaitForCompletionUsesRetryAfterHeader(bool useDefaultPollingInterval)
         {
-            var originalDelay = TimeSpan.FromSeconds(2);
-            var shortDelay = originalDelay.Subtract(TimeSpan.FromSeconds(1));
-            var longDelay = originalDelay.Add(TimeSpan.FromSeconds(1));
-            var passedDelays = new List<TimeSpan>();
+            TimeSpan originalDelay = TimeSpan.FromSeconds(2);
+            TimeSpan shortDelay = originalDelay.Subtract(TimeSpan.FromSeconds(1));
+            TimeSpan longDelay = originalDelay.Add(TimeSpan.FromSeconds(1));
+            List<TimeSpan> passedDelays = new List<TimeSpan>();
 
-            var shortDelayMockResponse = new MockResponse(200);
+            MockResponse shortDelayMockResponse = new MockResponse(200);
             shortDelayMockResponse.AddHeader(new HttpHeader("Retry-After", shortDelay.Seconds.ToString()));
 
-            var longDelayMockResponse = new MockResponse(200);
+            MockResponse longDelayMockResponse = new MockResponse(200);
             longDelayMockResponse.AddHeader(new HttpHeader("Retry-After", longDelay.Seconds.ToString()));
 
-            var callsCount = 0;
-            var testOperation = new TestOperation()
+            int callsCount = 0;
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = _ => ++callsCount switch
                 {
@@ -362,7 +362,7 @@ namespace Azure.Core.Tests
                     _ => OperationState<int>.Success(new MockResponse(200), 50)
                 }
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             operationInternal.OnWait = delay => passedDelays.Add(delay);
 
@@ -387,19 +387,19 @@ namespace Azure.Core.Tests
             [Values(true, false)] bool useDefaultPollingInterval,
             [Values("retry-after-ms", "x-ms-retry-after-ms")] string headerName)
         {
-            var originalDelay = TimeSpan.FromMilliseconds(500);
-            var shortDelay = originalDelay.Subtract(TimeSpan.FromMilliseconds(250));
-            var longDelay = originalDelay.Add(TimeSpan.FromMilliseconds(250));
-            var passedDelays = new List<TimeSpan>();
+            TimeSpan originalDelay = TimeSpan.FromMilliseconds(500);
+            TimeSpan shortDelay = originalDelay.Subtract(TimeSpan.FromMilliseconds(250));
+            TimeSpan longDelay = originalDelay.Add(TimeSpan.FromMilliseconds(250));
+            List<TimeSpan> passedDelays = new List<TimeSpan>();
 
-            var shortDelayMockResponse = new MockResponse(200);
+            MockResponse shortDelayMockResponse = new MockResponse(200);
             shortDelayMockResponse.AddHeader(new HttpHeader(headerName, shortDelay.Milliseconds.ToString()));
 
-            var longDelayMockResponse = new MockResponse(200);
+            MockResponse longDelayMockResponse = new MockResponse(200);
             longDelayMockResponse.AddHeader(new HttpHeader(headerName, longDelay.Milliseconds.ToString()));
 
-            var callsCount = 0;
-            var testOperation = new TestOperation()
+            int callsCount = 0;
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = _ => ++callsCount switch
                 {
@@ -408,7 +408,7 @@ namespace Azure.Core.Tests
                     _ => OperationState<int>.Success(new MockResponse(200), 50)
                 }
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             operationInternal.OnWait = delay => passedDelays.Add(delay);
 
@@ -433,12 +433,12 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public async Task WaitForCompletionPassesTheCancellationTokenToUpdateState(bool useDefaultPollingInterval)
         {
-            using var tokenSource = new CancellationTokenSource();
-            var originalToken = tokenSource.Token;
+            using CancellationTokenSource tokenSource = new CancellationTokenSource();
+            CancellationToken originalToken = tokenSource.Token;
             CancellationToken passedToken = default;
 
-            var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation()
+            MockResponse mockResponse = new MockResponse(200);
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = cancellationToken =>
                 {
@@ -446,7 +446,7 @@ namespace Azure.Core.Tests
                     return OperationState<int>.Success(mockResponse, default);
                 }
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             operationInternal.DefaultPollingInterval = TimeSpan.Zero;
 
@@ -462,17 +462,17 @@ namespace Azure.Core.Tests
         [TestCase(false)]
         public void WaitForCompletionPassesTheCancellationTokenToTaskDelay(bool useDefaultPollingInterval)
         {
-            using var tokenSource = new CancellationTokenSource();
-            var cancellationToken = tokenSource.Token;
+            using CancellationTokenSource tokenSource = new CancellationTokenSource();
+            CancellationToken cancellationToken = tokenSource.Token;
 
             tokenSource.Cancel();
 
-            var mockResponse = new MockResponse(200);
-            var testOperation = new TestOperation()
+            MockResponse mockResponse = new MockResponse(200);
+            TestOperation testOperation = new TestOperation()
             {
                 OnUpdateState = _ => OperationState<int>.Pending(mockResponse)
             };
-            var operationInternal = testOperation.MockOperationInternal;
+            MockOperationInternal<int> operationInternal = testOperation.MockOperationInternal;
 
             operationInternal.DefaultPollingInterval = TimeSpan.Zero;
 
