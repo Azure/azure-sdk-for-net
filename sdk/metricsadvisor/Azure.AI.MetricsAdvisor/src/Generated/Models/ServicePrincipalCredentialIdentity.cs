@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ServicePrincipalCredential. </summary>
-    public partial class ServicePrincipalCredentialIdentity : DataSourceCredentialIdentity
+    public partial class ServicePrincipalCredentialEntity : DataSourceCredentialEntity
     {
     }
 }

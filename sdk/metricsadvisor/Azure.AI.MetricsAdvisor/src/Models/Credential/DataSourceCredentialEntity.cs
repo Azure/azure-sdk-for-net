@@ -9,12 +9,12 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// TODO.
     /// </summary>
     [CodeGenModel("DataSourceCredential")]
-    public partial class DataSourceCredentialIdentity
+    public partial class DataSourceCredentialEntity
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataSourceCredentialIdentity"/> class.
+        /// Initializes a new instance of the <see cref="DataSourceCredentialEntity"/> class.
         /// </summary>
-        internal DataSourceCredentialIdentity(string name)
+        internal DataSourceCredentialEntity(string name)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -22,19 +22,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         }
 
         /// <summary>
-        /// The unique identifier of this <see cref="DataSourceCredentialIdentity"/>. Set by the service.
+        /// The unique identifier of this <see cref="DataSourceCredentialEntity"/>. Set by the service.
         /// </summary>
         [CodeGenMember("DataSourceCredentialId")]
         public string Id { get; }
 
         /// <summary>
-        /// A custom name for this <see cref="DataSourceCredentialIdentity"/> to be displayed on the web portal.
+        /// A custom name for this <see cref="DataSourceCredentialEntity"/> to be displayed on the web portal.
         /// </summary>
         [CodeGenMember("DataSourceCredentialName")]
         public string Name { get; set; }
 
         /// <summary>
-        /// A description of this <see cref="DataSourceCredentialIdentity"/>.
+        /// A description of this <see cref="DataSourceCredentialEntity"/>.
         /// </summary>
         [CodeGenMember("DataSourceCredentialDescription")]
         public string Description { get; set; }

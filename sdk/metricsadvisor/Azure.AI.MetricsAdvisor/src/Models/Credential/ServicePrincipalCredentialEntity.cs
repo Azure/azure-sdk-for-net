@@ -9,17 +9,17 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// TODO.
     /// </summary>
     [CodeGenModel("ServicePrincipalCredential")]
-    [CodeGenSuppress(nameof(ServicePrincipalCredentialIdentity), typeof(string), typeof(ServicePrincipalParam))]
-    public partial class ServicePrincipalCredentialIdentity
+    [CodeGenSuppress(nameof(ServicePrincipalCredentialEntity), typeof(string), typeof(ServicePrincipalParam))]
+    public partial class ServicePrincipalCredentialEntity
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServicePrincipalCredentialIdentity"/> class.
+        /// Initializes a new instance of the <see cref="ServicePrincipalCredentialEntity"/> class.
         /// </summary>
         /// <param name="name">TODO.</param>
         /// <param name="clientId"></param>
         /// <param name="clientSecret"></param>
         /// <param name="tenantId"></param>
-        public ServicePrincipalCredentialIdentity(string name, string clientId, string clientSecret, string tenantId) : base(name)
+        public ServicePrincipalCredentialEntity(string name, string clientId, string clientSecret, string tenantId) : base(name)
         {
             Argument.AssertNotNullOrEmpty(clientId, nameof(clientId));
             Argument.AssertNotNullOrEmpty(clientSecret, nameof(clientSecret));
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             TenantId = tenantId;
         }
 
-        internal ServicePrincipalCredentialIdentity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters) : base(dataSourceCredentialType, id, name, description)
+        internal ServicePrincipalCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description, ServicePrincipalParam parameters) : base(dataSourceCredentialType, id, name, description)
         {
             DataSourceCredentialType = dataSourceCredentialType;
             ClientId = parameters.ClientId; // Can these be null?

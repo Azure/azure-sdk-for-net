@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DataSourceCredential. </summary>
-    public partial class DataSourceCredentialIdentity
+    public partial class DataSourceCredentialEntity
     {
 
         /// <summary> Initializes a new instance of DataSourceCredentialIdentity. </summary>
@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="id"> Unique id of data source credential. </param>
         /// <param name="name"> Name of data source credential. </param>
         /// <param name="description"> Description of data source credential. </param>
-        internal DataSourceCredentialIdentity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description)
+        internal DataSourceCredentialEntity(DataSourceCredentialType dataSourceCredentialType, string id, string name, string description)
         {
             DataSourceCredentialType = dataSourceCredentialType;
             Id = id;

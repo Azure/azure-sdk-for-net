@@ -1771,25 +1771,25 @@ namespace Azure.AI.MetricsAdvisor.Administration
         #region Credential
 
         /// <summary>
-        /// Creates a <see cref="DataSourceCredentialIdentity"/> and assigns it a unique ID.
+        /// Creates a <see cref="DataSourceCredentialEntity"/> and assigns it a unique ID.
         /// </summary>
-        /// <param name="credentialIdentity">Specifies how the created <see cref="DataSourceCredentialIdentity"/> should be configured.</param>
+        /// <param name="credentialEntity">Specifies how the created <see cref="DataSourceCredentialEntity"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialIdentity"/>
-        /// instance containing information about the created credential identity.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
+        /// instance containing information about the created credential entity.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="credentialIdentity"/> is null.</exception>
-        public virtual async Task<Response<DataSourceCredentialIdentity>> CreateCredentialEntityAsync(DataSourceCredentialIdentity credentialIdentity, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="credentialEntity"/> is null.</exception>
+        public virtual async Task<Response<DataSourceCredentialEntity>> CreateCredentialEntityAsync(DataSourceCredentialEntity credentialEntity, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(credentialIdentity, nameof(credentialIdentity));
+            Argument.AssertNotNull(credentialEntity, nameof(credentialEntity));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateCredentialEntity)}");
             scope.Start();
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> response = await _serviceRestClient.CreateCredentialAsync(credentialIdentity, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> response = await _serviceRestClient.CreateCredentialAsync(credentialEntity, cancellationToken).ConfigureAwait(false);
                 string credentialId = ClientCommon.GetCredentialId(response.Headers.Location);
 
                 try
@@ -1811,25 +1811,25 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Creates a <see cref="DataSourceCredentialIdentity"/> and assigns it a unique ID.
+        /// Creates a <see cref="DataSourceCredentialEntity"/> and assigns it a unique ID.
         /// </summary>
-        /// <param name="credentialIdentity">Specifies how the created <see cref="DataSourceCredentialIdentity"/> should be configured.</param>
+        /// <param name="credentialEntity">Specifies how the created <see cref="DataSourceCredentialEntity"/> should be configured.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialIdentity"/>
-        /// instance containing information about the created credential identity.
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
+        /// instance containing information about the created credential entity.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="credentialIdentity"/> is null.</exception>
-        public virtual Response<DataSourceCredentialIdentity> CreateCredentialEntity(DataSourceCredentialIdentity credentialIdentity, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="credentialEntity"/> is null.</exception>
+        public virtual Response<DataSourceCredentialEntity> CreateCredentialEntity(DataSourceCredentialEntity credentialEntity, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(credentialIdentity, nameof(credentialIdentity));
+            Argument.AssertNotNull(credentialEntity, nameof(credentialEntity));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateCredentialEntity)}");
             scope.Start();
 
             try
             {
-                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> response = _serviceRestClient.CreateCredential(credentialIdentity, cancellationToken);
+                ResponseWithHeaders<AzureCognitiveServiceMetricsAdvisorRestAPIOpenAPIV2CreateCredentialHeaders> response = _serviceRestClient.CreateCredential(credentialEntity, cancellationToken);
                 string credentialId = ClientCommon.GetCredentialId(response.Headers.Location);
 
                 try
@@ -1851,17 +1851,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets an existing <see cref="DataSourceCredentialIdentity"/>.
+        /// Gets an existing <see cref="DataSourceCredentialEntity"/>.
         /// </summary>
-        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialIdentity"/>.</param>
+        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialEntity"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialIdentity"/>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
         /// instance containing the requested information.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="credentialEntityId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="credentialEntityId"/> is empty or not a valid GUID.</exception>
-        public virtual async Task<Response<DataSourceCredentialIdentity>> GetCredentialEntityAsync(string credentialEntityId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataSourceCredentialEntity>> GetCredentialEntityAsync(string credentialEntityId, CancellationToken cancellationToken = default)
         {
             Guid credentialGuid = ClientCommon.ValidateGuid(credentialEntityId, nameof(credentialEntityId));
 
@@ -1880,17 +1880,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Gets an existing <see cref="DataSourceCredentialIdentity"/>.
+        /// Gets an existing <see cref="DataSourceCredentialEntity"/>.
         /// </summary>
-        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialIdentity"/>.</param>
+        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialEntity"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialIdentity"/>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
         /// instance containing the requested information.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="credentialEntityId"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="credentialEntityId"/> is empty or not a valid GUID.</exception>
-        public virtual Response<DataSourceCredentialIdentity> GetCredentialEntity(string credentialEntityId, CancellationToken cancellationToken = default)
+        public virtual Response<DataSourceCredentialEntity> GetCredentialEntity(string credentialEntityId, CancellationToken cancellationToken = default)
         {
             Guid credentialGuid = ClientCommon.ValidateGuid(credentialEntityId, nameof(credentialEntityId));
 
@@ -1909,9 +1909,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Deletes an existing <see cref="DataSourceCredentialIdentity"/>.
+        /// Deletes an existing <see cref="DataSourceCredentialEntity"/>.
         /// </summary>
-        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialIdentity"/> to be deleted.</param>
+        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialEntity"/> to be deleted.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
@@ -1937,9 +1937,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         /// <summary>
-        /// Deletes an existing <see cref="DataSourceCredentialIdentity"/>.
+        /// Deletes an existing <see cref="DataSourceCredentialEntity"/>.
         /// </summary>
-        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialIdentity"/> to be deleted.</param>
+        /// <param name="credentialEntityId">The unique identifier of the <see cref="DataSourceCredentialEntity"/> to be deleted.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
         /// A <see cref="Response"/> containing the result of the operation.
