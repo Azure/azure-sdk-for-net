@@ -36,7 +36,7 @@ For the local development use the `local.settings.json` file to store the connec
 {
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "<connection_name>": "Endpoint=sb://<event_hub_name>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Jya7Eh76HU92ibsxuk1ITN8CM8Bt76YLKf5ISjU3jZ8="
+    "<connection_name>": "Endpoint=sb://<event_hubs_namespace>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Jya7Eh76HU92ibsxuk1ITN8CM8Bt76YLKf5ISjU3jZ8="
   }
 }
 ```
@@ -45,14 +45,15 @@ When deployed use the [application settings](https://docs.microsoft.com/azure/az
 
 #### Managed identity authentication
 
-If your environment has [managed identity](https://docs.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet) enabled you can use it to authenticate the Event Hubs extension.
-To use managed identity provide the `<connection_name>__fullyQualifiedNamespace` configuration setting.
+If your environment has [managed identity](https://docs.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet) enabled you can use it to authenticate the Event Hubs extension.  Before doing so, you will need to ensure that permissions have been configured as described in the [Azure Functions developer guide]( https://docs.microsoft.com/azure/azure-functions/functions-reference#grant-permission-to-the-identity).
+
+To use managed identity provide the `<connection_name>__fullyQualifiedNamespace` configuration setting.  
 
 ```json
 {
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "<connection_name>__fullyQualifiedNamespace": "<event_hub_name>.servicebus.windows.net"
+    "<connection_name>__fullyQualifiedNamespace": "{event_hubs_namespace}.servicebus.windows.net"
   }
 }
 ```
@@ -60,7 +61,7 @@ To use managed identity provide the `<connection_name>__fullyQualifiedNamespace`
 Or in the case of deployed app set the same setting in [application settings](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings):
 
 ```
-<connection_name>__fullyQualifiedNamespace=<event_hub_name>.servicebus.windows.net
+<connection_name>__fullyQualifiedNamespace={event_hubs_namespace}.servicebus.windows.net
 ```
 
 ## Key concepts
@@ -76,6 +77,18 @@ Please follow the [Azure Event Hubs trigger tutorial](https://docs.microsoft.com
 The Event Hub Output Binding allows a function to send Event Hub events.
 
 Please follow the [Azure Event Hubs output binding](https://docs.microsoft.com/azure/azure-functions/functions-bindings-event-hubs-output?tabs=csharp) to learn more about Event Hub bindings.
+
+### Supported types
+
+The following types are supported for trigger and output bindings:
+
+- `EventData`
+- `string` - value would be encoded using UTF8 encoding
+- `BinaryData`
+- `byte[]`
+- Custom model types will be JSON-serialized using Newtonsoft.Json 
+- `IAsyncCollector<T>` of any of the above types for batch triggers
+- `EventHubProducerClient` for output bindings
 
 ## Examples
 

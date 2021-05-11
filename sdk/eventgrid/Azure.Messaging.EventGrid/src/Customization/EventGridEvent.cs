@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="subject"> A resource path relative to the topic path. </param>
         /// <param name="eventType"> The type of the event that occurred. For example, "Contoso.Items.ItemReceived". </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
-        /// <param name="data"> Event data specific to the event type. </param>
+        /// <param name="data"> Pre-serialized JSON event data specific to the event type. </param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="subject"/>, <paramref name="data"/>, <paramref name="eventType"/>, or <paramref name="dataVersion"/> was null.
         /// </exception>

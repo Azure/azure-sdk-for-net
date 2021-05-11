@@ -7,12 +7,14 @@
       Microsoft Azure Communication Chat quickstart - https://docs.microsoft.com/azure/communication-services/quickstarts/chat/get-started?pivots=programming-language-csharp
     </Description>
     <AssemblyTitle>Azure Communication Chat Service</AssemblyTitle>
-    <Version>1.0.0-beta.6</Version>
+    <Version>1.0.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Chat Service;Microsoft;Azure;Azure Communication Service;Azure Communication Chat Service;Chat;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <EnableApiCompat>false</EnableApiCompat>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -29,9 +31,7 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Communication.Common\src\Azure.Communication.Common.csproj" />
+    <PackageReference Include="Azure.Communication.Common" />
   </ItemGroup>
-
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
 </Project>

@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private BigDataPoolsClient CreateClient()
         {
             return InstrumentClient(new BigDataPoolsClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));

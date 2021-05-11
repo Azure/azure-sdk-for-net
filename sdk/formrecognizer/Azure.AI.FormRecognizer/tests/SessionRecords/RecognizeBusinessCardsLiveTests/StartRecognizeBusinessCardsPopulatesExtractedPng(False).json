@@ -1,0 +1,445 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyze?includeTextDetails=false",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "22",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-7274c649832a294ab8772965df92aee4-ce1744d410885844-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "83f564eba96b07df2589a58b343d42ba",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "source": "Sanitized"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "3dc6d6df-b7ba-4e42-a0bf-4f8ab56b301f",
+        "Content-Length": "0",
+        "Date": "Wed, 31 Mar 2021 17:36:57 GMT",
+        "Operation-Location": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/3dc6d6df-b7ba-4e42-a0bf-4f8ab56b301f",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "634"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/3dc6d6df-b7ba-4e42-a0bf-4f8ab56b301f",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "a26d561ef43504063277d0ed510c495f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c4deb76d-540d-4220-8a7a-75a0a6e5a736",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 31 Mar 2021 17:36:57 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "13"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-03-31T17:36:57Z",
+        "lastUpdatedDateTime": "2021-03-31T17:36:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/3dc6d6df-b7ba-4e42-a0bf-4f8ab56b301f",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "b9024c6097e62d53c8b6843aa2d35092",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "dbb42c88-2d28-4200-8832-60666341a3e3",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 31 Mar 2021 17:36:58 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-31T17:36:57Z",
+        "lastUpdatedDateTime": "2021-03-31T17:36:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/3dc6d6df-b7ba-4e42-a0bf-4f8ab56b301f",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "2f5fcd484db8f7215ef150f4d9f2b519",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8a4e336d-b3b0-4f03-999d-4b1517d80203",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 31 Mar 2021 17:36:59 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "10"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-31T17:36:57Z",
+        "lastUpdatedDateTime": "2021-03-31T17:36:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/3dc6d6df-b7ba-4e42-a0bf-4f8ab56b301f",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "e72b4640893b86d3023fda7f6fcb615f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "77c7aee7-1907-4b79-b341-b1fa1756fc6e",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 31 Mar 2021 17:37:00 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "11"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-31T17:36:57Z",
+        "lastUpdatedDateTime": "2021-03-31T17:36:57Z"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/3dc6d6df-b7ba-4e42-a0bf-4f8ab56b301f",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210331.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "83a43d261aac12a62b0a5af5465e54d5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "70e9d2d1-caf1-4467-8272-8cf9000f7e5e",
+        "Content-Length": "2673",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 31 Mar 2021 17:37:01 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "62"
+      },
+      "ResponseBody": {
+        "status": "succeeded",
+        "createdDateTime": "2021-03-31T17:36:57Z",
+        "lastUpdatedDateTime": "2021-03-31T17:37:01Z",
+        "analyzeResult": {
+          "version": "2.1.0",
+          "readResults": [
+            {
+              "page": 1,
+              "angle": -16.693,
+              "width": 4032,
+              "height": 3024,
+              "unit": "pixel"
+            }
+          ],
+          "documentResults": [
+            {
+              "docType": "prebuilt:businesscard",
+              "pageRange": [
+                1,
+                1
+              ],
+              "fields": {
+                "Addresses": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "2 Kingdom Street Paddington, London, W2 6BD",
+                      "text": "2 Kingdom Street Paddington, London, W2 6BD",
+                      "boundingBox": [
+                        1227.4,
+                        2138.3,
+                        2528.6,
+                        1688.4,
+                        2605.1,
+                        1909.5,
+                        1303.9,
+                        2359.4
+                      ],
+                      "page": 1,
+                      "confidence": 0.98
+                    }
+                  ]
+                },
+                "CompanyNames": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "Contoso",
+                      "text": "Contoso",
+                      "boundingBox": [
+                        1146,
+                        1927,
+                        2231,
+                        1585,
+                        2293,
+                        1753,
+                        1202,
+                        2099
+                      ],
+                      "page": 1,
+                      "confidence": 0.168
+                    }
+                  ]
+                },
+                "ContactNames": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "FirstName": {
+                          "type": "string",
+                          "valueString": "Avery",
+                          "text": "Avery",
+                          "boundingBox": [
+                            667,
+                            1102,
+                            1111,
+                            995,
+                            1141,
+                            1114,
+                            696,
+                            1216
+                          ],
+                          "page": 1
+                        },
+                        "LastName": {
+                          "type": "string",
+                          "valueString": "Smith",
+                          "text": "Smith",
+                          "boundingBox": [
+                            1170,
+                            981,
+                            1570,
+                            881,
+                            1600,
+                            1000,
+                            1200,
+                            1100
+                          ],
+                          "page": 1
+                        }
+                      },
+                      "text": "Dr. Avery Smith",
+                      "boundingBox": [
+                        414.1,
+                        1152.8,
+                        1571.9,
+                        880.5,
+                        1601.4,
+                        1005.8,
+                        443.5,
+                        1278
+                      ],
+                      "page": 1,
+                      "confidence": 0.979
+                    }
+                  ]
+                },
+                "Departments": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "Cloud \u0026 Al Department",
+                      "text": "Cloud \u0026 Al Department",
+                      "boundingBox": [
+                        472,
+                        1403,
+                        1589,
+                        1133,
+                        1610.7,
+                        1223,
+                        493.7,
+                        1493
+                      ],
+                      "page": 1,
+                      "confidence": 0.989
+                    }
+                  ]
+                },
+                "Emails": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "avery.smith@contoso.com",
+                      "text": "avery.smith@contoso.com",
+                      "boundingBox": [
+                        2106,
+                        934,
+                        2909,
+                        706,
+                        2922,
+                        768,
+                        2122,
+                        993
+                      ],
+                      "page": 1,
+                      "confidence": 0.99
+                    }
+                  ]
+                },
+                "Faxes": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "phoneNumber",
+                      "text": "\u002B44 (0) 20 6789 2345",
+                      "boundingBox": [
+                        2519.4,
+                        1195,
+                        3189.9,
+                        984.7,
+                        3213.7,
+                        1060.6,
+                        2543.2,
+                        1270.9
+                      ],
+                      "page": 1,
+                      "confidence": 0.99
+                    }
+                  ]
+                },
+                "JobTitles": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "Senior Researcher",
+                      "text": "Senior Researcher",
+                      "boundingBox": [
+                        449.9,
+                        1311.6,
+                        1315,
+                        1104,
+                        1334.1,
+                        1183.4,
+                        469,
+                        1391
+                      ],
+                      "page": 1,
+                      "confidence": 0.99
+                    }
+                  ]
+                },
+                "MobilePhones": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "phoneNumber",
+                      "text": "\u002B44 (0) 7911 123456",
+                      "boundingBox": [
+                        2426.8,
+                        1039.4,
+                        3065,
+                        847.5,
+                        3086.5,
+                        919.2,
+                        2448.3,
+                        1111.1
+                      ],
+                      "page": 1,
+                      "confidence": 0.99
+                    }
+                  ]
+                },
+                "Websites": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "https://www.contoso.com/",
+                      "text": "https://www.contoso.com/",
+                      "boundingBox": [
+                        2120,
+                        1003,
+                        2980,
+                        757,
+                        3005,
+                        824,
+                        2139,
+                        1075
+                      ],
+                      "page": 1,
+                      "confidence": 0.99
+                    }
+                  ]
+                },
+                "WorkPhones": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "phoneNumber",
+                      "text": "\u002B44 (0) 20 9876 5432",
+                      "boundingBox": [
+                        2468.3,
+                        1118.6,
+                        3128.3,
+                        914.9,
+                        3151,
+                        988.1,
+                        2490.9,
+                        1191.9
+                      ],
+                      "page": 1,
+                      "confidence": 0.989
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-canada-central.cognitiveservices.azure.com/",
+    "RandomSeed": "2051981674"
+  }
+}

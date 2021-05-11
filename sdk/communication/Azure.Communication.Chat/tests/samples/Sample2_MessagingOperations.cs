@@ -5,25 +5,24 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.samples
 {
-    public partial class Sample2_MessagingOperations : SamplesBase<ChatTestEnvironment>
+    public partial class Sample2_MessagingOperations : ChatSampleBase
     {
         // This sample demonstrates the messaging operations that can be performed on a thread: send, get, update, delete, typing notifications and readreceipts
         [Test]
         public async Task SendGetUpdateDeleteMessagesSendNotificationReadReceiptsAsync()
         {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
+            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
             Response<CommunicationUserIdentifier> threadMember = await communicationIdentityClient.CreateUserAsync();
             AccessToken communicationUserToken = await communicationIdentityClient.GetTokenAsync(threadMember.Value, new[] { CommunicationTokenScope.Chat });
             string userToken = communicationUserToken.Token;
             string theadCreatorMemberId = threadMember.Value.Id;
 
             ChatClient chatClient = new ChatClient(
-                TestEnvironment.Endpoint,
+                TestEnvironment.LiveTestDynamicEndpoint,
                 new CommunicationTokenCredential(userToken));
 
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier(theadCreatorMemberId))
@@ -35,7 +34,8 @@ namespace Azure.Communication.Chat.Tests.samples
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
-            var messageId = await chatThreadClient.SendMessageAsync(content:"hello world");
+            SendChatMessageResult sendChatMessageResult = await chatThreadClient.SendMessageAsync(content:"hello world");
+            var messageId = sendChatMessageResult.Id;
             #endregion Snippet:Azure_Communication_Chat_Tests_SendMessage
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage

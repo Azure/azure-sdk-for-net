@@ -41,6 +41,6 @@ namespace Azure.AI.MetricsAdvisor
         /// unless the number of pages enumerated from the service is limited, the service will
         /// return an unlimited number of total items.
         /// </summary>
-        public int? TopCount { get; set; }
+        public int? MaxPageSize { get; set; }
     }
 }

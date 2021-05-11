@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -276,6 +277,28 @@ namespace Azure.Core.Tests
             Assert.IsFalse("foo" == new JsonData("bar"));
             Assert.IsTrue(new JsonData("bar") != "foo");
             Assert.IsTrue("foo" != new JsonData("bar"));
+        }
+
+        [Test]
+        public void JsonDataInPOCOsWorks()
+        {
+            JsonData orig = new JsonData(new
+            {
+                property = new JsonData("hello")
+            });
+
+            void validate(JsonData d)
+            {
+                Assert.AreEqual(JsonValueKind.Object, d.Kind);
+                Assert.AreEqual(d.Properties.Count(), 1);
+                Assert.AreEqual(d["property"], "hello");
+            }
+
+            validate(orig);
+
+            JsonData roundTrip = JsonSerializer.Deserialize<JsonData>(JsonSerializer.Serialize(orig, orig.GetType()));
+
+            validate(roundTrip);
         }
 
         private T JsonAsType<T>(string json)

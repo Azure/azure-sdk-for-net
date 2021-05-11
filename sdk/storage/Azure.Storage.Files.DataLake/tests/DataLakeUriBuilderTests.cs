@@ -17,6 +17,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         private readonly Uri _invalidServiceUri = new Uri("https://account.file.core.windows.net");
         private readonly Uri _blobUri = new Uri("https://account.blob.core.windows.net");
         private readonly Uri _dfsUri = new Uri("https://account.dfs.core.windows.net");
+        private readonly Uri _blobPeriodUri = new Uri("https://account.z.blob.core.windows.net");
+        private readonly Uri _dfsPeriodUri = new Uri("https://account.z.dfs.core.windows.net");
         private readonly Uri _rootDirectoryUri = new Uri("https://account.dfs.core.windows.net/filesystem/");
 
         public DataLakeUriBuilderTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
@@ -25,7 +27,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         //TODO address the flakiness of this test.
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_RoundTrip()
         {
             DataLakeServiceClient serviceUri = GetServiceClient_AccountSas();
@@ -39,7 +41,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(expectedUri, actualUri, "Flaky test -- potential signature generation issue not properly encoding space and + in the output");
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_AccountTest()
         {
             // Arrange
@@ -63,7 +65,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ListPaths()
         {
             // Arrange
@@ -88,14 +90,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_RegularUrl_CNAME()
         {
             var dataLakeUriBuilder = new DataLakeUriBuilder(new Uri("http://www.contoso.com"));
             Assert.AreEqual(string.Empty, dataLakeUriBuilder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_AccountNamePeriod()
         {
             var datalakeUriBuilder = new DataLakeUriBuilder(new Uri("https://account.z.blob.core.windows.net/share/dir"));
@@ -103,7 +105,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual("account", datalakeUriBuilder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_AccountNameError()
         {
             var datalakeUriBuilder = new DataLakeUriBuilder(new Uri("http://notaurl"));
@@ -111,7 +113,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsEmpty(datalakeUriBuilder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_MalformedSubdomain()
         {
             // account and file swapped
@@ -128,7 +130,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(string.Empty, datalakeUriBuilder3.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToBlobUri_CustomUri()
         {
             // Arrange
@@ -141,7 +143,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_customUri, result);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToBlobUri_ShortHost()
         {
             // Arrange
@@ -154,7 +156,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_shortHostUri, result);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToBlobUri_IpStyleUri()
         {
             // Arrange
@@ -167,7 +169,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_ipStyleUri, result);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToBlobUri_InvalidServiceUri()
         {
             // Arrange
@@ -180,7 +182,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_invalidServiceUri, result);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToBlobUri_BlobUri()
         {
             // Arrange
@@ -193,7 +195,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_blobUri, result);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToBlobUri_DfsUri()
         {
             // Arrange
@@ -206,7 +208,33 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_blobUri, result);
         }
 
-        [Test]
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToBlobPeriodUri_BlobPeriodUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_blobPeriodUri);
+
+            // Act
+            Uri result = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_blobPeriodUri, result);
+        }
+
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToBlobPeriodUri_DfsPeriodUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsPeriodUri);
+
+            // Act
+            Uri result = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_blobPeriodUri, result);
+        }
+
+        [RecordedTest]
         public void DataLakeUriBuilder_ToDfsUri_CustomUri()
         {
             // Arrange
@@ -219,7 +247,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_customUri, result);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToDfsUri_ShortHost()
         {
             // Arrange
@@ -232,7 +260,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_shortHostUri, result);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToDfsUri_IpStyleUri()
         {
             // Arrange
@@ -245,7 +273,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_ipStyleUri, result);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToDfsUri_InvalidServiceUri()
         {
             // Arrange
@@ -258,7 +286,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_invalidServiceUri, result);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToDfsUri_DfsUri()
         {
             // Arrange
@@ -271,7 +299,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_dfsUri, result);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToDfsUri_BlobUri()
         {
             // Arrange
@@ -284,7 +312,33 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_dfsUri, result);
         }
 
-        [Test]
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToDfsPeriodUri_DfsPeriodUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsPeriodUri);
+
+            // Act
+            Uri result = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_dfsPeriodUri, result);
+        }
+
+        [RecordedTest]
+        public void DataLakeUriBuilder_ToDfsPeriodUri_BlobPeriodUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_blobPeriodUri);
+
+            // Act
+            Uri result = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_dfsPeriodUri, result);
+        }
+
+        [RecordedTest]
         public void DataLakeUriBuilder_ToUri_RootDirectory()
         {
             // Arrange
@@ -297,7 +351,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_rootDirectoryUri, uri);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToDfsUri_RootDirectory()
         {
             // Arrange
@@ -310,7 +364,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_rootDirectoryUri, uri);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToBlobUri_RootDirectory()
         {
             // Arrange
@@ -344,7 +398,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsTrue(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"));
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_SasInvalidStartExpiryTimeFormat()
         {
             // Arrange

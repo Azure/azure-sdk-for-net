@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #endregion
 
             #region Snippet:CreateLinkedServiceClient
-            LinkedServiceClient client = new LinkedServiceClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+            LinkedServiceClient client = new LinkedServiceClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CreateLinkedService
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
 
             #region Snippet:DeleteLinkedService
             LinkedServiceDeleteLinkedServiceOperation deleteLinkedServiceOperation = client.StartDeleteLinkedService(serviceName);
-            await deleteLinkedServiceOperation.WaitForCompletionAsync();
+            await deleteLinkedServiceOperation.WaitForCompletionResponseAsync();
             #endregion
         }
     }

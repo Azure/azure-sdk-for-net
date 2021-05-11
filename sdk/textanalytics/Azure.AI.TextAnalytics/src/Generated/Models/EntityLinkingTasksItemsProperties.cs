@@ -10,5 +10,18 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The ComponentsIfu7BjSchemasTasksstatePropertiesTasksPropertiesEntitylinkingtasksItemsAllof1. </summary>
     internal partial class EntityLinkingTasksItemsProperties
     {
+        /// <summary> Initializes a new instance of EntityLinkingTasksItemsProperties. </summary>
+        internal EntityLinkingTasksItemsProperties()
+        {
+        }
+
+        /// <summary> Initializes a new instance of EntityLinkingTasksItemsProperties. </summary>
+        /// <param name="results"> . </param>
+        internal EntityLinkingTasksItemsProperties(EntityLinkingResult results)
+        {
+            Results = results;
+        }
+
+        public EntityLinkingResult Results { get; }
     }
 }

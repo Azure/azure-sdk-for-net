@@ -1,0 +1,43 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyze?includeTextDetails=false\u0026locale=not-locale",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "279674",
+        "Content-Type": "image/jpeg",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-79cfa003504bf141a749c61cbfc0c3d6-1fa05ac0566deb4a-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "8cd057cc00b441e0cd16874abc43e05b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "apim-request-id": "170cb366-142c-494a-b693-c5f4d6b573ff",
+        "Content-Length": "200",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Mar 2021 00:45:56 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "167"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "UnsupportedLocale",
+          "innerError": {
+            "requestId": "170cb366-142c-494a-b693-c5f4d6b573ff"
+          },
+          "message": "Locale unsupported. Supported locales include en-AU, en-CA, en-GB, en-IN and en-US."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "RandomSeed": "1304223939"
+  }
+}

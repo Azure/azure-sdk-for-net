@@ -1,7 +1,10 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
+
+## 1.0.0 (2021-03-29)
+Updated `Azure.Communication.Sms` version.
 
 ## 1.0.0-beta.4 (2021-03-09)
 
@@ -15,7 +18,7 @@
 ### Breaking
 - Updated `Task<Response<SendSmsResponse>> SendAsync(PhoneNumberIdentifier from, PhoneNumberIdentifier to, string message, SendSmsOptions sendSmsOptions = null, CancellationToken cancellationToken = default)`
 to `Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, SmsSendOptions options = default)`
-- Replaced `SendSmsResponse` with `SmsSendResult`
+- Replaced `SendSmsResponse` with `SmsSendResult`.
 
 ## 1.0.0-beta.3 (2020-11-16)
 

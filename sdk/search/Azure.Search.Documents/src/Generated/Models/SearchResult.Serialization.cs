@@ -16,7 +16,9 @@ namespace Azure.Search.Documents.Models
         internal static SearchResult DeserializeSearchResult(JsonElement element)
         {
             double searchScore = default;
+            Optional<double?> searchRerankerScore = default;
             Optional<IReadOnlyDictionary<string, IList<string>>> searchHighlights = default;
+            Optional<IReadOnlyList<CaptionResult>> searchCaptions = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -24,6 +26,16 @@ namespace Azure.Search.Documents.Models
                 if (property.NameEquals("@search.score"))
                 {
                     searchScore = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("@search.rerankerScore"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchRerankerScore = null;
+                        continue;
+                    }
+                    searchRerankerScore = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("@search.highlights"))
@@ -46,10 +58,25 @@ namespace Azure.Search.Documents.Models
                     searchHighlights = dictionary;
                     continue;
                 }
+                if (property.NameEquals("@search.captions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchCaptions = null;
+                        continue;
+                    }
+                    List<CaptionResult> array = new List<CaptionResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CaptionResult.DeserializeCaptionResult(item));
+                    }
+                    searchCaptions = array;
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SearchResult(searchScore, Optional.ToDictionary(searchHighlights), additionalProperties);
+            return new SearchResult(searchScore, Optional.ToNullable(searchRerankerScore), Optional.ToDictionary(searchHighlights), Optional.ToList(searchCaptions), additionalProperties);
         }
     }
 }

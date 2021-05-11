@@ -1,0 +1,35 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://lyshi-sdk-ledger-2.eastus.cloudapp.azure.com/app/governance/constitution?api-version=0.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-81c14123f2ae804f8f0fb515aa01aabf-2b71e6893036544f-00",
+        "User-Agent": [
+          "azsdk-net-Storage.ConfidentialLedger/1.0.1-alpha.20210505.1",
+          "(.NET 5.0.5; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "32f22aecef8e88387134cb043399be50",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "4306",
+        "Content-Type": "application/json",
+        "x-ms-ccf-transaction-id": "8.4119"
+      },
+      "ResponseBody": {
+        "digest": "8dd68f72e540dd7f96988eef553e122789228e9b4e917028853cc042d46ec811",
+        "script": "raw_puts=  tables, puts = ...\n  for table_name, entries in pairs(puts) do\n    t = tables[table_name]\n    for _,entry in pairs(entries) do\n      t:put(entry.k, entry.v)\n    end\n  end\n  return true;environment_proposal=  __Puts = {}\n  function __Puts:new(o)\n    o = o or {}\n    setmetatable(o, self)\n    self.__index = self\n    return o\n  end\n\n  function __Puts:put(t, key, value)\n    self[t] = self[t] or {}\n    table.insert(self[t], {k = key, v = value})\n    return self\n  end\n  -- create a frontend for __Puts that hides function entries\n  Puts = setmetatable({}, {__index = __Puts})\n\n  __Calls = {}\n  function __Calls:new(o)\n    o = o or {}\n    setmetatable(o, self)\n    self.__index = self\n    return o\n  end\n\n  function __Calls:call(_func, _args)\n    table.insert(self, {func=_func, args=_args})\n    return self\n  end\n  Calls =  setmetatable({}, {__index = __Calls})\n\n  function empty_list()\n    return setmetatable({}, {__was_object=false})\n  end\n\n  function empty_object()\n    return setmetatable({}, {__was_object=true})\n  end\n  ;pass=  tables, calls, votes, proposer_id = ...\n\n  -- interface definitions\n  PASSED = 1\n  PENDING = 0\n  REJECTED = -1\n  STATE_ACTIVE = \u0022ACTIVE\u0022\n\n  -- defines which of the members are operators\n  function is_operator(member)\n    member_info = tables[\u0022public:ccf.gov.members.info\u0022]:get(member)\n    if member_info then\n      member_data = member_info.member_data\n      if member_data then\n        return member_data.is_operator == true\n      end\n    end\n    return false\n  end\n\n  -- defines calls that can be passed with sole operator input\n  function can_operator_pass(call)\n    -- some calls can always be called by operators\n    allowed_operator_funcs = {\n      trust_node=true,\n      retire_node=true,\n      new_user=true,\n      remove_user=true,\n      open_network=true,\n      deploy_js_app=true,\n      set_ca_cert_bundle=true,\n      remove_ca_cert_bundle=true,\n      set_jwt_issuer=true,\n      remove_jwt_issuer=true,\n      set_jwt_public_signing_keys=true,\n      set_user_data=true,\n      set_service_principal=true,\n      remove_service_principal=true,\n    }\n    if allowed_operator_funcs[call.func] then\n      return true\n    end\n\n    -- additionally, operators can add or retire other operators\n    if call.func == \u0022new_member\u0022 then\n      member_data = call.args.member_data\n      if member_data and member_data.is_operator then\n        return true\n      end\n    elseif call.func == \u0022retire_member\u0022 then\n      if is_operator(call.args) then\n        return true\n      end\n    end\n  end\n\n  -- count member votes\n  member_votes = 0\n\n  for member, vote in pairs(votes) do\n    if vote then\n      if not is_operator(member) then\n        member_votes = member_votes \u002B 1\n      end\n    end\n  end\n\n  -- count active members, excluding operators\n  members_active = 0\n\n  tables[\u0022public:ccf.gov.members.info\u0022]:foreach(function(member, details)\n    if details[\u0022status\u0022] == STATE_ACTIVE and not is_operator(member) then\n      members_active = members_active \u002B 1\n    end\n  end)\n\n  -- check for raw_puts to sensitive tables\n  SENSITIVE_TABLES = {\u0022public:ccf.gov.whitelists\u0022, \u0022public:ccf.gov.scripts\u0022}\n  for _, call in pairs(calls) do\n    if call.func == \u0022raw_puts\u0022 then\n      for _, sensitive_table in pairs(SENSITIVE_TABLES) do\n        if call.args[sensitive_table] then\n          -- require unanimity of non-operating members\n          if member_votes == members_active then\n            return PASSED\n          else\n            return PENDING\n          end\n        end\n      end\n    end\n  end\n\n  -- a vote is an operator vote if it\u0027s only making operator calls\n  operator_change = true\n  for _, call in pairs(calls) do\n    if not can_operator_pass(call) then\n      operator_change = false\n      break\n    end\n  end\n\n  -- a majority of members can always pass votes\n  if member_votes \u003E math.floor(members_active / 2) then\n    return PASSED\n  end\n\n  -- operators proposing operator changes can pass them without a vote\n  if operator_change and is_operator(proposer_id) then\n    return PASSED\n  end\n\n  return PENDING;"
+      }
+    }
+  ],
+  "Variables": {
+    "CONFIDENTIALLEDGER_IDENTITY_URL": "https://identity.accledger.azure.com/ledgerIdentity/lyshi-sdk-ledger-2",
+    "CONFIDENTIALLEDGER_URL": "https://lyshi-sdk-ledger-2.eastus.cloudapp.azure.com",
+    "RandomSeed": "579915181"
+  }
+}

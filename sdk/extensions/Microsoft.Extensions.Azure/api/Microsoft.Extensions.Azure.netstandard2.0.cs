@@ -13,6 +13,10 @@ namespace Microsoft.Extensions.Azure
     public sealed partial class AzureClientFactoryBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder, Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<Microsoft.Extensions.Configuration.IConfiguration>, Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential
     {
         internal AzureClientFactoryBuilder() { }
+        public Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(System.Func<Azure.Core.TokenCredential, TOptions, TClient> factory) where TOptions : class { throw null; }
+        public Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(System.Func<System.IServiceProvider, Azure.Core.TokenCredential, TOptions, TClient> factory) where TOptions : class { throw null; }
+        public Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(System.Func<System.IServiceProvider, TOptions, TClient> factory) where TOptions : class { throw null; }
+        public Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(System.Func<TOptions, TClient> factory) where TOptions : class { throw null; }
         Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> Azure.Core.Extensions.IAzureClientFactoryBuilder.RegisterClientFactory<TClient, TOptions>(System.Func<TOptions, TClient> clientFactory) { throw null; }
         Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<Microsoft.Extensions.Configuration.IConfiguration>.RegisterClientFactory<TClient, TOptions>(Microsoft.Extensions.Configuration.IConfiguration configuration) { throw null; }
         Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential.RegisterClientFactory<TClient, TOptions>(System.Func<TOptions, Azure.Core.TokenCredential, TClient> clientFactory, bool requiresCredential) { throw null; }

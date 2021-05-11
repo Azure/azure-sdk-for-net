@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Spark.Samples
             string fileSystem = "<my-storage-filesystem-name>";
             /*@@*/fileSystem = TestEnvironment.StorageFileSystemName;
 
-            SparkBatchClient client = new SparkBatchClient(endpoint, sparkPoolName, new DefaultAzureCredential());
+            SparkBatchClient client = new SparkBatchClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
             #endregion
 
             #region Snippet:SubmitSparkBatchJob

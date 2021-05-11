@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -38,11 +39,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public MetricsAdvisorAdministrationClient GetMetricsAdvisorAdministrationClient(bool useTokenCredential = false)
         {
             var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
-            var instrumentedOptions = InstrumentClientOptions(new MetricsAdvisorClientsOptions());
+            var instrumentedOptions = GetInstrumentedOptions();
 
             MetricsAdvisorAdministrationClient client = useTokenCredential
-                ? new (endpoint, TestEnvironment.Credential, instrumentedOptions)
-                : new (endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
+                ? new(endpoint, TestEnvironment.Credential, instrumentedOptions)
+                : new(endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
 
             return InstrumentClient(client);
         }
@@ -50,11 +51,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         public MetricsAdvisorClient GetMetricsAdvisorClient(bool useTokenCredential = false)
         {
             var endpoint = new Uri(TestEnvironment.MetricsAdvisorUri);
-            var instrumentedOptions = InstrumentClientOptions(new MetricsAdvisorClientsOptions());
+            var instrumentedOptions = GetInstrumentedOptions();
 
             MetricsAdvisorClient client = useTokenCredential
-                ? new (endpoint, TestEnvironment.Credential, instrumentedOptions)
-                : new (endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
+                ? new(endpoint, TestEnvironment.Credential, instrumentedOptions)
+                : new(endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
 
             return InstrumentClient(client);
         }
@@ -87,6 +88,15 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(column.Key, Is.EqualTo("city").Or.EqualTo("category"));
                 Assert.That(column.Value, Is.Not.Null.And.Not.Empty);
             }
+        }
+
+        private MetricsAdvisorClientsOptions GetInstrumentedOptions()
+        {
+            var options = new MetricsAdvisorClientsOptions();
+
+            options.Retry.MaxRetries = 6;
+
+            return InstrumentClientOptions(options);
         }
     }
 }

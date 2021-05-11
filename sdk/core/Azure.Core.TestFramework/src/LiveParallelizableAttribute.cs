@@ -19,8 +19,7 @@ namespace Azure.Core.TestFramework
 
         private static ParallelScope ApplyModeToParallelScope(ParallelScope scope)
         {
-            RecordedTestMode mode = RecordedTestUtilities.GetModeFromEnvironment();
-            return mode == RecordedTestMode.Live ? scope : ParallelScope.None;
+            return TestEnvironment.GlobalTestMode == RecordedTestMode.Live ? scope : ParallelScope.None;
         }
     }
 }

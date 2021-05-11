@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/bd75cbc7ae9c997f39362ac9d19d557219720bbd/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a7292a40170e8ebb10ad12332022798c2fe72f8a/specification/eventgrid/data-plane/readme.md
 
 ```
 
@@ -36,6 +36,17 @@ directive:
     $.ResourceWriteCancelData["x-ms-client-name"] = "ResourceWriteCancelEventData";
     $.ResourceWriteFailureData["x-ms-client-name"] = "ResourceWriteFailureEventData";
     $.ResourceWriteSuccessData["x-ms-client-name"] = "ResourceWriteSuccessEventData";
+```
+
+### Fix casing
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.RedisExportRDBCompletedEventData["x-ms-client-name"] = "RedisExportRdbCompletedEventData";
+    $.RedisImportRDBCompletedEventData["x-ms-client-name"] = "RedisImportRdbCompletedEventData";
 ```
 
 ### Apply converters and update namespace for system event data models
@@ -72,4 +83,13 @@ directive:
           $[path]["properties"]["x509Thumbprint"]["x-csharp-formats"] = "json";
       }
     }
+```
+
+### Discriminator properties have to be required
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.MediaJobOutput
+  transform: $.required.push("@odata.type")
 ```

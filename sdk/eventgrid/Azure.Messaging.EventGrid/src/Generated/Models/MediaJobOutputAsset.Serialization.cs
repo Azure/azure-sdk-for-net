@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal static MediaJobOutputAsset DeserializeMediaJobOutputAsset(JsonElement element)
         {
             Optional<string> assetName = default;
-            Optional<string> odataType = default;
+            string odataType = default;
             Optional<MediaJobError> error = default;
             Optional<string> label = default;
             long progress = default;
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobOutputAsset(odataType.Value, error.Value, label.Value, progress, state, assetName.Value);
+            return new MediaJobOutputAsset(odataType, error.Value, label.Value, progress, state, assetName.Value);
         }
     }
 }

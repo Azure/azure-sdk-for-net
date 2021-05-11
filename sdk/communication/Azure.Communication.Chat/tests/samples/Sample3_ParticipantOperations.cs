@@ -5,18 +5,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.samples
 {
-    public partial class Sample3_ParticipantOperations : SamplesBase<ChatTestEnvironment>
+    public partial class Sample3_ParticipantOperations : ChatSampleBase
     {
         // This sample demonstrates the operations that can be performed on a thread for participants: add, get and remove participants
         [Test]
         public async Task GetAddRemoveMembersAsync()
         {
-            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.ConnectionString);
+            CommunicationIdentityClient communicationIdentityClient = new CommunicationIdentityClient(TestEnvironment.LiveTestDynamicConnectionString);
             Response<CommunicationUserIdentifier> joshResponse = await communicationIdentityClient.CreateUserAsync();
             CommunicationUserIdentifier josh = joshResponse.Value;
             Response<CommunicationUserIdentifier> gloriaResponse = await communicationIdentityClient.CreateUserAsync();
@@ -27,13 +26,13 @@ namespace Azure.Communication.Chat.Tests.samples
             AccessToken joshTokenResponse = await communicationIdentityClient.GetTokenAsync(josh, new[] { CommunicationTokenScope.Chat });
 
             ChatClient chatClient = new ChatClient(
-                TestEnvironment.Endpoint,
+                TestEnvironment.LiveTestDynamicEndpoint,
                 new CommunicationTokenCredential(joshTokenResponse.Token));
 
             var chatParticipant = new ChatParticipant(josh)
             {
                 DisplayName = "Josh",
-                ShareHistoryTime = DateTime.MinValue
+                ShareHistoryTime = DateTimeOffset.MinValue
             };
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);

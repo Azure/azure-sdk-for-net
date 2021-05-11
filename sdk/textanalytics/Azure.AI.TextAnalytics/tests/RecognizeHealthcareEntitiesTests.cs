@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -129,7 +129,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -181,7 +181,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en");
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -210,7 +210,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(documents);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -234,7 +234,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -262,7 +262,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchConvenienceDocuments, "en", options);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -285,7 +285,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -313,7 +313,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, options);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             ValidateOperationProperties(operation);
 
@@ -377,7 +377,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
             Assert.Throws<InvalidOperationException>(() => operation.GetValues());
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);

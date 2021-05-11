@@ -3,7 +3,7 @@ namespace Azure.Analytics.Synapse.Spark
     public partial class SparkBatchClient
     {
         protected SparkBatchClient() { }
-        public SparkBatchClient(string endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, string livyApiVersion = "2019-11-01-preview", Azure.Analytics.Synapse.Spark.SparkClientOptions options = null) { }
+        public SparkBatchClient(System.Uri endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, string livyApiVersion = "2019-11-01-preview", Azure.Analytics.Synapse.Spark.SparkClientOptions options = null) { }
         public virtual Azure.Response CancelSparkBatchJob(int batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelSparkBatchJobAsync(int batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob> GetSparkBatchJob(int batchId, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Spark
     }
     public partial class SparkBatchOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>
     {
-        internal SparkBatchOperation() { }
+        protected SparkBatchOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Spark
     public partial class SparkSessionClient
     {
         protected SparkSessionClient() { }
-        public SparkSessionClient(string endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, string livyApiVersion = "2019-11-01-preview", Azure.Analytics.Synapse.Spark.SparkClientOptions options = null) { }
+        public SparkSessionClient(System.Uri endpoint, string sparkPoolName, Azure.Core.TokenCredential credential, string livyApiVersion = "2019-11-01-preview", Azure.Analytics.Synapse.Spark.SparkClientOptions options = null) { }
         public virtual Azure.Response CancelSparkSession(int sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelSparkSessionAsync(int sessionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Synapse.Spark.Models.SparkStatementCancellationResult> CancelSparkStatement(int sessionId, int statementId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Spark
     }
     public partial class SparkSessionOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkSession>
     {
-        internal SparkSessionOperation() { }
+        protected SparkSessionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Spark
     }
     public partial class SparkStatementOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkStatement>
     {
-        internal SparkStatementOperation() { }
+        protected SparkStatementOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

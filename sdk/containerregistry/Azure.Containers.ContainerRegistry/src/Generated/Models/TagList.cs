@@ -5,36 +5,49 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> List of tag details. </summary>
-    public partial class TagList
+    internal partial class TagList
     {
         /// <summary> Initializes a new instance of TagList. </summary>
-        internal TagList()
+        /// <param name="repository"> Image name. </param>
+        /// <param name="tagAttributeBases"> List of tag attribute details. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="repository"/> or <paramref name="tagAttributeBases"/> is null. </exception>
+        internal TagList(string repository, IEnumerable<TagAttributesBase> tagAttributeBases)
         {
-            Tags = new ChangeTrackingList<TagAttributesBase>();
+            if (repository == null)
+            {
+                throw new ArgumentNullException(nameof(repository));
+            }
+            if (tagAttributeBases == null)
+            {
+                throw new ArgumentNullException(nameof(tagAttributeBases));
+            }
+
+            Repository = repository;
+            TagAttributeBases = tagAttributeBases.ToList();
         }
 
         /// <summary> Initializes a new instance of TagList. </summary>
-        /// <param name="registry"> Registry name. </param>
-        /// <param name="imageName"> Image name. </param>
-        /// <param name="tags"> List of tag attribute details. </param>
-        internal TagList(string registry, string imageName, IReadOnlyList<TagAttributesBase> tags)
+        /// <param name="repository"> Image name. </param>
+        /// <param name="tagAttributeBases"> List of tag attribute details. </param>
+        /// <param name="link"> . </param>
+        internal TagList(string repository, IReadOnlyList<TagAttributesBase> tagAttributeBases, string link)
         {
-            Registry = registry;
-            ImageName = imageName;
-            Tags = tags;
+            Repository = repository;
+            TagAttributeBases = tagAttributeBases;
+            Link = link;
         }
 
-        /// <summary> Registry name. </summary>
-        public string Registry { get; }
         /// <summary> Image name. </summary>
-        public string ImageName { get; }
+        public string Repository { get; }
         /// <summary> List of tag attribute details. </summary>
-        public IReadOnlyList<TagAttributesBase> Tags { get; }
+        public IReadOnlyList<TagAttributesBase> TagAttributeBases { get; }
+        public string Link { get; }
     }
 }

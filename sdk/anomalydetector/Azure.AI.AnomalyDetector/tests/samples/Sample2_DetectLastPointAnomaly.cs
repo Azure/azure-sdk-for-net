@@ -27,7 +27,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             var credential = new AzureKeyCredential(apiKey);
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri.AbsoluteUri, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 
             //read data
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "samples", "data", "request-data.csv");
@@ -36,10 +36,13 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 .Where(e => e.Trim().Length != 0)
                 .Select(e => e.Split(','))
                 .Where(e => e.Length == 2)
-                .Select(e => new TimeSeriesPoint(DateTime.Parse(e[0]), float.Parse(e[1]))).ToList();
+                .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
 
             //create request
-            DetectRequest request = new DetectRequest(list, TimeGranularity.Daily);
+            DetectRequest request = new DetectRequest(list)
+            {
+                Granularity = TimeGranularity.Daily
+            };
 
             #region Snippet:DetectLastPointAnomaly
 

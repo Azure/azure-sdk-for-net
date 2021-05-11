@@ -7,8 +7,18 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 public-clients: true
-input-file:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a4d1e1516433894fca89f9600a6ac8a5471fc598/specification/communication/data-plane/Microsoft.CommunicationServicesPhoneNumbers/stable/2021-03-07/phonenumbers.json
+tag: package-phonenumber-2021-03-07
+require:
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/bf081421869ccd31d9fd87084b07a1e246aee310/specification/communication/data-plane/Microsoft.CommunicationServicesPhoneNumbers/readme.md
 title: Phone numbers
 payload-flattening-threshold: 3
+```
+
+### Move all the models to the main namespace
+```yaml
+directive:
+  from: swagger-document
+  where: $.definitions.*
+  transform: >
+    $["x-namespace"] = "Azure.Communication.PhoneNumbers"
 ```

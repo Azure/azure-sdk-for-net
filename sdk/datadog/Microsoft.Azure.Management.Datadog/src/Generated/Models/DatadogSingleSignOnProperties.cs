@@ -28,14 +28,18 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// Initializes a new instance of the DatadogSingleSignOnProperties
         /// class.
         /// </summary>
+        /// <param name="provisioningState">Possible values include:
+        /// 'Accepted', 'Creating', 'Updating', 'Deleting', 'Succeeded',
+        /// 'Failed', 'Canceled', 'Deleted', 'NotSpecified'</param>
         /// <param name="singleSignOnState">Possible values include: 'Initial',
         /// 'Enable', 'Disable', 'Existing'</param>
         /// <param name="enterpriseAppId">The Id of the Enterprise App used for
         /// Single sign-on.</param>
         /// <param name="singleSignOnUrl">The login URL specific to this
         /// Datadog Organization.</param>
-        public DatadogSingleSignOnProperties(string singleSignOnState = default(string), string enterpriseAppId = default(string), string singleSignOnUrl = default(string))
+        public DatadogSingleSignOnProperties(string provisioningState = default(string), string singleSignOnState = default(string), string enterpriseAppId = default(string), string singleSignOnUrl = default(string))
         {
+            ProvisioningState = provisioningState;
             SingleSignOnState = singleSignOnState;
             EnterpriseAppId = enterpriseAppId;
             SingleSignOnUrl = singleSignOnUrl;
@@ -46,6 +50,14 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Accepted', 'Creating',
+        /// 'Updating', 'Deleting', 'Succeeded', 'Failed', 'Canceled',
+        /// 'Deleted', 'NotSpecified'
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Initial', 'Enable',
@@ -61,10 +73,10 @@ namespace Microsoft.Azure.Management.Datadog.Models
         public string EnterpriseAppId { get; set; }
 
         /// <summary>
-        /// Gets or sets the login URL specific to this Datadog Organization.
+        /// Gets the login URL specific to this Datadog Organization.
         /// </summary>
         [JsonProperty(PropertyName = "singleSignOnUrl")]
-        public string SingleSignOnUrl { get; set; }
+        public string SingleSignOnUrl { get; private set; }
 
     }
 }

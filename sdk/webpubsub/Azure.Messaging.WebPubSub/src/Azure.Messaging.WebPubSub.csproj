@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure SDK client library for the WebPubSub service</Description>
+    <AssemblyTitle>Azure SDK for WebPubSub</AssemblyTitle>
+    <Version>1.0.0-beta.2</Version>
+    <PackageTags>Azure, WebPubSub, SignalR</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <!-- Shared source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- HACK -->
+  <!-- Hack around lack of support for RequestContent in the code generators -->
+  <UsingTask TaskName="ReplaceText" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <FileName ParameterType="System.String" Required="true" />
+      <Pattern ParameterType="System.String" Required="true" />
+      <Replacement ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs">
+<![CDATA[
+File.WriteAllText(FileName, Regex.Replace(File.ReadAllText(FileName), Pattern, Replacement));
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+  <Target Name="HackGeneratedCode" AfterTargets="GenerateCode" Condition="'$(_GenerateCode)' == 'true'">
+    <Message Importance="high" Text="Hacking RequestContent into Generated Code" />
+    <ReplaceText Filename="$(MSBuildThisFileDirectory)\Generated\WebPubSubRestClient.cs" Pattern="Stream message" Replacement="RequestContent message" />
+    <ReplaceText Filename="$(MSBuildThisFileDirectory)\Generated\WebPubSubRestClient.cs" Pattern="RequestContent\.Create\(message\)" Replacement="message" />
+  </Target>
+  <!-- /HACK -->
+</Project>

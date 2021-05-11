@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewayConnectionsResetSharedKeyOperation : Operation<ConnectionResetSharedKey>, IOperationSource<ConnectionResetSharedKey>
     {
         private readonly ArmOperationHelpers<ConnectionResetSharedKey> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionsResetSharedKeyOperation for mocking. </summary>
+        protected VirtualNetworkGatewayConnectionsResetSharedKeyOperation()
+        {
+        }
+
         internal VirtualNetworkGatewayConnectionsResetSharedKeyOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ConnectionResetSharedKey>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewayConnectionsResetSharedKeyOperation");

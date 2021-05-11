@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes details. </summary>
     internal partial class ManifestAttributesManifestReferences
     {
         /// <summary> Initializes a new instance of ManifestAttributesManifestReferences. </summary>
-        internal ManifestAttributesManifestReferences()
+        /// <param name="digest"> Manifest digest. </param>
+        /// <param name="architecture"> CPU architecture. </param>
+        /// <param name="operatingSystem"> Operating system. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        internal ManifestAttributesManifestReferences(string digest, ArtifactArchitecture architecture, ArtifactOperatingSystem operatingSystem)
         {
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+
+            Digest = digest;
+            Architecture = architecture;
+            OperatingSystem = operatingSystem;
         }
 
         /// <summary> Manifest digest. </summary>
         public string Digest { get; }
         /// <summary> CPU architecture. </summary>
-        public string Architecture { get; }
+        public ArtifactArchitecture Architecture { get; }
         /// <summary> Operating system. </summary>
-        public string Os { get; }
+        public ArtifactOperatingSystem OperatingSystem { get; }
     }
 }

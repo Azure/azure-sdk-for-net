@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
         private ManagedPrivateEndpointsClient CreateClient()
         {
             return InstrumentClient(new ManagedPrivateEndpointsClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ManagedPrivateEndpointsClientOptions())
             ));

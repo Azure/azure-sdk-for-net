@@ -277,8 +277,8 @@ namespace Azure.ResourceManager.Compute.Tests
             VirtualMachine inputVM;
             var returnTwoVM = await CreateVM(m_resourceGroup1Name, asName, storageAccountName, imageRef, hasManagedDisks: true, hasDiffDisks: false, vmSize: "Standard_A0",
                 osDiskStorageAccountType: "Standard_LRS", dataDiskStorageAccountType: "Standard_LRS", writeAcceleratorEnabled: false, zones: null, ppgName: ppgName, diskEncryptionSetId: null);
-            VirtualMachine outVM = returnTwoVM.Item1;
-            inputVM = returnTwoVM.Item2;
+            VirtualMachine outVM = returnTwoVM.Response;
+            inputVM = returnTwoVM.Input;
             // Get and expect success.
             outProximityPlacementGroup = await ProximityPlacementGroupsOperations.GetAsync(m_resourceGroup1Name, ppgName, includeColocationStatus: "true");
             InstanceViewStatus expectedInstanceViewStatus = new InstanceViewStatus
