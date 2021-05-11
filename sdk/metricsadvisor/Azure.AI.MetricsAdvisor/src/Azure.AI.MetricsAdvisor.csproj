@@ -24,5 +24,8 @@
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\Credential\" />
+  </ItemGroup>
 
 </Project>

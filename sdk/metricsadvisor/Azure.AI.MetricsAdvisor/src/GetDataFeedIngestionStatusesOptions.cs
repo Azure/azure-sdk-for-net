@@ -34,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// If set, skips the first set of items returned. This property specifies the count of items to be skipped.
         /// </summary>
-        public int? SkipCount { get; set; }
+        public int? Skip { get; set; }
 
         /// <summary>
         /// If set, specifies the maximum limit of items returned in each page of results. Note:
