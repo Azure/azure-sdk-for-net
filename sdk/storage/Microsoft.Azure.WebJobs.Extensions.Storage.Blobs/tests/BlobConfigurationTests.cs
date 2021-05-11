@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"CustomConnection:serviceUri", account.Endpoint },
+                        {"CustomConnection:serviceUri", account.BlobEndpoint },
                         {"blobPath", "endpointcontainer/endpointblob" }
                     });
                 })
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"CustomConnection:blobServiceUri", account.Endpoint },
+                        {"CustomConnection:blobServiceUri", account.BlobEndpoint },
                         {"blobPath", "endpointcontainer/endpointblob" }
                     });
                 })

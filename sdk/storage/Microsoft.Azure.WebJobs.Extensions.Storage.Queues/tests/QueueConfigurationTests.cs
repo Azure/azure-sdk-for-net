@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"CustomConnection:serviceUri", account.Endpoint },
+                        {"CustomConnection:serviceUri", account.QueueEndpoint },
                         {"queueName", "testqueue" }
                     });
                 })
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"CustomConnection:queueServiceUri", account.Endpoint },
+                        {"CustomConnection:queueServiceUri", account.QueueEndpoint },
                         {"queueName", "testqueue" }
                     });
                 })
