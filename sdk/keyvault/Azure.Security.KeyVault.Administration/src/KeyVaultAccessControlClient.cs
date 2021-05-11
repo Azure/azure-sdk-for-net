@@ -428,7 +428,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 var _name = (roleAssignmentName ?? Guid.NewGuid()).ToString();
-                var properties = new KeyVaultRoleAssignmentProperties(roleDefinitionId, principalId);
+                var properties = new KeyVaultRoleAssignmentPropertiesInternal(roleDefinitionId, principalId);
 
                 return _assignmentsRestClient.Create(VaultUri.AbsoluteUri, roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken);
             }
@@ -461,7 +461,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 var _name = (roleAssignmentName ?? Guid.NewGuid()).ToString();
-                var properties = new KeyVaultRoleAssignmentProperties(roleDefinitionId, principalId);
+                var properties = new KeyVaultRoleAssignmentPropertiesInternal(roleDefinitionId, principalId);
 
                 return await _assignmentsRestClient.CreateAsync(VaultUri.AbsoluteUri, roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken)
                 .ConfigureAwait(false);

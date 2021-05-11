@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.KeyVaultBackupResult BackupResult(System.Uri folderUri, System.DateTimeOffset startTime, System.DateTimeOffset endTime) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRestoreOperation RestoreOperation(Azure.Response response, Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string errorMessage = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRestoreResult RestoreResult(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { throw null; }
-        public static Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment RoleAssignment(string id, string name, string type, Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentPropertiesWithScope properties) { throw null; }
+        public static Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment RoleAssignment(string id, string name, string type, Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties properties) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultPermission> permissions, System.Collections.Generic.IList<Azure.Security.KeyVault.Administration.KeyVaultRoleScope> assignableScopes) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRestoreResult SelectiveKeyRestoreResult(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { throw null; }
     }
@@ -171,12 +171,12 @@ namespace Azure.Security.KeyVault.Administration
         internal KeyVaultRoleAssignment() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentPropertiesWithScope Properties { get { throw null; } }
+        public Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties Properties { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class KeyVaultRoleAssignmentPropertiesWithScope
+    public partial class KeyVaultRoleAssignmentProperties
     {
-        internal KeyVaultRoleAssignmentPropertiesWithScope() { }
+        internal KeyVaultRoleAssignmentProperties() { }
         public string PrincipalId { get { throw null; } }
         public string RoleDefinitionId { get { throw null; } }
         public Azure.Security.KeyVault.Administration.KeyVaultRoleScope? Scope { get { throw null; } }

@@ -11,8 +11,8 @@ Alternatively, it is possible to [generate a SAS token in Storage Explorer](http
 string keyName = "<key name to restore>";
 
 // Start the restore for a specific key that was previously backed up using the backupBlobUri returned from a previous BackupOperation.
-SelectiveKeyRestoreOperation restoreOperation = await Client.StartSelectiveRestoreAsync(keyName, folderUri, sasToken);
+KeyVaultSelectiveRestoreOperation restoreOperation = await Client.StartSelectiveRestoreAsync(keyName, folderUri, sasToken);
 
 // Wait for completion of the RestoreOperation.
-SelectiveKeyRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
+KeyVaultSelectiveRestoreResult restoreResult = await restoreOperation.WaitForCompletionAsync();
 ```

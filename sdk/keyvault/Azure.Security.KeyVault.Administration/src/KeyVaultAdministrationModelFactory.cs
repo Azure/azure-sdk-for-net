@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name"> The role assignment name. </param>
         /// <param name="type"> The role assignment type. </param>
         /// <param name="properties"> Role assignment properties. </param>
-        public static KeyVaultRoleAssignment RoleAssignment(string id, string name, string type, KeyVaultRoleAssignmentPropertiesWithScope properties) =>
+        public static KeyVaultRoleAssignment RoleAssignment(string id, string name, string type, KeyVaultRoleAssignmentProperties properties) =>
             new KeyVaultRoleAssignment(id, name, type, properties);
 
         /// <summary>
