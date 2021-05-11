@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static DataSourceCredentialEntity DeserializeDataSourceCredentialIdentity(JsonElement element)
+        internal static DataSourceCredentialEntity DeserializeDataSourceCredentialEntity(JsonElement element)
         {
             if (element.TryGetProperty("dataSourceCredentialType", out JsonElement discriminator))
             {
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     case "AzureSQLConnectionString": return AzureSQLConnectionStringCredential.DeserializeAzureSQLConnectionStringCredential(element);
                     case "DataLakeGen2SharedKey": return DataLakeGen2SharedKeyCredential.DeserializeDataLakeGen2SharedKeyCredential(element);
-                    case "ServicePrincipal": return ServicePrincipalCredentialEntity.DeserializeServicePrincipalCredentialIdentity(element);
+                    case "ServicePrincipal": return ServicePrincipalCredentialEntity.DeserializeServicePrincipalCredentialEntity(element);
                     case "ServicePrincipalInKV": return ServicePrincipalInKVCredential.DeserializeServicePrincipalInKVCredential(element);
                 }
             }

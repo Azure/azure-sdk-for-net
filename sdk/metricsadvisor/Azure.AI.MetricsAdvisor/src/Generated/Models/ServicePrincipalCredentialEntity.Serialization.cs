@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndObject();
         }
 
-        internal static ServicePrincipalCredentialEntity DeserializeServicePrincipalCredentialIdentity(JsonElement element)
+        internal static ServicePrincipalCredentialEntity DeserializeServicePrincipalCredentialEntity(JsonElement element)
         {
             ServicePrincipalParam parameters = default;
             DataSourceCredentialType dataSourceCredentialType = default;
