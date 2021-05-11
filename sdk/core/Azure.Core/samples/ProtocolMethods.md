@@ -2,13 +2,13 @@
 
 ## Introduction
 
-Azure SDK clients provide an interface to Azure services translating library calls to REST requests. The schematized body in the request or response we will call the message body of the REST API.
+Azure SDK clients provide an interface to Azure services by translating library calls to REST requests. 
 
-There are two different ways this message body can be exposed in the Azure SDK client:
+The schematized body in the request or response, known as the message body, can be exposed in the Azure SDK client one of two ways:
 
-Most Azure SDK Clients expose methods that take ['model types'](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-model-types) as parameters, C# classes which map to the message body of the REST call. Those methods can be called '**standard model methods**',
+Most Azure SDK Clients expose methods that take ['model types'](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-model-types) as parameters, C# classes which map to the message body of the REST call. Those methods can be called here '**standard model methods**',
 
-However, some clients expose methods that mirror the message body directly. Those methods are called '**protocol methods**', as they provide more direct access to the REST protocol used by the client library.
+However, some clients expose methods that mirror the message body directly. Those methods are called here '**protocol methods**', as they provide more direct access to the REST protocol used by the client library.
 
 ### Pet's Example 
 
@@ -40,8 +40,6 @@ An API using model types could be:
 ```
 
 While the protocol methods version would be:
-
-For example:
 
 ```csharp
         // Request: {
