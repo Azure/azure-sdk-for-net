@@ -135,11 +135,11 @@ namespace Azure.Analytics.Synapse.Spark
 
         async ValueTask<OperationState<SparkSession>> IOperation<SparkSession>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            var response = async
+            Response<SparkSession> response = async
                 ? await _client.RestClient.GetSparkSessionAsync(_value.Id, true, cancellationToken).ConfigureAwait(false)
                 : _client.RestClient.GetSparkSession(_value.Id, true, cancellationToken);
 
-            var rawResponse = response.GetRawResponse();
+            Response rawResponse = response.GetRawResponse();
 
             if (IsJobComplete(response.Value.Result.ToString(), response.Value.State))
             {

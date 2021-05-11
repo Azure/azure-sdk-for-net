@@ -313,7 +313,7 @@ namespace Azure.AI.TextAnalytics
 
         async ValueTask<OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>> IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            var response = async
+            Response<HealthcareJobState> response = async
                 ? await _serviceClient.HealthStatusAsync(new Guid(Id), null, null, _showStats, cancellationToken).ConfigureAwait(false)
                 : _serviceClient.HealthStatus(new Guid(Id), null, null, _showStats, cancellationToken);
 
@@ -323,19 +323,19 @@ namespace Azure.AI.TextAnalytics
             _expiresOn = response.Value.ExpirationDateTime;
             _lastModified = response.Value.LastUpdateDateTime;
 
-            var rawResponse = response.GetRawResponse();
+            Response rawResponse = response.GetRawResponse();
 
             if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
             {
-                var nextLink = response.Value.NextLink;
-                var value = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(response.Value.Results, _idToIndexMap);
+                string nextLink = response.Value.NextLink;
+                AnalyzeHealthcareEntitiesResultCollection value = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(response.Value.Results, _idToIndexMap);
                 _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { value }, nextLink, rawResponse);
 
                 return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Success(rawResponse, CreateOperationValueAsync());
             }
             else if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
             {
-                var requestFailedException = await ClientCommon
+                RequestFailedException requestFailedException = await ClientCommon
                     .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
                     .ConfigureAwait(false);
 

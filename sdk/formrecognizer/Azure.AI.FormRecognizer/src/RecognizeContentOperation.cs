@@ -151,12 +151,12 @@ namespace Azure.AI.FormRecognizer.Models
 
         async ValueTask<OperationState<FormPageCollection>> IOperation<FormPageCollection>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            var response = async
+            Response<AnalyzeOperationResult> response = async
                 ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                 : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
 
-            var status = response.Value.Status;
-            var rawResponse = response.GetRawResponse();
+            OperationStatus status = response.Value.Status;
+            Response rawResponse = response.GetRawResponse();
 
             if (status == OperationStatus.Succeeded)
             {
@@ -165,7 +165,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
             else if (status == OperationStatus.Failed)
             {
-                var requestFailedException = await ClientCommon
+                RequestFailedException requestFailedException = await ClientCommon
                     .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.AnalyzeResult.Errors)
                     .ConfigureAwait(false);
 
@@ -182,7 +182,7 @@ namespace Azure.AI.FormRecognizer.Models
             List<FormPage> pages = new List<FormPage>();
             List<ReadResult> rawPages = readResults.ToList();
 
-            for (var pageIndex = 0; pageIndex < pageResults.Count; pageIndex++)
+            for (int pageIndex = 0; pageIndex < pageResults.Count; pageIndex++)
             {
                 pages.Add(new FormPage(pageResults[pageIndex], rawPages, pageIndex));
             }
