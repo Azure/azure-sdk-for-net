@@ -118,7 +118,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'ZRS'</param>
         /// <param name="zoneRedundant">Whether or not the multi-az is
         /// enabled.</param>
-        public ManagedInstance(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity), Sku sku = default(Sku), string provisioningState = default(string), string managedInstanceCreateMode = default(string), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string proxyOverride = default(string), string timezoneId = default(string), string instancePoolId = default(string), string maintenanceConfigurationId = default(string), IList<ManagedInstancePecProperty> privateEndpointConnections = default(IList<ManagedInstancePecProperty>), string minimalTlsVersion = default(string), string storageAccountType = default(string), bool? zoneRedundant = default(bool?))
+        /// <param name="primaryUserAssignedIdentityId">The resource id of a
+        /// user assigned identity to be used by default.</param>
+        /// <param name="keyId">A CMK URI of the key to use for
+        /// encryption.</param>
+        /// <param name="administrators">The Azure Active Directory
+        /// administrator of the server.</param>
+        public ManagedInstance(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentityWithUserAssignedIdentities identity = default(ResourceIdentityWithUserAssignedIdentities), Sku sku = default(Sku), string provisioningState = default(string), string managedInstanceCreateMode = default(string), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string sourceManagedInstanceId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), string proxyOverride = default(string), string timezoneId = default(string), string instancePoolId = default(string), string maintenanceConfigurationId = default(string), IList<ManagedInstancePecProperty> privateEndpointConnections = default(IList<ManagedInstancePecProperty>), string minimalTlsVersion = default(string), string storageAccountType = default(string), bool? zoneRedundant = default(bool?), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ManagedInstanceExternalAdministrator administrators = default(ManagedInstanceExternalAdministrator))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -147,6 +153,9 @@ namespace Microsoft.Azure.Management.Sql.Models
             MinimalTlsVersion = minimalTlsVersion;
             StorageAccountType = storageAccountType;
             ZoneRedundant = zoneRedundant;
+            PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
+            KeyId = keyId;
+            Administrators = administrators;
             CustomInit();
         }
 
@@ -160,7 +169,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// instance.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
-        public ResourceIdentity Identity { get; set; }
+        public ResourceIdentityWithUserAssignedIdentities Identity { get; set; }
 
         /// <summary>
         /// Gets or sets managed instance SKU. Allowed values for sku.name:
@@ -349,6 +358,26 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.zoneRedundant")]
         public bool? ZoneRedundant { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource id of a user assigned identity to be used
+        /// by default.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.primaryUserAssignedIdentityId")]
+        public string PrimaryUserAssignedIdentityId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a CMK URI of the key to use for encryption.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyId")]
+        public string KeyId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Azure Active Directory administrator of the
+        /// server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.administrators")]
+        public ManagedInstanceExternalAdministrator Administrators { get; set; }
 
         /// <summary>
         /// Validate the object.
