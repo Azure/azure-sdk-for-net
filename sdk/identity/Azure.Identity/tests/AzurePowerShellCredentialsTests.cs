@@ -86,14 +86,6 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        [RunOnlyOnPlatforms(Linux = true, OSX = true)]
-        public void AuthenticateWithAzurePowerShellCredential_UseLegacyPowerShellNotWindows()
-        {
-            var ex = Assert.Throws<ArgumentException>(() => new AzurePowerShellCredentialOptions());
-            Assert.AreEqual(Validations.NoWindowsPowerShellLegacyErrorMessage, ex.Message);
-        }
-
-        [Test]
         public void AuthenticateWithAzurePowerShellCredential_RunConnectAzAccount(
             [Values("Run Connect-AzAccount to login")]
             string errorMessage)
