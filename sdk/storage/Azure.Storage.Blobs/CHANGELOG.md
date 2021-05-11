@@ -1,11 +1,12 @@
 # Release History
 
-## 12.9.0-beta.4 (Unreleased)
+## 12.9.0-beta.4 (2021-05-12)
 - Added support for service version 2020-08-04.
 - Added WithCustomerProvidedKey() and WithEncryptionScope() to BlobClient, BlobBaseClient, AppendBlobClient, and PageBlobClient.
 - BlobLeaseClient now remembers the Lease ID after a lease change.
 - Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a BlobSasBuilder parameter.
 - Fixed bug where BlobBaseClient.Exists() would not function correctly on blobs encrypted with CPK.
+- Includes all updates and fixes from 12.8.2 and 12.8.3
 
 ## 12.8.3 (2020-04-27)
 - Fixed bug where Stream returned by BlockBlobClient.OpenWrite could corrupt blocks if flushed between writes.
