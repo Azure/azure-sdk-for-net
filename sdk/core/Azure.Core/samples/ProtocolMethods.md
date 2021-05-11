@@ -2,19 +2,19 @@
 
 ## Introduction
 
-Azure SDK clients provide an interface to Azure services translating library calls to REST requests. When there's a schematized body in the request or response we call this a 'model' in the REST API.
+Azure SDK clients provide an interface to Azure services translating library calls to REST requests. The schematized body in the request or response we will call the message body of the REST API.
 
-There are two different ways this rest 'model' can be exposed in the Azure SDK client:
+There are two different ways this message body can be exposed in the Azure SDK client:
 
-Most Azure SDK Clients expose methods that take ['model types'](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-model-types) as parameters, C# classes which map to the request or response body of the REST call. Those methods can be called '**standard model methods**',
+Most Azure SDK Clients expose methods that take ['model types'](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-model-types) as parameters, C# classes which map to the message body of the REST call. Those methods can be called '**standard model methods**',
 
-However, some clients expose methods that mirror the REST API directly. Those methods are called '**protocol methods**', as they provide more direct access to the REST protocol used by the client library.
+However, some clients expose methods that mirror the message body directly. Those methods are called '**protocol methods**', as they provide more direct access to the REST protocol used by the client library.
 
 ### Pet's Example 
 
 To compare the two approaches, imagine a service that stores information about pets, with a GetDog and SetDog pair of operations. 
 
-Pets are represented in the request as a JSON object:
+Pets are represented in the message body as a JSON object:
 
 ```json
 {
@@ -62,11 +62,11 @@ For example:
         Response SetDog(RequestContent requestBody, RequestOptions options = default);
 ```
 
-This document will be a quickstart in using SDK Clients that expose 'protocol methods'.
+This document will be a general quickstart in using SDK Clients that expose 'protocol methods'.
 
 ## Usage
 
-The basic structure of calls with clients remain the same if they use protocol methods or methods with models:
+The basic structure of calls with clients remain the same if they use protocol methods or standard model methods:
 
 1. [Initialize your client](#1-initialize-your-client "Initialize Your Client")
 2. [Create a request](#2-create-a-request "Create a Request")
@@ -75,7 +75,7 @@ The basic structure of calls with clients remain the same if they use protocol m
 
 ## 1. Initialize Your Client
 
-The first step in interacting with a service is to create a client instance. 
+The first step in interacting with a service via protocol methods is to create a client instance. 
 
 ```csharp
 using Azure.Pets;
@@ -83,13 +83,13 @@ using Azure.Core;
 using Azure.Identity;
 
 const string endpoint = "http://localhost:3000";
-var credential = new AzureKeyCredential(/*..*/);
+var credential = new AzureKeyCredential(/*SERVICE-API-KEY*/);
 var client = new PetsClient(endpoint, credential);
 ```
 
 ## 2. Create and Send a Request
 
-Protocol methods need a JSON object of the shape required by the service in question.
+Protocol methods need a JSON object of the shape required by the schema of the service.
 
 See the specific service documentation for details, but as an example:
 
@@ -111,7 +111,7 @@ See the specific service documentation for details, but as an example:
 
 ## 3. Handle the Response
 
-Protocol methods all return a `Response` object which contains information returned from the service request. 
+Protocol methods all return a `Response` object that contains information returned from the service request. 
 
 The most important field on Response contains the REST content returned from the service:
 
@@ -125,11 +125,14 @@ The most important field on Response contains the REST content returned from the
         string name = doc.RootElement.GetProperty("name").GetString();
 ```
 
-Protocol methods, just like other methods that use models, throw a C# exception when an error code is returned. This default behavior can be changed using RequestOptions discussed below.
+Protocol methods, just like other methods that use models, throw a C# RequestFailedException when an error code is returned. This default behavior can be changed using RequestOptions discussed below.
 
 ## Using `RequestOptions` to customize behavior
 
-`RequestOptions` has some advanced features which allow users to customize its behavior.
+`RequestOptions` has some advanced features which allow users to customize behavior:
+
+- [Exception Behavior](#exception-behavior "Exception Behavior")
+- [Request Callback](#request-callback "Request Callback")
 
 ### Exception Behavior
 
