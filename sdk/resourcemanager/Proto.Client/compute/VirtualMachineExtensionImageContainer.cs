@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
@@ -14,20 +12,23 @@ namespace Proto.Compute
     /// <summary>
     /// A class representing collection of VirtualMachine and their operations over a ResourceGroup.
     /// </summary>
-    public class VirtualMachineExtensionImageContainer : BasicContainerBase
+    public class VirtualMachineExtensionImageContainer : ContainerBase<SubscriptionResourceIdentifier>
     {
+        private string _subsriptionId;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineContainer"/> class.
         /// </summary>
-        /// <param name="resourceGroup"> The ResourceGroup that is the parent of the VirtualMachines. </param>
-        internal VirtualMachineExtensionImageContainer(SubscriptionOperations resourceGroup)
-            : base(resourceGroup)
+        /// <param name="subscription"> The subscription that is the parent of the VirtualMachinesExtensionImage. </param>
+        internal VirtualMachineExtensionImageContainer(SubscriptionOperations subscription)
+            : base(subscription)
         {
+            _subsriptionId = subscription.Id.SubscriptionId;
         }
 
-        private Azure.ResourceManager.Compute.VirtualMachineExtensionImagesOperations Operations => new ComputeManagementClient(
+        private VirtualMachineExtensionImagesOperations Operations => new ComputeManagementClient(
             BaseUri,
-            GetParentResource<Subscription, SubscriptionResourceIdentifier, SubscriptionOperations>().Id.SubscriptionId,
+            _subsriptionId,
             Credential,
             ClientOptions.Convert<ComputeManagementClientOptions>()).VirtualMachineExtensionImages;
 
@@ -44,7 +45,7 @@ namespace Proto.Compute
             CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualMachineExtensionImage,
-                Azure.ResourceManager.Compute.Models.VirtualMachineExtensionImage>(
+                VirtualMachineExtensionImage>(
                 Operations.Get(location, publisher, type, version, cancellationToken),
                 v => v);
         }

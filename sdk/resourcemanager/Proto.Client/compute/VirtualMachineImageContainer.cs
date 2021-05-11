@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
@@ -14,9 +12,9 @@ namespace Proto.Compute
     /// <summary>
     /// A class representing collection of VirtualMachine and their operations over a ResourceGroup.
     /// </summary>
-    public class VirtualMachineImageContainer : BasicContainerBase
+    public class VirtualMachineImageContainer : ContainerBase<SubscriptionResourceIdentifier>
     {
-        private string _subsriptionId;
+        private string _subscriptionId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineContainer"/> class.
@@ -25,12 +23,12 @@ namespace Proto.Compute
         internal VirtualMachineImageContainer(SubscriptionOperations parent)
             : base(parent)
         {
-            _subsriptionId = parent.Id.SubscriptionId;
+            _subscriptionId = parent.Id.SubscriptionId;
         }
 
-        private Azure.ResourceManager.Compute.VirtualMachineImagesOperations Operations => new ComputeManagementClient(
+        private VirtualMachineImagesOperations Operations => new ComputeManagementClient(
             BaseUri,
-            _subsriptionId,
+            _subscriptionId,
             Credential,
             ClientOptions.Convert<ComputeManagementClientOptions>()).VirtualMachineImages;
 
@@ -44,15 +42,8 @@ namespace Proto.Compute
             string version,
             CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachineImage, Azure.ResourceManager.Compute.Models.VirtualMachineImage>(
+            return new PhArmResponse<VirtualMachineImage, VirtualMachineImage>(
                 Operations.Get(location, publisher, offer, sku, version, cancellationToken), v => v);
-        }
-
-        public IEnumerable<VirtualMachineImageResource> ListPublishers(
-            string location,
-            CancellationToken cancellationToken = default)
-        {
-            return Operations.ListPublishers(location, cancellationToken).Value;
         }
 
         public IEnumerable<VirtualMachineImageResource> ListOffers(
@@ -61,6 +52,13 @@ namespace Proto.Compute
             CancellationToken cancellationToken = default)
         {
             return Operations.ListOffers(location, publisher, cancellationToken).Value;
+        }
+
+        public IEnumerable<VirtualMachineImageResource> ListPublishers(
+            string location,
+            CancellationToken cancellationToken = default)
+        {
+            return Operations.ListPublishers(location, cancellationToken).Value;
         }
 
         public IEnumerable<VirtualMachineImageResource> ListSkus(
