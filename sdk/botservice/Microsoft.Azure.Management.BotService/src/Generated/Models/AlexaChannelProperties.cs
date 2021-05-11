@@ -15,31 +15,33 @@ namespace Microsoft.Azure.Management.BotService.Models
     using System.Linq;
 
     /// <summary>
-    /// The parameters to provide for the Email channel.
+    /// The parameters to provide for the Alexa channel.
     /// </summary>
-    public partial class EmailChannelProperties
+    public partial class AlexaChannelProperties
     {
         /// <summary>
-        /// Initializes a new instance of the EmailChannelProperties class.
+        /// Initializes a new instance of the AlexaChannelProperties class.
         /// </summary>
-        public EmailChannelProperties()
+        public AlexaChannelProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EmailChannelProperties class.
+        /// Initializes a new instance of the AlexaChannelProperties class.
         /// </summary>
-        /// <param name="emailAddress">The email address</param>
+        /// <param name="alexaSkillId">The Alexa skill Id</param>
         /// <param name="isEnabled">Whether this channel is enabled for the
         /// bot</param>
-        /// <param name="password">The password for the email address. Value
-        /// only returned through POST to the action Channel List API,
-        /// otherwise empty.</param>
-        public EmailChannelProperties(string emailAddress, bool isEnabled, string password = default(string))
+        /// <param name="urlFragment">Url fragment used in part of the Uri
+        /// configured in Alexa</param>
+        /// <param name="serviceEndpointUri">Full Uri used to configured the
+        /// skill in Alexa</param>
+        public AlexaChannelProperties(string alexaSkillId, bool isEnabled, string urlFragment = default(string), string serviceEndpointUri = default(string))
         {
-            EmailAddress = emailAddress;
-            Password = password;
+            AlexaSkillId = alexaSkillId;
+            UrlFragment = urlFragment;
+            ServiceEndpointUri = serviceEndpointUri;
             IsEnabled = isEnabled;
             CustomInit();
         }
@@ -50,18 +52,22 @@ namespace Microsoft.Azure.Management.BotService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the email address
+        /// Gets or sets the Alexa skill Id
         /// </summary>
-        [JsonProperty(PropertyName = "emailAddress")]
-        public string EmailAddress { get; set; }
+        [JsonProperty(PropertyName = "alexaSkillId")]
+        public string AlexaSkillId { get; set; }
 
         /// <summary>
-        /// Gets or sets the password for the email address. Value only
-        /// returned through POST to the action Channel List API, otherwise
-        /// empty.
+        /// Gets url fragment used in part of the Uri configured in Alexa
         /// </summary>
-        [JsonProperty(PropertyName = "password")]
-        public string Password { get; set; }
+        [JsonProperty(PropertyName = "urlFragment")]
+        public string UrlFragment { get; private set; }
+
+        /// <summary>
+        /// Gets full Uri used to configured the skill in Alexa
+        /// </summary>
+        [JsonProperty(PropertyName = "serviceEndpointUri")]
+        public string ServiceEndpointUri { get; private set; }
 
         /// <summary>
         /// Gets or sets whether this channel is enabled for the bot
@@ -77,9 +83,9 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (EmailAddress == null)
+            if (AlexaSkillId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "EmailAddress");
+                throw new ValidationException(ValidationRules.CannotBeNull, "AlexaSkillId");
             }
         }
     }

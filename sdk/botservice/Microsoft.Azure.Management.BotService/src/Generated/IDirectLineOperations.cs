@@ -19,13 +19,28 @@ namespace Microsoft.Azure.Management.BotService
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Operations operations.
+    /// DirectLineOperations operations.
     /// </summary>
-    public partial interface IOperations
+    public partial interface IDirectLineOperations
     {
         /// <summary>
-        /// Lists all the available BotService operations.
+        /// Regenerates secret keys and returns them for the DirectLine Channel
+        /// of a particular BotService resource
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Bot resource group in the user subscription.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the Bot resource.
+        /// </param>
+        /// <param name='channelName'>
+        /// The name of the Channel resource for which keys are to be
+        /// regenerated. Possible values include: 'WebChatChannel',
+        /// 'DirectLineChannel'
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters to provide for the created bot.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -41,28 +56,6 @@ namespace Microsoft.Azure.Management.BotService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<OperationEntity>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all the available BotService operations.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<OperationEntity>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BotChannel>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string resourceName, RegenerateKeysChannelName channelName, SiteInfo parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

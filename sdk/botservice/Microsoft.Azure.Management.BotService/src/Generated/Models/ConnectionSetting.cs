@@ -16,20 +16,20 @@ namespace Microsoft.Azure.Management.BotService.Models
     using System.Linq;
 
     /// <summary>
-    /// Bot resource definition
+    /// Bot channel resource definition
     /// </summary>
-    public partial class Bot : Resource
+    public partial class ConnectionSetting : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Bot class.
+        /// Initializes a new instance of the ConnectionSetting class.
         /// </summary>
-        public Bot()
+        public ConnectionSetting()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Bot class.
+        /// Initializes a new instance of the ConnectionSetting class.
         /// </summary>
         /// <param name="id">Specifies the resource ID.</param>
         /// <param name="name">Specifies the name of the resource.</param>
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// 'azurebot'</param>
         /// <param name="etag">Entity Tag</param>
         /// <param name="properties">The set of properties specific to bot
-        /// resource</param>
-        public Bot(string id = default(string), string name = default(string), string location = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string), BotProperties properties = default(BotProperties))
+        /// channel resource</param>
+        public ConnectionSetting(string id = default(string), string name = default(string), string location = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string), ConnectionSettingProperties properties = default(ConnectionSettingProperties))
             : base(id, name, location, type, tags, sku, kind, etag)
         {
             Properties = properties;
@@ -58,10 +58,10 @@ namespace Microsoft.Azure.Management.BotService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the set of properties specific to bot resource
+        /// Gets or sets the set of properties specific to bot channel resource
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public BotProperties Properties { get; set; }
+        public ConnectionSettingProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -72,10 +72,6 @@ namespace Microsoft.Azure.Management.BotService.Models
         public override void Validate()
         {
             base.Validate();
-            if (Properties != null)
-            {
-                Properties.Validate();
-            }
         }
     }
 }

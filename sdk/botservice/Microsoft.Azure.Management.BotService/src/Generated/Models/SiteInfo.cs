@@ -15,29 +15,29 @@ namespace Microsoft.Azure.Management.BotService.Models
     using System.Linq;
 
     /// <summary>
-    /// A Facebook page for Facebook channel registration
+    /// Site information for WebChat or DirectLine Channels to identify which
+    /// site to regenerate keys for.
     /// </summary>
-    public partial class FacebookPage
+    public partial class SiteInfo
     {
         /// <summary>
-        /// Initializes a new instance of the FacebookPage class.
+        /// Initializes a new instance of the SiteInfo class.
         /// </summary>
-        public FacebookPage()
+        public SiteInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FacebookPage class.
+        /// Initializes a new instance of the SiteInfo class.
         /// </summary>
-        /// <param name="id">Page id</param>
-        /// <param name="accessToken">Facebook application access token. Value
-        /// only returned through POST to the action Channel List API,
-        /// otherwise empty.</param>
-        public FacebookPage(string id, string accessToken = default(string))
+        /// <param name="siteName">The site name</param>
+        /// <param name="key">Determines which key is to be regenerated.
+        /// Possible values include: 'key1', 'key2'</param>
+        public SiteInfo(string siteName, Key key)
         {
-            Id = id;
-            AccessToken = accessToken;
+            SiteName = siteName;
+            Key = key;
             CustomInit();
         }
 
@@ -47,17 +47,17 @@ namespace Microsoft.Azure.Management.BotService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets page id
+        /// Gets or sets the site name
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "siteName")]
+        public string SiteName { get; set; }
 
         /// <summary>
-        /// Gets or sets facebook application access token. Value only returned
-        /// through POST to the action Channel List API, otherwise empty.
+        /// Gets or sets determines which key is to be regenerated. Possible
+        /// values include: 'key1', 'key2'
         /// </summary>
-        [JsonProperty(PropertyName = "accessToken")]
-        public string AccessToken { get; set; }
+        [JsonProperty(PropertyName = "key")]
+        public Key Key { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -67,9 +67,9 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Id == null)
+            if (SiteName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+                throw new ValidationException(ValidationRules.CannotBeNull, "SiteName");
             }
         }
     }

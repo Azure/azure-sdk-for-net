@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.BotService.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -30,14 +29,14 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// <summary>
         /// Initializes a new instance of the TelegramChannelProperties class.
         /// </summary>
+        /// <param name="isEnabled">Whether this channel is enabled for the
+        /// bot</param>
         /// <param name="accessToken">The Telegram access token. Value only
         /// returned through POST to the action Channel List API, otherwise
         /// empty.</param>
-        /// <param name="isEnabled">Whether this channel is enabled for the
-        /// bot</param>
         /// <param name="isValidated">Whether this channel is validated for the
         /// bot</param>
-        public TelegramChannelProperties(string accessToken, bool isEnabled, bool? isValidated = default(bool?))
+        public TelegramChannelProperties(bool isEnabled, string accessToken = default(string), bool? isValidated = default(bool?))
         {
             AccessToken = accessToken;
             IsValidated = isValidated;
@@ -72,15 +71,12 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (AccessToken == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AccessToken");
-            }
+            //Nothing to validate
         }
     }
 }
