@@ -261,12 +261,9 @@ namespace Azure.Core.Tests
                 using (HttpMessage message = httpPipeline.CreateMessage())
                 {
                     message.Request.Uri.Reset(testServer.Address);
-                    message.BufferResponse = false;
+                    message.BufferResponse = true;
 
                     await ExecuteRequest(message, httpPipeline);
-
-                    Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
-                    Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
 
                     response = message.Response;
                 }
