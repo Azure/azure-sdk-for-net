@@ -691,19 +691,5 @@ namespace Azure.Storage.Test.Shared
                 Assert.AreEqual(_expectedBlobQueryError.Position, blobQueryError.Position);
             }
         }
-
-        public async Task<string> GetAuthToken()
-        {
-            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(TestConfigOAuth.ActiveDirectoryApplicationId)
-                .WithAuthority(AzureCloudInstance.AzurePublic, TestConfigOAuth.ActiveDirectoryTenantId)
-                .WithClientSecret(TestConfigOAuth.ActiveDirectoryApplicationSecret)
-                .Build();
-
-            string[] scopes = new string[] { "https://storage.azure.com/.default" };
-
-            AcquireTokenForClientParameterBuilder result = application.AcquireTokenForClient(scopes);
-            AuthenticationResult authenticationResult = await result.ExecuteAsync();
-            return authenticationResult.AccessToken;
-        }
     }
 }

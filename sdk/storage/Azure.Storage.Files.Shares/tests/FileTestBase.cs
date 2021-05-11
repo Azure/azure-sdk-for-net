@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -27,7 +28,7 @@ namespace Azure.Storage.Files.Shares.Tests
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
         RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
-        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
+        LiveServiceVersions = new object[] { StorageVersionExtensions.MaxVersion, StorageVersionExtensions.LatestVersion })]
     public class FileTestBase : StorageTestBase<StorageTestEnvironment>
     {
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
@@ -35,7 +36,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public static Uri s_invalidUri = new Uri("https://error.file.core.windows.net");
 
         public FileTestBase(bool async, ShareClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, RecordedTestMode.Live)
         {
             _serviceVersion = serviceVersion;
         }
@@ -111,6 +112,15 @@ namespace Azure.Storage.Files.Shares.Tests
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
                         TestConfigDefault.AccountKey),
+                    GetOptions()));
+
+        public ShareServiceClient GetServiceClient_OAuth()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigOAuth.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigOAuth.AccountName,
+                        TestConfigOAuth.AccountKey),
                     GetOptions()));
 
         public ShareServiceClient GetServiceClient_Premium()
