@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Core
         where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
         where TResource : class
     {
-        private static readonly object _parentLock = new object();
+        private readonly object _parentLock = new object();
         private object _parentResource;
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Whether or not the resource existed. </returns>
         public virtual TOperations TryGet(string resourceName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ContainerBase`2.TryGet");
+            using var scope = Diagnostics.CreateScope("ResourceContainerBase`3.TryGet");
             scope.Start();
 
             var op = GetOperation(resourceName);
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public async virtual Task<TOperations> TryGetAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<TOperations> TryGetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ContainerBase`2.TryGet");
+            using var scope = Diagnostics.CreateScope("ResourceContainerBase`3.TryGet");
             scope.Start();
 
             var op = GetOperation(resourceName);
