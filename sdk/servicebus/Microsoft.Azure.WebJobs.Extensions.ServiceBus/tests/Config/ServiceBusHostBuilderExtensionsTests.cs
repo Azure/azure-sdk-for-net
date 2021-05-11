@@ -66,6 +66,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.AreEqual(123, options.SingleMessageOptions.MaxConcurrentCalls);
             Assert.False(options.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), options.SingleMessageOptions.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(TimeSpan.FromSeconds(30), options.SingleMessageOptions.SessionIdleTimeout);
+            Assert.AreEqual(TimeSpan.FromSeconds(45), options.BatchMessageOptions.MaxReceiveWaitTime);
+            Assert.AreEqual(10, options.BatchMessageOptions.MaxMessages);
             Assert.AreEqual(ServiceBusTransportType.AmqpWebSockets, options.TransportType);
             Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)options.WebProxy).Address.AbsoluteUri);
             Assert.AreEqual(10, options.ClientRetryOptions.MaxRetries);
@@ -92,6 +95,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.AreEqual(123, result.SingleMessageOptions.MaxConcurrentCalls);
             Assert.False(result.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), result.SingleMessageOptions.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(TimeSpan.FromSeconds(30), result.SingleMessageOptions.SessionIdleTimeout);
+            Assert.AreEqual(TimeSpan.FromSeconds(45), result.BatchMessageOptions.MaxReceiveWaitTime);
+            Assert.AreEqual(10, result.BatchMessageOptions.MaxMessages);
             Assert.AreEqual("http://proxyserver:8080/", ((WebProxy)result.WebProxy).Address.AbsoluteUri);
             Assert.AreEqual(10, result.ClientRetryOptions.MaxRetries);
         }
@@ -102,10 +108,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             {
                 { $"{ExtensionPath}:PrefetchCount", "123" },
                 { $"ConnectionStrings:ServiceBus", "TestConnectionString" },
-                { $"{ExtensionPath}:MaxConcurrentCalls", "123" },
+                { $"{ExtensionPath}:SingleMessageOptions:MaxConcurrentCalls", "123" },
                 { $"{ExtensionPath}:AutoCompleteMessages", "false" },
-                { $"{ExtensionPath}:MaxAutoLockRenewalDuration", "00:00:15" },
-                { $"{ExtensionPath}:MaxConcurrentSessions", "123" },
+                { $"{ExtensionPath}:SingleMessageOptions:MaxAutoLockRenewalDuration", "00:00:15" },
+                { $"{ExtensionPath}:SingleMessageOptions:MaxConcurrentSessions", "123" },
+                { $"{ExtensionPath}:SingleMessageOptions:SessionIdleTimeout", "00:00:30" },
+                { $"{ExtensionPath}:BatchMessageOptions:MaxMessages", "10" },
+                { $"{ExtensionPath}:BatchMessageOptions:MaxReceiveWaitTime", "00:00:45" },
                 { $"{ExtensionPath}:TransportType", "AmqpWebSockets" },
                 { $"{ExtensionPath}:WebProxy", "http://proxyserver:8080/" },
                 { $"{ExtensionPath}:ClientRetryOptions:MaxRetries", "10" },
