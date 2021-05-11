@@ -207,6 +207,35 @@ foreach (var row in table.Rows)
 }
 ```
 
+### Querying metrics
+
+
+You can query logs using the `MetricsClient.QueryAsync`.
+
+```C# Snippet:QueryMetrics
+var metricsClient = new MetricsClient(new DefaultAzureCredential());
+Response<MetricQueryResult> results = await metricsClient.QueryAsync(
+    "/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.OperationalInsights/workspaces/[workspace_name]",
+    new[] {"Microsoft.OperationalInsights/workspaces"}
+);
+
+foreach (var metric in results.Value.Metrics)
+{
+    Console.WriteLine(metric.Name);
+    foreach (var element in metric.Timeseries)
+    {
+        Console.WriteLine("Dimensions: " + string.Join(",", element.Metadata));
+
+        foreach (var metricValue in element.Data)
+        {
+            Console.WriteLine(metricValue);
+        }
+    }
+}
+```
+
+
+
 ## Troubleshooting
 
 ### General
