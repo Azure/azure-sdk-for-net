@@ -176,12 +176,18 @@ namespace ApiManagement.Tests.ManagementApiTests
                         Secret = true
                     };
 
+                    // get the property etag
+                    var secretpropertyTag = await testBase.client.NamedValue.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        secretPropertyId);
+
                     testBase.client.NamedValue.Update(
                         testBase.rgName,
                         testBase.serviceName,
                         secretPropertyId,
                         updatekvProperty,
-                        "*");
+                        secretpropertyTag.ETag);
 
                     // check it is patched
                     var patchkvResponse = await testBase.client.NamedValue.GetAsync(

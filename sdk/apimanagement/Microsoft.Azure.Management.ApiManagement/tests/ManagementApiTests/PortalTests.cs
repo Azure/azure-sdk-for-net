@@ -38,7 +38,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         [Trait("owner", "jikang")]
         public async Task CreateListUpdatePortalRevision()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);

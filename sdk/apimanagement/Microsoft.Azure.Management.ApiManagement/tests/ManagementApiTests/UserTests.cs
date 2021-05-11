@@ -311,7 +311,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         [Trait("owner", "jikang")]
         public void SubscriptionsList()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
