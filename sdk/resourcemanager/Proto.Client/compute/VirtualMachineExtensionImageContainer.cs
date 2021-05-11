@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Core;
 
 namespace Proto.Compute
@@ -13,8 +14,7 @@ namespace Proto.Compute
     /// <summary>
     /// A class representing collection of VirtualMachine and their operations over a ResourceGroup.
     /// </summary>
-    public class VirtualMachineExtensionImageContainer 
-        : CustomKeyResourceContainerBase<SubscriptionResourceIdentifier, VirtualMachineExtensionImage, VirtualMachineExtensionImageData>
+    public class VirtualMachineExtensionImageContainer : BasicContainerBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineContainer"/> class.
@@ -43,9 +43,10 @@ namespace Proto.Compute
             string version,
             CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualMachineExtensionImage, Azure.ResourceManager.Compute.Models.VirtualMachineExtensionImage>(
+            return new PhArmResponse<VirtualMachineExtensionImage,
+                Azure.ResourceManager.Compute.Models.VirtualMachineExtensionImage>(
                 Operations.Get(location, publisher, type, version, cancellationToken),
-                v => new VirtualMachineExtensionImage(Parent, new VirtualMachineExtensionImageData(v)));
+                v => v);
         }
 
         public IEnumerable<VirtualMachineExtensionImage> ListTypes(
@@ -55,7 +56,7 @@ namespace Proto.Compute
         {
             return Operations
                 .ListTypes(location, publisher, cancellationToken)
-                .Value.Select(s => new VirtualMachineExtensionImage(Parent, new VirtualMachineExtensionImageData(s)));
+                .Value;
         }
 
         public IEnumerable<VirtualMachineExtensionImage> ListVersions(
@@ -69,7 +70,7 @@ namespace Proto.Compute
         {
             return Operations
                 .ListVersions(location, publisher, type, filter: filter, top: top, orderby: orderby, cancellationToken: cancellationToken)
-                .Value.Select(s => new VirtualMachineExtensionImage(Parent, new VirtualMachineExtensionImageData(s)));
+                .Value;
         }
     }
 }

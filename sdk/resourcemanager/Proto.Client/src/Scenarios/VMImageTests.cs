@@ -50,11 +50,11 @@ namespace Proto.Client
 
             foreach (var t in subscription.GetVmExtensionImages().ListTypes(defaultLocation, defaultPublisher))
             {
-                Console.WriteLine(t.Data.Name);
+                Console.WriteLine(t.Name);
 
-                foreach (var v in subscription.GetVmExtensionImages().ListVersions(defaultLocation, defaultPublisher, t.Data.Name))
+                foreach (var v in subscription.GetVmExtensionImages().ListVersions(defaultLocation, defaultPublisher, t.Name))
                 {
-                    Console.WriteLine(v.Data.Name);
+                    Console.WriteLine(v.Name);
                 }
             }
         }
