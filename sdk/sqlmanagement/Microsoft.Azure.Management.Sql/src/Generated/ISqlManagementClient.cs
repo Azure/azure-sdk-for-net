@@ -543,9 +543,9 @@ namespace Microsoft.Azure.Management.Sql
         IServerAutomaticTuningOperations ServerAutomaticTuning { get; }
 
         /// <summary>
-        /// Gets the IServerAzureADOnlyAuthenticationsOperations.
+        /// Gets the IServerAzureADAdministratorsOperations.
         /// </summary>
-        IServerAzureADOnlyAuthenticationsOperations ServerAzureADOnlyAuthentications { get; }
+        IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
 
         /// <summary>
         /// Gets the IServerAzureADOnlyAuthenticationsOperations.
@@ -610,12 +610,12 @@ namespace Microsoft.Azure.Management.Sql
         /// <summary>
         /// Gets the ISyncGroupsOperations.
         /// </summary>
-        IServerDevOpsAuditSettingsOperations ServerDevOpsAuditSettings { get; }
+        ISyncGroupsOperations SyncGroups { get; }
 
         /// <summary>
-        /// Gets the IServerDnsAliasesOperations.
+        /// Gets the ISyncMembersOperations.
         /// </summary>
-        IServerDnsAliasesOperations ServerDnsAliases { get; }
+        ISyncMembersOperations SyncMembers { get; }
 
         /// <summary>
         /// Gets the ITdeCertificatesOperations.
