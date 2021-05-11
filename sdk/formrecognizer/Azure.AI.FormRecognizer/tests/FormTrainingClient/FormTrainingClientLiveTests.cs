@@ -541,7 +541,24 @@ namespace Azure.AI.FormRecognizer.Tests
             var sourceClient = CreateFormTrainingClient();
             var targetClient = CreateFormTrainingClient();
             var resourceId = TestEnvironment.TargetResourceId;
-            var wrongRegion = TestEnvironment.TargetResourceRegion == "westcentralus" ? "eastus2" : "westcentralus";
+            var regionA = "regionA";
+            var regionB = "regionB";
+            switch (TestEnvironment.AuthorityHostUrl)
+            {
+                case "https://login.microsoftonline.com/":
+                    regionA = "westcentralus";
+                    regionB = "eastus2";
+                    break;
+                case "https://login.microsoftonline.us/":
+                    regionA = "usgovarizona";
+                    regionB = "usgovvirginia";
+                    break;
+                case "https://login.chinacloudapi.cn/":
+                    regionA = "chinaeast2";
+                    regionB = "chinanorth";
+                    break;
+            }
+            var wrongRegion = TestEnvironment.TargetResourceRegion == regionA ? regionB : regionA;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(resourceId, wrongRegion);
