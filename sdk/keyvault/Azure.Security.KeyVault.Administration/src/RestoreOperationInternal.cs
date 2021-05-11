@@ -155,9 +155,9 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     result = new KeyVaultRestoreResult(StartTime.Value, EndTime.Value) as TResult;
                 }
-                else if (resultType == typeof(KeyVaultSelectiveRestoreResult))
+                else if (resultType == typeof(KeyVaultSelectiveKeyRestoreResult))
                 {
-                    result = new KeyVaultSelectiveRestoreResult(StartTime.Value, EndTime.Value) as TResult;
+                    result = new KeyVaultSelectiveKeyRestoreResult(StartTime.Value, EndTime.Value) as TResult;
                 }
                 return result;
             }

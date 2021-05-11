@@ -65,8 +65,8 @@ namespace Azure.Security.KeyVault.Administration
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultBackupOperation> StartBackupAsync(System.Uri blobStorageUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Administration.KeyVaultRestoreOperation StartRestore(System.Uri folderUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultRestoreOperation> StartRestoreAsync(System.Uri folderUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.KeyVault.Administration.KeyVaultSelectiveRestoreOperation StartSelectiveRestore(string keyName, System.Uri folderUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultSelectiveRestoreOperation> StartSelectiveRestoreAsync(string keyName, System.Uri folderUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.KeyVault.Administration.KeyVaultSelectiveKeyRestoreOperation StartSelectiveRestore(string keyName, System.Uri folderUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultSelectiveKeyRestoreOperation> StartSelectiveRestoreAsync(string keyName, System.Uri folderUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class KeyVaultBackupOperation : Azure.Operation<Azure.Security.KeyVault.Administration.KeyVaultBackupResult>
     {
@@ -247,25 +247,25 @@ namespace Azure.Security.KeyVault.Administration
         public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultRoleType left, Azure.Security.KeyVault.Administration.KeyVaultRoleType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultSelectiveRestoreOperation : Azure.Operation<Azure.Security.KeyVault.Administration.KeyVaultSelectiveRestoreResult>
+    public partial class KeyVaultSelectiveKeyRestoreOperation : Azure.Operation<Azure.Security.KeyVault.Administration.KeyVaultSelectiveKeyRestoreResult>
     {
-        protected KeyVaultSelectiveRestoreOperation() { }
-        public KeyVaultSelectiveRestoreOperation(Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id) { }
+        protected KeyVaultSelectiveKeyRestoreOperation() { }
+        public KeyVaultSelectiveKeyRestoreOperation(Azure.Security.KeyVault.Administration.KeyVaultBackupClient client, string id) { }
         public System.DateTimeOffset? EndTime { get { throw null; } }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
         public System.DateTimeOffset? StartTime { get { throw null; } }
-        public override Azure.Security.KeyVault.Administration.KeyVaultSelectiveRestoreResult Value { get { throw null; } }
+        public override Azure.Security.KeyVault.Administration.KeyVaultSelectiveKeyRestoreResult Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSelectiveRestoreResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSelectiveRestoreResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSelectiveKeyRestoreResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultSelectiveKeyRestoreResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class KeyVaultSelectiveRestoreResult
+    public partial class KeyVaultSelectiveKeyRestoreResult
     {
-        internal KeyVaultSelectiveRestoreResult() { }
+        internal KeyVaultSelectiveKeyRestoreResult() { }
         public System.DateTimeOffset EndTime { get { throw null; } }
         public System.DateTimeOffset StartTime { get { throw null; } }
     }

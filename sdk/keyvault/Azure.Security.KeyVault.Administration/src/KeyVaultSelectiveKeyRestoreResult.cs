@@ -8,9 +8,9 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// The result of a selective key restore operation.
     /// </summary>
-    public class KeyVaultSelectiveRestoreResult
+    public class KeyVaultSelectiveKeyRestoreResult
     {
-        internal KeyVaultSelectiveRestoreResult(DateTimeOffset startTime, DateTimeOffset endTime)
+        internal KeyVaultSelectiveKeyRestoreResult(DateTimeOffset startTime, DateTimeOffset endTime)
         {
             StartTime = startTime;
             EndTime = endTime;

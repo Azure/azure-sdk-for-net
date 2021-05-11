@@ -215,7 +215,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultRestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual async Task<KeyVaultSelectiveRestoreOperation> StartSelectiveRestoreAsync(string keyName, Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
+        public virtual async Task<KeyVaultSelectiveKeyRestoreOperation> StartSelectiveRestoreAsync(string keyName, Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveRestore)}");
             scope.Start();
@@ -235,7 +235,7 @@ namespace Azure.Security.KeyVault.Administration
                                 folderName),
                     cancellationToken).ConfigureAwait(false);
 
-                return new KeyVaultSelectiveRestoreOperation(this, response);
+                return new KeyVaultSelectiveKeyRestoreOperation(this, response);
             }
             catch (Exception ex)
             {
@@ -258,7 +258,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultRestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual KeyVaultSelectiveRestoreOperation StartSelectiveRestore(string keyName, Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
+        public virtual KeyVaultSelectiveKeyRestoreOperation StartSelectiveRestore(string keyName, Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveRestore)}");
             scope.Start();
@@ -278,7 +278,7 @@ namespace Azure.Security.KeyVault.Administration
                                 folderName),
                     cancellationToken);
 
-                return new KeyVaultSelectiveRestoreOperation(this, response);
+                return new KeyVaultSelectiveKeyRestoreOperation(this, response);
             }
             catch (Exception ex)
             {
