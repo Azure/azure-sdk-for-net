@@ -123,7 +123,7 @@ The most important field on Response contains the REST content returned from the
         string name = doc.RootElement.GetProperty("name").GetString();
 ```
 
-Protocol methods, just like other methods that use models, throw a C# RequestFailedException when an error code is returned. This default behavior can be changed using RequestOptions discussed below.
+Protocol methods, just like other methods that use models, throw a `RequestFailedException` when an error code is returned. This default behavior can be changed using `RequestOptions` discussed below.
 
 ## Using `RequestOptions` to customize behavior
 
