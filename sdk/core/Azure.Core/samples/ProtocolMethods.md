@@ -137,7 +137,7 @@ Protocol methods, just like other methods that use models, throw a `RequestFaile
 Protocol methods allow customization of exception behavior by use of the optional `RequestOptions` parameter:
 
 ```csharp
-        RequestOptions options = new RequestOptions (ResponseStatusOption.NoThrow);
+        RequestOptions options = new RequestOptions(ResponseStatusOption.NoThrow);
         Response response = client.GetDog(RequestContent.Create(new {
                 name = "Buddy"
         }), options);
