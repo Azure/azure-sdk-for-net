@@ -57,7 +57,6 @@ namespace Azure.Identity
     public partial class AzurePowerShellCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public AzurePowerShellCredentialOptions() { }
-        public bool UseLegacyPowerShell { get { throw null; } set { } }
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
     {
