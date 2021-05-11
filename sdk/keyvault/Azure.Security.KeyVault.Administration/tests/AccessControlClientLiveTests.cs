@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             RegisterForCleanup(createdDefinition);
 
-            KeyVaultRoleDefinition fetchedRoleDefinition = await Client.GetRoleDefinitionAsync(name, KeyVaultRoleScope.Global);
+            KeyVaultRoleDefinition fetchedRoleDefinition = await Client.GetRoleDefinitionAsync(KeyVaultRoleScope.Global, name);
 
             Assert.That(fetchedRoleDefinition.AssignableScopes, Is.EqualTo(new[] { KeyVaultRoleScope.Global }));
             Assert.That(fetchedRoleDefinition.Description, Is.EqualTo(description));
@@ -92,7 +92,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             originalPermissions.DataActions.Add(KeyVaultDataAction.BackupHsmKeys);
 
             KeyVaultRoleDefinition createdDefinition = await Client.CreateOrUpdateRoleDefinitionAsync(description, originalPermissions, KeyVaultRoleScope.Global, name);
-            await Client.DeleteRoleDefinitionAsync(name, KeyVaultRoleScope.Global);
+            await Client.DeleteRoleDefinitionAsync(KeyVaultRoleScope.Global, name);
 
             List<KeyVaultRoleDefinition> results = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
 

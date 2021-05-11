@@ -102,7 +102,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             {
                 using (Recording.DisableRecording())
                 {
-                    await Client.DeleteRoleDefinitionAsync(new Guid(assignment.Name), assignment.Scope.Value).ConfigureAwait(false);
+                    await Client.DeleteRoleDefinitionAsync(assignment.Scope.Value, new Guid(assignment.Name)).ConfigureAwait(false);
                 }
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
