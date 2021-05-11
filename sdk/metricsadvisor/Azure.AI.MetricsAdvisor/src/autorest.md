@@ -176,6 +176,14 @@ directive:
     $.properties.query["x-nullable"] = true;
 ```
 
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.AnomalyProperty
+  transform: >
+    $.properties.expectedValue["x-nullable"] = true;
+```
+
 ### Add required properties
 
 ``` yaml

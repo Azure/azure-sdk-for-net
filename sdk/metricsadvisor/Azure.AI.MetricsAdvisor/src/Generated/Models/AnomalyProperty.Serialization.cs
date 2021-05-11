@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             AnomalySeverity anomalySeverity = default;
             Optional<AnomalyStatus> anomalyStatus = default;
             Optional<double> value = default;
-            Optional<double> expectedValue = default;
+            Optional<double?> expectedValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalySeverity"))
@@ -49,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        expectedValue = null;
                         continue;
                     }
                     expectedValue = property.Value.GetDouble();
