@@ -769,7 +769,7 @@ namespace Microsoft.Azure.Management.Sql
                 Credentials.InitializeServiceClient(this);
             }
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
