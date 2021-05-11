@@ -15,29 +15,19 @@ namespace Azure.Monitor.Query
     /// </summary>
     public class LogsBatchQuery
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly QueryRestClient _restClient;
-        private readonly RowBinder _rowBinder;
-        private readonly BatchRequest _batch;
+        internal BatchRequest Batch { get; }
         private int _counter;
 
-        internal LogsBatchQuery(ClientDiagnostics clientDiagnostics, QueryRestClient restClient, RowBinder rowBinder)
-        {
-            _clientDiagnostics = clientDiagnostics;
-            _restClient = restClient;
-            _rowBinder = rowBinder;
-            _batch = new BatchRequest();
-        }
-
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsBatchQuery"/> for mocking.
+        /// Initializes a new instance of <see cref="LogsBatchQuery"/>.
         /// </summary>
-        protected LogsBatchQuery()
+        public LogsBatchQuery()
         {
+            Batch = new BatchRequest();
         }
 
         /// <summary>
-        /// Adds the specified query to the batch. Results can be retrieved after the query is submitted via the <see cref="SubmitAsync"/> call.
+        /// Adds the specified query to the batch. Results can be retrieved after the query is submitted via the <see cref="LogsClient.QueryBatchAsync"/> call.
         /// </summary>
         /// <param name="workspaceId">The workspace to include in the query.</param>
         /// <param name="query">The query text to execute.</param>
@@ -58,52 +48,8 @@ namespace Azure.Monitor.Query
             {
                 logQueryRequest.Headers.Add("prefer", prefer);
             }
-            _batch.Requests.Add(logQueryRequest);
+            Batch.Requests.Add(logQueryRequest);
             return id;
-        }
-
-        /// <summary>
-        /// Submits the batch.
-        /// </summary>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="LogsBatchQueryResult"/> containing the query identifier that has to be passed into <see cref="LogsBatchQueryResult.GetResult"/> to get the result.</returns>
-        public virtual Response<LogsBatchQueryResult> Submit(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsBatchQuery)}.{nameof(Submit)}");
-            scope.Start();
-            try
-            {
-                var response = _restClient.Batch(_batch, cancellationToken);
-                response.Value.RowBinder = _rowBinder;
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Submits the batch.
-        /// </summary>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
-        /// <returns>The <see cref="LogsBatchQueryResult"/> that allows retrieving query results.</returns>
-        public virtual async Task<Response<LogsBatchQueryResult>> SubmitAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsBatchQuery)}.{nameof(Submit)}");
-            scope.Start();
-            try
-            {
-                var response = await _restClient.BatchAsync(_batch, cancellationToken).ConfigureAwait(false);
-                response.Value.RowBinder = _rowBinder;
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }
