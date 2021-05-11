@@ -58,31 +58,31 @@ namespace Proto.Compute
             ClientOptions.Convert<ComputeManagementClientOptions>()).AvailabilitySets;
 
         /// <inheritdoc/>
-        public ArmResponse Delete(CancellationToken cancellationToken = default)
+        public Response Delete(CancellationToken cancellationToken = default)
         {
-            return ArmResponse.FromResponse(Operations.Delete(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return Operations.Delete(Id.ResourceGroupName, Id.Name, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return ArmResponse.FromResponse(await Operations.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return await Operations.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public ArmOperation StartDelete(CancellationToken cancellationToken = default)
+        public Operation StartDelete(CancellationToken cancellationToken = default)
         {
             return new PhVoidArmOperation(Operations.Delete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Operation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             return new PhVoidArmOperation(await Operations.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<AvailabilitySet> Get(CancellationToken cancellationToken = default)
+        public override Response<AvailabilitySet> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 Operations.Get(Id.ResourceGroupName, Id.Name),
@@ -90,7 +90,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async override Task<ArmResponse<AvailabilitySet>> GetAsync(CancellationToken cancellationToken = default)
+        public async override Task<Response<AvailabilitySet>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 await Operations.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken),
@@ -102,7 +102,7 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="patchable"> The parameters to update. </param>
         /// <returns> The operation of the updated resource. </returns>
-        public ArmResponse<AvailabilitySet> Update(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
+        public Response<AvailabilitySet> Update(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 Operations.Update(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
@@ -115,7 +115,7 @@ namespace Proto.Compute
         /// <param name="patchable">  The parameters to update. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns the operation of the updated resource. </returns>
-        public async Task<ArmResponse<AvailabilitySet>> UpdateAsync(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailabilitySet>> UpdateAsync(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 await Operations.UpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
@@ -127,7 +127,7 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="patchable"> The parameters to update. </param>
         /// <returns> The operation of the updated resource. </returns>
-        public ArmOperation<AvailabilitySet> StartUpdate(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
+        public Operation<AvailabilitySet> StartUpdate(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 Operations.Update(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
@@ -140,7 +140,7 @@ namespace Proto.Compute
         /// <param name="patchable">  The parameters to update. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns the operation of the updated resource. </returns>
-        public async Task<ArmOperation<AvailabilitySet>> StartUpdateAsync(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
+        public async Task<Operation<AvailabilitySet>> StartUpdateAsync(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 await Operations.UpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
@@ -148,7 +148,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmResponse<AvailabilitySet> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public Response<AvailabilitySet> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new AvailabilitySetUpdate();
@@ -158,7 +158,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<AvailabilitySet>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailabilitySet>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = await GetResourceAsync(cancellationToken);
             var patchable = new AvailabilitySetUpdate();
@@ -168,7 +168,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmOperation<AvailabilitySet> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
+        public Operation<AvailabilitySet> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new AvailabilitySetUpdate();
@@ -178,7 +178,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<AvailabilitySet>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async Task<Operation<AvailabilitySet>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = await GetResourceAsync(cancellationToken);
             var patchable = new AvailabilitySetUpdate();
@@ -188,7 +188,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmResponse<AvailabilitySet> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public Response<AvailabilitySet> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(tags);
@@ -196,7 +196,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<AvailabilitySet>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailabilitySet>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(tags);
@@ -204,7 +204,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmOperation<AvailabilitySet> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public Operation<AvailabilitySet> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(tags);
@@ -212,7 +212,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<AvailabilitySet>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async Task<Operation<AvailabilitySet>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(tags);
@@ -220,7 +220,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmResponse<AvailabilitySet> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public Response<AvailabilitySet> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new AvailabilitySetUpdate();
@@ -230,7 +230,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<AvailabilitySet>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Response<AvailabilitySet>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = await GetResourceAsync(cancellationToken);
             var patchable = new AvailabilitySetUpdate();
@@ -240,7 +240,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmOperation<AvailabilitySet> StartRemoveTag(string key, CancellationToken cancellationToken = default)
+        public Operation<AvailabilitySet> StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new AvailabilitySetUpdate();
@@ -250,7 +250,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<AvailabilitySet>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Operation<AvailabilitySet>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = await GetResourceAsync(cancellationToken);
             var patchable = new AvailabilitySetUpdate();

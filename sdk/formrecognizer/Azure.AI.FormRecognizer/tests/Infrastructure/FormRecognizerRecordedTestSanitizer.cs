@@ -10,8 +10,8 @@ namespace Azure.AI.FormRecognizer.Tests
         public FormRecognizerRecordedTestSanitizer()
             : base()
         {
-            JsonPathSanitizers.Add("$..accessToken");
-            JsonPathSanitizers.Add("$..source");
+            AddJsonPathSanitizer("$..accessToken");
+            AddJsonPathSanitizer("$..source");
             SanitizedHeaders.Add(Constants.AuthorizationHeader);
         }
     }

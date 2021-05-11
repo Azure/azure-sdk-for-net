@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
 using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Core;
 using System;
@@ -64,7 +65,7 @@ namespace Proto.Authorization
         /// <param name="resourceDetails"> The properties of the role assignment. </param>
         /// <param name="cancellationToken"> A token that allows cancellation of any blockign API calls made during this method. </param>
         /// <returns> The created role assignment. </returns>
-        public override ArmResponse<RoleAssignment> Create(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
+        public override Response<RoleAssignment> Create(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
             var response = Operations.Create(Id, name, resourceDetails.ToModel(), cancellationToken);
             return new PhArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
@@ -80,7 +81,7 @@ namespace Proto.Authorization
         /// <param name="resourceDetails"> The properties of the role assignment. </param>
         /// <param name="cancellationToken"> A token that allows cancellation of any blockign API calls made during this method. </param>
         /// <returns> A Task that yields the created role assignment when complete. </returns>
-        public async override Task<ArmResponse<RoleAssignment>> CreateAsync(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
+        public async override Task<Response<RoleAssignment>> CreateAsync(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
             var response = await Operations.CreateAsync(Id, name, resourceDetails.ToModel(), cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
@@ -90,13 +91,13 @@ namespace Proto.Authorization
 
         /// <summary>
         /// Create a role assignment. This method blocks until the RoleAssignment creation is accepted on the service. It returns an
-        /// <see cref="ArmOperation{RoleAssignment}"/> allowing the caller to control polling and waiting for the creation to complete.
+        /// <see cref="Operation{RoleAssignment}"/> allowing the caller to control polling and waiting for the creation to complete.
         /// </summary>
         /// <param name="name"> The name of the role assignment. </param>
         /// <param name="resourceDetails"> The properties of the role assignment. </param>
         /// <param name="cancellationToken"> A token that allows cancellation of any blocking API calls made during this method. </param>
         /// <returns> An ArmOperation that yields the created role assignment and gives the user control over polling. </returns>
-        public override ArmOperation<RoleAssignment> StartCreate(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
+        public override Operation<RoleAssignment> StartCreate(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
                 Operations.Create(Id, name, resourceDetails.ToModel(), cancellationToken),
@@ -105,13 +106,13 @@ namespace Proto.Authorization
 
         /// <summary>
         /// Create a role assignment. This method blocks until the RoleAssignment creation is accepted on the service. It returns an
-        /// <see cref="ArmOperation{RoleAssignment}"/> allowing the caller to control polling and waiting for the creation to complete.
+        /// <see cref="Operation{RoleAssignment}"/> allowing the caller to control polling and waiting for the creation to complete.
         /// </summary>
         /// <param name="name"> The name of the role assignment. </param>
         /// <param name="resourceDetails"> The properties of the role assignment. </param>
         /// <param name="cancellationToken"> A token that allows cancellation of any blocking API calls made during this method. </param>
         /// <returns> A <see cref="Task{ArmOperation}"/> that yields the created role assignment and gives the user control over polling. </returns>
-        public async override Task<ArmOperation<RoleAssignment>> StartCreateAsync(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
+        public async override Task<Operation<RoleAssignment>> StartCreateAsync(string name, RoleAssignmentCreateParameters resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
                 await Operations.CreateAsync(Id, name, resourceDetails.ToModel(), cancellationToken).ConfigureAwait(false),

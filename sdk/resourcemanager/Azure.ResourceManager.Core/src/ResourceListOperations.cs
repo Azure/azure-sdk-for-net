@@ -1,14 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.Core.Adapters;
-using Azure.ResourceManager.Core.Resources;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
-using System;
-using System.Globalization;
-using System.Reflection;
 using System.Threading;
+using Azure.ResourceManager.Core.Resources;
 
 namespace Azure.ResourceManager.Core
 {
@@ -105,10 +99,10 @@ namespace Azure.ResourceManager.Core
                 cancellationToken);
         }
 
-        private static ResourcesManagementClient GetResourcesClient(ResourceOperationsBase resourceOperations)
+        private static GenericResourceContainer GetGenericResourceContainer(ResourceOperationsBase resourceOperations)
         {
             var subscription = resourceOperations.Id as SubscriptionResourceIdentifier;
-            return new ResourcesManagementClient(resourceOperations.BaseUri, subscription?.SubscriptionId, resourceOperations.Credential);
+            return new GenericResourceContainer(new ClientContext(resourceOperations.ClientOptions, resourceOperations.Credential, resourceOperations.BaseUri, resourceOperations.Pipeline), subscription);
         }
 
         private static AsyncPageable<GenericResource> ListAtContextInternalAsync(
@@ -118,23 +112,22 @@ namespace Azure.ResourceManager.Core
             int? top = null,
             CancellationToken cancellationToken = default)
         {
-            var armOperations = GetResourcesClient(resourceOperations).Resources;
-            AsyncPageable<GenericResourceExpanded> result;
+            var restClient = GetGenericResourceContainer(resourceOperations);
+            AsyncPageable<GenericResource> result;
             if (scopeFilter == null)
             {
-                result = armOperations.ListAsync(resourceFilters?.ToString(), null, top, cancellationToken);
+                result = restClient.ListAsync(resourceFilters?.ToString(), top, cancellationToken);
             }
             else
             {
-                result = armOperations.ListByResourceGroupAsync(
+                result = restClient.ListByResourceGroupAsync(
                     scopeFilter,
                     resourceFilters?.ToString(),
-                    null,
                     top,
                     cancellationToken);
             }
 
-            return ConvertResultsAsync(result, resourceOperations);
+            return result;
         }
 
         private static Pageable<GenericResource> ListAtContextInternal(
@@ -144,60 +137,22 @@ namespace Azure.ResourceManager.Core
             int? top = null,
             CancellationToken cancellationToken = default)
         {
-            var armOperations = GetResourcesClient(resourceOperations).Resources;
-            Pageable<GenericResourceExpanded> result;
+            var restClient = GetGenericResourceContainer(resourceOperations);
+            Pageable<GenericResource> result;
             if (scopeFilter == null)
             {
-                result = armOperations.List(resourceFilters?.ToString(), null, top, cancellationToken);
+                result = restClient.List(resourceFilters?.ToString(), top, cancellationToken);
             }
             else
             {
-                result = armOperations.ListByResourceGroup(
+                result = restClient.ListByResourceGroup(
                     scopeFilter,
                     resourceFilters?.ToString(),
-                    null,
                     top,
                     cancellationToken);
             }
 
-            return ConvertResults(result, resourceOperations);
-        }
-
-        private static Pageable<GenericResource> ConvertResults(
-            Pageable<GenericResourceExpanded> result,
-            ResourceOperationsBase resourceOperations)
-        {
-            return new PhWrappingPageable<GenericResourceExpanded, GenericResource>(
-                result,
-                CreateResourceConverter(resourceOperations));
-        }
-
-        private static AsyncPageable<GenericResource> ConvertResultsAsync(
-            AsyncPageable<GenericResourceExpanded> result,
-            ResourceOperationsBase resourceOperations)
-        {
-            return new PhWrappingAsyncPageable<GenericResourceExpanded, GenericResource>(
-                result,
-                CreateResourceConverter(resourceOperations));
-        }
-
-        private static Func<GenericResourceExpanded, GenericResource> CreateResourceConverter(ResourceOperationsBase resourceOperations)
-        {
-            return s =>
-            {
-                var args = new object[]
-                {
-                    resourceOperations,
-                    Activator.CreateInstance(typeof(GenericResourceData), s as ResourceManager.Resources.Models.GenericResource) as GenericResourceData,
-                };
-
-                return Activator.CreateInstance(
-                    typeof(GenericResource),
-                    BindingFlags.Instance | BindingFlags.NonPublic,
-                    null,
-                    args,
-                    CultureInfo.InvariantCulture) as GenericResource;
-            };
+            return result;
         }
     }
 }

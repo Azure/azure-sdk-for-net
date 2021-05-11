@@ -1,6 +1,6 @@
-﻿using Azure.ResourceManager.Core;
+﻿using Azure.Identity;
+using Azure.ResourceManager.Core;
 using System;
-using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -11,7 +11,7 @@ namespace Proto.Client
             Scenario scenario = null;
             try
             {
-                scenario = ScenarioFactory.GetScenario(Scenarios.CreateSingleVmExample);
+                scenario = ScenarioFactory.GetScenario(Scenarios.StartFromVm);
                 scenario.Execute();
             }
             finally
