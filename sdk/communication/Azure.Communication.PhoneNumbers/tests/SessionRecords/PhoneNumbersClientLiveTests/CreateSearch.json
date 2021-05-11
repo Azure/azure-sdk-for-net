@@ -152,7 +152,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "561856418",
-    "SKIP_INT_PHONENUMBERS_TEST": "False"
+    "RandomSeed": "561856418"
   }
 }
