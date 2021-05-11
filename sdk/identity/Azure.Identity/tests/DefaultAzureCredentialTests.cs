@@ -72,7 +72,6 @@ namespace Azure.Identity.Tests
             string expBrowserTenantId = Guid.NewGuid().ToString();
             string expVsTenantId = Guid.NewGuid().ToString();
             string expCodeTenantId = Guid.NewGuid().ToString();
-            bool expUseLegacyPowerShell = true;
             string actClientId = null;
             string actUsername = null;
             string actCacheTenantId = null;
@@ -99,7 +98,6 @@ namespace Azure.Identity.Tests
                 VisualStudioCodeTenantId = expCodeTenantId,
                 InteractiveBrowserTenantId = expBrowserTenantId,
                 ExcludeInteractiveBrowserCredential = false,
-                UseLegacyPowerShell = expUseLegacyPowerShell
             };
 
             var cred = new DefaultAzureCredential(credFactory, options);

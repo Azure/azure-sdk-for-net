@@ -94,7 +94,7 @@ namespace Azure.Identity
                 AccessToken token = await RequestAzurePowerShellAccessTokenAsync(async, requestContext.Scopes, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(token);
             }
-            catch (Win32Exception)
+            catch (Win32Exception ex) when (ex.NativeErrorCode == ERROR_FILE_NOT_FOUND && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 UseLegacyPowerShell = true;
                 try
@@ -132,11 +132,6 @@ namespace Azure.Identity
                 output = async ? await processRunner.RunAsync().ConfigureAwait(false) : processRunner.Run();
                 CheckForErrors(output);
             }
-            catch (Win32Exception ex) when (ex.NativeErrorCode == ERROR_FILE_NOT_FOUND && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                throw;
-            }
-
             catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
             {
                 throw new AuthenticationFailedException(AzurePowerShellTimeoutError);
