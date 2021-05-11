@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
             _logForwarder = logForwarder;
             _logger = logger;
 
-            _logForwarder.Start();
+            _logForwarder?.Start();
         }
 
         /// <summary>
