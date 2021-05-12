@@ -29,7 +29,7 @@ namespace Sql.Tests
                         AdministratorLogin = SqlManagementTestUtilities.DefaultLogin,
                         AdministratorLoginPassword = SqlManagementTestUtilities.DefaultPassword,
                         Location = resourceGroup.Location,
-                        Identity = new ResourceIdentity()
+                        Identity = new ResourceIdentityWithUserAssignedIdentities()
                         {
                             Type = IdentityType.SystemAssigned
                         }

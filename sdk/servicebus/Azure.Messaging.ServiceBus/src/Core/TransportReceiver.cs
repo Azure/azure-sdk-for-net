@@ -39,16 +39,16 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         /// Receives a set of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ServiceBusReceiveMode"/> mode.
         /// </summary>
-        ///
         /// <param name="maximumMessageCount">The maximum number of messages that will be received.</param>
         /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.
-        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
+        ///     If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
+        /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public abstract Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveMessagesAsync(
             int maximumMessageCount,
             TimeSpan? maxWaitTime,
+            bool isProcessor,
             CancellationToken cancellationToken);
 
         /// <summary>
@@ -61,11 +61,10 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         /// Opens an AMQP link for use with receiver operations.
         /// </summary>
-        ///
+        /// <param name="isProcessor">Whether or not the receiver is part of a processor.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public abstract Task OpenLinkAsync(CancellationToken cancellationToken);
+        public abstract Task OpenLinkAsync(bool isProcessor, CancellationToken cancellationToken);
 
         /// <summary>
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
@@ -117,7 +116,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// The first call to PeekBatchBySequenceAsync(long, int, CancellationToken) fetches the first active message for this receiver. Each subsequent call
         /// fetches the subsequent message in the entity.
         /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
-        /// Also, unlike <see cref="ReceiveMessagesAsync(int, TimeSpan?, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered messages).
+        /// Also, unlike <see cref="ReceiveMessagesAsync"/>, this method will fetch even Deferred messages (but not Deadlettered messages).
         /// </remarks>
         /// <returns></returns>
         public abstract Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(

@@ -423,7 +423,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         [TestCase(true, false)]
         [TestCase(false, false)]
         [TestCase(false, true)]
-        public async Task TransactionGroupReceivesFirst(bool partitioned, bool enableSessions)
+        public async Task CrossEntityTransactionReceivesFirst(bool partitioned, bool enableSessions)
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
@@ -471,7 +471,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
        [Test]
        [Ignore("Send claims are not available for the topic. Leaving for now in case this is supported in the future.")]
-        public async Task TransactionGroupReceivesFirstRollbackSubscription()
+        public async Task CrossEntityTransactionReceivesFirstRollbackSubscription()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var topicA = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
@@ -530,7 +530,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupReceivesFirstRollback()
+        public async Task CrossEntityTransactionReceivesFirstRollback()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -588,7 +588,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupFirstOperationTransacted()
+        public async Task CrossEntityTransactionFirstOperationTransacted()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -609,7 +609,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         [Test]
         [TestCase(true, false)]
         [TestCase(false, true)]
-        public async Task TransactionGroupSendsFirst(bool partitioned, bool enableSessions)
+        public async Task CrossEntityTransactionSendsFirst(bool partitioned, bool enableSessions)
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: enableSessions);
@@ -700,7 +700,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupSendsFirstRollback()
+        public async Task CrossEntityTransactionSendsFirstRollback()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -771,7 +771,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupProcessorRollback()
+        public async Task CrossEntityTransactionProcessorRollback()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
@@ -816,7 +816,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupProcessor()
+        public async Task CrossEntityTransactionProcessor()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var noTxClient = CreateClient();
@@ -867,7 +867,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupSessionProcessorRollback()
+        public async Task CrossEntityTransactionSessionProcessorRollback()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
@@ -910,7 +910,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionGroupSessionProcessor()
+        public async Task CrossEntityTransactionSessionProcessor()
         {
             await using var client = CreateCrossEntityTxnClient();
             await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);

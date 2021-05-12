@@ -41,10 +41,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
             };
 
             // Start the backup.
-            BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
+            KeyVaultBackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sasToken);
 
             // Wait for completion of the BackupOperation.
-            Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
+            Response<KeyVaultBackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
             // Get the Uri for the location of your backup blob.
             Uri folderUri = backupResult.Value.FolderUri;
@@ -57,10 +57,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             #region Snippet:HelloFullRestoreAsync
             // Start the restore using the backupBlobUri returned from a previous BackupOperation.
-            RestoreOperation restoreOperation = await Client.StartRestoreAsync(folderUri, sasToken);
+            KeyVaultRestoreOperation restoreOperation = await Client.StartRestoreAsync(folderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
-            Response<RestoreResult> restoreResult = await restoreOperation.WaitForCompletionAsync();
+            Response<KeyVaultRestoreResult> restoreResult = await restoreOperation.WaitForCompletionAsync();
             #endregion
 
             Assert.That(restoreOperation.HasValue, Is.True);
@@ -86,7 +86,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             };
 
             // Start the backup.
-            BackupOperation backupOperation = Client.StartBackup(builder.Uri, sasToken);
+            KeyVaultBackupOperation backupOperation = Client.StartBackup(builder.Uri, sasToken);
 
             // Wait for completion of the BackupOperation.
             while (!backupOperation.HasCompleted)
@@ -110,7 +110,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             #region Snippet:HelloFullRestoreSync
             // Start the restore using the backupBlobUri returned from a previous BackupOperation.
-            RestoreOperation restoreOperation = Client.StartRestore(folderUri, sasToken);
+            KeyVaultRestoreOperation restoreOperation = Client.StartRestore(folderUri, sasToken);
 
             // Wait for completion of the RestoreOperation.
             while (!restoreOperation.HasCompleted)

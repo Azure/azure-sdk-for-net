@@ -1,17 +1,22 @@
 # Release History
 
-## 3.1.0-beta.5 (Unreleased)
+## 3.1.0 (Unreleased)
 
 ### New Features
+- This General Availability (GA) release marks the stability of the changes introduced in package versions `3.1.0-beta.1` through `3.1.0-beta.4`.
 - Updated the `FormRecognizerModelFactory` class to support missing model types for mocking.
 - Added support for service version `2.0`. This can be specified in the `FormRecognizerClientOptions` object under the `ServiceVersion` enum.
 By default the SDK targets latest supported service version.
 
 ### Breaking changes
+- The client defaults to the latest supported service version, which currently is `2.1`.
 - Renamed `Id` for `Identity` in all the `StartRecognizeIdDocuments` functionalities. For example, the name of the method is now `StartRecognizeIdentityDocuments`.
 - Renamed the model `ReadingOrder` to `FormReadingOrder`.
 - The model `TextAppearance` now includes the properties `StyleName` and `StyleConfidence` that were part of the `TextStyle` object.
 - Removed the model `TextStyle`.
+- Renamed the method `AsCountryCode` to `AsCountryRegion`.
+- Removed type `FieldValueGender`.
+- Removed value `Gender` from the model `FieldValuetype`.
 
 ## 3.0.1 (2021-04-09)
 

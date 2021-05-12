@@ -15,8 +15,8 @@ namespace Azure.Containers.ContainerRegistry
         internal static ManifestAttributesManifestReferences DeserializeManifestAttributesManifestReferences(JsonElement element)
         {
             string digest = default;
-            string architecture = default;
-            string os = default;
+            ArtifactArchitecture architecture = default;
+            ArtifactOperatingSystem os = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"))
@@ -26,12 +26,12 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("architecture"))
                 {
-                    architecture = property.Value.GetString();
+                    architecture = new ArtifactArchitecture(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("os"))
                 {
-                    os = property.Value.GetString();
+                    os = new ArtifactOperatingSystem(property.Value.GetString());
                     continue;
                 }
             }

@@ -301,12 +301,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         private static List<LogMessage> GetLogMessages(IHost host)
         {
-            List<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages()
-                // Filter out Azure SDK and custom processor logs for easier validation. Intentionally do the error check after as the
-                // Service Bus SDK currently logs errors when stopping the processor. See https://github.com/Azure/azure-sdk-for-net/issues/19098#issuecomment-813126915
-                .Where(m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCultureIgnoreCase)).ToList();
+            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
             Assert.False(logMessages.Any(p => p.Level == LogLevel.Error));
-            return logMessages;
+
+            // Filter out Azure SDK and custom processor logs for easier validation.
+            return logMessages.Where(m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCulture)).ToList();
         }
 
         [Test]

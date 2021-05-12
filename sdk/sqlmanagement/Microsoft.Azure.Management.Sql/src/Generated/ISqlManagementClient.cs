@@ -73,19 +73,9 @@ namespace Microsoft.Azure.Management.Sql
         IRecoverableDatabasesOperations RecoverableDatabases { get; }
 
         /// <summary>
-        /// Gets the IRestorableDroppedDatabasesOperations.
-        /// </summary>
-        IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
-
-        /// <summary>
         /// Gets the IServerConnectionPoliciesOperations.
         /// </summary>
         IServerConnectionPoliciesOperations ServerConnectionPolicies { get; }
-
-        /// <summary>
-        /// Gets the IDatabaseThreatDetectionPoliciesOperations.
-        /// </summary>
-        IDatabaseThreatDetectionPoliciesOperations DatabaseThreatDetectionPolicies { get; }
 
         /// <summary>
         /// Gets the IDataMaskingPoliciesOperations.
@@ -96,11 +86,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IDataMaskingRulesOperations.
         /// </summary>
         IDataMaskingRulesOperations DataMaskingRules { get; }
-
-        /// <summary>
-        /// Gets the IFirewallRulesOperations.
-        /// </summary>
-        IFirewallRulesOperations FirewallRules { get; }
 
         /// <summary>
         /// Gets the IGeoBackupPoliciesOperations.
@@ -116,11 +101,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IElasticPoolsOperations.
         /// </summary>
         IElasticPoolsOperations ElasticPools { get; }
-
-        /// <summary>
-        /// Gets the IRecommendedElasticPoolsOperations.
-        /// </summary>
-        IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
 
         /// <summary>
         /// Gets the IReplicationLinksOperations.
@@ -148,11 +128,6 @@ namespace Microsoft.Azure.Management.Sql
         IElasticPoolDatabaseActivitiesOperations ElasticPoolDatabaseActivities { get; }
 
         /// <summary>
-        /// Gets the IServiceTierAdvisorsOperations.
-        /// </summary>
-        IServiceTierAdvisorsOperations ServiceTierAdvisors { get; }
-
-        /// <summary>
         /// Gets the ITransparentDataEncryptionsOperations.
         /// </summary>
         ITransparentDataEncryptionsOperations TransparentDataEncryptions { get; }
@@ -168,54 +143,14 @@ namespace Microsoft.Azure.Management.Sql
         IServerUsagesOperations ServerUsages { get; }
 
         /// <summary>
-        /// Gets the IDatabaseUsagesOperations.
+        /// Gets the IUsagesOperations.
         /// </summary>
-        IDatabaseUsagesOperations DatabaseUsages { get; }
+        IUsagesOperations Usages { get; }
 
         /// <summary>
-        /// Gets the IDatabaseAutomaticTuningOperations.
+        /// Gets the IBackupShortTermRetentionPoliciesOperations.
         /// </summary>
-        IDatabaseAutomaticTuningOperations DatabaseAutomaticTuning { get; }
-
-        /// <summary>
-        /// Gets the IEncryptionProtectorsOperations.
-        /// </summary>
-        IEncryptionProtectorsOperations EncryptionProtectors { get; }
-
-        /// <summary>
-        /// Gets the IFailoverGroupsOperations.
-        /// </summary>
-        IFailoverGroupsOperations FailoverGroups { get; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IServerKeysOperations.
-        /// </summary>
-        IServerKeysOperations ServerKeys { get; }
-
-        /// <summary>
-        /// Gets the ISyncAgentsOperations.
-        /// </summary>
-        ISyncAgentsOperations SyncAgents { get; }
-
-        /// <summary>
-        /// Gets the ISubscriptionUsagesOperations.
-        /// </summary>
-        ISubscriptionUsagesOperations SubscriptionUsages { get; }
-
-        /// <summary>
-        /// Gets the IVirtualClustersOperations.
-        /// </summary>
-        IVirtualClustersOperations VirtualClusters { get; }
-
-        /// <summary>
-        /// Gets the IVirtualNetworkRulesOperations.
-        /// </summary>
-        IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
+        IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }
 
         /// <summary>
         /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
@@ -238,6 +173,56 @@ namespace Microsoft.Azure.Management.Sql
         IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; }
 
         /// <summary>
+        /// Gets the IDatabaseAdvisorsOperations.
+        /// </summary>
+        IDatabaseAdvisorsOperations DatabaseAdvisors { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseAutomaticTuningOperations.
+        /// </summary>
+        IDatabaseAutomaticTuningOperations DatabaseAutomaticTuning { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseColumnsOperations.
+        /// </summary>
+        IDatabaseColumnsOperations DatabaseColumns { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseExtensionsOperations.
+        /// </summary>
+        IDatabaseExtensionsOperations DatabaseExtensions { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseOperations.
+        /// </summary>
+        IDatabaseOperations DatabaseOperations { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseRecommendedActionsOperations.
+        /// </summary>
+        IDatabaseRecommendedActionsOperations DatabaseRecommendedActions { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseSchemasOperations.
+        /// </summary>
+        IDatabaseSchemasOperations DatabaseSchemas { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseSecurityAlertPoliciesOperations.
+        /// </summary>
+        IDatabaseSecurityAlertPoliciesOperations DatabaseSecurityAlertPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseTablesOperations.
+        /// </summary>
+        IDatabaseTablesOperations DatabaseTables { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseUsagesOperations.
+        /// </summary>
+        IDatabaseUsagesOperations DatabaseUsages { get; }
+
+        /// <summary>
         /// Gets the IDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
         /// </summary>
         IDatabaseVulnerabilityAssessmentRuleBaselinesOperations DatabaseVulnerabilityAssessmentRuleBaselines { get; }
@@ -246,6 +231,51 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IDatabaseVulnerabilityAssessmentsOperations.
         /// </summary>
         IDatabaseVulnerabilityAssessmentsOperations DatabaseVulnerabilityAssessments { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        IDatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans { get; }
+
+        /// <summary>
+        /// Gets the IDataWarehouseUserActivitiesOperations.
+        /// </summary>
+        IDataWarehouseUserActivitiesOperations DataWarehouseUserActivities { get; }
+
+        /// <summary>
+        /// Gets the IDeletedServersOperations.
+        /// </summary>
+        IDeletedServersOperations DeletedServers { get; }
+
+        /// <summary>
+        /// Gets the IElasticPoolOperations.
+        /// </summary>
+        IElasticPoolOperations ElasticPoolOperations { get; }
+
+        /// <summary>
+        /// Gets the IEncryptionProtectorsOperations.
+        /// </summary>
+        IEncryptionProtectorsOperations EncryptionProtectors { get; }
+
+        /// <summary>
+        /// Gets the IFailoverGroupsOperations.
+        /// </summary>
+        IFailoverGroupsOperations FailoverGroups { get; }
+
+        /// <summary>
+        /// Gets the IFirewallRulesOperations.
+        /// </summary>
+        IFirewallRulesOperations FirewallRules { get; }
+
+        /// <summary>
+        /// Gets the IInstanceFailoverGroupsOperations.
+        /// </summary>
+        IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; }
+
+        /// <summary>
+        /// Gets the IInstancePoolsOperations.
+        /// </summary>
+        IInstancePoolsOperations InstancePools { get; }
 
         /// <summary>
         /// Gets the IJobAgentsOperations.
@@ -293,9 +323,164 @@ namespace Microsoft.Azure.Management.Sql
         IJobVersionsOperations JobVersions { get; }
 
         /// <summary>
+        /// Gets the ICapabilitiesOperations.
+        /// </summary>
+        ICapabilitiesOperations Capabilities { get; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionBackupsOperations.
+        /// </summary>
+        ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionManagedInstanceBackupsOperations.
+        /// </summary>
+        ILongTermRetentionManagedInstanceBackupsOperations LongTermRetentionManagedInstanceBackups { get; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionPoliciesOperations.
+        /// </summary>
+        ILongTermRetentionPoliciesOperations LongTermRetentionPolicies { get; }
+
+        /// <summary>
+        /// Gets the IMaintenanceWindowOptionsOperations.
+        /// </summary>
+        IMaintenanceWindowOptionsOperations MaintenanceWindowOptions { get; }
+
+        /// <summary>
+        /// Gets the IMaintenanceWindowsOperations.
+        /// </summary>
+        IMaintenanceWindowsOperations MaintenanceWindows { get; }
+
+        /// <summary>
         /// Gets the IManagedBackupShortTermRetentionPoliciesOperations.
         /// </summary>
         IManagedBackupShortTermRetentionPoliciesOperations ManagedBackupShortTermRetentionPolicies { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseColumnsOperations.
+        /// </summary>
+        IManagedDatabaseColumnsOperations ManagedDatabaseColumns { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseQueriesOperations.
+        /// </summary>
+        IManagedDatabaseQueriesOperations ManagedDatabaseQueries { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseRestoreDetailsOperations.
+        /// </summary>
+        IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabasesOperations.
+        /// </summary>
+        IManagedDatabasesOperations ManagedDatabases { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseSchemasOperations.
+        /// </summary>
+        IManagedDatabaseSchemasOperations ManagedDatabaseSchemas { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseSecurityAlertPoliciesOperations.
+        /// </summary>
+        IManagedDatabaseSecurityAlertPoliciesOperations ManagedDatabaseSecurityAlertPolicies { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseSecurityEventsOperations.
+        /// </summary>
+        IManagedDatabaseSecurityEventsOperations ManagedDatabaseSecurityEvents { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseSensitivityLabelsOperations.
+        /// </summary>
+        IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseRecommendedSensitivityLabelsOperations.
+        /// </summary>
+        IManagedDatabaseRecommendedSensitivityLabelsOperations ManagedDatabaseRecommendedSensitivityLabels { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseTablesOperations.
+        /// </summary>
+        IManagedDatabaseTablesOperations ManagedDatabaseTables { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseTransparentDataEncryptionOperations.
+        /// </summary>
+        IManagedDatabaseTransparentDataEncryptionOperations ManagedDatabaseTransparentDataEncryption { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        IManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations ManagedDatabaseVulnerabilityAssessmentRuleBaselines { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseVulnerabilityAssessmentsOperations.
+        /// </summary>
+        IManagedDatabaseVulnerabilityAssessmentsOperations ManagedDatabaseVulnerabilityAssessments { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        IManagedDatabaseVulnerabilityAssessmentScansOperations ManagedDatabaseVulnerabilityAssessmentScans { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceAdministratorsOperations.
+        /// </summary>
+        IManagedInstanceAdministratorsOperations ManagedInstanceAdministrators { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceAzureADOnlyAuthenticationsOperations.
+        /// </summary>
+        IManagedInstanceAzureADOnlyAuthenticationsOperations ManagedInstanceAzureADOnlyAuthentications { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceEncryptionProtectorsOperations.
+        /// </summary>
+        IManagedInstanceEncryptionProtectorsOperations ManagedInstanceEncryptionProtectors { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceKeysOperations.
+        /// </summary>
+        IManagedInstanceKeysOperations ManagedInstanceKeys { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceLongTermRetentionPoliciesOperations.
+        /// </summary>
+        IManagedInstanceLongTermRetentionPoliciesOperations ManagedInstanceLongTermRetentionPolicies { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceOperations.
+        /// </summary>
+        IManagedInstanceOperations ManagedInstanceOperations { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstancePrivateEndpointConnectionsOperations.
+        /// </summary>
+        IManagedInstancePrivateEndpointConnectionsOperations ManagedInstancePrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstancePrivateLinkResourcesOperations.
+        /// </summary>
+        IManagedInstancePrivateLinkResourcesOperations ManagedInstancePrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstancesOperations.
+        /// </summary>
+        IManagedInstancesOperations ManagedInstances { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceTdeCertificatesOperations.
+        /// </summary>
+        IManagedInstanceTdeCertificatesOperations ManagedInstanceTdeCertificates { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceVulnerabilityAssessmentsOperations.
+        /// </summary>
+        IManagedInstanceVulnerabilityAssessmentsOperations ManagedInstanceVulnerabilityAssessments { get; }
 
         /// <summary>
         /// Gets the IManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations.
@@ -303,19 +488,39 @@ namespace Microsoft.Azure.Management.Sql
         IManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies { get; }
 
         /// <summary>
-        /// Gets the IServerAutomaticTuningOperations.
+        /// Gets the IManagedServerSecurityAlertPoliciesOperations.
         /// </summary>
-        IServerAutomaticTuningOperations ServerAutomaticTuning { get; }
+        IManagedServerSecurityAlertPoliciesOperations ManagedServerSecurityAlertPolicies { get; }
 
         /// <summary>
-        /// Gets the IServerDnsAliasesOperations.
+        /// Gets the IOperations.
         /// </summary>
-        IServerDnsAliasesOperations ServerDnsAliases { get; }
+        IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IServerSecurityAlertPoliciesOperations.
+        /// Gets the IOperationsHealthOperations.
         /// </summary>
-        IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; }
+        IOperationsHealthOperations OperationsHealth { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IRecoverableManagedDatabasesOperations.
+        /// </summary>
+        IRecoverableManagedDatabasesOperations RecoverableManagedDatabases { get; }
+
+        /// <summary>
+        /// Gets the IRestorableDroppedDatabasesOperations.
+        /// </summary>
+        IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
 
         /// <summary>
         /// Gets the IRestorableDroppedManagedDatabasesOperations.
@@ -328,119 +533,54 @@ namespace Microsoft.Azure.Management.Sql
         IRestorePointsOperations RestorePoints { get; }
 
         /// <summary>
-        /// Gets the IManagedDatabaseSecurityAlertPoliciesOperations.
-        /// </summary>
-        IManagedDatabaseSecurityAlertPoliciesOperations ManagedDatabaseSecurityAlertPolicies { get; }
-
-        /// <summary>
-        /// Gets the IManagedServerSecurityAlertPoliciesOperations.
-        /// </summary>
-        IManagedServerSecurityAlertPoliciesOperations ManagedServerSecurityAlertPolicies { get; }
-
-        /// <summary>
         /// Gets the ISensitivityLabelsOperations.
         /// </summary>
         ISensitivityLabelsOperations SensitivityLabels { get; }
 
         /// <summary>
-        /// Gets the IManagedInstanceAdministratorsOperations.
+        /// Gets the IRecommendedSensitivityLabelsOperations.
         /// </summary>
-        IManagedInstanceAdministratorsOperations ManagedInstanceAdministrators { get; }
+        IRecommendedSensitivityLabelsOperations RecommendedSensitivityLabels { get; }
 
         /// <summary>
-        /// Gets the IDatabaseOperations.
+        /// Gets the IServerAdvisorsOperations.
         /// </summary>
-        IDatabaseOperations DatabaseOperations { get; }
+        IServerAdvisorsOperations ServerAdvisors { get; }
 
         /// <summary>
-        /// Gets the IElasticPoolOperations.
+        /// Gets the IServerAutomaticTuningOperations.
         /// </summary>
-        IElasticPoolOperations ElasticPoolOperations { get; }
+        IServerAutomaticTuningOperations ServerAutomaticTuning { get; }
 
         /// <summary>
-        /// Gets the IDatabaseVulnerabilityAssessmentScansOperations.
+        /// Gets the IServerAzureADAdministratorsOperations.
         /// </summary>
-        IDatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans { get; }
+        IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
 
         /// <summary>
-        /// Gets the IManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
+        /// Gets the IServerAzureADOnlyAuthenticationsOperations.
         /// </summary>
-        IManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations ManagedDatabaseVulnerabilityAssessmentRuleBaselines { get; }
+        IServerAzureADOnlyAuthenticationsOperations ServerAzureADOnlyAuthentications { get; }
 
         /// <summary>
-        /// Gets the IManagedDatabaseVulnerabilityAssessmentScansOperations.
+        /// Gets the IServerDevOpsAuditSettingsOperations.
         /// </summary>
-        IManagedDatabaseVulnerabilityAssessmentScansOperations ManagedDatabaseVulnerabilityAssessmentScans { get; }
+        IServerDevOpsAuditSettingsOperations ServerDevOpsAuditSettings { get; }
 
         /// <summary>
-        /// Gets the IManagedDatabaseVulnerabilityAssessmentsOperations.
+        /// Gets the IServerDnsAliasesOperations.
         /// </summary>
-        IManagedDatabaseVulnerabilityAssessmentsOperations ManagedDatabaseVulnerabilityAssessments { get; }
+        IServerDnsAliasesOperations ServerDnsAliases { get; }
 
         /// <summary>
-        /// Gets the IInstanceFailoverGroupsOperations.
+        /// Gets the IServerKeysOperations.
         /// </summary>
-        IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; }
+        IServerKeysOperations ServerKeys { get; }
 
         /// <summary>
-        /// Gets the ITdeCertificatesOperations.
+        /// Gets the IServerOperations.
         /// </summary>
-        ITdeCertificatesOperations TdeCertificates { get; }
-
-        /// <summary>
-        /// Gets the IManagedInstanceTdeCertificatesOperations.
-        /// </summary>
-        IManagedInstanceTdeCertificatesOperations ManagedInstanceTdeCertificates { get; }
-
-        /// <summary>
-        /// Gets the IManagedInstanceKeysOperations.
-        /// </summary>
-        IManagedInstanceKeysOperations ManagedInstanceKeys { get; }
-
-        /// <summary>
-        /// Gets the IManagedInstanceEncryptionProtectorsOperations.
-        /// </summary>
-        IManagedInstanceEncryptionProtectorsOperations ManagedInstanceEncryptionProtectors { get; }
-
-        /// <summary>
-        /// Gets the IRecoverableManagedDatabasesOperations.
-        /// </summary>
-        IRecoverableManagedDatabasesOperations RecoverableManagedDatabases { get; }
-
-        /// <summary>
-        /// Gets the IBackupShortTermRetentionPoliciesOperations.
-        /// </summary>
-        IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }
-
-        /// <summary>
-        /// Gets the IManagedInstanceVulnerabilityAssessmentsOperations.
-        /// </summary>
-        IManagedInstanceVulnerabilityAssessmentsOperations ManagedInstanceVulnerabilityAssessments { get; }
-
-        /// <summary>
-        /// Gets the IServerVulnerabilityAssessmentsOperations.
-        /// </summary>
-        IServerVulnerabilityAssessmentsOperations ServerVulnerabilityAssessments { get; }
-
-        /// <summary>
-        /// Gets the IManagedDatabaseSensitivityLabelsOperations.
-        /// </summary>
-        IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; }
-
-        /// <summary>
-        /// Gets the IInstancePoolsOperations.
-        /// </summary>
-        IInstancePoolsOperations InstancePools { get; }
-
-        /// <summary>
-        /// Gets the IUsagesOperations.
-        /// </summary>
-        IUsagesOperations Usages { get; }
-
-        /// <summary>
-        /// Gets the IPrivateLinkResourcesOperations.
-        /// </summary>
-        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+        IServerOperations ServerOperations { get; }
 
         /// <summary>
         /// Gets the IServersOperations.
@@ -448,39 +588,34 @@ namespace Microsoft.Azure.Management.Sql
         IServersOperations Servers { get; }
 
         /// <summary>
-        /// Gets the ICapabilitiesOperations.
+        /// Gets the IServerSecurityAlertPoliciesOperations.
         /// </summary>
-        ICapabilitiesOperations Capabilities { get; }
+        IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; }
 
         /// <summary>
-        /// Gets the ILongTermRetentionManagedInstanceBackupsOperations.
+        /// Gets the IServerTrustGroupsOperations.
         /// </summary>
-        ILongTermRetentionManagedInstanceBackupsOperations LongTermRetentionManagedInstanceBackups { get; }
+        IServerTrustGroupsOperations ServerTrustGroups { get; }
 
         /// <summary>
-        /// Gets the IManagedInstanceLongTermRetentionPoliciesOperations.
+        /// Gets the IServerVulnerabilityAssessmentsOperations.
         /// </summary>
-        IManagedInstanceLongTermRetentionPoliciesOperations ManagedInstanceLongTermRetentionPolicies { get; }
+        IServerVulnerabilityAssessmentsOperations ServerVulnerabilityAssessments { get; }
 
         /// <summary>
-        /// Gets the IWorkloadGroupsOperations.
+        /// Gets the ISqlAgentOperations.
         /// </summary>
-        IWorkloadGroupsOperations WorkloadGroups { get; }
+        ISqlAgentOperations SqlAgent { get; }
 
         /// <summary>
-        /// Gets the IWorkloadClassifiersOperations.
+        /// Gets the ISubscriptionUsagesOperations.
         /// </summary>
-        IWorkloadClassifiersOperations WorkloadClassifiers { get; }
+        ISubscriptionUsagesOperations SubscriptionUsages { get; }
 
         /// <summary>
-        /// Gets the IManagedInstanceOperations.
+        /// Gets the ISyncAgentsOperations.
         /// </summary>
-        IManagedInstanceOperations ManagedInstanceOperations { get; }
-
-        /// <summary>
-        /// Gets the IServerAzureADAdministratorsOperations.
-        /// </summary>
-        IServerAzureADAdministratorsOperations ServerAzureADAdministrators { get; }
+        ISyncAgentsOperations SyncAgents { get; }
 
         /// <summary>
         /// Gets the ISyncGroupsOperations.
@@ -493,59 +628,34 @@ namespace Microsoft.Azure.Management.Sql
         ISyncMembersOperations SyncMembers { get; }
 
         /// <summary>
-        /// Gets the IImportExportOperations.
+        /// Gets the ITdeCertificatesOperations.
         /// </summary>
-        IImportExportOperations ImportExport { get; }
+        ITdeCertificatesOperations TdeCertificates { get; }
 
         /// <summary>
-        /// Gets the IManagedDatabasesOperations.
+        /// Gets the ITimeZonesOperations.
         /// </summary>
-        IManagedDatabasesOperations ManagedDatabases { get; }
+        ITimeZonesOperations TimeZones { get; }
 
         /// <summary>
-        /// Gets the IManagedDatabaseRestoreDetailsOperations.
+        /// Gets the IVirtualClustersOperations.
         /// </summary>
-        IManagedDatabaseRestoreDetailsOperations ManagedDatabaseRestoreDetails { get; }
+        IVirtualClustersOperations VirtualClusters { get; }
 
         /// <summary>
-        /// Gets the IServerAzureADOnlyAuthenticationsOperations.
+        /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
-        IServerAzureADOnlyAuthenticationsOperations ServerAzureADOnlyAuthentications { get; }
+        IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
 
         /// <summary>
-        /// Gets the IManagedInstancesOperations.
+        /// Gets the IWorkloadClassifiersOperations.
         /// </summary>
-        IManagedInstancesOperations ManagedInstances { get; }
+        IWorkloadClassifiersOperations WorkloadClassifiers { get; }
 
         /// <summary>
-        /// Gets the IManagedInstanceAzureADOnlyAuthenticationsOperations.
+        /// Gets the IWorkloadGroupsOperations.
         /// </summary>
-        IManagedInstanceAzureADOnlyAuthenticationsOperations ManagedInstanceAzureADOnlyAuthentications { get; }
-
-        /// <summary>
-        /// Gets the IServerTrustGroupsOperations.
-        /// </summary>
-        IServerTrustGroupsOperations ServerTrustGroups { get; }
-
-        /// <summary>
-        /// Gets the IServerDevOpsAuditSettingsOperations.
-        /// </summary>
-        IServerDevOpsAuditSettingsOperations ServerDevOpsAuditSettings { get; }
-
-        /// <summary>
-        /// Gets the ILongTermRetentionBackupsOperations.
-        /// </summary>
-        ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; }
-
-        /// <summary>
-        /// Gets the ILongTermRetentionPoliciesOperations.
-        /// </summary>
-        ILongTermRetentionPoliciesOperations LongTermRetentionPolicies { get; }
-
-        /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
-        /// </summary>
-        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+        IWorkloadGroupsOperations WorkloadGroups { get; }
 
     }
 }

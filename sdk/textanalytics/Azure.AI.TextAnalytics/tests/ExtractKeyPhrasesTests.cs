@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -34,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         };
 
-        [Test]
+        [RecordedTest]
         public async Task ExtractKeyPhrasesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -48,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(keyPhrases.Contains("veterinarian"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExtractKeyPhrasesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -62,7 +63,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(keyPhrases.Contains("veterinarian"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExtractKeyPhrasesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -76,7 +77,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(keyPhrases.Contains("veterinario"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExtractKeyPhrasesWithWarningTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -89,7 +90,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsWarningCode.LongWordsInDocument, keyPhrases.Warnings.FirstOrDefault().WarningCode.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExtractKeyPhrasesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -111,7 +112,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExtractKeyPhrasesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -122,7 +123,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, 3);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExtractKeyPhrasesBatchConvenienceWithStatisticsTest()
         {
             var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
@@ -141,7 +142,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExtractKeyPhrasesBatchConvenienceWithExtractKeyPhrasesOptionsStatisticsTest()
         {
             var options = new ExtractKeyPhrasesOptions { IncludeStatistics = true };
@@ -160,7 +161,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExtractKeyPhrasesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -171,7 +172,7 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, 3);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExtractKeyPhrasesBatchWithSatisticsTest()
         {
             var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
@@ -190,7 +191,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExtractKeyPhrasesBatchWithExtractKeyPhrasesOptionsSatisticsTest()
         {
             var options = new ExtractKeyPhrasesOptions { IncludeStatistics = true };
@@ -209,7 +210,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
-        [Test]
+        [RecordedTest]
         public void ExtractKeyPhrasesBatchWithNullIdTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -219,7 +220,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExtractKeyPhrasesBatchWithNullTextTest()
         {
             TextAnalyticsClient client = GetClient();

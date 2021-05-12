@@ -6,9 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: release_3_1_preview.4
-require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/c2e50d64a580169c9925b33712421f59462ad761/specification/cognitiveservices/data-plane/TextAnalytics/readme.md
+input-file:
+    -  .\swagger\ta3.1p5.json
 ```
 
 ### Make generated models internal by default
@@ -96,9 +95,6 @@ directive:
           "summary": "Get healthcare analysis job status and results",
           "parameters": [
             {
-              "$ref": "#/parameters/ShowStats"
-            },
-            {
               "name": "nextLink",
               "in": "path",
               "required": true,
@@ -167,9 +163,6 @@ directive:
           "operationId": "AnalyzeStatusNextPage",
           "summary": "Get analysis status and results",
           "parameters": [
-            {
-              "$ref": "#/parameters/ShowStats"
-            },
             {
               "name": "nextLink",
               "in": "path",
