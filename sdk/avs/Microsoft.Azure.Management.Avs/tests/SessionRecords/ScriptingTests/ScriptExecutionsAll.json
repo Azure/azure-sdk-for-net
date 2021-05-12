@@ -1,0 +1,915 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\n  \"properties\": {\n    \"scriptCmdletId\": \"JSDR.Configuration/1.0.16/invoke-preflightjetdrsystemcheck\",\n    \"timeout\": \"PT1H\"\n  }\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b521aaf7-5925-4c54-8e69-511e20faf6f5"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "131"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa?api-version=2021-06-01"
+        ],
+        "x-ms-request-id": [
+          "2da10299-dd18-4742-87fe-c8679732e46b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "4ba1817b-7ebc-4931-8c5f-c2ff4b458638"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210355Z:4ba1817b-7ebc-4931-8c5f-c2ff4b458638"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 0AFB62FC92CA4C48820A9314AC21A483 Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:03:53Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:03:54 GMT"
+        ],
+        "Content-Length": [
+          "495"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703\",\n  \"name\": \"scripting_execution3703\",\n  \"properties\": {\n    \"namedOutputs\": {},\n    \"output\": [],\n    \"provisioningState\": \"Pending\",\n    \"scriptCmdletId\": \"JSDR.Configuration/1.0.16/invoke-preflightjetdrsystemcheck\",\n    \"submittedAt\": \"2021-05-12 21:03:46Z\",\n    \"timeout\": \"PT1H\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/scriptExecutions\"\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzL29wZXJhdGlvbnN0YXR1c2VzL2Q5YzFjYTljLTNkNDItNDFlZC1hYzc4LWI2MjkwOTY3MDNmYT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14991"
+        ],
+        "x-ms-request-id": [
+          "73f74107-54ef-4360-8c3e-f28962403b32"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "16b1926c-2ce3-4bda-af35-9407f5f187ca"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210405Z:16b1926c-2ce3-4bda-af35-9407f5f187ca"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 3FB6BAB72AC54FC385EB25684BB9D139 Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:04:05Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:04:05 GMT"
+        ],
+        "Content-Length": [
+          "389"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"name\": \"d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-12T16:03:46.0593611-05:00\",\n  \"status\": \"Pending\"\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzL29wZXJhdGlvbnN0YXR1c2VzL2Q5YzFjYTljLTNkNDItNDFlZC1hYzc4LWI2MjkwOTY3MDNmYT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14990"
+        ],
+        "x-ms-request-id": [
+          "dbbb6980-2ffe-43a0-9f68-37168d5f28e8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "fdae34eb-bd6e-476d-b502-6167f4db16d2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210416Z:fdae34eb-bd6e-476d-b502-6167f4db16d2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: B510F382A954453E87E088D4BEA1D99C Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:04:16Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:04:15 GMT"
+        ],
+        "Content-Length": [
+          "389"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"name\": \"d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-12T16:03:46.0593611-05:00\",\n  \"status\": \"Pending\"\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzL29wZXJhdGlvbnN0YXR1c2VzL2Q5YzFjYTljLTNkNDItNDFlZC1hYzc4LWI2MjkwOTY3MDNmYT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14989"
+        ],
+        "x-ms-request-id": [
+          "dd34216a-d2f6-40ec-bd18-bc0cc03258dc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "53138026-778f-4abc-ba14-11fb06b4bbdd"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210426Z:53138026-778f-4abc-ba14-11fb06b4bbdd"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: E8B312C142174CA389321F9641BBF492 Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:04:26Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:04:26 GMT"
+        ],
+        "Content-Length": [
+          "389"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"name\": \"d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-12T16:03:46.0593611-05:00\",\n  \"status\": \"Pending\"\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzL29wZXJhdGlvbnN0YXR1c2VzL2Q5YzFjYTljLTNkNDItNDFlZC1hYzc4LWI2MjkwOTY3MDNmYT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14988"
+        ],
+        "x-ms-request-id": [
+          "bd32c06f-7567-49de-ac5e-87802d0ed488"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "1c1268df-ebc8-4ea0-be37-b5a72015f9af"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210437Z:1c1268df-ebc8-4ea0-be37-b5a72015f9af"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 555109813B5042B5974D0BF61CCEBD3D Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:04:37Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:04:36 GMT"
+        ],
+        "Content-Length": [
+          "389"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"name\": \"d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-12T16:03:46.0593611-05:00\",\n  \"status\": \"Pending\"\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzL29wZXJhdGlvbnN0YXR1c2VzL2Q5YzFjYTljLTNkNDItNDFlZC1hYzc4LWI2MjkwOTY3MDNmYT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14987"
+        ],
+        "x-ms-request-id": [
+          "cec1bd29-ab71-4e81-b0cf-d13e975ef918"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "10b4bf7d-0cd2-4706-b2fe-0d2603490d9e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210447Z:10b4bf7d-0cd2-4706-b2fe-0d2603490d9e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 71AE3BF2F86744AF9FB1919BF504293B Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:04:47Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:04:47 GMT"
+        ],
+        "Content-Length": [
+          "389"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"name\": \"d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-12T16:03:46.0593611-05:00\",\n  \"status\": \"Pending\"\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzL29wZXJhdGlvbnN0YXR1c2VzL2Q5YzFjYTljLTNkNDItNDFlZC1hYzc4LWI2MjkwOTY3MDNmYT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14986"
+        ],
+        "x-ms-request-id": [
+          "19c7f62c-518f-4fcb-a4e9-0ebe95c0acf3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "757353d6-4b01-4f62-9617-c54e703c7bed"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210458Z:757353d6-4b01-4f62-9617-c54e703c7bed"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: F8FDB0D5FDC04F84BB459007EFEF0BBB Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:04:58Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:04:57 GMT"
+        ],
+        "Content-Length": [
+          "389"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"name\": \"d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-12T16:03:46.0593611-05:00\",\n  \"status\": \"Pending\"\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzL29wZXJhdGlvbnN0YXR1c2VzL2Q5YzFjYTljLTNkNDItNDFlZC1hYzc4LWI2MjkwOTY3MDNmYT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14985"
+        ],
+        "x-ms-request-id": [
+          "cf1b2ff8-1675-402d-92d2-6de1505d84a8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "15c6dd9e-70ad-461b-9a82-89587924d508"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210508Z:15c6dd9e-70ad-461b-9a82-89587924d508"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: D50E667B1C7B4825BE2B6E3E7F4BAAE0 Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:05:08Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:05:08 GMT"
+        ],
+        "Content-Length": [
+          "389"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"name\": \"d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-12T16:03:46.0593611-05:00\",\n  \"status\": \"Pending\"\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzL29wZXJhdGlvbnN0YXR1c2VzL2Q5YzFjYTljLTNkNDItNDFlZC1hYzc4LWI2MjkwOTY3MDNmYT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14984"
+        ],
+        "x-ms-request-id": [
+          "8fcfdb48-7da7-45be-a0ae-0fd454d3d70f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "d206a5a0-2e3b-4eb4-9209-9f9c4dc034eb"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210519Z:d206a5a0-2e3b-4eb4-9209-9f9c4dc034eb"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: DACE5C2717B444ECB4CD4F997C619568 Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:05:18Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:05:18 GMT"
+        ],
+        "Content-Length": [
+          "389"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"name\": \"d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"percentComplete\": 0,\n  \"startTime\": \"2021-05-12T16:03:46.0593611-05:00\",\n  \"status\": \"Pending\"\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzL29wZXJhdGlvbnN0YXR1c2VzL2Q5YzFjYTljLTNkNDItNDFlZC1hYzc4LWI2MjkwOTY3MDNmYT9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14983"
+        ],
+        "x-ms-request-id": [
+          "a57ef171-ef6b-4592-9bb3-5ed616c290c1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "027f6dd8-0fc7-402d-9698-7d601530a52b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210529Z:027f6dd8-0fc7-402d-9698-7d601530a52b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: A92898BE0F6B46448B9F0940CB931D24 Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:05:29Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:05:29 GMT"
+        ],
+        "Content-Length": [
+          "999"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"endTime\": \"2021-05-22T14:58:05.916814-05:00\",\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703/operationstatuses/d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"name\": \"d9c1ca9c-3d42-41ed-ac78-b629096703fa\",\n  \"percentComplete\": 100,\n  \"properties\": {\n    \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703\",\n    \"name\": \"scripting_execution3703\",\n    \"properties\": {\n      \"finishedAt\": \"2021-05-22 19:58:05Z\",\n      \"namedOutputs\": {\n        \"key\": \"value\"\n      },\n      \"output\": [],\n      \"provisioningState\": \"Succeeded\",\n      \"scriptCmdletId\": \"JSDR.Configuration/1.0.16/invoke-preflightjetdrsystemcheck\",\n      \"submittedAt\": \"2021-05-12 21:03:46Z\",\n      \"timeout\": \"PT1H\"\n    },\n    \"type\": \"Microsoft.AVS/privateClouds/scriptExecutions\"\n  },\n  \"startTime\": \"2021-05-12T16:03:46.0593611-05:00\",\n  \"status\": \"Succeeded\"\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14982"
+        ],
+        "x-ms-request-id": [
+          "57e42df7-d897-4498-bfc2-0d33cfcef587"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "48ee3d52-59b2-439e-8c9f-06715d44166a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210529Z:48ee3d52-59b2-439e-8c9f-06715d44166a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: E2B7338B46A441C785449B32A9C7CFC5 Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:05:29Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:05:29 GMT"
+        ],
+        "Content-Length": [
+          "546"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703\",\n  \"name\": \"scripting_execution3703\",\n  \"properties\": {\n    \"finishedAt\": \"2021-05-22 19:58:05Z\",\n    \"namedOutputs\": {\n      \"key\": \"value\"\n    },\n    \"output\": [],\n    \"provisioningState\": \"Succeeded\",\n    \"scriptCmdletId\": \"JSDR.Configuration/1.0.16/invoke-preflightjetdrsystemcheck\",\n    \"submittedAt\": \"2021-05-12 21:03:46Z\",\n    \"timeout\": \"PT1H\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/scriptExecutions\"\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9e49f01d-4bcb-46ee-8f12-bab15f5e5c0c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14981"
+        ],
+        "x-ms-request-id": [
+          "a05b2b80-742a-44de-ba5a-af6a3d2f513a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "faa45302-efee-4350-864e-62583b298d3a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210530Z:faa45302-efee-4350-864e-62583b298d3a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 0737FAE4DD634940BEA04075777CBC4D Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:05:30Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:05:29 GMT"
+        ],
+        "Content-Length": [
+          "546"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703\",\n  \"name\": \"scripting_execution3703\",\n  \"properties\": {\n    \"finishedAt\": \"2021-05-22 19:58:05Z\",\n    \"namedOutputs\": {\n      \"key\": \"value\"\n    },\n    \"output\": [],\n    \"provisioningState\": \"Succeeded\",\n    \"scriptCmdletId\": \"JSDR.Configuration/1.0.16/invoke-preflightjetdrsystemcheck\",\n    \"submittedAt\": \"2021-05-12 21:03:46Z\",\n    \"timeout\": \"PT1H\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/scriptExecutions\"\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "197c6a00-a91c-4f71-94d6-06e5bf0b45e2"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14980"
+        ],
+        "x-ms-request-id": [
+          "963c5ad5-ea99-4057-994c-1613c4761f77"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "a2cf1b72-189a-4e33-9363-c5dd87273c5c"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210530Z:a2cf1b72-189a-4e33-9363-c5dd87273c5c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: D3438393259A45ECAA871A86ABAE2A41 Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:05:30Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:05:30 GMT"
+        ],
+        "Content-Length": [
+          "1054"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703\",\n      \"name\": \"scripting_execution3703\",\n      \"properties\": {\n        \"finishedAt\": \"2021-05-22 19:58:05Z\",\n        \"namedOutputs\": {\n          \"key\": \"value\"\n        },\n        \"output\": [],\n        \"provisioningState\": \"Succeeded\",\n        \"scriptCmdletId\": \"JSDR.Configuration/1.0.16/invoke-preflightjetdrsystemcheck\",\n        \"submittedAt\": \"2021-05-12 21:03:46Z\",\n        \"timeout\": \"PT1H\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/scriptExecutions\"\n    },\n    {\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution6448\",\n      \"name\": \"scripting_execution6448\",\n      \"properties\": {\n        \"namedOutputs\": {},\n        \"output\": [],\n        \"provisioningState\": \"Pending\",\n        \"scriptCmdletId\": \"JSDR.Configuration/1.0.16/invoke-preflightjetdrsystemcheck\",\n        \"submittedAt\": \"2021-05-12 20:50:00Z\",\n        \"timeout\": \"PT1H\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/scriptExecutions\"\n    }\n  ]\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptExecutions/scripting_execution3703?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRFeGVjdXRpb25zL3NjcmlwdGluZ19leGVjdXRpb24zNzAzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2bb8918d-673d-49bf-ba39-d8965608c304"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "1967e6c2-b20e-43b9-9389-419867991a16"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "72f3ee29-122e-4690-8ddb-4b2f0bba456a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T210531Z:72f3ee29-122e-4690-8ddb-4b2f0bba456a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 4E4DC36EC4E24CE4972F49BA63C86531 Ref B: BOG30EDGE0106 Ref C: 2021-05-12T21:05:30Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 21:05:30 GMT"
+        ],
+        "Content-Type": [
+          "text/html"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "ScriptExecutionsAll": [
+      "scripting_execution3703"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5"
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration%401.0.16/scriptCmdlets?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRQYWNrYWdlcy9KU0RSLkNvbmZpZ3VyYXRpb24lNDAxLjAuMTYvc2NyaXB0Q21kbGV0cz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "80e1627a-8331-4cb7-af7f-e4f0f1661297"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14940"
+        ],
+        "x-ms-request-id": [
+          "07003a90-7d54-4748-83c6-2ef92aacd216"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "b8c62c73-2f3d-4b67-bba9-cc1427d06093"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T195310Z:b8c62c73-2f3d-4b67-bba9-cc1427d06093"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: DC4EDCABEDD94E8CB85601074B88F9D7 Ref B: BOG30EDGE0110 Ref C: 2021-05-12T19:53:09Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 19:53:10 GMT"
+        ],
+        "Content-Length": [
+          "2850"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"value\": [\n    {\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration@1.0.16/scriptCmdlets/Invoke-PreflightJetDRInstall\",\n      \"name\": \"Invoke-PreflightJetDRInstall\",\n      \"properties\": {\n        \"description\": \"Preflight commands to execute\",\n        \"parameters\": [\n          {\n            \"description\": \"Cluster where the MSA will be deployed\",\n            \"name\": \"Cluster\",\n            \"type\": \"String\",\n            \"visible\": true\n          },\n          {\n            \"description\": \"Protected Cluster\",\n            \"name\": \"ProtectedCluster\",\n            \"type\": \"String\",\n            \"visible\": true\n          },\n          {\n            \"description\": \"Install\",\n            \"name\": \"Mode\",\n            \"type\": \"String\",\n            \"visible\": true\n          },\n          {\n            \"description\": \"Credential\",\n            \"name\": \"Credential\",\n            \"type\": \"Credential\",\n            \"visible\": false\n          }\n        ],\n        \"timeout\": \"PT2H\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\"\n    },\n    {\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration@1.0.16/scriptCmdlets/Invoke-PreflightJetDRSystemCheck\",\n      \"name\": \"Invoke-PreflightJetDRSystemCheck\",\n      \"properties\": {\n        \"description\": \"Preflight commands to execute\",\n        \"parameters\": [],\n        \"timeout\": \"PT2H\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\"\n    },\n    {\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration@1.0.16/scriptCmdlets/Invoke-PreflightJetDRUninstall\",\n      \"name\": \"Invoke-PreflightJetDRUninstall\",\n      \"properties\": {\n        \"description\": \"This Cmdlet checks and displays current state of the system before uninstall of JetDR\",\n        \"parameters\": [\n          {\n            \"description\": \"IP of MSA VM\",\n            \"name\": \"MSIp\",\n            \"type\": \"String\",\n            \"visible\": true\n          },\n          {\n            \"description\": \"Credential\",\n            \"name\": \"Credential\",\n            \"type\": \"Credential\",\n            \"visible\": false\n          },\n          {\n            \"description\": \"Protected Cluster\",\n            \"name\": \"ProtectedCluster\",\n            \"type\": \"String\",\n            \"visible\": true\n          }\n        ],\n        \"timeout\": \"PT2H\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\"\n    },\n    {\n      \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration@1.0.16/scriptCmdlets/Uninstall-JetDR\",\n      \"name\": \"Uninstall-JetDR\",\n      \"properties\": {\n        \"description\": \"The top level Cmdlet creates a new user,assigns elevated privilleges to the user, unconfigures cluster,unregisters vCenter from the JetDr MSA,removes the user.\",\n        \"parameters\": [\n          {\n            \"description\": \"IP of the MSA to be deployed\",\n            \"name\": \"MSIp\",\n            \"type\": \"String\",\n            \"visible\": true\n          },\n          {\n            \"description\": \"Protected Cluster\",\n            \"name\": \"ProtectedCluster\",\n            \"type\": \"String\",\n            \"visible\": true\n          },\n          {\n            \"description\": \"Credential of root user of MSA\",\n            \"name\": \"Credential\",\n            \"type\": \"Credential\",\n            \"visible\": false\n          }\n        ],\n        \"timeout\": \"PT2H\"\n      },\n      \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\"\n    }\n  ]\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration%401.0.16/scriptCmdlets/invoke-preflightjetdrsystemcheck?api-version=2021-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmE3NWU3OWItZGQ5NS00MDI1LTlkYmYtM2E3YWU4ZGZmMmI1L3Jlc291cmNlR3JvdXBzL2FudWxsaWFuLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuQVZTL3ByaXZhdGVDbG91ZHMvYW51bGxpYW4tc291dGhjZW50cmFsdXMtcnVuY29tbWFuZC9zY3JpcHRQYWNrYWdlcy9KU0RSLkNvbmZpZ3VyYXRpb24lNDAxLjAuMTYvc2NyaXB0Q21kbGV0cy9pbnZva2UtcHJlZmxpZ2h0amV0ZHJzeXN0ZW1jaGVjaz9hcGktdmVyc2lvbj0yMDIxLTA2LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "25a9dbb6-9a45-467f-94de-25f7c011ce8c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29719.03",
+          "OSName/Linux",
+          "OSVersion/Linux.5.4.72.microsoft.standard.WSL2.1.SMP.Wed.Oct.28.23.40.43.UTC.2020",
+          "Microsoft.Azure.Management.Avs.AvsClient/2.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14939"
+        ],
+        "x-ms-request-id": [
+          "44d46b82-1ada-4108-a0dd-4021630deb83"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "98f8bbe6-8915-48ec-9b81-c07c9442294e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210512T195310Z:98f8bbe6-8915-48ec-9b81-c07c9442294e"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 8FCE87E23A5F4A3495AA79550E5D0117 Ref B: BOG30EDGE0110 Ref C: 2021-05-12T19:53:10Z"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 19:53:10 GMT"
+        ],
+        "Content-Length": [
+          "450"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\n  \"id\": \"/subscriptions/ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5/resourceGroups/anullian-rg/providers/Microsoft.AVS/privateClouds/anullian-southcentralus-runcommand/scriptPackages/JSDR.Configuration@1.0.16/scriptCmdlets/Invoke-PreflightJetDRSystemCheck\",\n  \"name\": \"Invoke-PreflightJetDRSystemCheck\",\n  \"properties\": {\n    \"description\": \"Preflight commands to execute\",\n    \"parameters\": [],\n    \"timeout\": \"PT2H\"\n  },\n  \"type\": \"Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets\"\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5"
+  }
+}
