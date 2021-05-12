@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "storagepool/resource-manager" -AutoRestVersion "latest"
