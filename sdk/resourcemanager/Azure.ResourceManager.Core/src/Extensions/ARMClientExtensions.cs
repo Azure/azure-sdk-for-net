@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Azure.ResourceManager.Core
@@ -16,11 +17,21 @@ namespace Azure.ResourceManager.Core
         /// Get the operations for an specif resource.
         /// </summary>
         /// <param name="client"></param>
-        /// <param name="id">The ID of the resource to retrieve.</param>
+        /// <param name="ids">A list of the IDs of the resources to retrieve.</param>
         /// <returns></returns>
-        public static GenericResourceOperations GetGenericResourceOperations(this ArmClient client, string id)
+        public static List<GenericResourceOperations> GetGenericResourceOperations(this ArmClient client, List<string> ids)
         {
-            return new GenericResourceOperations(client.DefaultSubscription, id);
+            if (ids == null || !ids.Any())
+            {
+                throw new ArgumentNullException(nameof(ids));
+            }
+
+            var genericRespirceOperations = new List<GenericResourceOperations>();
+            foreach (string id in ids)
+            {
+                genericRespirceOperations.Add(new GenericResourceOperations(client.DefaultSubscription, id));
+            }
+            return genericRespirceOperations;
         }
     }
 }
