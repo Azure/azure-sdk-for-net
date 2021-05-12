@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
@@ -26,8 +23,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="baseUri"> The base URI of the service. </param>
-        internal TenantOperations(ArmClientOptions options, TokenCredential credential, Uri baseUri)
-            : base(new ClientContext(options, credential, baseUri), ResourceIdentifier.RootResourceIdentifier)
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        internal TenantOperations(ArmClientOptions options, TokenCredential credential, Uri baseUri, HttpPipeline pipeline)
+            : base(new ClientContext(options, credential, baseUri, pipeline), ResourceIdentifier.RootResourceIdentifier)
         {
         }
 

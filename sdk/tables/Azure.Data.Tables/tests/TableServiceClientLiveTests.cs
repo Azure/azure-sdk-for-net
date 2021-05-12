@@ -67,8 +67,8 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClients using the SAS URIs.
             // Intentionally double add the Sas to the endpoint and the cred to validate de-duping
-            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TableClientOptions())));
-            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TablesClientOptions())));
+            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TablesClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with only Delete permissions.
 
@@ -117,8 +117,8 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClients using the SAS URIs.
             // Intentionally double add the Sas to the endpoint and the cred to validate de-duping
-            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TableClientOptions())));
-            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceDelete = InstrumentClient(new TableServiceClient(sasUriDelete.Uri, new AzureSasCredential(tokenDelete), InstrumentClientOptions(new TablesClientOptions())));
+            var sasAuthedServiceWriteDelete = InstrumentClient(new TableServiceClient(sasUriWriteDelete.Uri, new AzureSasCredential(tokenWriteDelete), InstrumentClientOptions(new TablesClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with only Delete permissions.
 
@@ -167,8 +167,8 @@ namespace Azure.Data.Tables.Tests
 
             // Create the TableServiceClients using the SAS URIs.
 
-            var sasAuthedServiceClientService = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenService), InstrumentClientOptions(new TableClientOptions())));
-            var sasAuthedServiceClientServiceContainer = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenServiceContainer), InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedServiceClientService = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenService), InstrumentClientOptions(new TablesClientOptions())));
+            var sasAuthedServiceClientServiceContainer = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(tokenServiceContainer), InstrumentClientOptions(new TablesClientOptions())));
 
             // Validate that we are unable to create a table using the SAS URI with access to Service resource types.
 
@@ -216,7 +216,7 @@ namespace Azure.Data.Tables.Tests
 
                 // Get the table list.
                 var remainingItems = createdTables.Count;
-                await foreach (var page in service.GetTablesAsync(/*maxPerPage: pageCount*/).AsPages(pageSizeHint: pageCount))
+                await foreach (var page in service.QueryAsync(/*maxPerPage: pageCount*/).AsPages(pageSizeHint: pageCount))
                 {
                     Assert.That(page.Values, Is.Not.Empty);
                     if (pageCount.HasValue)
@@ -262,14 +262,14 @@ namespace Azure.Data.Tables.Tests
 
                 // Query with a filter.
 
-                var tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{tableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+                var tableResponses = (await service.QueryAsync(filter: $"TableName eq '{tableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
                 Assert.AreEqual(tableName, tableResponses.Select(r => r.Name).SingleOrDefault());
 
                 // Query with a filter.
 
-                tableResponses = (await service.GetTablesAsync(filter: t => t.Name == tableName).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+                tableResponses = (await service.QueryAsync(filter: t => t.Name == tableName).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
                 Assert.AreEqual(tableName, tableResponses.Select(r => r.Name).SingleOrDefault());

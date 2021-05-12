@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -33,13 +32,13 @@ namespace Azure.ResourceManager.Core
             : base(clientContext, id)
         {
         }
-       
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerBase{TOperations, TIdentifier}"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         protected ContainerBase(ResourceOperationsBase parent)
-            : base(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri), parent.Id)
+            : base(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri, parent.Pipeline), parent.Id)
         {
             Parent = parent;
         }
@@ -111,10 +110,24 @@ namespace Azure.ResourceManager.Core
         /// Determines whether or not the azure resource exists in this container
         /// </summary>
         /// <param name="resourceName"> The name of the resource you want to check. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual bool DoesExist(string resourceName)
+        public virtual bool DoesExist(string resourceName, CancellationToken cancellationToken = default)
         {
-            return TryGet(resourceName) == null ? false : true;
+            return TryGet(resourceName, cancellationToken) == null ? false : true;
+        }
+
+        /// <summary>
+        /// Determines whether or not the azure resource exists in this container
+        /// </summary>
+        /// <param name="resourceName"> The name of the resource you want to check. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> Whether or not the resource existed. </returns>
+        public virtual async Task<bool> DoesExistAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            return await TryGetAsync(resourceName, cancellationToken).ConfigureAwait(false) == null ? false : true;
         }
 
         /// <summary>

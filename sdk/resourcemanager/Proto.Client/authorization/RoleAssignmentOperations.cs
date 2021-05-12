@@ -62,31 +62,31 @@ namespace Proto.Authorization
         private RoleAssignmentsOperations Operations { get; }
 
         /// <inheritdoc/>
-        public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
+        public Response Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.DeleteById(Id, cancellationToken).GetRawResponse());
+            return Operations.DeleteById(Id, cancellationToken).GetRawResponse();
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse((await Operations.DeleteByIdAsync(Id, cancellationToken)).GetRawResponse());
+            return (await Operations.DeleteByIdAsync(Id, cancellationToken)).GetRawResponse();
         }
 
         /// <inheritdoc/>
-        public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
+        public Operation StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.DeleteById(Id, cancellationToken).GetRawResponse());
+            return new PhVoidArmOperation(Operations.DeleteById(Id, cancellationToken).GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Operation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation((await Operations.DeleteByIdAsync(Id, cancellationToken)).GetRawResponse());
+            return new PhVoidArmOperation((await Operations.DeleteByIdAsync(Id, cancellationToken)).GetRawResponse());
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<RoleAssignment> Get(CancellationToken cancellationToken = default)
+        public override Response<RoleAssignment> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
                 Operations.GetById(Id, cancellationToken),
@@ -94,7 +94,7 @@ namespace Proto.Authorization
         }
 
         /// <inheritdoc/>
-        public async override Task<ArmResponse<RoleAssignment>> GetAsync(CancellationToken cancellationToken = default)
+        public async override Task<Response<RoleAssignment>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<RoleAssignment, Azure.ResourceManager.Authorization.Models.RoleAssignment>(
                 await Operations.GetByIdAsync(Id, cancellationToken),

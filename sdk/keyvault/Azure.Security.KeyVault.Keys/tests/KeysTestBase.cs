@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
             ? TimeSpan.Zero
-            : TimeSpan.FromSeconds(2);
+            : KeyVaultTestEnvironment.DefaultPollingInterval;
 
         public KeyClient Client { get; private set; }
 
@@ -260,7 +260,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= TimeSpan.FromSeconds(5);
+                delay ??= KeyVaultTestEnvironment.DefaultPollingInterval;
                 return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: delay.Value);
             }
         }
@@ -274,7 +274,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                delay ??= TimeSpan.FromSeconds(5);
+                delay ??= KeyVaultTestEnvironment.DefaultPollingInterval;
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {

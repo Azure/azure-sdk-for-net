@@ -432,7 +432,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [NonParallelizable]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/20923")]
         public async Task SetPropertiesAsync_DeleteRetentionPolicy()
         {
             // Arrange
@@ -781,7 +781,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var uriEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (uriEndpoint, blobSecondaryEndpoint));
@@ -812,7 +812,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void CanGenerateSas_GetFileSystemClient()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var uriEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (uriEndpoint, blobSecondaryEndpoint));
@@ -863,7 +863,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
-            var constants = new TestConstants(this);
+            var constants = TestConstants.Create(this);
             var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
             var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
@@ -894,7 +894,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void GenerateAccountSas_Builder()
         {
             // Arrange
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
@@ -927,7 +927,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public void GenerateAccountSas_WrongService_Service()
         {
-            TestConstants constants = new TestConstants(this);
+            TestConstants constants = TestConstants.Create(this);
             Uri serviceUri = new Uri($"https://{constants.Sas.Account}.dfs.core.windows.net");
             AccountSasPermissions permissions = AccountSasPermissions.Read | AccountSasPermissions.Write;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);

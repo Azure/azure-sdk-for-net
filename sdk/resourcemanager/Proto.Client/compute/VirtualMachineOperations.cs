@@ -70,27 +70,27 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
+        public Response Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return (await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc/>
-        public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
+        public Operation StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return new PhVoidArmOperation(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Operation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return new PhVoidArmOperation(await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         #region PowerOn
@@ -98,42 +98,42 @@ namespace Proto.Compute
         ///  The operation to start a virtual machine. 
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public ArmResponse<Response> PowerOn(CancellationToken cancellationToken = default)
+        /// <returns> A response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        public Response PowerOn(CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartStart(Id.ResourceGroupName, Id.Name, cancellationToken);
-            return new ArmResponse(operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <summary>
         ///  The operation to start a virtual machine. 
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public async Task<ArmResponse<Response>> PowerOnAsync(CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        public async Task<Response> PowerOnAsync(CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartStartAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-            return new ArmResponse(await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+            return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         ///  The operation to start a virtual machine. 
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
-        public ArmOperation<Response> StartPowerOn(CancellationToken cancellationToken = default)
+        /// <returns> An <see cref="ArmOperation"/> that allows polling for completion of the operation. </returns>
+        public Operation StartPowerOn(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartStart(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return new PhVoidArmOperation(Operations.StartStart(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <summary>
         ///  The operation to start a virtual machine. 
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
-        public async Task<ArmOperation<Response>> StartPowerOnAsync(CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation"/> that allows polling for completion of the operation. </returns>
+        public async Task<Operation> StartPowerOnAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartStartAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false));
+            return new PhVoidArmOperation(await Operations.StartStartAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false));
         }
         #endregion
 
@@ -143,11 +143,11 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public ArmResponse<Response> PowerOff(bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        /// <returns> A response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        public Response PowerOff(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartPowerOff(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken);
-            return new ArmResponse(operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -155,11 +155,11 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public async Task<ArmResponse<Response>> PowerOffAsync(bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        public async Task<Response> PowerOffAsync(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartPowerOffAsync(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken).ConfigureAwait(false);
-            return new ArmResponse(await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+            return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -167,10 +167,10 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
-        public ArmOperation<Response> StartPowerOff(bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        /// <returns> An <see cref="ArmOperation"/> that allows polling for completion of the operation. </returns>
+        public Operation StartPowerOff(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartPowerOff(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken));
+            return new PhVoidArmOperation(Operations.StartPowerOff(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken));
         }
 
         /// <summary>
@@ -178,15 +178,15 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
-        public async Task<ArmOperation<Response>> StartPowerOffAsync(bool? skipShutdown = null, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation"/> that allows polling for completion of the operation. </returns>
+        public async Task<Operation> StartPowerOffAsync(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartPowerOffAsync(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken).ConfigureAwait(false));
+            return new PhVoidArmOperation(await Operations.StartPowerOffAsync(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken).ConfigureAwait(false));
         }
         #endregion
 
         /// <inheritdoc/>
-        public override ArmResponse<VirtualMachine> Get(CancellationToken cancellationToken = default)
+        public override Response<VirtualMachine> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
                 Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken),
@@ -194,7 +194,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<VirtualMachine>> GetAsync(CancellationToken cancellationToken = default)
+        public override async Task<Response<VirtualMachine>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
                 await Operations.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken),
@@ -205,8 +205,8 @@ namespace Proto.Compute
         ///  The operation to update a virtual machine. Please note some properties can be set only during virtual machine creation. 
         /// </summary>
         /// <param name="patchable"> The parameters to update. </param>
-        /// <returns> An <see cref="ArmOperation{VirtualMachine}"/> that allows polling for completion of the operation. </returns>
-        public ArmOperation<VirtualMachine> StartUpdate(VirtualMachineUpdate patchable, CancellationToken cancellationToken = default)
+        /// <returns> An <see cref="Operation{VirtualMachine}"/> that allows polling for completion of the operation. </returns>
+        public Operation<VirtualMachine> StartUpdate(VirtualMachineUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
                 Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
@@ -218,8 +218,8 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="patchable"> The parameters to update. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{VirtualMachine}"/> that allows polling for completion of the operation. </returns>
-        public async Task<ArmOperation<VirtualMachine>> StartUpdateAsync(VirtualMachineUpdate patchable, CancellationToken cancellationToken = default)
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="Operation{VirtualMachine}"/> that allows polling for completion of the operation. </returns>
+        public async Task<Operation<VirtualMachine>> StartUpdateAsync(VirtualMachineUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
                 await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
@@ -227,7 +227,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmResponse<VirtualMachine> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public Response<VirtualMachine> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var vm = GetResource();
             var patchable = new VirtualMachineUpdate();
@@ -240,7 +240,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<VirtualMachine>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachine>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var vm = await GetResourceAsync(cancellationToken);
             var patchable = new VirtualMachineUpdate();
@@ -253,7 +253,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmOperation<VirtualMachine> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
+        public Operation<VirtualMachine> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var vm = GetResource();
             var patchable = new VirtualMachineUpdate();
@@ -266,7 +266,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<VirtualMachine>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async Task<Operation<VirtualMachine>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var vm = await GetResourceAsync(cancellationToken);
             var patchable = new VirtualMachineUpdate();
@@ -279,7 +279,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmResponse<VirtualMachine> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public Response<VirtualMachine> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new VirtualMachineUpdate();
             patchable.Tags.ReplaceWith(tags);
@@ -290,7 +290,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<VirtualMachine>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachine>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new VirtualMachineUpdate();
             patchable.Tags.ReplaceWith(tags);
@@ -301,7 +301,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmOperation<VirtualMachine> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public Operation<VirtualMachine> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new VirtualMachineUpdate();
             patchable.Tags.ReplaceWith(tags);
@@ -312,7 +312,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<VirtualMachine>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async Task<Operation<VirtualMachine>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new VirtualMachineUpdate();
             patchable.Tags.ReplaceWith(tags);
@@ -323,7 +323,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmResponse<VirtualMachine> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public Response<VirtualMachine> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var vm = GetResource();
             var patchable = new VirtualMachineUpdate();
@@ -336,7 +336,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<VirtualMachine>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachine>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var vm = await GetResourceAsync(cancellationToken);
             var patchable = new VirtualMachineUpdate();
@@ -349,7 +349,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public ArmOperation<VirtualMachine> StartRemoveTag(string key, CancellationToken cancellationToken = default)
+        public Operation<VirtualMachine> StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var vm = GetResource();
             var patchable = new VirtualMachineUpdate();
@@ -362,7 +362,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<VirtualMachine>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Operation<VirtualMachine>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var vm = await GetResourceAsync(cancellationToken);
             var patchable = new VirtualMachineUpdate();

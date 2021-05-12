@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="operations"> The operations to copy the client options from. </param>
         /// <param name="parentId"> The resource Id of the parent resource. </param>
         protected ExtensionResourceContainer(OperationsBase operations, ResourceIdentifier parentId)
-            : base(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri), parentId)
+            : base(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri, operations.Pipeline), parentId)
         {
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceDetails"> The properties of the extension resource. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An Http envelope containing the operations for the given extension. </returns>
-        public abstract ArmResponse<TOperations> Create(string name, TInput resourceDetails, CancellationToken cancellationToken = default);
+        public abstract Response<TOperations> Create(string name, TInput resourceDetails, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a new extension resource at the given scope without blocking the current thread.
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceDetails">The properties of the extension resource. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns>A Task that creates the extension resource. </returns>
-        public abstract Task<ArmResponse<TOperations>> CreateAsync(string name, TInput resourceDetails, CancellationToken cancellationToken = default);
+        public abstract Task<Response<TOperations>> CreateAsync(string name, TInput resourceDetails, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Begin Creation of a new extension resource. Block until the creation is accepted by the service.
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="name"> The name of the created extension resource. </param>
         /// <param name="resourceDetails"> The properties of the extension resource. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An instance of <see cref="ArmOperation{TOperation}"/>, allowing fine grained control over waiting for creation to complete. </returns>
-        public abstract ArmOperation<TOperations> StartCreate(string name, TInput resourceDetails, CancellationToken cancellationToken = default);
+        /// <returns> An instance of <see cref="Operation{TOperation}"/>, allowing fine grained control over waiting for creation to complete. </returns>
+        public abstract Operation<TOperations> StartCreate(string name, TInput resourceDetails, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Begin Creation of a new extension resource in a background task.
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="name"> The name of the created extension resource. </param>
         /// <param name="resourceDetails"> The properties of the extension resource. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{TOperations}"/> that allows polling for completion of the operation. </returns>
-        public abstract Task<ArmOperation<TOperations>> StartCreateAsync(string name, TInput resourceDetails, CancellationToken cancellationToken = default);
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="Operation{TOperations}"/> that allows polling for completion of the operation. </returns>
+        public abstract Task<Operation<TOperations>> StartCreateAsync(string name, TInput resourceDetails, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists the extension resources at the current scope. Blocks until the first page of results is returned.

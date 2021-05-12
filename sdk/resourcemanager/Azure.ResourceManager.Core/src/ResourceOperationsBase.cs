@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Core.Extensions;
 
 namespace Azure.ResourceManager.Core
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="id"></param>
         internal ResourceOperationsBase(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
-        { 
+        {
         }
     }
 
@@ -58,7 +56,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="parentOperations"> The resource representing the parent resource. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         protected ResourceOperationsBase(OperationsBase parentOperations, ResourceIdentifier id)
-            : base(new ClientContext(parentOperations.ClientOptions, parentOperations.Credential, parentOperations.BaseUri), id)
+            : base(new ClientContext(parentOperations.ClientOptions, parentOperations.Credential, parentOperations.BaseUri, parentOperations.Pipeline), id)
         {
         }
 
@@ -84,20 +82,20 @@ namespace Azure.ResourceManager.Core
         /// Gets details for this resource from the service.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
-        public abstract ArmResponse<TOperations> Get(CancellationToken cancellationToken = default);
+        /// <returns> A response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
+        public abstract Response<TOperations> Get(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets details for this resource from the service.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
-        public abstract Task<ArmResponse<TOperations>> GetAsync(CancellationToken cancellationToken = default);
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{TOperations}"/> operation for this resource. </returns>
+        public abstract Task<Response<TOperations>> GetAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get details for this resource from the service or can be overriden to provide a cached instance.
         /// </summary>
-        /// <returns> A <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
+        /// <returns> A TOperations operation for this resource. </returns>
         protected virtual TOperations GetResource(CancellationToken cancellationToken = default)
         {
             return Get(cancellationToken).Value;
@@ -107,7 +105,7 @@ namespace Azure.ResourceManager.Core
         /// Get details for this resource from the service or can be overriden to provide a cached instance.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a TOperations operation for this resource. </returns>
         protected virtual async Task<TOperations> GetResourceAsync(CancellationToken cancellationToken = default)
         {
             return (await GetAsync(cancellationToken).ConfigureAwait(false)).Value;

@@ -17,6 +17,12 @@ namespace Azure.IoT.TimeSeriesInsights
         public List<EventProperty> ProjectedProperties { get; }
 
         /// <summary>
+        /// The maximum number of property values in the whole response set, not the maximum number of property values per page.
+        /// Defaults to 10,000 when not set. Maximum value of take can be 250,000.
+        /// </summary>
+        public int? MaximumNumberOfEvents { get; set; }
+
+        /// <summary>
         /// Creates a new instance of QueryEventsRequestOptions.
         /// </summary>
         public QueryEventsRequestOptions()

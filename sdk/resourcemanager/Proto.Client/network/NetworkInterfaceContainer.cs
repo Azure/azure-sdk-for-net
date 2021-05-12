@@ -7,7 +7,6 @@ using Azure.ResourceManager.Core.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -40,8 +39,16 @@ namespace Proto.Network
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
 
-        /// <inheritdoc/>
-        public override ArmResponse<NetworkInterface> CreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a network interface. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the network interface. </param>
+        /// <param name="resourceDetails"> The desired network interface configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A response with the <see cref="Response{NetworkInterface}"/> operation for this resource. </returns>
+        /// <exception cref="ArgumentException"> Name of the network interface cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public Response<NetworkInterface> CreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken);
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
@@ -49,8 +56,16 @@ namespace Proto.Network
                 n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
         }
 
-        /// <inheritdoc/>
-        public async override Task<ArmResponse<NetworkInterface>> CreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a network interface. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the network interface. </param>
+        /// <param name="resourceDetails"> The desired network interface configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{NetworkInterface}"/> operation for this network interface. </returns>
+        /// <exception cref="ArgumentException"> Name of the network interface cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public async Task<Response<NetworkInterface>> CreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
@@ -58,16 +73,38 @@ namespace Proto.Network
                 n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
         }
 
-        /// <inheritdoc/>
-        public override ArmOperation<NetworkInterface> StartCreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a network interface. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the network interface. </param>
+        /// <param name="resourceDetails"> The desired network interface configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> An <see cref="Operation{NetworkInterface}"/> that allows polling for completion of the operation. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        /// <exception cref="ArgumentException"> Name of the network interface cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public Operation<NetworkInterface> StartCreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken),
                 n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
         }
 
-        /// <inheritdoc/>
-        public async override Task<ArmOperation<NetworkInterface>> StartCreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a network interface. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the network interface. </param>
+        /// <param name="resourceDetails"> The desired network interface configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="Operation{NetworkInterface}"/> that allows polling for completion of the operation. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        /// <exception cref="ArgumentException"> Name of the network interface cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public async Task<Operation<NetworkInterface>> StartCreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false),
@@ -81,7 +118,7 @@ namespace Proto.Network
         /// <param name="subnetId"> The resource identifier of the subnet attached to this <see cref="NetworkInterface"/>. </param>
         /// <param name="location"> The <see cref="LocationData"/> that will contain the <see cref="NetworkInterface"/>. </param>
         /// <returns>An object used to create a <see cref="NetworkInterface"/>. </returns>
-        public ArmBuilder<ResourceGroupResourceIdentifier, NetworkInterface, NetworkInterfaceData> Construct(string subnetId, PublicIPAddressData ip = default, LocationData location = null)
+        public NetworkInterfaceBuilder Construct(string subnetId, PublicIPAddressData ip = default, LocationData location = null)
         {
             var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier, ResourceGroupOperations>();
             var nic = new Azure.ResourceManager.Network.Models.NetworkInterface()
@@ -100,13 +137,13 @@ namespace Proto.Network
             if (ip != null)
                 nic.IpConfigurations[0].PublicIPAddress = new PublicIPAddress() { Id = ip.Id };
 
-            return new ArmBuilder<ResourceGroupResourceIdentifier, NetworkInterface, NetworkInterfaceData>(this, new NetworkInterfaceData(nic));
+            return new NetworkInterfaceBuilder(this, new NetworkInterfaceData(nic));
         }
 
         /// <summary>
         /// Lists the <see cref="NetworkInterface"/> for this <see cref="ResourceGroup"/>.
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="System.Threading.CancellationToken.None"/>. </param>
         /// <returns> A collection of <see cref="NetworkInterface"/> that may take multiple service requests to iterate over. </returns>
         public Pageable<NetworkInterfaceOperations> List(CancellationToken cancellationToken = default)
@@ -119,7 +156,7 @@ namespace Proto.Network
         /// <summary>
         /// Lists the <see cref="NetworkInterface"/> for this <see cref="ResourceGroup"/>.
         /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
         /// <returns> An async collection of <see cref="NetworkInterface"/> that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<NetworkInterfaceOperations> ListAsync(CancellationToken cancellationToken = default)
@@ -135,7 +172,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="nameFilter"> A string to filter the <see cref="NetworkInterface"/> resources by name. </param>
         /// <param name="top"> The number of results to return per page of data. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public Pageable<GenericResource> ListAsGenericResource(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
@@ -150,7 +187,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="nameFilter"> A string to filter the <see cref="NetworkInterface"/> resources by name. </param>
         /// <param name="top"> The number of results to return per page of data. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<GenericResource> ListAsGenericResourceAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
@@ -161,12 +198,12 @@ namespace Proto.Network
         }
 
         /// <summary>
-        /// Filters the list of <see cref="NetworkInterface"/> resources for this <see cref="ResourceGroup"/>. 
+        /// Filters the list of <see cref="NetworkInterface"/> resources for this <see cref="ResourceGroup"/>.
         /// Makes an additional network call to retrieve the full data model for each <see cref="NetworkInterface"/>.
         /// </summary>
         /// <param name="nameFilter"> A string to filter the <see cref="NetworkInterface"/> resources by name. </param>
         /// <param name="top"> The number of results to return per page of data. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public Pageable<NetworkInterface> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
@@ -176,12 +213,12 @@ namespace Proto.Network
         }
 
         /// <summary>
-        /// Filters the list of <see cref="NetworkInterface"/> resources for this <see cref="ResourceGroup"/>. 
+        /// Filters the list of <see cref="NetworkInterface"/> resources for this <see cref="ResourceGroup"/>.
         /// Makes an additional network call to retrieve the full data model for each <see cref="NetworkInterface"/>.
         /// </summary>
         /// <param name="nameFilter"> A string to filter the <see cref="NetworkInterface"/> resources by name. </param>
         /// <param name="top"> The number of results to return per page of data. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<NetworkInterface> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
@@ -196,7 +233,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc />
-        public override ArmResponse<NetworkInterface> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
+        public override Response<NetworkInterface> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 Operations.Get(Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken),
@@ -204,7 +241,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
+        public override async Task<Response<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await Operations.GetAsync(Id.ResourceGroupName, networkInterfaceName, null, cancellationToken),

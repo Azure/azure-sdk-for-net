@@ -4,7 +4,6 @@
 using Azure;
 using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -61,166 +60,166 @@ namespace Proto.Network
             ClientOptions.Convert<NetworkManagementClientOptions>()).PublicIPAddresses;
 
         /// <inheritdoc />
-        public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
+        public Response Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken)
-                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken)
+                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc />
-        public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken))
-                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return (await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken))
+                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <inheritdoc />
-        public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
+        public Operation StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return new PhVoidArmOperation(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc />
-        public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<Operation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
+            return new PhVoidArmOperation(await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc />
-        public override ArmResponse<PublicIpAddress> Get(CancellationToken cancellationToken = default)
+        public override Response<PublicIpAddress> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken),
+            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc />
-        public override async Task<ArmResponse<PublicIpAddress>> GetAsync(CancellationToken cancellationToken = default)
+        public override async Task<Response<PublicIpAddress>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(await Operations.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc />
-        public ArmResponse<PublicIpAddress> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public Response<PublicIpAddress> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc />
-        public async Task<ArmResponse<PublicIpAddress>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async Task<Response<PublicIpAddress>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = await GetResourceAsync(cancellationToken);
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc />
-        public ArmOperation<PublicIpAddress> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
+        public Operation<PublicIpAddress> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+            return new PhArmOperation<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc />
-        public async Task<ArmOperation<PublicIpAddress>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public async Task<Operation<PublicIpAddress>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = await GetResourceAsync(cancellationToken);
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+            return new PhArmOperation<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc/>
-        public ArmResponse<PublicIpAddress> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public Response<PublicIpAddress> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<PublicIpAddress>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async Task<Response<PublicIpAddress>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc/>
-        public ArmOperation<PublicIpAddress> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public Operation<PublicIpAddress> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+            return new PhArmOperation<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<PublicIpAddress>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public async Task<Operation<PublicIpAddress>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+            return new PhArmOperation<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc/>
-        public ArmResponse<PublicIpAddress> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public Response<PublicIpAddress> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<PublicIpAddress>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Response<PublicIpAddress>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = await GetResourceAsync(cancellationToken);
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc/>
-        public ArmOperation<PublicIpAddress> StartRemoveTag(string key, CancellationToken cancellationToken = default)
+        public Operation<PublicIpAddress> StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+            return new PhArmOperation<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<PublicIpAddress>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public async Task<Operation<PublicIpAddress>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             var resource = await GetResourceAsync(cancellationToken);
-            var patchable = new TagsObject();
+            var patchable = new Azure.ResourceManager.Network.Models.TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
+            return new PhArmOperation<PublicIpAddress, Azure.ResourceManager.Network.Models.PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 

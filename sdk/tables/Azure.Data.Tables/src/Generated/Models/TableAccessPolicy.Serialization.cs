@@ -17,12 +17,18 @@ namespace Azure.Data.Tables.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
-            writer.WriteStartElement("Start");
-            writer.WriteValue(StartsOn, "O");
-            writer.WriteEndElement();
-            writer.WriteStartElement("Expiry");
-            writer.WriteValue(ExpiresOn, "O");
-            writer.WriteEndElement();
+            if (StartsOn != null)
+            {
+                writer.WriteStartElement("Start");
+                writer.WriteValue(StartsOn.Value, "O");
+                writer.WriteEndElement();
+            }
+            if (ExpiresOn != null)
+            {
+                writer.WriteStartElement("Expiry");
+                writer.WriteValue(ExpiresOn.Value, "O");
+                writer.WriteEndElement();
+            }
             writer.WriteStartElement("Permission");
             writer.WriteValue(Permission);
             writer.WriteEndElement();
@@ -31,8 +37,8 @@ namespace Azure.Data.Tables.Models
 
         internal static TableAccessPolicy DeserializeTableAccessPolicy(XElement element)
         {
-            DateTimeOffset startsOn = default;
-            DateTimeOffset expiresOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? expiresOn = default;
             string permission = default;
             if (element.Element("Start") is XElement startElement)
             {

@@ -126,8 +126,7 @@ namespace Azure.Communication.Sms.Tests
             catch (RequestFailedException ex)
             {
                 Assert.IsNotEmpty(ex.Message);
-                // TODO: re-enable this when service change is made
-                // Assert.True(ex.Message.Contains("401"));
+                Assert.True(ex.Message.Contains("401"));
                 Console.WriteLine(ex.Message);
             }
             catch (Exception ex)

@@ -4,69 +4,65 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Core;
+using Azure.Core.TestFramework;
 
 namespace Azure.Core.Tests
 {
-    public class ArmOperationTest<T> : ArmOperation<T>
-        where T : class
+    public class ArmOperationTest : Operation<TestResource>, IOperationSource<TestResource>
     {
-        private T _value;
+        private TestResource _value;
         private bool _exceptionOnWait;
+        private OperationOrResponseInternals<TestResource> _operationHelper;
 
         protected ArmOperationTest()
         {
         }
 
-        public ArmOperationTest(T value, bool exceptionOnWait = false)
+        public ArmOperationTest(TestResource value, bool exceptionOnWait = false)
         {
             _value = value;
             _exceptionOnWait = exceptionOnWait;
+            _operationHelper = new OperationOrResponseInternals<TestResource>(Response.FromValue(value, new MockResponse(200)));
         }
 
         public override string Id => "testId";
 
-        public override T Value => _value;
+        public override TestResource Value => _operationHelper.Value;
 
-        public override bool HasCompleted => true;
+        public override bool HasCompleted => _operationHelper.HasCompleted;
 
-        public override bool HasValue => true;
+        public override bool HasValue => _operationHelper.HasValue;
 
-        public override Response GetRawResponse()
-        {
-            return Response.FromValue(_value, null) as Response;
-        }
+        public override Response GetRawResponse() => _operationHelper.GetRawResponse();
 
-        public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+        public override ValueTask<Response<TestResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
             if (_exceptionOnWait)
                 throw new ArgumentException("FakeArg");
 
-            return new ValueTask<Response<T>>(Response.FromValue(_value, null));
+            return new ValueTask<Response<TestResource>>(Response.FromValue(_value, new MockResponse(200)));
         }
 
-        public override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        public override ValueTask<Response<TestResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
             if (_exceptionOnWait)
                 throw new ArgumentException("FakeArg");
 
-            return new ValueTask<Response<T>>(Response.FromValue(_value, null));
+            return new ValueTask<Response<TestResource>>(Response.FromValue(_value, new MockResponse(200)));
         }
 
-        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
-        {
-            if (_exceptionOnWait)
-                throw new ArgumentException("FakeArg");
+        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operationHelper.UpdateStatusAsync(cancellationToken);
 
-            return new ValueTask<Response>(Response.FromValue(_value, null) as Response);
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operationHelper.UpdateStatus(cancellationToken);
+
+        public TestResource CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            return _value;
         }
 
-        public override Response UpdateStatus(CancellationToken cancellationToken = default)
+        public ValueTask<TestResource> CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            if (_exceptionOnWait)
-                throw new ArgumentException("FakeArg");
-
-            return Response.FromValue(_value, null) as Response;
+            return new ValueTask<TestResource>(_value);
         }
     }
 }

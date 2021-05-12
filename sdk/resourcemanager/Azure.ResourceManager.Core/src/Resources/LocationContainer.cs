@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager.Core.Adapters;
-using Azure.ResourceManager.Resources;
 using System.Threading;
-using System.Threading.Tasks;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
 {
@@ -18,7 +16,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="subscriptionOperations"> The subscription that this location container belongs to. </param>
         internal LocationContainer(SubscriptionOperations subscriptionOperations)
-            : base(new ClientContext(subscriptionOperations.ClientOptions, subscriptionOperations.Credential, subscriptionOperations.BaseUri), subscriptionOperations.Id)
+            : base(new ClientContext(subscriptionOperations.ClientOptions, subscriptionOperations.Credential, subscriptionOperations.BaseUri, subscriptionOperations.Pipeline), subscriptionOperations.Id)
         {
             Id = subscriptionOperations.Id;
         }
@@ -42,7 +40,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Subscription container. </returns>
         public SubscriptionContainer GetSubscriptions()
         {
-            return new SubscriptionContainer(new ClientContext(ClientOptions, Credential, BaseUri));
+            return new SubscriptionContainer(new ClientContext(ClientOptions, Credential, BaseUri, Pipeline));
         }
 
         /// <summary>

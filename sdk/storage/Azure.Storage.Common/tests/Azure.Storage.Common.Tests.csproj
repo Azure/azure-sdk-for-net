@@ -17,6 +17,7 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Remove="Shared\AzuriteFixture.cs" />
     <Compile Remove="Shared\AzuriteNUnitFixture.cs" />
+    <Compile Remove="Shared\StorageTestBase.SasVersion.cs" />
   </ItemGroup>
   <ItemGroup>
     <!-- To test shared resources that aren't included in Azure.Storage.Common itself. -->

@@ -35,8 +35,16 @@ namespace Proto.Network
             Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).Subnets;
 
-        /// <inheritdoc/>
-        public override ArmResponse<Subnet> CreateOrUpdate(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a subnet. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the subnet. </param>
+        /// <param name="resourceDetails"> The desired subnet configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A response with the <see cref="Response{Subnet}"/> operation for this resource. </returns>
+        /// <exception cref="ArgumentException"> Name of the subnet cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public Response<Subnet> CreateOrUpdate(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken);
             return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
@@ -44,8 +52,16 @@ namespace Proto.Network
                 s => new Subnet(Parent, new SubnetData(s)));
         }
 
-        /// <inheritdoc/>
-        public override async Task<ArmResponse<Subnet>> CreateOrUpdateAsync(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a subnet. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the subnet. </param>
+        /// <param name="resourceDetails"> The desired subnet configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{Subnet}"/> operation for this subnet. </returns>
+        /// <exception cref="ArgumentException"> Name of the subnet cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public async Task<Response<Subnet>> CreateOrUpdateAsync(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
@@ -53,16 +69,38 @@ namespace Proto.Network
                 s => new Subnet(Parent, new SubnetData(s)));
         }
 
-        /// <inheritdoc/>
-        public override ArmOperation<Subnet> StartCreateOrUpdate(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a subnet. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the subnet. </param>
+        /// <param name="resourceDetails"> The desired subnet configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> An <see cref="Operation{Subnet}"/> that allows polling for completion of the operation. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        /// <exception cref="ArgumentException"> Name of the subnet cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public Operation<Subnet> StartCreateOrUpdate(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
                 Operations.StartCreateOrUpdate(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken),
                 s => new Subnet(Parent, new SubnetData(s)));
         }
 
-        /// <inheritdoc/>
-        public async override Task<ArmOperation<Subnet>> StartCreateOrUpdateAsync(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a subnet. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the subnet. </param>
+        /// <param name="resourceDetails"> The desired subnet configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="Operation{Subnet}"/> that allows polling for completion of the operation. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        /// <exception cref="ArgumentException"> Name of the subnet cannot be null or a whitespace. </exception>
+        /// <exception cref="ArgumentNullException"> resourceDetails cannot be null. </exception>
+        public async Task<Operation<Subnet>> StartCreateOrUpdateAsync(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false),
@@ -89,7 +127,7 @@ namespace Proto.Network
 
             return new SubnetBuilder(this, new SubnetData(subnet));
         }
-        
+
         /// <summary>
         /// Lists the subnets for this virtual network.
         /// </summary>
@@ -120,14 +158,14 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<Subnet> Get(string subnetName, CancellationToken cancellationToken = default)
+        public override Response<Subnet> Get(string subnetName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(Operations.Get(Id.ResourceGroupName, Id.Name, subnetName, cancellationToken: cancellationToken),
                 n => new Subnet(Parent, new SubnetData(n)));
         }
-        
+
         /// <inheritdoc/>
-        public override async Task<ArmResponse<Subnet>> GetAsync(string subnetName, CancellationToken cancellationToken = default)
+        public override async Task<Response<Subnet>> GetAsync(string subnetName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(await Operations.GetAsync(Id.ResourceGroupName, Id.Name, subnetName, null, cancellationToken),
                 n => new Subnet(Parent, new SubnetData(n)));

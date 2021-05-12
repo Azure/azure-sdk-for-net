@@ -94,8 +94,8 @@ To start a translation operation you need to create one instance or a list of `D
 A single source URL to documents can be translated to many different languages:
 
 ```C# Snippet:DocumentTranslationSingleInput
-Uri sourceSasUri = <source SAS URI>;
-Uri frenchTargetSasUri = <french target SAS URI>;
+Uri sourceSasUri = new Uri("<source SAS URI>");
+Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
 
 var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr");
 ```
@@ -103,10 +103,10 @@ var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr")
 Or multiple different sources can be provided each with their own targets.
 
 ```C# Snippet:DocumentTranslationMultipleInputs
-Uri source1SasUri = <source1 SAS URI>;
-Uri source2SasUri = <source2 SAS URI>;
-Uri frenchTargetSasUri = <french target SAS URI>;
-Uri spanishTargetSasUri = <spanish target SAS URI>;
+Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
+Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
+Uri source1SasUri = new Uri("<source1 SAS URI>");
+Uri source2SasUri = new Uri("<source2 SAS URI>");
 
 var inputs = new List<DocumentTranslationInput>
 {
@@ -116,7 +116,7 @@ var inputs = new List<DocumentTranslationInput>
         targets: new List<TranslationTarget>
         {
             new TranslationTarget(frenchTargetSasUri, "fr"),
-            new TranslationTarget(spanishTargetSasUri, "es")
+            new TranslationTarget(arabicTargetSasUri, "ar")
         }),
 };
 ```
@@ -160,8 +160,8 @@ Note: our `DocumentTranslationClient` provides both synchronous and asynchronous
 Start a translation operation to translate documents in the source container and write the translated files to the target container. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
 ```C# Snippet:StartTranslationAsync
-Uri sourceUri = <source SAS URI>;
-Uri targetUri = <target SAS URI>;
+Uri sourceUri = new Uri("<source SAS URI>");
+Uri targetUri = new Uri("<target SAS URI>");
 
 var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
@@ -232,12 +232,13 @@ Console.WriteLine($"Cancelled Documents: {docsCancelled}");
 Start a translation operation to translate documents in multiple source containers to multiple target containers in different languages. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
 ```C# Snippet:MultipleInputsAsync
-Uri source1SasUriUri = <source1 SAS URI>;
-Uri source2SasUri = <source2 SAS URI>;
-Uri frenchTargetSasUri = <french target SAS URI>;
-Uri arabicTargetSasUri = <arabic target SAS URI>;
-Uri spanishTargetSasUri = <spanish target SAS URI>;
-Uri frenchGlossarySasUri = <french glossary SAS URI>;
+Uri source1SasUriUri = new Uri("<source1 SAS URI>");
+Uri source2SasUri = new Uri("<source2 SAS URI>");
+Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
+Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
+Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
+Uri frenchGlossarySasUri = new Uri("<french glossary SAS URI>");
+
 var glossaryFormat = "TSV";
 
 var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
@@ -279,8 +280,8 @@ await foreach (DocumentStatusResult document in operation.GetValuesAsync())
 Start a translation operation to translate documents in the source container and write the translated files to the target container. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
 ```C# Snippet:StartTranslation
-Uri sourceUri = <source SAS URI>;
-Uri targetUri = <target SAS URI>;
+Uri sourceUri = new Uri("<source SAS URI>");
+Uri targetUri = new Uri("<target SAS URI>");
 
 var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
@@ -342,7 +343,7 @@ When you interact with the Cognitive Services Document Translation client librar
 For example, if you submit a request with an empty targets list, a `400` error is returned, indicating "Bad Request".
 
 ```C# Snippet:BadRequest
-var invalidInput = new DocumentTranslationInput(new TranslationSource(sourceSasUri, new List<TranslationTarget>());
+var invalidInput = new DocumentTranslationInput(new TranslationSource(new Uri(endpoint)), new List<TranslationTarget>());
 
 try
 {
@@ -414,10 +415,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [documenttranslation_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/translation/Azure.AI.Translation.Document/src
 <!--TODO: remove /overview -->
 [documenttranslation_docs]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview
-<!-- TODO: Add correct link when available -->
-[documenttranslation_refdocs]: https://aka.ms/azsdk/net/translation/docs
-<!-- TODO: Add correct link when available -->
-[documenttranslation_nuget_package]: https://www.nuget.org/
+[documenttranslation_refdocs]: https://aka.ms/azsdk/net/documenttranslation/docs
+[documenttranslation_nuget_package]: https://www.nuget.org/packages/Azure.AI.Translation.Document
 [documenttranslation_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/translation/Azure.AI.Translation.Document/samples/README.md
 <!-- TODO: Add correct link when available -->
 [documenttranslation_rest_api]: https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/TranslatorText/preview/v1.0-preview.1/TranslatorBatch.json
@@ -430,8 +429,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [documenttranslation_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/translation/Azure.AI.Translation.Document/src/DocumentTranslationClient.cs
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
-<!-- TODO: Add correct link when available -->
-[data_limits]: https://docs.microsoft.com/azure/cognitive-services/document-translation/overview
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md
 
 [start_translation_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/samples/Sample1_StartTranslation.md

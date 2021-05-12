@@ -6,7 +6,6 @@ using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Core.Resources;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -54,8 +53,14 @@ namespace Proto.Network
             Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkSecurityGroups;
 
-        /// <inheritdoc />
-        public override ArmResponse<NetworkSecurityGroup> CreateOrUpdate(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a network security group. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the network security group. </param>
+        /// <param name="resourceDetails"> The desired network security group configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A response with the <see cref="Response{NetworkSecurityGroup}"/> operation for this resource. </returns>
+        public Response<NetworkSecurityGroup> CreateOrUpdate(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken);
             return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
@@ -63,8 +68,14 @@ namespace Proto.Network
                 n => new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(n)));
         }
 
-        /// <inheritdoc />
-        public override async Task<ArmResponse<NetworkSecurityGroup>> CreateOrUpdateAsync(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a network security group. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the network security group. </param>
+        /// <param name="resourceDetails"> The desired network security group configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response{NetworkSecurityGroup}"/> operation for this network security group. </returns>
+        public async Task<Response<NetworkSecurityGroup>> CreateOrUpdateAsync(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
@@ -72,16 +83,34 @@ namespace Proto.Network
                 n => new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(n)));
         }
 
-        /// <inheritdoc />
-        public override ArmOperation<NetworkSecurityGroup> StartCreateOrUpdate(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a network security group. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the network security group. </param>
+        /// <param name="resourceDetails"> The desired network security group configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> An <see cref="Operation{NetworkSecurityGroup}"/> that allows polling for completion of the operation. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        public Operation<NetworkSecurityGroup> StartCreateOrUpdate(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
                 Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken),
                 n => new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(n)));
         }
 
-        /// <inheritdoc />
-        public override async Task<ArmOperation<NetworkSecurityGroup>> StartCreateOrUpdateAsync(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// The operation to create or update a network security group. Please note some properties can be set only during creation.
+        /// </summary>
+        /// <param name="name"> The name of the network security group. </param>
+        /// <param name="resourceDetails"> The desired network security group configuration. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
+        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="Operation{NetworkSecurityGroup}"/> that allows polling for completion of the operation. </returns>
+        /// <remarks>
+        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
+        /// </remarks>
+        public async Task<Operation<NetworkSecurityGroup>> StartCreateOrUpdateAsync(string name, NetworkSecurityGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
                 await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false),
@@ -94,7 +123,7 @@ namespace Proto.Network
         /// <param name="locationData"> The location to create the network security group. </param>
         /// <param name="openPorts"> The location to create the network security group. </param>
         /// <returns> Object used to create a <see cref="NetworkSecurityGroup"/>. </returns>
-        public ArmBuilder<ResourceGroupResourceIdentifier, NetworkSecurityGroup, NetworkSecurityGroupData> Construct(LocationData locationData = null, params int[] openPorts)
+        public NetworkSecurityGroupBuilder Construct(LocationData locationData = null, params int[] openPorts)
         {
             var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier, ResourceGroupOperations>();
             var nsg = new Azure.ResourceManager.Network.Models.NetworkSecurityGroup
@@ -120,7 +149,7 @@ namespace Proto.Network
                 nsg.SecurityRules.Add(securityRule);
             }
 
-            return new ArmBuilder<ResourceGroupResourceIdentifier, NetworkSecurityGroup, NetworkSecurityGroupData>(this, new NetworkSecurityGroupData(nsg));
+            return new NetworkSecurityGroupBuilder(this, new NetworkSecurityGroupData(nsg));
         }
 
         /// <summary>
@@ -128,7 +157,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="openPorts"> The location to create the network security group. </param>
         /// <returns> Object used to create a <see cref="NetworkSecurityGroup"/>. </returns>
-        public ArmBuilder<ResourceGroupResourceIdentifier, NetworkSecurityGroup, NetworkSecurityGroupData> Construct(params int[] openPorts)
+        public NetworkSecurityGroupBuilder Construct(params int[] openPorts)
         {
             var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier, ResourceGroupOperations>();
             var nsg = new Azure.ResourceManager.Network.Models.NetworkSecurityGroup
@@ -154,11 +183,11 @@ namespace Proto.Network
                 nsg.SecurityRules.Add(securityRule);
             }
 
-            return new ArmBuilder<ResourceGroupResourceIdentifier, NetworkSecurityGroup, NetworkSecurityGroupData>(this, new NetworkSecurityGroupData(nsg));
+            return new NetworkSecurityGroupBuilder(this, new NetworkSecurityGroupData(nsg));
         }
 
         /// <summary>
-        /// List the network security groups for this resource group.
+        /// List the network security groups for this network security group.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> A collection of <see cref="NetworkSecurityGroup"/> that may take multiple service requests to iterate over. </returns>
@@ -170,7 +199,7 @@ namespace Proto.Network
         }
 
         /// <summary>
-        /// List the network security groups for this resource group.
+        /// List the network security groups for this network security group.
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> An async collection of <see cref="NetworkSecurityGroup"/> that may take multiple service requests to iterate over. </returns>
@@ -238,7 +267,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc />
-        public override ArmResponse<NetworkSecurityGroup> Get(string networkSecurityGroup, CancellationToken cancellationToken = default)
+        public override Response<NetworkSecurityGroup> Get(string networkSecurityGroup, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
                 Operations.Get(Id.ResourceGroupName, networkSecurityGroup, cancellationToken: cancellationToken),
@@ -246,11 +275,11 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override async Task<ArmResponse<NetworkSecurityGroup>> GetAsync(string networkSecurityGroup, CancellationToken cancellationToken = default)
+        public override async Task<Response<NetworkSecurityGroup>> GetAsync(string networkSecurityGroup, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<NetworkSecurityGroup, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>(
                 await Operations.GetAsync(Id.ResourceGroupName, networkSecurityGroup, null, cancellationToken),
                     g => new NetworkSecurityGroup(Parent, new NetworkSecurityGroupData(g)));
-        }     
+        }
     }
 }

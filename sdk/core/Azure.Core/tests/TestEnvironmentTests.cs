@@ -8,8 +8,10 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -169,6 +171,37 @@ namespace Azure.Core.Tests
             Assert.AreEqual("5", env.AzureEnvironment);
         }
 
+        [Test]
+        public async Task ShouldCacheExceptionIfWaitingForEnvironmentFailed()
+        {
+            if (TestEnvironment.GlobalIsRunningInCI)
+            {
+                var env = new WaitForEnvironmentTestEnvironmentFailureMode();
+
+                try
+                {
+                    await env.WaitForEnvironmentAsync();
+                    Assert.Fail();
+                }
+                catch (InvalidOperationException e)
+                {
+                    StringAssert.Contains("kaboom", e.Message);
+                }
+
+                try
+                {
+                    await env.WaitForEnvironmentAsync();
+                    Assert.Fail();
+                }
+                catch (InvalidOperationException e)
+                {
+                    StringAssert.Contains("kaboom", e.Message);
+                }
+
+                Assert.AreEqual(1, WaitForEnvironmentTestEnvironmentFailureMode.InvocationCount);
+            }
+        }
+
         private class RecordedVariableMisuse : RecordedTestBase<MockTestEnvironment>
         {
             // To make NUnit happy
@@ -222,6 +255,91 @@ namespace Azure.Core.Tests
             public string CustomSecret => GetRecordedVariable("CustomSecret", option => option.IsSecret("Custom"));
             public string MissingOptionalSecret => GetRecordedOptionalVariable("MissingOptionalSecret", option => option.IsSecret("INVALID"));
             public string ConnectionStringWithSecret => GetRecordedVariable("ConnectionStringWithSecret", option => option.HasSecretConnectionStringParameter("key"));
+        }
+
+        public class WaitForEnvironmentTestClassOne : RecordedTestBase<WaitForEnvironmentTestEnvironmentOne>
+        {
+            public WaitForEnvironmentTestClassOne(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+            {
+            }
+
+            [Test]
+            public void ShouldCacheStateCorrectly()
+            {
+                if (Core.TestFramework.TestEnvironment.GlobalIsRunningInCI)
+                {
+                    Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentOne.InvocationCount);
+                }
+            }
+        }
+
+        public class WaitForEnvironmentTestClassTwo : RecordedTestBase<WaitForEnvironmentTestEnvironmentTwo>
+        {
+            public WaitForEnvironmentTestClassTwo(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+            {
+            }
+
+            [Test]
+            public void ShouldCacheStateCorrectly()
+            {
+                if (Core.TestFramework.TestEnvironment.GlobalIsRunningInCI)
+                {
+                    Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentTwo.InvocationCount);
+                }
+            }
+        }
+
+        // This one uses same env as WaitForEnvironmentTestClassTwo to prove value is cached.
+        public class WaitForEnvironmentTestClassThree : RecordedTestBase<WaitForEnvironmentTestEnvironmentTwo>
+        {
+            public WaitForEnvironmentTestClassThree(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+            {
+            }
+
+            [Test]
+            public void ShouldCacheStateCorrectly()
+            {
+                if (Core.TestFramework.TestEnvironment.GlobalIsRunningInCI)
+                {
+                    Assert.AreEqual(2, WaitForEnvironmentTestEnvironmentTwo.InvocationCount);
+                }
+            }
+        }
+
+        public class WaitForEnvironmentTestEnvironmentOne : TestEnvironment
+        {
+            public static int InvocationCount { get; private set; }
+
+            protected override ValueTask<bool> IsEnvironmentReadyAsync()
+            {
+                return new ValueTask<bool>(InvocationCount++ < 1 ? false : true);
+            }
+        }
+
+        public class WaitForEnvironmentTestEnvironmentTwo : TestEnvironment
+        {
+            public static int InvocationCount { get; private set; }
+
+            protected override ValueTask<bool> IsEnvironmentReadyAsync()
+            {
+                return new ValueTask<bool>(InvocationCount++ < 1 ? false : true);
+            }
+        }
+
+        public class WaitForEnvironmentTestEnvironmentFailureMode : TestEnvironment
+        {
+            public WaitForEnvironmentTestEnvironmentFailureMode()
+            {
+                Mode = RecordedTestMode.Live;
+            }
+
+            public static int InvocationCount { get; private set; }
+
+            protected override ValueTask<bool> IsEnvironmentReadyAsync()
+            {
+                InvocationCount++;
+                throw new InvalidOperationException("kaboom");
+            }
         }
     }
 }
