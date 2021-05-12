@@ -42,5 +42,22 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             return new MemoryStream(Encoding.UTF8.GetBytes(jsonStr));
         }
+
+        public Stream CreateIncidentJsonStream(double valueOfRootNode = default, double? expectedValueOfRootNode = default)
+        {
+            string jsonStr = JsonConvert.SerializeObject(new
+            {
+                value = new[]
+                {
+                    new
+                    {
+                        rootNode = new { dimension = new {} },
+                        property = new { valueOfRootNode = valueOfRootNode, expectedValueOfRootNode = expectedValueOfRootNode }
+                    }
+                }
+            });
+
+            return new MemoryStream(Encoding.UTF8.GetBytes(jsonStr));
+        }
     }
 }

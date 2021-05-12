@@ -184,6 +184,14 @@ directive:
     $.properties.expectedValue["x-nullable"] = true;
 ```
 
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.IncidentProperty
+  transform: >
+    $.properties.expectedValueOfRootNode["x-nullable"] = true;
+```
+
 ### Add required properties
 
 ``` yaml
