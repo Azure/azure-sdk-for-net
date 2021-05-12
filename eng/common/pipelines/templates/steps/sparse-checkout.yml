@@ -20,6 +20,7 @@ steps:
     - pwsh: |
         $dir = "${{ coalesce(repo.WorkingDirectory, format('{0}/{1}', '$(System.DefaultWorkingDirectory)', repo.Name)) }}"
         New-Item $dir -ItemType Directory -Force
+      displayName: Create ${{ repo.Name }} directories
 
     - pwsh: |
         git clone --no-checkout --filter=tree:0 git://github.com/${{ repo.Name }} .
