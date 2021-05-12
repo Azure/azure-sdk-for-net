@@ -9,7 +9,7 @@ namespace Azure.IoT.TimeSeriesInsights
     // recommend changing the swagger file to rename the model. This way, the customization done here is no longer needed. This also ensures
     // that when client libraries are to be generated for different languages, the model names stay the same.
     [CodeGenModel("Interpolation")]
-    public partial class InterpolationOperation
+    public partial class TimeSeriesInterpolation
     {
     }
 }

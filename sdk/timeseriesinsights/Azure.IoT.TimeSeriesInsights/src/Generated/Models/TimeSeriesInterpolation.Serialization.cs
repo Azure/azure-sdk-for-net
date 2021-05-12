@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class InterpolationOperation : IUtf8JsonSerializable
+    public partial class TimeSeriesInterpolation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteEndObject();
         }
 
-        internal static InterpolationOperation DeserializeInterpolationOperation(JsonElement element)
+        internal static TimeSeriesInterpolation DeserializeTimeSeriesInterpolation(JsonElement element)
         {
             Optional<InterpolationKind> kind = default;
             Optional<InterpolationBoundary> boundary = default;
@@ -55,7 +55,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InterpolationOperation(Optional.ToNullable(kind), boundary.Value);
+            return new TimeSeriesInterpolation(Optional.ToNullable(kind), boundary.Value);
         }
     }
 }

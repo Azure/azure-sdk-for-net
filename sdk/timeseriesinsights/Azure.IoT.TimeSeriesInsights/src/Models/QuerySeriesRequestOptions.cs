@@ -14,7 +14,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Selected variables that needs to be projected in the query result. When it is null or not set, all the
         /// variables and Time Series types in the model are returned.
         /// </summary>
-        public List<string> ProjectedVariables { get; }
+        public IList<string> ProjectedVariableNames { get; }
 
         /// <summary>
         /// Optional inline variables apart from the ones already defined in the Time Series type in the model.
@@ -26,14 +26,14 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The maximum number of property values in the whole response set, not the maximum number of property values per page.
         /// Defaults to 10,000 when not set. Maximum value of take can be 250,000.
         /// </summary>
-        public int? MaximumNumberOfEvents { get; set; }
+        public int? MaxNumberOfEvents { get; set; }
 
         /// <summary>
         /// Creates a new instance of QuerySeriesRequestOptions.
         /// </summary>
         public QuerySeriesRequestOptions()
         {
-            ProjectedVariables = new List<string>();
+            ProjectedVariableNames = new List<string>();
             InlineVariables = new Dictionary<string, TimeSeriesVariable>();
         }
     }
