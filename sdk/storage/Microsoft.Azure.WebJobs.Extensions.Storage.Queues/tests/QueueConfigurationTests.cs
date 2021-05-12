@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Queues;
 using Azure.Storage.Test.Shared;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Extensions.Azure;
@@ -11,117 +14,111 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
+namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 {
-    public class BlobConfigurationTests
+    public class QueueConfigurationTests
     {
         private readonly AzuriteFixture azuriteFixture;
 
-        public BlobConfigurationTests()
+        public QueueConfigurationTests()
         {
             azuriteFixture = AzuriteNUnitFixture.Instance;
         }
 
         [Test]
-        public async Task BlobClient_CanConnect_ConnectionString()
+        public async Task QueueClient_CanConnect_ConnectionString()
         {
             var account = azuriteFixture.GetAzureAccount();
-            var prog = new BindToCloudBlockBlobProgram();
+            var prog = new BindToCloudQueueProgram();
             IHost host = new HostBuilder()
                 .ConfigureAppConfiguration(cb =>
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
                         {"CustomConnection", account.ConnectionString },
-                        {"blobPath", "cscontainer/csblob" }
+                        {"queueName", "testqueue" }
                     });
                 })
                 .ConfigureDefaultTestHost(prog, builder =>
                 {
                     SetupAzurite(builder);
-                    builder.AddAzureStorageBlobs();
+                    builder.AddAzureStorageQueues();
                 })
                 .Build();
 
-            var jobHost = host.GetJobHost<BindToCloudBlockBlobProgram>();
-            await jobHost.CallAsync(nameof(BindToCloudBlockBlobProgram.Run));
+            var jobHost = host.GetJobHost<BindToCloudQueueProgram>();
+            await jobHost.CallAsync(nameof(BindToCloudQueueProgram.Run));
 
             var result = prog.Result;
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual("csblob", result.Name);
-            Assert.AreEqual("cscontainer", result.BlobContainerName);
-            Assert.NotNull(result.BlobContainerName);
-            Assert.False(await result.ExistsAsync());
+            Assert.AreEqual("testqueue", result.Name);
+            Assert.True(await result.ExistsAsync());
         }
 
         [Test]
-        public async Task BlobClient_CanConnect_ServiceUri()
+        public async Task QueueClient_CanConnect_ServiceUri()
         {
             var account = azuriteFixture.GetAzureAccount();
-            var prog = new BindToCloudBlockBlobProgram();
+            var prog = new BindToCloudQueueProgram();
             IHost host = new HostBuilder()
                 .ConfigureAppConfiguration(cb =>
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"CustomConnection:serviceUri", account.BlobEndpoint },
-                        {"blobPath", "endpointcontainer/endpointblob" }
+                        {"CustomConnection:serviceUri", account.QueueEndpoint },
+                        {"queueName", "testqueue" }
                     });
                 })
                 .ConfigureDefaultTestHost(prog, builder =>
                 {
                     SetupAzurite(builder);
-                    builder.AddAzureStorageBlobs();
+                    builder.AddAzureStorageQueues();
                 })
                 .Build();
 
-            var jobHost = host.GetJobHost<BindToCloudBlockBlobProgram>();
-            await jobHost.CallAsync(nameof(BindToCloudBlockBlobProgram.Run));
+            var jobHost = host.GetJobHost<BindToCloudQueueProgram>();
+            await jobHost.CallAsync(nameof(BindToCloudQueueProgram.Run));
 
             var result = prog.Result;
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual("endpointblob", result.Name);
-            Assert.AreEqual("endpointcontainer", result.BlobContainerName);
-            Assert.NotNull(result.BlobContainerName);
-            Assert.False(await result.ExistsAsync());
+            Assert.AreEqual("testqueue", result.Name);
+            Assert.True(await result.ExistsAsync());
         }
 
         [Test]
-        public async Task BlobClient_CanConnect_BlobServiceUri()
+        public async Task QueueClient_CanConnect_QueueServiceUri()
         {
             var account = azuriteFixture.GetAzureAccount();
-            var prog = new BindToCloudBlockBlobProgram();
+            var prog = new BindToCloudQueueProgram();
             IHost host = new HostBuilder()
                 .ConfigureAppConfiguration(cb =>
                 {
                     cb.AddInMemoryCollection(new Dictionary<string, string>()
                     {
-                        {"CustomConnection:blobServiceUri", account.BlobEndpoint },
-                        {"blobPath", "endpointcontainer/endpointblob" }
+                        {"CustomConnection:queueServiceUri", account.QueueEndpoint },
+                        {"queueName", "testqueue" }
                     });
                 })
                 .ConfigureDefaultTestHost(prog, builder =>
                 {
                     SetupAzurite(builder);
-                    builder.AddAzureStorageBlobs();
+                    builder.AddAzureStorageQueues();
                 })
                 .Build();
 
-            var jobHost = host.GetJobHost<BindToCloudBlockBlobProgram>();
-            await jobHost.CallAsync(nameof(BindToCloudBlockBlobProgram.Run));
+            var jobHost = host.GetJobHost<BindToCloudQueueProgram>();
+            await jobHost.CallAsync(nameof(BindToCloudQueueProgram.Run));
 
             var result = prog.Result;
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual("endpointblob", result.Name);
-            Assert.AreEqual("endpointcontainer", result.BlobContainerName);
-            Assert.NotNull(result.BlobContainerName);
-            Assert.False(await result.ExistsAsync());
+            Assert.AreEqual("testqueue", result.Name);
+            Assert.True(await result.ExistsAsync());
         }
 
         private void SetupAzurite(IWebJobsBuilder builder)
@@ -133,14 +130,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             });
         }
 
-        private class BindToCloudBlockBlobProgram
+        private class BindToCloudQueueProgram
         {
-            public BlockBlobClient Result { get; set; }
+            public QueueClient Result { get; set; }
 
             public void Run(
-                [Blob("%blobPath%", Connection = "CustomConnection")] BlockBlobClient blob)
+                [Queue("%queueName%", Connection = "CustomConnection")] QueueClient queue)
             {
-                Result = blob;
+                Result = queue;
             }
         }
     }
