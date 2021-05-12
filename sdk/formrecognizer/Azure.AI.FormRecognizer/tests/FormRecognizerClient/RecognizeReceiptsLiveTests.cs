@@ -286,7 +286,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "File not in Github")]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1_Preview_3)]
         public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
@@ -296,7 +296,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceipMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeReceiptsAsync(stream, options);
@@ -304,7 +304,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceMultipage);
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.ReceipMultipage);
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, options);
             }
 
@@ -326,17 +326,16 @@ namespace Azure.AI.FormRecognizer.Tests
                     expectedLastPageNumber: expectedPageNumber);
 
                 // Basic sanity test to make sure pages are ordered correctly.
+                var sampleField = recognizedForm.Fields["Total"];
+                Assert.IsNotNull(sampleField.ValueData);
 
                 if (formIndex == 0)
                 {
-                    var sampleField = recognizedForm.Fields["MerchantAddress"];
-
-                    Assert.IsNotNull(sampleField.ValueData);
-                    Assert.AreEqual("Maple City, Massachusetts.", sampleField.ValueData.Text);
+                    Assert.AreEqual("$14.50", sampleField.ValueData.Text);
                 }
                 else if (formIndex == 1)
                 {
-                    Assert.IsFalse(recognizedForm.Fields.TryGetValue("MerchantAddress", out _));
+                    Assert.AreEqual("$ 1203.39", sampleField.ValueData.Text);
                 }
             }
         }
@@ -381,7 +380,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var options = new RecognizeReceiptsOptions() { IncludeFieldElements = true };
             RecognizeReceiptsOperation operation;
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceipMultipageWithBlankPage);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeReceiptsAsync(stream, options);
@@ -409,7 +408,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 if (formIndex == 0 || formIndex == 2)
                 {
                     var sampleField = recognizedForm.Fields["Total"];
-                    var expectedValueData = formIndex == 0 ? "430.00" : "4300.00";
+                    var expectedValueData = formIndex == 0 ? "$14.50" : "$ 1203.39";
 
                     Assert.IsNotNull(sampleField.ValueData);
                     Assert.AreEqual(expectedValueData, sampleField.ValueData.Text);
@@ -518,7 +517,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateFormRecognizerClient();
             RecognizeReceiptsOperation operation;
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceipMultipage);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeReceiptsAsync(stream, new RecognizeReceiptsOptions() { Pages = { pages } });
@@ -538,7 +537,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateFormRecognizerClient();
             RecognizeReceiptsOperation operation;
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceipMultipageWithBlankPage);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeReceiptsAsync(stream, new RecognizeReceiptsOptions() { Pages = { page1, page2 } });

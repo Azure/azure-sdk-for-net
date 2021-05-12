@@ -201,6 +201,9 @@
 # ServiceLabel: %Compute - VMSS %Service Attention
 #/<NotInRepo>/            @Drewm3 @avirishuv
 
+# PRLabel: %Confidential Ledger
+/sdk/confidentialledger/  @christothes
+
 # ServiceLabel: %Consumption %Service Attention
 /sdk/consumption/Microsoft.Azure.Management.Consumption/            @ms-premp
 

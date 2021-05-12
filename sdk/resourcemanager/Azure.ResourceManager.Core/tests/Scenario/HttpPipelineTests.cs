@@ -2,7 +2,7 @@
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Core.Tests.Scenario
+namespace Azure.ResourceManager.Core.Tests
 {
     [Parallelizable]
     public class HttpPipelineTests : ResourceManagerTestBase

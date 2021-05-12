@@ -6,9 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Request-Id": "|ad80da29-4d0c713138b5070e.",
         "User-Agent": "azsdk-net-ResourceManager.Resources/1.0.0-preview.2 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "1ba9401c9199950ab4c6511790a6e967",
+        "x-ms-client-request-id": "aa51013d54407fd4230a57392c708ca6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +16,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 May 2021 00:23:02 GMT",
+        "Date": "Fri, 07 May 2021 20:23:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "aad9c700-c4d5-4a18-a44b-616368be9de0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "aad9c700-c4d5-4a18-a44b-616368be9de0",
-        "x-ms-routing-request-id": "WESTUS2:20210507T002302Z:aad9c700-c4d5-4a18-a44b-616368be9de0"
+        "x-ms-correlation-request-id": "98330849-c1f3-4d60-ae24-a479db7e3c65",
+        "x-ms-ratelimit-remaining-subscription-reads": "11956",
+        "x-ms-request-id": "98330849-c1f3-4d60-ae24-a479db7e3c65",
+        "x-ms-routing-request-id": "WESTUS2:20210507T202304Z:98330849-c1f3-4d60-ae24-a479db7e3c65"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -43,16 +42,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testrg4683?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testrg1226?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "34",
         "Content-Type": "application/json",
-        "traceparent": "00-3ae3425434118c43817437aac90ea572-2e031c553d3bc648-00",
-        "User-Agent": "azsdk-net-ResourceManager.Core/1.0.0-alpha.20210506.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "c10c69c4b754a8908de162f0f30ff867",
+        "traceparent": "00-eeeabc9e5a44cb42a868cbcb3c18692b-abf72679ab4e1d47-00",
+        "User-Agent": "azsdk-net-ResourceManager.Resources/1.0.0-preview.2 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "f7042e52bd2a4bb1f0cc1dc04b133791",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -64,19 +63,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "228",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 May 2021 00:23:03 GMT",
+        "Date": "Fri, 07 May 2021 20:23:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d42c4635-0178-492a-b01a-2ce400b18030",
-        "x-ms-ratelimit-remaining-subscription-writes": "1195",
-        "x-ms-request-id": "d42c4635-0178-492a-b01a-2ce400b18030",
-        "x-ms-routing-request-id": "WESTUS2:20210507T002303Z:d42c4635-0178-492a-b01a-2ce400b18030"
+        "x-ms-correlation-request-id": "10f68959-43eb-456f-875e-0d7566d449b3",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "10f68959-43eb-456f-875e-0d7566d449b3",
+        "x-ms-routing-request-id": "WESTUS2:20210507T202305Z:10f68959-43eb-456f-875e-0d7566d449b3"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg4683",
-        "name": "testrg4683",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg1226",
+        "name": "testrg1226",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "tags": {},
@@ -92,24 +91,24 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-ResourceManager.Resources/1.0.0-preview.2 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "cbdfe453c71259281e5e11321ed0c830",
+        "x-ms-client-request-id": "9973a89644702293435b54b17472bbe6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1293230",
+        "Content-Length": "1293150",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 May 2021 00:23:05 GMT",
+        "Date": "Fri, 07 May 2021 20:23:07 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f58d20e0-3fbf-44ff-a1e9-b5967568ccad",
-        "x-ms-ratelimit-remaining-subscription-reads": "11994",
-        "x-ms-request-id": "f58d20e0-3fbf-44ff-a1e9-b5967568ccad",
-        "x-ms-routing-request-id": "WESTUS2:20210507T002305Z:f58d20e0-3fbf-44ff-a1e9-b5967568ccad"
+        "x-ms-correlation-request-id": "e03a4712-161f-4c3f-9aef-d09e0c1eae96",
+        "x-ms-ratelimit-remaining-subscription-reads": "11955",
+        "x-ms-request-id": "e03a4712-161f-4c3f-9aef-d09e0c1eae96",
+        "x-ms-routing-request-id": "WESTUS2:20210507T202307Z:e03a4712-161f-4c3f-9aef-d09e0c1eae96"
       },
       "ResponseBody": {
         "value": [
@@ -56753,6 +56752,55 @@
             "registrationPolicy": "RegistrationRequired"
           },
           {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AzureSphere",
+            "namespace": "Microsoft.AzureSphere",
+            "authorizations": [
+              {
+                "applicationId": "e7d5afaf-5e93-4aad-b546-878812ff572c",
+                "roleDefinitionId": "0bf1834f-602f-4692-b93c-814d655198fd"
+              }
+            ],
+            "resourceTypes": [
+              {
+                "resourceType": "catalogs",
+                "locations": [
+                  "East US 2 EUAP",
+                  "Central US EUAP",
+                  "global"
+                ],
+                "apiVersions": [
+                  "2021-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": false
+                  }
+                },
+                "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+              },
+              {
+                "resourceType": "catalogs/products",
+                "locations": [
+                  "global"
+                ],
+                "apiVersions": [
+                  "2021-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": false
+                  }
+                },
+                "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+              }
+            ],
+            "metadata": {
+              "onboardedVia": "ProviderHub"
+            },
+            "registrationState": "NotRegistered",
+            "registrationPolicy": "RegistrationRequired"
+          },
+          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AzureStack",
             "namespace": "Microsoft.AzureStack",
             "resourceTypes": [
@@ -59724,6 +59772,65 @@
                   "2020-08-20"
                 ],
                 "capabilities": "None"
+              }
+            ],
+            "metadata": {
+              "onboardedVia": "ProviderHub"
+            },
+            "registrationState": "NotRegistered",
+            "registrationPolicy": "RegistrationRequired"
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.ConfidentialLedger",
+            "namespace": "Microsoft.ConfidentialLedger",
+            "authorizations": [
+              {
+                "applicationId": "4353526e-1c33-4fcf-9e82-9683edf52848"
+              },
+              {
+                "applicationId": "c9e0b461-3515-4a03-b576-ede91ed4336d"
+              }
+            ],
+            "resourceTypes": [
+              {
+                "resourceType": "Locations",
+                "locations": [
+                  "global"
+                ],
+                "apiVersions": [
+                  "2020-12-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": true
+                  }
+                },
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "Locations/operationstatuses",
+                "locations": [
+                  "East US 2 EUAP"
+                ],
+                "apiVersions": [
+                  "2020-12-01-preview"
+                ],
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "Ledgers",
+                "locations": [
+                  "East US 2 EUAP"
+                ],
+                "apiVersions": [
+                  "2020-12-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": false
+                  }
+                },
+                "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
               }
             ],
             "metadata": {
@@ -62900,6 +63007,253 @@
             "registrationPolicy": "RegistrationRequired"
           },
           {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Datadog",
+            "namespace": "Microsoft.Datadog",
+            "authorizations": [
+              {
+                "applicationId": "ae11f5fb-c627-4eec-b4a0-f7b5969426e5",
+                "roleDefinitionId": "904f1136-432f-44da-adc4-d3bdf27b156d"
+              },
+              {
+                "applicationId": "055caf97-1b4f-4730-9f5d-acc24b707b06",
+                "roleDefinitionId": "4ac7c055-417e-47eb-9a38-137e6233a688"
+              },
+              {
+                "applicationId": "0c6620df-7b29-44de-8ba4-688a56a20f9f",
+                "roleDefinitionId": "e2116b11-5fb7-4f68-b0e9-9d4173a5dfdb"
+              }
+            ],
+            "resourceTypes": [
+              {
+                "resourceType": "registeredSubscriptions",
+                "locations": [],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "defaultApiVersion": "2021-03-01",
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "locations",
+                "locations": [],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": true
+                  }
+                },
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "locations/operationStatuses",
+                "locations": [
+                  "West US 2",
+                  "East US 2 EUAP"
+                ],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "operations",
+                "locations": [],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "monitors",
+                "locations": [
+                  "West US 2"
+                ],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "metadata": {
+                  "Microsoft.ManagedIdentity": {
+                    "applicationId": "055caf97-1b4f-4730-9f5d-acc24b707b06"
+                  },
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": false
+                  }
+                },
+                "capabilities": "SystemAssignedResourceIdentity, SupportsTags, SupportsLocation"
+              },
+              {
+                "resourceType": "monitors/tagRules",
+                "locations": [
+                  "West US 2"
+                ],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": false
+                  }
+                },
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "monitors/listMonitoredResources",
+                "locations": [
+                  "West US 2"
+                ],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": true
+                  }
+                },
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "monitors/listApiKeys",
+                "locations": [
+                  "West US 2"
+                ],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": true
+                  }
+                },
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "monitors/getDefaultKey",
+                "locations": [
+                  "West US 2"
+                ],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": true
+                  }
+                },
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "monitors/setDefaultKey",
+                "locations": [
+                  "West US 2"
+                ],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": true
+                  }
+                },
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "monitors/singleSignOnConfigurations",
+                "locations": [
+                  "West US 2"
+                ],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": false
+                  }
+                },
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "monitors/listHosts",
+                "locations": [
+                  "West US 2"
+                ],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": true
+                  }
+                },
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "monitors/listLinkedResources",
+                "locations": [
+                  "West US 2"
+                ],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": true
+                  }
+                },
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "monitors/refreshSetPasswordLink",
+                "locations": [
+                  "West US 2"
+                ],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": true
+                  }
+                },
+                "capabilities": "None"
+              },
+              {
+                "resourceType": "agreements",
+                "locations": [],
+                "apiVersions": [
+                  "2021-03-01",
+                  "2020-02-01-preview"
+                ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": false
+                  }
+                },
+                "capabilities": "None"
+              }
+            ],
+            "metadata": {
+              "onboardedVia": "ProviderHub"
+            },
+            "registrationState": "NotRegistered",
+            "registrationPolicy": "RegistrationRequired"
+          },
+          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DataFactory",
             "namespace": "Microsoft.DataFactory",
             "authorizations": [
@@ -65523,6 +65877,74 @@
             "registrationPolicy": "RegistrationRequired"
           },
           {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DelegatedNetwork",
+            "namespace": "Microsoft.DelegatedNetwork",
+            "authorizations": [
+              {
+                "applicationId": "a91b1853-4403-4f54-b5cb-d1ea19d90c37",
+                "roleDefinitionId": "ff3f8a59-97f9-442a-9d5f-e21908e36352"
+              },
+              {
+                "applicationId": "1efe5bbf-d5b1-4fe9-99fa-f55ce1c88679"
+              }
+            ],
+            "resourceTypes": [
+              {
+                "resourceType": "operations",
+                "locations": [
+                  "Australia Central",
+                  "Australia Central 2",
+                  "Australia East",
+                  "Australia Southeast",
+                  "Brazil South",
+                  "Canada Central",
+                  "Canada East",
+                  "Central India",
+                  "Central US",
+                  "East Asia",
+                  "East US 2",
+                  "East US",
+                  "France Central",
+                  "France South",
+                  "Germany West Central",
+                  "Japan East",
+                  "Japan West",
+                  "Korea Central",
+                  "Korea South",
+                  "North Central US",
+                  "North Europe",
+                  "Norway East",
+                  "South Africa North",
+                  "South Africa West",
+                  "South Central US",
+                  "South India",
+                  "Southeast Asia",
+                  "Switzerland North",
+                  "UAE North",
+                  "UK South",
+                  "UK West",
+                  "West Central US",
+                  "West Europe",
+                  "West India",
+                  "West US",
+                  "West US 2"
+                ],
+                "apiVersions": [
+                  "2021-03-15",
+                  "2020-08-08-preview"
+                ],
+                "capabilities": "None"
+              }
+            ],
+            "metadata": {
+              "Microsoft.ManagedIdentity": {
+                "applicationId": "a91b1853-4403-4f54-b5cb-d1ea19d90c37"
+              }
+            },
+            "registrationState": "NotRegistered",
+            "registrationPolicy": "RegistrationRequired"
+          },
+          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DeploymentManager",
             "namespace": "Microsoft.DeploymentManager",
             "authorizations": [
@@ -65886,18 +66308,12 @@
                 "apiVersions": [
                   "2020-03-01-preview"
                 ],
-                "metadata": {
-                  "providerHubMetadata": {
-                    "providerExtendsPreflight": true
-                  }
-                },
                 "capabilities": "None"
               },
               {
-                "resourceType": "locations/operationstatuses",
+                "resourceType": "locations/operationStatuses",
                 "locations": [
                   "East US 2 EUAP",
-                  "West US",
                   "West US 2",
                   "North Europe",
                   "Southeast Asia"
@@ -65958,11 +66374,6 @@
                 "apiVersions": [
                   "2020-03-01-preview"
                 ],
-                "metadata": {
-                  "providerHubMetadata": {
-                    "providerExtendsPreflight": true
-                  }
-                },
                 "capabilities": "None"
               },
               {
@@ -65971,11 +66382,6 @@
                 "apiVersions": [
                   "2020-03-01-preview"
                 ],
-                "metadata": {
-                  "providerHubMetadata": {
-                    "providerExtendsPreflight": true
-                  }
-                },
                 "capabilities": "None"
               }
             ],
@@ -67286,6 +67692,11 @@
                 "apiVersions": [
                   "2020-12-08"
                 ],
+                "metadata": {
+                  "providerHubMetadata": {
+                    "providerExtendsPreflight": true
+                  }
+                },
                 "capabilities": "None"
               },
               {
@@ -67313,7 +67724,9 @@
                   "North Europe",
                   "Southeast Asia",
                   "Australia East",
-                  "East US 2 EUAP"
+                  "East US 2 EUAP",
+                  "Central India",
+                  "West Central US"
                 ],
                 "apiVersions": [
                   "2020-12-08"
@@ -67332,7 +67745,9 @@
                   "North Europe",
                   "Southeast Asia",
                   "Australia East",
-                  "East US 2 EUAP"
+                  "East US 2 EUAP",
+                  "Central India",
+                  "West Central US"
                 ],
                 "apiVersions": [
                   "2020-12-08"
@@ -83690,7 +84105,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1641568194",
+    "RandomSeed": "1888836356",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

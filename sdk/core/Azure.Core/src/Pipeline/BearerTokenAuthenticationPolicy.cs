@@ -64,7 +64,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Executes before <see cref="ProcessAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> or
         /// <see cref="Process(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> is called.
-        /// Implementers of this method are expected to call <see cref="AuthorizeRequest(Azure.Core.HttpMessage,Azure.Core.TokenRequestContext)"/> or <see cref="AuthorizeRequestAsync(Azure.Core.HttpMessage,Azure.Core.TokenRequestContext)"/>
+        /// Implementers of this method are expected to call <see cref="AuthenticateAndAuthorizeRequest"/> or <see cref="AuthenticateAndAuthorizeRequestAsync"/>
         /// if authorization is required for requests not related to handling a challenge response.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
@@ -72,20 +72,20 @@ namespace Azure.Core.Pipeline
         protected virtual ValueTask AuthorizeRequestAsync(HttpMessage message)
         {
             var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
-            return AuthorizeRequestAsync(message, context);
+            return AuthenticateAndAuthorizeRequestAsync(message, context);
         }
 
         /// <summary>
         /// Executes before <see cref="ProcessAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> or
         /// <see cref="Process(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> is called.
-        /// Implementers of this method are expected to call <see cref="AuthorizeRequest(Azure.Core.HttpMessage,Azure.Core.TokenRequestContext)"/> or <see cref="AuthorizeRequestAsync(Azure.Core.HttpMessage,Azure.Core.TokenRequestContext)"/>
+        /// Implementers of this method are expected to call <see cref="AuthenticateAndAuthorizeRequest"/> or <see cref="AuthenticateAndAuthorizeRequestAsync"/>
         /// if authorization is required for requests not related to handling a challenge response.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         protected virtual void AuthorizeRequest(HttpMessage message)
         {
             var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
-            AuthorizeRequest(message, context);
+            AuthenticateAndAuthorizeRequest(message, context);
         }
 
         /// <summary>
@@ -152,22 +152,22 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Sets the Authorization header on the <see cref="Request"/>.
+        /// Sets the Authorization header on the <see cref="Request"/> by calling GetToken, or from cache, if possible.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> with the <see cref="Request"/> to be authorized.</param>
         /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
-        protected async ValueTask AuthorizeRequestAsync(HttpMessage message, TokenRequestContext context)
+        protected async ValueTask AuthenticateAndAuthorizeRequestAsync(HttpMessage message, TokenRequestContext context)
         {
             string headerValue = await _accessTokenCache.GetHeaderValueAsync(message, context, true).ConfigureAwait(false);
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
         }
 
         /// <summary>
-        /// Sets the Authorization header on the <see cref="Request"/>.
+        /// Sets the Authorization header on the <see cref="Request"/> by calling GetToken, or from cache, if possible.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> with the <see cref="Request"/> to be authorized.</param>
         /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
-        protected void AuthorizeRequest(HttpMessage message, TokenRequestContext context)
+        protected void AuthenticateAndAuthorizeRequest(HttpMessage message, TokenRequestContext context)
         {
             string headerValue = _accessTokenCache.GetHeaderValueAsync(message, context, false).EnsureCompleted();
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);

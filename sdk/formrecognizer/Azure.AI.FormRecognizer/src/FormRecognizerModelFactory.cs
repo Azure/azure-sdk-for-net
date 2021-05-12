@@ -478,19 +478,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizer.Models.TextAppearance"/> class.
         /// </summary>
-        /// <param name="style">An object representing the style of the text line.</param>
+        /// <param name="styleName">The text line style name.</param>
+        /// <param name="styleConfidence">Measures the degree of certainty of the recognition result.</param>
         /// <returns>A new <see cref="FormRecognizer.Models.TextAppearance"/> instance for mocking.</returns>
-        public static TextAppearance TextAppearance(TextStyle style) =>
-            style == null ? new TextAppearance() : new TextAppearance(style);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FormRecognizer.Models.TextStyle"/> class.
-        /// </summary>
-        /// <param name="name">The text line style name.</param>
-        /// <param name="confidence">Measures the degree of certainty of the recognition result.</param>
-        /// <returns>A new <see cref="FormRecognizer.Models.TextStyle"/> instance for mocking.</returns>
-        public static TextStyle TextStyle(TextStyleName name, float confidence) =>
-            new TextStyle(name, confidence);
+        public static TextAppearance TextAppearance(TextStyleName styleName, float styleConfidence) =>
+            new TextAppearance(styleName, styleConfidence);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Training.TrainingDocumentInfo"/> class.

@@ -5,11 +5,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Core;
 
 namespace Azure.Core.Tests
 {
-    public class ArmOperationTest : ArmOperation<TestResource>, IOperationSource<TestResource>
+    public class ArmOperationTest : Operation<TestResource>, IOperationSource<TestResource>
     {
         private TestResource _value;
         private bool _exceptionOnWait;

@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task Get()
         {
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroup rg2 = await rg.GetAsync();
-            Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
-            Assert.AreEqual(rg.Data.Tags, rg2.Data.Tags);
+            ResourceGroup rg1 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg2 = await rg1.GetAsync();
+            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
+            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
+            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
+            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
+            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.AreEqual(rg1.Data.Tags, rg2.Data.Tags);
         }
 
         [TestCase]
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task Update()
         {
             var rgName = Recording.GenerateAssetName("testrg");
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
+            ResourceGroup rg1 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(rgName);
             var parameters = new ResourceGroupPatchable
             {
                 Name = rgName
             };
-            ResourceGroup rg2 = await rg.UpdateAsync(parameters);
-            Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
-            Assert.AreEqual(rg.Data.Tags, rg2.Data.Tags);
+            ResourceGroup rg2 = await rg1.UpdateAsync(parameters);
+            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
+            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
+            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
+            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
+            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.AreEqual(rg1.Data.Tags, rg2.Data.Tags);
         }
 
         [TestCase]
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Core.Tests
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             var parameters = new ExportTemplateRequest
             {
-                Options = ""
+                Options = "IncludeParameterDefaultValue: '', IncludeComments: '', SkipResourceNameParameterization: '', SkipAllParameterization: ''"
             };
             var expOp = await rg.StartExportTemplateAsync(parameters);
             await expOp.WaitForCompletionAsync();
@@ -109,17 +109,17 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task AddTag()
         {
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            Assert.AreEqual(0, rg.Data.Tags.Count);
-            ResourceGroup rg2 = await rg.AddTagAsync("key", "value");
+            ResourceGroup rg1 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            Assert.AreEqual(0, rg1.Data.Tags.Count);
+            ResourceGroup rg2 = await rg1.AddTagAsync("key", "value");
             Assert.AreEqual(1, rg2.Data.Tags.Count);
             Assert.IsTrue(rg2.Data.Tags.Contains(new KeyValuePair<string, string>("key", "value")));
-            Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
+            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
+            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
+            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
+            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
         }
 
         [TestCase]
@@ -127,38 +127,38 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task StartAddTag()
         {
             var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroup rg = await rgOp.WaitForCompletionAsync();
-            Assert.AreEqual(0, rg.Data.Tags.Count);
-            var addTagOp = await rg.StartAddTagAsync("key", "value");
+            ResourceGroup rg1 = await rgOp.WaitForCompletionAsync();
+            Assert.AreEqual(0, rg1.Data.Tags.Count);
+            var addTagOp = await rg1.StartAddTagAsync("key", "value");
             ResourceGroup rg2 = await addTagOp.WaitForCompletionAsync();
             Assert.AreEqual(1, rg2.Data.Tags.Count);
             Assert.IsTrue(rg2.Data.Tags.Contains(new KeyValuePair<string, string>("key", "value")));
-            Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
+            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
+            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
+            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
+            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task SetTags()
         {
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            Assert.AreEqual(0, rg.Data.Tags.Count);
+            ResourceGroup rg1 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            Assert.AreEqual(0, rg1.Data.Tags.Count);
             var tags = new Dictionary<string, string>()
             {
                 { "key", "value"}
             };
-            ResourceGroup rg2 = await rg.SetTagsAsync(tags);
+            ResourceGroup rg2 = await rg1.SetTagsAsync(tags);
             Assert.AreEqual(tags, rg2.Data.Tags);
-            Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
+            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
+            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
+            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
+            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
         }
 
         [TestCase]
@@ -166,46 +166,46 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task StartSetTags()
         {
             var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroup rg = await rgOp.WaitForCompletionAsync();
-            Assert.AreEqual(0, rg.Data.Tags.Count);
+            ResourceGroup rg1 = await rgOp.WaitForCompletionAsync();
+            Assert.AreEqual(0, rg1.Data.Tags.Count);
             var tags = new Dictionary<string, string>()
             {
                 { "key", "value"}
             };
-            var setTagOp = await rg.StartSetTagsAsync(tags);
+            var setTagOp = await rg1.StartSetTagsAsync(tags);
             ResourceGroup rg2 = await setTagOp.WaitForCompletionAsync();
             Assert.AreEqual(tags, rg2.Data.Tags);
-            Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
+            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
+            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
+            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
+            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task RemoveTag()
         {
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg1 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             var tags = new Dictionary<string, string>()
             {
                 { "k1", "v1"},
                 { "k2", "v2"}
             };
-            rg = await rg.SetTagsAsync(tags);
-            ResourceGroup rg2 = await rg.RemoveTagAsync("k1");
+            rg1 = await rg1.SetTagsAsync(tags);
+            ResourceGroup rg2 = await rg1.RemoveTagAsync("k1");
             var tags2 = new Dictionary<string, string>()
             {
                 { "k2", "v2"}
             };
             Assert.AreEqual(tags2, rg2.Data.Tags);
-            Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
+            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
+            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
+            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
+            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
         }
 
         [TestCase]
@@ -213,27 +213,27 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task StartRemoveTag()
         {
             var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroup rg = await rgOp.WaitForCompletionAsync();
+            ResourceGroup rg1 = await rgOp.WaitForCompletionAsync();
             var tags = new Dictionary<string, string>()
             {
                 { "k1", "v1"},
                 { "k2", "v2"}
             };
-            var setTagOp = await rg.StartSetTagsAsync(tags);
-            rg = await setTagOp.WaitForCompletionAsync();
-            var removeTagOp = await rg.StartRemoveTagAsync("k1");
+            var setTagOp = await rg1.StartSetTagsAsync(tags);
+            rg1 = await setTagOp.WaitForCompletionAsync();
+            var removeTagOp = await rg1.StartRemoveTagAsync("k1");
             ResourceGroup rg2 = await removeTagOp.WaitForCompletionAsync();
             var tags2 = new Dictionary<string, string>()
             {
                 { "k2", "v2"}
             };
             Assert.AreEqual(tags2, rg2.Data.Tags);
-            Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
-            Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
-            Assert.AreEqual(rg.Data.Type, rg2.Data.Type);
-            Assert.AreEqual(rg.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
-            Assert.AreEqual(rg.Data.Location, rg2.Data.Location);
-            Assert.AreEqual(rg.Data.ManagedBy, rg2.Data.ManagedBy);
+            Assert.AreEqual(rg1.Data.Name, rg2.Data.Name);
+            Assert.AreEqual(rg1.Data.Id, rg2.Data.Id);
+            Assert.AreEqual(rg1.Data.Type, rg2.Data.Type);
+            Assert.AreEqual(rg1.Data.Properties.ProvisioningState, rg2.Data.Properties.ProvisioningState);
+            Assert.AreEqual(rg1.Data.Location, rg2.Data.Location);
+            Assert.AreEqual(rg1.Data.ManagedBy, rg2.Data.ManagedBy);
         }
 
         [TestCase]
@@ -248,6 +248,96 @@ namespace Azure.ResourceManager.Core.Tests
                 count++;
             }
             Assert.GreaterOrEqual(count, 1);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task MoveResources()
+        {
+            ResourceGroup rg1 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg2 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            var aset = await CreateGenericAvailabilitySetAsync(rg1.Id);
+
+            int countRg1 = await GetResourceCountAsync(genericResources, rg1);
+            int countRg2 = await GetResourceCountAsync(genericResources, rg2);
+            Assert.AreEqual(1, countRg1);
+            Assert.AreEqual(0, countRg2);
+
+            var moveInfo = new ResourcesMoveInfo();
+            moveInfo.TargetResourceGroup = rg2.Id;
+            moveInfo.Resources.Add(aset.Id);
+            _ = await rg1.MoveResourcesAsync(moveInfo);
+
+            countRg1 = await GetResourceCountAsync(genericResources, rg1);
+            countRg2 = await GetResourceCountAsync(genericResources, rg2);
+            Assert.AreEqual(0, countRg1);
+            Assert.AreEqual(1, countRg2);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task StartMoveResources()
+        {
+            var rg1Op = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var rg2Op = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg1 = await rg1Op.WaitForCompletionAsync();
+            ResourceGroup rg2 = await rg2Op.WaitForCompletionAsync();
+            var genericResources = Client.DefaultSubscription.GetGenericResources();
+            var asetOp = await StartCreateGenericAvailabilitySetAsync(rg1.Id);
+            GenericResource aset = await asetOp.WaitForCompletionAsync();
+
+            int countRg1 = await GetResourceCountAsync(genericResources, rg1);
+            int countRg2 = await GetResourceCountAsync(genericResources, rg2);
+            Assert.AreEqual(1, countRg1);
+            Assert.AreEqual(0, countRg2);
+
+            var moveInfo = new ResourcesMoveInfo();
+            moveInfo.TargetResourceGroup = rg2.Id;
+            moveInfo.Resources.Add(aset.Id);
+            var moveOp = await rg1.StartMoveResourcesAsync(moveInfo);
+            _ = await moveOp.WaitForCompletionResponseAsync();
+
+            countRg1 = await GetResourceCountAsync(genericResources, rg1);
+            countRg2 = await GetResourceCountAsync(genericResources, rg2);
+            Assert.AreEqual(0, countRg1);
+            Assert.AreEqual(1, countRg2);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task ValidateMoveResources()
+        {
+            ResourceGroup rg1 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg2 = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var aset = await CreateGenericAvailabilitySetAsync(rg1.Id);
+
+            var moveInfo = new ResourcesMoveInfo();
+            moveInfo.TargetResourceGroup = rg2.Id;
+            moveInfo.Resources.Add(aset.Id);
+            Response response = await rg1.ValidateMoveResourcesAsync(moveInfo);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task StartValidateMoveResources()
+        {
+            var rg1Op = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var rg2Op = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg1 = await rg1Op.WaitForCompletionAsync();
+            ResourceGroup rg2 = await rg2Op.WaitForCompletionAsync();
+            var asetOp = await StartCreateGenericAvailabilitySetAsync(rg1.Id);
+            GenericResource aset = await asetOp.WaitForCompletionAsync();
+
+            var moveInfo = new ResourcesMoveInfo();
+            moveInfo.TargetResourceGroup = rg2.Id;
+            moveInfo.Resources.Add(aset.Id);
+            var validateOp = await rg1.StartValidateMoveResourcesAsync(moveInfo);
+            Response response = await validateOp.WaitForCompletionResponseAsync();
+
+            Assert.AreEqual(204, response.Status);
         }
 
         [TestCase]

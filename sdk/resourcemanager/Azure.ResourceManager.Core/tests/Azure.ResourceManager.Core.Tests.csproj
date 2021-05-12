@@ -26,6 +26,9 @@
     <None Update="Unit\TestAssets\SystemAssignedIdentity\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Unit\TestAssets\GenericResourceData\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\ContainerTryGetTest\" />
