@@ -26,7 +26,7 @@ this._serviceClient = ServiceClient.CreateFromConnectionString(connectionString)
 
 Install the Video Analyzer client library for .NET with NuGet:
 
-`dotnet add package Azure.Media.Analytics.Edge --version 1.0.0-beta.1`
+`dotnet add package Azure.Media.VideoAnalyzer.Edge --version 1.0.0-beta.1`
 
 Install the Azure IoT Hub SDk for .Net with NuGet:
 
@@ -150,17 +150,17 @@ private PipelineTopology BuildPipelineTopology()
 To create a live pipeline, you need to have an existing pipeline topology.
 
 ```C# Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
-private LivePipeline BuildLivePipeline(string graphTopologyName)
+private LivePipeline BuildLivePipeline(string topologyName)
 {
     var livePipelineProps = new LivePipelineProperties
     {
-        Description = "Sample graph description",
-        TopologyName = graphTopologyName,
+        Description = "Sample description",
+        TopologyName = topologyName,
     };
 
     livePipelineProps.Parameters.Add(new ParameterDefinition("rtspUrl", "rtsp://sample.com"));
 
-    return new LivePipeline("graphInstance")
+    return new LivePipeline("livePIpeline")
     {
         Properties = livePipelineProps
     };

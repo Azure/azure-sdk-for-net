@@ -16,13 +16,13 @@ using System.Linq;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Samples
 {
-    public class LiveVideoAnalyticsSample
+    public class LiveVideoAnalyzerSample
     {
         private ServiceClient _serviceClient;
         private String _deviceId = "lva-sample-device";
         private String _moduleId = "mediaEdge";
 
-        public LiveVideoAnalyticsSample()
+        public LiveVideoAnalyzerSample()
         {
             #region Snippet:Azure_VideoAnalyzer_Samples_ConnectionString
             var connectionString = "connectionString";
@@ -32,15 +32,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
         }
 
         [Test]
-        public async Task SendGraphRequests()
+        public async Task SendPipelineRequests()
         {
             try
             {
-                // create a graph topology and graph instance
+                // create a pipeline topology and live pipeline
                 var pipelineTopology = BuildPipelineTopology();
                 var livePipeline = BuildLivePipeline(pipelineTopology.Name);
 
-                //set graph topology without using helper function
+                //set topology without using helper function
                 #region Snippet:Azure_VideoAnalyzeramples_InvokeDirectMethod
                 var setPipelineTopRequest = new PipelineTopologySetRequest(pipelineTopology);
 
@@ -50,34 +50,34 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
                 var setPipelineTopResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
                 #endregion Snippet:Azure_VideoAnalyzeramples_InvokeDirectMethod
 
-                // get a graph topology using helper function
+                // get a topology using helper function
                 var getPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyGetRequest(pipelineTopology.Name));
                 var getPipelineTopResponse = PipelineTopology.Deserialize(getPipelineTopRequest.GetPayloadAsJson());
 
-                // list all graph topologies
+                // list all  topologies
                 var listPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyListRequest());
                 var listPipelineTopResponse = PipelineTopologyCollection.Deserialize(listPipelineTopRequest.GetPayloadAsJson());
 
-                //set graph instance
+                //set live pipeline
                 var setLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineSetRequest(livePipeline));
 
-                //activate graph instance
+                //activate live pipeline
                 var activateLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineActivateRequest(livePipeline.Name));
 
-                //get instance
+                //get live pipeline
                 var getLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineGetRequest(livePipeline.Name));
                 var getLivePipelineResponse = LivePipeline.Deserialize(getLivePipelineRequest.GetPayloadAsJson());
 
-                // list all graph instance
+                // list all live pipeline
                 var listLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineListRequest());
                 var listLivePipelineResponse = LivePipelineCollection.Deserialize(listLivePipelineRequest.GetPayloadAsJson());
 
-                //get deactive graph
+                //getlive pipeline
                 var deactiveLivePipeline = await InvokeDirectMethodHelper(new LivePipelineDeactivateRequest(livePipeline.Name));
 
                 var deleteLivePipeline = await InvokeDirectMethodHelper(new LivePipelineDeleteRequest(livePipeline.Name));
 
-                //delete graph
+                //delete live pipeline
                 var deletePipelineTopology = await InvokeDirectMethodHelper(new PipelineTopologyDeleteRequest(pipelineTopology.Name));
             }
             catch (Exception ex)
@@ -95,17 +95,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
         }
 
         #region Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
-        private LivePipeline BuildLivePipeline(string graphTopologyName)
+        private LivePipeline BuildLivePipeline(string topologyName)
         {
             var livePipelineProps = new LivePipelineProperties
             {
-                Description = "Sample graph description",
-                TopologyName = graphTopologyName,
+                Description = "Sample description",
+                TopologyName = topologyName,
             };
 
             livePipelineProps.Parameters.Add(new ParameterDefinition("rtspUrl", "rtsp://sample.com"));
 
-            return new LivePipeline("graphInstance")
+            return new LivePipeline("livePIpeline")
             {
                 Properties = livePipelineProps
             };

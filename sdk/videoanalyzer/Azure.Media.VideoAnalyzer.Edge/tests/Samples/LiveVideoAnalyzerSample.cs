@@ -18,7 +18,7 @@ using System.Linq;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Samples
 {
-    public class LiveVideoAnalyticsSample
+    public class LiveVideoAnalyzerSample
     {
         /// <summary>
         /// We do not have live tests for this sdk because this is a models only sdk. All of its operations are done through the azure-iot-hub sdk.
