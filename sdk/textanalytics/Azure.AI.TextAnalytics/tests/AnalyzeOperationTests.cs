@@ -95,12 +95,12 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(piiResult);
             Assert.IsNotNull(elResult);
 
-            Assert.AreEqual(2, keyPhrasesResult.Count);
-
             var keyPhrasesListId1 = new List<string> { "CEO of SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock", "year" };
 
             var keyPhrases = keyPhrasesResult.FirstOrDefault().Result;
+            Assert.AreEqual(2, keyPhrases.Count);
+
             foreach (string keyphrase in keyPhrases[0].KeyPhrases)
             {
                 Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
