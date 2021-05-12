@@ -97,10 +97,8 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task StartExportTemplate()
         {
             ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            var parameters = new ExportTemplateRequest
-            {
-                Options = "IncludeParameterDefaultValue: '', IncludeComments: '', SkipResourceNameParameterization: '', SkipAllParameterization: ''"
-            };
+            var parameters = new ExportTemplateRequest();
+            parameters.Resources.Add("*");
             var expOp = await rg.StartExportTemplateAsync(parameters);
             await expOp.WaitForCompletionAsync();
         }
