@@ -376,7 +376,7 @@ namespace Azure.Core.Tests
         public void RecordingSessionSanitizeTextBody(string jsonPath, string body, string expected)
         {
             var sanitizer = new RecordedTestSanitizer();
-            sanitizer.JsonPathSanitizers.Add(jsonPath);
+            sanitizer.AddJsonPathSanitizer(jsonPath);
 
             string response = sanitizer.SanitizeTextBody(default, body);
 
@@ -387,8 +387,8 @@ namespace Azure.Core.Tests
         public void RecordingSessionSanitizeTextBodyMultipleValues()
         {
             var sanitizer = new RecordedTestSanitizer();
-            sanitizer.JsonPathSanitizers.Add("$..secret");
-            sanitizer.JsonPathSanitizers.Add("$..topSecret");
+            sanitizer.AddJsonPathSanitizer("$..secret");
+            sanitizer.AddJsonPathSanitizer("$..topSecret");
 
             var body = "{\"secret\":\"I should be sanitized\",\"key\":\"value\",\"topSecret\":\"I should be sanitized\"}";
             var expected = "{\"secret\":\"Sanitized\",\"key\":\"value\",\"topSecret\":\"Sanitized\"}";

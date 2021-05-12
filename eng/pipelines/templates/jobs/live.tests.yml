@@ -26,6 +26,9 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
+- name: Project
+  type: string
+  default: '**'
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -112,6 +115,7 @@ jobs:
           --logger:"console;verbosity=normal"
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+          /p:Project=${{ parameters.Project }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:BuildInParallel=${{ parameters.BuildInParallel }}
           $(AdditionalTestArguments)

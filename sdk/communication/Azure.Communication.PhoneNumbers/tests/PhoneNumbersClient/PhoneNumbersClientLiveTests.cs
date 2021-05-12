@@ -132,6 +132,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [AsyncOnly]
         public async Task CreateSearchAsync()
         {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
             var client = CreateClient();
             var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
                 new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
@@ -150,6 +153,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [SyncOnly]
         public void CreateSearch()
         {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
             var client = CreateClient();
             var searchOperation = client.StartSearchAvailablePhoneNumbers("US", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
                 new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
@@ -172,6 +178,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [AsyncOnly]
         public async Task UpdateCapabilitiesAsync()
         {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
             var number = GetTestPhoneNumber();
 
             var client = CreateClient();
@@ -192,6 +201,9 @@ namespace Azure.Communication.PhoneNumbers.Tests
         [SyncOnly]
         public void UpdateCapabilities()
         {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests) {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
             var number = GetTestPhoneNumber();
 
             var client = CreateClient();

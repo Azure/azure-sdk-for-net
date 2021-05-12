@@ -6,13 +6,10 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-
-#pragma warning disable AZC0007
 
 namespace Azure.Analytics.Purview.Catalog
 {
@@ -24,6 +21,7 @@ namespace Azure.Analytics.Purview.Catalog
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private Uri endpoint;
         private readonly string apiVersion;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of LineageRestClient for mocking. </summary>
         protected LineageRestClient()
@@ -46,7 +44,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
 
             options ??= new CatalogClientOptions();
-            Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
+            _clientDiagnostics = new ClientDiagnostics(options);
+            var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
@@ -58,11 +58,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetLineageGraphAsync(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LineageRestClient.GetLineageGraph");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get lineage info about the specified entity by GUID. </summary>
@@ -72,11 +103,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetLineageGraph(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetLineageGraph(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetLineageGraphRequest(guid, direction, depth, width, includeParent, getDerivedLineage, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LineageRestClient.GetLineageGraph");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetLineageGraph"/> and <see cref="GetLineageGraphAsync"/> operations. </summary>
@@ -86,7 +148,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="width"> The number of max expanding width in lineage. </param>
         /// <param name="includeParent"> True to include the parent chain in the response. </param>
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
-        private Request CreateGetLineageGraphRequest(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth = null, int? width = null, bool? includeParent = null, bool? getDerivedLineage = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -115,7 +178,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Return immediate next level lineage info about entity with pagination. </summary>
@@ -124,11 +187,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> NextLevelLineageAsync(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> NextLevelLineageAsync(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateNextLevelLineageRequest(guid, direction, getDerivedLineage, offset, limit);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateNextLevelLineageRequest(guid, direction, getDerivedLineage, offset, limit, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LineageRestClient.NextLevelLineage");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Return immediate next level lineage info about entity with pagination. </summary>
@@ -137,11 +231,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response NextLevelLineage(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response NextLevelLineage(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateNextLevelLineageRequest(guid, direction, getDerivedLineage, offset, limit);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateNextLevelLineageRequest(guid, direction, getDerivedLineage, offset, limit, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("LineageRestClient.NextLevelLineage");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="NextLevelLineage"/> and <see cref="NextLevelLineageAsync"/> operations. </summary>
@@ -150,7 +275,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="getDerivedLineage"> True to include derived lineage in the response. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
-        private Request CreateNextLevelLineageRequest(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateNextLevelLineageRequest(string guid, string direction, bool? getDerivedLineage = null, int? offset = null, int? limit = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -180,7 +306,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
     }
 }

@@ -399,8 +399,7 @@ namespace Azure.AI.FormRecognizer.Models
         public static Azure.AI.FormRecognizer.Models.RecognizedForm RecognizedForm(string formType, Azure.AI.FormRecognizer.Models.FormPageRange pageRange, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.Models.FormField> fields, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormPage> pages) { throw null; }
         public static Azure.AI.FormRecognizer.Models.RecognizedForm RecognizedForm(string formType, Azure.AI.FormRecognizer.Models.FormPageRange pageRange, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.Models.FormField> fields, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormPage> pages, string modelId, float? formTypeConfidence) { throw null; }
         public static Azure.AI.FormRecognizer.Models.RecognizedFormCollection RecognizedFormCollection(System.Collections.Generic.IList<Azure.AI.FormRecognizer.Models.RecognizedForm> list) { throw null; }
-        public static Azure.AI.FormRecognizer.Models.TextAppearance TextAppearance(Azure.AI.FormRecognizer.Models.TextStyle style) { throw null; }
-        public static Azure.AI.FormRecognizer.Models.TextStyle TextStyle(Azure.AI.FormRecognizer.Models.TextStyleName name, float confidence) { throw null; }
+        public static Azure.AI.FormRecognizer.Models.TextAppearance TextAppearance(Azure.AI.FormRecognizer.Models.TextStyleName styleName, float styleConfidence) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.FormRecognizer.Training.TrainingDocumentInfo TrainingDocumentInfo(string name, int pageCount, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.Models.FormRecognizerError> errors, Azure.AI.FormRecognizer.Training.TrainingStatus status) { throw null; }
         public static Azure.AI.FormRecognizer.Training.TrainingDocumentInfo TrainingDocumentInfo(string name, int pageCount, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.Models.FormRecognizerError> errors, Azure.AI.FormRecognizer.Training.TrainingStatus status, string modelId) { throw null; }
@@ -548,13 +547,8 @@ namespace Azure.AI.FormRecognizer.Models
     public partial class TextAppearance
     {
         internal TextAppearance() { }
-        public Azure.AI.FormRecognizer.Models.TextStyle Style { get { throw null; } }
-    }
-    public partial class TextStyle
-    {
-        internal TextStyle() { }
-        public float Confidence { get { throw null; } }
-        public Azure.AI.FormRecognizer.Models.TextStyleName Name { get { throw null; } }
+        public float StyleConfidence { get { throw null; } }
+        public Azure.AI.FormRecognizer.Models.TextStyleName StyleName { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TextStyleName : System.IEquatable<Azure.AI.FormRecognizer.Models.TextStyleName>

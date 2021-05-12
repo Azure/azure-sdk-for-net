@@ -37,7 +37,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithConnectionString(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.LiveTestConnectionString,
+                    TestEnvironment.LiveTestStaticConnectionString,
                     CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
             // We always create the instrumented client to suppress the instrumentation check
@@ -53,8 +53,8 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithAzureKeyCredential(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.LiveTestEndpoint,
-                     new AzureKeyCredential(TestEnvironment.LiveTestAccessKey),
+                    TestEnvironment.LiveTestStaticEndpoint,
+                     new AzureKeyCredential(TestEnvironment.LiveTestStaticAccessKey),
                     CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
             return isInstrumented ? InstrumentClient(client) : client;
@@ -68,7 +68,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.LiveTestEndpoint,
+                    TestEnvironment.LiveTestStaticEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     CreatePhoneNumbersClientOptionsWithCorrelationVectorLogs());
 
