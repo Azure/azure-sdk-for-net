@@ -42,7 +42,7 @@ namespace Proto.Client
         CheckResourceGroupContainerAsync,
         GenericResourceOperationsExample,
         SingletonVmssUpgrade,
-        VMImageTests,
+        VmImageTests,
     }
 
     class ScenarioFactory
