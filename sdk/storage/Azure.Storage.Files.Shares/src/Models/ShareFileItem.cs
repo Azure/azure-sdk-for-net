@@ -60,7 +60,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new StorageFileItem instance for mocking.
         /// </summary>
-        public static ShareFileItem StorageFileItem(
+        public static ShareFileItem ShareFileItem(
             bool isDirectory = default,
             string name = default,
             long? fileSize = default,
