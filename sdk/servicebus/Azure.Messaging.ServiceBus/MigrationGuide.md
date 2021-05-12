@@ -50,7 +50,7 @@ We have a variety of new features in the version 7 of the Service Bus library.
 
 Package names and the namespace root for the modern Azure client libraries for .NET have changed. Each will follow the pattern `Azure.[Area].[Service]` where the legacy clients followed the pattern `Microsoft.Azure.[Service]`. This provides a quick and accessible means to help understand, at a glance, whether you are using the modern or legacy clients.
 
-In the case of Service Bus, the modern client library has package name and namespace `Azure.Messaging.ServiceBus` and were released beginning with version 7. The legacy client library has package and namespace `Microsoft.Azure.ServiceBus`.
+In the case of Service Bus, the modern client library has package name and namespace `Azure.Messaging.ServiceBus` and was released beginning with version 7. The legacy client library has package and namespace `Microsoft.Azure.ServiceBus`.
 
 ### Client hierarchy
 
