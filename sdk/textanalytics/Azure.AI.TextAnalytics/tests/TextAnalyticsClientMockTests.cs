@@ -690,10 +690,10 @@ namespace Azure.AI.TextAnalytics.Tests
             await client.StartAnalyzeBatchActionsAsync(documents, batchActions);
 
             var content = mockTransport.Requests.Single().Content;
-            var stream = new MemoryStream();
+            using var stream = new MemoryStream();
             await content.WriteToAsync(stream, default);
             stream.Position = 0;
-            var streamReader = new StreamReader(stream);
+            using var streamReader = new StreamReader(stream);
             string contentString = streamReader.ReadToEnd();
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
@@ -702,7 +702,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeOperationRecognizeEntititesWithDisableServiceLogs()
+        public async Task AnalyzeOperationRecognizeEntitiesWithDisableServiceLogs()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
@@ -728,10 +728,10 @@ namespace Azure.AI.TextAnalytics.Tests
             await client.StartAnalyzeBatchActionsAsync(documents, batchActions);
 
             var content = mockTransport.Requests.Single().Content;
-            var stream = new MemoryStream();
+            using var stream = new MemoryStream();
             await content.WriteToAsync(stream, default);
             stream.Position = 0;
-            var streamReader = new StreamReader(stream);
+            using var streamReader = new StreamReader(stream);
             string contentString = streamReader.ReadToEnd();
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"),19);
 
@@ -740,7 +740,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeOperationRecognizeLinkedEntititesWithDisableServiceLogs()
+        public async Task AnalyzeOperationRecognizeLinkedEntitiesWithDisableServiceLogs()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
@@ -766,10 +766,10 @@ namespace Azure.AI.TextAnalytics.Tests
             await client.StartAnalyzeBatchActionsAsync(documents, batchActions);
 
             var content = mockTransport.Requests.Single().Content;
-            var stream = new MemoryStream();
+            using var stream = new MemoryStream();
             await content.WriteToAsync(stream, default);
             stream.Position = 0;
-            var streamReader = new StreamReader(stream);
+            using var streamReader = new StreamReader(stream);
             string contentString = streamReader.ReadToEnd();
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 
@@ -778,7 +778,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task AnalyzeOperationRecognizePiiEntititesWithDisableServiceLogs()
+        public async Task AnalyzeOperationRecognizePiiEntitiesWithDisableServiceLogs()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
@@ -804,10 +804,10 @@ namespace Azure.AI.TextAnalytics.Tests
             await client.StartAnalyzeBatchActionsAsync(documents, batchActions);
 
             var content = mockTransport.Requests.Single().Content;
-            var stream = new MemoryStream();
+            using var stream = new MemoryStream();
             await content.WriteToAsync(stream, default);
             stream.Position = 0;
-            var streamReader = new StreamReader(stream);
+            using var streamReader = new StreamReader(stream);
             string contentString = streamReader.ReadToEnd();
             string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
 

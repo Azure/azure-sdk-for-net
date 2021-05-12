@@ -327,11 +327,11 @@ namespace Azure.AI.TextAnalytics
             {
                 Parameters = new PiiTaskParameters()
                 {
-                    Domain = option.DomainFilter.HasValue ? option.DomainFilter.Value.GetString() : (PiiTaskParametersDomain?)null,
+                    Domain = option.DomainFilter.Value.GetString(),
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
                     StringIndexType = option.StringIndexType,
-                    LoggingOptOut = option.DisableServiceLogs.HasValue ? option.DisableServiceLogs : null
-                    // Categories are not enabled becuase of https://github.com/Azure/azure-sdk-for-net/issues/19237
+                    LoggingOptOut = option.DisableServiceLogs
+                    // Categories are not enabled because of https://github.com/Azure/azure-sdk-for-net/issues/19237
                 }
             };
         }
@@ -344,7 +344,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
                     StringIndexType = option.StringIndexType,
-                    LoggingOptOut = option.DisableServiceLogs.HasValue ? option.DisableServiceLogs : null
+                    LoggingOptOut = option.DisableServiceLogs
                 }
             };
         }
@@ -357,7 +357,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
                     StringIndexType = option.StringIndexType,
-                    LoggingOptOut = option.DisableServiceLogs.HasValue ? option.DisableServiceLogs : null
+                    LoggingOptOut = option.DisableServiceLogs
                 }
             };
         }
@@ -369,7 +369,7 @@ namespace Azure.AI.TextAnalytics
                 Parameters = new KeyPhrasesTaskParameters()
                 {
                     ModelVersion = !string.IsNullOrEmpty(option.ModelVersion) ? option.ModelVersion : "latest",
-                    LoggingOptOut = option.DisableServiceLogs.HasValue ? option.DisableServiceLogs : null
+                    LoggingOptOut = option.DisableServiceLogs
                 }
             };
         }
