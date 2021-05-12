@@ -2,7 +2,7 @@
   "version": "0.1",
   "language": "en_US",
   "languageId": "csharp",
-  "dictionaries": ["powershell", "softwareTerms"],
+  "dictionaries": ["powershell", "softwareTerms", "csharp"],
   "ignorePaths": [
     "**/SessionRecords/**",
     "**/packages/**",
@@ -54,7 +54,6 @@
     "referer",
     "renormalize",
     "retriable",
-    "struct",
     "structs",
     "uints",
     "unformattable",
