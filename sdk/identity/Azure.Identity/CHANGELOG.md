@@ -4,8 +4,6 @@
 
 ### New Features
 
-- The Microsoft Authentication Library (MSAL) dependency versions have been updated to the latest
-    - Microsoft.Identity.Client version 4.30.1, Microsoft.Identity.Client.Extensions.Msal version 2.18.4.
 - By default, the MSAL Public Client Client Capabilities are populated with "CP1" to enable support for [Continuous Access Evaluation (CAE)](https://docs.microsoft.com/azure/active-directory/develop/app-resilience-continuous-access-evaluation).
 This indicates to AAD that your application is CAE ready and can handle the CAE claim challenge. This capability can be disabled, if necessary, by either setting an `AppContext` switch named "Azure.Identity.DisableCP1" to `true` or by setting the environment variable;
 "AZURE_IDENTITY_DISABLE_CP1" to "true". Note: AppContext switches can also be configured via configuration like below:
@@ -15,6 +13,10 @@ This indicates to AAD that your application is CAE ready and can handle the CAE 
     <RuntimeHostConfigurationOption Include="Azure.Identity.DisableCP1" Value="true" />
 </ItemGroup> 
   ```
+### Fixes and improvements
+
+- The Microsoft Authentication Library (MSAL) dependency versions have been updated to the latest
+    - Microsoft.Identity.Client version 4.30.1, Microsoft.Identity.Client.Extensions.Msal version 2.18.4.
 
 ## 1.4.0-beta.5 (2021-04-06)
 
