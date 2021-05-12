@@ -10,8 +10,8 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
 {
     public class TestHelper : IDisposable
     {
-        public string ResourceGroup = "SwaggerTestRg";
-        public string VaultName = "NetSDKTestRsVault";
+        public string ResourceGroup = "mayaggarDiskRG";
+        public string VaultName = "DiskbackupVault2";
         public string Location = "southeastasia";
         public JObject mockJson;
 
@@ -31,8 +31,9 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
 
         public void CreateVault()
         {
-            JToken requestData = mockJson["Entries"][0]["RequestBody"];
-            BackupVaultResource backupVaultResource = SafeJsonConvert.DeserializeObject<BackupVaultResource>(requestData.ToString(), BackupClient.DeserializationSettings);
+            // JToken requestData = mockJson["Entries"][0]["RequestBody"];
+            string data = "{\n    \"id\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault2\",\n    \"name\": \"DiskbackupVault2\",\n    \"type\": \"Microsoft.DataProtection/BackupVaults\",\n    \"location\": \"southeastasia\",\n    \"identity\": {\n        \"type\": \"systemAssigned\"\n    },\n    \"properties\": {\n        \"storageSettings\": [\n            {\n                \"datastoreType\": \"VaultStore\",\n                \"type\": \"ZonallyRedundant\"\n            },\n            {\n                \"datastoreType\": \"OperationalStore\",\n                \"type\": \"ZonallyRedundant\"\n            }\n        ]\n    }\n}";
+            BackupVaultResource backupVaultResource = SafeJsonConvert.DeserializeObject<BackupVaultResource>(data, BackupClient.DeserializationSettings);
             var response = BackupClient.BackupVaults.CreateOrUpdate(VaultName, ResourceGroup, backupVaultResource);
             Assert.NotNull(response);
         }
@@ -45,7 +46,8 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
 
         public void CreatePolicy(string policyName)
         {
-            JToken requestData = mockJson["Entries"][2]["RequestBody"];
+            //JToken requestData = mockJson["Entries"][2]["RequestBody"];
+            string requestData = "{\r\n  \"id\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault2/backupPolicies/retentionpolicy2\",\r\n  \"name\": \"retentionpolicy2\",\r\n  \"type\": \"Microsoft.DataProtection/backupPolicies\",\r\n  \"properties\": {\r\n\t\"policyRules\": [\r\n\t  {\r\n\t\t\"backupParameters\": {\r\n\t\t  \"backupType\": \"Incremental\",\r\n\t\t  \"objectType\": \"AzureBackupParams\"\r\n\t\t},\r\n\t\t\"trigger\": {\r\n\t\t  \"schedule\": {\r\n\t\t\t\"repeatingTimeIntervals\": [\r\n\t\t\t  \"R/2019-12-26T13:08:27.8535071Z/PT4H\"\r\n\t\t\t]\r\n\t\t  },\r\n\t\t  \"taggingCriteria\": [\r\n\t\t\t{\r\n\t\t\t  \"tagInfo\": {\r\n\t\t\t\t\"tagName\": \"Default\",\r\n\t\t\t\t\"id\": \"Default_\"\r\n\t\t\t  },\r\n\t\t\t  \"taggingPriority\": 99,\r\n\t\t\t  \"isDefault\": true,\r\n\t\t\t  \"objectType\": \"TaggingCriteria\"\r\n\t\t\t}\r\n\t\t  ],\r\n\t\t  \"objectType\": \"ScheduleBasedTriggerContext\"\r\n\t\t},\r\n\t\t\"dataStore\": {\r\n\t\t  \"dataStoreType\": \"OperationalStore\",\r\n\t\t  \"objectType\": \"DataStoreInfoBase\"\r\n\t\t},\r\n\t\t\"name\": \"BackupHourly\",\r\n\t\t\"objectType\": \"AzureBackupRule\",\r\n\t\t\"ruleType\": \"Backup\"\r\n\t  },\r\n\t  {\r\n\t\t\"lifecycles\": [\r\n\t\t  {\r\n\t\t\t\"sourceDataStore\": {\r\n\t\t\t  \"dataStoreType\": \"OperationalStore\",\r\n\t\t\t  \"objectType\": \"DataStoreInfoBase\"\r\n\t\t\t},\r\n\t\t\t\"deleteAfter\": {\r\n\t\t\t  \"objectType\": \"AbsoluteDeleteOption\",\r\n\t\t\t  \"duration\": \"P1W\"\r\n\t\t\t}\r\n\t\t  }\r\n\t\t],\r\n\t\t\"isDefault\": true,\r\n\t\t\"name\": \"Default\",\r\n\t\t\"objectType\": \"AzureRetentionRule\",\r\n\t\t\"ruleType\": \"Retention\"\r\n\t  }\r\n\t],\r\n\t\"name\": \"retentionpolicy2\",\r\n\t\"id\": \"75efeda6-7c58-4771-a618-0ec86fe8e423\",\r\n\t\"datasourceTypes\": [\r\n\t  \"Microsoft.Compute/disks\"\r\n\t],\r\n\t\"objectType\": \"BackupPolicy\"\r\n  }\r\n}";
             BaseBackupPolicyResource body = SafeJsonConvert.DeserializeObject<BaseBackupPolicyResource>(requestData.ToString(), BackupClient.DeserializationSettings);
             BaseBackupPolicyResource baseBackupPolicyResource = BackupClient.BackupPolicies.CreateOrUpdate(VaultName, ResourceGroup, policyName, body);
             Assert.NotNull(baseBackupPolicyResource);
@@ -57,19 +59,21 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
             Assert.NotNull(baseBackupPolicyResource);
         }
 
-        public void ValidateForBackup(string backupInstanceName)
+        public void ValidateForBackup()
         {
-            JToken requestData = mockJson["Entries"][4]["RequestBody"];
+            //JToken requestData = mockJson["Entries"][4]["RequestBody"];
+            string requestData = "{\r\n    \"objectType\": \"ValidateForBackupRequest\",\r\n\t\"backupInstance\": {\r\n\t\t\"objectType\": \"BackupInstance\",\r\n\t\t\"dataSourceInfo\": {\r\n\t\t\t\"objectType\": \"Datasource\",\r\n\t\t\t\"resourceID\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.Compute/disks/testingDisk\",\r\n\t\t\t\"resourceName\": \"testingDisk\",\r\n\t\t\t\"resourceType\": \"Microsoft.Compute/disks\",\r\n\t\t\t\"resourceUri\": \"\",\r\n\t\t\t\"resourceLocation\": \"southeastasia\",\r\n\t\t\t\"datasourceType\": \"Microsoft.Compute/disks\"\r\n\t\t},\r\n\t\t\"policyInfo\": {\r\n\t\t\t\"policyId\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault2/backupPolicies/retentionpolicy2\",\r\n\t\t\t\"name\": \"retentionpolicy2\",\r\n\t\t\t\"policyVersion\": \"3.2\",\r\n\t\t\t\"policyParameters\": {\r\n\t\t\t\t\"dataStoreParametersList\": [\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"objectType\": \"AzureOperationalStoreParameters\",\r\n\t\t\t\t\t\t\"dataStoreType\": \"OperationalStore\",\r\n\t\t\t\t\t\t\"resourceGroupId\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarOTDSRG\"\r\n\t\t\t\t\t}\r\n\t\t\t\t]\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}";
             ValidateForBackupRequest body = SafeJsonConvert.DeserializeObject<ValidateForBackupRequest>(requestData.ToString(), BackupClient.DeserializationSettings);
             var response = BackupClient.BackupInstances.ValidateForBackup(VaultName, ResourceGroup, body.BackupInstance);
-            Assert.Null(response);
+            Assert.NotNull(response);
         }
 
-        public void CreateBackupInstance(string backupInstanceName)
+        public void CreateBackupInstance()
         {
-            JToken requestData = mockJson["Entries"][5]["RequestBody"];
+            //JToken requestData = mockJson["Entries"][5]["RequestBody"];
+            string requestData = "{\r\n\t\"id\": null,\r\n\t\"name\": \"testingDisk\",\r\n\t\"type\": \"Microsoft.DataProtection/backupvaults/backupInstances\",\r\n\t\"location\": null,\r\n\t\"tags\": null,\r\n\t\"eTag\": null,\r\n\t\"properties\": {\r\n\t\t\"objectType\": \"BackupInstance\",\r\n\t\t\"dataSourceInfo\": {\r\n\t\t\t\"objectType\": \"Datasource\",\r\n\t\t\t\"resourceID\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.Compute/disks/testingDisk\",\r\n\t\t\t\"resourceName\": \"testingDisk\",\r\n\t\t\t\"resourceType\": \"Microsoft.Compute/disks\",\r\n\t\t\t\"resourceUri\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.Compute/disks/testingDisk\",\r\n\t\t\t\"resourceLocation\": \"southeastasia\",\r\n\t\t\t\"datasourceType\": \"Microsoft.Compute/disks\"\r\n\t\t},\r\n\t\t\"policyInfo\": {\r\n\t\t\t\"policyId\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault2/backupPolicies/retentionpolicy2\",\r\n\t\t\t\"name\": \"retentionpolicy2\",\r\n\t\t\t\"policyVersion\": \"3.2\",\r\n            \"policyParameters\": {\r\n\t\t\t\t\"dataStoreParametersList\": [\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t\"objectType\": \"AzureOperationalStoreParameters\",\r\n\t\t\t\t\t\t\"dataStoreType\": \"OperationalStore\",\r\n\t\t\t\t\t\t\"resourceGroupId\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarOTDSRG\"\r\n\t\t\t\t\t}\r\n\t\t\t\t]\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}";
             BackupInstanceResource body = SafeJsonConvert.DeserializeObject<BackupInstanceResource>(requestData.ToString(), BackupClient.DeserializationSettings);
-            var response = BackupClient.BackupInstances.CreateOrUpdate(VaultName, ResourceGroup, backupInstanceName, body);
+            var response = BackupClient.BackupInstances.CreateOrUpdate(VaultName, ResourceGroup, body.Name, body);
             Assert.NotNull(response);
         }
 
@@ -81,26 +85,29 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
 
         public void TriggerBackup(string backupInstanceName)
         {
-            JToken requestData = mockJson["Entries"][7]["RequestBody"];
+            //JToken requestData = mockJson["Entries"][7]["RequestBody"];
+            string requestData = "{\r\n  \"backupRuleOptions\": {\r\n    \"ruleName\": \"BackupHourly\",\r\n    \"triggerOption\": {\r\n      \"retentionTagOverride\": \"Default\"\r\n    }\r\n  }\r\n}";
             TriggerBackupRequest body = SafeJsonConvert.DeserializeObject<TriggerBackupRequest>(requestData.ToString(), BackupClient.DeserializationSettings);
             var response = BackupClient.BackupInstances.AdhocBackup(VaultName, ResourceGroup, backupInstanceName, body.BackupRuleOptions);
-            Assert.Null(response);
+            Assert.NotNull(response);
         }
 
         public void ValidateForRestore(string backupInstanceName)
         {
-            JToken requestData = mockJson["Entries"][8]["RequestBody"];
+            //JToken requestData = mockJson["Entries"][8]["RequestBody"];
+            string requestData = "{\"objectType\":\"ValidateRestoreRequestObject\",\"restoreRequestObject\":{\"objectType\":\"AzureBackupRecoveryPointBasedRestoreRequest\",\"sourceDataStoreType\":\"OperationalStore\",\"restoreTargetInfo\":{\"objectType\":\"restoreTargetInfo\",\"recoveryOption\":\"FailIfExists\",\"dataSourceInfo\":{\"objectType\":\"Datasource\",\"resourceID\":\"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggartargetrg/providers/Microsoft.Compute/disks/restoredisk1\",\"resourceName\":\"restoredisk1\",\"resourceType\":\"Microsoft.Compute/disks\",\"resourceLocation\":\"centraluseuap\",\"resourceUri\":\"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggartargetrg/providers/Microsoft.Compute/disks/restoredisk1\",\"datasourceType\":\"Microsoft.Compute/disks\"},\"restoreLocation\":\"southeastasia\"},\"recoveryPointId\":\"7327d7065c4145b3b6d80bcb8a787ea6\"}}";
             ValidateRestoreRequestObject body = SafeJsonConvert.DeserializeObject<ValidateRestoreRequestObject>(requestData.ToString(), BackupClient.DeserializationSettings);
             var response = BackupClient.BackupInstances.ValidateRestore(VaultName, ResourceGroup, backupInstanceName, body.RestoreRequestObject);
-            Assert.Null(response);
+            Assert.NotNull(response);
         }
 
         public void TriggerRestore(string backupInstanceName)
         {
-            JToken requestData = mockJson["Entries"][9]["RequestBody"];
+            //JToken requestData = mockJson["Entries"][9]["RequestBody"];
+            string requestData = "{\r\n\t\"objectType\": \"AzureBackupRecoveryPointBasedRestoreRequest\",\r\n    \"recoveryPointId\": \"7327d7065c4145b3b6d80bcb8a787ea6\",\r\n    \"sourceDataStoreType\": \"OperationalStore\",\r\n    \"recoveryPointTime\": \"2020-10-30T11:47:00.0000000Z\",\r\n   \t\"restoreTargetInfo\": {\r\n\t\t\t\"objectType\": \"restoreTargetInfo\",\r\n\t\t\t\"recoveryOption\": \"FailIfExists\",\r\n\t\t\t\"dataSourceInfo\": {\r\n\t\t\t\t\"objectType\": \"Datasource\",\r\n\t\t\t\t\"resourceID\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarTargetRG/providers/Microsoft.Compute/disks/restoreDisk1\",\r\n\t\t\t\t\"resourceName\": \"restoreDisk1\",\r\n\t\t\t\t\"resourceType\": \"Microsoft.Compute/disks\",\r\n\t\t\t\t\"resourceLocation\": \"southeastasia\",\r\n\t\t\t\t\"resourceUri\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarTargetRG/providers/Microsoft.Compute/disks/restoreDisk1\",\r\n\t\t\t\t\"datasourceType\": \"Microsoft.Compute/disks\"\r\n\t\t\t},\r\n\t\t\t\"restoreLocation\": \"southeastasia\"\r\n\t\t}\r\n}";
             AzureBackupRecoveryPointBasedRestoreRequest body = SafeJsonConvert.DeserializeObject<AzureBackupRecoveryPointBasedRestoreRequest>(requestData.ToString(), BackupClient.DeserializationSettings);
             var response = BackupClient.BackupInstances.TriggerRestore(VaultName, ResourceGroup, backupInstanceName, body);
-            Assert.Null(response);
+            Assert.NotNull(response);
         }
     }
 }

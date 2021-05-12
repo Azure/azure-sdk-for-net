@@ -7,8 +7,10 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.ScenarioTests
 {
     public class DPPDisksE2ETests : TestBase, IDisposable
     {
-        private const string TestVault = "DiskbackupVault1";
+        private const string TestVault = "DiskbackupVault2";
         private const string TestVaultRg = "mayaggarDiskRG";
+        private const string testBackupInstance = "testingDisk";
+        private const string testPolicy = "retentionpolicy2";
 
         [Fact]
         public void DisksE2ETests()
@@ -26,25 +28,25 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.ScenarioTests
                 testHelper.GetVault();
 
                 // Create Policy
-                testHelper.CreatePolicy("retentionpolicy2");
+                testHelper.CreatePolicy(testPolicy);
 
                 // Get Policy
-                testHelper.GetPolicy("retentionpolicy2");
-                
-                // Configure Backup
-                // testHelper.CreateBackupInstance("TestDiskCmk2");
+                testHelper.GetPolicy(testPolicy);
 
-                // Validate For Backup
-                // testHelper.ValidateForBackup("TestDiskCmk2");
+                // Configure Backup
+                testHelper.CreateBackupInstance();
 
                 // Trigger Backup
-                // testHelper.TriggerBackup("TestDiskCmk2");
+                testHelper.TriggerBackup(testBackupInstance);
+
+                // Validate For Backup
+                testHelper.ValidateForBackup();
 
                 // Validate for Restore
-                // testHelper.ValidateForRestore("TestDiskCmk2");
+                testHelper.ValidateForRestore(testBackupInstance);
 
                 // Trigger Restore
-                //testHelper.TriggerRestore("TestDiskCmk2");
+                testHelper.TriggerRestore(testBackupInstance);
             }
         }
         public void Dispose()
