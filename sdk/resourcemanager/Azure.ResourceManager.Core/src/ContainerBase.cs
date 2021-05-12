@@ -49,6 +49,14 @@ namespace Azure.ResourceManager.Core
         protected ResourceOperationsBase Parent { get; }
 
         /// <summary>
+        /// The typed resource identifier for the underlying resource container.
+        /// </summary>
+        public virtual new TIdentifier Id
+        {
+            get { return base.Id as TIdentifier; }
+        }
+
+        /// <summary>
         /// Returns the resource from Azure if it exists.
         /// </summary>
         /// <param name="resourceName"> The name of the resource you want to get. </param>
