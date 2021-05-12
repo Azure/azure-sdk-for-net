@@ -44,6 +44,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleGetModelSettings">
         /// TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+        /// TimeSeriesInsightsTypes typesClient = client.GetTypesClient();
         /// Response&lt;TimeSeriesModelSettings&gt; getModelSettingsResponse = await modelSettingsClient.GetAsync();
         /// Console.WriteLine($&quot;Retrieved Time Series Insights model settings \nname : &apos;{getModelSettingsResponse.Value.Name}&apos;, &quot; +
         ///     $&quot;default type Id: {getModelSettingsResponse.Value.DefaultTypeId}&apos;&quot;);
@@ -162,7 +163,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType">
-        /// Response&lt;TimeSeriesModelSettings&gt; updateDefaultTypeIdResponse = await modelSettingsClient.UpdateDefaultTypeIdAsync(tsiTypeId);
+        /// Response&lt;TimeSeriesModelSettings&gt; updateDefaultTypeIdResponse = await modelSettingsClient
+        ///     .UpdateDefaultTypeIdAsync(tsiTypeId);
         /// Console.WriteLine($&quot;Updated Time Series Insights model settings default type Id: &quot; +
         ///     $&quot;{updateDefaultTypeIdResponse.Value.Name}&quot;);
         /// </code>

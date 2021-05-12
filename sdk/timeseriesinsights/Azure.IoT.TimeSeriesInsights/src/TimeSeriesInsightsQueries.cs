@@ -49,7 +49,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// DateTimeOffset endTime = DateTime.UtcNow;
         /// DateTimeOffset startTime = endTime.AddMinutes(-10);
         ///
-        /// QueryAnalyzer temperatureEventsQuery = client.Queries.CreateEventsQuery(tsId, startTime, endTime);
+        /// QueryAnalyzer temperatureEventsQuery = queriesClient.CreateEventsQuery(tsId, startTime, endTime);
         /// await foreach (TimeSeriesPoint point in temperatureEventsQuery.GetResultsAsync())
         /// {
         ///     TimeSeriesValue temperatureValue = point.GetValue(&quot;Temperature&quot;);
@@ -115,7 +115,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan">
         /// Console.WriteLine(&quot;\n\nQuery for raw humidity events over the past 30 seconds.\n&quot;);
         ///
-        /// QueryAnalyzer humidityEventsQuery = client.Queries.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
+        /// QueryAnalyzer humidityEventsQuery = queriesClient.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
         /// await foreach (TimeSeriesPoint point in humidityEventsQuery.GetResultsAsync())
         /// {
         ///     TimeSeriesValue humidityValue = point.GetValue(&quot;Humidity&quot;);
@@ -187,7 +187,7 @@ namespace Azure.IoT.TimeSeriesInsights
         ///
         /// DateTimeOffset endTime = DateTime.UtcNow;
         /// DateTimeOffset startTime = endTime.AddMinutes(-10);
-        /// QueryAnalyzer seriesQuery = client.Queries.CreateSeriesQuery(
+        /// QueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
         ///     tsId,
         ///     startTime,
         ///     endTime);
@@ -255,7 +255,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// querySeriesRequestOptions.InlineVariables[&quot;TemperatureInCelsius&quot;] = celsiusVariable;
         /// querySeriesRequestOptions.InlineVariables[&quot;TemperatureInFahrenheit&quot;] = fahrenheitVariable;
         ///
-        /// QueryAnalyzer seriesQuery = client.Queries.CreateSeriesQuery(
+        /// QueryAnalyzer seriesQuery = queriesClient.CreateSeriesQuery(
         ///     tsId,
         ///     TimeSpan.FromMinutes(10),
         ///     null,
@@ -328,7 +328,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
         /// aggregateSeriesRequestOptions.ProjectedVariableNames.Add(countVariableName);
         ///
-        /// QueryAnalyzer query = client.Queries.CreateAggregateSeriesQuery(
+        /// QueryAnalyzer query = queriesClient.CreateAggregateSeriesQuery(
         ///     tsId,
         ///     startTime,
         ///     endTime,
@@ -394,7 +394,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// requestOptions.InlineVariables[&quot;Temperature&quot;] = numericVariable;
         /// requestOptions.ProjectedVariableNames.Add(&quot;Temperature&quot;);
         ///
-        /// QueryAnalyzer aggregateSeriesQuery = client.Queries.CreateAggregateSeriesQuery(
+        /// QueryAnalyzer aggregateSeriesQuery = queriesClient.CreateAggregateSeriesQuery(
         ///     tsId,
         ///     TimeSpan.FromSeconds(2),
         ///     TimeSpan.FromSeconds(30),

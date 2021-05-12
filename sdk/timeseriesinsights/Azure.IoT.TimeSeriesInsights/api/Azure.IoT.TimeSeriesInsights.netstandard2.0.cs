@@ -170,10 +170,6 @@ namespace Azure.IoT.TimeSeriesInsights
         protected TimeSeriesInsightsClient() { }
         public TimeSeriesInsightsClient(string environmentFqdn, Azure.Core.TokenCredential credential) { }
         public TimeSeriesInsightsClient(string environmentFqdn, Azure.Core.TokenCredential credential, Azure.IoT.TimeSeriesInsights.TimeSeriesInsightsClientOptions options) { }
-        public virtual Azure.IoT.TimeSeriesInsights.TimeSeriesInsightsHierarchies Hierarchies { get { throw null; } }
-        public virtual Azure.IoT.TimeSeriesInsights.TimeSeriesInsightsInstances Instances { get { throw null; } }
-        public virtual Azure.IoT.TimeSeriesInsights.TimeSeriesInsightsQueries Queries { get { throw null; } }
-        public virtual Azure.IoT.TimeSeriesInsights.TimeSeriesInsightsTypes Types { get { throw null; } }
         public virtual Azure.IoT.TimeSeriesInsights.TimeSeriesInsightsHierarchies GetHierarchiesClient() { throw null; }
         public virtual Azure.IoT.TimeSeriesInsights.TimeSeriesInsightsInstances GetInstancesClient() { throw null; }
         public virtual Azure.IoT.TimeSeriesInsights.TimeSeriesInsightsModelSettings GetModelSettingsClient() { throw null; }

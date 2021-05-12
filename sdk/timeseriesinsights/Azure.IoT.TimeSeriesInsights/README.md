@@ -94,8 +94,7 @@ Example below shows use of TimeSeriesInsightsSampleGetTypeById operation, iterat
 
 TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
 TimeSeriesModelSettings modelSettings = await modelSettingsClient.GetAsync();
-Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await client
-    .Types
+Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await typesClient
     .GetByIdAsync(new string[] { modelSettings.DefaultTypeId });
 
 // The response of calling the API contains a list of type or error objects corresponding by position to the input parameter array in the request.
