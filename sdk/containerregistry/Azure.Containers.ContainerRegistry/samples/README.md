@@ -11,4 +11,7 @@ description: Samples for the Azure.Containers.ContainerRegistry client library
 
 # Azure.Containers.ContainerRegistry Samples
 
-- Get started either [synchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample01a_HelloWorld.md) or [asynchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample01b_HelloWorldAsync.md).
+- Get started with the HelloWorld sample either [synchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample01a_HelloWorld.md) or [asynchronously](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/Sample01b_HelloWorldAsync.md).
+- Manage a registry by deleting old images [synchronously]() or [asynchronously]().
+- Set read/write/delete permissions on an image [synchronously]() or [asynchronously]().
+- List tags on an image using an anonymous access client  [synchronously]() or [asynchronously]().

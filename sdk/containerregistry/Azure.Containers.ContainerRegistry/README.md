@@ -73,10 +73,16 @@ We guarantee that all client instance methods are thread-safe and independent of
 ### Sync examples
 
 - [List repositories](#list-repositories)
+- [Delete images](#delete-images)
+- [Set artifact properties](#set-artifact-properties)
+- [List tags with anonymous access](#list-tags-with-anonymous-access)
 
 ### Async examples
 
 - [List repositories asynchronously](#list-repositories-asynchronously)
+- [Delete images asynchronously](#delete-images)
+- [Set artifact properties asynchronously](#set-artifact-properties)
+- [List tags with anonymous access asynchronously](#list-tags-with-anonymous-access)
 
 ### List repositories
 
@@ -97,6 +103,21 @@ foreach (string repository in repositories)
 }
 ```
 
+### Delete images
+
+```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImage
+```
+
+### Set artifact properties
+
+```C# Snippet:ContainerRegistry_Tests_Samples_SetArtifactProperties
+```
+
+### List tags with anonymous access
+
+```C# Snippet:ContainerRegistry_Tests_Samples_ListTagsAnonymous
+```
+
 ### List repositories asynchronously
 
 The asynchronous APIs are identical to their synchronous counterparts, but methods end with the standard .NET "Async" suffix and return a Task.
@@ -114,6 +135,21 @@ await foreach (string repository in repositories)
 {
     Console.WriteLine(repository);
 }
+```
+
+### Delete images asynchronously
+
+```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImageAsync
+```
+
+### Set artifact properties asynchronously
+
+```C# Snippet:ContainerRegistry_Tests_Samples_SetArtifactPropertiesAsync
+```
+
+### List tags with anonymous access asynchronously
+
+```C# Snippet:ContainerRegistry_Tests_Samples_ListTagsAnonymousAsync
 ```
 
 ## Troubleshooting
@@ -144,9 +180,9 @@ deeper into the requests you're making against the service.
 
 ## Next steps
 
-- Go further with Azure.Containers.ContainerRegistry and our [samples][samples]
-- Watch a [demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?service=container-registry)
-- Read more about the [Azure Container Registry service](https://docs.microsoft.com/azure/container-registry/container-registry-intro)
+- Go further with Azure.Containers.ContainerRegistry and our [samples][samples].
+- Watch a [demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?service=container-registry).
+- Read more about the [Azure Container Registry service](https://docs.microsoft.com/azure/container-registry/container-registry-intro).
 
 ## Contributing
 

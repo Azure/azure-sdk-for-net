@@ -266,7 +266,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 await foreach (ArtifactManifestProperties manifest in manifests)
                 {
                     // Make sure we're looking at a manifest list, which has the tag
-                    if (manifest.References != null && manifest.References.Count > 0)
+                    if (manifest.Manifests != null && manifest.Manifests.Count > 0)
                     {
                         digest = manifest.Digest;
                         Assert.That(manifest.RepositoryName.Contains(repositoryName));
