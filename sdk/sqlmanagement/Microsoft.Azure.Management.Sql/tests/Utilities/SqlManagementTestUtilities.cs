@@ -563,7 +563,7 @@ namespace Sql.Tests
         }
 
         private static KeyBundle CreateKeyVaultKeyAccessibleByIdentity(SqlManagementTestContext context,
-            ResourceGroup resourceGroup, ResourceIdentity identity)
+            ResourceGroup resourceGroup, ResourceIdentityWithUserAssignedIdentities identity)
         {
             var sqlClient = context.GetClient<SqlManagementClient>();
             var keyVaultManagementClient = context.GetClient<KeyVaultManagementClient>();

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Tests.Config
 {
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Tests.Config
                 p => p.CreateClient(expectedValue))
                 .Returns(Mock.Of<ServiceBusClient>());
 
-            var factory = new ServiceBusClientFactory(configuration, Mock.Of<AzureComponentFactory>(), mockProvider.Object);
+            var factory = new ServiceBusClientFactory(configuration, Mock.Of<AzureComponentFactory>(), mockProvider.Object, new AzureEventSourceLogForwarder(new NullLoggerFactory()));
             if (expectedValue == null)
             {
                 Assert.That(

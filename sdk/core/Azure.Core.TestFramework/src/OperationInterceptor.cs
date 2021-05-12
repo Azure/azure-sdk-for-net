@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using Castle.DynamicProxy;
 
@@ -31,7 +32,14 @@ namespace Azure.Core.TestFramework
                     CheckArguments(invocation.Arguments);
                     var cancellationToken = invocation.Arguments.Last();
                     var waitForCompletionMethod = invocation.TargetType.GetMethod(WaitForCompletionMethodName, new[]{typeof(TimeSpan), typeof(CancellationToken)});
-                    invocation.ReturnValue = waitForCompletionMethod.Invoke(invocation.InvocationTarget, new[] {NoWaitDelay, cancellationToken});
+                    try
+                    {
+                        invocation.ReturnValue = waitForCompletionMethod.Invoke(invocation.InvocationTarget, new[] {NoWaitDelay, cancellationToken});
+                    }
+                    catch (TargetInvocationException ex)
+                    {
+                        ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                    }
                     return;
                 }
 
@@ -39,7 +47,14 @@ namespace Azure.Core.TestFramework
                 {
                     CheckArguments(invocation.Arguments);
                     var cancellationToken = invocation.Arguments.Last();
-                    invocation.ReturnValue = WaitForCompletionResponseAsync.Invoke(invocation.InvocationTarget, new[] {NoWaitDelay, cancellationToken});
+                    try
+                    {
+                        invocation.ReturnValue = WaitForCompletionResponseAsync.Invoke(invocation.InvocationTarget, new[] {NoWaitDelay, cancellationToken});
+                    }
+                    catch (TargetInvocationException ex)
+                    {
+                        ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                    }
                     return;
                 }
             }
@@ -54,8 +69,8 @@ namespace Azure.Core.TestFramework
                 var interval = (TimeSpan) invocationArguments[0];
                 if (interval < TimeSpan.FromSeconds(1))
                 {
-                    throw new InvalidOperationException($"Fast polling interval of {interval} detected in playback mode." +
-                                                        $"Please use the default WaitForCompletion()." +
+                    throw new InvalidOperationException($"Fast polling interval of {interval} detected in playback mode. " +
+                                                        $"Please use the default WaitForCompletion(). " +
                                                         $"The test framework would automatically reduce the interval in playback.");
                 }
             }

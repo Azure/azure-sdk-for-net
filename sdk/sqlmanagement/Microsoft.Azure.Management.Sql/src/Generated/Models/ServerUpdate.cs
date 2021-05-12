@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ServerUpdate class.
         /// </summary>
+        /// <param name="identity">Server identity</param>
         /// <param name="administratorLogin">Administrator username for the
         /// server. Once created it cannot be changed.</param>
         /// <param name="administratorLoginPassword">The administrator login
@@ -50,9 +51,19 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// access is allowed for this server.  Value is optional but if passed
         /// in, must be 'Enabled' or 'Disabled'. Possible values include:
         /// 'Enabled', 'Disabled'</param>
+        /// <param name="workspaceFeature">Whether or not existing server has a
+        /// workspace created and if it allows connection from workspace.
+        /// Possible values include: 'Connected', 'Disconnected'</param>
+        /// <param name="primaryUserAssignedIdentityId">The resource id of a
+        /// user assigned identity to be used by default.</param>
+        /// <param name="keyId">A CMK URI of the key to use for
+        /// encryption.</param>
+        /// <param name="administrators">The Azure Active Directory identity of
+        /// the server.</param>
         /// <param name="tags">Resource tags.</param>
-        public ServerUpdate(string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ServerUpdate(ResourceIdentityWithUserAssignedIdentities identity = default(ResourceIdentityWithUserAssignedIdentities), string administratorLogin = default(string), string administratorLoginPassword = default(string), string version = default(string), string state = default(string), string fullyQualifiedDomainName = default(string), IList<ServerPrivateEndpointConnection> privateEndpointConnections = default(IList<ServerPrivateEndpointConnection>), string minimalTlsVersion = default(string), string publicNetworkAccess = default(string), string workspaceFeature = default(string), string primaryUserAssignedIdentityId = default(string), string keyId = default(string), ServerExternalAdministrator administrators = default(ServerExternalAdministrator), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
+            Identity = identity;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             Version = version;
@@ -61,6 +72,10 @@ namespace Microsoft.Azure.Management.Sql.Models
             PrivateEndpointConnections = privateEndpointConnections;
             MinimalTlsVersion = minimalTlsVersion;
             PublicNetworkAccess = publicNetworkAccess;
+            WorkspaceFeature = workspaceFeature;
+            PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
+            KeyId = keyId;
+            Administrators = administrators;
             Tags = tags;
             CustomInit();
         }
@@ -69,6 +84,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets server identity
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ResourceIdentityWithUserAssignedIdentities Identity { get; set; }
 
         /// <summary>
         /// Gets or sets administrator username for the server. Once created it
@@ -122,6 +143,33 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets whether or not existing server has a workspace created and if
+        /// it allows connection from workspace. Possible values include:
+        /// 'Connected', 'Disconnected'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.workspaceFeature")]
+        public string WorkspaceFeature { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the resource id of a user assigned identity to be used
+        /// by default.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.primaryUserAssignedIdentityId")]
+        public string PrimaryUserAssignedIdentityId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a CMK URI of the key to use for encryption.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyId")]
+        public string KeyId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Azure Active Directory identity of the server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.administrators")]
+        public ServerExternalAdministrator Administrators { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

@@ -22,16 +22,18 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), credential);
 
-            string dataFeedId = DataFeedId;
-
             #region Snippet:GetDataFeedIngestionStatusesAsync
-            //@@ string dataFeedId = "<dataFeedId>";
+#if SNIPPET
+            string dataFeedId = "<dataFeedId>";
+#else
+            string dataFeedId = DataFeedId;
+#endif
 
             var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endTime = DateTimeOffset.Parse("2020-09-09T00:00:00Z");
             var options = new GetDataFeedIngestionStatusesOptions(startTime, endTime)
             {
-                TopCount = 5
+                MaxPageSize = 5
             };
 
             Console.WriteLine("Ingestion statuses:");

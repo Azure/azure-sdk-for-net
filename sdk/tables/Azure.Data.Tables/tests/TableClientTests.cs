@@ -26,12 +26,12 @@ namespace Azure.Data.Tables.Tests
         private TableEntity entityWithoutPK = new TableEntity { { TableConstants.PropertyNames.RowKey, "row" } };
         private TableEntity entityWithoutRK = new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" } };
         private TableEntity validEntity = new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" }, { TableConstants.PropertyNames.RowKey, "row" } };
-        private const string signature = "sig";
+        private const string signature = "sv=2019-12-12&ss=t&srt=s&sp=rwdlacu&se=2020-08-28T23:45:30Z&st=2020-08-26T15:45:30Z&spr=https&sig=mySig&tn=someTableName";
 
         [SetUp]
         public void TestSetup()
         {
-            var service_Instrumented = InstrumentClient(new TableServiceClient(new Uri("https://example.com"), new AzureSasCredential("sig"), new TableClientOptions()));
+            var service_Instrumented = InstrumentClient(new TableServiceClient(new Uri("https://example.com"), new AzureSasCredential("sig"), new TablesClientOptions()));
             client = service_Instrumented.GetTableClient(TableName);
         }
 
@@ -41,15 +41,15 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void ConstructorValidatesArguments()
         {
-            Assert.That(() => new TableClient(_url, null, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the tableName.");
+            Assert.Catch<ArgumentException>(() => new TableClient(_url, null, new TableSharedKeyCredential(AccountName, string.Empty)), "The constructor should validate the tableName.");
 
             Assert.That(() => new TableClient(null, TableName, new TableSharedKeyCredential(AccountName, string.Empty)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
 
-            Assert.That(() => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions()), Throws.Nothing, "The constructor should accept valid arguments.");
+            Assert.That(() => new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TablesClientOptions()), Throws.Nothing, "The constructor should accept valid arguments.");
 
-            Assert.That(() => new TableClient(_url, TableName, credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the TablesSharedKeyCredential.");
+            Assert.That(() => new TableClient(_url, TableName, null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the TablesSharedKeyCredential.");
 
-            Assert.That(() => new TableClient(_urlHttp, TableName, new AzureSasCredential(signature)), Throws.InstanceOf<ArgumentException>(), "The constructor should validate the Uri is https when using a SAS token.");
+            Assert.That(() => new TableClient(_urlHttp, new AzureSasCredential(signature)), Throws.InstanceOf<ArgumentException>(), "The constructor should validate the Uri is https when using a SAS token.");
 
             Assert.That(() => new TableClient(_urlHttp, TableName, null), Throws.InstanceOf<ArgumentException>(), "The constructor should not accept a null credential");
 
@@ -72,7 +72,7 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(ValidConnStrings))]
         public void AccountNameAndNameForConnStringCtor(string connString)
         {
-            var client = new TableClient(connString, TableName, new TableClientOptions());
+            var client = new TableClient(connString, TableName, new TablesClientOptions());
 
             Assert.AreEqual(AccountName, client.AccountName);
             Assert.AreEqual(TableName, client.Name);
@@ -81,7 +81,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void AccountNameAndNameForUriCtor()
         {
-            var client = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions());
+            var client = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TablesClientOptions());
 
             Assert.AreEqual(AccountName, client.AccountName);
             Assert.AreEqual(TableName, client.Name);

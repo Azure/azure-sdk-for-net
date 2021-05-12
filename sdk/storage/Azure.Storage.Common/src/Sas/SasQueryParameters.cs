@@ -99,7 +99,7 @@ namespace Azure.Storage.Sas
         /// made with this shared access signature, and the service version to
         /// use when handling requests made with this shared access signature.
         /// </summary>
-        public string Version => _version ?? DefaultSasVersion;
+        public string Version => _version ?? SasQueryParametersInternals.DefaultSasVersionInternal;
 
         /// <summary>
         /// Gets the signed services accessible with an account level shared

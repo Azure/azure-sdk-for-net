@@ -66,7 +66,6 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     getInstanceWithNullInId.Value.Length.Should().Be(1);
 
                     InstancesOperationResult resultItem = getInstanceWithNullInId.Value.First();
-                    resultItem.Error.Should().BeNull();
                     resultItem.Instance.Should().NotBeNull();
                     resultItem.Instance.TimeSeriesId.ToArray().Length.Should().Be(3);
                     resultItem.Instance.TimeSeriesId.ToArray()[1].Should().BeNull();

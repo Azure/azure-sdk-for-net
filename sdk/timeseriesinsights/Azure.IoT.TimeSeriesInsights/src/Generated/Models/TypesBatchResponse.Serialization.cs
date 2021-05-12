@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class TypesBatchResponse
+    internal partial class TypesBatchResponse
     {
     }
 }

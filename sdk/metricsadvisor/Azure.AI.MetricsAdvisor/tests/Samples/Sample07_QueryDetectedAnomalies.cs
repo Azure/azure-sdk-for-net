@@ -28,7 +28,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
             var endTime = DateTimeOffset.UtcNow;
             var options = new GetAnomaliesForDetectionConfigurationOptions(startTime, endTime)
             {
-                TopCount = 3
+                MaxPageSize = 3
             };
 
             int anomalyCount = 0;
@@ -64,14 +64,16 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var client = new MetricsAdvisorClient(new Uri(endpoint), credential);
 
+            #region Snippet:GetAnomaliesForAlertAsync
+#if SNIPPET
+            string alertConfigurationId = "<alertConfigurationId>";
+            string alertId = "<alertId>";
+#else
             string alertConfigurationId = AlertConfigurationId;
             string alertId = AlertId;
+#endif
 
-            #region Snippet:GetAnomaliesForAlertAsync
-            //@@ string alertConfigurationId = "<alertConfigurationId>";
-            //@@ string alertId = "<alertId>";
-
-            var options = new GetAnomaliesForAlertOptions() { TopCount = 3 };
+            var options = new GetAnomaliesForAlertOptions() { MaxPageSize = 3 };
 
             int anomalyCount = 0;
 

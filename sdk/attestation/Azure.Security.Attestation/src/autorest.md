@@ -20,15 +20,15 @@ directive:
   transform: >
     for (var path in $)
     {
-      if (path.endsWith("AttestationCertificateManagementBody"))
+      if (path.endsWith("AttestationCertificateManagementBody") ||
+        path.endsWith("PolicyCertificatesModificationResult"))
       {
         $[path]["x-csharp-usage"] = "model,output,input,converter";
         $[path]["x-csharp-formats"] = "json";
       }
       else if (path.endsWith("PolicyResult") ||
         path.endsWith("AttestationResult") ||
-        path.endsWith("PolicyCertificatesResult") ||
-        path.endsWith("PolicyCertificatesModificationResult"))
+        path.endsWith("PolicyCertificatesResult"))
       {
         $[path]["x-csharp-usage"] = "model,output,converter";
         $[path]["x-csharp-formats"] = "json";

@@ -1075,7 +1075,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task SendEnumerableEnsuresConnectionNotClosed()
+        public void SendEnumerableEnsuresConnectionNotClosed()
         {
             var endpoint = new Uri("amqps://not.real.com");
             var eventHub = "eventHubName";
@@ -1085,10 +1085,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());
 
             var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null);
-            scope.Dispose();
-
             var producer = new AmqpProducer(eventHub, partition, scope, Mock.Of<AmqpMessageConverter>(), retryPolicy);
-            await producer.CloseAsync(CancellationToken.None);
+
+            scope.Dispose();
 
             Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendEventOptions(), CancellationToken.None),
                 Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
@@ -1418,7 +1417,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task SendBatchConnectionEnsuresNotClosed()
+        public void SendBatchEnsuresConnectionNotClosed()
         {
             var endpoint = new Uri("amqps://not.real.com");
             var eventHub = "eventHubName";
@@ -1428,10 +1427,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockCredential = new EventHubTokenCredential(Mock.Of<TokenCredential>());
 
             var scope = new AmqpConnectionScope(endpoint, endpoint, eventHub, mockCredential, EventHubsTransportType.AmqpTcp, null);
-            scope.Dispose();
-
             var producer = new AmqpProducer(eventHub, partition, scope, Mock.Of<AmqpMessageConverter>(), retryPolicy);
-            await producer.CloseAsync(CancellationToken.None);
+
+            scope.Dispose();
 
             Assert.That(async () => await producer.SendAsync(EventHubsModelFactory.EventDataBatch(2048, new List<EventData>()), CancellationToken.None),
                 Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
