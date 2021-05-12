@@ -60,11 +60,11 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     // too familiar with the property type.
         ///     if (temperatureValue.Type == typeof(double?))
         ///     {
-        ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {(double?)temperatureValue}&quot;);
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {point.GetNullableDouble(&quot;Temperature&quot;)}&quot;);
         ///     }
         ///     else if (temperatureValue.Type == typeof(int?))
         ///     {
-        ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {(int?)temperatureValue}&quot;);
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {point.GetNullableInt(&quot;Temperature&quot;)}&quot;);
         ///     }
         ///     else
         ///     {
@@ -126,11 +126,11 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     // too familiar with the property type.
         ///     if (humidityValue.Type == typeof(double?))
         ///     {
-        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {(double?)humidityValue}&quot;);
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {point.GetNullableDouble(&quot;Humidity&quot;)}&quot;);
         ///     }
         ///     else if (humidityValue.Type == typeof(int?))
         ///     {
-        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {(int?)humidityValue}&quot;);
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {point.GetNullableInt(&quot;Humidity&quot;)}&quot;);
         ///     }
         ///     else
         ///     {
@@ -194,8 +194,8 @@ namespace Azure.IoT.TimeSeriesInsights
         ///
         /// await foreach (TimeSeriesPoint point in seriesQuery.GetResultsAsync())
         /// {
-        ///     double? tempInCelsius = (double?)point.GetValue(celsiusVariableName);
-        ///     double? tempInFahrenheit = (double?)point.GetValue(fahrenheitVariableName);
+        ///     double? tempInCelsius = point.GetNullableDouble(celsiusVariableName);
+        ///     double? tempInFahrenheit = point.GetNullableDouble(fahrenheitVariableName);
         ///
         ///     Console.WriteLine($&quot;{point.Timestamp} - Average temperature in Celsius: {tempInCelsius}. &quot; +
         ///         $&quot;Average temperature in Fahrenheit: {tempInFahrenheit}.&quot;);
@@ -403,7 +403,7 @@ namespace Azure.IoT.TimeSeriesInsights
         ///
         /// await foreach (TimeSeriesPoint point in aggregateSeriesQuery.GetResultsAsync())
         /// {
-        ///     double? averageTemperature = (double?)point.GetValue(&quot;Temperature&quot;);
+        ///     double? averageTemperature = point.GetNullableDouble(&quot;Temperature&quot;);
         ///     if (averageTemperature != null)
         ///     {
         ///         Console.WriteLine($&quot;{point.Timestamp} - Average temperature: {averageTemperature}.&quot;);

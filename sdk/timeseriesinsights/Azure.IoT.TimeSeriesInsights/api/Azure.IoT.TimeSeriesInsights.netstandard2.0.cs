@@ -64,7 +64,7 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         public QueryEventsRequestOptions() { }
         public int? MaxNumberOfEvents { get { throw null; } set { } }
-        public System.Collections.Generic.List<Azure.IoT.TimeSeriesInsights.TimeSeriesInsightsEventProperty> ProjectedProperties { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.IoT.TimeSeriesInsights.TimeSeriesInsightsEventProperty> ProjectedProperties { get { throw null; } }
     }
     public abstract partial class QueryRequestOptions
     {
@@ -129,6 +129,9 @@ namespace Azure.IoT.TimeSeriesInsights
         public TimeSeriesId(string key1, string key2) { throw null; }
         public TimeSeriesId(string key1, string key2, string key3) { throw null; }
         public bool Equals(Azure.IoT.TimeSeriesInsights.TimeSeriesId other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
         public string[] ToArray() { throw null; }
         public override string ToString() { throw null; }
     }
@@ -312,6 +315,10 @@ namespace Azure.IoT.TimeSeriesInsights
         private int _dummyPrimitive;
         public TimeSeriesPoint(System.DateTimeOffset timestamp, System.Collections.Generic.IDictionary<string, Azure.IoT.TimeSeriesInsights.PropertyValues> propertyNameToPageValues, int index) { throw null; }
         public System.DateTimeOffset Timestamp { get { throw null; } }
+        public bool? GetNullableBoolean(string propertyName) { throw null; }
+        public System.DateTimeOffset? GetNullableDateTimeOffset(string propertyName) { throw null; }
+        public double? GetNullableDouble(string propertyName) { throw null; }
+        public int? GetNullableInt(string propertyName) { throw null; }
         public string[] GetUniquePropertyNames() { throw null; }
         public Azure.IoT.TimeSeriesInsights.TimeSeriesValue GetValue(string propertyName) { throw null; }
     }

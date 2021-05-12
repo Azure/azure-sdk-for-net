@@ -69,7 +69,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         count++;
                         timeSeriesPoint.Timestamp.Should().BeAfter(startTime).And.BeBefore(endTime);
 
-                        var temperatureValue = (double?)timeSeriesPoint.GetValue(QueryTestsHelper.Temperature);
+                        var temperatureValue = timeSeriesPoint.GetNullableDouble(QueryTestsHelper.Temperature);
                         temperatureValue.Should().NotBeNull();
 
                         var humidityValue = (double?)timeSeriesPoint.GetValue(QueryTestsHelper.Humidity);
