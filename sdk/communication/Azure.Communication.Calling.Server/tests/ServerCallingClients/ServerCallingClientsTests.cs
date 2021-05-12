@@ -215,7 +215,7 @@ namespace Azure.Communication.Calling.Server.Tests
                 new object?[] {
                     new CommunicationUserIdentifier("50125645-5dca-4193-877d-4608ed2a0bc2"),
                     new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("+14052882361") },
-                    new CreateCallOptions(new Uri($"https://0ae21f526c94.ngrok.io/api/incident/callback?secret=h3llowW0rld"), new List<CallModality> { CallModality.Audio }, new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived })
+                    new CreateCallOptions(new Uri($"https://dummy.ngrok.io/api/incident/callback?secret=h3llowW0rld"), new List<CallModality> { CallModality.Audio }, new List<EventSubscriptionType> { EventSubscriptionType.ParticipantsUpdated, EventSubscriptionType.DtmfReceived })
                 },
             };
         }

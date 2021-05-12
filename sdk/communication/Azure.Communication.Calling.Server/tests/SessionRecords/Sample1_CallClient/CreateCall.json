@@ -1,0 +1,62 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://acstestbot3.communication.azure.com/calls?api-version=2021-04-15-preview1",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "354",
+        "Content-Type": "application/json",
+        "Date": "Wed, 12 May 2021 00:20:16 GMT",
+        "User-Agent": [
+          "azsdk-net-Communication.Calling.Server/1.0.0-alpha.20210511.1",
+          "(.NET 5.0.6; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "f7c8910f9c6fa503ddd8b7582e6d4d17",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "source": {
+          "communicationUser": {
+            "id": "8:acs:02665c56-277e-4c59-bab4-c475caa3ee80_00000009-fdd3-b400-ceb1-a43a0d000f8c"
+          }
+        },
+        "targets": [
+          {
+            "phoneNumber": {
+              "value": "\u002B15129104698"
+            }
+          }
+        ],
+        "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
+        "requestedModalities": [
+          "audio"
+        ],
+        "requestedCallEvents": [
+          "participantsUpdated",
+          "dtmfReceived"
+        ]
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Client-Request-Id": "1f91b41a-9ea6-4421-bc56-f15a5746a18c",
+        "Content-Length": "52",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 12 May 2021 00:20:16 GMT",
+        "X-Azure-Ref": "0QB\u002BbYAAAAACMziMZlunhQ7bp9TtpsQr3V1NURURHRTA4MTkAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Microsoft-Skype-Chain-ID": "04233920-dbc2-44e8-90df-848aca6e77a8"
+      },
+      "ResponseBody": {
+        "callLegId": "00000b80-0400-4a3f-9ba4-a98722156b00"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://acstestbot3.communication.azure.com/;accesskey=Kg==",
+    "AZURE_PHONE_NUMBER": "\u002B15129104698",
+    "RandomSeed": "54266852"
+  }
+}

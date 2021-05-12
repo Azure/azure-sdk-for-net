@@ -28,22 +28,23 @@ namespace Azure.Communication.Calling.Server.Tests
         /// <summary>
         /// The phone number associated with the source.
         /// </summary>
-        public string SourcePhoneNumber => GetRecordedVariable(SourcePhoneNumber);
+        public string SourcePhoneNumber => GetRecordedVariable(AzurePhoneNumber);
 
         /// <summary>
         /// The base url of the applicaiton.
-        /// </summary>
-        public string AppBaseUrl => GetRecordedVariable(AppBaseUrl);
-
-        /// <summary>
         /// The audio file name of the play prompt.
         /// </summary>
-        public string AudioFileName => GetRecordedVariable(AudioFileName);
+        public string AudioFileName => "sample-message.wav";
 
         /// <summary>
         /// The secret for validating incoming request.
         /// </summary>
-        public string IncomingRequestSecret => GetRecordedVariable(IncomingRequestSecret) ?? "helloworld";
+        public string IncomingRequestSecret => "helloworld";
+
+        /// <summary>
+        /// The base url of the applicaiton.
+        /// </summary>
+        public string AppBaseUrl => "https://dummy.ngrok.io";
 
         /// <summary>
         /// The callback url of the application where notification would be received.
