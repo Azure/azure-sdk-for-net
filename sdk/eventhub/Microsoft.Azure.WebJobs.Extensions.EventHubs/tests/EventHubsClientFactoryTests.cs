@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Reflection;
 using Azure.Identity;
 using Azure.Messaging.EventHubs;
@@ -129,10 +130,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var testEndpoint = new Uri("http://mycustomendpoint.com");
             EventHubOptions options = new EventHubOptions
             {
-                ConnectionOptions = new EventHubConnectionOptions
-                {
-                    CustomEndpointAddress = testEndpoint
-                },
+                CustomEndpointAddress = testEndpoint,
                 ClientRetryOptions = new EventHubsRetryOptions
                 {
                     MaximumRetries = 10
@@ -162,10 +160,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var testEndpoint = new Uri("http://mycustomendpoint.com");
             EventHubOptions options = new EventHubOptions
             {
-                ConnectionOptions = new EventHubConnectionOptions
-                {
-                    CustomEndpointAddress = testEndpoint
-                },
+                CustomEndpointAddress = testEndpoint,
                 ClientRetryOptions = new EventHubsRetryOptions
                 {
                     MaximumRetries = 10
@@ -207,10 +202,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var testEndpoint = new Uri("http://mycustomendpoint.com");
             EventHubOptions options = new EventHubOptions
             {
-                ConnectionOptions = new EventHubConnectionOptions
-                {
-                    CustomEndpointAddress = testEndpoint
-                },
+                CustomEndpointAddress = testEndpoint,
+                TransportType = EventHubsTransportType.AmqpWebSockets,
+                WebProxy = new WebProxy("http://proxyserver/"),
                 ClientRetryOptions = new EventHubsRetryOptions
                 {
                     MaximumRetries = 10
@@ -225,7 +219,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 .GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(processor);
             Assert.AreEqual(testEndpoint, processorOptions.ConnectionOptions.CustomEndpointAddress);
-
+            Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, processorOptions.ConnectionOptions.TransportType);
+            Assert.AreEqual("http://proxyserver/", ((WebProxy)processorOptions.ConnectionOptions.Proxy).Address.AbsoluteUri);
             Assert.AreEqual(10, processorOptions.RetryOptions.MaximumRetries);
             Assert.AreEqual(expectedPathName, processor.EventHubName);
         }

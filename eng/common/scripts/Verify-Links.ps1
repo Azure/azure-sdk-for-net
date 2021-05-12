@@ -330,6 +330,10 @@ function GetLinks([System.Uri]$pageUri)
     try {
       $response = Invoke-WebRequest -Uri $pageUri -UserAgent $userAgent
       $content = $response.Content
+
+      if ($pageUri.ToString().EndsWith(".md")) {
+        $content = (ConvertFrom-MarkDown -InputObject $content).html
+      }
     }
     catch {
       $statusCode = $_.Exception.Response.StatusCode.value__

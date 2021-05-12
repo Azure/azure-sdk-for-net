@@ -8,6 +8,7 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
+    ///<summary>The result of a policy modification operation.</summary>
     [CodeGenModel("PolicyModification")]
     public partial struct PolicyModification
     {

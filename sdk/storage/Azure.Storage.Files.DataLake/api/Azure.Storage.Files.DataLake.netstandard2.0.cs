@@ -2,7 +2,7 @@ namespace Azure.Storage.Files.DataLake
 {
     public partial class DataLakeClientOptions : Azure.Core.ClientOptions
     {
-        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2020_06_12) { }
+        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2020_08_04) { }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -588,10 +588,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions OutputTextConfiguration { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public event System.Action<Azure.Storage.Files.DataLake.Models.DataLakeQueryError> ErrorHandler { add { } remove { } }
-    }
-    public partial class DataLakeQueryParquetTextOptions : Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions
-    {
-        public DataLakeQueryParquetTextOptions() { }
     }
     public abstract partial class DataLakeQueryTextOptions
     {
