@@ -350,7 +350,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -376,7 +376,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -818,7 +818,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
@@ -845,7 +845,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.StringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
@@ -909,7 +909,7 @@ namespace Azure.AI.TextAnalytics
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
@@ -976,7 +976,7 @@ namespace Azure.AI.TextAnalytics
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
@@ -1144,7 +1144,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
@@ -1173,7 +1173,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.DomainFilter.HasValue ? options.DomainFilter.Value.GetString() : null,
                     options.StringIndexType,
                     options.CategoriesFilter.Count == 0 ? null : options.CategoriesFilter,
@@ -1289,7 +1289,7 @@ namespace Azure.AI.TextAnalytics
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.IncludeOpinionMining,
                     options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
@@ -1350,7 +1350,7 @@ namespace Azure.AI.TextAnalytics
                     new MultiLanguageBatchInput(documents),
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.IncludeOpinionMining,
                     options.StringIndexType,
                     cancellationToken);
@@ -1627,7 +1627,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.IncludeOpinionMining,
                     options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
@@ -1655,7 +1655,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.IncludeOpinionMining,
                     options.StringIndexType,
                     cancellationToken);
@@ -2079,7 +2079,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
 
@@ -2105,7 +2105,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     cancellationToken);
                 var response = result.GetRawResponse();
 
@@ -2523,7 +2523,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.StringIndexType,
                     cancellationToken).ConfigureAwait(false);
                 var response = result.GetRawResponse();
@@ -2549,7 +2549,7 @@ namespace Azure.AI.TextAnalytics
                 Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(batchInput,
                     options.ModelVersion,
                     options.IncludeStatistics,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     options.StringIndexType,
                     cancellationToken);
                 var response = result.GetRawResponse();
@@ -2709,7 +2709,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.StringIndexType,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     cancellationToken);
                 string location = response.Headers.OperationLocation;
 
@@ -2737,7 +2737,7 @@ namespace Azure.AI.TextAnalytics
                     batchInput,
                     options.ModelVersion,
                     options.StringIndexType,
-                    loggingOptOut: default,
+                    options.DisableServiceLogs,
                     cancellationToken).ConfigureAwait(false);
                 string location = response.Headers.OperationLocation;
 
