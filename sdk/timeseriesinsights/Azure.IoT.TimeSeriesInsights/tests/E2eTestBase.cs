@@ -97,7 +97,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             }
         }
 
-        protected async Task<TimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsClient tsiClient, int numOfIdKeys)
+        protected async Task<TimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsInstances instancesClient, int numOfIdKeys)
         {
             numOfIdKeys.Should().BeInRange(1, 3);
 
@@ -117,8 +117,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     _ => throw new Exception($"Invalid number of Time Series Insights Id properties."),
                 };
 
-                Response<InstancesOperationResult[]> getInstancesResult = await tsiClient
-                    .Instances
+                Response<InstancesOperationResult[]> getInstancesResult = await instancesClient
                     .GetAsync(new List<TimeSeriesId> { tsId })
                     .ConfigureAwait(false);
 

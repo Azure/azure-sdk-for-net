@@ -30,6 +30,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
+            TimeSeriesInsightsInstances instancesClient = client.GetInstancesClient();
 
             // Create a Time Series Id with 3 keys. Middle key is a null
             var idWithNull = new TimeSeriesId(
@@ -46,8 +47,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             try
             {
                 // Create TSI instances
-                Response<TimeSeriesOperationError[]> createInstancesResult = await client
-                    .Instances
+                Response<TimeSeriesOperationError[]> createInstancesResult = await instancesClient
                     .CreateOrReplaceAsync(timeSeriesInstances)
                     .ConfigureAwait(false);
 
@@ -58,8 +58,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 await TestRetryHelper.RetryAsync<Response<InstancesOperationResult[]>>(async () =>
                 {
                     // Get the instance with a null item in its Id
-                    Response<InstancesOperationResult[]> getInstanceWithNullInId = await client
-                        .Instances
+                    Response<InstancesOperationResult[]> getInstanceWithNullInId = await instancesClient
                         .GetAsync(new List<TimeSeriesId> { idWithNull })
                         .ConfigureAwait(false);
 
@@ -78,8 +77,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // clean up
                 try
                 {
-                    Response<TimeSeriesOperationError[]> deleteInstancesResponse = await client
-                        .Instances
+                    Response<TimeSeriesOperationError[]> deleteInstancesResponse = await instancesClient
                         .DeleteAsync(timeSeriesInstances.Select((instance) => instance.TimeSeriesId))
                         .ConfigureAwait(false);
 

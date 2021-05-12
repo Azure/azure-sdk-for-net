@@ -32,13 +32,14 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             // Arrange
             TimeSeriesInsightsClient tsiClient = GetClient();
             TimeSeriesInsightsModelSettings timeSeriesModelSettings = tsiClient.GetModelSettingsClient();
+            TimeSeriesInsightsInstances instancesClient = tsiClient.GetInstancesClient();
             DeviceClient deviceClient = await GetDeviceClient().ConfigureAwait(false);
 
             // Figure out what the Time Series Id is composed of
             TimeSeriesModelSettings modelSettings = await timeSeriesModelSettings.GetAsync().ConfigureAwait(false);
 
             // Create a Time Series Id where the number of keys that make up the Time Series Id is fetched from Model Settings
-            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(tsiClient, modelSettings.TimeSeriesIdProperties.Count)
+            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(instancesClient, modelSettings.TimeSeriesIdProperties.Count)
                 .ConfigureAwait(false);
 
             try
@@ -198,13 +199,14 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             // Arrange
             TimeSeriesInsightsClient tsiClient = GetClient();
             TimeSeriesInsightsModelSettings timeSeriesModelSettings = tsiClient.GetModelSettingsClient();
+            TimeSeriesInsightsInstances instancesClient = tsiClient.GetInstancesClient();
             DeviceClient deviceClient = await GetDeviceClient().ConfigureAwait(false);
 
             // Figure out what the Time Series Id is composed of
             TimeSeriesModelSettings modelSettings = await timeSeriesModelSettings.GetAsync().ConfigureAwait(false);
 
             // Create a Time Series Id where the number of keys that make up the Time Series Id is fetched from Model Settings
-            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(tsiClient, modelSettings.TimeSeriesIdProperties.Count)
+            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(instancesClient, modelSettings.TimeSeriesIdProperties.Count)
                 .ConfigureAwait(false);
 
             try
@@ -264,13 +266,14 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             // Arrange
             TimeSeriesInsightsClient tsiClient = GetClient();
             TimeSeriesInsightsModelSettings timeSeriesInsightsModelSettings = tsiClient.GetModelSettingsClient();
+            TimeSeriesInsightsInstances instancesClient = tsiClient.GetInstancesClient();
             DeviceClient deviceClient = await GetDeviceClient().ConfigureAwait(false);
 
             // Figure out what the Time Series Id is composed of
             TimeSeriesModelSettings modelSettings = await timeSeriesInsightsModelSettings.GetAsync().ConfigureAwait(false);
 
             // Create a Time Series Id where the number of keys that make up the Time Series Id is fetched from Model Settings
-            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(tsiClient, modelSettings.TimeSeriesIdProperties.Count)
+            TimeSeriesId tsiId = await GetUniqueTimeSeriesInstanceIdAsync(instancesClient, modelSettings.TimeSeriesIdProperties.Count)
                 .ConfigureAwait(false);
 
             try
