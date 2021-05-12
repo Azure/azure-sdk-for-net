@@ -11,7 +11,7 @@ namespace Proto.Client
             Scenario scenario = null;
             try
             {
-                scenario = ScenarioFactory.GetScenario(Scenarios.StartFromVm);
+                scenario = ScenarioFactory.GetScenario(Scenarios.VmImageTests);
                 scenario.Execute();
             }
             finally

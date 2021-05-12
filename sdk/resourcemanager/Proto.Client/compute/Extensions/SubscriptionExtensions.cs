@@ -136,5 +136,28 @@ namespace Proto.Compute
             );
         }
         #endregion
+
+        #region VMImage Operations
+        /// <summary>
+        /// Lists the Virtual Machine Extension Images Container for this SubscriptionOperations.
+        /// </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static VirtualMachineExtensionImageContainer GetVmExtensionImages(this SubscriptionOperations subscription)
+        {
+            return new VirtualMachineExtensionImageContainer(subscription);
+        }
+
+        /// <summary>
+        /// Lists the Virtual Machine Images Container  for this SubscriptionOperations.
+        /// </summary>
+        /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
+        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        public static VirtualMachineImageContainer GetVmImages(this SubscriptionOperations subscription)
+        {
+            return new VirtualMachineImageContainer(subscription);
+        }
+
+        #endregion
     }
 }
