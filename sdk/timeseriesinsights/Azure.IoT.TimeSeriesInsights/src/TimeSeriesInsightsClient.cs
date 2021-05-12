@@ -72,11 +72,6 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Types client to perform various Time Series Insights types operations.
-        /// </summary>
-        public virtual TimeSeriesInsightsTypes Types { get; private set; }
-
-        /// <summary>
         /// Hierarchies client to perform various Time Series Insights hierarchies operations.
         /// </summary>
         public virtual TimeSeriesInsightsHierarchies Hierarchies { get; private set; }
@@ -147,7 +142,6 @@ namespace Azure.IoT.TimeSeriesInsights
             _timeSeriesHierarchiesRestClient = new TimeSeriesHierarchiesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
 
-            Types = new TimeSeriesInsightsTypes(_timeSeriesTypesRestClient, _clientDiagnostics);
             Hierarchies = new TimeSeriesInsightsHierarchies(_timeSeriesHierarchiesRestClient, _clientDiagnostics);
             Queries = new TimeSeriesInsightsQueries(_queryRestClient, _clientDiagnostics);
         }

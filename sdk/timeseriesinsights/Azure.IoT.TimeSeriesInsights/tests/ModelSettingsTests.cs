@@ -28,6 +28,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             TimeSeriesInsightsClient client = GetClient();
             TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+            TimeSeriesInsightsTypes typesClient = client.GetTypesClient();
 
             // GET model settings
             Response<TimeSeriesModelSettings> currentSettings = await modelSettingsClient.GetAsync().ConfigureAwait(false);
@@ -60,8 +61,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // clean up
                 try
                 {
-                    Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
-                        .Types
+                    Response<TimeSeriesOperationError[]> deleteTypesResponse = await typesClient
                         .DeleteByIdAsync(new string[] { typeId })
                         .ConfigureAwait(false);
 
@@ -93,6 +93,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
         private async Task<string> createTimeSeriesTypeAsync(TimeSeriesInsightsClient client)
         {
+            TimeSeriesInsightsTypes typesClient = client.GetTypesClient();
             var timeSeriesTypes = new List<TimeSeriesType>();
             var tsiTypeNamePrefix = "type";
             var timeSeriesTypesName = Recording.GenerateAlphaNumericId(tsiTypeNamePrefix);
@@ -111,8 +112,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             };
             timeSeriesTypes.Add(type);
 
-            Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
-               .Types
+            Response<TimeSeriesTypeOperationResult[]> createTypesResult = await typesClient
                .CreateOrReplaceAsync(timeSeriesTypes)
                .ConfigureAwait(false);
 

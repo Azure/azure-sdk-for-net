@@ -113,6 +113,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
         {
             // Setup
             TimeSeriesInsightsInstances instancesClient = client.GetInstancesClient();
+            TimeSeriesInsightsTypes typesClient = client.GetTypesClient();
 
             // First create the Time Series type along with the numeric variables
             var timeSeriesTypes = new List<TimeSeriesType>();
@@ -134,8 +135,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             timeSeriesTypes.Add(new TimeSeriesType("TemperatureSensor", variables) { Id = "TemperatureSensorTypeId" });
 
-            Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
-                .Types
+            Response<TimeSeriesTypeOperationResult[]> createTypesResult = await typesClient
                 .CreateOrReplaceAsync(timeSeriesTypes)
                 .ConfigureAwait(false);
 
@@ -147,7 +147,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             }
 
             // Get the Time Series instance and replace its type with the one we just created
-            Response<InstancesOperationResult[]> getInstanceResult = await instancesClient.GetAsync(new List<TimeSeriesId> { tsId });
+            Response<InstancesOperationResult[]> getInstanceResult = await instancesClient
+                .GetAsync(new List<TimeSeriesId> { tsId });
             if (getInstanceResult.Value.First().Error != null)
             {
                 Console.WriteLine($"\n\nFailed to retrieve Time Series instance with Id '{tsId}'. " +
@@ -157,7 +158,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             TimeSeriesInstance instanceToReplace = getInstanceResult.Value.First().Instance;
             instanceToReplace.TypeId = createTypesResult.Value.First().TimeSeriesType.Id;
-            Response<InstancesOperationResult[]> replaceInstanceResult = await instancesClient.ReplaceAsync(new List<TimeSeriesInstance> { instanceToReplace });
+            Response<InstancesOperationResult[]> replaceInstanceResult = await instancesClient
+                .ReplaceAsync(new List<TimeSeriesInstance> { instanceToReplace });
             if (replaceInstanceResult.Value.First().Error != null)
             {
                 Console.WriteLine($"\n\nFailed to retrieve Time Series instance with Id '{tsId}'. " +

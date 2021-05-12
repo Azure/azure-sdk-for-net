@@ -21,6 +21,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             PrintHeader("TIME SERIES INSIGHTS TYPES SAMPLE");
 
             #region Snippet:TimeSeriesInsightsSampleCreateType
+            TimeSeriesInsightsTypes typesClient = client.GetTypesClient();
+
             // Create a type with an aggregate variable
             var timeSeriesTypes = new List<TimeSeriesType>();
 
@@ -32,8 +34,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             timeSeriesTypes.Add(new TimeSeriesType("Type1", variables) { Id = "Type1Id" });
             timeSeriesTypes.Add(new TimeSeriesType("Type2", variables) { Id = "Type2Id" });
 
-            Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
-                .Types
+            Response<TimeSeriesTypeOperationResult[]> createTypesResult = await typesClient
                 .CreateOrReplaceAsync(timeSeriesTypes);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
@@ -57,8 +58,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
             TimeSeriesModelSettings modelSettings = await modelSettingsClient.GetAsync();
-            Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await client
-                .Types
+            Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await typesClient
                 .GetByIdAsync(new string[] { modelSettings.DefaultTypeId });
 
             // The response of calling the API contains a list of type or error objects corresponding by position to the input parameter array in the request.
@@ -83,8 +83,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 type.Description = "Description";
             }
 
-            Response<TimeSeriesTypeOperationResult[]> updateTypesResult = await client
-                .Types
+            Response<TimeSeriesTypeOperationResult[]> updateTypesResult = await typesClient
                 .CreateOrReplaceAsync(timeSeriesTypes);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter array in the request.
@@ -104,7 +103,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             #region Snippet:TimeSeriesInsightsSampleGetAllTypes
             // Get all Time Series types in the environment
-            AsyncPageable<TimeSeriesType> getAllTypesResponse = client.Types.GetTypesAsync();
+            AsyncPageable<TimeSeriesType> getAllTypesResponse = typesClient.GetTypesAsync();
 
             await foreach (TimeSeriesType tsiType in getAllTypesResponse)
             {
@@ -120,8 +119,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 // Delete Time Series types with Ids
 
                 var typesIdsToDelete = new List<string> { "Type1Id", " Type2Id" };
-                Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
-                    .Types
+                Response<TimeSeriesOperationError[]> deleteTypesResponse = await typesClient
                     .DeleteByIdAsync(typesIdsToDelete);
 
                 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
