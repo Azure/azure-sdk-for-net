@@ -100,7 +100,7 @@ namespace System.Tests
             Stream stream = data.ToStream();
             buffer[0] = (byte)'z';
             StreamReader sr = new StreamReader(stream);
-            Assert.Equal("zome data", await sr.ReadToEndAsync());
+            Assert.Equal("some data", await sr.ReadToEndAsync());
         }
 
         [Fact]

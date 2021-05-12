@@ -145,15 +145,15 @@ namespace Azure.Core
                         int max = end + 1;
                         if (max <= i + 4)
                         {
-                            int accum = 0;
+                            int accumulator = 0;
                             for (idx = i; idx < max; idx++)
                             {
                                 val = data[idx];
-                                accum <<= 7;
-                                accum |= (byte)(val & 0x7f);
+                                accumulator <<= 7;
+                                accumulator |= (byte)(val & 0x7f);
                             }
 
-                            ret.Append(accum);
+                            ret.Append(accumulator);
                             i = end;
                         }
                         else
