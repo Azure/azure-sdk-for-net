@@ -98,7 +98,7 @@ namespace Proto.Compute
         ///  The operation to start a virtual machine. 
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="Response"/> operation for this resource. </returns>
         public Response PowerOn(CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartStart(Id.ResourceGroupName, Id.Name, cancellationToken);
@@ -109,7 +109,7 @@ namespace Proto.Compute
         ///  The operation to start a virtual machine. 
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response"/> operation for this resource. </returns>
         public async Task<Response> PowerOnAsync(CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartStartAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -143,7 +143,7 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        /// <returns> A response with the <see cref="Response"/> operation for this resource. </returns>
         public Response PowerOff(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
             var operation = Operations.StartPowerOff(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken);
@@ -155,7 +155,7 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="skipShutdown"> The parameter to request non-graceful VM shutdown. True value for this flag indicates non-graceful shutdown whereas false indicates otherwise. Default value for this flag is false if not specified. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse"/> operation for this resource. </returns>
+        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="Response"/> operation for this resource. </returns>
         public async Task<Response> PowerOffAsync(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartPowerOffAsync(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken).ConfigureAwait(false);
