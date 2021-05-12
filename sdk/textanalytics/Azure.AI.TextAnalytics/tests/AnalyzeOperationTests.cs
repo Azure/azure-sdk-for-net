@@ -84,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             IReadOnlyCollection<RecognizeEntitiesActionResult> entitiesResult = resultCollection.RecognizeEntitiesActionsResults;
 
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionsResults.ElementAt(0).Result;
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionsResults;
 
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> piiResult = resultCollection.RecognizePiiEntitiesActionsResults;
 
@@ -100,12 +100,13 @@ namespace Azure.AI.TextAnalytics.Tests
             var keyPhrasesListId1 = new List<string> { "CEO of SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock", "year" };
 
-            foreach (string keyphrase in keyPhrasesResult[0].KeyPhrases)
+            var keyPhrases = keyPhrasesResult.FirstOrDefault().Result;
+            foreach (string keyphrase in keyPhrases[0].KeyPhrases)
             {
                 Assert.IsTrue(keyPhrasesListId1.Contains(keyphrase));
             }
 
-            foreach (string keyphrase in keyPhrasesResult[1].KeyPhrases)
+            foreach (string keyphrase in keyPhrases[1].KeyPhrases)
             {
                 Assert.IsTrue(keyPhrasesListId2.Contains(keyphrase));
             }
@@ -491,6 +492,44 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.AreEqual(51, result[0].Statistics.CharacterCount);
             Assert.AreEqual(1, result[0].Statistics.TransactionCount);
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeOperationAllActionsAndDisableServiceLogs ()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() { DisableServiceLogs = true } },
+                RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() { DisableServiceLogs = true } },
+                RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() { DisableServiceLogs = false } },
+                RecognizeLinkedEntitiesOptions = new List<RecognizeLinkedEntitiesOptions>() { new RecognizeLinkedEntitiesOptions() { DisableServiceLogs = true } },
+            };
+
+            AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchConvenienceDocuments, batchActions);
+
+            await operation.WaitForCompletionAsync();
+
+            //Take the first page
+            AnalyzeBatchActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.ExtractKeyPhrasesActionsResults.FirstOrDefault().Result;
+            RecognizeEntitiesResultCollection entitiesResult = resultCollection.RecognizeEntitiesActionsResults.FirstOrDefault().Result;
+            RecognizePiiEntitiesResultCollection piiResult = resultCollection.RecognizePiiEntitiesActionsResults.FirstOrDefault().Result;
+            RecognizeLinkedEntitiesResultCollection entityLinkingResult = resultCollection.RecognizeLinkedEntitiesActionsResults.FirstOrDefault().Result;
+
+            Assert.IsNotNull(keyPhrasesResult);
+            Assert.AreEqual(2, keyPhrasesResult.Count);
+
+            Assert.IsNotNull(entitiesResult);
+            Assert.AreEqual(2, keyPhrasesResult.Count);
+
+            Assert.IsNotNull(piiResult);
+            Assert.AreEqual(2, keyPhrasesResult.Count);
+
+            Assert.IsNotNull(entityLinkingResult);
+            Assert.AreEqual(2, keyPhrasesResult.Count);
         }
     }
 }

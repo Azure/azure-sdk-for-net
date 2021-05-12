@@ -46,5 +46,14 @@ namespace Azure.AI.TextAnalytics
         /// <see cref="StringIndexType.Utf16CodeUnit"/>.
         /// </summary>
         public StringIndexType StringIndexType { get; set; } = StringIndexType.Utf16CodeUnit;
+
+        /// <summary>
+        /// If set to true (the default for `StartAnalyzeHealthcareEntities` and `RecognizePiiEntities`),
+        /// you opt-out of having your text input logged for troubleshooting. By default, Text Analytics
+        /// logs your input text for 48 hours, solely to allow for troubleshooting issues.
+        /// Setting this parameter to true, disables input logging and may limit our ability
+        /// to investigate issues that occur.
+        /// </summary>
+        public bool? DisableServiceLogs { get; set; }
     }
 }
