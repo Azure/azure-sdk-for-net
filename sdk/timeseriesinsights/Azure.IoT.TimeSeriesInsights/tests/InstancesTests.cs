@@ -27,10 +27,12 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         {
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
+            TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+
             int numOfIdProperties = 3;
             int numOfInstancesToSetup = 2;
             var timeSeriesInstances = new List<TimeSeriesInstance>();
-            string defaultTypeId = await getDefaultTypeIdAsync(client).ConfigureAwait(false);
+            string defaultTypeId = await getDefaultTypeIdAsync(modelSettingsClient).ConfigureAwait(false);
 
             for (int i = 0; i < numOfInstancesToSetup; i++)
             {

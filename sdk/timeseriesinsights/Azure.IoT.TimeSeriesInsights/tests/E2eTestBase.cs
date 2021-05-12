@@ -131,9 +131,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             throw new Exception($"Unique Id could not be found");
         }
 
-        protected async Task<string> getDefaultTypeIdAsync(TimeSeriesInsightsClient client)
+        protected async Task<string> getDefaultTypeIdAsync(TimeSeriesInsightsModelSettings modelSettingsClient)
         {
-            Response<TimeSeriesModelSettings> currentSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
+            Response<TimeSeriesModelSettings> currentSettings = await modelSettingsClient.GetAsync();
             return currentSettings.Value.DefaultTypeId;
         }
 

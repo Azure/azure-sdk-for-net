@@ -27,9 +27,49 @@ namespace Azure.IoT.TimeSeriesInsights
         private readonly QueryRestClient _queryRestClient;
 
         /// <summary>
-        /// Client to get and update model settings.
+        /// Create a new <see cref="TimeSeriesInsightsModelSettings"/> client to get and update model settings.
         /// </summary>
-        public virtual TimeSeriesInsightsModelSettings ModelSettings { get; private set; }
+        /// <returns>A new <see cref="TimeSeriesInsightsModelSettings"/> instance.</returns>
+        public virtual TimeSeriesInsightsModelSettings GetModelSettingsClient()
+        {
+            return new TimeSeriesInsightsModelSettings(_modelSettingsRestClient, _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="TimeSeriesInsightsInstances"/> client to perform various Time Series Insights instances operations.
+        /// </summary>
+        /// <returns>A new <see cref="TimeSeriesInsightsInstances"/> instance.</returns>
+        public virtual TimeSeriesInsightsInstances GetInstancesClient()
+        {
+            return new TimeSeriesInsightsInstances(_timeSeriesInstancesRestClient, _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="TimeSeriesInsightsTypes"/> client to perform various Time Series Insights types operations.
+        /// </summary>
+        /// <returns>A new <see cref="TimeSeriesInsightsTypes"/> instance.</returns>
+        public virtual TimeSeriesInsightsTypes GetTypesClient()
+        {
+            return new TimeSeriesInsightsTypes(_timeSeriesTypesRestClient, _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="TimeSeriesInsightsHierarchies"/> client to perform various Time Series Insights hierarchies operations.
+        /// </summary>
+        /// <returns>A new <see cref="TimeSeriesInsightsHierarchies"/> instance.</returns>
+        public virtual TimeSeriesInsightsHierarchies GetHierarchiesClient()
+        {
+            return new TimeSeriesInsightsHierarchies(_timeSeriesHierarchiesRestClient, _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="TimeSeriesInsightsQueries"/> client that can be used can be used to perform query operations on Time Series Insights.
+        /// </summary>
+        /// <returns>A new <see cref="TimeSeriesInsightsQueries"/> instance.</returns>
+        public virtual TimeSeriesInsightsQueries GetQueriesClient()
+        {
+            return new TimeSeriesInsightsQueries(_queryRestClient, _clientDiagnostics);
+        }
 
         /// <summary>
         /// Instances client to perform various Time Series Insights instances operations.
@@ -112,7 +152,6 @@ namespace Azure.IoT.TimeSeriesInsights
             _timeSeriesHierarchiesRestClient = new TimeSeriesHierarchiesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
 
-            ModelSettings = new TimeSeriesInsightsModelSettings(_modelSettingsRestClient, _clientDiagnostics);
             Instances = new TimeSeriesInsightsInstances(_timeSeriesInstancesRestClient, _clientDiagnostics);
             Types = new TimeSeriesInsightsTypes(_timeSeriesTypesRestClient, _clientDiagnostics);
             Hierarchies = new TimeSeriesInsightsHierarchies(_timeSeriesHierarchiesRestClient, _clientDiagnostics);
