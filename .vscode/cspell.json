@@ -32,7 +32,6 @@
   // Sort words alphabetically to make this list easier to use
   "words": [
     "apos",
-    "aragorn",
     "azsdk",
     "blazor",
     "contoso",
@@ -55,7 +54,6 @@
     "referer",
     "renormalize",
     "retriable",
-    "sauron's",
     "struct",
     "structs",
     "uints",
@@ -65,7 +63,10 @@
     "xunit"
   ],
   "overrides": [
-    { "filename": "**/sdk/formrecognizer/**/*.cs", "words": ["ZhHant"] },
+    {
+      "filename": "**/sdk/formrecognizer/**/*.cs",
+      "words": ["ZhHant"]
+    },
     {
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": ["warnaserror"]

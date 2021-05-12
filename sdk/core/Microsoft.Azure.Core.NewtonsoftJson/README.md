@@ -79,7 +79,7 @@ foreach (SearchResult<Movie> result in results.Value.GetResults())
 ```
 
 If searching an index full of movies, the following may be printed:
-
+<!-- cspell:word Aragorn Sauron's -->
 ```text
 The Lord of the Rings: The Return of the King
 Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.
