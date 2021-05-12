@@ -1,5 +1,8 @@
 # Release History
 
+## 12.7.0-beta.5 (Unreleased)
+
+
 ## 12.7.0-beta.4 (2021-05-12)
 - Added support for service version 2020-08-04.
 - Added support for Soft Delete for Hierarchical-Namespace enabled accounts.
