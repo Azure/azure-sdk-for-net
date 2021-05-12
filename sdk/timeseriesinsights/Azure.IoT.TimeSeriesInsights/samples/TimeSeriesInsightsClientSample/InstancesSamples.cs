@@ -22,7 +22,8 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             PrintHeader("TIME SERIES INSIGHTS INSTANCES SAMPLE");
 
             // Figure out what keys make up the Time Series Id
-            TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync();
+            TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+            TimeSeriesModelSettings modelSettings = await modelSettingsClient.GetAsync();
             TimeSeriesId tsId = TimeSeriesIdHelper.CreateTimeSeriesId(modelSettings);
             string defaultTypeId = modelSettings.DefaultTypeId;
 
