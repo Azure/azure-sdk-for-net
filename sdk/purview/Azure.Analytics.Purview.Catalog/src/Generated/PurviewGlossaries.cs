@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The GlossaryRest service client. </summary>
-    public partial class GlossaryRestClient
+    /// <summary> The PurviewGlossaries service client. </summary>
+    public partial class PurviewGlossaries
     {
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
@@ -23,32 +23,9 @@ namespace Azure.Analytics.Purview.Catalog
         private readonly string apiVersion;
         private readonly ClientDiagnostics _clientDiagnostics;
 
-        /// <summary> Initializes a new instance of GlossaryRestClient for mocking. </summary>
-        protected GlossaryRestClient()
+        /// <summary> Initializes a new instance of PurviewGlossaries for mocking. </summary>
+        protected PurviewGlossaries()
         {
-        }
-
-        /// <summary> Initializes a new instance of GlossaryRestClient. </summary>
-        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.catalog.purview.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        public GlossaryRestClient(Uri endpoint, TokenCredential credential, CatalogClientOptions options = null)
-        {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            options ??= new CatalogClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
-            this.endpoint = endpoint;
-            apiVersion = options.Version;
         }
 
         /// <summary> Get all glossaries registered with Atlas. </summary>
@@ -66,7 +43,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaries");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
             try
             {
@@ -108,7 +85,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaries");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
             try
             {
@@ -282,12 +259,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -448,7 +419,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossary");
             scope.Start();
             try
             {
@@ -589,12 +560,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
@@ -757,7 +722,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossary");
             scope.Start();
             try
             {
@@ -985,12 +950,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -1112,7 +1071,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryCategories");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
             scope.Start();
             try
             {
@@ -1321,12 +1280,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -1448,7 +1401,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryCategories");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
             scope.Start();
             try
             {
@@ -1676,12 +1629,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -1803,7 +1750,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategory");
             scope.Start();
             try
             {
@@ -2012,12 +1959,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -2139,7 +2080,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategory");
             scope.Start();
             try
             {
@@ -2198,7 +2139,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
             try
             {
@@ -2238,7 +2179,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
             try
             {
@@ -2465,12 +2406,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -2593,7 +2528,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.UpdateGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
             scope.Start();
             try
             {
@@ -2802,12 +2737,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -2930,7 +2859,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.UpdateGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
             scope.Start();
             try
             {
@@ -2991,7 +2920,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
             try
             {
@@ -3031,7 +2960,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
             try
             {
@@ -3089,7 +3018,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.PartialUpdateGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
             scope.Start();
             try
             {
@@ -3130,7 +3059,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.PartialUpdateGlossaryCategory");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
             scope.Start();
             try
             {
@@ -3195,7 +3124,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetRelatedCategories");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
             try
             {
@@ -3238,7 +3167,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetRelatedCategories");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
             try
             {
@@ -3315,7 +3244,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetCategoryTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
             try
             {
@@ -3358,7 +3287,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetCategoryTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
             try
             {
@@ -3709,12 +3638,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -3996,18 +3919,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateGlossaryTermAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateGlossaryTermAsync(RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryTermRequest(requestBody, requestOptions);
+            HttpMessage message = CreateCreateGlossaryTermRequest(requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerm");
             scope.Start();
             try
             {
@@ -4324,12 +4248,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -4611,18 +4529,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateGlossaryTerm(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateGlossaryTerm(RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryTermRequest(requestBody, requestOptions);
+            HttpMessage message = CreateCreateGlossaryTermRequest(requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerm");
             scope.Start();
             try
             {
@@ -4651,8 +4570,9 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="CreateGlossaryTerm"/> and <see cref="CreateGlossaryTermAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateGlossaryTermRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateCreateGlossaryTermRequest(RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -4661,6 +4581,10 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(endpoint);
             uri.AppendRaw("/api", false);
             uri.AppendPath("/atlas/v2/glossary/term", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -4670,18 +4594,19 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryTermRequest(termGuid, requestOptions);
+            HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
             try
             {
@@ -4710,18 +4635,19 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetGlossaryTerm(string termGuid, RequestOptions requestOptions = null)
+        public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryTermRequest(termGuid, requestOptions);
+            HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
             try
             {
@@ -4750,8 +4676,9 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetGlossaryTerm"/> and <see cref="GetGlossaryTermAsync"/> operations. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetGlossaryTermRequest(string termGuid, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetGlossaryTermRequest(string termGuid, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -4761,6 +4688,10 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendRaw("/api", false);
             uri.AppendPath("/atlas/v2/glossary/term/", false);
             uri.AppendPath(termGuid, true);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -5054,12 +4985,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
@@ -5355,7 +5280,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.UpdateGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
             try
             {
@@ -5672,12 +5597,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -5971,7 +5890,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.UpdateGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
             try
             {
@@ -6032,7 +5951,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
             try
             {
@@ -6072,7 +5991,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
             try
             {
@@ -6119,18 +6038,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the glossary term partially. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> PartialUpdateGlossaryTermAsync(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> PartialUpdateGlossaryTermAsync(string termGuid, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, requestBody, requestOptions);
+            HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.PartialUpdateGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
             scope.Start();
             try
             {
@@ -6160,18 +6080,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the glossary term partially. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response PartialUpdateGlossaryTerm(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response PartialUpdateGlossaryTerm(string termGuid, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, requestBody, requestOptions);
+            HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.PartialUpdateGlossaryTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
             scope.Start();
             try
             {
@@ -6201,8 +6122,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create Request for <see cref="PartialUpdateGlossaryTerm"/> and <see cref="PartialUpdateGlossaryTermAsync"/> operations. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreatePartialUpdateGlossaryTermRequest(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreatePartialUpdateGlossaryTermRequest(string termGuid, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -6213,6 +6135,10 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/glossary/term/", false);
             uri.AppendPath(termGuid, true);
             uri.AppendPath("/partial", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -6510,12 +6436,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -6797,18 +6717,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> CreateGlossaryTermsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> CreateGlossaryTermsAsync(RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryTermsRequest(requestBody, requestOptions);
+            HttpMessage message = CreateCreateGlossaryTermsRequest(requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
             scope.Start();
             try
             {
@@ -7125,12 +7046,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
         ///   </item>
         ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
-        ///   </item>
-        ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
         ///     <term>boolean</term>
         ///     <term></term>
@@ -7412,18 +7327,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response CreateGlossaryTerms(RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response CreateGlossaryTerms(RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateCreateGlossaryTermsRequest(requestBody, requestOptions);
+            HttpMessage message = CreateCreateGlossaryTermsRequest(requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
             scope.Start();
             try
             {
@@ -7452,8 +7368,9 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="CreateGlossaryTerms"/> and <see cref="CreateGlossaryTermsAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateCreateGlossaryTermsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateCreateGlossaryTermsRequest(RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -7462,6 +7379,10 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(endpoint);
             uri.AppendRaw("/api", false);
             uri.AppendPath("/atlas/v2/glossary/terms", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -7485,7 +7406,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetEntitiesAssignedWithTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
             try
             {
@@ -7528,7 +7449,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetEntitiesAssignedWithTerm");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
             try
             {
@@ -7695,7 +7616,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.AssignTermToEntities");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
             scope.Start();
             try
             {
@@ -7828,7 +7749,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.AssignTermToEntities");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
             scope.Start();
             try
             {
@@ -7982,7 +7903,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.RemoveTermAssignmentFromEntities");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
             scope.Start();
             try
             {
@@ -8115,7 +8036,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.RemoveTermAssignmentFromEntities");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
             scope.Start();
             try
             {
@@ -8269,7 +8190,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteTermAssignmentFromEntities");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
             scope.Start();
             try
             {
@@ -8402,7 +8323,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteTermAssignmentFromEntities");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
             scope.Start();
             try
             {
@@ -8466,7 +8387,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetRelatedTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
             try
             {
@@ -8509,7 +8430,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetRelatedTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
             try
             {
@@ -8583,7 +8504,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
             try
             {
@@ -8623,7 +8544,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
             try
             {
@@ -8782,12 +8703,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
@@ -8951,7 +8866,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.UpdateGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
             scope.Start();
             try
             {
@@ -9092,12 +9007,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///     <term>&quot;ACTIVE&quot; | &quot;DELETED&quot;</term>
         ///     <term></term>
         ///     <term> Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store. </term>
-        ///   </item>
-        ///   <item>
-        ///     <term>propagate</term>
-        ///     <term>boolean</term>
-        ///     <term></term>
-        ///     <term> Determines if the classification will be propagated. </term>
         ///   </item>
         ///   <item>
         ///     <term>removePropagationsOnEntityDelete</term>
@@ -9261,7 +9170,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.UpdateGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
             scope.Start();
             try
             {
@@ -9322,7 +9231,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
             try
             {
@@ -9362,7 +9271,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
             try
             {
@@ -9422,7 +9331,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryCategories");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
             try
             {
@@ -9465,7 +9374,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryCategories");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
             try
             {
@@ -9542,7 +9451,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryCategoriesHeaders");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
             try
             {
@@ -9585,7 +9494,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryCategoriesHeaders");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
             try
             {
@@ -9648,18 +9557,19 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get a specific glossary with detailed information. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, requestOptions);
+            HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetDetailedGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
             try
             {
@@ -9688,18 +9598,19 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get a specific glossary with detailed information. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetDetailedGlossary(string glossaryGuid, RequestOptions requestOptions = null)
+        public virtual Response GetDetailedGlossary(string glossaryGuid, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, requestOptions);
+            HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetDetailedGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
             try
             {
@@ -9728,8 +9639,9 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetDetailedGlossary"/> and <see cref="GetDetailedGlossaryAsync"/> operations. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetDetailedGlossaryRequest(string glossaryGuid, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetDetailedGlossaryRequest(string glossaryGuid, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -9740,6 +9652,10 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/detailed", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -9748,18 +9664,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> PartialUpdateGlossaryAsync(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> PartialUpdateGlossaryAsync(string glossaryGuid, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, requestBody, requestOptions);
+            HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.PartialUpdateGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
             scope.Start();
             try
             {
@@ -9789,18 +9706,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response PartialUpdateGlossary(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response PartialUpdateGlossary(string glossaryGuid, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, requestBody, requestOptions);
+            HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.PartialUpdateGlossary");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
             scope.Start();
             try
             {
@@ -9830,8 +9748,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Create Request for <see cref="PartialUpdateGlossary"/> and <see cref="PartialUpdateGlossaryAsync"/> operations. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreatePartialUpdateGlossaryRequest(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreatePartialUpdateGlossaryRequest(string glossaryGuid, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -9842,6 +9761,10 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/partial", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -9851,21 +9774,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get terms belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, limit, offset, sort, requestOptions);
+            HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
             try
             {
@@ -9894,21 +9818,22 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Get terms belonging to a specific glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetGlossaryTerms(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+        public virtual Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, limit, offset, sort, requestOptions);
+            HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, includeTermHierarchy, limit, offset, sort, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryTerms");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
             try
             {
@@ -9937,11 +9862,12 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Create Request for <see cref="GetGlossaryTerms"/> and <see cref="GetGlossaryTermsAsync"/> operations. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetGlossaryTermsRequest(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetGlossaryTermsRequest(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -9952,6 +9878,10 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/terms", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
             if (limit != null)
             {
                 uri.AppendQuery("limit", limit.Value, true);
@@ -9985,7 +9915,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryTermHeaders");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
             try
             {
@@ -10028,7 +9958,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryTermHeaders");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
             try
             {
@@ -10092,18 +10022,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Import Glossary Terms from local csv file. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ImportGlossaryTermsViaCSVAsync(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> ImportGlossaryTermsViaCsvAsync(string glossaryGuid, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateImportGlossaryTermsViaCSVRequest(glossaryGuid, requestBody, requestOptions);
+            HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.ImportGlossaryTermsViaCSV");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
             scope.Start();
             try
             {
@@ -10133,18 +10064,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Import Glossary Terms from local csv file. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response ImportGlossaryTermsViaCSV(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response ImportGlossaryTermsViaCsv(string glossaryGuid, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateImportGlossaryTermsViaCSVRequest(glossaryGuid, requestBody, requestOptions);
+            HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.ImportGlossaryTermsViaCSV");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
             scope.Start();
             try
             {
@@ -10171,11 +10103,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="ImportGlossaryTermsViaCSV"/> and <see cref="ImportGlossaryTermsViaCSVAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="ImportGlossaryTermsViaCsv"/> and <see cref="ImportGlossaryTermsViaCsvAsync"/> operations. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateImportGlossaryTermsViaCSVRequest(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateImportGlossaryTermsViaCsvRequest(string glossaryGuid, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -10186,10 +10119,11 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/terms/import", false);
-            if (apiVersion != null)
+            if (includeTermHierarchy != null)
             {
-                uri.AppendQuery("api-version", apiVersion, true);
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "multipart/form-data");
@@ -10203,16 +10137,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ImportGlossaryTermsViaCSVByGlossaryNameAsync(string glossaryName, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> ImportGlossaryTermsViaCsvByGlossaryNameAsync(string glossaryName, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateImportGlossaryTermsViaCSVByGlossaryNameRequest(glossaryName, requestBody, includeTermHierarchy, requestOptions);
+            HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.ImportGlossaryTermsViaCSVByGlossaryName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
             scope.Start();
             try
             {
@@ -10245,16 +10179,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response ImportGlossaryTermsViaCSVByGlossaryName(string glossaryName, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
+        public virtual Response ImportGlossaryTermsViaCsvByGlossaryName(string glossaryName, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateImportGlossaryTermsViaCSVByGlossaryNameRequest(glossaryName, requestBody, includeTermHierarchy, requestOptions);
+            HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.ImportGlossaryTermsViaCSVByGlossaryName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
             scope.Start();
             try
             {
@@ -10281,12 +10215,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="ImportGlossaryTermsViaCSVByGlossaryName"/> and <see cref="ImportGlossaryTermsViaCSVByGlossaryNameAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="ImportGlossaryTermsViaCsvByGlossaryName"/> and <see cref="ImportGlossaryTermsViaCsvByGlossaryNameAsync"/> operations. </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateImportGlossaryTermsViaCSVByGlossaryNameRequest(string glossaryName, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(string glossaryName, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -10301,10 +10235,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "multipart/form-data");
@@ -10313,19 +10244,19 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the status of import csv operation. </summary>
-        /// <param name="operationGuid"> The globally unique identifier for async operation/job`. </param>
+        /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetImportCSVOperationStatusAsync(string operationGuid, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetImportCsvOperationStatusAsync(string operationGuid, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetImportCSVOperationStatusRequest(operationGuid, requestOptions);
+            HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetImportCSVOperationStatus");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
             try
             {
@@ -10353,19 +10284,19 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the status of import csv operation. </summary>
-        /// <param name="operationGuid"> The globally unique identifier for async operation/job`. </param>
+        /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetImportCSVOperationStatus(string operationGuid, RequestOptions requestOptions = null)
+        public virtual Response GetImportCsvOperationStatus(string operationGuid, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetImportCSVOperationStatusRequest(operationGuid, requestOptions);
+            HttpMessage message = CreateGetImportCsvOperationStatusRequest(operationGuid, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetImportCSVOperationStatus");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
             try
             {
@@ -10392,10 +10323,10 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="GetImportCSVOperationStatus"/> and <see cref="GetImportCSVOperationStatusAsync"/> operations. </summary>
-        /// <param name="operationGuid"> The globally unique identifier for async operation/job`. </param>
+        /// <summary> Create Request for <see cref="GetImportCsvOperationStatus"/> and <see cref="GetImportCsvOperationStatusAsync"/> operations. </summary>
+        /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetImportCSVOperationStatusRequest(string operationGuid, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetImportCsvOperationStatusRequest(string operationGuid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -10405,10 +10336,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendRaw("/api", false);
             uri.AppendPath("/glossary/terms/import/", false);
             uri.AppendPath(operationGuid, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -10417,18 +10345,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Export Glossary Terms as csv file. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> ExportGlossaryTermsAsCSVAsync(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual async Task<Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateExportGlossaryTermsAsCSVRequest(glossaryGuid, requestBody, requestOptions);
+            HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.ExportGlossaryTermsAsCSV");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
             scope.Start();
             try
             {
@@ -10458,18 +10387,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Export Glossary Terms as csv file. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response ExportGlossaryTermsAsCSV(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+        public virtual Response ExportGlossaryTermsAsCsv(string glossaryGuid, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateExportGlossaryTermsAsCSVRequest(glossaryGuid, requestBody, requestOptions);
+            HttpMessage message = CreateExportGlossaryTermsAsCsvRequest(glossaryGuid, requestBody, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.ExportGlossaryTermsAsCSV");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
             scope.Start();
             try
             {
@@ -10496,11 +10426,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create Request for <see cref="ExportGlossaryTermsAsCSV"/> and <see cref="ExportGlossaryTermsAsCSVAsync"/> operations. </summary>
+        /// <summary> Create Request for <see cref="ExportGlossaryTermsAsCsv"/> and <see cref="ExportGlossaryTermsAsCsvAsync"/> operations. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateExportGlossaryTermsAsCSVRequest(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+        private HttpMessage CreateExportGlossaryTermsAsCsvRequest(string glossaryGuid, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -10511,12 +10442,13 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             uri.AppendPath("/terms/export", false);
-            if (apiVersion != null)
+            if (includeTermHierarchy != null)
             {
-                uri.AppendQuery("api-version", apiVersion, true);
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/octet-stream");
+            request.Headers.Add("Accept", "text/csv");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
             return message;
@@ -10526,18 +10458,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, RequestOptions requestOptions = null)
+        public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, requestOptions);
+            HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetTermsByGlossaryName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
             try
             {
@@ -10568,18 +10501,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
 #pragma warning disable AZC0002
-        public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, RequestOptions requestOptions = null)
+        public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
 #pragma warning restore AZC0002
         {
             requestOptions ??= new RequestOptions();
-            HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, requestOptions);
+            HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, includeTermHierarchy, requestOptions);
             if (requestOptions.PerCallPolicy != null)
             {
                 message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
             }
-            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetTermsByGlossaryName");
+            using var scope = _clientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
             try
             {
@@ -10610,8 +10544,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="requestOptions"> The request options. </param>
-        private HttpMessage CreateGetTermsByGlossaryNameRequest(string glossaryName, int? limit = null, int? offset = null, RequestOptions requestOptions = null)
+        private HttpMessage CreateGetTermsByGlossaryNameRequest(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -10630,10 +10565,11 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("offset", offset.Value, true);
             }
-            if (apiVersion != null)
+            if (includeTermHierarchy != null)
             {
-                uri.AppendQuery("api-version", apiVersion, true);
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
