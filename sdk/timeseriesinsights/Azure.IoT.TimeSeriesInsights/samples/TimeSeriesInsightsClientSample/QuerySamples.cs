@@ -56,7 +56,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             DateTimeOffset endTime = DateTime.UtcNow;
             DateTimeOffset startTime = endTime.AddMinutes(-10);
 
-            TimeSeriesQuery temperatureEventsQuery = client.Queries.CreateEventsQuery(tsId, startTime, endTime);
+            QueryAnalyzer temperatureEventsQuery = client.Queries.CreateEventsQuery(tsId, startTime, endTime);
             await foreach (TimeSeriesPoint point in temperatureEventsQuery.GetResultsAsync())
             {
                 TimeSeriesValue temperatureValue = point.GetValue("Temperature");
@@ -84,7 +84,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             #region Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
             Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
 
-            TimeSeriesQuery humidityEventsQuery = client.Queries.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
+            QueryAnalyzer humidityEventsQuery = client.Queries.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
             await foreach (TimeSeriesPoint point in humidityEventsQuery.GetResultsAsync())
             {
                 TimeSeriesValue humidityValue = point.GetValue("Humidity");
@@ -172,7 +172,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
 
             DateTimeOffset endTime = DateTime.UtcNow;
             DateTimeOffset startTime = endTime.AddMinutes(-10);
-            TimeSeriesQuery seriesQuery = client.Queries.CreateSeriesQuery(
+            QueryAnalyzer seriesQuery = client.Queries.CreateSeriesQuery(
                 tsId,
                 startTime,
                 endTime);
@@ -205,7 +205,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             querySeriesRequestOptions.InlineVariables["TemperatureInCelsius"] = celsiusVariable;
             querySeriesRequestOptions.InlineVariables["TemperatureInFahrenheit"] = fahrenheitVariable;
 
-            TimeSeriesQuery seriesQuery = client.Queries.CreateSeriesQuery(
+            QueryAnalyzer seriesQuery = client.Queries.CreateSeriesQuery(
                 tsId,
                 TimeSpan.FromMinutes(10),
                 null,
@@ -234,7 +234,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             requestOptions.InlineVariables["Temperature"] = numericVariable;
             requestOptions.ProjectedVariableNames.Add("Temperature");
 
-            TimeSeriesQuery aggregateSeriesQuery = client.Queries.CreateAggregateSeriesQuery(
+            QueryAnalyzer aggregateSeriesQuery = client.Queries.CreateAggregateSeriesQuery(
                 tsId,
                 TimeSpan.FromSeconds(2),
                 TimeSpan.FromSeconds(30),
@@ -267,7 +267,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
             aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
             aggregateSeriesRequestOptions.ProjectedVariableNames.Add(countVariableName);
 
-            TimeSeriesQuery query = client.Queries.CreateAggregateSeriesQuery(
+            QueryAnalyzer query = client.Queries.CreateAggregateSeriesQuery(
                 tsId,
                 startTime,
                 endTime,

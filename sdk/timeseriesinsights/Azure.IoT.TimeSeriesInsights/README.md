@@ -92,7 +92,8 @@ Example below shows use of TimeSeriesInsightsSampleGetTypeById operation, iterat
 // Code snippet below shows getting a default Type using Id
 // The default type Id can be obtained programmatically by using the ModelSettings client.
 
-TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync();
+TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+TimeSeriesModelSettings modelSettings = await modelSettingsClient.GetAsync();
 Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await client
     .Types
     .GetByIdAsync(new string[] { modelSettings.DefaultTypeId });
