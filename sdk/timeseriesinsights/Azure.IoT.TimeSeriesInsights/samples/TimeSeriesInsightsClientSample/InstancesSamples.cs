@@ -43,8 +43,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 instance,
             };
 
-            Response<TimeSeriesOperationError[]> createInstanceErrors = await client
-                .Instances
+            Response<TimeSeriesOperationError[]> createInstanceErrors = await instancesClient
                 .CreateOrReplaceAsync(tsiInstancesToCreate);
 
             // The response of calling the API contains a list of error objects corresponding by position to the input parameter
@@ -163,8 +162,7 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                     tsId,
                 };
 
-                Response<TimeSeriesOperationError[]> deleteInstanceErrors = await client
-                    .Instances
+                Response<TimeSeriesOperationError[]> deleteInstanceErrors = await instancesClient
                     .DeleteAsync(instancesToDelete);
 
                 // The response of calling the API contains a list of error objects corresponding by position to the input parameter
