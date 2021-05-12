@@ -6,13 +6,10 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-
-#pragma warning disable AZC0007
 
 namespace Azure.Analytics.Purview.Catalog
 {
@@ -24,6 +21,7 @@ namespace Azure.Analytics.Purview.Catalog
         private readonly string[] AuthorizationScopes = { "https://purview.azure.net/.default" };
         private Uri endpoint;
         private readonly string apiVersion;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary> Initializes a new instance of GlossaryRestClient for mocking. </summary>
         protected GlossaryRestClient()
@@ -46,7 +44,9 @@ namespace Azure.Analytics.Purview.Catalog
             }
 
             options ??= new CatalogClientOptions();
-            Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
+            _clientDiagnostics = new ClientDiagnostics(options);
+            var authPolicy = new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes);
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authPolicy, new LowLevelCallbackPolicy() });
             this.endpoint = endpoint;
             apiVersion = options.Version;
         }
@@ -55,29 +55,92 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossariesRequest(limit, offset, sort);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaries");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get all glossaries registered with Atlas. </summary>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetGlossaries(int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetGlossaries(int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossariesRequest(limit, offset, sort);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossariesRequest(limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaries");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetGlossaries"/> and <see cref="GetGlossariesAsync"/> operations. </summary>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        private Request CreateGetGlossariesRequest(int? limit = null, int? offset = null, string sort = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetGlossariesRequest(int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -100,7 +163,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Create a glossary. </summary>
@@ -374,11 +437,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateGlossaryAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateGlossaryAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateGlossaryRequest(requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateGlossaryRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossary");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create a glossary. </summary>
@@ -652,16 +746,48 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateGlossary(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateGlossary(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateGlossaryRequest(requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateGlossaryRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossary");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="CreateGlossary"/> and <see cref="CreateGlossaryAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateCreateGlossaryRequest(RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateGlossaryRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -674,7 +800,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Create glossary category in bulk. </summary>
@@ -975,11 +1101,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateGlossaryCategoriesAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateGlossaryCategoriesAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateGlossaryCategoriesRequest(requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateGlossaryCategoriesRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryCategories");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create glossary category in bulk. </summary>
@@ -1280,16 +1437,48 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateGlossaryCategories(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateGlossaryCategories(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateGlossaryCategoriesRequest(requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateGlossaryCategoriesRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryCategories");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="CreateGlossaryCategories"/> and <see cref="CreateGlossaryCategoriesAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateCreateGlossaryCategoriesRequest(RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateGlossaryCategoriesRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1302,7 +1491,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Create a glossary category. </summary>
@@ -1603,11 +1792,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateGlossaryCategoryAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateGlossaryCategoryAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateGlossaryCategoryRequest(requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateGlossaryCategoryRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryCategory");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create a glossary category. </summary>
@@ -1908,16 +2128,48 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateGlossaryCategory(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateGlossaryCategory(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateGlossaryCategoryRequest(requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateGlossaryCategoryRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryCategory");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="CreateGlossaryCategory"/> and <see cref="CreateGlossaryCategoryAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateCreateGlossaryCategoryRequest(RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateGlossaryCategoryRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1930,30 +2182,93 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Get specific glossary category by its GUID. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetGlossaryCategoryAsync(string categoryGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetGlossaryCategoryAsync(string categoryGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryCategoryRequest(categoryGuid);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryCategory");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get specific glossary category by its GUID. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetGlossaryCategory(string categoryGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetGlossaryCategory(string categoryGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryCategoryRequest(categoryGuid);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryCategoryRequest(categoryGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryCategory");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetGlossaryCategory"/> and <see cref="GetGlossaryCategoryAsync"/> operations. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        private Request CreateGetGlossaryCategoryRequest(string categoryGuid)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetGlossaryCategoryRequest(string categoryGuid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -1965,7 +2280,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(categoryGuid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Update the given glossary category by its GUID. </summary>
@@ -2267,11 +2582,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateGlossaryCategoryAsync(string categoryGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> UpdateGlossaryCategoryAsync(string categoryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateUpdateGlossaryCategoryRequest(categoryGuid, requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.UpdateGlossaryCategory");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update the given glossary category by its GUID. </summary>
@@ -2573,17 +2919,49 @@ namespace Azure.Analytics.Purview.Catalog
         /// </remarks>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateGlossaryCategory(string categoryGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response UpdateGlossaryCategory(string categoryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateUpdateGlossaryCategoryRequest(categoryGuid, requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateUpdateGlossaryCategoryRequest(categoryGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.UpdateGlossaryCategory");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="UpdateGlossaryCategory"/> and <see cref="UpdateGlossaryCategoryAsync"/> operations. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2597,30 +2975,93 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Delete a glossary category. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteGlossaryCategoryAsync(string categoryGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteGlossaryCategoryAsync(string categoryGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteGlossaryCategoryRequest(categoryGuid);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteGlossaryCategory");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete a glossary category. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteGlossaryCategory(string categoryGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteGlossaryCategory(string categoryGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteGlossaryCategoryRequest(categoryGuid);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteGlossaryCategoryRequest(categoryGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteGlossaryCategory");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="DeleteGlossaryCategory"/> and <see cref="DeleteGlossaryCategoryAsync"/> operations. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
-        private Request CreateDeleteGlossaryCategoryRequest(string categoryGuid)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteGlossaryCategoryRequest(string categoryGuid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2631,33 +3072,96 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/glossary/category/", false);
             uri.AppendPath(categoryGuid, true);
             request.Uri = uri;
-            return request;
+            return message;
         }
 
         /// <summary> Update the glossary category partially. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PartialUpdateGlossaryCategoryAsync(string categoryGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> PartialUpdateGlossaryCategoryAsync(string categoryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.PartialUpdateGlossaryCategory");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update the glossary category partially. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PartialUpdateGlossaryCategory(string categoryGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response PartialUpdateGlossaryCategory(string categoryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreatePartialUpdateGlossaryCategoryRequest(categoryGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.PartialUpdateGlossaryCategory");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="PartialUpdateGlossaryCategory"/> and <see cref="PartialUpdateGlossaryCategoryAsync"/> operations. </summary>
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreatePartialUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreatePartialUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2672,7 +3176,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
@@ -2680,11 +3184,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetRelatedCategories");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get all related categories (parent and children). Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
@@ -2692,11 +3227,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetRelatedCategories(string categoryGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetRelatedCategories(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetRelatedCategoriesRequest(categoryGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetRelatedCategories");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetRelatedCategories"/> and <see cref="GetRelatedCategoriesAsync"/> operations. </summary>
@@ -2704,7 +3270,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        private Request CreateGetRelatedCategoriesRequest(string categoryGuid, int? limit = null, int? offset = null, string sort = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetRelatedCategoriesRequest(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2729,7 +3296,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Get all terms associated with the specific category. </summary>
@@ -2737,11 +3304,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetCategoryTerms");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get all terms associated with the specific category. </summary>
@@ -2749,11 +3347,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetCategoryTerms(string categoryGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetCategoryTerms(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetCategoryTermsRequest(categoryGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetCategoryTerms");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetCategoryTerms"/> and <see cref="GetCategoryTermsAsync"/> operations. </summary>
@@ -2761,7 +3390,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        private Request CreateGetCategoryTermsRequest(string categoryGuid, int? limit = null, int? offset = null, string sort = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetCategoryTermsRequest(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -2786,7 +3416,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Create a glossary term. </summary>
@@ -3366,11 +3996,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateGlossaryTermAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateGlossaryTermAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateGlossaryTermRequest(requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateGlossaryTermRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryTerm");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create a glossary term. </summary>
@@ -3950,16 +4611,48 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateGlossaryTerm(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateGlossaryTerm(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateGlossaryTermRequest(requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateGlossaryTermRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryTerm");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="CreateGlossaryTerm"/> and <see cref="CreateGlossaryTermAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateCreateGlossaryTermRequest(RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateGlossaryTermRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -3972,30 +4665,93 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryTermRequest(termGuid);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryTermRequest(termGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryTerm");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetGlossaryTerm(string termGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetGlossaryTerm(string termGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryTermRequest(termGuid);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryTermRequest(termGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryTerm");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetGlossaryTerm"/> and <see cref="GetGlossaryTermAsync"/> operations. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        private Request CreateGetGlossaryTermRequest(string termGuid)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetGlossaryTermRequest(string termGuid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -4007,7 +4763,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(termGuid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Update the given glossary term by its GUID. </summary>
@@ -4588,11 +5344,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateGlossaryTermAsync(string termGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> UpdateGlossaryTermAsync(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateUpdateGlossaryTermRequest(termGuid, requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.UpdateGlossaryTerm");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update the given glossary term by its GUID. </summary>
@@ -5173,17 +5960,49 @@ namespace Azure.Analytics.Purview.Catalog
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateGlossaryTerm(string termGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response UpdateGlossaryTerm(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateUpdateGlossaryTermRequest(termGuid, requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.UpdateGlossaryTerm");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="UpdateGlossaryTerm"/> and <see cref="UpdateGlossaryTermAsync"/> operations. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateUpdateGlossaryTermRequest(string termGuid, RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateUpdateGlossaryTermRequest(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -5197,30 +6016,93 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Delete a glossary term. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteGlossaryTermAsync(string termGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteGlossaryTermAsync(string termGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteGlossaryTermRequest(termGuid);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteGlossaryTerm");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete a glossary term. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteGlossaryTerm(string termGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteGlossaryTerm(string termGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteGlossaryTermRequest(termGuid);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteGlossaryTermRequest(termGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteGlossaryTerm");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="DeleteGlossaryTerm"/> and <see cref="DeleteGlossaryTermAsync"/> operations. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
-        private Request CreateDeleteGlossaryTermRequest(string termGuid)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteGlossaryTermRequest(string termGuid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -5231,33 +6113,96 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/glossary/term/", false);
             uri.AppendPath(termGuid, true);
             request.Uri = uri;
-            return request;
+            return message;
         }
 
         /// <summary> Update the glossary term partially. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PartialUpdateGlossaryTermAsync(string termGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> PartialUpdateGlossaryTermAsync(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreatePartialUpdateGlossaryTermRequest(termGuid, requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.PartialUpdateGlossaryTerm");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update the glossary term partially. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PartialUpdateGlossaryTerm(string termGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response PartialUpdateGlossaryTerm(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreatePartialUpdateGlossaryTermRequest(termGuid, requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreatePartialUpdateGlossaryTermRequest(termGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.PartialUpdateGlossaryTerm");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="PartialUpdateGlossaryTerm"/> and <see cref="PartialUpdateGlossaryTermAsync"/> operations. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreatePartialUpdateGlossaryTermRequest(string termGuid, RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreatePartialUpdateGlossaryTermRequest(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -5272,7 +6217,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Create glossary terms in bulk. </summary>
@@ -5852,11 +6797,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateGlossaryTermsAsync(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> CreateGlossaryTermsAsync(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateGlossaryTermsRequest(requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateGlossaryTermsRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryTerms");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create glossary terms in bulk. </summary>
@@ -6436,16 +7412,48 @@ namespace Azure.Analytics.Purview.Catalog
         /// </list>
         /// </remarks>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateGlossaryTerms(RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response CreateGlossaryTerms(RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateCreateGlossaryTermsRequest(requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateCreateGlossaryTermsRequest(requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.CreateGlossaryTerms");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="CreateGlossaryTerms"/> and <see cref="CreateGlossaryTermsAsync"/> operations. </summary>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateCreateGlossaryTermsRequest(RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateCreateGlossaryTermsRequest(RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -6458,7 +7466,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Get all related objects assigned with the specified term. </summary>
@@ -6466,11 +7474,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetEntitiesAssignedWithTerm");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get all related objects assigned with the specified term. </summary>
@@ -6478,11 +7517,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetEntitiesAssignedWithTerm(string termGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetEntitiesAssignedWithTerm(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetEntitiesAssignedWithTermRequest(termGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetEntitiesAssignedWithTerm");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetEntitiesAssignedWithTerm"/> and <see cref="GetEntitiesAssignedWithTermAsync"/> operations. </summary>
@@ -6490,7 +7560,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        private Request CreateGetEntitiesAssignedWithTermRequest(string termGuid, int? limit = null, int? offset = null, string sort = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetEntitiesAssignedWithTermRequest(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -6515,7 +7586,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Assign the given term to the provided list of related objects. </summary>
@@ -6613,11 +7684,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> AssignTermToEntitiesAsync(string termGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> AssignTermToEntitiesAsync(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateAssignTermToEntitiesRequest(termGuid, requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.AssignTermToEntities");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Assign the given term to the provided list of related objects. </summary>
@@ -6715,17 +7817,49 @@ namespace Azure.Analytics.Purview.Catalog
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response AssignTermToEntities(string termGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response AssignTermToEntities(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateAssignTermToEntitiesRequest(termGuid, requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateAssignTermToEntitiesRequest(termGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.AssignTermToEntities");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="AssignTermToEntities"/> and <see cref="AssignTermToEntitiesAsync"/> operations. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateAssignTermToEntitiesRequest(string termGuid, RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateAssignTermToEntitiesRequest(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -6739,7 +7873,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
@@ -6837,11 +7971,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RemoveTermAssignmentFromEntitiesAsync(string termGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> RemoveTermAssignmentFromEntitiesAsync(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.RemoveTermAssignmentFromEntities");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
@@ -6939,17 +8104,49 @@ namespace Azure.Analytics.Purview.Catalog
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RemoveTermAssignmentFromEntities(string termGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response RemoveTermAssignmentFromEntities(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateRemoveTermAssignmentFromEntitiesRequest(termGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.RemoveTermAssignmentFromEntities");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="RemoveTermAssignmentFromEntities"/> and <see cref="RemoveTermAssignmentFromEntitiesAsync"/> operations. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateRemoveTermAssignmentFromEntitiesRequest(string termGuid, RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateRemoveTermAssignmentFromEntitiesRequest(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -6963,7 +8160,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
@@ -7061,11 +8258,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteTermAssignmentFromEntities");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete the term assignment for the given list of related objects. </summary>
@@ -7163,17 +8391,49 @@ namespace Azure.Analytics.Purview.Catalog
         /// </remarks>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteTermAssignmentFromEntities(string termGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteTermAssignmentFromEntities(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteTermAssignmentFromEntitiesRequest(termGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteTermAssignmentFromEntities");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="DeleteTermAssignmentFromEntities"/> and <see cref="DeleteTermAssignmentFromEntitiesAsync"/> operations. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateDeleteTermAssignmentFromEntitiesRequest(string termGuid, RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteTermAssignmentFromEntitiesRequest(string termGuid, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -7187,7 +8447,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
@@ -7195,11 +8455,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetRelatedTermsAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetRelatedTermsAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetRelatedTerms");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are currently not being enabled and won&apos;t work even they are passed. </summary>
@@ -7207,11 +8498,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetRelatedTerms(string termGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetRelatedTerms(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetRelatedTermsRequest(termGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetRelatedTerms");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetRelatedTerms"/> and <see cref="GetRelatedTermsAsync"/> operations. </summary>
@@ -7219,7 +8541,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        private Request CreateGetRelatedTermsRequest(string termGuid, int? limit = null, int? offset = null, string sort = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetRelatedTermsRequest(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -7244,30 +8567,93 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Get a specific Glossary by its GUID. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryRequest(glossaryGuid);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryRequest(glossaryGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossary");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get a specific Glossary by its GUID. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetGlossary(string glossaryGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetGlossary(string glossaryGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryRequest(glossaryGuid);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryRequest(glossaryGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossary");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetGlossary"/> and <see cref="GetGlossaryAsync"/> operations. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        private Request CreateGetGlossaryRequest(string glossaryGuid)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetGlossaryRequest(string glossaryGuid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -7279,7 +8665,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(glossaryGuid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Update the given glossary. </summary>
@@ -7554,11 +8940,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateGlossaryAsync(string glossaryGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> UpdateGlossaryAsync(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateUpdateGlossaryRequest(glossaryGuid, requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.UpdateGlossary");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update the given glossary. </summary>
@@ -7833,17 +9250,49 @@ namespace Azure.Analytics.Purview.Catalog
         /// </remarks>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateGlossary(string glossaryGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response UpdateGlossary(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateUpdateGlossaryRequest(glossaryGuid, requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateUpdateGlossaryRequest(glossaryGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.UpdateGlossary");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="UpdateGlossary"/> and <see cref="UpdateGlossaryAsync"/> operations. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateUpdateGlossaryRequest(string glossaryGuid, RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateUpdateGlossaryRequest(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -7857,30 +9306,93 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Delete a glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteGlossaryAsync(string glossaryGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> DeleteGlossaryAsync(string glossaryGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteGlossaryRequest(glossaryGuid);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteGlossary");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete a glossary. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteGlossary(string glossaryGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response DeleteGlossary(string glossaryGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateDeleteGlossaryRequest(glossaryGuid);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateDeleteGlossaryRequest(glossaryGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.DeleteGlossary");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 204:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="DeleteGlossary"/> and <see cref="DeleteGlossaryAsync"/> operations. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        private Request CreateDeleteGlossaryRequest(string glossaryGuid)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateDeleteGlossaryRequest(string glossaryGuid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -7891,7 +9403,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryGuid, true);
             request.Uri = uri;
-            return request;
+            return message;
         }
 
         /// <summary> Get the categories belonging to a specific glossary. </summary>
@@ -7899,11 +9411,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryCategories");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the categories belonging to a specific glossary. </summary>
@@ -7911,11 +9454,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetGlossaryCategories(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetGlossaryCategories(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryCategoriesRequest(glossaryGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryCategories");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetGlossaryCategories"/> and <see cref="GetGlossaryCategoriesAsync"/> operations. </summary>
@@ -7923,7 +9497,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        private Request CreateGetGlossaryCategoriesRequest(string glossaryGuid, int? limit = null, int? offset = null, string sort = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetGlossaryCategoriesRequest(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -7948,7 +9523,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Get the category headers belonging to a specific glossary. </summary>
@@ -7956,11 +9531,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryCategoriesHeaders");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the category headers belonging to a specific glossary. </summary>
@@ -7968,11 +9574,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryCategoriesHeadersRequest(glossaryGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryCategoriesHeaders");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetGlossaryCategoriesHeaders"/> and <see cref="GetGlossaryCategoriesHeadersAsync"/> operations. </summary>
@@ -7980,7 +9617,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        private Request CreateGetGlossaryCategoriesHeadersRequest(string glossaryGuid, int? limit = null, int? offset = null, string sort = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetGlossaryCategoriesHeadersRequest(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -8005,30 +9643,93 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Get a specific glossary with detailed information. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetDetailedGlossaryRequest(glossaryGuid);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetDetailedGlossary");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get a specific glossary with detailed information. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetDetailedGlossary(string glossaryGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetDetailedGlossary(string glossaryGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetDetailedGlossaryRequest(glossaryGuid);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetDetailedGlossaryRequest(glossaryGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetDetailedGlossary");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetDetailedGlossary"/> and <see cref="GetDetailedGlossaryAsync"/> operations. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
-        private Request CreateGetDetailedGlossaryRequest(string glossaryGuid)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetDetailedGlossaryRequest(string glossaryGuid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -8041,33 +9742,96 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/detailed", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PartialUpdateGlossaryAsync(string glossaryGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> PartialUpdateGlossaryAsync(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreatePartialUpdateGlossaryRequest(glossaryGuid, requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.PartialUpdateGlossary");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update the glossary partially. Some properties such as qualifiedName are not allowed to be updated. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PartialUpdateGlossary(string glossaryGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response PartialUpdateGlossary(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreatePartialUpdateGlossaryRequest(glossaryGuid, requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreatePartialUpdateGlossaryRequest(glossaryGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.PartialUpdateGlossary");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="PartialUpdateGlossary"/> and <see cref="PartialUpdateGlossaryAsync"/> operations. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreatePartialUpdateGlossaryRequest(string glossaryGuid, RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreatePartialUpdateGlossaryRequest(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -8082,7 +9846,7 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Get terms belonging to a specific glossary. </summary>
@@ -8090,11 +9854,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryTermsRequest(glossaryGuid, limit, offset, sort);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryTerms");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get terms belonging to a specific glossary. </summary>
@@ -8102,11 +9897,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetGlossaryTerms(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetGlossaryTerms(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryTermsRequest(glossaryGuid, limit, offset, sort);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryTermsRequest(glossaryGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryTerms");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetGlossaryTerms"/> and <see cref="GetGlossaryTermsAsync"/> operations. </summary>
@@ -8114,7 +9940,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        private Request CreateGetGlossaryTermsRequest(string glossaryGuid, int? limit = null, int? offset = null, string sort = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetGlossaryTermsRequest(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -8139,7 +9966,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Get term headers belonging to a specific glossary. </summary>
@@ -8147,11 +9974,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryTermHeaders");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get term headers belonging to a specific glossary. </summary>
@@ -8159,11 +10017,42 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetGlossaryTermHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetGlossaryTermHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetGlossaryTermHeadersRequest(glossaryGuid, limit, offset, sort, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetGlossaryTermHeaders");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetGlossaryTermHeaders"/> and <see cref="GetGlossaryTermHeadersAsync"/> operations. </summary>
@@ -8171,7 +10060,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
-        private Request CreateGetGlossaryTermHeadersRequest(string glossaryGuid, int? limit = null, int? offset = null, string sort = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetGlossaryTermHeadersRequest(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -8196,33 +10086,96 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Import Glossary Terms from local csv file. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ImportGlossaryTermsViaCSVAsync(string glossaryGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> ImportGlossaryTermsViaCSVAsync(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateImportGlossaryTermsViaCSVRequest(glossaryGuid, requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateImportGlossaryTermsViaCSVRequest(glossaryGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.ImportGlossaryTermsViaCSV");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Import Glossary Terms from local csv file. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ImportGlossaryTermsViaCSV(string glossaryGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response ImportGlossaryTermsViaCSV(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateImportGlossaryTermsViaCSVRequest(glossaryGuid, requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateImportGlossaryTermsViaCSVRequest(glossaryGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.ImportGlossaryTermsViaCSV");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="ImportGlossaryTermsViaCSV"/> and <see cref="ImportGlossaryTermsViaCSVAsync"/> operations. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateImportGlossaryTermsViaCSVRequest(string glossaryGuid, RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateImportGlossaryTermsViaCSVRequest(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -8241,36 +10194,99 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "multipart/form-data");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ImportGlossaryTermsViaCSVByGlossaryNameAsync(string glossaryName, RequestContent requestBody, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> ImportGlossaryTermsViaCSVByGlossaryNameAsync(string glossaryName, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateImportGlossaryTermsViaCSVByGlossaryNameRequest(glossaryName, requestBody, includeTermHierarchy);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateImportGlossaryTermsViaCSVByGlossaryNameRequest(glossaryName, requestBody, includeTermHierarchy, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.ImportGlossaryTermsViaCSVByGlossaryName");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ImportGlossaryTermsViaCSVByGlossaryName(string glossaryName, RequestContent requestBody, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response ImportGlossaryTermsViaCSVByGlossaryName(string glossaryName, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateImportGlossaryTermsViaCSVByGlossaryNameRequest(glossaryName, requestBody, includeTermHierarchy);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateImportGlossaryTermsViaCSVByGlossaryNameRequest(glossaryName, requestBody, includeTermHierarchy, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.ImportGlossaryTermsViaCSVByGlossaryName");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 202:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="ImportGlossaryTermsViaCSVByGlossaryName"/> and <see cref="ImportGlossaryTermsViaCSVByGlossaryNameAsync"/> operations. </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
-        private Request CreateImportGlossaryTermsViaCSVByGlossaryNameRequest(string glossaryName, RequestContent requestBody, bool? includeTermHierarchy = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateImportGlossaryTermsViaCSVByGlossaryNameRequest(string glossaryName, RequestContent requestBody, bool? includeTermHierarchy = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -8293,30 +10309,93 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "multipart/form-data");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Get the status of import csv operation. </summary>
         /// <param name="operationGuid"> The globally unique identifier for async operation/job`. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetImportCSVOperationStatusAsync(string operationGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetImportCSVOperationStatusAsync(string operationGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetImportCSVOperationStatusRequest(operationGuid);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetImportCSVOperationStatusRequest(operationGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetImportCSVOperationStatus");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the status of import csv operation. </summary>
         /// <param name="operationGuid"> The globally unique identifier for async operation/job`. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetImportCSVOperationStatus(string operationGuid, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetImportCSVOperationStatus(string operationGuid, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetImportCSVOperationStatusRequest(operationGuid);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetImportCSVOperationStatusRequest(operationGuid, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetImportCSVOperationStatus");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetImportCSVOperationStatus"/> and <see cref="GetImportCSVOperationStatusAsync"/> operations. </summary>
         /// <param name="operationGuid"> The globally unique identifier for async operation/job`. </param>
-        private Request CreateGetImportCSVOperationStatusRequest(string operationGuid)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetImportCSVOperationStatusRequest(string operationGuid, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -8332,33 +10411,96 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
 
         /// <summary> Export Glossary Terms as csv file. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ExportGlossaryTermsAsCSVAsync(string glossaryGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> ExportGlossaryTermsAsCSVAsync(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateExportGlossaryTermsAsCSVRequest(glossaryGuid, requestBody);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateExportGlossaryTermsAsCSVRequest(glossaryGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.ExportGlossaryTermsAsCSV");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Export Glossary Terms as csv file. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ExportGlossaryTermsAsCSV(string glossaryGuid, RequestContent requestBody, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response ExportGlossaryTermsAsCSV(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateExportGlossaryTermsAsCSVRequest(glossaryGuid, requestBody);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateExportGlossaryTermsAsCSVRequest(glossaryGuid, requestBody, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.ExportGlossaryTermsAsCSV");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="ExportGlossaryTermsAsCSV"/> and <see cref="ExportGlossaryTermsAsCSVAsync"/> operations. </summary>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="requestBody"> The request body. </param>
-        private Request CreateExportGlossaryTermsAsCSVRequest(string glossaryGuid, RequestContent requestBody)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateExportGlossaryTermsAsCSVRequest(string glossaryGuid, RequestContent requestBody, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -8377,36 +10519,99 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/octet-stream");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = requestBody;
-            return request;
+            return message;
         }
 
         /// <summary> Get terms by glossary name. </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset);
-            return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetTermsByGlossaryName");
+            scope.Start();
+            try
+            {
+                await Pipeline.SendAsync(message, requestOptions.CancellationToken).ConfigureAwait(false);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get terms by glossary name. </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, CancellationToken cancellationToken = default)
+        /// <param name="requestOptions"> The request options. </param>
+#pragma warning disable AZC0002
+        public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, RequestOptions requestOptions = null)
+#pragma warning restore AZC0002
         {
-            Request req = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset);
-            return Pipeline.SendRequest(req, cancellationToken);
+            requestOptions ??= new RequestOptions();
+            HttpMessage message = CreateGetTermsByGlossaryNameRequest(glossaryName, limit, offset, requestOptions);
+            if (requestOptions.PerCallPolicy != null)
+            {
+                message.SetProperty("RequestOptionsPerCallPolicyCallback", requestOptions.PerCallPolicy);
+            }
+            using var scope = _clientDiagnostics.CreateScope("GlossaryRestClient.GetTermsByGlossaryName");
+            scope.Start();
+            try
+            {
+                Pipeline.Send(message, requestOptions.CancellationToken);
+                if (requestOptions.StatusOption == ResponseStatusOption.Default)
+                {
+                    switch (message.Response.Status)
+                    {
+                        case 200:
+                            return message.Response;
+                        default:
+                            throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    }
+                }
+                else
+                {
+                    return message.Response;
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create Request for <see cref="GetTermsByGlossaryName"/> and <see cref="GetTermsByGlossaryNameAsync"/> operations. </summary>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
-        private Request CreateGetTermsByGlossaryNameRequest(string glossaryName, int? limit = null, int? offset = null)
+        /// <param name="requestOptions"> The request options. </param>
+        private HttpMessage CreateGetTermsByGlossaryNameRequest(string glossaryName, int? limit = null, int? offset = null, RequestOptions requestOptions = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
@@ -8431,7 +10636,7 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            return request;
+            return message;
         }
     }
 }

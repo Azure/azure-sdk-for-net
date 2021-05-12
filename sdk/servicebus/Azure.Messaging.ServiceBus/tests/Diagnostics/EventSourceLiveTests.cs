@@ -385,5 +385,84 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorClientClosedExceptionEvent);
             }
         }
+
+        [Test]
+        public async Task DoesNotLogAcceptSessionTimeoutAsError()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateNoRetryClient(5);
+                await using var processor = client.CreateSessionProcessor(scope.QueueName);
+
+                processor.ProcessMessageAsync += args => Task.CompletedTask;
+                processor.ProcessErrorAsync += args => Task.CompletedTask;
+
+                await processor.StartProcessingAsync();
+
+                // wait twice as long as the try timeout to ensure that the Accept session will timeout
+                await Task.Delay(TimeSpan.FromSeconds(10));
+
+                await processor.StopProcessingAsync();
+
+                Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any());
+                Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any());
+                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorAcceptSessionTimeoutEvent).Any());
+                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingAcceptSessionCanceledEvent).Any());
+            }
+        }
+
+        [Test]
+        public async Task StoppingProcessorDoesNotLogTaskCanceledExceptions()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = CreateNoRetryClient(5);
+                await using var processor = client.CreateProcessor(scope.QueueName);
+
+                processor.ProcessMessageAsync += args => Task.CompletedTask;
+                processor.ProcessErrorAsync += args => Task.CompletedTask;
+
+                await processor.StartProcessingAsync();
+
+                // wait twice as long as the try timeout to ensure that the Accept session will timeout
+                await Task.Delay(TimeSpan.FromSeconds(10));
+
+                await processor.StopProcessingAsync();
+
+                Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any());
+                Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any());
+                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingReceiveCanceledEvent).Any());
+            }
+        }
+
+        [Test]
+        public async Task StoppingSessionProcessorDoesNotLogTaskCanceledExceptions()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateNoRetryClient(5);
+                await using var processor = client.CreateSessionProcessor(
+                    scope.QueueName,
+                    new ServiceBusSessionProcessorOptions
+                {
+                    // specify a session so that we can establish the link without sending messages
+                    SessionIds = { "sessionId "}
+                });
+
+                processor.ProcessMessageAsync += args => Task.CompletedTask;
+                processor.ProcessErrorAsync += args => Task.CompletedTask;
+
+                await processor.StartProcessingAsync();
+
+                // wait twice as long as the try timeout to ensure that the Accept session will timeout
+                await Task.Delay(TimeSpan.FromSeconds(10));
+
+                await processor.StopProcessingAsync();
+
+                Assert.False(_listener.EventsById(ServiceBusEventSource.CreateReceiveLinkExceptionEvent).Any());
+                Assert.False(_listener.EventsById(ServiceBusEventSource.ClientCreateExceptionEvent).Any());
+                Assert.True(_listener.EventsById(ServiceBusEventSource.ProcessorStoppingReceiveCanceledEvent).Any());
+            }
+        }
     }
 }

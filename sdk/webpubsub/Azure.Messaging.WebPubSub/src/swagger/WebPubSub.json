@@ -254,6 +254,7 @@
                 ],
                 "summary": "Check if there are any client connections inside the given group",
                 "operationId": "WebPubSubService_GroupExists",
+                "x-accessibility": "internal",
                 "parameters": [
                     {
                         "in": "path",

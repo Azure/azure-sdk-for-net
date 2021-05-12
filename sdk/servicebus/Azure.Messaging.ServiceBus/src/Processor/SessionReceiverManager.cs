@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -141,7 +142,8 @@ namespace Azure.Messaging.ServiceBus
                     plugins: _plugins,
                     options: _sessionReceiverOptions,
                     sessionId: _sessionId,
-                    cancellationToken: processorCancellationToken).ConfigureAwait(false);
+                    cancellationToken: processorCancellationToken,
+                    isProcessor: true).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
@@ -259,9 +261,12 @@ namespace Azure.Messaging.ServiceBus
                 while (!_sessionCancellationSource.Token.IsCancellationRequested)
                 {
                     errorSource = ServiceBusErrorSource.Receive;
-                    ServiceBusReceivedMessage message = await _receiver.ReceiveMessageAsync(
-                        _maxReceiveWaitTime,
-                        _sessionCancellationSource.Token).ConfigureAwait(false);
+                    IReadOnlyList<ServiceBusReceivedMessage> messages = await Receiver.ReceiveMessagesAsync(
+                        maxMessages: 1,
+                        maxWaitTime: _maxReceiveWaitTime,
+                        isProcessor: true,
+                        cancellationToken: _sessionCancellationSource.Token).ConfigureAwait(false);
+                    ServiceBusReceivedMessage message = messages.Count == 0 ? null : messages[0];
                     if (message == null)
                     {
                         // Break out of the loop to allow a new session to

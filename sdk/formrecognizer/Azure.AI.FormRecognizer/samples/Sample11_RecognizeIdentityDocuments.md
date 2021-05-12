@@ -44,12 +44,12 @@ if (identityDocument.Fields.TryGetValue("Address", out FormField addressField))
     }
 }
 
-if (identityDocument.Fields.TryGetValue("Country", out FormField countryField))
+if (identityDocument.Fields.TryGetValue("CountryRegion", out FormField countryRegionField))
 {
-    if (countryField.Value.ValueType == FieldValueType.Country)
+    if (countryRegionField.Value.ValueType == FieldValueType.CountryRegion)
     {
-        string country = countryField.Value.AsCountryCode();
-        Console.WriteLine($"Country: '{country}', with confidence {countryField.Confidence}");
+        string countryRegion = countryRegionField.Value.AsCountryRegion();
+        Console.WriteLine($"CountryRegion: '{countryRegion}', with confidence {countryRegionField.Confidence}");
     }
 }
 
@@ -104,6 +104,15 @@ if (identityDocument.Fields.TryGetValue("Region", out FormField regionfield))
     {
         string region = regionfield.Value.AsString();
         Console.WriteLine($"Region: '{region}', with confidence {regionfield.Confidence}");
+    }
+}
+
+if (identityDocument.Fields.TryGetValue("Sex", out FormField sexfield))
+{
+    if (sexfield.Value.ValueType == FieldValueType.String)
+    {
+        string sex = sexfield.Value.AsString();
+        Console.WriteLine($"Sex: '{sex}', with confidence {sexfield.Confidence}");
     }
 }
 ```
@@ -137,12 +146,12 @@ if (identityDocument.Fields.TryGetValue("Address", out FormField addressField))
     }
 }
 
-if (identityDocument.Fields.TryGetValue("Country", out FormField countryField))
+if (identityDocument.Fields.TryGetValue("CountryRegion", out FormField countryRegionField))
 {
-    if (countryField.Value.ValueType == FieldValueType.Country)
+    if (countryRegionField.Value.ValueType == FieldValueType.CountryRegion)
     {
-        string country = countryField.Value.AsCountryCode();
-        Console.WriteLine($"Country: '{country}', with confidence {countryField.Confidence}");
+        string countryRegion = countryRegionField.Value.AsCountryRegion();
+        Console.WriteLine($"CountryRegion: '{countryRegion}', with confidence {countryRegionField.Confidence}");
     }
 }
 
@@ -197,6 +206,15 @@ if (identityDocument.Fields.TryGetValue("Region", out FormField regionfield))
     {
         string region = regionfield.Value.AsString();
         Console.WriteLine($"Region: '{region}', with confidence {regionfield.Confidence}");
+    }
+}
+
+if (identityDocument.Fields.TryGetValue("Sex", out FormField sexfield))
+{
+    if (sexfield.Value.ValueType == FieldValueType.String)
+    {
+        string sex = sexfield.Value.AsString();
+        Console.WriteLine($"Sex: '{sex}', with confidence {sexfield.Confidence}");
     }
 }
 ```

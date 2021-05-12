@@ -179,5 +179,25 @@ namespace Azure.Messaging.WebPubSub
         {
             return SendToGroup(group, JsonContent, RequestContent.Create(message), excluded, cancellationToken);
         }
+
+        ///// <summary> Check if there are any client connections inside the given group. </summary>
+        ///// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        ///// <param name="cancellationToken"> The cancellation token to use. </param>
+        //public virtual async Task<Response<bool>> GroupExistsAsync(string group, CancellationToken cancellationToken = default)
+        //{
+        //    var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+        //    var response = await GroupExistsAsync(group, options).ConfigureAwait(false);
+        //    return Response.FromValue(response.Status == 200, response);
+        //}
+
+        ///// <summary> Check if there are any client connections inside the given group. </summary>
+        ///// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
+        ///// <param name="cancellationToken"> The cancellation token to use. </param>
+        //public virtual Response<bool> GroupExists(string group, CancellationToken cancellationToken = default)
+        //{
+        //    var options = new RequestOptions() { StatusOption = ResponseStatusOption.NoThrow, CancellationToken = cancellationToken };
+        //    var response = GroupExists(group, options);
+        //    return Response.FromValue(response.Status == 200, response);
+        //}
     }
 }
