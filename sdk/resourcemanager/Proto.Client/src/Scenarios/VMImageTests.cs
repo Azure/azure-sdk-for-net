@@ -17,7 +17,6 @@ namespace Proto.Client
             var subscription = client.DefaultSubscription;
 
             var defaultLocation = "westus2";
-            //var defaultPublisher = "TrendMicro.DeepSecurity";
             var defaultPublisher = "redhat";
 
             foreach (var p in subscription.GetVmImages().ListPublishers(defaultLocation))
