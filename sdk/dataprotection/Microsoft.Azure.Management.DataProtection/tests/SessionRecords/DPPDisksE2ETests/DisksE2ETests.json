@@ -403,6 +403,327 @@
       "StatusCode": 200
     },
     {
+      "RequestUri": "/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault2/validateForBackup?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjJiODI5ZWUtNzkzNi00MGM5LWExYzktNDdhOTNmOWYzOTY1L3Jlc291cmNlR3JvdXBzL21heWFnZ2FyRGlza1JHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vYmFja3VwVmF1bHRzL0Rpc2tiYWNrdXBWYXVsdDIvdmFsaWRhdGVGb3JCYWNrdXA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"backupInstance\": {\r\n    \"dataSourceInfo\": {\r\n      \"datasourceType\": \"Microsoft.Compute/disks\",\r\n      \"objectType\": \"Datasource\",\r\n      \"resourceID\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.Compute/disks/testingDisk\",\r\n      \"resourceLocation\": \"southeastasia\",\r\n      \"resourceName\": \"testingDisk\",\r\n      \"resourceType\": \"Microsoft.Compute/disks\",\r\n      \"resourceUri\": \"\"\r\n    },\r\n    \"policyInfo\": {\r\n      \"policyId\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault2/backupPolicies/retentionpolicy2\",\r\n      \"policyParameters\": {\r\n        \"dataStoreParametersList\": [\r\n          {\r\n            \"objectType\": \"AzureOperationalStoreParameters\",\r\n            \"resourceGroupId\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarOTDSRG\",\r\n            \"dataStoreType\": \"OperationalStore\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    \"objectType\": \"BackupInstance\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fcac9627-f828-4167-b822-6eb6a396f570"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29916.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.DataProtection.DataProtectionClient/4.1.4.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "1068"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/providers/Microsoft.DataProtection/locations/southeastasia/operationResults/ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==?api-version=2021-01-01"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==?api-version=2021-01-01"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "0af34d46-0fbc-40b4-a914-24010fb0c776"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20210512T133147Z:0af34d46-0fbc-40b4-a914-24010fb0c776"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 13:31:47 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjJiODI5ZWUtNzkzNi00MGM5LWExYzktNDdhOTNmOWYzOTY1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvb3BlcmF0aW9uU3RhdHVzL1pHTTRaVFJpT0RndFltWXlNeTAwT1RnMExUbG1aRFF0TURrNE56a3dOakkzTkRReE96WmxZMk0zTURZeUxXUTVOREl0TkdVM1pDMWlNMk01TFRZd1lXRmhOVGxoT1RRMFlnPT0/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29916.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.DataProtection.DataProtectionClient/4.1.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-correlation-request-id": [
+          "76fc2825-2b94-45e1-8bc5-8a306a021562"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20210512T133158Z:76fc2825-2b94-45e1-8bc5-8a306a021562"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 13:31:57 GMT"
+        ],
+        "Content-Length": [
+          "443"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==\",\r\n  \"name\": \"ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==\",\r\n  \"status\": \"Inprogress\",\r\n  \"startTime\": \"2021-05-12T13:31:47.6689002Z\",\r\n  \"endTime\": \"0001-01-01T00:00:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjJiODI5ZWUtNzkzNi00MGM5LWExYzktNDdhOTNmOWYzOTY1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvb3BlcmF0aW9uU3RhdHVzL1pHTTRaVFJpT0RndFltWXlNeTAwT1RnMExUbG1aRFF0TURrNE56a3dOakkzTkRReE96WmxZMk0zTURZeUxXUTVOREl0TkdVM1pDMWlNMk01TFRZd1lXRmhOVGxoT1RRMFlnPT0/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29916.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.DataProtection.DataProtectionClient/4.1.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-correlation-request-id": [
+          "3bc4af50-258c-46a8-8a79-5e0e7bbd8262"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20210512T133208Z:3bc4af50-258c-46a8-8a79-5e0e7bbd8262"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 13:32:07 GMT"
+        ],
+        "Content-Length": [
+          "443"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==\",\r\n  \"name\": \"ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==\",\r\n  \"status\": \"Inprogress\",\r\n  \"startTime\": \"2021-05-12T13:31:47.6689002Z\",\r\n  \"endTime\": \"0001-01-01T00:00:00\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjJiODI5ZWUtNzkzNi00MGM5LWExYzktNDdhOTNmOWYzOTY1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvb3BlcmF0aW9uU3RhdHVzL1pHTTRaVFJpT0RndFltWXlNeTAwT1RnMExUbG1aRFF0TURrNE56a3dOakkzTkRReE96WmxZMk0zTURZeUxXUTVOREl0TkdVM1pDMWlNMk01TFRZd1lXRmhOVGxoT1RRMFlnPT0/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29916.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.DataProtection.DataProtectionClient/4.1.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-correlation-request-id": [
+          "e3c7fec0-cf8b-4628-abb6-41bab99f3f24"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20210512T133218Z:e3c7fec0-cf8b-4628-abb6-41bab99f3f24"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 13:32:18 GMT"
+        ],
+        "Content-Length": [
+          "443"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==\",\r\n  \"name\": \"ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-05-12T13:31:47.6689002Z\",\r\n  \"endTime\": \"2021-05-12T13:32:10Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/providers/Microsoft.DataProtection/locations/southeastasia/operationResults/ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==?api-version=2021-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjJiODI5ZWUtNzkzNi00MGM5LWExYzktNDdhOTNmOWYzOTY1L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vbG9jYXRpb25zL3NvdXRoZWFzdGFzaWEvb3BlcmF0aW9uUmVzdWx0cy9aR000WlRSaU9EZ3RZbVl5TXkwME9UZzBMVGxtWkRRdE1EazROemt3TmpJM05EUXhPelpsWTJNM01EWXlMV1E1TkRJdE5HVTNaQzFpTTJNNUxUWXdZV0ZoTlRsaE9UUTBZZz09P2FwaS12ZXJzaW9uPTIwMjEtMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29916.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.DataProtection.DataProtectionClient/4.1.4.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "30"
+        ],
+        "Azure-AsyncOperation": [
+          "https://management.azure.com/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/providers/Microsoft.DataProtection/locations/southeastasia/operationStatus/ZGM4ZTRiODgtYmYyMy00OTg0LTlmZDQtMDk4NzkwNjI3NDQxOzZlY2M3MDYyLWQ5NDItNGU3ZC1iM2M5LTYwYWFhNTlhOTQ0Yg==?api-version=2021-01-01"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          ""
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-correlation-request-id": [
+          "8d44e716-5d5f-478e-a808-bf0d9aa11238"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTINDIA:20210512T133219Z:8d44e716-5d5f-478e-a808-bf0d9aa11238"
+        ],
+        "Date": [
+          "Wed, 12 May 2021 13:32:18 GMT"
+        ],
+        "Content-Length": [
+          "41"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"objectType\": \"OperationJobExtendedInfo\"\r\n}",
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault2/backupInstances/testingDisk?api-version=2021-01-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjJiODI5ZWUtNzkzNi00MGM5LWExYzktNDdhOTNmOWYzOTY1L3Jlc291cmNlR3JvdXBzL21heWFnZ2FyRGlza1JHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vYmFja3VwVmF1bHRzL0Rpc2tiYWNrdXBWYXVsdDIvYmFja3VwSW5zdGFuY2VzL3Rlc3RpbmdEaXNrP2FwaS12ZXJzaW9uPTIwMjEtMDEtMDE=",
       "RequestMethod": "PUT",
@@ -800,75 +1121,6 @@
       },
       "ResponseBody": "{\r\n  \"jobId\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault2/backupJobs/610fe9cb-4196-4508-ab4b-4dbcfdc44b57\",\r\n  \"objectType\": \"OperationJobExtendedInfo\"\r\n}",
       "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault2/validateForBackup?api-version=2021-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjJiODI5ZWUtNzkzNi00MGM5LWExYzktNDdhOTNmOWYzOTY1L3Jlc291cmNlR3JvdXBzL21heWFnZ2FyRGlza1JHL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVByb3RlY3Rpb24vYmFja3VwVmF1bHRzL0Rpc2tiYWNrdXBWYXVsdDIvdmFsaWRhdGVGb3JCYWNrdXA/YXBpLXZlcnNpb249MjAyMS0wMS0wMQ==",
-      "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"backupInstance\": {\r\n    \"dataSourceInfo\": {\r\n      \"datasourceType\": \"Microsoft.Compute/disks\",\r\n      \"objectType\": \"Datasource\",\r\n      \"resourceID\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.Compute/disks/testingDisk\",\r\n      \"resourceLocation\": \"southeastasia\",\r\n      \"resourceName\": \"testingDisk\",\r\n      \"resourceType\": \"Microsoft.Compute/disks\",\r\n      \"resourceUri\": \"\"\r\n    },\r\n    \"policyInfo\": {\r\n      \"policyId\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/BackupVaults/DiskbackupVault2/backupPolicies/retentionpolicy2\",\r\n      \"policyParameters\": {\r\n        \"dataStoreParametersList\": [\r\n          {\r\n            \"objectType\": \"AzureOperationalStoreParameters\",\r\n            \"resourceGroupId\": \"/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarOTDSRG\",\r\n            \"dataStoreType\": \"OperationalStore\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    \"objectType\": \"BackupInstance\"\r\n  }\r\n}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "cd6bb332-19bd-40db-be76-528abdb17aa0"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.29916.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.DataProtection.DataProtectionClient/4.1.4.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "1068"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          ""
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "45d704e6-61b6-4ec5-b51a-774cc5b81fa9"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTINDIA:20210512T131221Z:45d704e6-61b6-4ec5-b51a-774cc5b81fa9"
-        ],
-        "Date": [
-          "Wed, 12 May 2021 13:12:20 GMT"
-        ],
-        "Content-Length": [
-          "1039"
-        ],
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"additionalInfo\": [\r\n      {\r\n        \"type\": \"UserFacingError\",\r\n        \"info\": {\r\n          \"message\": \"Datasource is already protected under the Backup vault /subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault2.\",\r\n          \"recommendedAction\": [\r\n            \"Delete the backup instance testingDisk from the Backup vault /subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault2 to re-protect the datasource in any other vault.\"\r\n          ],\r\n          \"details\": null,\r\n          \"code\": \"UserErrorDppDatasourceAlreadyProtected\",\r\n          \"target\": \"\",\r\n          \"innerError\": null,\r\n          \"isRetryable\": false,\r\n          \"isUserError\": false,\r\n          \"properties\": {\r\n            \"ActivityId\": \"cd6bb332-19bd-40db-be76-528abdb17aa0\"\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"code\": \"UserErrorDppDatasourceAlreadyProtected\",\r\n    \"message\": \"Datasource is already protected under the Backup vault /subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault2.\",\r\n    \"target\": null\r\n  }\r\n}",
-      "StatusCode": 400
     },
     {
       "RequestUri": "/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/mayaggarDiskRG/providers/Microsoft.DataProtection/backupVaults/DiskbackupVault2/backupInstances/testingDisk/validateRestore?api-version=2021-01-01",

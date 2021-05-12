@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.ScenarioTests
             {
                 // initilizing test context
                 testHelper.Initialize(context);
-
+                
                 // Create Backup vault
                 testHelper.CreateVault();
 
@@ -33,20 +33,21 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.ScenarioTests
                 // Get Policy
                 testHelper.GetPolicy(testPolicy);
 
+                // Validate For Backup
+                testHelper.ValidateForBackup();
+
                 // Configure Backup
                 testHelper.CreateBackupInstance();
 
                 // Trigger Backup
                 testHelper.TriggerBackup(testBackupInstance);
 
-                // Validate For Backup
-                testHelper.ValidateForBackup();
-
                 // Validate for Restore
                 testHelper.ValidateForRestore(testBackupInstance);
 
                 // Trigger Restore
                 testHelper.TriggerRestore(testBackupInstance);
+                
             }
         }
         public void Dispose()
