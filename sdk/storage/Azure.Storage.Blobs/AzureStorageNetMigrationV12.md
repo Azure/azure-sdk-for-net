@@ -457,7 +457,7 @@ await foreach (BlobHierarchyItem item in results)
 
 On the service, blob metadata is overwritten alongside blob data overwrites. If metadata is not provided on a blob content edit, that is interpreted as a metadata clear. Legacy versions of the SDK mitigated this by maintaining blob metadata internally and sending it for you on appropriate requests. This helped in simple cases, but could fall out of sync and required developers to defensively code against metadata changes in a multi-client scenario anyway.
 
-V12 has abandoned this stateful approach, having users manage their own metadata. While this requires additional code for developers, it ensures you always know how your metadata is being managed and can avoid silent corruption on the part of the SDK.
+V12 has abandoned this stateful approach, having users manage their own metadata. While this requires additional code for developers, it ensures you always know how your metadata is being managed and avoid silently corrupting metadata due to SDK caching.
 
 v11 samples:
 
