@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Core.Tests
                 var serializationCtor = refType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(c => HasAttribute(c.GetCustomAttributes<Attribute>(false), SerializationConstructor)).FirstOrDefault();
                 Assert.IsNotNull(serializationCtor);
-                Assert.IsTrue(serializationCtor.IsFamilyOrAssembly);
-                Assert.IsFalse(serializationCtor.IsPublic);
+                Assert.IsTrue(serializationCtor.IsFamilyOrAssembly, $"Serialization ctor for {refType.Name} should be protected internal");
+                Assert.IsFalse(serializationCtor.IsPublic, $"Serialization ctor for {refType.Name} should not be public");
             }
         }
 
@@ -34,8 +34,9 @@ namespace Azure.ResourceManager.Core.Tests
                 var initializationCtor = refType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(c => HasAttribute(c.GetCustomAttributes<Attribute>(false), InitializationConstructor)).FirstOrDefault();
                 Assert.IsNotNull(initializationCtor);
-                Assert.IsTrue(initializationCtor.IsFamily || initializationCtor.IsPublic);
-                Assert.IsFalse(initializationCtor.IsAssembly);
+                Assert.IsTrue(refType.IsAbstract == initializationCtor.IsFamily, $"If {refType.Name} is abstract then its initialization ctor should be protected");
+                Assert.IsTrue(refType.IsAbstract != initializationCtor.IsPublic, $"If {refType.Name} is abstract then its initialization ctor should be public");
+                Assert.IsFalse(initializationCtor.IsAssembly, $"Initialization ctor for {refType.Name} should not be internal");
             }
         }
 
