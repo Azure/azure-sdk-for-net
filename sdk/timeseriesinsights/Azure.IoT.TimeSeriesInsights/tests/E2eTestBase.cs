@@ -132,7 +132,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
         protected async Task<string> getDefaultTypeIdAsync(TimeSeriesInsightsModelSettings modelSettingsClient)
         {
-            Response<TimeSeriesModelSettings> currentSettings = await modelSettingsClient.GetAsync();
+            Response<TimeSeriesModelSettings> currentSettings = await modelSettingsClient.GetAsync().ConfigureAwait(false);
             return currentSettings.Value.DefaultTypeId;
         }
 
