@@ -112,8 +112,8 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(callOptions, nameof(callOptions));
 
                 CreateCallRequestInternal request = new CreateCallRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(source),
                     targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
+                    CommunicationIdentifierSerializer.Serialize(source),
                     callOptions.CallbackUri?.AbsoluteUri,
                     callOptions.RequestedModalities,
                     callOptions.RequestedCallEvents);
@@ -152,8 +152,8 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(callOptions, nameof(callOptions));
 
                 CreateCallRequestInternal request = new CreateCallRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(source),
                     targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
+                    CommunicationIdentifierSerializer.Serialize(source),
                     callOptions.CallbackUri.AbsoluteUri,
                     callOptions.RequestedModalities,
                     callOptions.RequestedCallEvents);

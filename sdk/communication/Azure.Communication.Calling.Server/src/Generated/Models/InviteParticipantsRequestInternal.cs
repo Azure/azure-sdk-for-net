@@ -34,5 +34,7 @@ namespace Azure.Communication.Calling.Server
         public IList<CommunicationIdentifierModel> Participants { get; }
         /// <summary> The operation context. </summary>
         public string OperationContext { get; set; }
+        /// <summary> The callback URI. </summary>
+        public string CallbackUri { get; set; }
     }
 }

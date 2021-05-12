@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Communication.Pipeline;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.Calling.Server
 {
@@ -16,7 +18,7 @@ namespace Azure.Communication.Calling.Server
     public class ConversationClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal RecordingRestClient RestClient { get; }
+        internal ConversationRestClient RestClient { get; }
 
         /// <summary> Initializes a new instance of <see cref="ConversationClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
@@ -58,7 +60,7 @@ namespace Azure.Communication.Calling.Server
 
         private ConversationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpointUrl)
         {
-            RestClient = new RecordingRestClient(clientDiagnostics, pipeline, endpointUrl);
+            RestClient = new ConversationRestClient(clientDiagnostics, pipeline, endpointUrl);
             _clientDiagnostics = clientDiagnostics;
         }
 
@@ -75,7 +77,7 @@ namespace Azure.Communication.Calling.Server
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
 
             _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new RecordingRestClient(
+            RestClient = new ConversationRestClient(
                 _clientDiagnostics,
                 options.BuildHttpPipeline(tokenCredential),
                 endpoint.AbsoluteUri);
@@ -84,10 +86,78 @@ namespace Azure.Communication.Calling.Server
         private ConversationClient(Uri endpoint, CallClientOptions options, AzureKeyCredential credential)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            RestClient = new RecordingRestClient(
+            RestClient = new ConversationRestClient(
                 _clientDiagnostics,
                 options.BuildHttpPipeline(credential),
                 endpoint.AbsoluteUri);
+        }
+
+        /// Create a Call Requestion from source identity to targets identity asynchronously.
+        /// <param name="groupId"> The group id. </param>
+        /// <param name="source"> The source of the call. </param>
+        /// <param name="callOptions"> The call Options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="groupId"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
+        public virtual async Task<Response<JoinCallResponse>> JoinCallAsync(string groupId, CommunicationIdentifier source, CreateCallOptions callOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(JoinCallAsync)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(source, nameof(source));
+                Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+                Argument.AssertNotNull(callOptions, nameof(callOptions));
+
+                JoinCallRequestInternal request = new JoinCallRequestInternal(
+                    CommunicationIdentifierSerializer.Serialize(source),
+                    callOptions.CallbackUri.AbsoluteUri,
+                    callOptions.RequestedModalities,
+                    callOptions.RequestedCallEvents);
+
+                return await RestClient.JoinCallAsync(groupId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Create a Call Requestion from source identity to targets identity.
+        /// <param name="groupId"> The group id. </param>
+        /// <param name="source"> The source of the call. </param>
+        /// <param name="callOptions"> The call Options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="groupId"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="callOptions"/> is null.</exception>
+        public virtual Response<JoinCallResponse> JoinCall(string groupId, CommunicationIdentifier source, CreateCallOptions callOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallClient)}.{nameof(JoinCall)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(source, nameof(source));
+                Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+                Argument.AssertNotNull(callOptions, nameof(callOptions));
+
+                JoinCallRequestInternal request = new JoinCallRequestInternal(
+                    CommunicationIdentifierSerializer.Serialize(source),
+                    callOptions.CallbackUri.AbsoluteUri,
+                    callOptions.RequestedModalities,
+                    callOptions.RequestedCallEvents);
+
+                return RestClient.JoinCall(groupId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -384,6 +454,130 @@ namespace Azure.Communication.Calling.Server
                 Argument.AssertNotNull(operationContext, nameof(operationContext));
 
                 return RestClient.RecordingState(conversationId, recordingId, operationContext, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add participant
+        /// </summary>
+        /// <param name="conversationId">The conversation id.</param>
+        /// <param name="participantId"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="operationContext">The operation context.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual Response AddParticipant(string conversationId, string participantId, Uri callbackUri, string operationContext, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(AddParticipant)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(conversationId, nameof(conversationId));
+                Argument.AssertNotNull(callbackUri, nameof(callbackUri));
+                Argument.AssertNotNull(operationContext, nameof(operationContext));
+                Argument.AssertNotNull(participantId, nameof(participantId));
+
+                var target = new CommunicationUserIdentifier(participantId);
+                var participants = new List<CommunicationIdentifier> { target };
+
+                var participantsInternal = participants.Select(p => CommunicationIdentifierSerializer.Serialize(p));
+                InviteParticipantsRequestInternal request = new InviteParticipantsRequestInternal(participantsInternal)
+                {
+                    OperationContext = operationContext,
+                    CallbackUri = callbackUri.AbsoluteUri
+                };
+
+                return RestClient.InviteParticipants(conversationId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add participant.
+        /// </summary>
+        /// <param name="conversationId">The conversation id.</param>
+        /// <param name="participantId"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="operationContext">The operation context.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual async Task<Response> AddParticipantAsync(string conversationId, string participantId, Uri callbackUri, string operationContext, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(AddParticipantAsync)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(conversationId, nameof(conversationId));
+                Argument.AssertNotNull(callbackUri, nameof(callbackUri));
+                Argument.AssertNotNull(operationContext, nameof(operationContext));
+                Argument.AssertNotNull(participantId, nameof(participantId));
+
+                var target = new CommunicationUserIdentifier(participantId);
+                var participants = new List<CommunicationIdentifier> { target };
+
+                var participantsInternal = participants.Select(p => CommunicationIdentifierSerializer.Serialize(p));
+                InviteParticipantsRequestInternal request = new InviteParticipantsRequestInternal(participantsInternal)
+                {
+                    OperationContext = operationContext,
+                    CallbackUri = callbackUri.AbsoluteUri
+                };
+
+                return await RestClient.InviteParticipantsAsync(conversationId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// RemoveParticipant
+        /// </summary>
+        /// <param name="conversationId">The conversation id.</param>
+        /// <param name="participantId">The participant id.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual Response RemoveParticipant(string conversationId, string participantId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(RemoveParticipant)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(conversationId, nameof(conversationId));
+                Argument.AssertNotNull(participantId, nameof(participantId));
+
+                return RestClient.RemoveParticipant(conversationId, participantId, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove Participant
+        /// </summary>
+        /// <param name="conversationId">The conversation id.</param>
+        /// <param name="participantId">The participant id.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        public virtual async Task<Response> RemoveParticipantAsync(string conversationId, string participantId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConversationClient)}.{nameof(RemoveParticipantAsync)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(conversationId, nameof(conversationId));
+                Argument.AssertNotNull(participantId, nameof(participantId));
+
+                return await RestClient.RemoveParticipantAsync(conversationId, participantId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

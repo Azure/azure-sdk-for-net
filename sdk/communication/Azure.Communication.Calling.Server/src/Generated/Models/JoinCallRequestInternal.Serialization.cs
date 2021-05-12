@@ -10,23 +10,11 @@ using Azure.Core;
 
 namespace Azure.Communication.Calling.Server
 {
-    internal partial class CreateCallRequestInternal : IUtf8JsonSerializable
+    internal partial class JoinCallRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceAlternateIdentity))
-            {
-                writer.WritePropertyName("sourceAlternateIdentity");
-                writer.WriteObjectValue(SourceAlternateIdentity);
-            }
-            writer.WritePropertyName("targets");
-            writer.WriteStartArray();
-            foreach (var item in Targets)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
             writer.WritePropertyName("source");
             writer.WriteObjectValue(Source);
             if (Optional.IsDefined(Subject))

@@ -8,7 +8,7 @@ namespace Azure.Communication.Calling.Server
     /// <summary>
     /// The call state change event.
     /// </summary>
-    public class ParticipantsUpdatedEvent : CallEventBase
+    public partial class ParticipantsUpdatedEvent : CallEventBase
     {
         /// <summary>
         /// The event type.
@@ -25,7 +25,7 @@ namespace Azure.Communication.Calling.Server
         /// </summary>
         public IEnumerable<CommunicationParticipant> Participants { get; set; }
 
-        /// <summary> Initializes a new instance of ParticipantsUpdatedEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParticipantsUpdatedEvent"/>. </summary>
         /// <param name="callLegId"> The call leg id. </param>
         /// <param name="participants"> The conversation id. </param>
         public ParticipantsUpdatedEvent(string callLegId, IEnumerable<CommunicationParticipant> participants)

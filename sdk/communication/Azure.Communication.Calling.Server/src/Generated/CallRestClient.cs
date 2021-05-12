@@ -52,7 +52,7 @@ namespace Azure.Communication.Calling.Server
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/calls", false);
+            uri.AppendPath("/calling/calls", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -124,7 +124,7 @@ namespace Azure.Communication.Calling.Server
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/calls/", false);
+            uri.AppendPath("/calling/calls/", false);
             uri.AppendPath(callId, true);
             uri.AppendPath("/Hangup", false);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -184,7 +184,7 @@ namespace Azure.Communication.Calling.Server
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/calls/", false);
+            uri.AppendPath("/calling/calls/", false);
             uri.AppendPath(callId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -243,7 +243,7 @@ namespace Azure.Communication.Calling.Server
             request0.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/calls/", false);
+            uri.AppendPath("/calling/calls/", false);
             uri.AppendPath(callId, true);
             uri.AppendPath("/PlayAudio", false);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -327,7 +327,7 @@ namespace Azure.Communication.Calling.Server
             request0.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/calls/", false);
+            uri.AppendPath("/calling/calls/", false);
             uri.AppendPath(callId, true);
             uri.AppendPath("/CancelMediaProcessing", false);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -411,7 +411,7 @@ namespace Azure.Communication.Calling.Server
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/calls/", false);
+            uri.AppendPath("/calling/calls/", false);
             uri.AppendPath(callId, true);
             uri.AppendPath("/participants", false);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -485,7 +485,7 @@ namespace Azure.Communication.Calling.Server
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/calls/", false);
+            uri.AppendPath("/calling/calls/", false);
             uri.AppendPath(callId, true);
             uri.AppendPath("/participants/", false);
             uri.AppendPath(participantId, true);

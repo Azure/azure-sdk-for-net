@@ -6,12 +6,13 @@ namespace Azure.Communication.Calling.Server
     /// <summary>
     /// The subscribe to tone event
     /// </summary>
-    public class ToneReceivedEvent : CallEventBase
+    public partial class ToneReceivedEvent : CallEventBase
     {
         /// <summary>
         /// The event type.
         /// </summary>
         public const string EventType = "Microsoft.Communication.DtmfReceived";
+
         /// <summary>
         /// The tone info.
         /// </summary>

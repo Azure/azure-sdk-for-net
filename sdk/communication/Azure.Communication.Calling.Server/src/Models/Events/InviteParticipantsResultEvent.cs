@@ -10,7 +10,7 @@ namespace Azure.Communication.Calling.Server
     /// <summary>
     /// The invited participants result event.
     /// </summary>
-    public class InviteParticipantsResultEvent
+    public partial class InviteParticipantsResultEvent : CallEventBase
     {
         /// <summary>
         /// The event type.
@@ -18,7 +18,7 @@ namespace Azure.Communication.Calling.Server
         public const string EventType = "Microsoft.Communication.InviteParticipantResult";
 
         /// <summary>
-        /// The result details.
+        /// The result info.
         /// </summary>
         public ResultInfo ResultInfo { get; set; }
 
@@ -37,9 +37,17 @@ namespace Azure.Communication.Calling.Server
         /// </summary>
         public string CallLegId { get; set; }
 
-        /// <summary>
-        /// The invited participants.
-        /// </summary>
-        public IEnumerable<CommunicationIdentifier> Participants { get; set; }
+        /// <summary> Initializes a new instance of <see cref="InviteParticipantsResultEvent"/>. </summary>
+        /// <param name="resultInfo"> The result info. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="status"> The status. </param>
+        /// <param name="callLegId"> The call leg id. </param>
+        public InviteParticipantsResultEvent(ResultInfo resultInfo, string operationContext, OperationStatus status, string callLegId)
+        {
+            ResultInfo = resultInfo;
+            OperationContext = operationContext;
+            Status = status;
+            CallLegId = callLegId;
+        }
     }
 }
