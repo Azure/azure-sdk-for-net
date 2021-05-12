@@ -143,11 +143,6 @@ namespace Microsoft.Azure.Management.Sql
         IServerUsagesOperations ServerUsages { get; }
 
         /// <summary>
-        /// Gets the IUsagesOperations.
-        /// </summary>
-        IUsagesOperations Usages { get; }
-
-        /// <summary>
         /// Gets the IBackupShortTermRetentionPoliciesOperations.
         /// </summary>
         IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }
@@ -188,16 +183,6 @@ namespace Microsoft.Azure.Management.Sql
         IDatabaseColumnsOperations DatabaseColumns { get; }
 
         /// <summary>
-        /// Gets the IDatabaseExtensionsOperations.
-        /// </summary>
-        IDatabaseExtensionsOperations DatabaseExtensions { get; }
-
-        /// <summary>
-        /// Gets the IDatabaseOperations.
-        /// </summary>
-        IDatabaseOperations DatabaseOperations { get; }
-
-        /// <summary>
         /// Gets the IDatabaseRecommendedActionsOperations.
         /// </summary>
         IDatabaseRecommendedActionsOperations DatabaseRecommendedActions { get; }
@@ -216,11 +201,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IDatabaseTablesOperations.
         /// </summary>
         IDatabaseTablesOperations DatabaseTables { get; }
-
-        /// <summary>
-        /// Gets the IDatabaseUsagesOperations.
-        /// </summary>
-        IDatabaseUsagesOperations DatabaseUsages { get; }
 
         /// <summary>
         /// Gets the IDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
@@ -648,6 +628,21 @@ namespace Microsoft.Azure.Management.Sql
         IWorkloadGroupsOperations WorkloadGroups { get; }
 
         /// <summary>
+        /// Gets the IDatabaseExtensionsOperations.
+        /// </summary>
+        IDatabaseExtensionsOperations DatabaseExtensions { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseOperations.
+        /// </summary>
+        IDatabaseOperations DatabaseOperations { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseUsagesOperations.
+        /// </summary>
+        IDatabaseUsagesOperations DatabaseUsages { get; }
+
+        /// <summary>
         /// Gets the ILedgerDigestUploadsOperations.
         /// </summary>
         ILedgerDigestUploadsOperations LedgerDigestUploads { get; }
@@ -666,6 +661,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IRestorableDroppedManagedDatabasesOperations.
         /// </summary>
         IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; }
+
+        /// <summary>
+        /// Gets the IUsagesOperations.
+        /// </summary>
+        IUsagesOperations Usages { get; }
 
     }
 }
