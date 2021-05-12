@@ -72,11 +72,6 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// A client that can be used can be used to perform query operations on Time Series Insights.
-        /// </summary>
-        public virtual TimeSeriesInsightsQueries Queries { get; private set; }
-
-        /// <summary>
         /// Creates a new instance of the <see cref="TimeSeriesInsightsClient"/> class.
         /// </summary>
         /// <param name='environmentFqdn'>Per environment FQDN, for example 10000000-0000-0000-0000-100000000109.env.timeseries.azure.com.
@@ -136,8 +131,6 @@ namespace Azure.IoT.TimeSeriesInsights
             _timeSeriesTypesRestClient = new TimeSeriesTypesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _timeSeriesHierarchiesRestClient = new TimeSeriesHierarchiesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
-
-            Queries = new TimeSeriesInsightsQueries(_queryRestClient, _clientDiagnostics);
         }
 
         /// <summary>
