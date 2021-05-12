@@ -9,9 +9,9 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// The result of a backup operation.
     /// </summary>
-    public class BackupResult
+    public class KeyVaultBackupResult
     {
-        internal BackupResult(Uri folderUri, DateTimeOffset startTime, DateTimeOffset endTime)
+        internal KeyVaultBackupResult(Uri folderUri, DateTimeOffset startTime, DateTimeOffset endTime)
         {
             Argument.AssertNotNull(folderUri, nameof(folderUri));
 

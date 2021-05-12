@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -261,12 +262,9 @@ namespace Azure.Core.Tests
                 using (HttpMessage message = httpPipeline.CreateMessage())
                 {
                     message.Request.Uri.Reset(testServer.Address);
-                    message.BufferResponse = false;
+                    message.BufferResponse = true;
 
                     await ExecuteRequest(message, httpPipeline);
-
-                    Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
-                    Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
 
                     response = message.Response;
                 }
@@ -274,6 +272,50 @@ namespace Azure.Core.Tests
                 var memoryStream = new MemoryStream();
                 await response.ContentStream.CopyToAsync(memoryStream);
                 Assert.AreEqual(memoryStream.Length, bodySize);
+            }
+        }
+
+        [Test]
+        public async Task UnbufferedResponsesDisposedAfterMessageDisposed()
+        {
+            byte[] buffer = { 0 };
+
+            HttpPipeline httpPipeline = HttpPipelineBuilder.Build(GetOptions());
+
+            int bodySize = 1000;
+
+            using TestServer testServer = new TestServer(
+                async context =>
+                {
+                    for (int i = 0; i < bodySize; i++)
+                    {
+                        await context.Response.Body.WriteAsync(buffer, 0, 1);
+                    }
+                });
+
+            var requestCount = 100;
+            for (int i = 0; i < requestCount; i++)
+            {
+                Response response;
+                Mock<Stream> disposeTrackingStream = null;
+                using (HttpMessage message = httpPipeline.CreateMessage())
+                {
+                    message.Request.Uri.Reset(testServer.Address);
+                    message.BufferResponse = false;
+
+                    await ExecuteRequest(message, httpPipeline);
+
+                    response = message.Response;
+                    var originalStream = response.ContentStream;
+                    disposeTrackingStream = new Mock<Stream>();
+                    disposeTrackingStream
+                        .Setup(s=>s.Close())
+                        .Callback(originalStream.Close)
+                        .Verifiable();
+                    response.ContentStream = disposeTrackingStream.Object;
+                }
+
+                disposeTrackingStream.Verify();
             }
         }
 
