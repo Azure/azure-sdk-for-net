@@ -51,6 +51,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($"Last associated anomaly occurred at: {incident.LastTime}");
                 Console.WriteLine($"Status: {incident.Status}");
                 Console.WriteLine($"Severity: {incident.Severity}");
+                Console.WriteLine($"Value of root node anomaly: {incident.ValueOfRootNode}");
+
+                if (incident.ExpectedValueOfRootNode.HasValue)
+                {
+                    Console.WriteLine($"Expected value of root node anomaly: {incident.ExpectedValueOfRootNode}");
+                }
+
                 Console.WriteLine("Series key:");
 
                 foreach (KeyValuePair<string, string> keyValuePair in incident.DimensionKey.AsDictionary())
@@ -94,6 +101,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
                 Console.WriteLine($"Last associated anomaly occurred at: {incident.LastTime}");
                 Console.WriteLine($"Status: {incident.Status}");
                 Console.WriteLine($"Severity: {incident.Severity}");
+                Console.WriteLine($"Value of root node anomaly: {incident.ValueOfRootNode}");
+
+                if (incident.ExpectedValueOfRootNode.HasValue)
+                {
+                    Console.WriteLine($"Expected value of root node anomaly: {incident.ExpectedValueOfRootNode}");
+                }
+
                 Console.WriteLine("Series key:");
 
                 foreach (KeyValuePair<string, string> keyValuePair in incident.DimensionKey.AsDictionary())

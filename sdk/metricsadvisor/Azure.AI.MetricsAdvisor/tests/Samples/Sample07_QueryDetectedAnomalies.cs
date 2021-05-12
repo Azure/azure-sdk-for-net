@@ -35,6 +35,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             await foreach (DataPointAnomaly anomaly in client.GetAnomaliesAsync(detectionConfigurationId, options))
             {
+                Console.WriteLine($"Anomaly value: {anomaly.Value}");
+
+                if (anomaly.ExpectedValue.HasValue)
+                {
+                    Console.WriteLine($"Anomaly expected value: {anomaly.ExpectedValue}");
+                }
+
                 Console.WriteLine($"Anomaly at timestamp: {anomaly.Timestamp}");
                 Console.WriteLine($"Severity: {anomaly.Severity}");
                 Console.WriteLine("Series key:");
@@ -81,6 +88,13 @@ namespace Azure.AI.MetricsAdvisor.Samples
             {
                 Console.WriteLine($"Anomaly detection configuration ID: {anomaly.AnomalyDetectionConfigurationId}");
                 Console.WriteLine($"Metric ID: {anomaly.MetricId}");
+                Console.WriteLine($"Anomaly value: {anomaly.Value}");
+
+                if (anomaly.ExpectedValue.HasValue)
+                {
+                    Console.WriteLine($"Anomaly expected value: {anomaly.ExpectedValue}");
+                }
+
                 Console.WriteLine($"Anomaly at timestamp: {anomaly.Timestamp}");
                 Console.WriteLine($"Anomaly detected at: {anomaly.CreatedTime}");
                 Console.WriteLine($"Status: {anomaly.Status}");
