@@ -844,5 +844,60 @@ namespace Azure.Storage.Files.Shares
 
             return httpHeaders;
         }
+
+        internal static ShareFileItem ToShareFileItem(this DirectoryItem directoryItem)
+        {
+            if (directoryItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem
+            {
+                IsDirectory = true,
+                Name = directoryItem.Name,
+                Id = directoryItem.FileId,
+                Properties = directoryItem.Properties.ToShareFileItemProperties(),
+                FileAttributes = ToFileAttributes(directoryItem.Attributes),
+                PermissionKey = directoryItem.PermissionKey,
+            };
+        }
+
+        internal static ShareFileItem ToShareFileItem(this FileItem fileItem)
+        {
+            if (fileItem == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItem
+            {
+                IsDirectory = false,
+                Name = fileItem.Name,
+                Id = fileItem.FileId,
+                Properties = fileItem.Properties.ToShareFileItemProperties(),
+                FileAttributes = ToFileAttributes(fileItem.Attributes),
+                PermissionKey = fileItem.PermissionKey,
+                FileSize = fileItem.Properties.ContentLength
+            };
+        }
+
+        internal static ShareFileItemProperties ToShareFileItemProperties(this FileProperty fileProperty)
+        {
+            if (fileProperty == null)
+            {
+                return null;
+            }
+
+            return new ShareFileItemProperties
+            {
+                CreatedOn = fileProperty.CreationTime,
+                LastAccessedOn = fileProperty.LastAccessTime,
+                LastWrittenOn = fileProperty.LastWriteTime,
+                ChangedOn = fileProperty.ChangeTime,
+                LastModified = fileProperty.LastModified,
+                ETag = fileProperty.Etag == null ? null : new ETag(fileProperty.Etag)
+            };
+        }
     }
 }
