@@ -131,5 +131,17 @@ namespace Azure
         {
             return $"Status: {Status}, ReasonPhrase: {ReasonPhrase}";
         }
+
+        internal void DisposeContentStreamIfNotBuffered()
+        {
+            // We want to keep the ContentStream readable
+            // even after the response is disposed but only if it's a
+            // buffered memory stream otherwise we can leave a network
+            // connection hanging open
+            if (ContentStream is not MemoryStream)
+            {
+                ContentStream?.Dispose();
+            }
+        }
     }
 }
