@@ -67,7 +67,8 @@ var instanceId =  new TimeSeriesId("Millennium", "Floor2", "2A01");
 Use `ModelSettings` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/src/TimeSeriesInsightsClient.cs) to learn more about the environment model settings, such as name, default type ID, and the properties that define the Time Series ID during environment creation.
 
 ```C# Snippet:TimeSeriesInsightsSampleGetModelSettings
-Response<TimeSeriesModelSettings> getModelSettingsResponse = await client.ModelSettings.GetAsync();
+TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+Response<TimeSeriesModelSettings> getModelSettingsResponse = await modelSettingsClient.GetAsync();
 Console.WriteLine($"Retrieved Time Series Insights model settings \nname : '{getModelSettingsResponse.Value.Name}', " +
     $"default type Id: {getModelSettingsResponse.Value.DefaultTypeId}'");
 IReadOnlyList<TimeSeriesIdProperty> timeSeriesIdProperties = getModelSettingsResponse.Value.TimeSeriesIdProperties;
@@ -117,13 +118,13 @@ Here's what a retrieved model settings object looks like.
 You can also use `ModelSettings` object to make changes to the model settings name and/or default type ID.
 
 ```C# Snippet:TimeSeriesInsightsSampleUpdateModelSettingsName
-Response<TimeSeriesModelSettings> updateModelSettingsNameResponse = await client.ModelSettings.UpdateNameAsync("NewModelSettingsName");
+Response<TimeSeriesModelSettings> updateModelSettingsNameResponse = await modelSettingsClient.UpdateNameAsync("NewModelSettingsName");
 Console.WriteLine($"Updated Time Series Insights model settings name: " +
     $"{updateModelSettingsNameResponse.Value.Name}");
 ```
 
 ```C# Snippet:TimeSeriesInsightsSampleUpdateModelSettingsDefaultType
-Response<TimeSeriesModelSettings> updateDefaultTypeIdResponse = await client.ModelSettings.UpdateDefaultTypeIdAsync(tsiTypeId);
+Response<TimeSeriesModelSettings> updateDefaultTypeIdResponse = await modelSettingsClient.UpdateDefaultTypeIdAsync(tsiTypeId);
 Console.WriteLine($"Updated Time Series Insights model settings default type Id: " +
     $"{updateDefaultTypeIdResponse.Value.Name}");
 ```
@@ -339,7 +340,8 @@ This snippet highlights how you can retrieve a list of specific Time Series type
 // Code snippet below shows getting a default Type using Id
 // The default type Id can be obtained programmatically by using the ModelSettings client.
 
-TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync();
+TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+TimeSeriesModelSettings modelSettings = await modelSettingsClient.GetAsync();
 Response<TimeSeriesTypeOperationResult[]> getTypeByIdResults = await client
     .Types
     .GetByIdAsync(new string[] { modelSettings.DefaultTypeId });
@@ -554,14 +556,14 @@ Use `Queries` in [TimeSeriesInsightsClient](https://github.com/Azure/azure-sdk-f
 - Computed values and the associated event timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
 - Aggregated values and the associated interval timestamps by applying calculations defined by variables on raw events. These variables can be defined in either the Time Series Model or provided inline in the query.
 
-Response for the `Query` APIs are of type `TimeSeriesQuery`. The TimeSeriesQuery allows a developer to query for pages of results, while being able to perform operations on the result set as a whole. For example, to get a list of `TimeSeriesPoint` in pages, call the `GetResultsAsync` method on the `TimeSeriesQuery` object. You can enumerate an AsyncPageable object using the `async foreach` loop.
+Response for the `Query` APIs are of type `QueryAnalyzer`. The QueryAnalyzer allows a developer to query for pages of results, while being able to perform operations on the result set as a whole. For example, to get a list of `TimeSeriesPoint` in pages, call the `GetResultsAsync` method on the `TimeSeriesQuery` object. You can enumerate an AsyncPageable object using the `async foreach` loop.
 
 This code snippet demonstrates querying for raw events with using a time span interval.
 
 ```C# Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan
 Console.WriteLine("\n\nQuery for raw humidity events over the past 30 seconds.\n");
 
-TimeSeriesQuery humidityEventsQuery = client.Queries.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
+QueryAnalyzer humidityEventsQuery = client.Queries.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
 await foreach (TimeSeriesPoint point in humidityEventsQuery.GetResultsAsync())
 {
     TimeSeriesValue humidityValue = point.GetValue("Humidity");
@@ -572,11 +574,11 @@ await foreach (TimeSeriesPoint point in humidityEventsQuery.GetResultsAsync())
     // too familiar with the property type.
     if (humidityValue.Type == typeof(double?))
     {
-        Console.WriteLine($"{point.Timestamp} - Humidity: {(double?)humidityValue}");
+        Console.WriteLine($"{point.Timestamp} - Humidity: {point.GetNullableDouble("Humidity")}");
     }
     else if (humidityValue.Type == typeof(int?))
     {
-        Console.WriteLine($"{point.Timestamp} - Humidity: {(int?)humidityValue}");
+        Console.WriteLine($"{point.Timestamp} - Humidity: {point.GetNullableInt("Humidity")}");
     }
     else
     {
@@ -594,7 +596,7 @@ Console.WriteLine("\n\nQuery for raw temperature events over the past 10 minutes
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);
 
-TimeSeriesQuery temperatureEventsQuery = client.Queries.CreateEventsQuery(tsId, startTime, endTime);
+QueryAnalyzer temperatureEventsQuery = client.Queries.CreateEventsQuery(tsId, startTime, endTime);
 await foreach (TimeSeriesPoint point in temperatureEventsQuery.GetResultsAsync())
 {
     TimeSeriesValue temperatureValue = point.GetValue("Temperature");
@@ -605,11 +607,11 @@ await foreach (TimeSeriesPoint point in temperatureEventsQuery.GetResultsAsync()
     // too familiar with the property type.
     if (temperatureValue.Type == typeof(double?))
     {
-        Console.WriteLine($"{point.Timestamp} - Temperature: {(double?)temperatureValue}");
+        Console.WriteLine($"{point.Timestamp} - Temperature: {point.GetNullableDouble("Temperature")}");
     }
     else if (temperatureValue.Type == typeof(int?))
     {
-        Console.WriteLine($"{point.Timestamp} - Temperature: {(int?)temperatureValue}");
+        Console.WriteLine($"{point.Timestamp} - Temperature: {point.GetNullableInt("Temperature")}");
     }
     else
     {
@@ -627,15 +629,15 @@ Console.WriteLine($"\n\nQuery for temperature series in Celsius and Fahrenheit o
 
 DateTimeOffset endTime = DateTime.UtcNow;
 DateTimeOffset startTime = endTime.AddMinutes(-10);
-TimeSeriesQuery seriesQuery = client.Queries.CreateSeriesQuery(
+QueryAnalyzer seriesQuery = client.Queries.CreateSeriesQuery(
     tsId,
     startTime,
     endTime);
 
 await foreach (TimeSeriesPoint point in seriesQuery.GetResultsAsync())
 {
-    double? tempInCelsius = (double?)point.GetValue(celsiusVariableName);
-    double? tempInFahrenheit = (double?)point.GetValue(fahrenheitVariableName);
+    double? tempInCelsius = point.GetNullableDouble(celsiusVariableName);
+    double? tempInFahrenheit = point.GetNullableDouble(fahrenheitVariableName);
 
     Console.WriteLine($"{point.Timestamp} - Average temperature in Celsius: {tempInCelsius}. " +
         $"Average temperature in Fahrenheit: {tempInFahrenheit}.");
@@ -658,7 +660,7 @@ var querySeriesRequestOptions = new QuerySeriesRequestOptions();
 querySeriesRequestOptions.InlineVariables["TemperatureInCelsius"] = celsiusVariable;
 querySeriesRequestOptions.InlineVariables["TemperatureInFahrenheit"] = fahrenheitVariable;
 
-TimeSeriesQuery seriesQuery = client.Queries.CreateSeriesQuery(
+QueryAnalyzer seriesQuery = client.Queries.CreateSeriesQuery(
     tsId,
     TimeSpan.FromMinutes(10),
     null,
@@ -691,7 +693,7 @@ var aggregateSeriesRequestOptions = new QueryAggregateSeriesRequestOptions();
 aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
 aggregateSeriesRequestOptions.ProjectedVariableNames.Add(countVariableName);
 
-TimeSeriesQuery query = client.Queries.CreateAggregateSeriesQuery(
+QueryAnalyzer query = client.Queries.CreateAggregateSeriesQuery(
     tsId,
     startTime,
     endTime,

@@ -290,7 +290,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// // Code snippet below shows getting a default Type using Id
         /// // The default type Id can be obtained programmatically by using the ModelSettings client.
         ///
-        /// TimeSeriesModelSettings modelSettings = await client.ModelSettings.GetAsync();
+        /// TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+        /// TimeSeriesModelSettings modelSettings = await modelSettingsClient.GetAsync();
         /// Response&lt;TimeSeriesTypeOperationResult[]&gt; getTypeByIdResults = await client
         ///     .Types
         ///     .GetByIdAsync(new string[] { modelSettings.DefaultTypeId });

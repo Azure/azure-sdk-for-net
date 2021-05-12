@@ -40,7 +40,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded.</param>
         /// <param name="options">Optional parameters to use when querying for events.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The <see cref="TimeSeriesQuery"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
+        /// <returns>The <see cref="QueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryEvents">
         /// Console.WriteLine(&quot;\n\nQuery for raw temperature events over the past 10 minutes.\n&quot;);
@@ -49,7 +49,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// DateTimeOffset endTime = DateTime.UtcNow;
         /// DateTimeOffset startTime = endTime.AddMinutes(-10);
         ///
-        /// TimeSeriesQuery temperatureEventsQuery = client.Queries.CreateEventsQuery(tsId, startTime, endTime);
+        /// QueryAnalyzer temperatureEventsQuery = client.Queries.CreateEventsQuery(tsId, startTime, endTime);
         /// await foreach (TimeSeriesPoint point in temperatureEventsQuery.GetResultsAsync())
         /// {
         ///     TimeSeriesValue temperatureValue = point.GetValue(&quot;Temperature&quot;);
@@ -60,11 +60,11 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     // too familiar with the property type.
         ///     if (temperatureValue.Type == typeof(double?))
         ///     {
-        ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {(double?)temperatureValue}&quot;);
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {point.GetNullableDouble(&quot;Temperature&quot;)}&quot;);
         ///     }
         ///     else if (temperatureValue.Type == typeof(int?))
         ///     {
-        ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {(int?)temperatureValue}&quot;);
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Temperature: {point.GetNullableInt(&quot;Temperature&quot;)}&quot;);
         ///     }
         ///     else
         ///     {
@@ -73,7 +73,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// }
         /// </code>
         /// </example>
-        public virtual TimeSeriesQuery CreateEventsQuery(
+        public virtual QueryAnalyzer CreateEventsQuery(
             TimeSeriesId timeSeriesId,
             DateTimeOffset startTime,
             DateTimeOffset endTime,
@@ -93,7 +93,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildEventsRequestOptions(options, queryRequest);
 
-                return new TimeSeriesQuery(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
+                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -110,12 +110,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded. If null is provided, <c>DateTimeOffset.UtcNow</c> is used.</param>
         /// <param name="options">Optional parameters to use when querying for events.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The <see cref="TimeSeriesQuery"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
+        /// <returns>The <see cref="QueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryEventsUsingTimeSpan">
         /// Console.WriteLine(&quot;\n\nQuery for raw humidity events over the past 30 seconds.\n&quot;);
         ///
-        /// TimeSeriesQuery humidityEventsQuery = client.Queries.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
+        /// QueryAnalyzer humidityEventsQuery = client.Queries.CreateEventsQuery(tsId, TimeSpan.FromSeconds(30));
         /// await foreach (TimeSeriesPoint point in humidityEventsQuery.GetResultsAsync())
         /// {
         ///     TimeSeriesValue humidityValue = point.GetValue(&quot;Humidity&quot;);
@@ -126,11 +126,11 @@ namespace Azure.IoT.TimeSeriesInsights
         ///     // too familiar with the property type.
         ///     if (humidityValue.Type == typeof(double?))
         ///     {
-        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {(double?)humidityValue}&quot;);
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {point.GetNullableDouble(&quot;Humidity&quot;)}&quot;);
         ///     }
         ///     else if (humidityValue.Type == typeof(int?))
         ///     {
-        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {(int?)humidityValue}&quot;);
+        ///         Console.WriteLine($&quot;{point.Timestamp} - Humidity: {point.GetNullableInt(&quot;Humidity&quot;)}&quot;);
         ///     }
         ///     else
         ///     {
@@ -139,7 +139,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// }
         /// </code>
         /// </example>
-        public virtual TimeSeriesQuery CreateEventsQuery(
+        public virtual QueryAnalyzer CreateEventsQuery(
             TimeSeriesId timeSeriesId,
             TimeSpan timeSpan,
             DateTimeOffset? endTime = null,
@@ -161,7 +161,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildEventsRequestOptions(options, queryRequest);
 
-                return new TimeSeriesQuery(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
+                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -178,7 +178,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded.</param>
         /// <param name="options">Optional parameters to use when querying for series events.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The <see cref="TimeSeriesQuery"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
+        /// <returns>The <see cref="QueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleQuerySeries">
         /// Console.WriteLine($&quot;\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes. &quot; +
@@ -187,22 +187,22 @@ namespace Azure.IoT.TimeSeriesInsights
         ///
         /// DateTimeOffset endTime = DateTime.UtcNow;
         /// DateTimeOffset startTime = endTime.AddMinutes(-10);
-        /// TimeSeriesQuery seriesQuery = client.Queries.CreateSeriesQuery(
+        /// QueryAnalyzer seriesQuery = client.Queries.CreateSeriesQuery(
         ///     tsId,
         ///     startTime,
         ///     endTime);
         ///
         /// await foreach (TimeSeriesPoint point in seriesQuery.GetResultsAsync())
         /// {
-        ///     double? tempInCelsius = (double?)point.GetValue(celsiusVariableName);
-        ///     double? tempInFahrenheit = (double?)point.GetValue(fahrenheitVariableName);
+        ///     double? tempInCelsius = point.GetNullableDouble(celsiusVariableName);
+        ///     double? tempInFahrenheit = point.GetNullableDouble(fahrenheitVariableName);
         ///
         ///     Console.WriteLine($&quot;{point.Timestamp} - Average temperature in Celsius: {tempInCelsius}. &quot; +
         ///         $&quot;Average temperature in Fahrenheit: {tempInFahrenheit}.&quot;);
         /// }
         /// </code>
         /// </example>
-        public virtual TimeSeriesQuery CreateSeriesQuery(
+        public virtual QueryAnalyzer CreateSeriesQuery(
             TimeSeriesId timeSeriesId,
             DateTimeOffset startTime,
             DateTimeOffset endTime,
@@ -222,7 +222,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildSeriesRequestOptions(options, queryRequest);
 
-                return new TimeSeriesQuery(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
+                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -239,7 +239,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded. If null is provided, <c>DateTimeOffset.UtcNow</c> is used.</param>
         /// <param name="options">Optional parameters to use when querying for series events.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The <see cref="TimeSeriesQuery"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
+        /// <returns>The <see cref="QueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleQuerySeriesWithInlineVariables">
         /// Console.WriteLine(&quot;\n\nQuery for temperature series in Celsius and Fahrenheit over the past 10 minutes.\n&quot;);
@@ -255,7 +255,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// querySeriesRequestOptions.InlineVariables[&quot;TemperatureInCelsius&quot;] = celsiusVariable;
         /// querySeriesRequestOptions.InlineVariables[&quot;TemperatureInFahrenheit&quot;] = fahrenheitVariable;
         ///
-        /// TimeSeriesQuery seriesQuery = client.Queries.CreateSeriesQuery(
+        /// QueryAnalyzer seriesQuery = client.Queries.CreateSeriesQuery(
         ///     tsId,
         ///     TimeSpan.FromMinutes(10),
         ///     null,
@@ -270,7 +270,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// }
         /// </code>
         /// </example>
-        public virtual TimeSeriesQuery CreateSeriesQuery(
+        public virtual QueryAnalyzer CreateSeriesQuery(
             TimeSeriesId timeSeriesId,
             TimeSpan timeSpan,
             DateTimeOffset? endTime = null,
@@ -292,7 +292,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildSeriesRequestOptions(options, queryRequest);
 
-                return new TimeSeriesQuery(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
+                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -310,7 +310,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="interval">Interval size used to group events by.</param>
         /// <param name="options">Optional parameters to use when querying for aggregated series events.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The <see cref="TimeSeriesQuery"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
+        /// <returns>The <see cref="QueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithAggregateVariable">
         /// Console.WriteLine(&quot;\n\nCount the number of temperature events over the past 3 minutes, in 1-minute time slots.\n&quot;);
@@ -328,7 +328,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// aggregateSeriesRequestOptions.InlineVariables[countVariableName] = aggregateVariable;
         /// aggregateSeriesRequestOptions.ProjectedVariableNames.Add(countVariableName);
         ///
-        /// TimeSeriesQuery query = client.Queries.CreateAggregateSeriesQuery(
+        /// QueryAnalyzer query = client.Queries.CreateAggregateSeriesQuery(
         ///     tsId,
         ///     startTime,
         ///     endTime,
@@ -342,7 +342,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// }
         /// </code>
         /// </example>
-        public virtual TimeSeriesQuery CreateAggregateSeriesQuery(
+        public virtual QueryAnalyzer CreateAggregateSeriesQuery(
             TimeSeriesId timeSeriesId,
             DateTimeOffset startTime,
             DateTimeOffset endTime,
@@ -363,7 +363,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildAggregateSeriesRequestOptions(options, queryRequest);
 
-                return new TimeSeriesQuery(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
+                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -381,7 +381,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded. If null is provided, <c>DateTimeOffset.UtcNow</c> is used.</param>
         /// <param name="options">Optional parameters to use when querying for aggregated series events.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The <see cref="TimeSeriesQuery"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
+        /// <returns>The <see cref="QueryAnalyzer"/> object that can be used to retrieve the pageable list <see cref="AsyncPageable{TimeSeriesPoint}"/>.</returns>
         /// <example>
         /// <code snippet="Snippet:TimeSeriesInsightsSampleQueryAggregateSeriesWithNumericVariable">
         /// Console.WriteLine(&quot;\n\nQuery for the average temperature over the past 30 seconds, in 2-second time slots.\n&quot;);
@@ -394,7 +394,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// requestOptions.InlineVariables[&quot;Temperature&quot;] = numericVariable;
         /// requestOptions.ProjectedVariableNames.Add(&quot;Temperature&quot;);
         ///
-        /// TimeSeriesQuery aggregateSeriesQuery = client.Queries.CreateAggregateSeriesQuery(
+        /// QueryAnalyzer aggregateSeriesQuery = client.Queries.CreateAggregateSeriesQuery(
         ///     tsId,
         ///     TimeSpan.FromSeconds(2),
         ///     TimeSpan.FromSeconds(30),
@@ -403,7 +403,7 @@ namespace Azure.IoT.TimeSeriesInsights
         ///
         /// await foreach (TimeSeriesPoint point in aggregateSeriesQuery.GetResultsAsync())
         /// {
-        ///     double? averageTemperature = (double?)point.GetValue(&quot;Temperature&quot;);
+        ///     double? averageTemperature = point.GetNullableDouble(&quot;Temperature&quot;);
         ///     if (averageTemperature != null)
         ///     {
         ///         Console.WriteLine($&quot;{point.Timestamp} - Average temperature: {averageTemperature}.&quot;);
@@ -411,7 +411,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// }
         /// </code>
         /// </example>
-        public virtual TimeSeriesQuery CreateAggregateSeriesQuery(
+        public virtual QueryAnalyzer CreateAggregateSeriesQuery(
             TimeSeriesId timeSeriesId,
             TimeSpan interval,
             TimeSpan timeSpan,
@@ -434,7 +434,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildAggregateSeriesRequestOptions(options, queryRequest);
 
-                return new TimeSeriesQuery(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
+                return new QueryAnalyzer(_queryRestClient, queryRequest, options?.Store?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.Json;
 
@@ -15,7 +16,6 @@ namespace Azure.IoT.TimeSeriesInsights
     /// A single Time Series Id can be composite of multiple properties are specified as Time Series Id at environment creation time.
     /// The position and type of values must match Time Series Id properties specified on the environment and returned by Get Model Setting API.
     /// </remarks>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1067:Override Object.Equals(object) when implementing IEquatable<T>", Justification = "<Pending>")]
     public struct TimeSeriesId : IEquatable<TimeSeriesId>
     {
         private readonly string[] _keys;
@@ -83,6 +83,30 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             return _keys.Length == other.ToArray().Length
                 && _keys.SequenceEqual(other.ToArray());
+        }
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj)
+        {
+            return obj is TimeSeriesId id && Equals(id);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            if (_keys.Length == 1)
+            {
+                return (_keys[0]).GetHashCode();
+            }
+            else if (_keys.Length == 2)
+            {
+                return (_keys[0], _keys[1]).GetHashCode();
+            }
+            else
+            {
+                return (_keys[0], _keys[1], _keys[2]).GetHashCode();
+            }
         }
     }
 }

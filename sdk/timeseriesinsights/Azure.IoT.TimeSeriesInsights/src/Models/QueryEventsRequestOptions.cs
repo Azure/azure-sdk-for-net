@@ -14,7 +14,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// An array of properties to be returned in the response. These properties must appear
         /// in the events; otherwise, they are not returned.
         /// </summary>
-        public List<TimeSeriesInsightsEventProperty> ProjectedProperties { get; }
+        public IList<TimeSeriesInsightsEventProperty> ProjectedProperties { get; }
 
         /// <summary>
         /// The maximum number of property values in the whole response set, not the maximum number of property values per page.
