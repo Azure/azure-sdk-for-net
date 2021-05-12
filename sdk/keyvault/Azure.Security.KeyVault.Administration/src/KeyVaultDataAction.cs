@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     [CodeGenModel("DataAction")]
     public readonly partial struct KeyVaultDataAction : IEquatable<KeyVaultDataAction>

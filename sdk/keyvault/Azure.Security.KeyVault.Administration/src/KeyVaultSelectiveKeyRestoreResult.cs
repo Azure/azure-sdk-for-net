@@ -2,28 +2,27 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary>
-    /// The result of a restore operation.
+    /// The result of a selective key restore operation.
     /// </summary>
-    public class RestoreResult
+    public class KeyVaultSelectiveKeyRestoreResult
     {
-        internal RestoreResult(DateTimeOffset startTime, DateTimeOffset endTime)
+        internal KeyVaultSelectiveKeyRestoreResult(DateTimeOffset startTime, DateTimeOffset endTime)
         {
             StartTime = startTime;
             EndTime = endTime;
         }
 
         /// <summary>
-        /// Gets the start time of the restore operation.
+        /// Gets the start time of the selective key restore operation.
         /// </summary>
         public DateTimeOffset StartTime { get; }
 
         /// <summary>
-        /// Gets the end time of the restore operation.
+        /// Gets the end time of the selective key restore operation.
         /// </summary>
         public DateTimeOffset EndTime { get; }
     }
