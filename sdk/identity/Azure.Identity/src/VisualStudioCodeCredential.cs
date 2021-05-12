@@ -26,6 +26,8 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
         private readonly MsalPublicClient _client;
+        private const string _commonTenant = "common";
+        private bool tenantIdOptionProvided;
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
@@ -41,7 +43,8 @@ namespace Azure.Identity
         internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem,
             IVisualStudioCodeAdapter vscAdapter)
         {
-            _tenantId = options?.TenantId ?? "common";
+            tenantIdOptionProvided = options?.TenantId != null;
+            _tenantId = options?.TenantId ?? _commonTenant;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
@@ -63,6 +66,10 @@ namespace Azure.Identity
             try
             {
                 GetUserSettings(out var tenant, out var environmentName);
+                if (!tenantIdOptionProvided && requestContext.TenantIdHint != default )
+                {
+                    tenant = requestContext.TenantIdHint;
+                }
 
                 if (string.Equals(tenant, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {
@@ -135,6 +142,7 @@ namespace Azure.Identity
                 if (root.TryGetProperty("azure.tenant", out JsonElement tenantProperty))
                 {
                     tenant = tenantProperty.GetString();
+                    tenantIdOptionProvided = true;
                 }
 
                 if (root.TryGetProperty("azure.cloud", out JsonElement environmentProperty))

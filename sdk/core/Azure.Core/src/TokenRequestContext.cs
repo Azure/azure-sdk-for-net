@@ -38,16 +38,13 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new TokenRequest with the specified scopes.
         /// </summary>
-        /// <param name="scopes">The scopes required for the token.</param>
-        /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
-        /// <param name="claims">Additional claims to be included in the token.</param>
-        /// <param name="tenantId"> The tenantId to prefer when requesting a token. </param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default)
+        /// <param name="options"> The options to initialized the <see cref="TokenRequestContext"/> </param>
+        public TokenRequestContext(TokenRequestContextOptions options)
         {
-            Scopes = scopes;
-            ParentRequestId = parentRequestId;
-            Claims = claims;
-            TenantIdHint = tenantId;
+            Scopes = options.Scopes;
+            ParentRequestId = options.ParentRequestId;
+            Claims = options.Claims;
+            TenantIdHint = options.TenantIdHint;
         }
 
         /// <summary>

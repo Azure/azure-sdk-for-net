@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage
 {
@@ -67,7 +68,7 @@ namespace Azure.Storage
         /// <param name="credential">Credential to use.</param>
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy(this TokenCredential credential) =>
-            new BearerTokenAuthenticationPolicy(
+            new StorageBearerTokenChallengeAuthorizationPolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)),
                 StorageScope);
 

@@ -18,9 +18,16 @@
     <RootNamespace>Azure.Storage</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <!-- TODO: uncomment when Azure.Core ships 
     <PackageReference Include="Azure.Core" />
+    end TODO -->
+    <!-- TODO: revert when Azure.Core ships -->
+      <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <!--  end TODO-->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core"/>
+    <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core"/>
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
@@ -29,11 +36,12 @@
     <Compile Remove="Shared\ClientsideEncryption\*.cs;Shared\ClientsideEncryption\Models\*.cs" />
     <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->
     <Compile Include="Shared\Constants.cs" />
-    <Compile Include="Shared\Errors.cs" />
+    <Compile Include="Shared\Errors.cs" />  
     <Compile Include="Shared\GeoRedundantReadPolicy.cs" />
     <Compile Include="Shared\SasExtensions.cs" />
     <Compile Include="Shared\SasQueryParametersInternals.cs" />
     <Compile Include="Shared\SharedAccessSignatureCredentials.cs" />
+    <Compile Include="Shared\StorageBearerTokenChallengeAuthorizationPolicy.cs" />
     <Compile Include="Shared\StorageExceptionExtensions.cs" />
     <Compile Include="Shared\StorageConnectionString.cs" />
     <Compile Include="Shared\StorageResponseClassifier.cs" />
