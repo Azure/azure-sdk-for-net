@@ -152,7 +152,6 @@ namespace Azure.IoT.TimeSeriesInsights
             _timeSeriesHierarchiesRestClient = new TimeSeriesHierarchiesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
 
-            Instances = new TimeSeriesInsightsInstances(_timeSeriesInstancesRestClient, _clientDiagnostics);
             Types = new TimeSeriesInsightsTypes(_timeSeriesTypesRestClient, _clientDiagnostics);
             Hierarchies = new TimeSeriesInsightsHierarchies(_timeSeriesHierarchiesRestClient, _clientDiagnostics);
             Queries = new TimeSeriesInsightsQueries(_queryRestClient, _clientDiagnostics);

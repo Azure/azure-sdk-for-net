@@ -28,6 +28,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
             TimeSeriesInsightsModelSettings modelSettingsClient = client.GetModelSettingsClient();
+            TimeSeriesInsightsInstances instancesClient = client.GetInstancesClient();
 
             int numOfIdProperties = 3;
             int numOfInstancesToSetup = 2;
@@ -36,7 +37,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
             for (int i = 0; i < numOfInstancesToSetup; i++)
             {
-                TimeSeriesId id = await GetUniqueTimeSeriesInstanceIdAsync(client, numOfIdProperties)
+                TimeSeriesId id = await GetUniqueTimeSeriesInstanceIdAsync(instancesClient, numOfIdProperties)
                     .ConfigureAwait(false);
 
                 var instance = new TimeSeriesInstance(id, defaultTypeId)
@@ -54,8 +55,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 await TestRetryHelper.RetryAsync<Response<InstancesOperationResult[]>>(async () =>
                 {
                     // Create TSI instances
-                    Response<TimeSeriesOperationError[]> createInstancesResult = await client
-                        .Instances
+                    Response<TimeSeriesOperationError[]> createInstancesResult = await instancesClient
                         .CreateOrReplaceAsync(timeSeriesInstances)
                         .ConfigureAwait(false);
 
@@ -63,8 +63,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     createInstancesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);
 
                     // Get the created instances by Ids
-                    Response<InstancesOperationResult[]> getInstancesByIdsResult = await client
-                        .Instances
+                    Response<InstancesOperationResult[]> getInstancesByIdsResult = await instancesClient
                         .GetAsync(timeSeriesInstancesIds)
                         .ConfigureAwait(false);
 
@@ -83,8 +82,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     timeSeriesInstances.ForEach((timeSeriesInstance) =>
                         timeSeriesInstance.Description = "Description");
 
-                    Response<InstancesOperationResult[]> replaceInstancesResult = await client
-                        .Instances
+                    Response<InstancesOperationResult[]> replaceInstancesResult = await instancesClient
                         .ReplaceAsync(timeSeriesInstances)
                         .ConfigureAwait(false);
 
@@ -92,8 +90,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     replaceInstancesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
 
                     // Get instances by name
-                    Response<InstancesOperationResult[]> getInstancesByNameResult = await client
-                        .Instances
+                    Response<InstancesOperationResult[]> getInstancesByNameResult = await instancesClient
                         .GetAsync(timeSeriesInstances.Select((instance) => instance.Name))
                         .ConfigureAwait(false);
 
@@ -109,7 +106,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     }
 
                     // Get all Time Series instances in the environment
-                    AsyncPageable<TimeSeriesInstance> getAllInstancesResponse = client.Instances.GetAsync();
+                    AsyncPageable<TimeSeriesInstance> getAllInstancesResponse = instancesClient.GetAsync();
 
                     int numOfInstances = 0;
                     await foreach (TimeSeriesInstance tsiInstance in getAllInstancesResponse)
@@ -126,8 +123,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // clean up
                 try
                 {
-                    Response<TimeSeriesOperationError[]> deleteInstancesResponse = await client
-                        .Instances
+                    Response<TimeSeriesOperationError[]> deleteInstancesResponse = await instancesClient
                         .DeleteAsync(timeSeriesInstancesIds)
                         .ConfigureAwait(false);
 
